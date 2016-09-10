@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.AccountDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.AccountDetail" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="accountId" property="accountid" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="changeItem" property="changeitem" jdbcType="CHAR" />
+    <result column="changeValue" property="changevalue" jdbcType="INTEGER" />
+    <result column="changeCause" property="changecause" jdbcType="VARCHAR" />
+    <result column="changeType" property="changetype" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, accountId, createTime, changeItem, changeValue, changeCause, changeType
+  </sql>
+  <!-- 获取账户详情列表 -->
+  <select id="getListByRecord" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.AccountDetail" >
+    select 
+    <include refid="Base_Column_List" />
+     ,(select count(*) from tbl_accountDetail t
+		where t.accountId = #{accountid,jdbcType=INTEGER}
+		<if test="changeitem != null">
+			and t.changeItem = #{changeitem,jdbcType=INTEGER}
+		</if>
+		<if test="changecause != null">
+			and t.changeCause = #{changecause,jdbcType=VARCHAR}
+		</if>
+		<if test="changetype != null">
+			and t.changeType = #{changetype,jdbcType=CHAR}
+		</if>) as pageCount 
+    
+	from tbl_accountDetail t
+	where t.accountId = #{accountid,jdbcType=INTEGER}
+	<if test="changeitem != null">
+		and t.changeItem = #{changeitem,jdbcType=INTEGER}
+	</if>
+	<if test="changecause != null">
+		and t.changeCause = #{changecause,jdbcType=VARCHAR}
+	</if>
+	<if test="changetype != null">
+		and t.changeType = #{changetype,jdbcType=CHAR}
+	</if>
+    order by t.createTime desc
+    <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+  </select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_accountDetail
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_accountDetail
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <!-- adOrDecAccount -->
+  <!-- <insert id="adOrDecAccount" parameterType="com.jobplus.pojo.AccountDetail" >
+    insert into tbl_accountDetail (ID, accountId, createTime, 
+      changeItem, changeValue, changeCause, 
+      changeType)
+    values (#{id,jdbcType=INTEGER}, #{accountid,jdbcType=INTEGER}, Now(), 
+      #{changeitem,jdbcType=CHAR}, #{changevalue,jdbcType=INTEGER}, #{changecause,jdbcType=VARCHAR}, 
+      #{changetype,jdbcType=CHAR})
+  </insert> -->
+  <insert id="insert" parameterType="com.jobplus.pojo.AccountDetail" >
+    insert into tbl_accountDetail (ID, accountId, createTime, 
+      changeItem, changeValue, changeCause, 
+      changeType)
+    values (#{id,jdbcType=INTEGER}, #{accountid,jdbcType=INTEGER}, Now(), 
+      #{changeitem,jdbcType=CHAR}, #{changevalue,jdbcType=INTEGER}, #{changecause,jdbcType=VARCHAR}, 
+      #{changetype,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.AccountDetail" >
+    insert into tbl_accountDetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="accountid != null" >
+        accountId,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="changeitem != null" >
+        changeItem,
+      </if>
+      <if test="changevalue != null" >
+        changeValue,
+      </if>
+      <if test="changecause != null" >
+        changeCause,
+      </if>
+      <if test="changetype != null" >
+        changeType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accountid != null" >
+        #{accountid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changeitem != null" >
+        #{changeitem,jdbcType=CHAR},
+      </if>
+      <if test="changevalue != null" >
+        #{changevalue,jdbcType=INTEGER},
+      </if>
+      <if test="changecause != null" >
+        #{changecause,jdbcType=VARCHAR},
+      </if>
+      <if test="changetype != null" >
+        #{changetype,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.AccountDetail" >
+    update tbl_accountDetail
+    <set >
+      <if test="accountid != null" >
+        accountId = #{accountid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changeitem != null" >
+        changeItem = #{changeitem,jdbcType=CHAR},
+      </if>
+      <if test="changevalue != null" >
+        changeValue = #{changevalue,jdbcType=INTEGER},
+      </if>
+      <if test="changecause != null" >
+        changeCause = #{changecause,jdbcType=VARCHAR},
+      </if>
+      <if test="changetype != null" >
+        changeType = #{changetype,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.AccountDetail" >
+    update tbl_accountDetail
+    set accountId = #{accountid,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      changeItem = #{changeitem,jdbcType=CHAR},
+      changeValue = #{changevalue,jdbcType=INTEGER},
+      changeCause = #{changecause,jdbcType=VARCHAR},
+      changeType = #{changetype,jdbcType=CHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

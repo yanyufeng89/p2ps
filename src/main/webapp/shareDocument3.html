@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html class="expanded">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>上传文档</title>
+<link rel="stylesheet" type="text/css" href="css/pj_wkcommon_framework.css">
+<link rel="stylesheet" type="text/css" href="css/pj_wkcommon_base.css" charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/pj_upload.css">
+<script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="scripts/pj_content.js"></script>
+<script type="text/javascript">
+    function testSubmit(){    	
+    	testForm.submit();
+    }   
+  	
+   	function getBookSimpleInfo(){
+  	   $.ajax({
+         	type:"POST",
+         	url:"books/getBookSimpleInfo",
+         	data:{id:4},
+         	dataType:"json",
+         	success:function(data){
+         		if(data.returnStatus=='000'){//返回成功
+            		console.log(data);
+        		}else{//返回失败
+        		}
+        	}
+     });
+  } 
+   	function getCollectedCourseList(){
+  	   $.ajax({
+         	type:"POST",
+         	url:"myCenter/getCollectedCourseList",
+         	//data:{id:4},
+         	dataType:"json",
+         	success:function(data){
+         		if(data.returnStatus=='000'){//返回成功
+            		console.log(data);
+        		}else{//返回失败
+        		}
+        	}
+     });
+  } 
+   	
+   
+//批量删除   MyCollects
+ 	function deleteMyCollects(){
+ 		//var conditions ='1,2,3,4';
+	  	//console.log(conditions);
+	  	//console.log(JSON.stringify(conditions));
+	  	///var s = JSON.stringify(conditions);
+	   $.ajax({
+       	type:"POST",
+       	url:"myCenter/deleteMyCollects",
+       	data:{condition:'22,23',collecttype:"tbl_books"},
+       	dataType:"json",
+       	success:function(data){
+       		if(data.returnStatus=='000'){//返回成功
+      			//alert(data.list);
+          		console.log(data);
+          		
+      		}else{//返回失败
+      		}
+      		
+      	}
+   });
+}
+ 	function delSharedCourses(){
+ 		//var conditions ='1,2,3,4';
+	  	//console.log(conditions);
+	  	//console.log(JSON.stringify(conditions));
+	  	///var s = JSON.stringify(conditions);
+	   $.ajax({
+       	type:"POST",
+       	url:"courses/delSharedCourses",
+       	data:{condition:'100,101'},
+       	dataType:"json",
+       	success:function(data){
+       		if(data.returnStatus=='000'){//返回成功
+      			//alert(data.list);
+          		console.log(data);
+          		
+      		}else{//返回失败
+      		}
+      		
+      	}
+   });
+}
+
+  //获取私信列表  smstype:消息类型 暂时定义两种   0系统消息    1私信  
+  function getSmsList(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myCenter/getSmsList",
+        	data:{smstype:1},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function getCourseDetail(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"courses/getCourseDetail",
+        	data:{id:1},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  
+  function getSharedBookList(){	
+	 // var page = $.parseJSON('{pageNo:2}');
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myCenter/getSharedBookList",
+        	data:{pageNo:2},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+        		console.log(data);  
+       	}
+    });
+ }
+  function getSharedCourseList(){	
+	 // var page = $.parseJSON('{pageNo:2}');
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myCenter/getSharedCourseList",
+        	data:{pageNo:2},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+        		console.log(data);  
+       	}
+    });
+ }
+  function getCollectedBookList(){	
+	 // var page = $.parseJSON('{pageNo:2}');
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myCenter/getCollectedBookList",
+        	data:{pageNo:1},
+        	dataType:"json",
+        	success:function(data){
+        		console.log(data); 
+       	}
+    });
+ }
+  function loadBookComments(){	
+	 // var page = $.parseJSON('{pageNo:2}');
+ 	   $.ajax({
+        	type:"POST",
+        	url:"books/loadBookComments",
+        	data:{pageNo:1,bookid:1},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function shareArticle(){	
+	 // var page = $.parseJSON('{pageNo:2}');
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myCenter/shareArticle",
+        	data:{articleurl:"www.imooc.com",recommend:"imooc 程序员的梦想工厂",intro:"一门好的课程"},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function getSharedArticleList(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myCenter/getSharedArticleList",
+        	data:{pageNo:1},
+        	dataType:"json",
+        	success:function(data){
+        		console.log(data);  
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function getCollectedArticleList(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myCenter/getCollectedArticleList",
+        	data:{pageNo:1},
+        	dataType:"json",
+        	success:function(data){
+        		console.log(data); 
+        		if(data.returnStatus=='000'){//返回成功        			
+           		 
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function delSharedArticle(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/delSharedArticle",
+        	data:{condition:"1,2,3"},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function getArticleDetail(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/getArticleDetail",
+        	data:{id:"1"},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+  }
+  function loadArticleComments(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/loadArticleComments",
+        	data:{articleid:"11",pageNo:"1"},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function addCommentarticle(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/addComment",
+        	data:{articleid:"1",recommend:"评论1",ObjTitle:"一门腰带蝴蝶结的系法图解_百度经验好的文章",objCreateperson:"2"},//commentby:"2",
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function delComment(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/delComment",
+        	data:{articleid:"1",id:"1"},
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function clickLikeOnArticle(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/clickLikeOnArticle",
+        	data:{id:"1",articleid:"2",cutUserIsliked:"0"},//cutUserIsliked:"0"
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function collectArticle(){	
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/collectArticle",
+        	data:{objectid:"1",articleid:"1",judgeTodo:"1"},//judgeTodo:"0"
+        	dataType:"json",
+        	success:function(data){
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }  
+  
+  
+  
+
+
+  function shareSite(){	
+		 // var page = $.parseJSON('{pageNo:2}');
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/shareSite",
+	        	data:{sitesurl:"www.imooc.com",recommend:"imooc 程序员的梦想工厂",intro:"一门好的课程"},
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function getSharedSiteList(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/getSharedSiteList",
+	        	data:{pageNo:1},
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function getCollectedSiteList(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/getCollectedSiteList",
+	        	data:{pageNo:1},
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data); 
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		 
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function delSharedSite(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"sites/delSharedSite",
+	        	data:{condition:"1,2,3"},
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function getSiteDetail(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"sites/getSiteDetail",
+	        	data:{id:"1"},
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	  }
+	  function loadSiteComments(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"sites/loadSiteComments",
+	        	data:{sitesid:"11",pageNo:"1"},
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function addCommentsite(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"sites/addComment",
+	        	data:{sitesid:"1",recommend:"评论1",commentby:"2"},
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function delComment(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"sites/delComment",
+	        	data:{sitesid:"1",id:"1"},
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function clickLikeOnSite(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"sites/clickLikeOnSite",
+	        	data:{id:"1",sitesid:"2",cutUserIsliked:"0"},//cutUserIsliked:"0"
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 }
+	  function collectSite(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"sites/collectSite",
+	        	data:{objectid:"1",sitesid:"1",judgeTodo:"1"},//judgeTodo:"0"
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function getMyHeadTop(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/getMyHeadTop",
+	        	//data:{objectid:"1",sitesid:"1",judgeTodo:"1"},//judgeTodo:"0"
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function getNewSms(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/getNewSms",
+	        	//data:{objectid:"1",sitesid:"1",judgeTodo:"1"},//judgeTodo:"0"
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function getMyFans(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/getMyFans",
+	        	//data:{objectid:"1",sitesid:"1",judgeTodo:"1"},//judgeTodo:"0"
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function getMyAttenMan(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/getMyAttenMan",
+	        	//data:{objectid:"1",sitesid:"1",judgeTodo:"1"},//judgeTodo:"0"
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function setSmsFilter(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myCenter/setSmsFilter",
+	        	data:{userid:"30",filterlevel:"0",filteritem:"1"},//1私信   0 消息
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function updEduInfo(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myHome/updEduInfo",
+	        	//Integer id;Integer userid;String school; major; degree; description;Date starttime; endtime; createtime;
+	        	data:{userid:"30",school:"麻省理工",major:"广电管理",degree:"doc",description:"发不催哦不错"},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function getOneShares(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"myHome/getOneShares",
+	        	//tableName;tableColumn;userid; 
+	        	data:{userid:"30",tableName:"tbl_docs",tableColumn:"title",pageNo:"2"},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  //.param("downvalue", "5").param("userid", "2")
+	  function downloadDocs(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"docs/downloadDocs",
+	        	data:{id:"93416",userid:"344",downvalue:"5"},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+  
+	  function getHome(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"homePage/getHome",
+	        	//data:{id:"93416",userid:"344",downvalue:"5"},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function search(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"homePage/search",
+	        	//data:{id:"93416",userid:"344",downvalue:"5"},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+  
+  
+    
+    </script>
+</head>
+<body>
+
+	<input type="button" value="deleteMyCollects" onclick="deleteMyCollects()" /><br><br>
+	<input type="button" value="getCourseDetail" onclick="getCourseDetail()" /><br><br>
+	<input type="button" value="delSharedCourses" onclick="delSharedCourses()" /><br><br>
+	<input type="button" value="getCollectedCourseList" onclick="getCollectedCourseList()" /><br><br>
+	<input type="button" value="getSharedBookList" onclick="getSharedBookList()" /><br><br>
+	<input type="button" value="getCollectedBookList" onclick="getCollectedBookList()" /><br><br>
+	<input type="button" value="loadBookComments" onclick="loadBookComments()" /><br><br>
+	<input type="button" value="getSharedCourseList" onclick="getSharedCourseList()"/><br><br>
+	<input type="button" value="shareArticle" onclick="shareArticle()"/><br><br>
+	<input type="button" value="getSharedArticleList" onclick="getSharedArticleList()"/><br><br>
+	<input type="button" value="getCollectedArticleList" onclick="getCollectedArticleList()"/><br><br>
+	<input type="button" value="delSharedArticle" onclick="delSharedArticle()"/><br><br>
+	<input type="button" value="getArticleDetail" onclick="getArticleDetail()"/><br><br>
+	<input type="button" value="loadArticleComments" onclick="loadArticleComments()"/><br><br>
+	<input type="button" value="addCommentarticle" onclick="addCommentarticle()"/><br><br>
+	<input type="button" value="delComment" onclick="delComment()"/><br><br>
+	<input type="button" value="clickLikeOnArticle" onclick="clickLikeOnArticle()"/><br><br>
+	<input type="button" value="collectArticle" onclick="collectArticle()"/><br><br>
+	
+	
+	<input type="button" value="shareSite" onclick="shareSite()"/><br><br>
+	<input type="button" value="getSharedSiteList" onclick="getSharedSiteList()"/><br><br>
+	<input type="button" value="getCollectedSiteList" onclick="getCollectedSiteList()"/><br><br>
+	<input type="button" value="delSharedSite" onclick="delSharedSite()"/><br><br>
+	<input type="button" value="getSiteDetail" onclick="getSiteDetail()"/><br><br>
+	<input type="button" value="loadSiteComments" onclick="loadSiteComments()"/><br><br>
+	<input type="button" value="addCommentsite" onclick="addCommentsite()"/><br><br>
+	<input type="button" value="delComment" onclick="delComment()"/><br><br>
+	<input type="button" value="clickLikeOnSite" onclick="clickLikeOnSite()"/><br><br>
+	<input type="button" value="collectSite" onclick="collectSite()"/><br><br>
+	<input type="button" value="getMyHeadTop" onclick="getMyHeadTop()"/><br><br>
+	<input type="button" value="getNewSms" onclick="getNewSms()"/><br><br>
+	<input type="button" value="getMyFans" onclick="getMyFans()"/><br><br>
+	<input type="button" value="getMyAttenMan" onclick="getMyAttenMan()"/><br><br>
+	<input type="button" value="setSmsFilter" onclick="setSmsFilter()"/><br><br>
+	<input type="button" value="getOneShares" onclick="getOneShares()"/><br><br>
+	<input type="button" value="downloadDocs" onclick="downloadDocs()"/><br><br>
+	<input type="button" value="getHome" onclick="getHome()"/><br><br>
+	<input type="button" value="search" onclick="search()"/><br><br>
+
+<!-- //Integer id;Integer userid;String school; major; degree; description;Date starttime; endtime; createtime; -->
+<form action="myHome/updEduInfo" method="post" >
+		<input type="text" value="加拿大多伦多  大学" name="school"> 
+		<input type="text" value="30" name="id"> 
+		<input type="text" value="30" name=userid> 
+		<input type="text" value="什么都不会。" name="description"> 
+		<!-- <input  type="text"  value="30"  name="starttime">
+		<input  type="text" value="30" name="endtime"> -->
+		<!-- <input  type="date" name="starttime">
+		<input  type="date" name="endtime"> --> 
+		<input style="width: 155px" readonly="readonly" name="starttime"
+			id="startTime"  type="text"
+			value="2015-09-01 12:12:09" />
+<!-- 		<input style="width: 155px" readonly="readonly" name="starttime"
+			id="startTime"  type="text"
+			value="2015-08-08 12:12:09" /> -->
+			至 
+		
+		<input style="width: 155px" readonly="readonly"
+			name="endtime" id="finishTime"  type="text"
+			value="2016-06-01 12:08:09" /> 
+		<input type="text" value="MMMMM" name="degree"> 
+		<input type="text" value="major in eg" name="major"> 
+		
+		
+		<input type="submit" value="修改教育信息">
+	</form>
+<form action="myHome/updUserInfo" method="post" enctype="multipart/form-data">
+		<input type="file"  name="headIconFile"> 
+		<input type="submit" value="修改头像啊">
+</form>
+
+</body>
+
+</html>

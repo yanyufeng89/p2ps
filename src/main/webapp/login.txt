@@ -1,0 +1,151 @@
+﻿<div class="logined-wrap" id="loginwrap">
+		        <div class="upload-doc">
+		          <p class="upload-wrap">
+		            <a class="upload-btn bg-index" href="searchuploadFile.html">
+		            </a>
+		          </p>
+		          <p class="doc-num" id="total-docnum" data-docnum="151,604,442">
+		            已有
+		            <span class="num0" data-num="1" style="background-position: -34px -24px;">
+		            </span>
+		            <span class="num0" data-num="5" style="background-position: -34px -120px;">
+		            </span>
+		            <span class="num0" data-num="1" style="background-position: -34px -24px;">
+		            </span>
+		            <b class="spr">
+		              ,
+		            </b>
+		            <span class="num0" data-num="6" style="background-position: -34px -144px;">
+		            </span>
+		            <span class="num0" data-num="0" style="background-position: -34px 0px;">
+		            </span>
+		            <span class="num0" data-num="4" style="background-position: -34px -96px;">
+		            </span>
+		            <b class="spr">
+		              ,
+		            </b>
+		            <span class="num0" data-num="4" style="background-position: -34px -96px;">
+		            </span>
+		            <span class="num0" data-num="4" style="background-position: -34px -96px;">
+		            </span>
+		            <span class="num0" data-num="2" style="background-position: -34px -48px;">
+		            </span>
+		            份文档
+		          </p>
+		        </div>
+		        <div class="mod loginMod login_tabs0" style="margin-top:7px">
+
+		          <div class="bd">
+		            <div class="current login_box tang-pass-login" id="login_user0">
+		              <form id="TANGRAM__PSP_6__form" class="pass-form pass-form-normal" method="get" onsubmit="return loginInfoVerify()">
+		                <p id="TANGRAM__PSP_7__errorWrapper" class="pass-generalErrorWrapper">
+		                  <span id="TANGRAM__PSP_7__error" class="pass-generalError pass-generalError-error">
+		                  </span>
+		                </p>
+		                <p id="TANGRAM__PSP_7__MakeTextWrapper" class="pass-make-text" style="display:none;">
+		                </p>
+		                <p id="TANGRAM__PSP_7__hiddenFields" style="display:none">
+		                  <input type="hidden" id="TANGRAM__PSP_7__codeString" name="codeString" value="">
+		                  <input type="hidden" id="TANGRAM__PSP_7__safeFlag" name="safeFlag" value="0">
+		                  <input type="hidden" id="TANGRAM__PSP_7__u" name="u" value="">
+		                  <input type="hidden" id="TANGRAM__PSP_7__isPhone" name="isPhone" value="false">
+		                  <input type="hidden" id="TANGRAM__PSP_7__detect" name="detect" value="1">
+		                  <input type="hidden" id="TANGRAM__PSP_7__gid" name="gid" value="11E223E-69E6-42D3-AD36-5E3BC67DC6CD">
+		                  <input type="hidden" id="TANGRAM__PSP_7__staticPage" name="staticPage" value="http://wenku.baidu.com/static/wkcommon/html/v3Jump.html">
+		                  <input type="hidden" id="TANGRAM__PSP_7__quick_user" name="quick_user" value="0">
+		                  <input type="hidden" id="TANGRAM__PSP_7__logintype" name="logintype" value="basicLogin">
+		                  <input type="hidden" id="TANGRAM__PSP_7__logLoginType" name="logLoginType" value="pc_loginBasic">
+		                  <input type="hidden" id="TANGRAM__PSP_7__subpro" name="subpro" value="">
+		                  <input type="hidden" id="TANGRAM__PSP_7__idc" name="idc" value="">
+		                  <input type="hidden" id="TANGRAM__PSP_7__loginMerge" name="loginMerge" value="true">
+		                </p>
+		                <p id="TANGRAM__PSP_7__userNameWrapper" class="pass-form-item pass-form-item-userName" style="display:">
+		                  <label for="TANGRAM__PSP_7__userName" id="TANGRAM__PSP_7__userNameLabel" class="pass-label pass-label-userName">
+		                  </label>
+		                  <input id="TANGRAM__PSP_7__userName" type="text" name="username" class="pass-text-input pass-text-input-userName" autocomplete="off" placeholder="手机/邮箱/用户名">
+		                  <span id="TANGRAM__PSP_7__userName_clearbtn" class="pass-clearbtn pass-clearbtn-userName" style="display:none;">
+		                  </span>
+		                  <span id="TANGRAM__PSP_7__userNameTip" class="pass-item-tip pass-item-tip-userName" style="display:none">
+		                    <span id="TANGRAM__PSP_7__userNameTipText" class="pass-item-tiptext pass-item-tiptext-userName">
+		                    </span>
+		                  </span>
+		                </p>
+		                <p id="TANGRAM__PSP_7__passwordWrapper" class="pass-form-item pass-form-item-password" style="display:">
+		                  <label for="TANGRAM__PSP_7__password" id="TANGRAM__PSP_7__passwordLabel" class="pass-label pass-label-password">
+		                  </label>
+		                  <input id="TANGRAM__PSP_7__password" type="password" name="passwd" class="pass-text-input pass-text-input-password" placeholder="密码">
+		                  <span id="TANGRAM__PSP_7__password_clearbtn" class="pass-clearbtn pass-clearbtn-password" style="display:none;">
+		                  </span>
+		                  <span id="TANGRAM__PSP_7__passwordTip" class="pass-item-tip pass-item-tip-password" style="display:none">
+		                    <span id="TANGRAM__PSP_7__passwordTipText" class="pass-item-tiptext pass-item-tiptext-password">
+		                    </span>
+		                  </span>
+		                </p>
+		                <p id="TANGRAM__PSP_7__verifyCodeImgWrapper" class="pass-form-item pass-form-item-verifyCode" style="display:none">
+		                  <label for="TANGRAM__PSP_7__verifyCode" id="TANGRAM__PSP_7__verifyCodeLabel" class="pass-label pass-label-verifyCode">
+		                    验证码：
+		                  </label>
+		                  <input id="TANGRAM__PSP_7__verifyCode" type="text" name="verifyCode" class="pass-text-input pass-text-input-verifyCode" maxlength="6" placeholder="验证码">
+		                  <span id="TANGRAM__PSP_7__verifyCode_clearbtn" class="pass-clearbtn pass-clearbtn-verifyCode" style="display:none;">
+		                  </span>
+		                  <span id="TANGRAM__PSP_7__verifyCodeImgParent" class="pass-verifyCodeImgParent">
+		                   <!--  <img id="TANGRAM__PSP_7__verifyCodeImg" class="pass-verifyCode" src="./百度文库——让每个人平等地提升自我_files/small_blank_5b01ba6e.gif"> -->
+		                  </span>
+		                  <a id="TANGRAM__PSP_7__verifyCodeChange" href="#" class="pass-change-verifyCode">
+		                    换一张
+		                  </a>
+		                  <span id="TANGRAM__PSP_7__verifyCodeError" class="pass-error pass-error-verifyCode">
+		                  </span>
+		                  <span id="TANGRAM__PSP_7__verifyCodeTip" class="pass-tip pass-tip-verifyCode">
+		                  </span>
+		                  <span id="TANGRAM__PSP_7__verifyCodeSuccess" class="pass-success pass-success-verifyCode">
+		                  </span>
+		                </p>
+		                <p id="TANGRAM__PSP_7__memberPassWrapper" class="pass-form-item pass-form-item-memberPass">
+		                  <input id="TANGRAM__PSP_7__memberPass" type="checkbox" name="memberPass" class="pass-checkbox-input pass-checkbox-memberPass" checked="checked">
+		                  <label for="TANGRAM__PSP_7__memberPass" id="TANGRAM__PSP_7__memberPassLabel" class="">
+		                    记住我
+		                  </label>
+		                </p>
+		                <p id="TANGRAM__PSP_7__submitWrapper" class="pass-form-item pass-form-item-submit">
+		                 <!--  <input id="TANGRAM__PSP_7__submit" type="submit" value="登录" class="pass-button pass-button-submit"> -->
+		                 <button id="userlogin">用户登录</button>
+		                  <a class="pass-reglink" href="#" target="_blank" style="display:none">
+		                    立即注册
+		                  </a>
+		                  <a class="pass-fgtpwd" href="#" target="_blank">
+		                    登录遇到问题
+		                  </a>
+		                </p>
+		                <p id="login_other" class="pass-form-item login_other">
+		                   <lable class="login_other_left">其他方式登录：</lable>
+		                   <lable class="login_qq">
+				               <a href="#" class="log_sina png"></a>
+				               <a href="#" class="png"></a>
+				      	       <a href="#" class="log_wx png"></a>
+				      	  </lable>
+		                </p>
+		              </form>
+		            </div>
+		            <div id="TANGRAM__PSP_7__pass_b2c" style="display:none;">
+		            </div>
+		            <p class="task">
+		              <a href="#" class="daily-task">
+		                <b class="ic-wealth bg-index">
+		                </b>
+		                每日任务，领取<b style="font-size:15px;">加币</b>
+		                <b class="li-aw bg-index">
+		                </b>
+		              </a>
+		            </p>
+		            <p class="reg-now" id="extra-regnow">
+		              <span>
+		                &nbsp;&nbsp;&nbsp;
+		              </span>
+		              <a href="#" target="_blank">
+		                立即注册
+		              </a>
+		            </p>
+		          </div>
+		        </div>
+      </div>

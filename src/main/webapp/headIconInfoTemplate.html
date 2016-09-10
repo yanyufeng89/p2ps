@@ -1,0 +1,87 @@
+<div id="pj-tooltip" data-theme="" class="goog-hovercard popover top" data-za-module="HoverCard">
+  <div class="popover-content no-hovercard">
+    <div class="zh-profile-card member">
+      <div class="upper">
+        <a class="avatar-link" target="_blank" href='/51jobplusCore/myHome/getHomePage?userid={$T.userid}'>
+          {#if $T.userSimpleInformation.headicon}
+              <img class="Avatar Avatar--xs" src="{$T.userSimpleInformation.headicon}">
+          {#else}
+              <img class="Avatar Avatar--xs" src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg">
+          {#/if}
+          {#if $T.userSimpleInformation.username}
+             <span class="name">{$T.userSimpleInformation.username}</span>
+          {#else}
+             <span class="name">匿名用户</span>
+          {#/if}
+        </a>
+        <div class="tagline">
+           {#if $T.userSimpleInformation.description}
+              {$T.userSimpleInformation.description}
+           {#/if}
+        </div>
+      </div>
+      <div class="lower clearfix">
+        <div class="meta">
+          <a class="item" target="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+            <span class="value">
+              {#if $T.userSimpleInformation.operationSum.attentionsum}
+	              {$T.userSimpleInformation.operationSum.attentionsum}
+	          {#else}
+	             0
+	          {#/if}
+            </span>
+            <span class="key">关注</span>
+           </a>
+          <a class="item" target="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+            <span class="value">
+            {#if $T.userSimpleInformation.operationSum.fanssum}
+	              {$T.userSimpleInformation.operationSum.fanssum}
+	        {#else}
+	             0
+	        {#/if}
+            </span>
+            <span class="key">粉丝</span>
+          </a>
+            {#if $T.cutuserid==$T.userid}
+	          <a class="item" target="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+	            <span class="value">
+	            {#if $T.userSimpleInformation.operationSum.allshresum}
+		              {$T.userSimpleInformation.operationSum.allshresum}
+		        {#else}
+		             0
+		        {#/if}
+	            </span>
+	              <span class="key">我的分享</span>
+	          </a>
+	      {#else}
+	          <a class="item" self="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+	            <span class="value">
+	            {#if $T.userSimpleInformation.operationSum.allshresum}
+		              {$T.userSimpleInformation.operationSum.allshresum}
+		        {#else}
+		             0
+		        {#/if}
+	            </span>
+	              <span class="key">他的分享</span>
+	          </a>
+          {#/if}
+        </div>
+        <div class="operation">
+          {#if $T.userSimpleInformation.fansIds==1}
+	          <button data-follow="m:button" data-userid="{$T.userid}" data-actiontype='1' class="zg-btn zg-btn-follow zm-rich-follow-btn" >
+	          		关注他
+	          </button>
+	      {#else}
+	          <button data-follow="m:button" data-userid="{$T.userid}" data-actiontype='0' class="zg-btn zg-btn-unfollow zm-rich-follow-btn" >
+	          		取消关注
+	          </button>
+          {#/if}
+          <a href="javascript:;" class="zg-btn-white member-profile-card-pm private-message" data-name="{$T.userSimpleInformation.username}"  data-receivedid="{$T.userid}">
+            <i class="zg-icon pm">私信</i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="arrow" style="left: 82.5px;"></div>
+  <div class="arrow2" style="left: 82.5px;"></div>
+</div>

@@ -1,0 +1,79 @@
+<div class="background-selfinfo-container section-container">
+  <input type='hidden' name='isedit' value='{$T.isEdit}'>
+  <input type='hidden' name='ismarry' value='{$T.ismarry}'>
+  <input type='hidden' name='birthdayone' value='{$T.birthdayone}'>
+  <input type='hidden' name='birthdaytwo' value='{$T.birthdaytwo}'>
+
+  <div class="header">
+    <span>个人信息</span>
+ </div>
+  <div class="birthday">
+           生日:&nbsp;&nbsp;
+     <span class='birth'>
+      <select name='month' id='birthdaymonth'>
+        {#if $T.birthdayone==0}
+         <option value="" selected="selected">月</option>
+        {#/if}
+       {#for index = 1 to 12}
+        {#if $T.birthdayone==$T.index} 
+          <option value="{$T.index}" selected="selected">{$T.index} 月</option> 
+        {#else}
+          <option value="{$T.index}">{$T.index} 月</option> 
+        {#/if}
+       {#/for} 
+      </select>
+      &nbsp;&nbsp;
+     <select name='day' id='birthdayday'>
+        {#if $T.birthdaytwo==0} 
+          <option value="" selected="selected">日</option>
+        {#/if} 
+        {#for index = 1 to 31}
+         {#if $T.birthdaytwo==$T.index} 
+           <option value="{$T.index}" selected="selected">{$T.index} 日</option>
+         {#else}
+           <option value="{$T.index}">{$T.index} 日</option>
+         {#/if}
+        {#/for} 
+      </select>
+      <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+      <span class="item-msg-content"  style="display:none">请选择生日</span>
+    </span>
+    <a href="javascript:;" class="zu-edit-button" name="editbirthday" style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+          
+      <span class='marr'>
+        <span class="marriage">
+                         婚姻状况:&nbsp;&nbsp;
+          <select name="maritalStatusParam" id='marriage'>
+             {#if  $T.ismarry=='2'}
+               <option value="2" selected="selected">请选择</option>
+             {#else}
+                <option value="2" >请选择</option>
+             {#/if}
+			 {#if  $T.ismarry=='1'}
+			  <option value="1" selected="selected">已婚</option>
+			 {#else}
+			   <option value="1">已婚</option>
+			 {#/if}
+			 {#if  $T.ismarry=='0'}
+			  <option value="0" selected="selected">未婚</option>
+			 {#else}
+			  <option value="0">未婚</option>
+			 {#/if}
+		  </select>
+      </span>
+      <a href="javascript:;" class="zu-edit-button" name="editmarriage" style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+    </span>
+  </div>
+  <div class="header">
+    <span>自我简介</span>
+  </div>
+  <div class="intro">
+    <span class="introinfo"></span>
+    <a href="javascript:;" class="zu-edit-button" name="editintroinfo" style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+    <textarea name="recommend" class="content" style="resize: none" placeholder="填写自我简介"></textarea>
+  </div>
+  <div class="zm-command">
+    <a class="zm-command-cancel" data-ismarry='{$T.ismarry}' data-birthdayone='{$T.birthdayone}'  data-birthdaytwo='{$T.birthdaytwo}' data-description='{$T.description}' name="myintrocancel" href="javascript:;" style='font-size:14px;font-weight:500;'>取消</a>
+    <a class="zg-r3px zg-btn-blue" name="myintrosave" href="javascript:;">保存</a>
+  </div>
+</div>

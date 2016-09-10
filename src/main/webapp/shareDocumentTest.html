@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="expanded">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>上传文档</title>
+<script type="text/javascript">
+function doUpload() {  
+    var formData = new FormData($( "#uploadForm" )[0]); 
+    $.ajax({  
+         url: 'myHome/updUserInfo' ,  
+         type: 'POST',  
+         data: formData,  
+         async: false,  
+         cache: false,  
+         contentType: false,  
+         processData: false,  
+         success: function (returndata) {  
+             alert(returndata);  
+         },  
+         error: function (returndata) {  
+             alert(returndata);  
+         }  
+    });  
+}  
+
+</script>
+
+
+
+
+</head>
+<body>
+
+	<form id="uploadForm">
+		<p>
+			指定文件名： <input type="text" name="username" value="" />
+		</p>
+		<p>上传文件： <input type="file" name="headIconFile"  onchange="doUpload()"/></p> 
+		<input type="button" value="上传" onclick="doUpload()" />
+	</form>
+
+
+
+</body>
+
+<script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="scripts/pj_content.js"> </script>
+<link rel="stylesheet" type="text/css"href="css/pj_wkcommon_framework.css">
+<link rel="stylesheet" type="text/css" href="css/pj_wkcommon_base.css" charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/pj_upload.css">
+</html>

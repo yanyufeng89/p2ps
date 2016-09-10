@@ -1,0 +1,102 @@
+﻿ <div class="logined-wrap" id="logininfo">
+				<div class="logined-doc-num">
+				<p class="num-tip">聘加海量知识体系</p>
+				<p class="num" id="total-docnum" data-docnum="153,377,154"><span class="num0" data-num="1" style="background-position: 0px -29px;"></span><span class="num0" data-num="5" style="background-position: 0px -145px;"></span><span class="num0" data-num="3" style="background-position: 0px -87px;"></span><b class="spr">,</b><span class="num0" data-num="3" style="background-position: 0px -87px;"></span><span class="num0" data-num="7" style="background-position: 0px -203px;"></span><span class="num0" data-num="7" style="background-position: 0px -203px;"></span><b class="spr">,</b><span class="num0" data-num="1" style="background-position: 0px -29px;"></span><span class="num0" data-num="5" style="background-position: 0px -145px;"></span><span class="num0" data-num="4" style="background-position: 0px -116px;"></span></p>
+				</div>
+				<div class="logined-user-info">
+				<div class="org-user-tip">
+				<p>点击头像，访问我的机构主页</p>
+				<span class="arrow-icon"></span><span class="close-icon close-pic"></span>
+				</div>
+				<div class="user-brief bg-index clearfix">
+				<div class="avatar">
+				<div>
+				<img class="user-icon" src="http://himg.bdimg.com/sys/portrait/item/78646368656e31323338373132392a">
+				</div>
+				<a href="mydocs.html" target="_blank" class="bg-avatar bg-index"></a></div>
+				<div class="name-task">
+				<p class="name">
+				<a href="mydocs.html" class="name-link" title="chen12387" target="_blank">
+				chen1238...
+				</a>
+				<a href="#" target="_blank"><b id="user-vip-ic" class="ic-vip-disable-small"></b><span class="iconfont ic-eduVip hide"></span></a>
+				</p>
+				<p class="task"><a href="#" target="_blank" class="daily-task"><b class="ic-wealth bg-index"></b>每日任务，领财富值<b class="li-aw bg-index"></b></a></p>
+				</div>
+				</div>
+				<div class="doc-info-wrap">
+				<div class="doc-num-info">
+				<ul class="clearfix" id="doccount">
+				<li>
+					<p>
+					   <a href="user/mydocument/1" target="_blank">
+					     <span class="num">1</span>
+					     <br>
+					     <span class="nav-item mr25 mingjia tb-selected">文档<i></i></span>
+					   </a>
+					</p>
+				</li>
+				<li>
+					<p>
+					   <a href="user/mytopic/1" target="_blank">
+					     <span class="num">2</span>
+					     <br>
+					     <span class="nav-item mr25 mingjia">话题</span>
+					   </a>
+					</p>
+				</li>
+				<li style="margin-right:0px">
+					<p>
+					   <a href="user/mybook/1" target="_blank">
+					     <span class="num">3</span>
+					     <br>
+					     <span class="nav-item mr25 mingjia">书籍</span>
+					   </a>
+					</p>
+				</li>
+				<li>
+					<p>
+					   <a href="user/mycourse/1" target="_blank">
+					     <span class="num">4</span>
+					     <br>
+					     <span class="nav-item mr25 mingjia">课程</span>
+					   </a>
+					</p>
+				</li>
+				<li>
+					<p>
+					   <a href="user/myarticle/1" target="_blank">
+					     <span class="num">5</span>
+					     <br>
+					     <span class="nav-item mr25 mingjia">文章</span>
+					   </a>
+					</p>
+				</li>
+				<li style="margin-right:0px">
+					<p>
+					   <a href="user/mysite/1" target="_blank">
+					     <span class="num">6</span>
+					     <br>
+					     <span class="nav-item mr25 mingjia">站点</span>
+					   </a>
+					</p>
+				</li>
+				</ul>
+				</div>
+				<div class="my-wk">
+				<!-- <p class="t-mywk"><a href="/user/mydocs">个人中心</a></p> -->
+				<!-- <ul class="squr" id="mywk-wrap"><li><span class="page-num">3页</span><a href="#" title="readme">readme</a></li><li><span class="page-num">3页</span><a href="/view/1c76c6ab48d7c1c708a145da" title="readme">readme</a></li></ul> -->
+				<p class="upload-wrap">
+				<a class="upload-btn bg-index" href="searchuploadFile.html"></a>
+				<span class="upload-btn-wealth-tip" style="display: inline;">
+				<i class="ic icon-upload-wealth bg-index"></i>
+				送下载券<i class="arrow">
+				<i class="arrow-out"></i>
+				<i class="arrow-inner"></i>
+				</i>
+				</span>
+				</p>
+				</div>
+				</div>
+				</div>
+           </div>

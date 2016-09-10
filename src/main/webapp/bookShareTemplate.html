@@ -1,0 +1,35 @@
+<!-- 个人主页 书籍--书籍分享 -->
+{#foreach $T.sharedBookPage as sharelist}
+<li>
+    <div class="w335 fs14 fc3 ib titlehidden">
+        <div class="checkbox chk" data-commentid="{$T.sharelist.bookShare.id}" data-bookid="{$T.sharelist.id}" data-name="{$T.sharelist.bookname}">
+        </div>
+        <a href="/51jobplusCore/books/getBookDetail?id={$T.sharelist.id}" target="_blank" title="{$T.sharelist.bookname}">
+            {$T.sharelist.bookname}
+        </a>
+    </div>
+    <div class="w140 ib replayhidden">
+        <p title="{$T.sharelist.bookShare.recommend}">
+           {$T.sharelist.bookShare.recommend}
+        </p>
+    </div>
+    <div class="w92 ib ilbook">
+        {$T.sharelist.author}
+    </div>
+    <div class="w92 ib ilbookc">
+        {$T.sharelist.collectsum}
+    </div>
+    <div class="w119 ib ilbook">
+        {$T.sharelist.userShareTime}
+    </div>
+    <div class="w92 ib operate">
+        <span data-commentid="{$T.sharelist.bookShare.id}" data-bookid="{$T.sharelist.id}" data-name="{$T.sharelist.bookname}"
+        class="cancelshare">
+            <b class="iconfont pr2">
+                
+            </b>
+            删除
+        </span>
+    </div>
+</li>
+{#/for}

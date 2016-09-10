@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.CoursesShareMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.CoursesShare" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="coursesID" property="coursesid" jdbcType="INTEGER" />
+    <result column="userID" property="userid" jdbcType="INTEGER" />
+    <result column="recommend" property="recommend" jdbcType="VARCHAR" />
+    <result column="knsite" property="knsite" jdbcType="VARCHAR" />
+    <result column="extendeds" property="extendeds" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="commentby" property="commentby" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="likeSum" property="likesum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, coursesID, userID, recommend, knsite, extendeds, isdelete, commentby, updateTime, 
+    createTime, likeSum
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.ID, t.coursesID, t.userID, t.recommend, t.knsite, t.extendeds, t.isdelete, t.commentby, t.updateTime, t.createTime, t.likeSum
+  </sql>
+	<!-- getList -->
+	<select id="getList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.CoursesShare">
+		select
+		<include refid="Base_Column_List2" />
+		,
+		u.userName as userName,
+		u.headIcon as userHeadIcon,
+		uc.userName as
+		commentbyName,
+		uc.headIcon as commentbyHeadIcon
+		,(select count(*) from tbl_courses_share t LEFT JOIN tbl_user u on t.userID = u.userid LEFT JOIN tbl_user uc on t.commentby = uc.userid
+			 where 1=1
+			<!--课程详情不需要用户id 
+			<if test="userid != null"> AND
+				t.userID = #{userid,jdbcType=INTEGER}
+			</if> -->
+			<if test="coursesid != null">
+				and t.coursesId = #{coursesid,jdbcType=INTEGER}
+			</if>
+		)as pageCount 
+		
+		from tbl_courses_share t LEFT JOIN tbl_user u on t.userID = u.userid
+		LEFT JOIN tbl_user uc on t.commentby = uc.userid
+
+		where 1=1
+		<!--课程详情不需要用户id 
+		<if test="userid != null"> AND
+			t.userID = #{userid,jdbcType=INTEGER}
+		</if> -->
+		<if test="coursesid != null">
+			and t.coursesId = #{coursesid,jdbcType=INTEGER}
+		</if>
+		<choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_courses_share
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_courses_share
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.CoursesShare" >
+    insert into tbl_courses_share (ID, coursesID, userID, 
+      recommend, knsite, extendeds, 
+      isdelete, commentby, updateTime, 
+      createTime, likeSum)
+    values (#{id,jdbcType=INTEGER}, #{coursesid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{recommend,jdbcType=VARCHAR}, #{knsite,jdbcType=VARCHAR}, #{extendeds,jdbcType=VARCHAR}, 
+      0, #{commentby,jdbcType=INTEGER}, Now(), 
+      Now(), 0)
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.CoursesShare" >
+    insert into tbl_courses_share
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="coursesid != null" >
+        coursesID,
+      </if>
+      <if test="userid != null" >
+        userID,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="knsite != null" >
+        knsite,
+      </if>
+      <if test="extendeds != null" >
+        extendeds,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="commentby != null" >
+        commentby,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="likesum != null" >
+        likeSum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="coursesid != null" >
+        #{coursesid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="knsite != null" >
+        #{knsite,jdbcType=VARCHAR},
+      </if>
+      <if test="extendeds != null" >
+        #{extendeds,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likesum != null" >
+        #{likesum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.CoursesShare" >
+    update tbl_courses_share
+    <set >
+      <if test="coursesid != null" >
+        coursesID = #{coursesid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="knsite != null" >
+        knsite = #{knsite,jdbcType=VARCHAR},
+      </if>
+      <if test="extendeds != null" >
+        extendeds = #{extendeds,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        commentby = #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likesum != null" >
+        likeSum = #{likesum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.CoursesShare" >
+    update tbl_courses_share
+    set coursesID = #{coursesid,jdbcType=INTEGER},
+      userID = #{userid,jdbcType=INTEGER},
+      recommend = #{recommend,jdbcType=VARCHAR},
+      knsite = #{knsite,jdbcType=VARCHAR},
+      extendeds = #{extendeds,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      commentby = #{commentby,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      likeSum = #{likesum,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

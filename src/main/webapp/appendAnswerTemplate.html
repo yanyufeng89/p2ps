@@ -1,0 +1,45 @@
+<div class="_CommentItem_root_PQNS" tabindex="-1" aria-label="" data-id="">
+
+  <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.userinfo.userid}' target="_blank" tabindex="-1"  data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
+    {#if $T.userinfo.headicon}
+    <img tabindex="-1" class="Avatar Avatar-s" src="{$T.userinfo.headicon}" data-userid="{$T.userinfo.userid}">
+    {#else}
+    <img tabindex="-1" class="Avatar Avatar-s" src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" data-userid="{$T.userinfo.userid}">
+    {#/if}
+ </a>
+  <div class="_CommentItem_body_3qwB">
+    <div class="_CommentItem_header_2JGh">
+     {#if $T.commentby}
+     {#if $T.userinfo.username}
+      <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.userinfo.userid}' target="_blank" class='zg-link' data-userid="{$T.userinfo.userid}" data-moduletype="0">
+             {$T.userinfo.username}
+      </a>
+      {#else}
+                                 匿名用户
+      {#/if}
+     <span class="desc">回复 </span>
+
+	 <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.commentby}' class="zg-link"  data-userid="{$T.commentby}" data-original_title="{$T.commentname}">{$T.commentname}</a>
+     {#else}
+       {#if $T.userinfo.username}
+	     <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.userinfo.userid}' class='zg-link' target="_blank"  data-userid="{$T.userinfo.userid}" data-moduletype="0">
+	             {$T.userinfo.username}
+	     </a>
+       {#else}
+                                 匿名用户
+       {#/if}
+     {#/if}
+   </div>
+    <div class="_CommentItem_content_CYqW">
+        {$T.topicsComment.commcontent}
+    </div>
+    <div class="_CommentItem_footer_46v8 clearfix">
+      <span class="date">{$T.topicsComment.showcreatetime}</span>
+      <button class="_CommentItem_action_Hk0w _CommentBox_textButton_3t9_  CommentItem_cancel" data-reply="{$T.topicsComment.id}"  data-commentid="{$T.userinfo.userid}" data-name="{$T.userinfo.username}"  data-answer="{$T.parentcommid}">
+        <i class="zg-icon zg-icon-comment-del" data-reactid=""></i>
+        <span>删除</span>
+      </button>
+
+    </div>
+  </div>
+</div>

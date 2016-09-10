@@ -1,0 +1,230 @@
+.mod-upload .link .ask-renderer .ask-first b{
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+.mod-upload .link .ask-renderer .ask-row {
+    cursor: pointer;
+    padding: 6px 8px;
+    font-size: 12px;
+    border-bottom:1px solid #F0EDED;
+}
+
+.mod-upload .link .ask-renderer {
+    position: relative;
+}
+#book-renderer{
+	width:718px!important;
+	margin-top:30px!important;
+}
+.Bvatar {
+    height:58px;
+    width:42px;
+    background-color: #eee;
+}
+.bookauthoinfo{
+	font-size:12px;
+	color:#666;
+	font-weight:700;
+}
+.bookdescription{
+	color:#090909;
+	font-weight:500;
+	margin-left:8px;
+}
+.bookinfo{
+	float:left;
+}
+.authorinfo{
+	float:left;
+	margin-left:16px;
+}
+.authorinfo p{
+	margin-top:10px;
+}
+.popover .popover-content{
+	height:90!important;
+}
+ .book-border{
+	border:1px solid #ccc;
+	border-top:0;
+	border-radius:0 0 4px 4px;
+}
+ #upload-initbook-container .bdbook {
+    border: 1px dashed #a1a1a1;
+    background: #fff;
+    display: inline-block;
+    outline: 0;
+    padding: 60px 75px 70px 55px;
+}
+.upper span.name {
+    font-size: 14px;
+    font-weight: 700;
+}
+.upper img.Bvatar {
+    left: -66px;
+}
+.upper div.tagline {
+    font-size: 13px;
+    color: #222;
+    padding-top: 4px;
+}
+.Avatar--xs {
+    width: 50px;
+    height: 50px;
+}
+.mod-upload .link .bookable{
+	background: url(../image/searchbook-icon.png) no-repeat center center;
+    width: 80px;
+    height: 32px;
+    border-radius: 0 4px 4px 0;
+    border-left: 0;
+}
+#upload-initbook-container,#upload-book-container{
+    border: 1px solid #cdcdcd;
+}
+#upload-book-container .nedit-all-head {
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd;
+    position: relative;
+}
+ #upload-book-container .nhd {
+    padding: 36px 0 36px 40px; 
+    background: #fff;
+}
+
+
+.upload-notice {
+    padding-bottom:60px!important;
+    margin:0!important;
+}
+.zg-r5px, .goog-tooltip {
+    border-radius: 5px;
+}
+.zm-modal-dialog-guide-title, .zm-modal-dialog-guide-warn-message {
+    padding-left: 10px;
+    position: relative;
+    width: 40%;
+}
+.zm-modal-dialog-guide-warn-message {
+    background: none repeat scroll 0 0 #f8f6e2;
+    border: 1px solid #ccc9ac!important;
+}
+.zm-modal-dialog-warnmsg {
+    margin: 5px 0 5px 5px;
+    border-left: 3px solid #C3412F;
+    /* padding: 0 0 0 10px; */
+    font-size: 12px;
+}
+.zm-modal-dialog-guide-title-msg {
+    background: transparent url(../image/sprites.png) scroll no-repeat -227px -174px;
+    visibility: hidden;
+    position: absolute;
+    bottom: -11px;
+    left: 20px;
+    width: 16px;
+    height: 11px;
+    bottom: -10px;
+    z-index: 1;
+    visibility: visible;
+    left: 21px;
+}
+.zm-modal-dialog-guide-title-msg {
+    background: transparent url(../image/sprites.png) scroll no-repeat -227px -174px;
+    visibility: hidden;
+    position: absolute;
+    bottom: -11px;
+    left: 20px;
+    width: 16px;
+    height: 11px;
+    bottom: -10px;
+    z-index: 1;
+    visibility: visible;
+    left: 21px;
+}
+
+.zm-modal-dialog-guide-title-msg {
+    background: transparent url(../image/sprites.png) scroll no-repeat -227px -174px;
+    visibility: hidden;
+    position: absolute;
+    bottom: -11px;
+    left: 20px;
+    width: 16px;
+    height: 11px;
+    bottom: -10px;
+    z-index: 1;
+    visibility: visible;
+    left: 21px;
+}
+
+textarea.zg-form-text-input, .zg-form-text-input>textarea {
+    padding-left: 10px;
+    min-height: 22px;
+    margin: 0!important;
+    border: 0 none;
+}
+.zu-seamless-input-origin-element {
+    overflow: hidden;
+}
+.zg-editor-input {
+    width: 100%;
+    font-weight: 400;
+    min-height: 66px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+.uploadtopic-list .question-suggest-ac-wrap {
+    margin-top: 5px;
+}
+.uploadtopic-list .question-suggest-ac-wrap .ac-renderer {
+    position: static;
+    margin-top: -1px;
+    width: 92%;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+#pj-book-suggest-detail{
+    font-size: 13px;
+    line-height: 15px;
+    background: #fff;
+    color: #222;
+    width: 500px;
+}
+textarea {
+    border: 0;
+    border: 0;
+    -moz-outline: 0;
+    outline: 0;
+    overflow: auto;
+    resize: none;
+    -webkit-appearance: none;
+}
+.book-error{
+	display:none;
+}
+.edit-table .edit-class-sub{
+	height:223px!important;
+}
+.add-question-title-form .booksimg,.add-question-title-form .booksinfo{
+	float:left;
+	font-size:12px;
+	margin-top:7px;
+}
+.add-question-title-form .booksinfo{
+	margin-left:16px;
+}
+.add-question-title-form .booksimg .Avatar-book{
+	width:88px;
+	height:116px;
+}
+.add-question-title-form .booksinfo p{
+	color:#090909;
+	margin-top:16px;
+}
+.add-question-title-form .booksinfo span{
+	color:#666;
+	margin-right:10px;
+	font-weight:500;
+}

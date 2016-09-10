@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.DocCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.DocComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="docId" property="docid" jdbcType="INTEGER" />
+    <result column="rootId" property="rootid" jdbcType="INTEGER" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="tier" property="tier" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="commentby" property="commentby" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.DocComment" extends="BaseResultMap" >
+    <result column="comments" property="comments" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, docId, rootId, parentId, tier, userId, commentby, createTime, isdelete, updateTime
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.id, t.docId, t.rootId, t.parentId, t.tier, t.userId, t.commentby, t.createTime, t.isdelete, t.updateTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    comments
+  </sql>
+  <!-- getList 获取文档下的评论列表 -->
+  <select id="getList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.DocComment" >
+    select
+		<include refid="Base_Column_List2" />,
+		<include refid="Blob_Column_List" />
+		,
+		u.userName as userName,
+		u.headIcon as userHeadIcon,
+		uc.userName as
+		commentbyName,
+		uc.headIcon as commentbyHeadIcon
+		,(select count(*) from tbl_docs_comment t LEFT JOIN tbl_user u on t.userId = u.userid
+			LEFT JOIN tbl_user uc on t.commentby = uc.userid 
+			where 1=1
+			<!--FIXME 他人浏览不需要登录 TEST 
+			<if test="userid != null"> AND
+				t.userID = #{userid,jdbcType=INTEGER}
+			</if>  -->
+			<if test="docid != null">
+				and t.docId = #{docid,jdbcType=INTEGER}
+			</if>
+		)as pageCount 
+		
+		from tbl_docs_comment t LEFT JOIN tbl_user u on t.userId = u.userid
+		LEFT JOIN tbl_user uc on t.commentby = uc.userid
+
+		where 1=1
+		<!--FIXME 他人浏览不需要登录 TEST 
+		<if test="userid != null"> AND
+			t.userID = #{userid,jdbcType=INTEGER}
+		</if>  -->
+		<if test="docid != null">
+			and t.docId = #{docid,jdbcType=INTEGER}
+		</if>
+		<choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+  </select>
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_docs_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_docs_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.DocComment" >
+    insert into tbl_docs_comment (id, docId, rootId, 
+      parentId, tier, userId, 
+      commentby, createTime, isdelete, 
+      updateTime, comments)
+    values (#{id,jdbcType=INTEGER}, #{docid,jdbcType=INTEGER}, #{rootid,jdbcType=INTEGER}, 
+      #{parentid,jdbcType=INTEGER}, #{tier,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{commentby,jdbcType=INTEGER}, Now(), 0, 
+      Now(), #{comments,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.DocComment" >
+    insert into tbl_docs_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="docid != null" >
+        docId,
+      </if>
+      <if test="rootid != null" >
+        rootId,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="tier != null" >
+        tier,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="commentby != null" >
+        commentby,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="docid != null" >
+        #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="rootid != null" >
+        #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="tier != null" >
+        #{tier,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.DocComment" >
+    update tbl_docs_comment
+    <set >
+      <if test="docid != null" >
+        docId = #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="rootid != null" >
+        rootId = #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="tier != null" >
+        tier = #{tier,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        commentby = #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.DocComment" >
+    update tbl_docs_comment
+    set docId = #{docid,jdbcType=INTEGER},
+      rootId = #{rootid,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      tier = #{tier,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      commentby = #{commentby,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      comments = #{comments,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.DocComment" >
+    update tbl_docs_comment
+    set docId = #{docid,jdbcType=INTEGER},
+      rootId = #{rootid,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      tier = #{tier,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      commentby = #{commentby,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

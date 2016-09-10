@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.IndexGenerateMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.IndexGenerate" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="relationId" property="relationid" jdbcType="INTEGER" />
+    <result column="relationType" property="relationtype" jdbcType="VARCHAR" />
+    <result column="indexCont1" property="indexcont1" jdbcType="VARCHAR" />
+    <result column="indexCont2" property="indexcont2" jdbcType="VARCHAR" />
+    <result column="indexCont3" property="indexcont3" jdbcType="VARCHAR" />
+    <result column="indexCont4" property="indexcont4" jdbcType="VARCHAR" />
+    <result column="indexCont5" property="indexcont5" jdbcType="VARCHAR" />
+    <result column="indexCont6" property="indexcont6" jdbcType="VARCHAR" />
+    <result column="indexCont7" property="indexcont7" jdbcType="VARCHAR" />
+    <result column="indexCont8" property="indexcont8" jdbcType="VARCHAR" />
+    <result column="indexStatus" property="indexstatus" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="indexTime" property="indextime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.IndexGenerateWithBLOBs" extends="BaseResultMap" >
+    <result column="indexCont9" property="indexcont9" jdbcType="LONGVARCHAR" />
+    <result column="indexCont10" property="indexcont10" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, relationId, relationType, indexCont1, indexCont2, indexCont3, indexCont4, indexCont5, 
+    indexCont6, indexCont7, indexCont8, indexStatus, createTime, indexTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    indexCont9, indexCont10
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_indexGenerate
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_indexGenerate
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.IndexGenerateWithBLOBs" >
+    insert into tbl_indexGenerate (ID, relationId, relationType, 
+      indexCont1, indexCont2, indexCont3, 
+      indexCont4, indexCont5, indexCont6, 
+      indexCont7, indexCont8, indexStatus, 
+      createTime, indexTime, indexCont9, 
+      indexCont10)
+    values (#{id,jdbcType=INTEGER}, #{relationid,jdbcType=INTEGER}, #{relationtype,jdbcType=VARCHAR}, 
+      #{indexcont1,jdbcType=VARCHAR}, #{indexcont2,jdbcType=VARCHAR}, #{indexcont3,jdbcType=VARCHAR}, 
+      #{indexcont4,jdbcType=VARCHAR}, #{indexcont5,jdbcType=VARCHAR}, #{indexcont6,jdbcType=VARCHAR}, 
+      #{indexcont7,jdbcType=VARCHAR}, #{indexcont8,jdbcType=VARCHAR}, #{indexstatus,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{indextime,jdbcType=TIMESTAMP}, #{indexcont9,jdbcType=LONGVARCHAR}, 
+      #{indexcont10,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.IndexGenerateWithBLOBs" >
+    insert into tbl_indexGenerate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="relationid != null" >
+        relationId,
+      </if>
+      <if test="relationtype != null" >
+        relationType,
+      </if>
+      <if test="indexcont1 != null" >
+        indexCont1,
+      </if>
+      <if test="indexcont2 != null" >
+        indexCont2,
+      </if>
+      <if test="indexcont3 != null" >
+        indexCont3,
+      </if>
+      <if test="indexcont4 != null" >
+        indexCont4,
+      </if>
+      <if test="indexcont5 != null" >
+        indexCont5,
+      </if>
+      <if test="indexcont6 != null" >
+        indexCont6,
+      </if>
+      <if test="indexcont7 != null" >
+        indexCont7,
+      </if>
+      <if test="indexcont8 != null" >
+        indexCont8,
+      </if>
+      <if test="indexstatus != null" >
+        indexStatus,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="indextime != null" >
+        indexTime,
+      </if>
+      <if test="indexcont9 != null" >
+        indexCont9,
+      </if>
+      <if test="indexcont10 != null" >
+        indexCont10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="relationid != null" >
+        #{relationid,jdbcType=INTEGER},
+      </if>
+      <if test="relationtype != null" >
+        #{relationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont1 != null" >
+        #{indexcont1,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont2 != null" >
+        #{indexcont2,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont3 != null" >
+        #{indexcont3,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont4 != null" >
+        #{indexcont4,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont5 != null" >
+        #{indexcont5,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont6 != null" >
+        #{indexcont6,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont7 != null" >
+        #{indexcont7,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont8 != null" >
+        #{indexcont8,jdbcType=VARCHAR},
+      </if>
+      <if test="indexstatus != null" >
+        #{indexstatus,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indextime != null" >
+        #{indextime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indexcont9 != null" >
+        #{indexcont9,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="indexcont10 != null" >
+        #{indexcont10,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.IndexGenerateWithBLOBs" >
+    update tbl_indexGenerate
+    <set >
+      <if test="relationid != null" >
+        relationId = #{relationid,jdbcType=INTEGER},
+      </if>
+      <if test="relationtype != null" >
+        relationType = #{relationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont1 != null" >
+        indexCont1 = #{indexcont1,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont2 != null" >
+        indexCont2 = #{indexcont2,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont3 != null" >
+        indexCont3 = #{indexcont3,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont4 != null" >
+        indexCont4 = #{indexcont4,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont5 != null" >
+        indexCont5 = #{indexcont5,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont6 != null" >
+        indexCont6 = #{indexcont6,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont7 != null" >
+        indexCont7 = #{indexcont7,jdbcType=VARCHAR},
+      </if>
+      <if test="indexcont8 != null" >
+        indexCont8 = #{indexcont8,jdbcType=VARCHAR},
+      </if>
+      <if test="indexstatus != null" >
+        indexStatus = #{indexstatus,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indextime != null" >
+        indexTime = #{indextime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indexcont9 != null" >
+        indexCont9 = #{indexcont9,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="indexcont10 != null" >
+        indexCont10 = #{indexcont10,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.IndexGenerateWithBLOBs" >
+    update tbl_indexGenerate
+    set relationId = #{relationid,jdbcType=INTEGER},
+      relationType = #{relationtype,jdbcType=VARCHAR},
+      indexCont1 = #{indexcont1,jdbcType=VARCHAR},
+      indexCont2 = #{indexcont2,jdbcType=VARCHAR},
+      indexCont3 = #{indexcont3,jdbcType=VARCHAR},
+      indexCont4 = #{indexcont4,jdbcType=VARCHAR},
+      indexCont5 = #{indexcont5,jdbcType=VARCHAR},
+      indexCont6 = #{indexcont6,jdbcType=VARCHAR},
+      indexCont7 = #{indexcont7,jdbcType=VARCHAR},
+      indexCont8 = #{indexcont8,jdbcType=VARCHAR},
+      indexStatus = #{indexstatus,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      indexTime = #{indextime,jdbcType=TIMESTAMP},
+      indexCont9 = #{indexcont9,jdbcType=LONGVARCHAR},
+      indexCont10 = #{indexcont10,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.IndexGenerate" >
+    update tbl_indexGenerate
+    set relationId = #{relationid,jdbcType=INTEGER},
+      relationType = #{relationtype,jdbcType=VARCHAR},
+      indexCont1 = #{indexcont1,jdbcType=VARCHAR},
+      indexCont2 = #{indexcont2,jdbcType=VARCHAR},
+      indexCont3 = #{indexcont3,jdbcType=VARCHAR},
+      indexCont4 = #{indexcont4,jdbcType=VARCHAR},
+      indexCont5 = #{indexcont5,jdbcType=VARCHAR},
+      indexCont6 = #{indexcont6,jdbcType=VARCHAR},
+      indexCont7 = #{indexcont7,jdbcType=VARCHAR},
+      indexCont8 = #{indexcont8,jdbcType=VARCHAR},
+      indexStatus = #{indexstatus,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      indexTime = #{indextime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

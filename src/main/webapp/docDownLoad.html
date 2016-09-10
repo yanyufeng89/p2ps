@@ -1,0 +1,41 @@
+<!-- 文档下载 -->
+<div class="modal-dialog-bg" style="opacity: 0.5; width: 1920px; height: 12986px;" aria-hidden="true"></div>
+<div class="modal-wrapper">
+  <div class="modal-dialog" tabindex="0" role="dialog" aria-labelledby=":4w">
+    <div class="modal-dialog-title">
+      <span class="modal-dialog-title-text" id=":6w" role="heading">文档下载</span>
+      <span class="modal-dialog-title-close" role="button" tabindex="0" aria-label="Close"></span>
+    </div>
+    <div class="modal-dialog-content" style="margin: 0px; padding: 0px;">
+      <div class="ReportMenu">
+        <div class="dialog-inner tac">      
+           <p class="ticket-num-msg msg1 coupon-need">
+                                     下载需要
+                <a href="">
+					 <strong>
+						 {$T.downvalue}
+					 </strong>
+			     </a> 
+                                      财富值
+           </p>      
+           <p class="ticket-num-msg msg1 coupon-need">
+                                      您当前拥有
+                 <a href="">
+					 <strong>
+						 {$T.sumvalue}
+					 </strong>
+			     </a>                  
+                                      财富值
+           </p>  
+           <div class="blank20"></div>   
+           <div class="zh-pm-warnmsg" style="display:none;text-align:right;color:#C3412F; font-size:12px;padding:0 18px 0 0;">
+                                    财富值不足,无法兑换下载券
+           </div>    
+           <a  class="ui-bz-btn-senior btn-diaolog-downdoc log-xsend"  data-docCreatePerson='{$T.docCreatePerson}'  data-downvalue='{$T.downvalue}' data-sumvalue='{$T.sumvalue}'>
+             <b class="ui-bz-btn-p-16 ui-bz-btc">立即下载</b>
+           </a>       
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

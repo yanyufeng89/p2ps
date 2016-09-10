@@ -1,0 +1,42 @@
+<!-- 他关注的人 -->
+{#foreach $T.attenManPage as attenlist}
+<div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
+	   <div class="zg-right">
+	     {#if $T.attenlist.fansIds==1}
+		  <button data-userid="{$T.attenlist.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
+		 {#else}
+		 <button  data-userid="{$T.attenlist.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注他</button>
+		 {#/if}
+	   </div>
+	   <a title="{$T.attenlist.username}" data-userid="{$T.attenlist.userid}" class="zm-item-link-avatar"  target='_blank' href="/51jobplusCore/myHome/getHomePage?userid={$T.attenlist.userid}">
+		   {#if $T.attenlist.headicon}
+			   <img src="{$T.attenlist.headicon}" class="zm-item-img-avatar">
+		   {#else}
+			   <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+		   {#/if}
+	   </a>
+	   <div class="zm-list-content-medium">
+			<h2 class="zm-list-content-title">
+			   <a href="/51jobplusCore/myHome/getHomePage?userid={$T.attenlist.userid}"  data-userid="{$T.attenlist.userid}"  target='_blank' class="zg-link author-link" title={$T.attenlist.username}>{$T.attenlist.username}</a>
+			</h2>
+			<div class="ellipsis">
+			    <span class="bio">
+			       {#if list.description}
+					  {$T.attenlist.description}
+				   {#/if}
+			    </span>
+			</div>
+			<div class="details zg-gray">
+			<a target="_blank" class="zg-link-gray-normal">
+			  {#if $T.attenlist.operationSum.attentionsum} {$T.attenlist.operationSum.attentionsum}{#/if}
+			     关注
+			</a>
+			<a class="zg-link-gray-normal">/</a>
+			<a target="_blank" class="zg-link-gray-normal">
+			  {#if $T.attenlist.operationSum.fanssum} {$T.attenlist.operationSum.fanssum}{#/if}  
+			   粉丝
+			</a>
+			</div>
+	  </div>
+</div>
+{#/for}

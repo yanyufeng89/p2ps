@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.BooksMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Books" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="bookname" property="bookname" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="press" property="press" jdbcType="VARCHAR" />
+    <result column="bookImg" property="bookimg" jdbcType="VARCHAR" />
+    <result column="bookClass" property="bookclass" jdbcType="VARCHAR" />
+    <result column="bookType" property="booktype" jdbcType="VARCHAR" />
+    <result column="isValid" property="isvalid" jdbcType="INTEGER" />
+    <result column="collectSum" property="collectsum" jdbcType="INTEGER" />
+    <result column="recommendSum" property="recommendsum" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Books" extends="BaseResultMap" >
+    <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, bookname, author, press, bookImg, bookClass, bookType, isValid, collectSum, recommendSum, 
+    updateTime, createTime
+  </sql>
+  <sql id="Base_Column_List2" >
+     t.ID, t.bookname, t.author, t.press, t.bookImg, t.bookClass, t.bookType, t.isValid, t.collectSum, t.recommendSum
+  </sql>
+  <sql id="Blob_Column_List" >
+    intro
+  </sql>
+  <sql id="books_share_Column_List" >
+    bs.ID AS "bookShare.id", bs.bookID AS "bookShare.bookid", bs.userID AS "bookShare.userid", bs.recommend AS "bookShare.recommend", 
+    bs.knsite AS "bookShare.knsite", bs.extendeds AS "bookShare.extendeds", bs.isdelete AS "bookShare.isdelete", bs.commentby AS "bookShare.commentby", 
+    bs.shareType AS "bookShare.sharetype", bs.shareClass AS "bookShare.shareclass", bs.updateTime AS "bookShare.updatetime",
+     bs.createTime AS "bookShare.createTime", bs.likeSum  AS "bookShare.likeSum"
+  </sql>
+  <sql id="collect_List" >
+    myc.ID AS "myCollect.id", myc.userId AS "myCollect.userid", myc.collectType AS "myCollect.collecttype", myc.objectId AS "myCollect.objectid", 
+    myc.folderId AS "myCollect.folderid", myc.collTime AS "myCollect.colltime",myc.actionType AS "myCollect.actiontype"
+  </sql>
+  
+  
+  <!-- 个人中心我分享的书籍列表     getSharedBookList 排除自己评论：commentBy为空 -->
+  <select id="getSharedBookList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Books">
+    select 
+    <include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+    <include refid="books_share_Column_List" />
+
+	,(select count(*) from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID where 1 = 1 AND t.isvalid = 1 AND bs.commentBy IS NULL AND bs.isdelete = 0
+	AND bs.userID = #{bookShare.userid,jdbcType=INTEGER}) as pageCount 
+
+	from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID
+	where 1 = 1
+	AND t.isvalid = 1
+	AND bs.commentBy IS NULL
+	AND bs.isdelete = 0
+	AND
+	bs.userID = #{bookShare.userid,jdbcType=INTEGER}
+	ORDER BY bs.createTime desc
+	 <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+  </select>
+  <!-- 个人中心我收藏的书籍列表     getCollectedBookList -->
+  <select id="getCollectedBookList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Books">
+    select 
+    <include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+    <include refid="collect_List" />
+    
+    ,(select count(*) from tbl_books t JOIN tbl_collect myc ON t.id = myc.objectId  where 1 = 1 AND t.isvalid = 1 AND myc.userId = #{myCollect.userid,jdbcType=INTEGER} AND myc.collectType =  #{myCollect.collecttype,jdbcType=VARCHAR}
+    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount 
+    
+    from tbl_books t JOIN tbl_collect myc ON t.id = myc.objectId 
+    
+    where 1 = 1 
+    AND t.isvalid = 1 
+    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
+    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
+    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}
+    ORDER BY myc.collTime desc
+    <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+    
+  </select> 
+  <!-- 书籍主体 -->
+  <select id="selectRecord" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+   <!--   ,u.userName as "objCreator.userName",u.headIcon as "objCreator.headIcon",u.userid as "objCreator.userid" -->
+     ,(select group_concat(cl.userId) from tbl_collect cl where cl.collectType = 'tbl_books' and cl.actionType = 1 and cl.objectId = #{id,jdbcType=INTEGER}) as collectIds
+    
+    from tbl_books t <!-- left join tbl_user u on t.createPerson  = u.userid -->
+    where t.ID = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_books
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_books
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.Books" >
+    insert into tbl_books (ID, bookname, author, 
+      press, bookImg, bookClass, 
+      bookType, isValid, collectSum, 
+      recommendSum, updateTime, createTime, 
+      intro)
+    values (#{id,jdbcType=INTEGER}, #{bookname,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{press,jdbcType=VARCHAR}, #{bookimg,jdbcType=VARCHAR}, #{bookclass,jdbcType=VARCHAR}, 
+      #{booktype,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, #{collectsum,jdbcType=INTEGER}, 
+      #{recommendsum,jdbcType=INTEGER}, #{updatetime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{intro,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Books" >
+    insert into tbl_books
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bookname != null" >
+        bookname,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="press != null" >
+        press,
+      </if>
+      <if test="bookimg != null" >
+        bookImg,
+      </if>
+      <if test="bookclass != null" >
+        bookClass,
+      </if>
+      <if test="booktype != null" >
+        bookType,
+      </if>
+      <if test="isvalid != null" >
+        isValid,
+      </if>
+      <if test="collectsum != null" >
+        collectSum,
+      </if>
+      <if test="recommendsum != null" >
+        recommendSum,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookname != null" >
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="press != null" >
+        #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="bookimg != null" >
+        #{bookimg,jdbcType=VARCHAR},
+      </if>
+      <if test="bookclass != null" >
+        #{bookclass,jdbcType=VARCHAR},
+      </if>
+      <if test="booktype != null" >
+        #{booktype,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="recommendsum != null" >
+        #{recommendsum,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Books" >
+    update tbl_books
+    <set >
+      <if test="bookname != null" >
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="press != null" >
+        press = #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="bookimg != null" >
+        bookImg = #{bookimg,jdbcType=VARCHAR},
+      </if>
+      <if test="bookclass != null" >
+        bookClass = #{bookclass,jdbcType=VARCHAR},
+      </if>
+      <if test="booktype != null" >
+        bookType = #{booktype,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isValid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        collectSum = #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="recommendsum != null" >
+        recommendSum = #{recommendsum,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.Books" >
+    update tbl_books
+    set bookname = #{bookname,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      press = #{press,jdbcType=VARCHAR},
+      bookImg = #{bookimg,jdbcType=VARCHAR},
+      bookClass = #{bookclass,jdbcType=VARCHAR},
+      bookType = #{booktype,jdbcType=VARCHAR},
+      isValid = #{isvalid,jdbcType=INTEGER},
+      collectSum = #{collectsum,jdbcType=INTEGER},
+      recommendSum = #{recommendsum,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      intro = #{intro,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Books" >
+    update tbl_books
+    set bookname = #{bookname,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      press = #{press,jdbcType=VARCHAR},
+      bookImg = #{bookimg,jdbcType=VARCHAR},
+      bookClass = #{bookclass,jdbcType=VARCHAR},
+      bookType = #{booktype,jdbcType=VARCHAR},
+      isValid = #{isvalid,jdbcType=INTEGER},
+      collectSum = #{collectsum,jdbcType=INTEGER},
+      recommendSum = #{recommendsum,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

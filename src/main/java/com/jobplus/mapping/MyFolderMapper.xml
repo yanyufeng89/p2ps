@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.MyFolderMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.MyFolder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="rootFolderId" property="rootfolderid" jdbcType="INTEGER" />
+    <result column="parentFolderId" property="parentfolderid" jdbcType="INTEGER" />
+    <result column="folderName" property="foldername" jdbcType="VARCHAR" />
+    <result column="folderType" property="foldertype" jdbcType="VARCHAR" />
+    <result column="folderTire" property="foldertire" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, rootFolderId, parentFolderId, folderName, folderType, folderTire
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_myfolder
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_myfolder
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.MyFolder" >
+    insert into tbl_myfolder (id, userId, rootFolderId, 
+      parentFolderId, folderName, folderType, 
+      folderTire)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{rootfolderid,jdbcType=INTEGER}, 
+      #{parentfolderid,jdbcType=INTEGER}, #{foldername,jdbcType=VARCHAR}, #{foldertype,jdbcType=VARCHAR}, 
+      #{foldertire,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.MyFolder" >
+    insert into tbl_myfolder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="rootfolderid != null" >
+        rootFolderId,
+      </if>
+      <if test="parentfolderid != null" >
+        parentFolderId,
+      </if>
+      <if test="foldername != null" >
+        folderName,
+      </if>
+      <if test="foldertype != null" >
+        folderType,
+      </if>
+      <if test="foldertire != null" >
+        folderTire,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="rootfolderid != null" >
+        #{rootfolderid,jdbcType=INTEGER},
+      </if>
+      <if test="parentfolderid != null" >
+        #{parentfolderid,jdbcType=INTEGER},
+      </if>
+      <if test="foldername != null" >
+        #{foldername,jdbcType=VARCHAR},
+      </if>
+      <if test="foldertype != null" >
+        #{foldertype,jdbcType=VARCHAR},
+      </if>
+      <if test="foldertire != null" >
+        #{foldertire,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.MyFolder" >
+    update tbl_myfolder
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="rootfolderid != null" >
+        rootFolderId = #{rootfolderid,jdbcType=INTEGER},
+      </if>
+      <if test="parentfolderid != null" >
+        parentFolderId = #{parentfolderid,jdbcType=INTEGER},
+      </if>
+      <if test="foldername != null" >
+        folderName = #{foldername,jdbcType=VARCHAR},
+      </if>
+      <if test="foldertype != null" >
+        folderType = #{foldertype,jdbcType=VARCHAR},
+      </if>
+      <if test="foldertire != null" >
+        folderTire = #{foldertire,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.MyFolder" >
+    update tbl_myfolder
+    set userId = #{userid,jdbcType=INTEGER},
+      rootFolderId = #{rootfolderid,jdbcType=INTEGER},
+      parentFolderId = #{parentfolderid,jdbcType=INTEGER},
+      folderName = #{foldername,jdbcType=VARCHAR},
+      folderType = #{foldertype,jdbcType=VARCHAR},
+      folderTire = #{foldertire,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

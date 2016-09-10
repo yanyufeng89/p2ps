@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.TypeConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.TypeConfig" >
+    <id column="typeId" property="typeid" jdbcType="INTEGER" />
+    <result column="rootId" property="rootid" jdbcType="INTEGER" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="typeName" property="typename" jdbcType="VARCHAR" />
+    <result column="typeGroup" property="typegroup" jdbcType="VARCHAR" />
+    <result column="isValid" property="isvalid" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="lastUpdateTime" property="lastupdatetime" jdbcType="TIMESTAMP" />
+    <result column="tier" property="tier" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    typeId, rootId, parentId, typeName, typeGroup, isValid, createTime, lastUpdateTime, 
+    tier
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_typeConfig
+    where typeId = #{typeid,jdbcType=INTEGER}
+  </select>
+  
+  
+   <!-- 获取所有的父节点    -->
+  <select id="getAllParentTypeConfigs" resultMap="BaseResultMap">
+    SELECT 
+	<include refid="Base_Column_List" />
+	  FROM tbl_typeConfig t WHERE t.parentId = 0 ORDER BY t.typeId 
+  </select>
+   <!-- 获取所有的分类    -->
+  <select id="getAllTypeConfigs" resultMap="BaseResultMap">
+    SELECT 
+	<include refid="Base_Column_List" />
+	  FROM tbl_typeConfig t WHERE 1 = 1 ORDER BY t.typeId 
+  </select>
+   <!-- 获取所有的子节点     -->
+  <select id="getAllChildrenTypeConfigs" resultMap="BaseResultMap">
+  	SELECT p.typeName AS parentTypeName, q.typeId, q.rootId, q.parentId, q.typeName, q.typeGroup, q.isValid, q.createTime, q.lastUpdateTime, q.tier
+		FROM tbl_typeConfig q,
+			( SELECT t.typeName AS typeName, t.typeId AS parID FROM tbl_typeConfig t
+				WHERE t.parentId = 0 ORDER BY t.typeId ) p
+		WHERE q.parentId = p.parID
+  	<!-- <![CDATA[ 
+		SELECT p.typeName as typeName ,q.typeName as parentTypeName,q.typeId, q. rootId, q. parentId, q. typeName, q. typeGroup, q. isValid, q. createTime, q. lastUpdateTime, q. 
+    tier FROM
+		(SELECT t.typeName as typeName,t.parentId as parID FROM tbl_typeConfig t WHERE t.parentId <> 0 ORDER BY t.typeId )p,tbl_typeConfig q
+		WHERE q.typeId = p.parID
+ 	]]> -->
+  </select>
+  <!-- 根据父节点ID 获取子节点list  -->
+  <select id="getChildTypeConfigsByParentID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_typeConfig
+    where parentId = #{parentId,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_typeConfig
+    where typeId = #{typeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.TypeConfig" >
+    insert into tbl_typeConfig (typeId, rootId, parentId, 
+      typeName, typeGroup, isValid, 
+      createTime, lastUpdateTime, tier
+      )
+    values (#{typeid,jdbcType=INTEGER}, #{rootid,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, 
+      #{typename,jdbcType=VARCHAR}, #{typegroup,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{lastupdatetime,jdbcType=TIMESTAMP}, #{tier,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.TypeConfig" >
+    insert into tbl_typeConfig
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="typeid != null" >
+        typeId,
+      </if>
+      <if test="rootid != null" >
+        rootId,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="typename != null" >
+        typeName,
+      </if>
+      <if test="typegroup != null" >
+        typeGroup,
+      </if>
+      <if test="isvalid != null" >
+        isValid,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="lastupdatetime != null" >
+        lastUpdateTime,
+      </if>
+      <if test="tier != null" >
+        tier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="rootid != null" >
+        #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null" >
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="typegroup != null" >
+        #{typegroup,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastupdatetime != null" >
+        #{lastupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tier != null" >
+        #{tier,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.TypeConfig" >
+    update tbl_typeConfig
+    <set >
+      <if test="rootid != null" >
+        rootId = #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null" >
+        typeName = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="typegroup != null" >
+        typeGroup = #{typegroup,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isValid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastupdatetime != null" >
+        lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tier != null" >
+        tier = #{tier,jdbcType=INTEGER},
+      </if>
+    </set>
+    where typeId = #{typeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.TypeConfig" >
+    update tbl_typeConfig
+    set rootId = #{rootid,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      typeName = #{typename,jdbcType=VARCHAR},
+      typeGroup = #{typegroup,jdbcType=VARCHAR},
+      isValid = #{isvalid,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
+      tier = #{tier,jdbcType=INTEGER}
+    where typeId = #{typeid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,61 @@
+<!-- 书籍详情加载更多 -->
+{#foreach $T.booklist as list}
+<div class="item">
+    <div class="media-left">
+        <a class="uhead" href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target='_blank' data-userid="{$T.list.userid}">
+            {#if $T.list.userHeadIcon}
+		        <img class='uname' src="{$T.list.userHeadIcon}" alt=""  data-userid='{$T.list.userid}' data-moduletype='1'>
+		        {#else}
+		        <img class='uname' src='/51jobplusCore/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid='{$T.list.userid}' data-moduletype='1'>
+		    {#/if}
+		  </a>
+		    {#if $T.list.commentbyName}
+	            <span class="uname" data-userid='{$T.list.userid}'>
+	               <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target='_blank'>{$T.list.userName}</a>
+	              <span class="desc">回复</span>
+	               <span class="uname"  data-userid='{$T.list.commentby}' data-moduletype='1'>
+	                 <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.commentby}' target='_blank'>{$T.list.commentbyName}</a>
+	               </span>
+	            </span>
+	           {#else}
+	            <span class="uname" data-userid='{$T.list.userid}' data-moduletype='1'>
+	                <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target='_blank'>{$T.list.userName}</a>
+	            </span>
+		    {#/if}       
+       
+    </div>
+    <div class="media-right">
+        <div class="reason">
+           {$T.list.recommend}
+        </div>
+        <div class="operate">
+            <a itemprop="url" class="answer-date-link meta-item" target="_blank" href="javascript:;">
+                {#if $T.list.userShareTime}
+		            {$T.list.userShareTime}
+		        {#/if}
+            </a>
+            <a href="javascript:;" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox"
+            data-recommend="{$T.list.userid}" data-recommendname="{$T.list.userName}" data-relationid='{$T.list.id}'>
+                <i class="z-icon-comment">
+                </i>
+                评论
+            </a>
+           {#if ($T.list.likedIds=='0')}
+			     <a href="javascript:;" class="meta-item zu-autohide js-thank" data-reasonid='{$T.list.id}' data-islike='0' data-likecount='{$T.list.likesum}' data-recommend="{$T.list.userid}">
+					<i class="z-icon-thank"></i>{$T.list.likesum}赞
+				</a>
+		   {#else}
+				<a href="javascript:;" class="meta-item zu-autohide js-thank" data-reasonid='{$T.list.id}' data-islike='1' data-likecount='{$T.list.likesum}' data-recommend="{$T.list.userid}">
+					<i class="z-icon-thank"></i>取消赞({$T.list.likesum})
+				</a>
+		   {#/if}
+            <a href="javascript:;" class="meta-item zu-autohide js-report" data-commentbyid="{$T.list.userid}"
+            data-topiccommentid="{$T.list.id}" data-reporttype="2">
+                <i class="z-icon-report-o">
+                </i>
+                举报
+            </a>
+        </div>
+    </div>
+</div>
+{#/for}

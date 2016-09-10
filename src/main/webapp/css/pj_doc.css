@@ -1,0 +1,30 @@
+
+.zu-autocomplete-row-name {
+    display: block;
+    height: 1.2em;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topic-error{
+	display:none;
+	font-size: 13px;
+    color: #c33;
+    font-weight: 400;
+}
+
+
+.ic-msg {
+	vertical-align: -4px;
+	margin-right: 4px;
+	background: url(../image/new_upload_6dde23c.png) no-repeat;
+	background-position: 0 -37px;background-position: -15px -145px;
+}
+.item-msg-content{
+   font-size:10px;
+ }
+   .zm-item-tag, .zm-tag-editor-edit-item{
+   margin:0 5px 0 0;
+ }

@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.TopicsCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.TopicsComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="topicsId" property="topicsid" jdbcType="INTEGER" />
+    <result column="rootCommID" property="rootcommid" jdbcType="INTEGER" />
+    <result column="parentCommId" property="parentcommid" jdbcType="INTEGER" />
+    <result column="tier" property="tier" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="commentBy" property="commentby" jdbcType="INTEGER" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="replySum" property="replysum" jdbcType="INTEGER" />
+    <result column="likeSum" property="likesum" jdbcType="INTEGER" />
+    <result column="collectSum" property="collectsum" jdbcType="INTEGER" />
+    <result column="isPublic" property="isPublic" jdbcType="INTEGER" />
+ <!--    <result column="isLiked" property="isLiked" jdbcType="INTEGER" /> -->
+    
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.TopicsComment" extends="BaseResultMap" >
+    <result column="commContent" property="commcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, topicsId, rootCommID, parentCommId, tier, userId, commentBy, isdelete, updateTime, 
+    createTime,type, replySum, likeSum, collectSum,isPublic
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.id, t.topicsId, t.rootCommID, t.parentCommId, t.tier, t.userId, t.commentBy, t.isdelete, t.updateTime,t.createTime ,
+    t.type, t.replySum, t.likeSum, t.collectSum,t.isPublic
+  </sql>
+  <sql id="Blob_Column_List" >
+    commContent
+  </sql>
+  <!-- tbl_topics_Column_List  -->
+  <sql id="tbl_topics_Column_List" >
+  p.ID as "topics.ID", p.title  as "topics.title", p.createTime  as "topics.createTime", p.lastEditTime  as "topics.lastEditTime", 
+  p.createPerson  as "topics.createperson", p.followsSum  as "topics.followssum", p.readSum  as "topics.readsum", 
+  p.replySum  as "topics.replysum", p.likeSum  as "topics.likesum", p.futilitySum  as "topics.futilitysum", 
+  p.collectSum  as "topics.collectSum", p.topicsType  as "topics.topicstype", p.topicsClass  as "topics.topicsclass", 
+  p.isPublic  as "topics.ispublic", p.isValid  as "topics.isvalid"
+  </sql>
+  
+  
+  <!-- 我回复过的话题    getMyTopicsComments -->
+  <select id="getMyTopicsComments" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+	select
+	<include refid="Base_Column_List2" />
+	,
+	<include refid="tbl_topics_Column_List" />
+	,
+	strip_tags(commContent) as commContent
+	 ,(select count(*) from tbl_topics_comment t JOIN tbl_topics p ON t.topicsId = p.ID where 1 = 1
+			AND t.userId = #{userid,jdbcType=INTEGER} AND t.isDelete = 0) as pageCount 	
+			
+	from tbl_topics_comment t JOIN tbl_topics p
+	ON t.topicsId = p.ID
+	where 1 = 1
+	AND t.userId = #{userid,jdbcType=INTEGER}
+	AND t.isDelete = 0
+	ORDER BY t.updateTime DESC
+	<choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+	</select>
+
+  <!-- <delete id="deleteTopicsComments" parameterType="java.lang.Integer" >
+    delete from tbl_topics_comment
+    where id in
+    	<foreach collection="condition" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    
+  </delete> -->
+   <!-- 个人中心   批量删除我的回复      deleteTopicsComments -->
+  <update id="deleteTopicsComments" parameterType="java.lang.Integer" >
+    update tbl_topics_comment
+    set isdelete = 1
+    where id in
+    	<foreach collection="condition" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    
+  </update>
+  <!-- 获取某条话题的所有回答   关联用户表的用户名和用户头像     （用于话题详情页的展示）     （用于话题详情页的展示） getTopicsCommentsByTopicId type 回复类型    回答1 评论2-->
+  <!-- sortType排序方式      1是时间排序      2是评论数排序    默认按照时间排序 -->
+  <select id="getTopicsCommentsByTopicId" resultMap="BaseResultMap"  parameterType="com.jobplus.pojo.TopicsComment" >
+	select
+	<include refid="Base_Column_List2" />
+	,
+	<include refid="Blob_Column_List" />
+	,u.userName AS tmpUserName,
+	u.headIcon AS tmpHeadIcon,
+	(SELECT			
+			group_concat(userid)
+		FROM
+			tbl_topics_isliked where commid = t.id) AS likedIds
+	 ,(select count(*) FROM tbl_topics_comment t JOIN tbl_user u ON t.userId = u.userId WHERE	isdelete = 0
+		AND topicsId = #{topicsid,jdbcType=INTEGER} 	
+		AND type = 1	
+		) as pageCount 	
+	
+	FROM
+		tbl_topics_comment t 
+	JOIN tbl_user u ON t.userId = u.userId
+	WHERE	isdelete = 0
+	AND
+	topicsId = #{topicsid,jdbcType=INTEGER} 	
+	AND
+	type = 1	
+	ORDER BY
+	<if test="sortType != null and sortType != '' and sortType == 1" >
+        t.createTime DESC
+     </if>
+	<if test="sortType != null and sortType != '' and sortType == 2" >
+        t.replySum desc 
+     </if>
+     <if test="sortType == null or sortType == ''" >
+        t.createTime
+     </if>
+     <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+  </select>
+
+
+	<!-- 获取话题的评论 或者 话题下回答的评论 通过parentCommId获取 getPartTopicsComments -->
+	<select id="getPartTopicsComments" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List2" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		uc.userName AS commentbyUserName,
+		uc.headIcon AS commentbyHeadIcon ,
+		u.userName AS tmpUserName,
+		u.headIcon AS tmpHeadIcon,
+		comm.likedIds AS
+		likedIds
+
+		
+		 ,(select count(*) FROM (select commId,group_concat(userid) as likedIds from
+			tbl_topics_isliked group by commId) as comm RIGHT JOIN
+			tbl_topics_comment t on comm.commId = t.id LEFT JOIN tbl_user u on
+			t.userid= u.userid LEFT
+			JOIN tbl_user uc on t.commentBy = uc.userid
+			WHERE
+			1 = 1 AND t.isdelete = 0
+			<if test="parentcommid != null and parentcommid != ''">
+				AND parentCommId = #{parentcommid,jdbcType=INTEGER}
+			</if>
+			<if test="topicsid != null and topicsid != ''">
+				AND topicsId = #{topicsid,jdbcType=INTEGER}
+			</if>
+			<if test="type != null and type != ''">
+				AND type = #{type,jdbcType=INTEGER}
+			</if>
+		) as pageCount
+
+		FROM
+		(select commId,group_concat(userid) as likedIds from
+			tbl_topics_isliked
+			group by commId) as comm RIGHT JOIN
+			tbl_topics_comment t on
+			comm.commId = t.id LEFT JOIN tbl_user u on
+			t.userid= u.userid LEFT
+			JOIN tbl_user uc on t.commentBy = uc.userid
+		WHERE
+		1 = 1 AND t.isdelete = 0
+		<if test="parentcommid != null and parentcommid != ''">
+			AND parentCommId = #{parentcommid,jdbcType=INTEGER}
+		</if>
+		<if test="topicsid != null and topicsid != ''">
+			AND topicsId = #{topicsid,jdbcType=INTEGER}
+		</if>
+		<if test="type != null and type != ''">
+			AND type = #{type,jdbcType=INTEGER}
+		</if>
+		ORDER BY t.updateTime 
+		<choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+  <!-- 点赞取消点赞    -->
+    <update id="updateLikeSum" parameterType="com.jobplus.pojo.TopicsComment" >
+    update tbl_topics_comment
+    <set >
+  
+      <if test="likeOperate != null" >
+        likeSum = likeSum + #{likeOperate,jdbcType=INTEGER},
+      </if>
+     
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_topics_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_topics_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!-- 部分数据字段设置为默认值         updateTime, createTime -->
+  <insert id="insert" parameterType="com.jobplus.pojo.TopicsComment" >
+    insert into tbl_topics_comment (id, topicsId, rootCommID, 
+      parentCommId, tier, userId, 
+      commentBy, isdelete, updateTime, 
+      createTime, commContent,type, replySum, likeSum, collectSum,isPublic)
+    values (#{id,jdbcType=INTEGER}, #{topicsid,jdbcType=INTEGER}, #{rootcommid,jdbcType=INTEGER}, 
+      #{parentcommid,jdbcType=INTEGER}, #{tier,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{commentby,jdbcType=INTEGER}, 0 
+      <if test="updatetime != null"  >
+        ,#{updatetime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatetime == null"  >
+        ,Now()
+      </if>
+      <if test="createtime != null"  >
+        ,#{createtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createtime == null"  >
+        ,Now()
+      </if>
+       ,#{commcontent,jdbcType=LONGVARCHAR},
+      #{type,jdbcType=INTEGER},0,0,0
+      <if test="isPublic != null"  >
+         ,#{isPublic,jdbcType=INTEGER}
+      </if>
+      <if test="isPublic == null"  >
+         ,1
+      </if>)
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.TopicsComment" >
+    insert into tbl_topics_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="topicsid != null" >
+        topicsId,
+      </if>
+      <if test="rootcommid != null" >
+        rootCommID,
+      </if>
+      <if test="parentcommid != null" >
+        parentCommId,
+      </if>
+      <if test="tier != null" >
+        tier,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="commentby != null" >
+        commentBy,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="commcontent != null" >
+        commContent,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="replysum != null" >
+        replySum,
+      </if>
+      <if test="likesum != null" >
+        likeSum,
+      </if>
+      <if test="collectsum != null" >
+        collectSum,
+      </if>
+      <if test="isPublic != null" >
+        isPublic,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="topicsid != null" >
+        #{topicsid,jdbcType=INTEGER},
+      </if>
+      <if test="rootcommid != null" >
+        #{rootcommid,jdbcType=INTEGER},
+      </if>
+      <if test="parentcommid != null" >
+        #{parentcommid,jdbcType=INTEGER},
+      </if>
+      <if test="tier != null" >
+        #{tier,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commcontent != null" >
+        #{commcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="replysum != null" >
+        #{replysum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="isPublic != null" >
+        #{isPublic,jdbcType=INTEGER},
+      </if>
+     
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.TopicsComment" >
+    update tbl_topics_comment
+    <set >
+      <if test="topicsid != null" >
+        topicsId = #{topicsid,jdbcType=INTEGER},
+      </if>
+      <if test="rootcommid != null" >
+        rootCommID = #{rootcommid,jdbcType=INTEGER},
+      </if>
+      <if test="parentcommid != null" >
+        parentCommId = #{parentcommid,jdbcType=INTEGER},
+      </if>
+      <if test="tier != null" >
+        tier = #{tier,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        commentBy = #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+        updateTime = Now(),
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commcontent != null" >
+        commContent = #{commcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="replysum != null" >
+        replySum = #{replysum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        likeSum = #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        collectSum = #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="isPublic != null" >
+        isPublic = #{isPublic,jdbcType=INTEGER},
+      </if>
+     
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.TopicsComment" >
+	update tbl_topics_comment
+	set topicsId = #{topicsid,jdbcType=INTEGER},
+		rootCommID = #{rootcommid,jdbcType=INTEGER},
+		parentCommId = #{parentcommid,jdbcType=INTEGER},
+		tier = #{tier,jdbcType=INTEGER},
+		userId = #{userid,jdbcType=INTEGER},
+		commentBy = #{commentby,jdbcType=INTEGER},
+		isdelete = #{isdelete,jdbcType=INTEGER},
+		updateTime = Now(),
+		createTime = #{createtime,jdbcType=TIMESTAMP},
+		commContent = #{commcontent,jdbcType=LONGVARCHAR},
+		type = #{type,jdbcType=INTEGER},
+		replySum = #{replysum,jdbcType=INTEGER},
+		likeSum = #{likesum,jdbcType=INTEGER},
+		collectSum = #{collectsum,jdbcType=INTEGER},
+		isPublic = #{isPublic,jdbcType=INTEGER}
+	where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.TopicsComment" >
+	update tbl_topics_comment
+	set topicsId = #{topicsid,jdbcType=INTEGER},
+		rootCommID = #{rootcommid,jdbcType=INTEGER},
+		parentCommId = #{parentcommid,jdbcType=INTEGER},
+		tier = #{tier,jdbcType=INTEGER},
+		userId = #{userid,jdbcType=INTEGER},
+		commentBy = #{commentby,jdbcType=INTEGER},
+		isdelete = #{isdelete,jdbcType=INTEGER},
+		updateTime = Now(),
+		createTime = #{createtime,jdbcType=TIMESTAMP},
+		commContent = #{commcontent,jdbcType=LONGVARCHAR},
+		type = #{type,jdbcType=INTEGER},
+		replySum = #{replysum,jdbcType=INTEGER},
+		likeSum = #{likesum,jdbcType=INTEGER},
+		collectSum = #{collectsum,jdbcType=INTEGER},
+		isPublic = #{isPublic,jdbcType=INTEGER}
+	where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

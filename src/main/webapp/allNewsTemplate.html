@@ -1,0 +1,35 @@
+ <!-- 个人主页 我的账户--全部消息-->
+  {#foreach $T.allSmsPage as list}
+{#if $T.list.islook=='1'}
+ <li data-id='{$T.list.id}' data-islook='1'>
+{#else}
+ <li data-id='{$T.list.id}' data-islook='0'>
+{#/if}
+        <div class='author-list'>
+         {#if $T.list.smstype=='1'}
+           <span class='sms-icon-1'></span>
+         {#elseif $T.list.smstype=='0'}
+           <span class='sms-icon-0'></span>
+         {#elseif $T.list.smstype=='3'}
+           <span class='sms-icon-3'></span>
+         {#else}
+           <span class='sms-icon-2'></span>
+         {#/if}
+          <a href="/51jobplusCore/myHome/getHomePage?userid={$T.list.senderid}" target='_blank'>{$T.list.sendUserName}:</a>
+          {#if $T.list.islook=='1'}
+             <span class='allnewscontent' style='color:#999'>{$T.list.smscontent}</span>
+          {#else}
+             <span class='allnewscontent'>{$T.list.smscontent}</span>
+          {#/if}
+        </div>
+        
+        <div class='cancelorreply pj-pm-item-meta'>
+              <span class='smsdate zg-gray zg-left'>{$T.list.senOrReTime}</span>
+              <span class='zg-cancelnews zg-right' data-id='{$T.list.id}' data-type='{$T.currentnum}'><b class="iconfont pr2"></b>&nbsp;删除</span>
+            {#if $T.list.smstype==3}
+              <span class="zg-bull zg-right">|</span>
+              <span class='zg-link-replypm zg-right' data-receivedid='{$T.list.senderid}' data-name='{$T.list.sendUserName}'>回复</span>
+            {#/if}
+        </div>
+ </li>
+    {/for}

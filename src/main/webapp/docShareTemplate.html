@@ -1,0 +1,28 @@
+<!-- 个人主页 文档--文档分享 -->
+{#foreach $T.docsPage as list}
+  <li>
+     <div class='w335 fs14 fc3 ib dochidden'>
+        <div class="checkbox chk" data-docid="{$T.list.id}" data-name="{$T.list.title}" ></div>
+        <b class="ic ic-{$T.list.docsuffix} mr14"></b>
+        <a href="/51jobplusCore/docs/getDocsDetail?id={$T.list.id}"   data-isconverter='{$T.list.isconverter}'  class='doctitle' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
+     </div>
+     <div class='w140 ib il'>
+       {$T.list.downsum}
+     </div>
+     <div class='w140 ib il'>
+       {$T.list.collectsum}
+     </div>
+     <div class="w140 ib">
+        {$T.list.showcreatetime}
+     </div>
+     <div class='w119 ib operate'>
+         <a href='/51jobplusCore/myCenter/getDocsDetailForEdit?docId={$T.list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
+           <b class="iconfont pr2"></b>修改
+         </a>
+         <span data-id='{$T.list.id}' data-name='{$T.list.title}' data-type='1'>
+             <b class="iconfont pr2"></b>
+                                       删除
+          </span>
+     </div>
+    </li>
+ {#/for}

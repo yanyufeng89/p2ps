@@ -1,0 +1,100 @@
+<div class="editlayoutbook" id="upload-item-{$T.num}">
+   <dl class="editupload"> 
+    <dd> 
+     <div class="booksedit  booksedit-bdr"> 
+      <div class="item-index">
+       {$T.index}
+      </div>
+       <div class="ui-imgBtn-delete" title="删除" data-size='{$T.size}' data-name='{$T.name}' data-index='{$T.num}'>
+                              删除    
+      </div>
+      <table class="edit-table"> 
+       <tbody> 
+        <tr> 
+         <td class="name"><i>*</i>标题：</td> 
+         <td> 
+            <input type="text" name="title" class="titles" value='{$T.name}'/> 
+            <b class="ic ic-msg"></b><span class="item-msg-content">建议您结合文档正文完善文档标题信息</span>
+         </td> 
+        </tr> 
+        <tr> 
+         <td class="name">简介：</td> 
+         <td> <textarea name="description" class="bookcontent" style="resize: none" placeholder='新建文本文档'></textarea> </td> 
+        </tr> 
+        <tr> 
+         <td class="name">售价：</td> 
+         <td>
+            <input type="hidden" name="downvalue" value="0" /> 
+            <select>
+             <option value="0">免财富值</option> 
+             <option value="1">1财富值</option> 
+             <option value="2">2财富值</option> 
+             <option value="5">5财富值</option> 
+             <option value="8">8财富值</option> 
+             <option value="10">10财富值</option> 
+             <option value="20">20财富值</option> 
+          </select> 
+          <span class='ispublic'>
+           <input type='hidden' value='1' name='ispublic'>
+           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='1' checked id='g{$T.pid}'/>
+           <label for='g{$T.pid}' style="margin-right:20px;">公开</label> 
+           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='0' id='s{$T.pid}'/>
+           <label for='s{$T.pid}'>私有</label>
+         </span>
+        </td> 
+       </tr> 
+       </tbody> 
+      </table> 
+     </div> 
+    </dd> 
+    <dd> 
+     <div class="booksedit"> 
+      <table class="edit-table"> 
+       <tbody> 
+        <tr> 
+         <td class="name"><i>*</i>分类:</td> 
+         <td> 
+          <ul> 
+           <li class="edit-class-sub topic-sort"> 
+            <ol> 
+             <li class="tltle display-n">一级分类</li>
+	           {#foreach $T.parentConfigList as record}
+	               <li value="{$T.record.typeid}" data-id="{$T.record.typeid}" class="">{$T.record.typename}</li>              
+	           {#/for}   
+            </ol> 
+           </li> 
+           <li class="edit-class-sub edit-class-sec"> 
+            <ol> 
+             {#foreach $T.childConfigList as record}
+	            <li value="{$T.record.typeid}" data-id="{$T.record.typeid}" data-parentid='{$T.record.parentid}' class="">{$T.record.typename}</li>              
+             {#/for}
+             <input type="hidden" name="doctype" value="">
+            </ol>
+           </li> 
+          </ul> 
+          <div class="docclassify" style="display:none">
+                <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+                <span class="item-msg-content" style="">分类左右必选</span>
+          </div>
+         </td>
+        </tr> 
+        <tr> 
+         <td class="name">标签:</td> 
+         <td> <input type="hidden" value="" name="docclass" /> 
+          <div class="zm-tag-editor-editor zg-clear"> 
+           <div class="zg-inline"></div> 
+           <div class="zm-tag-editor-command-buttons-wrap zg-left"> 
+            <label for="docs" class="zg-icon icon-magnify"></label> 
+            <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this)" /> 
+            <label class="err-tip" style="display:none;">最多添加五个话题</label> 
+           </div> 
+          </div>
+          <span class="doc-error">至少添加一个标签</span> </td> 
+        </tr> 
+       </tbody> 
+      </table> 
+     </div> 
+    </dd> 
+    <div class="clearfix"></div> 
+   </dl>
+  </div>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.SmsFilterMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.SmsFilter" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="filterLevel" property="filterlevel" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="filterItem" property="filteritem" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, filterLevel, createTime, filterItem
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.id, t.userId, t.filterLevel, t.createTime, t.filterItem
+  </sql>
+<!-- 新增或者更新消息过滤项    参数：消息类型;过滤等级    -->
+	<insert id="insertOrUpd" parameterType="com.jobplus.pojo.SmsFilter" >
+		<selectKey keyProperty="count" resultType="int" order="BEFORE">
+			select count(*) from tbl_smsFilter where userId = #{userid,jdbcType=INTEGER} and filterItem = #{filteritem,jdbcType=INTEGER}
+		</selectKey>
+		<if test="count > 0">
+			update tbl_smsFilter
+			set filterLevel = #{filterlevel,jdbcType=INTEGER}
+			where userId = #{userid,jdbcType=INTEGER} and filterItem = #{filteritem,jdbcType=INTEGER}
+		</if>
+		<if test="count==0">
+			insert into tbl_smsFilter values(#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{filterlevel,jdbcType=INTEGER}, 
+      Now(), #{filteritem,jdbcType=INTEGER})
+		</if>
+	</insert>
+	<!-- 查询过滤等级参数  selFilterLvByRecord -->
+  <select id="selFilterLvByRecord" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.SmsFilter" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_smsFilter
+    where userId = #{userid,jdbcType=INTEGER} and filterItem = #{filteritem,jdbcType=INTEGER}
+  </select>
+  <!-- 获取过滤等级和粉丝ids -->
+  <select id="getFilterLvAndFansIds" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.SmsFilter" >
+    select 
+    <include refid="Base_Column_List2" />
+    ,(select group_concat(objectId)  from tbl_attention where userid = t.userid and colltype='tbl_user') as fansIds
+    from tbl_smsFilter t 
+    where t.userId = #{userid,jdbcType=INTEGER} and t.filterItem = #{filteritem,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_smsFilter
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_smsFilter
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.SmsFilter" >
+    insert into tbl_smsFilter (id, userId, filterLevel, 
+      createTime, filterItem)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{filterlevel,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{filteritem,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.SmsFilter" >
+    insert into tbl_smsFilter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="filterlevel != null" >
+        filterLevel,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="filteritem != null" >
+        filterItem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="filterlevel != null" >
+        #{filterlevel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filteritem != null" >
+        #{filteritem,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.SmsFilter" >
+    update tbl_smsFilter
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="filterlevel != null" >
+        filterLevel = #{filterlevel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filteritem != null" >
+        filterItem = #{filteritem,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.SmsFilter" >
+    update tbl_smsFilter
+    set userId = #{userid,jdbcType=INTEGER},
+      filterLevel = #{filterlevel,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      filterItem = #{filteritem,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

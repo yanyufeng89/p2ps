@@ -1,0 +1,58 @@
+{#if $T.pmorsmg=='1'}
+ <div class="top-pm-nav-live noti7-popup r5px no-hovercard" id="top-nav-live-new1">
+{#else}
+ <div class="top-sms-nav-live noti7-popup r5px no-hovercard" id="top-nav-live-new2">
+{#/if}
+       <div class="top-nav-live-inner zg-r5px">
+           <div class="top-live-icon">&nbsp;</div>
+           <div class='zm-noti7-frame'>
+             <div class="zm-noti7-content message zh-scroller" style="position: relative; overflow: hidden;">
+                 <div class='zh-scroller-inner'>
+                   <div class='zh-scroller-content'>
+                     <div class='zm-noti7-content-inner'> 
+                       <div class='zm-noti7-content-body'>
+                       {#if $T.pmorsmg=='1'}
+                          {#if $T.baseResponse}
+	                          {#foreach $T.baseResponse as list}
+	                             <div class='zm-noti7-content-item' data-id='{$T.list.id}' data-ispmorsms='1' data-islook='0'>
+	                               <div class='author-list'>
+	                                  <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.senderid}'>{$T.list.sendUserName}:</a>
+	                                  <span class='pmcontent' title='{$T.list.smscontent}'>{$T.list.smscontent}</span>
+	                               </div>
+	                               <div class='zg-gray zu-pm-item-meta'>
+	                                 <span class="zg-link-replypm zg-right"  name="reply" data-receivedid='{$T.list.senderid}' data-name='{$T.list.sendUserName}'>回复</span>
+	                                 <span class="zg-gray zg-left">{$T.list.senOrReTime}</span>
+	                               </div>
+	                             </div>
+	                          {#/for}
+                          {#/if}
+                        {#else}
+                            {#if $T.baseResponse}
+                              {#foreach $T.baseResponse as list}
+                                <div class='zm-noti7-content-item' data-id='{$T.list.id}' data-ispmorsms='0' data-islook='0'>
+	                               <span class='author-list'>
+	                                  <span class='sms-icon-{$T.list.smstype}'></span>
+	                                  <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.senderid}'>{$T.list.sendUserName}:</a>
+	                                  <span class='smscontent'>{$T.list.smscontent}</span>
+	                               </span>
+	                               <div class='zg-gray zu-pm-item-meta'>
+	                                 <span class="zg-gray zg-left">{$T.list.senOrReTime}</span>
+	                               </div>
+	                             </div>
+                              {#/for}
+                            {#/if}
+                        {#/if}
+                       </div>
+                       
+                     </div>
+                   </div>
+                 </div>
+             </div>
+           </div>
+           <div class="bottom-live-border bottom"></div>
+           <div class="top-live-footer">
+             <a href="/51jobplusCore/myCenter/getAllSms" class="popup-footer-all popup-right">查看全部 »</a>
+             <a href="/51jobplusCore/myCenter/getSmsFilterParm" class="popup-footer-set" title="通知设置"><i class="popup-icon icon-settings"></i></a>
+           </div>
+       </div>
+</div>

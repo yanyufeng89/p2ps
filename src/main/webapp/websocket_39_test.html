@@ -1,0 +1,57 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>websocket</title>
+</head>
+<body>
+
+	<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+	<script type="text/javascript">
+		//用户登录成功后需要初始化websocket以便服务器进行消息通知
+		var socket;
+
+		if ('WebSocket' in window) {
+			socket = new WebSocket("ws://localhost:8080/51jobplusCore/ws");
+		} else if ('MozWebSocket' in window) {
+			socket = new MozWebSocket("ws://localhost:8080/51jobplusCore/ws");
+		} else {
+			socket = new SockJS("http://localhost:8080/51jobplusCore/ws/sockjs");
+		}
+
+		socket.onopen = function(event) {
+			console.log("websocket open");
+		};
+		socket.onclose = function(event) {
+			console.log("websocket close");
+		};
+
+		socket.onmessage = function(event) {
+
+			//业务处理逻辑 event.data==1  私信+1，=0 系统通知+1
+
+			console.log(event.data);
+			var ta = document.getElementById('responseText');
+			ta.value += event.data + "\r\n";
+		};
+
+		function send(message) {
+			if (!window.WebSocket) {
+				return;
+			}
+
+			if (socket.readyState == WebSocket.OPEN) {
+				socket.send(message);
+			} else {
+				alert("The socket is not open.");
+			}
+		}
+	</script>
+	<form onsubmit="return false;">
+		<input type="text" name="message"
+			value="{'receiveid':'29','msgtype':'1'}" /> <input type="button"
+			value="Send Web Socket Data" onclick="send(this.form.message.value)" />
+		<h3>服务端返回的应答消息</h3>
+		<textarea id="responseText" style="width: 1024px; height: 300px;"></textarea>
+	</form>
+</body>
+</html>

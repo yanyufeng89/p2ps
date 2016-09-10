@@ -1,0 +1,423 @@
+.word-break-all,.break-word {
+	word-wrap:break-word;
+	overflow:hidden
+}
+
+.body:after,.main:after {
+	clear:both;
+	display:block;
+	visibility:hidden;
+	overflow:hidden;
+	height:0!important;
+	line-height:0;
+	font-size:xx-large;
+	content:" x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x "
+}
+.main {
+	display:table-cell;
+	*display:block;
+	width:auto;
+	_position:relative;
+	_right:-3px;
+	_margin-left:-3px
+}
+ #hd .top-search-box,.ui-nav .inner,#bd,.concerncontent{
+	width:1200px;
+	margin:0 auto;
+} 
+.ir {
+	display:inline-block;
+	border:0;
+	line-height:999em;
+	overflow:hidden;
+	background-color:transparent;
+	background-repeat:no-repeat;
+	text-align:left;
+	direction:ltr;
+	*line-height:0;
+	vertical-align:middle;
+	outline:0
+}
+.ir b {
+	display:none
+}
+
+html {
+	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust:100%
+}
+label,button {
+	cursor:pointer;
+	_cursor:hand
+}
+abbr[title],acronym[title] {
+	border-bottom:1px dotted;
+	cursor:help
+}
+.footer {
+	text-align:center
+}
+em,.em {
+	font-style:italic
+}
+strong,.strong {
+	font-weight:700
+}
+
+.gd-l-u {
+	float:left
+}
+.gd-g {
+	letter-spacing:-.31em;
+	*letter-spacing:normal;
+	word-spacing:-.43em
+}
+.gd-g-u {
+	display:inline-block;
+	*zoom:1;
+	*display:inline;
+	letter-spacing:normal;
+	word-spacing:normal;
+	vertical-align:top
+}
+.box:before,.box:after {
+	content:'';
+	display:table
+}
+.box:after {
+	clear:both
+}
+.box {
+	*zoom:1
+}
+.box .media {
+	float:left;
+	_display:inline;
+	margin-right:10px
+}
+.box .media img {
+	display:block
+}
+.box .media .title {
+	display:block
+}
+.box .content {
+	_position:relative;
+	_left:-3px;
+	_margin-right:-3px;
+	overflow:hidden;
+	*zoom:1;
+	*overflow:visible
+}
+.box .content .title,.box .content .summary {
+	display:block;
+	margin-bottom:5px
+}
+.box .title {
+	font-weight:700
+}
+.box .other {
+	clear:both
+}
+.box .more,.box .detail {
+	float:right;
+	_display:inline
+}
+.ext .media {
+	float:right;
+	margin-left:10px;
+	margin-right:0
+}
+
+.ext .content {
+	_left:0;
+	_margin-right:0;
+	_right:-3px;
+	_margin-left:-3px
+}
+.body,#hd,#bd,#ft,.clearfix {
+	*zoom:1
+}
+
+h2,.h2 {
+	font-size:16px;
+	font-weight:700;
+	color:#333
+}
+/* h3,.h3 {
+	font-size:14px;
+	font-weight:700;
+	color:#333
+} */
+
+h5,.h5 {
+	font-size:12px;
+	font-weight:700;
+	color:#333
+}
+h6,.h6 {
+	font-size:11px;
+	font-weight:400;
+	color:#333
+}
+
+.act {
+	float:right
+}
+.gbma-d,.gbma-r,.gbma-u {
+	position:relative;
+	border-style:solid;
+	border-color:transparent;
+	_border-color:#fff;
+	display:inline-block;
+	font-size:0;
+	height:0;
+	line-height:0;
+	width:0;
+	border-width:3px;
+	left:4px;
+	top:-1px
+}
+
+.ib {
+	display:-moz-inline-stack;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:middle;
+	position:relative;
+	*position:static
+}
+.mod .inner:before,.mod .hd:before,.mod .bd:before,.mod .ft:before,.mod .inner:after,.mod .hd:after,.mod .bd:after,.mod .ft:after {
+	content:'';
+	display:table
+}
+.mod .inner {
+	position:relative
+}
+.mod .top,.mod .bottom,.mod .tl,.mod .tr,.mod .bl,.mod .br {
+	display:block;
+	background-repeat:no-repeat;
+	font-size:1%;
+	position:relative;
+	z-index:10
+}
+.mod .tl,.mod .tr,.mod .bl,.mod .br {
+	height:10px;
+	width:10px;
+	float:left
+}
+.mod .tl {
+	background-position:left top
+}
+.mod .tr {
+	background-position:right top
+}
+.mod .bl {
+	background-position:left bottom
+}
+.mod .br {
+	background-position:right bottom
+}
+.mod .br,.mod .tr {
+	float:right
+}
+.mod .tr,.mod .tl {
+	overflow:hidden;
+	margin-bottom:-32000px
+}
+.mod .bl,.mod .br {
+	margin-top:-10px
+}
+.mod .top {
+	background-position:center top
+}
+.mod .bottom {
+	background-position:center bottom;
+	_zoom:1
+}
+.mod .hd .act {
+	float:right
+}
+.complex {
+	overflow:hidden;
+	*position:relative;
+	*zoom:1
+}
+
+.pop {
+	overflow:visible;
+	margin:10px 20px 20px 10px;
+	background-position:left top
+}
+.pop .inner {
+	right:-10px;
+	bottom:-10px;
+	background-position:right bottom;
+	padding:0 10px 10px 0
+}
+.pop .tl,.pop .br {
+	display:none
+}
+.pop .bl {
+	bottom:-10px
+}
+.pop .tr {
+	margin-right:-10px;
+	_display:inline
+}
+.pop .top,.pop .bottom {
+	*z-index:-1
+}
+
+.bt,.bt:focus,.bt:hover,.bt:active,.bt .btText {
+	white-space:nowrap;
+	text-decoration:none;
+	cursor:pointer;
+	_cursor:hand;
+	-moz-user-select:none;
+	user-select:none
+}
+
+.aside {
+	float:right;
+	_display:inline;
+	width:230px;
+	margin-left:10px
+}
+.bt {
+	*zoom:1;
+	vertical-align:middle
+}
+.bt:before,.bt:after {
+	content:'';
+	display:table
+}
+.bt:after {
+	clear:both
+}
+.bt,.bt .btl .bt .btr,.bt .btc,.bt .btText {
+	display:-moz-inline-stack;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	position:relative;
+	*position:static
+}
+.bt .btl,.bt .btr {
+	font-size:0;
+	overflow:hidden
+}
+.bt .btText {
+	line-height:1
+}
+.bt button,.bt input {
+	*overflow:visible;
+	padding:0;
+	border:0;
+	background:transparent
+}
+
+.list:before,.list:after {
+	content:'';
+	display:table
+}
+.list:after {
+	clear:both
+}
+.list {
+	*zoom:1
+}
+.list li .act,.title .act {
+	float:right
+}
+.list-dot li {
+	background-repeat:no-repeat;
+	text-indent:10px
+}
+.list-num .num {
+	margin-right:10px
+}
+.list-num .num {
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	padding:0;
+	vertical-align:middle;
+	font-size:0;
+	line-height:9999em;
+	overflow:hidden;
+	position:relative;
+	*position:static
+}
+.tabs .tabControl {
+	letter-spacing:-.31em;
+	*letter-spacing:normal;
+	word-spacing:-.43em
+}
+.tabs .tabControl li,.tabs .tabControl li a,.tabs .tabControl li span {
+	display:-moz-inline-stack;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:bottom
+}
+.tabs .tabControl li {
+	letter-spacing:normal;
+	word-spacing:normal
+}
+.tabs .tabControl li a {
+	text-decoration:none;
+	*cursor:hand
+}
+.tabs .tabControl li span {
+	text-align:center
+}
+.tabs .tabContent .disabled {
+	display:none
+}
+.tabs .tabContent .current {
+	display:block
+}
+
+.paginate-counter {
+	float:right
+}
+.paging {
+	float:left
+}
+.paging li {
+	margin-right:2px;
+	float:left;
+	_display:inline
+}
+.paging a {
+	margin-right:2px
+}
+.paging .previous.disabled,.paging .next.disabled {
+	float:left;
+	margin-right:2px;
+	_display:inline
+}
+.paging .next a,.paging .previous a {
+	font-weight:700
+}
+.paging .current {
+	font-weight:700;
+	float:left;
+	vertical-align:middle
+}
+.paging a {
+	float:left;
+	text-decoration:none
+}
+.data {
+	position:relative;
+	zoom:1;
+	vertical-align:top;
+	text-align:left
+}
+.data table {
+	width:100%;
+	table-layout:fixed
+}
