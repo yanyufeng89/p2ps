@@ -137,7 +137,7 @@ var upOrDownCount=0;
 			    	}
 			    	addTagToDatabase();
 		    	}
-		    	
+		    	$this.obj.parent().find('input[name=currenttagval]').val('');
 		    }
 		    //文档
 			Chosen.prototype.iniDocIputTags=function(name,id){
@@ -167,7 +167,7 @@ var upOrDownCount=0;
 		    		$this.obj.hide().prev().hide();
 		    		$this.obj.parent().find('.err-tip').show();
 		    	}
-				
+		    	$this.obj.parent().find('input[name=currenttagval]').val('');
 			}
 			return  Chosen;
 		})()
@@ -184,33 +184,35 @@ var upOrDownCount=0;
 
 //键盘上下键切换
 function upOrDownConvert(obj){
-	var $len=obj.nextAll('.tagdropdown').children().length;  
-	var key = event.keyCode;  
-	if (key == 38) { /*向上按钮*/  
-		upOrDownCount--;  
-		if (upOrDownCount ==-1) upOrDownCount = $len-1; //到顶了
-    } else if (key == 40) {/*向下按钮*/  
-    	upOrDownCount++;  
-    	if (upOrDownCount ==$len) upOrDownCount =0; //到底了   
-    }else if(key == 13){//回车键
-    	upOrDownCount=0;
-    	//创建标签 
-    	//获取当前有类ac-active 同时又类ac-create 说明是创建一个新的标签
-    	var $children=obj.nextAll('.tagdropdown');
-    	if($children.find('.ac-create')&&$children.find('.ac-create').hasClass('ac-active')){
-    		createtag($children.find('.ac-create'));
-    	}else{
-    		var tagnames=$children.find('.ac-active').attr('data-name');
-    		var tagid=$children.find('.ac-active').attr('data-id');
-    		if($this.type=='topic'||$this.type=='topictag'){
-            	$this.iniTopicIputTags(tagnames,tagid,$this.type);
-            }
-            else if($this.type=='doc'||$this.type=='book'){
-            	$this.iniDocIputTags(tagnames,tagid);
-            }
-    	}
-    	ispublic=false;
-    }
+		var $len=obj.nextAll('.tagdropdown').children().length;  
+		var key = event.keyCode;  
+		if (key == 38) { /*向上按钮*/  
+			upOrDownCount--;  
+			if (upOrDownCount ==-1) upOrDownCount = $len-1; //到顶了
+	    } else if (key == 40) {/*向下按钮*/  
+	    	upOrDownCount++;  
+	    	if (upOrDownCount ==$len) upOrDownCount =0; //到底了   
+	    }else if(key == 13){//回车键
+	    	upOrDownCount=0;
+	    	//创建标签 
+	    	//获取当前有类ac-active 同时又类ac-create 说明是创建一个新的标签
+	    	var $children=obj.nextAll('.tagdropdown');
+	    	if($children.find('.ac-create')&&$children.find('.ac-create').hasClass('ac-active')){
+	    		createtag($children.find('.ac-create'));
+	    	}else{
+	    		var tagnames=$children.find('.ac-active').attr('data-name');
+	    		var tagid=$children.find('.ac-active').attr('data-id');
+	    		if($.trim(tagnames).length!=0){
+	    			if($this.type=='topic'||$this.type=='topictag'){
+		            	$this.iniTopicIputTags(tagnames,tagid,$this.type);
+		            }
+		            else if($this.type=='doc'||$this.type=='book'){
+		            	$this.iniDocIputTags(tagnames,tagid);
+		            }
+	    		}
+	    	}
+	    	ispublic=false;
+	    }
 	var $div = obj.nextAll('.tagdropdown').children().eq(upOrDownCount);  
 	$div.addClass('ac-active').siblings().removeClass('ac-active');     
 }

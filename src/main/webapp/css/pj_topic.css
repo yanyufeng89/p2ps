@@ -44,18 +44,21 @@
 	vertical-align: bottom;
 	min-height: 1em;
 }
-#uploadtopic-list .zg-form-text-input{
-	height: 22px!important;
+#uploadtopic-list .pj-form-text-input{
+	height: 22px;
+	font-size: 13px; 
 	padding: 4px 0;
 	width: 96%;
-    border-radius:0px
+    border: 1px solid #ccc;
 }
 #uploadtopic-list  .zg-editor-input{
-	min-height: 22px;
-	height: 22px!important;
-	width: 98%;
-	padding-left: 10px!important;
+	line-height:30px;
+	height:30px;
+    width: 95%;
+	padding-left: 10px;
 	resize:none;
+	border: solid 1px #ccc;
+	outline:none;
 }
 .uploadtopic-list .title-length-err-msg {
 	color: #999;

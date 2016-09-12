@@ -62,7 +62,7 @@ import com.jobplus.utils.DateUtils;
  *
  */
 @Controller
-@RequestMapping("/myCenter")
+@RequestMapping("/myCenter")   
 public class MyCenterController2 {
 
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(MyCenterController2.class);

@@ -350,7 +350,31 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename)//object
         }
 	})
 }
-
+//根据条件查询(标签) url:"tags/findClass/"+condition
+var getTagsByCondition=function(obj,type){
+	var $this=$(obj);
+	var oldval=$this.parent().find('input[name=currenttagval]').val();
+	var conds=$this.val();
+	//过滤掉空格 "" null 等
+	if(conds !== null &&conds !== undefined&&$.trim(conds).length!=0&&$.trim(oldval).length!=$.trim(conds).length){
+		 $.ajax({
+	         	type:"POST",
+	         	url:"/51jobplusCore/tags/findClass/"+conds,
+	         	//data:{condition:100},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	         			$this.parent().find('input[name=currenttagval]').val(conds);
+	            		$this.chosen(data,$this,type,conds);
+	        		}else{//返回失败	        			
+	        		}
+	        	}
+	     })}else if($.trim(conds).length==0){
+			//当input为空时 隐藏搜索的下拉列表
+		   $this.parent().find('div:last-child').remove();
+		   $this.parent().find('input[name=currenttagval]').val('');
+		} 		
+}
 /*window._bd_share_config = {
 	    "common": {
 	      "bdSnsKey": {},

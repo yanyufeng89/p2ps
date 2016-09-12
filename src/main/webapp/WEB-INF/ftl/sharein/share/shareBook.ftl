@@ -7,10 +7,8 @@
     <title>
              分享书籍
     </title> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
+    <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/jquery.pinwheel-0.1.0.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_upload.css">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_book.css">
   </head>
   <body>
@@ -208,7 +206,8 @@
                                         <div class="zg-inline" id="bookinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
                                           <label for="docs" class="zg-icon icon-magnify"></label>
-                                          <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchBook" oninput="getTagsByCondition(this)">
+                                          <input type='hidden' name='currenttagval' value=''>
+                                          <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchBook" oninput="getTagsByCondition(this,'book')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
                                      </td>

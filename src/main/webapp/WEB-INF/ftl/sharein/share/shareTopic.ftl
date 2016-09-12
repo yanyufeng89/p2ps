@@ -5,9 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>话题分享</title>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_upload.css" charset="UTF-8">
+    <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_topic.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/jquery.autocomplete.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/uedit/themes/default/css/umeditor.css" charset="UTF-8">
@@ -152,11 +150,11 @@
                                       <i>*</i>问题：</td>
                                     <td>
                                      
-                                      <div class="zg-form-text-input add-question-title-form">
+                                      
                                          <textarea rows="1" class="zg-editor-input zu-seamless-input-origin-element" 
 								           title="在这里输入问题" id="pj-question-suggest-title-content"  placeholder="写下你的问题" name="title" data-searchtype='1'>
 								         </textarea>
-                                      </div>
+                                     
                                       
                                       <div class="question-suggest-ac-wrap" id="pj-question-suggest-ac-wrap" style="display: none;">
                                         <div class="ac-renderer">
@@ -239,7 +237,8 @@
                                         <div class="zg-inline" id='inputtags'></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
                                           <label for="docs" class="zg-icon icon-magnify"></label>
-                                          <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchTopic" oninput="getTagsByCondition(this)">
+                                          <input type='hidden' name='currenttagval' value=''>
+                                          <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchTopic" oninput="getTagsByCondition(this,'topic')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
                                       <span class="topic-error">

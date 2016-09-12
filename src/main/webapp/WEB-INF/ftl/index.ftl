@@ -6,9 +6,7 @@
     <title>
            首页
     </title>
-    <meta name="viewport" content="maximum-scale=1">
-    <meta property="wb:webmaster" content="3dc25059492736e0">
-    <meta name="description" content="在线互动式文档分享平台，在这里，您可以和千万网友分享自己手中的文档，全文阅读其他用户的文档，同时，也可以利用分享文档获取的积分下载文档 ">
+    <meta name="viewport" content="width=1200"/>
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_index.css" charset="UTF-8">

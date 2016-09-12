@@ -7,9 +7,7 @@
     <title>
              上传文档
     </title> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_upload.css">
+    <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_doc.css">
   </head>
   <body>
@@ -183,7 +181,7 @@
                           <span class="item-reward-wealth">1财富值</span>的奖励
                         </span>
                     </h3>
-                    <p class="error"><i class="tips_icon"></i>上传的文档包含不支持的类型</p>
+                    <p class="error" style='margin:0'><i class="tips_icon"></i>上传的文档包含不支持的类型</p>
                   </div>
                   <div id='addtemp' style='display:none'></div>
                   <div id="upload-list" class="upload-list">

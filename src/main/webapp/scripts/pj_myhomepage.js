@@ -1,6 +1,7 @@
 var randomid=1;
 var userInfo;
 $(function(){
+
 	 //个人中心  点击联系方式
     $(".show-more-info").on('click',function(){
     	//只有在看别人的主页的时候 才会有收起

@@ -6,6 +6,7 @@
     <title>
                登录
     </title>
+    <meta name="viewport" content="width=1200"/> 
     <link rel="stylesheet" href="/51jobplusCore/css/css.css" type="text/css">
     <link rel="stylesheet" href="/51jobplusCore/css/login.css" type="text/css">
     <link rel="stylesheet" href="/51jobplusCore/scripts/layer.css" id="layui_layer_skinlayercss">

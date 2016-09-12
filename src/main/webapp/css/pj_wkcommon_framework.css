@@ -42,10 +42,10 @@
 	display:none
 }
 
-html {
+/* html {
 	-webkit-text-size-adjust:100%;
 	-ms-text-size-adjust:100%
-}
+} */
 label,button {
 	cursor:pointer;
 	_cursor:hand

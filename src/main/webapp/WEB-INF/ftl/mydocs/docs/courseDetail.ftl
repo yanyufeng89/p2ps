@@ -152,11 +152,11 @@
 		<#--判断是否登录-->
 		<#if (Session.user)??>
 		<div class='mycomment'>
-		  <a href='/51jobplusCore/myHome/getHomePage?userid=${record.objCreator.userid}' target='_blank' data-userid='${record.objCreator.userid}'>
-		     <#if (record.objCreator.headicon)??>
-		       <img src="${record.objCreator.headicon}" alt="" class='zm-list-avatar' data-userid='${record.objCreator.userid}' data-moduletype='1'>
+		  <a href='/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}' target='_blank' data-userid='${Session.user.userid}'>
+		     <#if (Session.user.headicon)??>
+		       <img src="${Session.user.headicon}" alt="" class='zm-list-avatar' data-userid='${Session.user.userid}' data-moduletype='1'>
 			 <#else>
-			   <img src='/51jobplusCore/image/1b48b5a75c71597_100x100.jpg' alt="" class='zm-list-avatar' data-userid='${record.objCreator.userid}' data-moduletype='1'>
+			   <img src='/51jobplusCore/image/1b48b5a75c71597_100x100.jpg' alt="" class='zm-list-avatar' data-userid='${Session.user.userid}' data-moduletype='1'>
 			 </#if>
 			 <span class="mycommentinfo">推荐语</span>
 		  </a>

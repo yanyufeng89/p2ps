@@ -21,7 +21,7 @@
         <input type='hidden' name='docid' value='${record.id}'>
         <input type='hidden' name='docname' value='${record.title}'>
         <input type='hidden' name='docCreatePerson' value='${record.userid}'>
-        <input type='hidden' name='docsuffix' value='${record.docsuffix}'>
+        <input type='hidden' name='docsuffix' value='${record.docsuffix?lower_case}'>
         <input type='hidden' name='docurl' value='${record.readurl}'>
         <div class="plus-main-content">
            <div class="plus-main-content-inner" style='border-bottom:none'>
@@ -30,7 +30,7 @@
                       <#if (record)??>
 	                       <div class='infor-right'>
                              <div class='bookname'>
-                                <b class="ic ic-${record.docsuffix} mr14"></b>
+                                <b class="ic ic-${record.docsuffix?lower_case} mr14"></b>
                                <#if record.title?index_of(record.docsuffix)!=-1>
                                  <#assign title=record.title?substring(0,record.title?index_of(record.docsuffix)?number-1) />
                                  <span class='courseinfo'>${title}</span>
@@ -205,9 +205,8 @@
 		   </#if>
 		</div>
 		<div class="detail">
-		
-		 <div class='detailcomment-list'>
-		  <#if (record.commentList)??>
+		 <div class='detailcomment-list' style='padding-bottom:14px;'>
+		 <#if (record.commentList.list)?? &&record.commentList.list?size gt 0>
 		     <#list  record.commentList.list as booklist>
 		       <div class='item'>
 		         <div class='media-left'>
@@ -253,10 +252,12 @@
 		     <#if (record.commentList.last gt 1)>
 			   <a data-pageno='1' data-sumpage='${record.commentList.last}' class="zg-btn-white zu-button-more loadmore">更多</a>
 			 </#if>
+			 
 		  </#if>
+		   </div>
 		  </div>
 		  
-		</div>
+		
 		
 		<#--判断是否登录-->
 		<#if (Session.user)??>
@@ -367,7 +368,7 @@
 						  <li>
 							 <div class='related-book-right'>
 							   <span>
-							        <b class="ic ic-${samelist.docSuffix} mr14"></b>
+							        <b class="ic ic-${samelist.docSuffix?lower_case} mr14"></b>
 							        <#if samelist.title?index_of(samelist.docSuffix)!=-1>
 							          <#assign sametilte=samelist.title?substring(0,samelist.title?index_of(samelist.docSuffix)?number-1) />
 							          <a href='/51jobplusCore/docs/getDocsDetail?id=${samelist.data_id}'>${sametilte}</a>

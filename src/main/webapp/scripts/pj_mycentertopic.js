@@ -270,6 +270,7 @@ $(function(){
     })
     //话题详情--回答里面的评论收起或展开
     $('#zh-question-answer-wrap .js-comment').live('click',function(){
+    	userInfo=$('#currentUserId');
        	$(this).toggle(function(){
         	var $child=$(this).children();
         	$(this).empty().append($child).append('收起评论');
@@ -992,7 +993,7 @@ function deleteTopicsComments(conditions,obj){
 }
 
 //根据条件查询(标签) url:"tags/findClass/"+condition
-function getTagsByCondition(obj){
+/*function getTagsByCondition(obj){
 	var conds=$(obj).val();
 	//过滤掉空格 "" null 等
 	if (conds !== null || conds !== undefined || conds !== '') { 
@@ -1006,7 +1007,7 @@ function getTagsByCondition(obj){
 	         	success:function(data){
 	         		if(data.returnStatus=='000'){//返回成功
 	            		console.log(data);
-	         			/*initTagBySearchTopic(data);	*/
+	         			initTagBySearchTopic(data);	
 	            		$("#topictag").chosen(data,'','topictag',conds);
 	        		}else{//返回失败
 	        			
@@ -1022,7 +1023,7 @@ function getTagsByCondition(obj){
 	}else{//输入值 为   空格 "" null 等
 		
 	}   		
-}
+}*/
 //话题编辑
 function updateTopics(){
 	   $.ajax({

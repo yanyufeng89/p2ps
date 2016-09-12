@@ -85,7 +85,8 @@
            <div class="zg-inline"></div> 
            <div class="zm-tag-editor-command-buttons-wrap zg-left"> 
             <label for="docs" class="zg-icon icon-magnify"></label> 
-            <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this)" /> 
+            <input type='hidden' name='currenttagval' value=''>
+            <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this,'doc')" /> 
             <label class="err-tip" style="display:none;">最多添加五个话题</label> 
            </div> 
           </div>

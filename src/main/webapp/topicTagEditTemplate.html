@@ -14,8 +14,9 @@
     {#else}
      <div class="zg-section zm-tag-editor-command-buttons-wrap">
     {#/if}
+        <input type='hidden' name='currenttagval' value=''>
         <input class="zg-form-text-input zg-mr15" type="text" placeholder="搜索话题"
-        aria-label="搜索话题" title="搜索话题" role="combobox" aria-autocomplete="list" oninput="getTagsByCondition(this)"
+        aria-label="搜索话题" title="搜索话题" role="combobox" aria-autocomplete="list" oninput="getTagsByCondition(this,'topictag')"
         aria-haspopup="false" id='topictag'>
         <a href="#" name="close">
             完成

@@ -53,8 +53,8 @@ $(function(){
 		var flag = true;
 		var newarrFiles=[];//继续上传的文件数组
 	   for(var i=0;i<addfiles.length;i++){
-		    var fileend = addfiles[i].name.substring(addfiles[i].name.indexOf("."));
-		    if(filetypes.indexOf(fileend)<0){
+		    var fileend = addfiles[i].name.substring(addfiles[i].name.lastIndexOf("."));
+		    if(filetypes.indexOf(fileend.toLowerCase())<0){
 		    	flag=false;
 		    }
 		    //文件类型不符合
@@ -174,41 +174,10 @@ $(function(){
    //获取公开 或者私有
    $("input[type=radio]").live('change',function(){
 	   $(this).parent().find('input[name=ispublic]').val($(this).val());
-   })
-  
+   })  
 });
 
-//根据条件查询(标签) url:"tags/findClass/"+condition
-var getTagsByCondition=function(obj){
-	$this=$(obj);
-	var conds=$this.val();
-	//过滤掉空格 "" null 等
-	if (conds !== null || conds !== undefined || conds !== '') { 
-		//过滤掉正在输入汉字的情况
-		if($.trim(conds).length>0){
-		 $.ajax({
-	         	type:"POST",
-	         	url:"/51jobplusCore/tags/findClass/"+conds,
-	         	//data:{condition:100},
-	         	dataType:"json",
-	         	success:function(data){
-	         		if(data.returnStatus=='000'){//返回成功
-	            		$this.chosen(data,$this,'doc',conds);
-	        		}else{//返回失败
-	        			
-	        		}
-	        		
-	        	}
-	     });
-		} 
-	   else{
-			//当input为空时 隐藏搜索的下拉列表
-		   $this.parent().find('div:last-child').remove();
-		}
-	}else{//输入值 为   空格 "" null 等
-		
-	}   		
-}
+
 
 //创建标签HTML
 var funDisposePreviewHtml=function(files,flag){

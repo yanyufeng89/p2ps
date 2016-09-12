@@ -13,8 +13,7 @@
 .upload-hd {
 	height: 40px;
 	width: 980px;
-	background: url(../image/uploaddoc.png) no-repeat;
-	
+	background: url(../image/uploaddoc.png) no-repeat;	
 }
 .mod-upload .link .capture-loading {
     display: none;
@@ -750,7 +749,7 @@ a.upload-btn:hover{
 	width: 107px;
     position: absolute;
     top:30px;
-    right:200px;
+    right:142px;
     bottom: 0;
     border: 0;
     padding: 0;
@@ -2905,7 +2904,7 @@ a.upload-btn:hover{
 	font-size: 20px;
 	color: #666;
 }
-#upload-files-container .nhd .error{
+#upload-files-container .nhd .errors{
 	display:none;
     font-size: 12px;
     color: red;

@@ -7,9 +7,7 @@
     <title>
              上传文档
     </title> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_upload.css">
+    <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_doc.css">
   </head>
   <body>
@@ -161,14 +159,14 @@
 						                    <#assign len=record.docclass?split(',')/>
 						                      <#if (len?size == 5)>
 							                    <label for="docs" class="zg-icon icon-magnify" style="display:none"></label>
-							                    <input style="display:none" class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this)">
+							                    <input style="display:none" class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this,'doc')">
 							                  <#else>
 							                    <label for="docs" class="zg-icon icon-magnify"></label>
-							                    <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this)">
+							                    <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this,'doc')">
 						                      </#if>
 										   <#else>
 										      <label for="docs" class="zg-icon icon-magnify"></label>
-						                      <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this)">
+						                      <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" oninput="getTagsByCondition(this,'doc')">
 						                   </#if>
 										   <label class="err-tip" style="display:none;">最多添加五个话题</label>
 										  </div>

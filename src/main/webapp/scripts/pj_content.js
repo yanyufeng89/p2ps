@@ -84,6 +84,8 @@ $(function () {
     $('#wk-all-cate > dl').each(function(a){
     	var explorer =navigator.userAgent;
     	$(this).hover(function(){
+    		/*$(this).css('height',$(this).height()-3+'px');
+    		$(this).css('width',$(this).width()-1+'px');*/
     		$(this).nextAll('dl').removeClass("current");
     		$(this).nextAll('.menu_sub').addClass("dn");
     		$(this).prev().prev().css('border-bottom','0');
@@ -144,6 +146,8 @@ $(function () {
         	}
         	$(this).removeClass("current").next().addClass("dn");
         	$(this).prev().prev().css('border-bottom','1px solid #e9e9e9');
+    		/*$(this).css('height',$(this).height()+3+'px');
+    		$(this).css('width',$(this).width()-1+'px');*/
         })
        })
        //鼠标移动到分节点  对应的父节点显示

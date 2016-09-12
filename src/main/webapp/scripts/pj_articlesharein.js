@@ -61,37 +61,7 @@ $(function(){
    		$(this).parent().remove();
    	});*/
 })
-//根据条件查询(标签) url:"tags/findClass/"+condition
-function getTagsByCondition(obj){
-	$this=$(obj);
-	var conds=$.trim($(obj).val());
-	//过滤掉空格 "" null 等
-	if (conds !== null || conds !== undefined || conds !== '') { 
-		//过滤掉正在输入汉字的情况
-		if($.trim(conds).length>0){
-		 $.ajax({
-	         	type:"POST",
-	         	url:projectName+"tags/findClass/"+conds,
-	         	//data:{condition:100},
-	         	dataType:"json",
-	         	success:function(data){
-	         		if(data.returnStatus=='000'){//返回成功
-	         			$this.chosen(data,$this,'doc',conds);
-	        		}else{//返回失败
-	        			
-	        		}
-	        		
-	        	}
-	     });
-		} 
-	   else{
-			//当input为空时 隐藏搜索的下拉列表
-		   $(".zm-tag-editor-command-buttons-wrap div:last-child").remove();
-		}
-	}else{//输入值 为   空格 "" null 等
-		
-	}   		
-}
+
 //判断输入的链接是否拼通
 function get3WInfo(url){
 	$.ajax({

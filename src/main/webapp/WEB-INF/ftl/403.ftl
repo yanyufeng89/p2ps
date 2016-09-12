@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
        403页面
-    </title> 
+    </title>
+    <meta name="viewport" content="width=1200"/> 
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/error.css">
   </head>
   <body>

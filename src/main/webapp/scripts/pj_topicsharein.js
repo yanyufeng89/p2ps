@@ -3,7 +3,6 @@ var oldval,newval;
 $(function(){
 	//窗体加载的时候 焦点定位到文本框
 	$('#js-before-ask').focus();
-	
 	//确定
 	$("#upload-inittopic-container").on('click','.iwanttoask',function(){
 		var askval=$("#js-before-ask").val().replace(/[ ]/g,"");//去掉空格
@@ -125,7 +124,6 @@ $(function(){
 		 var searchtype=$(this).attr('data-searchtype');
 		 oldval=$('input[name=pj-autocomplete]').val();
 		 newval=$(this).val();
-		 
 		if(newval !== null &&newval !== undefined&&$.trim(newval).length!=0&&$.trim(oldval).length!=$.trim(newval).length){
 			findTitle($(this),searchtype);
 		}else if($.trim(newval).length==0){
@@ -156,38 +154,6 @@ function sendFile(file,editor,welEditable) {
     });
 }
 
-//根据条件查询(标签) url:"tags/findClass/"+condition
-function getTagsByCondition(obj){
-	var conds=$.trim($(obj).val());
-	//过滤掉空格 "" null 等
-	if (conds !== null || conds !== undefined || conds !== '') { 
-		//过滤掉正在输入汉字的情况
-		if($.trim(conds).length>0){
-		 $.ajax({
-	         	type:"POST",
-	         	url:"/51jobplusCore/tags/findClass/"+conds,
-	         	//data:{condition:100},
-	         	dataType:"json",
-	         	success:function(data){
-	         		if(data.returnStatus=='000'){//返回成功
-	            		console.log(data);
-	         			/*initTagBySearchTopic(data);	*/
-	            		$("#searchTopic").chosen(data,'','topic',conds);
-	        		}else{//返回失败
-	        			
-	        		}
-	        		
-	        	}
-	     });
-		} 
-	   else{
-			//当input为空时 隐藏搜索的下拉列表
-		   $(".zm-tag-editor-command-buttons-wrap div:last-child").remove();
-		}
-	}else{//输入值 为   空格 "" null 等
-		
-	}   		
-}
 //模糊查询标题  	
 function findTitle(obj,flag){
 	    $("#js-before-ask").parent().find('.error').hide();
@@ -213,7 +179,6 @@ function findTitle(obj,flag){
 	        		}else{//返回失败
 	        			
 	        		}
-	        		
 	        	}
 	     });
    		}

@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
           忘记密码
-    </title> 
+    </title>
+    <meta name="viewport" content="width=1200"/> 
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
     <link rel="stylesheet" href="/51jobplusCore/scripts/layer.css" id="layui_layer_skinlayercss"> 

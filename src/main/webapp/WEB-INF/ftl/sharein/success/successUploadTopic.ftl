@@ -7,9 +7,7 @@
     <title>
          话题分享
     </title> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_upload.css">
+    <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
   </head>
   <body>
     <div class="page">

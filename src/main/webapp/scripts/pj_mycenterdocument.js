@@ -40,7 +40,7 @@ $(function(){
 				}
 			});
     	}
-    	$(this).addClass('enabled');
+    	$(this).removeClass('enabled');
     })
     //我的文档--操作--删除(单个删除)
     $('.operate span').live('click',function(){
@@ -81,7 +81,7 @@ $(function(){
     		/*if($('p.error').length==0)*/
     		$(this).after('<p class="error" style="display:block"><i class="tips_icon"></i>当前文档转换中...,请稍后再试!</p>');
     		//一段时间之后自动隐藏提示信息
-    		setInterval("startrequest()",5000); 
+    		setInterval("startrequest()",3000); 
     		return false;
     	}
     });    

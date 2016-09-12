@@ -7,9 +7,7 @@
     <title>
             站点分享
     </title> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_upload.css">
+    <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
   </head>
   <body>
     <div class="page">
@@ -223,8 +221,9 @@
                                         <div class="zg-inline" id="siteinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
                                           <label for="docs" class="zg-icon icon-magnify"></label>
+                                          <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" 
-                                          aria-autocomplete="list" placeholder="搜索标签"  oninput="getTagsByCondition(this)">
+                                          aria-autocomplete="list" placeholder="搜索标签"  oninput="getTagsByCondition(this,'doc')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
                                      </td>
