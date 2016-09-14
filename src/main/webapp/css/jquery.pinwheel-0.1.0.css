@@ -4,10 +4,7 @@
     z-index: 100;
     -webkit-animation: .05s ease-in both;
     animation: .05s ease-in both;
-    width:380px;
-}
-#pj-tooltip.goog-hovercard.popover {
-    z-index: 90;
+    width:376px;
 }
 .popover.top {
     margin-top: -6px;
@@ -16,13 +13,12 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1050;
     padding: 12px;
 }
 .popover .popover-content {
     background: #fff;
     border: solid 1px #ccc;
-    border-radius: 5px;
+    border-radius:2px;
     overflow: hidden;
 }
 .zh-profile-card {
@@ -32,9 +28,16 @@
     background: #fff;
     min-height: 50px;
 }
-.zh-profile-card .upper, .zh-profile-card .lower {
-    border: 14px solid transparent;
+.zh-profile-card .upper{
+    border: 1px solid transparent;
+    padding: 20px 20px 14px 20px;
 }
+.zh-profile-card .lower {
+    background: #fff;
+    border: 1px solid transparent;
+    padding: 0 20px 20px 20px;
+}
+
 .zh-profile-card .lower .meta .item:last-child {
     border-right: 0 none;
 }
@@ -69,17 +72,13 @@
     color: #222;
     padding:4px 0 0 38px;
 }
-.zh-profile-card .lower {
-    background: #fff;
-}
 
 .zh-profile-card .lower .meta .item:first-child {
     padding-left: 0;
 }
 .zh-profile-card .lower .meta .item {
     float: left;
-    padding: 0 16px;
-    border-right: 1px solid #eee;
+    padding: 0 12px;
     color: inherit;
     text-decoration: none;
 }
@@ -97,15 +96,15 @@
     color: #999;
     padding-top: 6px;
 }
-.zh-profile-card .lower .operation .zg-btn {
-    margin-left: 15px;
-    font-size: 13px;
-}
+
 .zh-profile-card .lower .operation .zg-btn, .zh-profile-card .lower .operation .zg-btn-white, .zh-profile-card .lower .operation button {
-    float: right;
+    float: left;
     height: 32px;
-    margin-top: 8px;
+    margin:8px 0 0 10px;
     vertical-align: middle;
+    width:78px!important;
+    font-family:"Microsoft YaHei";
+	_font-family:"Microsoft YaHei";
 }
 .zg-btn {
     display: block;
@@ -116,7 +115,7 @@
     padding: 1px;
     font-weight: 400;
     line-height: 18px;
-    border-radius: 3px;
+    border-radius: 2px;
     cursor: pointer;
     box-sizing: border-box;
 }
@@ -127,7 +126,7 @@
     border-left: 13px solid transparent;
     border-right: 13px solid transparent;
     border-top: 13px solid #ccc;
-   /* border-top: 13px solid #fff; */
+
 }
 .popover .arrow, .popover .arrow2 {
     position: absolute;

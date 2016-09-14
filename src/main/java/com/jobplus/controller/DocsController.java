@@ -98,7 +98,7 @@ public class DocsController {
 	 * @return
 	 */
 	@RequestMapping(value = "/getDocsDetail")
-	public ModelAndView getDocsDetail(HttpServletRequest request, HttpServletResponse response,Docs record) {
+	public ModelAndView getDocsDetail(HttpServletRequest request, HttpServletResponse response,Docs record,@RequestParam(required=false) String isAdmin) {
 		ModelAndView mv = new ModelAndView();
 		record = docsService.getDocsDetail(record);
 		if(record == null || 1!=record.getIsconverter() ){
@@ -108,7 +108,12 @@ public class DocsController {
 		}
 		logger.info("*****getDocsDetail 文档详情*******record=="+JSON.toJSONString(record));
 		mv.addObject("record", record);
-		mv.setViewName("mydocs/docs/documentDetail");
+		if("7".equals(isAdmin)){
+			//后台管理员查看
+			mv.setViewName("manage/documentDetail");
+		}else{
+			mv.setViewName("mydocs/docs/documentDetail");
+		}
 		return mv;
 	}
 	/**

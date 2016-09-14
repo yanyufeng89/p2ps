@@ -31,4 +31,13 @@ public interface IUpdTableColumnService {
 	 * @return
 	 */
 	int updNums(Integer tableName, Integer tableColumn, Integer addOrDec, Integer AdOrDeNum, Integer objId);
+	
+	/**
+	 * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
+				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
+	 * @param id
+	 * @param tableName
+	 * @return
+	 */
+	int delOneById(Integer tableName,Integer id);
 }

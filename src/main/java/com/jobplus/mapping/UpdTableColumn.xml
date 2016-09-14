@@ -26,6 +26,13 @@
     END  	
   	where id = #{objectId}
   </update>
+  
+   <delete id="delOneById" parameterType="java.lang.String" >
+    delete from ${tableName}
+    where id = ${id}
+  </delete>
+  
+  
   <!-- <update id="updTableColumn" parameterType="com.jobplus.pojo.UpdTableColumn" >
   	update tbl_books
   	set collectsum = collectsum + 999

@@ -430,8 +430,11 @@ public class SolrJUtils {
 			e.printStackTrace();
 		}
 		List<Object> dataList = new ArrayList<Object>();
-		dataList.add(rsp.getResults().getNumFound());
-		dataList.add(JSON.toJSONString(rsp.getResults()));
+		if(null!=rsp.getResults()){
+			
+			dataList.add(rsp.getResults().getNumFound());
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}
 
 		return dataList;
 	}

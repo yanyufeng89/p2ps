@@ -19,7 +19,7 @@ $(function(){
 	    	$this=$(this);
 			$.confirm({
 				'title'		: '确认删除话题',
-				'message'	: "确认要删除话题\""+name+"\"吗?",
+				'message'	: "确认要删除话题&nbsp;\""+name+"\"&nbsp;吗?",
 				'buttons'	: {
 					'确认'	: {
 						'class'	: 'blue',
@@ -82,13 +82,15 @@ $(function(){
     $('.attention span').live('click',function(){
     	var topicid=$(this).data('topicid');
     	var $btn=$(this).find('input[type=botton]');
+    	var createperson=$(this).data('createperson');
+    	var titlename=$(this).data('titlename');
     	if($btn.hasClass('topic-disblue')){
     		$btn.removeClass('topic-disblue').addClass('topic-blue').val('关注');
     		deleteAttentions(topicid.toString(),$(this));
     		$(this).attr('data-actiontype','1');
     	}else{
     		$btn.removeClass('topic-blue').addClass('topic-disblue').val('取消关注');
-    		topicFollow($(this),1,'1');
+    		topicFollow($(this),1,'1',createperson,topicid,titlename);
     		$(this).attr('data-actiontype','0');
     	}
     	 

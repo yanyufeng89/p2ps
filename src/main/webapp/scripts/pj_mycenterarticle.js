@@ -9,7 +9,7 @@ $(function(){
 	    	$this=$(this);
 			$.confirm({
 				'title'		: '确认删除已分享的文章',
-				'message'	: "确认要删除已分享的文章\""+name+"\"吗?",
+				'message'	: "确认要删除已分享的文章&nbsp;\""+name+"\"&nbsp;吗?",
 				'buttons'	: {
 					'确认'	: {
 						'class'	: 'blue',
@@ -31,7 +31,7 @@ $(function(){
 	    	$this=$(this);
 			$.confirm({
 				'title'		: '确认删除收藏的文章',
-				'message'	: "确认要删除收藏的文章\""+name+"\"吗?",
+				'message'	: "确认要删除收藏的文章&nbsp;\""+name+"\"&nbsp;吗?",
 				'buttons'	: {
 					'确认'	: {
 						'class'	: 'blue',

@@ -15,7 +15,7 @@
     <div class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
       <div class='bookdescrition'>
-        <span>聘加知识库>文档<#list record.doctype?split(",") as doctype><#assign types=doctype?split(":")/>>${types[1]}</#list></span>
+        <span>JobPlus知识库>文档<#list record.doctype?split(",") as doctype><#assign types=doctype?split(":")/>>${types[1]}</#list></span>
       </div>
       <div id="content">
         <input type='hidden' name='docid' value='${record.id}'>

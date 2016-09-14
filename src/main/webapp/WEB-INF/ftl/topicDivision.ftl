@@ -6,7 +6,8 @@
     <title>
             话题专区
     </title>
-    <meta name="viewport" content="width=1200"/> 
+    <meta name="viewport" content="width=1230"/> 
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_searchres.css">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
@@ -17,7 +18,7 @@
   <body>
     <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
     <div class='division-banner'>
-	  <span>聘加知识库>话题</span>
+	  <span>JobPlus知识库>话题</span>
 	</div>
     <input type="hidden" id="topicstype" value="${topicstype}"/>
     <div id="topic-division-container" class='topic-division-container'>

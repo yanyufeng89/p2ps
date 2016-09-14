@@ -2,7 +2,7 @@
 <html class="expanded">
   
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
           个人中心
@@ -14,19 +14,14 @@
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
       <div id="bd">
 		<div class="bd-wrap">
-		<div class="body">
 		<div class="uc-aside">
 		<div class="uc-user-box">
 		<div class="img-center">
-		<div>
 		 <#if (Session.user.headicon)??>
-		   <a class="name-link" href="/51jobplusCore/myCenter/getMyHeadTop" target="_self">
-		    <img src="${Session.user.headicon}">
+		    <img src="${Session.user.headicon}" width='80' height='80'>
 		  <#else>
-		    <img src="/51jobplusCore/image/myphoto.jpg">
-		  </a>
+		    <img src="/51jobplusCore/image/myphoto.jpg" width='80' height='80'>
 		 </#if>
-		</div>
 		</div>
 		<p class="user-name">
 			<a class="name-link" href="/51jobplusCore/myCenter/getMyHeadTop" target="_self">
@@ -238,7 +233,6 @@
 		      </div>
 		  </div>
 		  
-		</div>
 		</div>
 		</div>
 		</div>

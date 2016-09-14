@@ -1,7 +1,9 @@
 package com.jobplus.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.jobplus.pojo.GridQuery;
 import com.jobplus.pojo.ReportInfo;
 import com.jobplus.pojo.ReportInfoConfig;
 
@@ -24,4 +26,11 @@ public interface IReportInfoService {
 
 	public List<ReportInfoConfig> getReportInfoConfigList();
 	
+	/**
+	 * 分页获取所有的举报信息
+	 * @param record
+	 * @return
+	 */
+	public Map<String, Object> getAllReportInfo(GridQuery gridQuery);
+//	public Page<ReportInfo> getAllReportInfo(ReportInfo record);
 }

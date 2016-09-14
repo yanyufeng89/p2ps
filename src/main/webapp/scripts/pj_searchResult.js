@@ -12,15 +12,24 @@ $(function(){
 		  var index=$(this).index();
 		  if(index!=1){
 			  $('.select-2').show();
-			  $('.select-2-arrow').css({
-				  left: $(this).position().left-121
-			  });
+			  $('.select-2-arrow').css({left: $(this).position().left-121}).show();
 			  $('.select-2 .2-list').hide().eq(index-2).show();
 		  }
 		  if(index==1||index==0){
 			  $('.select-2,.select-2 .2-list').hide();
 		  }
 	});
+    $posbox.mouseleave(function () {
+        var index = $(this).index();
+        if (index == 1 || index == 0) {
+            var $currentType = $(".select-2 a.active");
+            if ($currentType.length == 1) {
+                $currentType.parent().show();
+                $currentType.parent().parent().show();
+                $(".select-2-arrow").css({left: $("span[data-id='" + $currentType.attr("data-pid") + "']").position().left - 121}).show();
+            }
+        }
+    });
     $anvlfteb.mouseleave(function () {
         var $currentType = $(".select-2 a.active");
         if ($currentType.length == 1) {
@@ -29,7 +38,7 @@ $(function(){
         } else {
             $('.select-2,.select-2 .2-list').hide();
         }
-    })
+    });
 	
     //绑定查询事件
     $("#searchCollapse li:first-child span,.select-2 a").click(function (e) {

@@ -122,7 +122,7 @@ public class TopicsController {
 	@RequestMapping(value = "/getTopicsDetail")
 	@ResponseBody
 	public ModelAndView getTopicsDetail(HttpServletRequest request, HttpServletResponse response,@RequestParam(required=true) String topicId,
-			@RequestParam(required=false) String sortType) {
+			@RequestParam(required=false) String sortType,@RequestParam(required=false) String isAdmin) {
 		ModelAndView mv = new ModelAndView();
 		if(StringUtils.isBlank(sortType)){//默认为1  按照时间排序
 			sortType = ConstantManager.DEFAULT_SORT_TYPE_VALUE;
@@ -140,7 +140,12 @@ public class TopicsController {
 		
 		mv.addObject("topicsDetail", topicsDetail);
 		mv.addObject("sortType", sortType);
-		mv.setViewName("mydocs/docs/topicDetail");
+		if("7".equals(isAdmin)){
+			//后台管理员查看
+			mv.setViewName("manage/topicDetail");
+		}else{
+			mv.setViewName("mydocs/docs/topicDetail");
+		}
 		return mv;
 	}
 	

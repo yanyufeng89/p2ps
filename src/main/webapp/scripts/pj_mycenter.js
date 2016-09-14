@@ -294,7 +294,7 @@ function visitorLoadMore(obj){
 		          		else{
 		          			obj.removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
 		          			obj.attr('data-actiontype','1');
-		          			obj.empty().html('关注他');
+		          			obj.empty().html('关注');
 		          		} 
 	        	  }
 	        }

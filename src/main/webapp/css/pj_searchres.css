@@ -16,7 +16,7 @@
 }
 ul.filter-wrapper {
 	position: relative;
-	margin:8px 0 20px 0;
+	margin:8px 0 8px 0;
 	background-color: #fff;
 	border: 1px solid #d6d6d6;
 	min-height: 36px;
@@ -64,9 +64,9 @@ ul.filter-wrapper li span{
 }
 .topic-sharein{
 	background:url(../image/selected.png) transparent no-repeat;
-	background-position:0 -80px;
+	background-position:0 -85px;
 	width:198px;
-	height:40px;
+	height:45px;
 	cursor:pointer;
 	display: inline-block;
 	outline:none;
@@ -75,7 +75,7 @@ ul.filter-wrapper li span{
 	background-position:0 -40px;
 } 
 ul.filter-wrapper li span.active, ul.filter-wrapper li span:hover,.select-2 a:hover,.select-2 a.active{
-	background-color: #0867c5; 
+	background-color: #1b85d5; 
 	color: #fff;
 	border-radius:25px;
 	text-decoration: none;
@@ -119,10 +119,14 @@ ul.filter-wrapper li:after {
 
 .all-news-list .item{
 	border: 1px solid #d6d6d6;
-	margin-bottom:16px;
+	margin-bottom:8px;
 	zoom: 1;
 	overflow: hidden;
 	position: relative;
+	background:#fff;
+}
+.all-news-list .item:hover{
+	border-color:#1b85d5
 }
 .news .hd {
 	background: url(../image/waterCover.png) no-repeat 380px 0;
@@ -167,9 +171,7 @@ strong, b {
 	font-weight: bold;
 }
 .all-news-list .title {
-	line-height: 26px;
-	width:1100px;
-	float: left;
+	line-height: 26px;;
 	margin-bottom: 7px;
 }
 
@@ -206,7 +208,7 @@ strong, b {
     visibility: visible;
 }
 .all-news-list .picno {
-	float: right;
+	/* float: right; */
 	margin:6px;
 	position: relative;
 }
@@ -237,7 +239,7 @@ p {
 	word-break: break-all;
 }
 .all-news-list .newsinfo p{
-    width:1090px;
+    /* width:1090px; */
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -469,10 +471,11 @@ ul.filter-wrapper input[type=button] {
 }
 .topicdivision-left{
 	float:left;
+	width:980px;
 }
 .topicdivision-right{
-	float:right;
-	margin-top:6px;
+	float:left;
+	margin:6px 0 0 73px;
 }
 .select-1{
     padding-bottom: 20px;

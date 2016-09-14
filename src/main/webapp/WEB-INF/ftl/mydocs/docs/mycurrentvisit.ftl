@@ -2,7 +2,7 @@
 <html class="expanded">
     
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <title>最近访问</title>
         <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
@@ -20,10 +20,7 @@
                                <#else>
                                  <img src="/51jobplusCore/image/myphoto.jpg" width="120" height="120" id="imghead">
                                </#if>
-                                <span class="ProfileAvatarEditor-tip">更换头像</span>
-                                <form method="POST"  id="previewImage" enctype="multipart/form-data">
-                                  <input name='headIconFile' class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this)" />
-                                </form>
+                               
                               </div>
                             <div class="profile-overview">
                                 <div class="profile-overview-content">
@@ -140,17 +137,17 @@
 										  <#if (list.fansIds?string==Session.user.userid?string)>
 											<button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow"  data-actiontype='0'>取消关注</button>
 										  <#else>
-											<button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注他</button>
+											<button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注</button>
 										  </#if>
 									  <#else>
 										 <#if list.fansIds?split(",")?seq_contains(Session.user.userid?string)>
 											<button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow"  data-actiontype='0'>取消关注</button>
 										 <#else>
-											<button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注他</button>
+											<button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注</button>
 										 </#if>
 									</#if>
 								  <#else>
-									  <button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注他</button>
+									  <button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注</button>
 								  </#if>
 							   </div>
 								 <a title="${list.userName}"  target="_blank" class="zm-item-link-avatar"  data-userid='${list.visitorid}' href='/51jobplusCore/myHome/getHomePage?userid=${list.visitorid}'>

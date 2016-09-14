@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -110,7 +111,7 @@ public class SitesController {
 	 */
 	@RequestMapping(value = "/getSiteDetail")
 	@ResponseBody
-	public ModelAndView getSiteDetail(HttpServletRequest request, HttpServletResponse response, Sites record) {
+	public ModelAndView getSiteDetail(HttpServletRequest request, HttpServletResponse response, Sites record,@RequestParam(required=false) String isAdmin) {
 		ModelAndView mv = new ModelAndView();
 		if (record.getId() != null) {
 			record = sitesService.getSiteDetail(record);
@@ -120,7 +121,12 @@ public class SitesController {
 			}
 			logger.info("**getSiteDetail*获取站点详情****record==" + JSON.toJSONString(record));
 			mv.addObject("record", record);
-			mv.setViewName("mydocs/docs/siteDetail");
+			if("7".equals(isAdmin)){
+				//后台管理员查看
+				mv.setViewName("manage/siteDetail");
+			}else{
+				mv.setViewName("mydocs/docs/siteDetail");
+			}
 		} else {
 			logger.info("**getSiteDetail*获取站点详情  失败   record.getId() == null  999****");
 		}

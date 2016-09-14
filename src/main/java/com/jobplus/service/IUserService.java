@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jobplus.pojo.GridQuery;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jobplus.pojo.OperationSum;
@@ -107,4 +108,13 @@ public interface IUserService {
      * @return
      */
     public OperationSum getOperationSum(HttpServletRequest request);
+
+	/**
+	 * 后台查询用户列表
+	 *
+	 * @param gridQuery
+	 * @return
+	 */
+	Map<String, Object> getAllUsers(GridQuery gridQuery);
+
 }

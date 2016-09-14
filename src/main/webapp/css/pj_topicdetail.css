@@ -56,7 +56,7 @@
     margin: 5px 0 35px;
     color: #222;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 
@@ -70,7 +70,7 @@
 }
 
 .submit-button{
-	margin-right:26px;
+	margin-right:18px;
 }
 
 .loading{
@@ -144,10 +144,9 @@ input[type=text], input[type=password]:focus {
 }
 .zg-btn-unfollow, .zg-btn-disabled {
     background: #eee;
-    color: #888;
-    border: 1px solid #ddd;
+    color: #666;
+    border: 1px solid #e5e5e5;
 }
-
 
 .zm-tag-editor-maxcount {
     color: #999;
@@ -168,7 +167,7 @@ input[type=text], input[type=password]:focus {
     background: #fff;
     border: 1px solid #999;
     border: 0 none rgba(0,0,0,0);
-    border-radius: 5px;
+    border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.5);
     font-size: 12px;
     color:gray;
@@ -195,16 +194,8 @@ input[type=text], input[type=password]:focus {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.uEditorCustom,.topiceditor{
-	/* width:830px; */
-	/* height:auto;
-	min-height:150px;
-	overflow:auto; */
-}
 
-.edui-body-container{
-	display:block!important;
-}
+
 .Sorter a.lbl:hover {
 	background-color:#eee
 }
@@ -215,7 +206,7 @@ input[type=text], input[type=password]:focus {
 	height:auto;
 	border:1px solid #ddd;
 	border-color:#ddd;
-	border-radius:3px;
+	border-radius:2px;
 	box-shadow:0 1px 1px rgba(0,0,0,.05);
 	text-decoration:none;
 	padding-left:10px;
@@ -234,12 +225,6 @@ input[type=text], input[type=password]:focus {
     float: left;
     width: 838px;
  }
-#content .searchresright{
-	position: relative;
-    border: 1px solid #e5e5e5;
-    height:120px;
-
-}
 .ui-helper-hidden-accessible {
     border: 0;
     clip: rect(0, 0, 0, 0);
@@ -253,6 +238,7 @@ input[type=text], input[type=password]:focus {
 .zm-relate-answer{
    border: 1px solid #e5e5e5;
    margin-top:10px;
+   background:#fff;
 }
 .bdcs-search-form-submit {
     border: 2px solid #0867c5;
@@ -403,10 +389,7 @@ ul.filter-wrapper li:before, ul.filter-wrapper li:after {
 ul.filter-wrapper li span lable {
     padding-left: 42px;
 }
-a.upload-btn {
-    left:62px;
-    top:40px;
-}
+
 .bg-index {
     background: transparent url(../image/selected.png) no-repeat scroll;
 }
@@ -508,7 +491,7 @@ a.upload-btn {
 }
 ._CommentBox_root_G_1m._CommentBox_bordered_3Fo- {
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 ._CommentBox_root_G_1m {
@@ -550,8 +533,8 @@ a.upload-btn {
 ._CommentForm_bordered_2isg {
     margin: 0;
     padding: 1em;
-    border-radius: 0 0 4px 4px;
-    background: #fbfbfb;
+    border-radius: 0 0 2px 2px;
+    background: #fff;
 }
 
 ._CommentForm_root_1-ko {
@@ -612,7 +595,7 @@ a.upload-btn {
 }
 .zm-comment-box.empty.cannot-comment .zm-comment-box-ft, .zm-comment-box .zm-comment-box-ft {
     color:#999;
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 2px 2px;
     position: relative;
 }
 .zm-comment-box.empty.cannot-comment .zm-comment-form, .zm-comment-box .zm-comment-form {
@@ -710,10 +693,6 @@ a.upload-btn {
 	margin-right:26px;
 }
 
-.zm-form-table-field-last {
-    padding: 0;
-}
-
 .modal-dialog-buttons {
     padding: 0 15px;
     margin-bottom: 15px;
@@ -731,10 +710,6 @@ a.upload-btn {
 .ReportMenu span {
 	display:block;
 }
-.zg-user-name{
-	font-size: 14px;
-}
-
 .zm-item-img-avatar{
 	width:32px;
 	height:32px;

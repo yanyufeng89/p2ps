@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_聘十知识库
+          个人中心_JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -18,13 +18,11 @@
 		<div class="uc-aside">
 		<div class="uc-user-box">
 		<div class="img-center">
-		<div>
 		   <#if (Session.user.headicon)??>
-		    <img src="${Session.user.headicon}">
+		    <img src="${Session.user.headicon}" width='80' height='80'>
 		  <#else>
-		    <img src="/51jobplusCore/image/myphoto.jpg">
+		    <img src="/51jobplusCore/image/myphoto.jpg" width='80' height='80'>
 		  </#if>
-		</div>
 		</div>
 		<p class="user-name">
 			<a class="name-link" href="/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}" target="_blank"> 

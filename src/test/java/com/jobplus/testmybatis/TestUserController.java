@@ -275,7 +275,7 @@ public class TestUserController {
 	@Test
 	public void search() throws Exception {
 		MvcResult result = mockMvc
-				.perform(MockMvcRequestBuilders.post("/homePage/search"))//.param("userId", "2"))//.param("objectId", "21").param("actionType", "1").param("userid", "2"))
+				.perform(MockMvcRequestBuilders.post("search/302"))//.param("Condition", "Uber"))//.param("userId", "2"))//.param("objectId", "21").param("actionType", "1").param("userid", "2"))
 				.andDo(MockMvcResultHandlers.print()).andReturn();
 		logger.info(JSON.toJSONString("testMyCenter*****************:" + result.toString()));
 	}
@@ -283,6 +283,13 @@ public class TestUserController {
 	public void index() throws Exception {
 		MvcResult result = mockMvc
 				.perform(MockMvcRequestBuilders.post("/homePage/getHome"))//.param("userId", "2"))//.param("objectId", "21").param("actionType", "1").param("userid", "2"))
+				.andDo(MockMvcResultHandlers.print()).andReturn();
+		logger.info(JSON.toJSONString("testMyCenter*****************:" + result.toString()));
+	}
+	@Test
+	public void myHome() throws Exception {
+		MvcResult result = mockMvc
+				.perform(MockMvcRequestBuilders.post("/myHome/getHomePage"))//.param("userId", "2"))//.param("objectId", "21").param("actionType", "1").param("userid", "2"))
 				.andDo(MockMvcResultHandlers.print()).andReturn();
 		logger.info(JSON.toJSONString("testMyCenter*****************:" + result.toString()));
 	}

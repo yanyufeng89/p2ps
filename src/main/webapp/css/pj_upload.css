@@ -88,6 +88,9 @@
 	margin-bottom:16px;
 	width: 1200px;
     margin: 0 auto;
+    margin-top:8px;
+    height:24px;
+    line-height:24px;
 }
 .upload-success-container .ic-success {
 	background: url(../image/uploadFinish_4fc6506.png) no-repeat;
@@ -117,9 +120,9 @@ a.upload-btn:hover{
 
 .upload-success-container .hd-wrap .goon-upload {
 	clear:both;
-	height:40px;
-	line-height:40px;
-	width:180px;
+	height:30px;
+	line-height:30px;
+	width:100px;
 	display: block;
 	margin: 0 auto;
 	background-color: #3195e1;
@@ -537,9 +540,10 @@ a.upload-btn:hover{
 .mod-upload .link .txtdocument,.mod-upload .link .bookdocument,.mod-upload .link .coursedocument,.sharedetail .link .coursedocument{
 	height: 32px;
 	border: 1px solid #cdcdcd; 
-	border-radius: 4px 0 0 4px;
+	border-radius: 2px 0 0 2px;
 	color: #090909;
     font-size: 12px;
+    cursor:pointer;
 }
 .mod-upload .link .bookdocument,.mod-upload .link .coursedocument,.sharedetail .link .coursedocument,
 .mod-upload .link .txtdocument{
@@ -556,7 +560,7 @@ a.upload-btn:hover{
 	line-height: 32px;
 	width:80px;
 	cursor:pointer;
-	border-radius: 0 4px 4px 0;
+	border-radius: 0 2px 2px 0;
 	border-left: 0;
 	float:left;
 }
@@ -582,12 +586,11 @@ a.upload-btn:hover{
 	box-sizing: border-box;
 	float: none;
 	outline:none;
+
+  
 }
 
-.mod-upload .bddoc .link .txtdocument,.mod-upload .bddoc .link .docpreview,
-.mod-upload .bdtopic .link .txtdocument{
-	float:left;
-}
+
 .mod-upload .bddoc .link .file{
     top: 11px;
     width: 720px!important;
@@ -613,13 +616,16 @@ a.upload-btn:hover{
 }
 .mod-upload .bar input {
     background: #97b5eb;
-    width: 80px;
-    line-height: 30px;
+    width:60px;
+    line-height:30px;
     height: 30px;
     text-align: center;
     float: right;
-    border-radius: 4px;
+    border-radius:2px;
+    font-size:14px;
     border: 1px solid #e5e5e5;
+    font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
 }
 
 .mod-upload .bar>div {
@@ -688,7 +694,7 @@ a.upload-btn:hover{
     background: #fff;
     border: 1px solid #999;
     border: 0 none rgba(0,0,0,0);
-    border-radius: 5px;
+    border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0,0,0,.5);
     font-size: 12px;
 }
@@ -712,10 +718,8 @@ a.upload-btn:hover{
 
 .mod-upload .bar .btn-blue {
 	background: #1b85d5;
-	border-radius:2px;
 	cursor: pointer;
 	padding:0;
-	border-radius: 4px;
 }
 
 .mod-upload .bar .btn-blue:hover{
@@ -728,8 +732,8 @@ a.upload-btn:hover{
 
 .btn {
 	border: 1px solid #EAE5E5;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
 	border-radius: 2px;
 	min-width: 80px;
 	display: inline-block;
@@ -746,17 +750,18 @@ a.upload-btn:hover{
 	cursor: pointer;
 }
 .nhd .add-all-able input[type=file]{
-	width: 107px;
+	width: 100px;
     position: absolute;
     top:30px;
-    right:142px;
+    right:136px;
     bottom: 0;
     border: 0;
-    padding: 0;
-    margin: 0;
-    height: 36px;
+    height: 30px;
+    line-height:30px;
     cursor: pointer;
     opacity: 0;
+    font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
 }
 .mod-upload .bar .btn-loading {
 	right: 0;
@@ -861,7 +866,7 @@ a.upload-btn:hover{
 	line-height: 35px;
 	text-align: center;
 	font-size: 16px;
-	border-radius: 4px;
+	border-radius: 2px;
 	display: inline-block;
 	*display: inline;
 	*zoom: 1;
@@ -884,7 +889,7 @@ a.upload-btn:hover{
 	line-height: 35px;
 	text-align: center;
 	font-size: 16px;
-	border-radius: 4px;
+	border-radius:2px;
 	display: inline-block;
 	*display: inline;
 	*zoom: 1;
@@ -2044,7 +2049,7 @@ a.upload-btn:hover{
 	*zoom: 1;
 	width: 9px;
 	height: 9px;
-	border-radius: 5px;
+	border-radius:2px;
 	background-color: #e8e8e8;
 	margin: 0 7px;
 	cursor: pointer
@@ -2729,6 +2734,8 @@ a.upload-btn:hover{
     font-size: 12px;
     height: 25px;
     display: block;
+    font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
 }
  .booksedit .content {
 	height: 98px!important;
@@ -2854,7 +2861,7 @@ a.upload-btn:hover{
 #upload-init-container .nhd,#upload-files-container .nhd,#upload-topicfiles-container .nhd{
 	height: 40px;
 	padding: 30px;
-	background: #ffff;
+	background: #fff;
 }
 
 #upload-init-container .nedit-all-head,#upload-files-container .nedit-all-head,
@@ -2864,8 +2871,8 @@ a.upload-btn:hover{
 	position: relative;
 }
 
-#upload-init-container .nhd .act,#upload-files-container .nhd .act ,#upload-topicfiles-container .nhd .act {
-	line-height: 40px;
+.act {
+	float:right
 }
 
 #upload-init-container .nhd h3 a, #upload-init-container .nhd .btn-cancel-update,
@@ -2882,17 +2889,19 @@ a.upload-btn:hover{
 }
 
 .nhd .submit-all-able{
-	height: 35px;
-	width: 107px;
+	height: 30px;
+	width: 100px;
 	color: #fff;
 	background-color: #1b85d5;
-	line-height: 35px;
+	line-height: 30px;
 	text-align: center;
-	font-size: 16px;
+	font-size: 14px;
 	border-radius: 2px;
 	display: inline-block;
 	text-decoration: none;
 	cursor:pointer;
+	float:left;
+	margin-left:10px;
 }
 #sharebook,#sharecourse,#sharearticle,#sharesite{
 	margin-right:36px;
@@ -2932,17 +2941,19 @@ a.upload-btn:hover{
 }
 
 .nhd .add-all-able{
-	height: 35px;
-	width: 107px;
+	height:28px;
+	line-height:28px;
+	width: 98px;
 	color: gray;
-	background-color: fff;
-	line-height: 35px;
+	background-color:#fff;
 	text-align: center;
-	font-size: 16px;
+	font-size: 14px;
 	border-radius: 2px;
 	display: inline-block;
 	text-decoration: none;
-	border: 1px solid #EAE5E5;
+	border: 1px solid #e5e5e5;
+	float:left;
+	
 }
 .nhd .add-all-able span{
 	color:#0867c5;
@@ -3033,13 +3044,15 @@ a.upload-btn:hover{
 }
 #js-before-ask{
 	cursor:auto;
-	border-radius: 4px 0 0 4px;
+	border-radius: 2px 0 0 2px;
 }
 .editlayoutbook .zu-question-suggest-topic-input {
     width: 120px;
     border: 0 none;
     font-size: 12px;
     outline:none;
+    font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
 }
 .editlayoutbook  .label-input-label {
     line-height: 23px;

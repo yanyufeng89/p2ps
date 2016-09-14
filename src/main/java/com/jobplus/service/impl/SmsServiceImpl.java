@@ -45,7 +45,7 @@ public class SmsServiceImpl implements ISmsService{
 	*3关注了你发布的话题  
     * */
 	private static Map<String, String> map = new HashMap<String,String>();
-	private static Map<String, String> urlMap = new HashMap<String,String>();
+	public static Map<String, String> urlMap = new HashMap<String,String>();
 //	private static Map<String, String> tableColMap = new HashMap<String,String>();
 	static {
 		map.put("2","关注了您");

@@ -14,7 +14,7 @@
     <div  class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
       <div class='topicdescrition'>
-		<span>聘加知识库>话题<#list topicsDetail.topicstype?split(",") as item><#assign types=item?split(":")/>>${types[1]}</#list></span>
+		<span>JobPlus知识库>话题<#list topicsDetail.topicstype?split(",") as item><#assign types=item?split(":")/>>${types[1]}</#list></span>
       </div>
       <div id="content">
         <input type='hidden' name='titleid' value='${topicsDetail.id}'>
@@ -304,12 +304,12 @@
 				  <#if (topicsDetail.fansList)??>
 				   <#list topicsDetail.fansList as fanlist>
 
-				     <a title="${fanlist.username}"  class="zm-item-link-avatar" target='_blank' href='/51jobplusCore/myHome/getHomePage?userid=${fanlist.userid}'  data-userid='${fanlist.userid}' data-moduletype='0'>
+				     <a title="${fanlist.username}" target='_blank' href='/51jobplusCore/myHome/getHomePage?userid=${fanlist.userid}' data-moduletype='0'>
 				 
 					   <#if (fanlist.headicon)?? && fanlist.headicon?length gt 0>
-					     <img src="${fanlist.headicon}" class="zm-item-img-avatar" data-moduletype='0'>
+					     <img src="${fanlist.headicon}" class="zm-item-img-avatar" data-moduletype='0' data-userid='${fanlist.userid}'>
 					   <#else>
-					     <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-moduletype='0'>
+					     <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-moduletype='0' data-userid='${fanlist.userid}'>
 					   </#if>
 					</a>
 				  </#list>

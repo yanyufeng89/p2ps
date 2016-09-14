@@ -14,7 +14,7 @@
     <div class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
       <div class='bookdescrition'>
-		<span>聘加知识库>课程<#list record.coursestype?split(",") as item><#assign types=item?split(":")/>>${types[1]}</#list></span>
+		<span>JobPlus知识库>课程<#list record.coursestype?split(",") as item><#assign types=item?split(":")/>>${types[1]}</#list></span>
       </div>
       <div id="content">
         <input type='hidden' name='courseid' value='${record.id}'>

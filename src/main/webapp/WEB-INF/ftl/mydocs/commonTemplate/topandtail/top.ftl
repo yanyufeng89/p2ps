@@ -81,10 +81,10 @@
 					<a href="/51jobplusCore/index"  target='_self'>知识库</a>
 		    </li>
 		    <li>
-					<a href="javascript:void(0)" target='_blank'>使用攻略</a>
+					<a href="/51jobplusCore/about/newbie_guide" target='_blank'>使用攻略</a>
 		    </li>
 		    <li>
-					<a href="javascript:void(0)" target='_blank'>建议反馈</a>
+					<a href="/51jobplusCore/about/feedback" target='_blank'>建议反馈</a>
 		    </li>
           </ul>
         </div>

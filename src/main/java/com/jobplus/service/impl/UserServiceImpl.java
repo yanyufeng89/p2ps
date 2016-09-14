@@ -1,16 +1,11 @@
 package com.jobplus.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-
+import com.jobplus.dao.AccountMapper;
+import com.jobplus.dao.OperationSumMapper;
+import com.jobplus.dao.UserMapper;
+import com.jobplus.pojo.*;
+import com.jobplus.service.*;
+import com.jobplus.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -19,25 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jobplus.dao.AccountMapper;
-import com.jobplus.dao.OperationSumMapper;
-import com.jobplus.dao.UserMapper;
-import com.jobplus.pojo.Account;
-import com.jobplus.pojo.FTPStatus;
-import com.jobplus.pojo.OperationSum;
-import com.jobplus.pojo.Page;
-import com.jobplus.pojo.User;
-import com.jobplus.service.IAccountService;
-import com.jobplus.service.IAttentionService;
-import com.jobplus.service.IOperationSumService;
-import com.jobplus.service.ISequenceService;
-import com.jobplus.service.ISmsService;
-import com.jobplus.service.IUserService;
-import com.jobplus.utils.DBUtilsTemplate;
-import com.jobplus.utils.DateUtils;
-import com.jobplus.utils.FTPUtils;
-import com.jobplus.utils.SHAUtil;
-import com.jobplus.utils.UUIDGenerator;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
@@ -517,5 +502,24 @@ public class UserServiceImpl implements IUserService {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * 后台查询用户列表
+	 *
+	 * @param gridQuery
+	 * @return
+	 */
+	@Override
+	public Map<String, Object> getAllUsers(GridQuery gridQuery) {
+		User record = gridQuery.getCondition() == null ? new User() : (User) gridQuery.getCondition();
+		List<User> list = null;
+		int count = userDao.countList(record);
+		if (count > 0) {
+			record.setPageNo(gridQuery.getPage());
+			record.setPageSize(gridQuery.getRows());
+			record.setLimitSt(record.getPageNo() * record.getPageSize() - record.getPageSize());
+			list = userDao.getList(record);
+		}
+		return GridDataUtil.getGridMap(gridQuery.getRows(), gridQuery.getPage(), count, list);
+	}
 }

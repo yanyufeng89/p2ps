@@ -1,11 +1,10 @@
 package com.jobplus.dao;
 
 
-import java.util.List;
-
+import com.jobplus.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
-import com.jobplus.pojo.User;
+import java.util.List;
 
 public interface UserMapper {
 	
@@ -52,5 +51,19 @@ public interface UserMapper {
      * @return
      */
     List<User> getAttenManList(User record);
-    
+
+    /**
+     * 查询
+     * @param record
+     * @return
+     */
+    List<User> getList(User record);
+
+    /**
+     * 统计
+     * @param record
+     * @return
+     */
+    int countList(User record);
+
 }

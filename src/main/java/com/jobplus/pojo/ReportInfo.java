@@ -2,7 +2,7 @@ package com.jobplus.pojo;
 
 import java.io.Serializable;
 
-public class ReportInfo implements Serializable{
+public class ReportInfo extends PageParent implements Serializable{
     /**
 	 * 
 	 */
@@ -54,14 +54,19 @@ public class ReportInfo implements Serializable{
     /**
      * 举报类型枚举  对应 表名   "tbl_user","tbl_article","tbl_books","tbl_courses","tbl_docs","tbl_topics","tbl_topics_comment" REPORTTYPE_INDEX
      */
-    private String[] REPORTTYPE = {"tbl_user","tbl_article","tbl_books","tbl_courses","tbl_docs","tbl_topics","tbl_topics_comment","tbl_sites"};    
+    private String[] REPORTTYPES = {"tbl_user","tbl_article","tbl_books","tbl_courses","tbl_docs","tbl_topics","tbl_topics_comment","tbl_sites"};    
     /**
      * 用于定义枚举类的下标  
      */
     private Integer REPORTTYPE_INDEX;
     
-    public String[] getREPORTTYPE() {
-		return REPORTTYPE;
+
+	public String[] getREPORTTYPES() {
+		return REPORTTYPES;
+	}
+
+	public void setREPORTTYPES(String[] rEPORTTYPES) {
+		REPORTTYPES = rEPORTTYPES;
 	}
 
 	public Integer getId() {

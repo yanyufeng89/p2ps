@@ -6,7 +6,8 @@
     <title>
            首页
     </title>
-    <meta name="viewport" content="width=1200"/>
+    <meta name="viewport" content="width=1230,initial-scale=0.9"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_index.css" charset="UTF-8">
@@ -89,12 +90,12 @@
                 
                 <input type="submit" id="search_button" class="search_button" value="搜索知识">
                 <input type="text" id="search_input" class="search_input ui-autocomplete-input" name="Condition"
-                tabindex="1" maxlength="64" autocomplete="off" value=""  style="color: rgb(153, 153, 153);">
+                tabindex="1" maxlength="64" autocomplete="off" value="" placeholder="JobPlus海量知识库"  style="color: rgb(153, 153, 153);">
                 <input type="hidden" name="labelWords" id="labelWords" value="">
                 <input type="hidden" name="fromSearch" id="fromSearch" value="true">
                 <input type="hidden" name="suginput" id="suginput">
                 <input type="submit" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier"
-                id="search-form-submit" style='height:40px;' value="分类搜索">
+                id="search-form-submit" style='height:45px;' value="分类搜索">
               </form>
               
               <#--
@@ -276,7 +277,7 @@
 				</div>
 				<div class="doc-info-wrap">
 				<div class="doc-num-info">
-				<ul class="clearfix" id="doccount">
+				<ul class="clearfix pj-doccount" id="doccount">
 				<li>
 					<div class="num">
 					<#if (Session.operationSum.docsharesum)??>
@@ -354,7 +355,7 @@
 				<div class="my-wk">
 				
 				<p class="upload-wrap">
-				<a class="upload-btn bg-index" target='_blank' href="/51jobplusCore/sharein/searchuploadFile"></a>
+				<a class="upload-btn bg-index" style='left:0;top:0' target='_blank' href="/51jobplusCore/sharein/searchuploadFile"></a>
 				<span class="upload-btn-wealth-tip" style="display: inline;">
 				<i class="ic icon-upload-wealth bg-index"></i>
 				送下载券<i class="arrow">
@@ -372,7 +373,7 @@
              <div class='newstitle'>
 			  <span>最新分享</span>
 			 </div>
-			 <div>
+			
 			   <div class='newscontent-left'>
 			     <ul>
                  <#list latestDatas as data>
@@ -401,7 +402,7 @@
                  </#list>
 			     </ul>
                </div>
-			 </div>
+		
           </div>
         </div>
       </div>
@@ -895,8 +896,9 @@
     </div>
     <a id="backtop" title="回到顶部" href="#top" style="display: none; bottom:300px;"></a>
     </div>
-    <div class='pagetemplate'></div>
+    
     <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
+    <div class='pagetemplate'></div>
     <#include "/mydocs/commonTemplate/pmorsmgjs/pmorsmg.ftl"/> 
     <script type="text/javascript" src="/51jobplusCore/scripts/jquery.pause.min.js"></script>
     <script type="text/javascript" src="/51jobplusCore/scripts/jcarousellite_1.0.1.pack.js"></script>

@@ -339,7 +339,7 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename)//object
             		}
             		else{
             			obj.removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
-            			obj.empty().html('关注他');
+            			obj.empty().html('关注');
             			obj.attr('data-actiontype','1');
             		} 
         	  }

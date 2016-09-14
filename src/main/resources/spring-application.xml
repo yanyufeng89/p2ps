@@ -111,7 +111,7 @@
 		<property name="successUrl" value="/index.html" />
 		<!-- 如果您请求的资源不再您的权限范围，则跳转到/403请求地址 -->
 		<property name="unauthorizedUrl" value="/error/403" />
-		<!-- 权限配置 --><!-- /** = authc -->
+		<!-- 权限配置 --><!-- /** = authc    /manage/backstage/** = roles[admin] -->
 		<property name="filterChainDefinitions">
 			<value>
 				/css/** = anon
@@ -144,8 +144,16 @@
 				/search/** = anon
 				/mobilesms/** = anon
 				/authorize/** = anon
+				/about/** = anon
 				/error/** = anon
-				/** = authc
+				/manage/login = anon
+				
+				/manage/avatars/** = anon
+				/manage/css/** = anon
+				/manage/font/** = anon
+				/manage/img/** = anon
+				/manage/js/** = anon
+				/** = anon
 			</value>
 		</property>
 	</bean>

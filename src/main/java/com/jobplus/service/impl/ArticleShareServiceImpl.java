@@ -106,7 +106,7 @@ public class ArticleShareServiceImpl implements IArticleShareService {
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		
-		return 0;
+		return articleShareDao.deleteByPrimaryKey(id);
 	}
 
 	@Override

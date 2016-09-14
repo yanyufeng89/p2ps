@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.SuggestionMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Suggestion" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="sugUserId" property="suguserid" jdbcType="INTEGER" />
+    <result column="sugTel" property="sugtel" jdbcType="CHAR" />
+    <result column="sugEmail" property="sugemail" jdbcType="CHAR" />
+    <result column="sugTime" property="sugtime" jdbcType="DATE" />
+    <result column="isDeal" property="isdeal" jdbcType="INTEGER" />
+    <result column="sugCauseId" property="sugcauseid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Suggestion" extends="BaseResultMap" >
+    <result column="sugContent" property="sugcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, sugUserId, sugTel, sugEmail, sugTime, isDeal, sugCauseId
+  </sql>
+  <sql id="Blob_Column_List" >
+    sugContent
+  </sql>
+  <!-- 查询列表  -->
+   <select id="getAllSug" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Suggestion" >
+    select 
+    <include refid="Base_Column_List" />
+	,
+	<include refid="Blob_Column_List" />
+	,(select count(*) from tbl_suggestion t
+		where 1 = 1
+		<if test="isdeal != null">
+			and isdeal = #{isdeal,jdbcType=INTEGER}
+		</if>
+		<if test="id != null">
+			and sugUserId = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="sugtel != null">
+			and sugTel = #{sugtel,jdbcType=CHAR}
+		</if>
+		<if test="sugemail != null">
+			and sugEmail = #{sugemail,jdbcType=CHAR}
+		</if> ) as pageCount 
+	from tbl_suggestion t
+	where 1 = 1
+	<if test="isdeal != null">
+		and isdeal = #{isdeal,jdbcType=INTEGER}
+	</if>
+	<if test="id != null">
+		and sugUserId = #{id,jdbcType=INTEGER}
+	</if>
+	<if test="sugtel != null">
+		and sugTel = #{sugtel,jdbcType=CHAR}
+	</if>
+	<if test="sugemail != null">
+		and sugEmail = #{sugemail,jdbcType=CHAR}
+	</if>
+	ORDER BY t.sugTime DESC
+	<choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+  </select>
+  <!-- 总数  -->
+   <select id="getAllSug" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Suggestion" >
+   select count(*) from tbl_suggestion t
+		where 1 = 1
+		<if test="isdeal != null">
+			and isdeal = #{isdeal,jdbcType=INTEGER}
+		</if>
+		<if test="id != null">
+			and sugUserId = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="sugtel != null">
+			and sugTel = #{sugtel,jdbcType=CHAR}
+		</if>
+		<if test="sugemail != null">
+			and sugEmail = #{sugemail,jdbcType=CHAR}
+		</if> 
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_suggestion
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_suggestion
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.Suggestion" >
+    insert into tbl_suggestion (ID, sugUserId, sugTel, 
+      sugEmail, sugTime, isDeal, 
+      sugCauseId, sugContent)
+    values (#{id,jdbcType=INTEGER}, #{suguserid,jdbcType=INTEGER}, #{sugtel,jdbcType=CHAR}, 
+      #{sugemail,jdbcType=CHAR}, Now(), 0, 
+      #{sugcauseid,jdbcType=INTEGER}, #{sugcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Suggestion" >
+    insert into tbl_suggestion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="suguserid != null" >
+        sugUserId,
+      </if>
+      <if test="sugtel != null" >
+        sugTel,
+      </if>
+      <if test="sugemail != null" >
+        sugEmail,
+      </if>
+      <if test="sugtime != null" >
+        sugTime,
+      </if>
+      <if test="isdeal != null" >
+        isDeal,
+      </if>
+      <if test="sugcauseid != null" >
+        sugCauseId,
+      </if>
+      <if test="sugcontent != null" >
+        sugContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="suguserid != null" >
+        #{suguserid,jdbcType=INTEGER},
+      </if>
+      <if test="sugtel != null" >
+        #{sugtel,jdbcType=CHAR},
+      </if>
+      <if test="sugemail != null" >
+        #{sugemail,jdbcType=CHAR},
+      </if>
+      <if test="sugtime != null" >
+        #{sugtime,jdbcType=DATE},
+      </if>
+      <if test="isdeal != null" >
+        #{isdeal,jdbcType=INTEGER},
+      </if>
+      <if test="sugcauseid != null" >
+        #{sugcauseid,jdbcType=INTEGER},
+      </if>
+      <if test="sugcontent != null" >
+        #{sugcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Suggestion" >
+    update tbl_suggestion
+    <set >
+      <if test="suguserid != null" >
+        sugUserId = #{suguserid,jdbcType=INTEGER},
+      </if>
+      <if test="sugtel != null" >
+        sugTel = #{sugtel,jdbcType=CHAR},
+      </if>
+      <if test="sugemail != null" >
+        sugEmail = #{sugemail,jdbcType=CHAR},
+      </if>
+      <if test="sugtime != null" >
+        sugTime = #{sugtime,jdbcType=DATE},
+      </if>
+      <if test="isdeal != null" >
+        isDeal = #{isdeal,jdbcType=INTEGER},
+      </if>
+      <if test="sugcauseid != null" >
+        sugCauseId = #{sugcauseid,jdbcType=INTEGER},
+      </if>
+      <if test="sugcontent != null" >
+        sugContent = #{sugcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.Suggestion" >
+    update tbl_suggestion
+    set sugUserId = #{suguserid,jdbcType=INTEGER},
+      sugTel = #{sugtel,jdbcType=CHAR},
+      sugEmail = #{sugemail,jdbcType=CHAR},
+      sugTime = #{sugtime,jdbcType=DATE},
+      isDeal = #{isdeal,jdbcType=INTEGER},
+      sugCauseId = #{sugcauseid,jdbcType=INTEGER},
+      sugContent = #{sugcontent,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Suggestion" >
+    update tbl_suggestion
+    set sugUserId = #{suguserid,jdbcType=INTEGER},
+      sugTel = #{sugtel,jdbcType=CHAR},
+      sugEmail = #{sugemail,jdbcType=CHAR},
+      sugTime = #{sugtime,jdbcType=DATE},
+      isDeal = #{isdeal,jdbcType=INTEGER},
+      sugCauseId = #{sugcauseid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

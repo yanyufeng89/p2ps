@@ -75,7 +75,7 @@
 	bottom:-3px;
 	width: 5em;
 	text-align: center;
-	background: #f7f7f7;
+	background: #fff;
 }
 .basic .infor .infor-right .brief .showbrief .slideup {
 	text-align: right;
@@ -210,23 +210,11 @@
     margin-left: 14px;
 }
 
-#content .searchresright {
-    position: relative;
-    border: 1px solid #e5e5e5;
-    height: 120px;
-}
-a.upload-btn {
-    position: relative;
-    left:62px;
-    top:40px;
-}
-a.upload-btn:hover{
-	background-position:0 -40px;
-	
-}
+
 .zm-relate-book {
     border: 1px solid #e5e5e5;
     margin-top: 10px;
+    background:#fff;
 }
 .zm-side-section-inner {
     position: relative;
@@ -293,7 +281,7 @@ input[type=text], input[type=password]:focus {
 }
 ._CommentBox_root_G_1m._CommentBox_bordered_3Fo- {
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 ._CommentBox_root_G_1m {
@@ -327,8 +315,8 @@ input[type=text], input[type=password]:focus {
 ._CommentForm_bordered_2isg {
     margin: 0;
     padding: 1em;
-    border-radius: 0 0 4px 4px;
-    background: #fbfbfb;
+    border-radius: 0 0 2px 2px;
+    background: #fff;
 }
 
 ._CommentForm_expanded_39uD ._CommentForm_actions_ooEq {
@@ -407,7 +395,9 @@ input[type=text], input[type=password]:focus {
     line-height: 20px;
     color: #090909;
     outline: none;
-    border-radius: 4px;
+    border-radius:2px;
+    font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
 }
 .zm-command {
     padding: 10px 0;

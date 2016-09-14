@@ -2,7 +2,7 @@
 <html class="expanded">
   
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
              上传文档
@@ -15,7 +15,7 @@
     <div id="doc" class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
       <div id="bd">
-        <div class='docdetail'>聘加知识库>上传文档</div>
+        <div class='docdetail'>JobPlus知识库>上传文档</div>
         <div class="upload-doc"></div>
         <div class="bd-wrap">
         <div class="body">

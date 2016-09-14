@@ -1,6 +1,6 @@
 ﻿ <div class="logined-wrap" id="logininfo">
 				<div class="logined-doc-num">
-				<p class="num-tip">聘加海量知识体系</p>
+				<p class="num-tip">JobPlus海量知识体系</p>
 				<p class="num" id="total-docnum" data-docnum="153,377,154"><span class="num0" data-num="1" style="background-position: 0px -29px;"></span><span class="num0" data-num="5" style="background-position: 0px -145px;"></span><span class="num0" data-num="3" style="background-position: 0px -87px;"></span><b class="spr">,</b><span class="num0" data-num="3" style="background-position: 0px -87px;"></span><span class="num0" data-num="7" style="background-position: 0px -203px;"></span><span class="num0" data-num="7" style="background-position: 0px -203px;"></span><b class="spr">,</b><span class="num0" data-num="1" style="background-position: 0px -29px;"></span><span class="num0" data-num="5" style="background-position: 0px -145px;"></span><span class="num0" data-num="4" style="background-position: 0px -116px;"></span></p>
 				</div>
 				<div class="logined-user-info">

@@ -6,7 +6,8 @@
     <title>
            导航搜索
     </title>
-    <meta name="viewport" content="width=1200"/> 
+    <meta name="viewport" content="width=1230"/> 
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_searchres.css">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
@@ -18,20 +19,20 @@
     <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
 
     <div class='division-banner'>
-	  <#-- <span>聘加知识库>创新/创新方法</span> -->
+	  <#-- <span>JobPlus知识库>创新/创新方法</span> -->
 	  
 	  <#if (preSharedType == 0)|| (preSharedType == "") >
-		    <span>聘加知识库><span id="span_type1">所有</span></span>
+		    <span>JobPlus知识库><span id="span_type1">所有</span></span>
 	  <#else>
 		  <#list searchTypeList as clist>
 		  	<#if preSharedType == clist.parTagId?c>
-			   <span>聘加知识库><span id="span_type1">${clist.parTagName}</span></span>
+			   <span>JobPlus知识库><span id="span_type1">${clist.parTagName}</span></span>
 			</#if>
 		  
 			<#list clist.chlTagList as ctagList>
 				<#if preSharedType == ctagList.typeid?c>
 					<#-- <a data-id="${ctagList.typeid}" data-pid="${clist.parTagId}" href="#" class="active"><dt>${ctagList.typename}</dt></a>  -->
-					<span>聘加知识库><span id="span_type1">${clist.parTagName}</span>/<span id="span_type1">${ctagList.typename}</span></span>
+					<span>JobPlus知识库><span id="span_type1">${clist.parTagName}</span>/<span id="span_type1">${ctagList.typename}</span></span>
 				</#if>
 			</#list>
 		  </#list>
@@ -50,7 +51,7 @@
         -->
         <input type="button" id="searchres_button" class="search_button" onclick="javascript:reloadPage();" value="搜索知识">
         <input type="text" id="searchres_input" class="search_input ui-autocomplete-input" name="Condition" tabindex="1" maxlength="64" autocomplete="off" 
-        placeholder="聘加海量知识库" style="color: rgb(153, 153, 153);" value="${preCondition}" onkeypress="if(event.keyCode==13){reloadPage();};">
+        placeholder="JobPlus海量知识库" style="color: rgb(153, 153, 153);" value="${preCondition}" onkeypress="if(event.keyCode==13){reloadPage();};">
         <input type="hidden" name="fromSearch" id="fromSearches" value="true">
         <input type="botton" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="searches-form-submit" value="分类搜索" onclick="javascript:reloadPage();">
       </div>
@@ -91,7 +92,7 @@
 			   </dl>
 			   <div class="clear"></div>
 			   <dl class='select-2'>
-			     <div class="select-2-arrow" style=""></div>
+			     <div class="select-2-arrow" style="display: none;"></div>
 			     <#list searchTypeList as clist>
 		                 <div class="2-list" style="display: none;">
 			                 <#list clist.chlTagList as ctagList>

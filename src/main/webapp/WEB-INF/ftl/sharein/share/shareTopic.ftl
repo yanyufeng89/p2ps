@@ -14,8 +14,7 @@
   <body>
     <div class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
-      <div id="bd">
-        <div class='topicdetail'>聘加知识库>话题分享</div>
+        <div class='topicdetail'>JobPlus知识库>话题分享</div>
         <div class="upload-topic"></div>
         <div class="bd-wrap">
           <div class="body">
@@ -133,9 +132,11 @@
                     
                     <div class="nhd nedit-all-head">
                       <span class="act btn-submit-all-wrap logSend">
-                        <a href="" id="btn-cancel-all" class="add-all ml20  add-all-able">取消</a>
-                        <a id="btn-public-all" class="submit-all ml20  submit-all-able">
-                          <i class="iconfont"></i>&nbsp;发布</a></span>
+                        <a href="" id="btn-cancel-all" class="add-all ml20  add-all-able" style='width:60px;'>取消</a>
+                        <a id="btn-public-all" class="submit-all ml20  submit-all-able" style='width:80px;'>
+                          <i class="iconfont"></i>&nbsp;发布
+                        </a>
+                       </span>
                     </div>
                     
                     <div id="uploadtopic-list" class="uploadtopic-list">
@@ -271,7 +272,6 @@
             </div>
           </div>
         </div>
-      </div>
       <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
       <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
       <script type="text/javascript" src="/51jobplusCore/scripts/pj_topicsharein.js"></script>

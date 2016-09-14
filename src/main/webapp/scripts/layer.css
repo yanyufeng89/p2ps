@@ -457,7 +457,7 @@ html #layui_layer_skinlayercss {
 .layui-layer-rim {
 	border:6px solid #8D8D8D;
 	border:6px solid rgba(0,0,0,.3);
-	border-radius:5px;
+	border-radius:2px;
 	box-shadow:none
 }
 .layui-layer-msg {
@@ -531,7 +531,7 @@ html #layui_layer_skinlayercss {
 	padding:5px 10px;
 	font-size:12px;
 	_float:left;
-	border-radius:3px;
+	border-radius:2px;
 	box-shadow:1px 1px 3px rgba(0,0,0,.3);
 	background-color:#F90;
 	color:#fff

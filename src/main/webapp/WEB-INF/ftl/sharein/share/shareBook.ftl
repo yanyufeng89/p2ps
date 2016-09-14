@@ -2,7 +2,7 @@
 <html class="expanded">
   
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
              分享书籍
@@ -15,8 +15,7 @@
     
     <div  class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
-      <div id="bd">
-        <div class='bookdetail'>聘加知识库>分享书籍</div>
+        <div class='bookdetail'>JobPlus知识库>分享书籍</div>
         <div class="upload-book"></div>
         <div class="bd-wrap">
         <div class="body">
@@ -242,7 +241,6 @@
              </div>
             </div>
           </div>
-        </div>
       </div>
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <div class='headiconintotem' style='display:none'></div>

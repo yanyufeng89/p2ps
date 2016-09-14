@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="expanded">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
            选择分享
@@ -11,8 +11,7 @@
   <body>
     <div id="doc" class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
-      <div id="bd">
-        <div class='bookdetail'>聘加知识库><span id='loveshare'>上传文档</span></div> 
+        <div class='bookdetail'>JobPlus知识库><span id='loveshare'>上传文档</span></div> 
         <div class="upload-share"></div>
         <div class="bd-wrap">
         <div class="body">
@@ -115,7 +114,7 @@
                     </h4>
                     <ol>
                       <li>
-                         1.聘加是一个新型的知识分享平台,目前主要聚集在互联网从业者与创业者最关注的知识领域;
+                         1.JobPlus是一个新型的知识分享平台,目前主要聚集在互联网从业者与创业者最关注的知识领域;
                       </li>
                       <li>
                         2.如果您不想上传文档给他人看，只想自己阅读使用，可以将文档上传为私有文档，当然，文档的显示设置可以随时修改，公开文档和私有文档可以随时切换，满足您的阅读需求；
@@ -153,7 +152,7 @@
             </div>
           </div>
         </div>
-      </div>
+
     <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
     <#include "/mydocs/commonTemplate/successuploadjs/successuploadjs.ftl"/> 
 

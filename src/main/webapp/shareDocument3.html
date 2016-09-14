@@ -8,7 +8,6 @@
 <link rel="stylesheet" type="text/css" href="css/pj_wkcommon_base.css" charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/pj_upload.css">
 <script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="scripts/pj_content.js"></script>
 <script type="text/javascript">
     function testSubmit(){    	
     	testForm.submit();
@@ -605,7 +604,52 @@
 	 	   $.ajax({
 	        	type:"POST",
 	        	url:"homePage/search",
-	        	//data:{id:"93416",userid:"344",downvalue:"5"},//id:1,
+	        	data:{isdeal:0},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function getAllReport(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"manage/getAllReport",
+	        	data:{isdeal:0},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function getAllSug(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"manage/getAllSug",
+	        	data:{isdeal:0},//id:1,
+	        	dataType:"json",
+	        	success:function(data){
+	        		console.log(data);  
+	        		if(data.returnStatus=='000'){//返回成功        			
+	           		console.log(data);  
+	       		}else{//返回失败
+	       		}
+	       	}
+	    });
+	 } 
+	  function delC(){	
+	 	   $.ajax({
+	        	type:"POST",
+	        	url:"manage/backstage/delComment",
+	        	data:{id:12,tableName:3},//id:1,
 	        	dataType:"json",
 	        	success:function(data){
 	        		console.log(data);  
@@ -662,6 +706,9 @@
 	<input type="button" value="downloadDocs" onclick="downloadDocs()"/><br><br>
 	<input type="button" value="getHome" onclick="getHome()"/><br><br>
 	<input type="button" value="search" onclick="search()"/><br><br>
+	<input type="button" value="getAllSug" onclick="getAllSug()"/><br><br>
+	<input type="button" value="getAllReport" onclick="getAllReport()"/><br><br>
+	<input type="button" value="delC" onclick="delC()"/><br><br>
 
 <!-- //Integer id;Integer userid;String school; major; degree; description;Date starttime; endtime; createtime; -->
 <form action="myHome/updEduInfo" method="post" >

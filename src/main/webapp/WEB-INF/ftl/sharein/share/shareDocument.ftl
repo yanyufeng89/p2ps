@@ -2,7 +2,7 @@
 <html class="expanded">
   
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
              上传文档
@@ -14,8 +14,7 @@
    
     <div class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
-      <div id="bd">
-        <div class='docdetail'>聘加知识库>上传文档</div>
+        <div class='docdetail'>JobPlus知识库>上传文档</div>
         <div class="upload-doc"></div>
         <div class="bd-wrap">
         <div class="body">
@@ -44,12 +43,12 @@
 	                     <a class="titleinfo">【文档】</a>
 	                     <span class="titlename">请选择上传文档</span>
 	                     <div class="link after file-box">
-				            <input type='text' name='textfield' style='color:darkgrey;' id='textfield' class='txtdocument' placeholder='请选择文档...'/>
+				            <input type='text' name='textfield' style='color:darkgrey;visible:hidden' id='textfield' class='txtdocument' placeholder='请选择文档...'/>
 				            <input type='button' class='docpreview' value='浏览' />
-				            <input type="file" name="fileField" class="file" id="docfileField" size="28" multiple="multiple"/>
+				            <input type="file" name="fileField" class="file" id="docfileField"  multiple="multiple"/>
                                <p class="error"><i class="tips_icon"></i>包含不支持的文件类型,具体文件类型参考温馨提示</p>
 				           	<div class="bar after">
-						        <input type="botton" class="btn-disblue" value="确定" id='btnsure' style='float:right;' disabled="disabled">
+						        <input type="botton" class="btn-disblue" value="确定" id='btnsure'  disabled="disabled">
 						        <a href='/51jobplusCore/sharein/searchuploadFile' class='btn-cancleupload'>取消</a>
 						        <div class="btn-loading push-loading"></div>
 		                    </div>
@@ -308,7 +307,6 @@
             </div>
           </div>
         </div>
-      </div>
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
      <script type="text/javascript" src="/51jobplusCore/scripts/pj_docsharein.js"></script>

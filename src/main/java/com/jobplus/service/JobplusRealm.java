@@ -1,7 +1,9 @@
 package com.jobplus.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -39,10 +41,14 @@ public class JobplusRealm extends AuthorizingRealm {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			// // 用户的角色集合
 			// // 用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
+			Set<String> roles =new HashSet();
+			Set<String> permissions =new HashSet();
 			for (Object role : list) {
-				info.getRoles().add((String) ((Map<?, ?>) role).get("roleName"));
-				info.getStringPermissions().add((String) ((Map<?, ?>) role).get("resourceName"));
+				roles.add((String) ((Map<?, ?>) role).get("roleName"));
+				permissions.add((String) ((Map<?, ?>) role).get("resourceName"));
 			}
+			info.setRoles(roles);
+			info.setStringPermissions(permissions);
 			return info;
 		}
 		return null;

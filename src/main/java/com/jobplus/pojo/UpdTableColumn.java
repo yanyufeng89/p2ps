@@ -24,7 +24,7 @@ public class UpdTableColumn {
 	/**
 	 * 类对应的表
 	 */
-	private static String []TABLENAMES;
+	public static String []TABLENAMES;
 	
 	private String[] ADDORDECREASE = { "+", "-" };
 //	private String []OTHERTABLENAMES = {"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
@@ -45,7 +45,7 @@ public class UpdTableColumn {
 	private static String[] ARTICLESHARECOLUMNS;
 	private static String[] SITESSHARECOLUMNS;
 	
-	private static Map<String,String[]> TABLECOLUMN = new HashMap<String,String[]>();
+	public static Map<String,String[]> TABLECOLUMN = new HashMap<String,String[]>();
 
 	static{
 		TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",

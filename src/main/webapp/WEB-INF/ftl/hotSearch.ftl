@@ -4,44 +4,49 @@
     </dd>
     <dd style="margin-left: 0px">
         <a href="javascript:void(0);" class="current">
-            iOS
+            创新方法
         </a>
     </dd>
     <dd>
         <a href="javascript:void(0);" class="current">
-            北京热招职位
+            融资股权
         </a>
     </dd>
     <dd>
         <a href="javascript:void(0);" class="current">
-            上海热招职位
+            大数据
         </a>
     </dd>
     <dd>
         <a href="javascript:void(0);" class="current">
-            .NET
+            新型材料
         </a>
     </dd>
     <dd>
         <a href="javascript:void(0);" class="current">
-            急速入职
+            渠道管理
         </a>
     </dd>
     <dd>
         <a href="javascript:void(0);"
            class="current">
-            Java
+            品牌管理
         </a>
     </dd>
     <dd>
         <a href="javascript:void(0);"
            class="current">
-            产品经理
+            供应链金融
         </a>
     </dd>
     <dd>
         <a href="javascript:void(0);" class="current">
-            聘十APP
+            机械设计
+        </a>
+    </dd>
+    <dd>
+        <a href="javascript:void(0);" class="current">
+           新媒体
         </a>
     </dd>
 </dl>

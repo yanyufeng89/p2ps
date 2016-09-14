@@ -1,6 +1,7 @@
 package com.jobplus.service.impl;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,7 @@ public class UpdTableColumnServiceImpl implements IUpdTableColumnService{
 	 * @param objId id
 	 * @return
 	 */
+	@Transactional
 	@SuppressWarnings("static-access")
 	@Override
 	public int updNums(Integer tableName,Integer tableColumn,Integer addOrDec,Integer AdOrDeNum,Integer objId) {
@@ -51,6 +53,27 @@ public class UpdTableColumnServiceImpl implements IUpdTableColumnService{
 		upd.setAdOrDeNum(AdOrDeNum);
 		upd.setObjectId(objId);
 		ret = updTableColumnDao.updTableColumn(upd);
+		return ret;
+	}
+
+
+
+	/**
+	 * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
+				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
+	 * @param id
+	 * @param tableName
+	 * @return
+	 */
+	@Transactional
+	@Override
+	public int delOneById(Integer tableName, Integer id) {
+		int ret = 0;
+		try {
+			ret = updTableColumnDao.delOneById(UpdTableColumn.TABLENAMES[tableName], id);
+		} catch (Exception e) {
+			return ret;
+		}
 		return ret;
 	}
 

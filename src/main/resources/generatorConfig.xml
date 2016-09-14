@@ -401,6 +401,13 @@
 				replaceString="" />
 		</table>
 		
+		<table tableName="tbl_suggestion" domainObjectName="Suggestion"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
 
 	</context>
 </generatorConfiguration>

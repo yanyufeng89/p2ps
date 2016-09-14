@@ -2,7 +2,7 @@
 <html class="expanded">
   
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
             站点分享
@@ -12,8 +12,7 @@
   <body>
     <div class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
-      <div id="bd">
-       <div class='bookdetail'>聘加知识库>站点分享</div>
+       <div class='bookdetail'>JobPlus知识库>站点分享</div>
         <div class="upload-site"></div>
         <div class="bd-wrap">
         <div class="body">
@@ -260,7 +259,7 @@
             </div>
           </div>
         </div>
-      </div>
+
     <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
     <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
     <script type="text/javascript" src="/51jobplusCore/scripts/pj_sitesharein.js"></script>

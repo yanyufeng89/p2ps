@@ -217,4 +217,18 @@ public class IndexController {
 		mv.setViewName(type);
 		return mv;
 	}
+
+	/**
+	 * 关于我们
+	 *
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "/about/{page}", method = RequestMethod.GET)
+	public ModelAndView syscHotData(@PathVariable String page) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("currentPage", page);
+		mv.setViewName("about/" + page);
+		return mv;
+	}
 }

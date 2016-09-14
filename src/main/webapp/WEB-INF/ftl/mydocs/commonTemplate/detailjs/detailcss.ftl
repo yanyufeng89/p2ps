@@ -1,4 +1,5 @@
-    <meta name="viewport" content="width=1200"/> 
+    <meta name="viewport" content="width=1230"/> 
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/jquery.pinwheel-0.1.0.css">

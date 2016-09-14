@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jobplus.dao.UserMapper" >
-  <!-- 启用缓存 -->  
+  <!-- 启用缓存 -->
   <!-- <cache eviction="LRU" type="com.jobplus.dao.cache.MybatisRedisCache" />  -->
   <resultMap id="BaseResultMap" type="com.jobplus.pojo.User" >
     <id column="userId" property="userid" jdbcType="INTEGER" />
@@ -49,8 +49,8 @@
     t.school,t.specialty,t.description,t.headIcon,t.compName,t.city,t.userType,t.userLevel,t.authenticate,t.isValid,t.isSearch,t.createTime,t.updateTime
      ,t.nation, t.province, t.ismarry, t.birthdayOne, t.birthdayTwo
   </sql>
-  
-  
+
+
   <sql id="tbl_operationSum_Column_List" >
     p.userid AS "operationSum.userid", p.docShareSum AS "operationSum.docsharesum", p.docDownSum AS "operationSum.docdownsum", p.docCollSum AS "operationSum.doccollsum", 
     p.topicsShareSum AS "operationSum.topicssharesum", p.topicsComSum AS "operationSum.operationsum",p.topicsAtteSum AS "operationSum.topicsattesum", 
@@ -63,7 +63,7 @@
   </sql>
   <!-- 通过用户Id获取用户简单信息    包括用户统计  getUserSimpleInformation-->
   <select id="getUserSimpleInformation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List_copy" />
     ,
     <include refid="tbl_operationSum_Column_List" />
@@ -71,7 +71,7 @@
     on t.userId = p.userid
     where t.userId = #{userID,jdbcType=INTEGER}
   </select>
-  
+
     <select id="getFansListInformation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
    	u.userId,u.userName,u.headIcon 
@@ -79,7 +79,7 @@
   </select>
 	<!-- 个人中心：我的粉丝列表 getMyFansList -->
 	<select id="getMyFansList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.User" >
-		select 
+		select
 		<include refid="Base_Column_List_copy" />
 		,
 		<include refid="tbl_operationSum_Column_List" />
@@ -105,16 +105,16 @@
 	</select>
 	<!-- 个人中心：我关注的人列表  getAttenManList   -->
 	<select id="getAttenManList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.User" >
-		select 
+		select
 		<include refid="Base_Column_List_copy" />
 		,
 		<include refid="tbl_operationSum_Column_List" />
 		,(select group_concat(userid)  from tbl_attention where objectId = t.userid and colltype='tbl_user') as fansIds
-		,(select COUNT(at.objectId) from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid 
+		,(select COUNT(at.objectId) from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
 		where at.collType='tbl_user'
 		and at.userid = #{userid,jdbcType=INTEGER} ) as pageCount
 
-		from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid 
+		from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
 		where at.collType='tbl_user'
 		and at.userid = #{userid,jdbcType=INTEGER}
 		<choose>
@@ -126,12 +126,12 @@
 			</otherwise>
 		</choose>
 	</select>
-	
-	
-	
-  
+
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List_copy" />
     ,(select group_concat(DISTINCT userid)  from tbl_attention where objectId = t.userid and colltype='tbl_user') as fansIds
     from tbl_user t left join tbl_attention at on t.userId = at.objectId
@@ -148,7 +148,7 @@
 	
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tbl_user
+    update tbl_user set isValid=0
     where userId = #{userid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jobplus.pojo.User" >
@@ -518,4 +518,45 @@
       birthdayTwo = #{birthdaytwo,jdbcType=VARCHAR}
     where userId = #{userid,jdbcType=INTEGER}
   </update>
+
+  <!-- countList -->
+  <select id="countList" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.User">
+    select
+    count(1)
+    from tbl_user
+    where isValid = 1
+    <if test="username != null and username != ''">
+      AND userName like concat('%',#{username},'%')
+    </if>
+    <if test="email != null and email != ''">
+      AND email like concat('%',#{email},'%')
+    </if>
+    <if test="mobile != null and mobile != ''">
+      AND mobile like concat('%',#{mobile},'%')
+    </if>
+  </select>
+  <!-- getList -->
+  <select id="getList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.User">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_user
+    where isValid = 1
+    <if test="username != null and username != ''">
+      AND userName like concat('%',#{username},'%')
+    </if>
+    <if test="email != null and email != ''">
+      AND email like concat('%',#{email},'%')
+    </if>
+    <if test="mobile != null and mobile != ''">
+      AND mobile like concat('%',#{mobile},'%')
+    </if>
+    <choose>
+      <when test="pageNo !=null">
+        limit #{limitSt},#{pageSize}
+      </when>
+      <otherwise>
+        limit #{defaultPageSize,jdbcType=INTEGER}
+      </otherwise>
+    </choose>
+  </select>
 </mapper>

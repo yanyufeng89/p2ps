@@ -42,18 +42,6 @@
 	display:none
 }
 
-/* html {
-	-webkit-text-size-adjust:100%;
-	-ms-text-size-adjust:100%
-} */
-label,button {
-	cursor:pointer;
-	_cursor:hand
-}
-abbr[title],acronym[title] {
-	border-bottom:1px dotted;
-	cursor:help
-}
 .footer {
 	text-align:center
 }
@@ -161,9 +149,6 @@ h6,.h6 {
 	color:#333
 }
 
-.act {
-	float:right
-}
 .gbma-d,.gbma-r,.gbma-u {
 	position:relative;
 	border-style:solid;
@@ -179,15 +164,7 @@ h6,.h6 {
 	top:-1px
 }
 
-.ib {
-	display:-moz-inline-stack;
-	display:inline-block;
-	*display:inline;
-	*zoom:1;
-	vertical-align:middle;
-	position:relative;
-	*position:static
-}
+
 .mod .inner:before,.mod .hd:before,.mod .bd:before,.mod .ft:before,.mod .inner:after,.mod .hd:after,.mod .bd:after,.mod .ft:after {
 	content:'';
 	display:table
