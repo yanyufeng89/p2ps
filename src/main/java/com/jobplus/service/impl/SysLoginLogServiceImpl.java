@@ -72,19 +72,19 @@ public class SysLoginLogServiceImpl implements ISysLoginLogService {
 	@Override
 	public SysLoginLog selectByPrimaryKey(Integer id) {
 		
-		return null;
+		return sysLoginLogMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(SysLoginLog record) {
 		
-		return 0;
+		return sysLoginLogMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(SysLoginLog record) {
 		
-		return 0;
+		return sysLoginLogMapper.updateByPrimaryKey(record);
 	}
 
 }

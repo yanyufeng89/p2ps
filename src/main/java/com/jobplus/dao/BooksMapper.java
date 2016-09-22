@@ -36,6 +36,7 @@ public interface BooksMapper {
      * @return
      */
     List<Books> getSharedBookList(Books record);
+    int getSharedBookListCount(Books record);
     
     /**
      * 个人中心  -- 获取我收藏的书籍列表
@@ -43,5 +44,6 @@ public interface BooksMapper {
      * @return
      */
     List<Books> getCollectedBookList(Books record);
+    int getCollectedBookListCount(Books record);
     
 }

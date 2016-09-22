@@ -244,4 +244,10 @@
       reportCauseId = #{reportcauseid,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="dealComplaints" parameterType="java.lang.Integer" >
+    update tbl_reportInfo
+    set isDeal = 1
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

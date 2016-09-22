@@ -37,19 +37,23 @@ public class AccountDetailServiceImpl implements IAccountDetailService {
 	@Override
 	public Page<AccountDetail> getDetailListByRecord(AccountDetail record) {
 		Page<AccountDetail> page = new Page<AccountDetail>();
-	    record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
-	    record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
-	    record.setPageSize(page.getPageSize());
-	    List<AccountDetail> list = accountDetailDao.getListByRecord(record);
-	    if (list.size() > 0) {
-	      for (AccountDetail act : list) {
-	        // 用于前端页面显示
-	        act.setShowCreateTime(DateUtils.formatDate(act.getCreatetime(), "yyyy-MM-dd HH:mm:ss"));
-	      }
-	      page.initialize(list.get(0).getPageCount(), record.getPageNo());
-	      page.setList(list);
-	    }
-	    return page;
+		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
+		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		record.setPageSize(page.getPageSize());
+		int count = accountDetailDao.getListByRecordCount(record);
+		if (count < 1) {
+			return page;
+		}
+		List<AccountDetail> list = accountDetailDao.getListByRecord(record);
+		if (list.size() > 0) {
+			for (AccountDetail act : list) {
+				// 用于前端页面显示
+				act.setShowCreateTime(DateUtils.formatDate(act.getCreatetime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			page.initialize((long)count, record.getPageNo());
+			page.setList(list);
+		}
+		return page;
 	}
 
 }

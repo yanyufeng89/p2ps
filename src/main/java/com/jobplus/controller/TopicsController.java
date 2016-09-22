@@ -21,11 +21,13 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.alibaba.fastjson.JSON;
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.Sms;
 import com.jobplus.pojo.Topics;
 import com.jobplus.pojo.TopicsComment;
 import com.jobplus.pojo.User;
 import com.jobplus.pojo.response.BaseResponse;
 import com.jobplus.pojo.response.TopicsCommentResponse;
+import com.jobplus.service.ISmsService;
 import com.jobplus.service.ITagsService;
 import com.jobplus.service.ITopicsCommentService;
 import com.jobplus.service.ITopicsService;
@@ -52,6 +54,8 @@ public class TopicsController {
 	private ITopicsCommentService topicsCommentService;
 	@Resource
 	private IUserService userService;
+	@Resource
+	private ISmsService smsService;
 
 	
 	/**
@@ -328,4 +332,42 @@ public class TopicsController {
 			return mv;
 		}
 	}
+	
+	/**
+	 * 邀请别人回答
+	 */
+	@RequestMapping(value = "/askPeople")
+	@ResponseBody
+	public String askPeople(HttpServletRequest request, Topics record) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			User user = (User)request.getSession().getAttribute("user");
+			if(user != null){
+				//邀请回答消息通知  
+				int ret = smsService.addNotice(user,request.getContextPath(),new Sms().getTABLENAMES()[2],record.getId(),
+						record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[23],record.getId(),
+						record.getTitle());
+				logger.info("**askPeople 邀请别人回答    **");
+				if(ret > 0){
+//					baseResponse.setObj(topicsCommentPage);
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				}else{
+					baseResponse.setReturnMsg("发送通知失败");
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				}
+			}else{
+				baseResponse.setReturnMsg("用户未登录");
+				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			}
+			return JSON.toJSONString(baseResponse);
+
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**askPeople 邀请别人回答    **请求失败 999 ********************"+e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
+	
 }

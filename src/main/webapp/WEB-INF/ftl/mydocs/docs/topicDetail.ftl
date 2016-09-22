@@ -41,7 +41,7 @@
 						<div class="zm-tag-editor-labels zg-clear">
 							<#list topicsDetail.topicsclass?split(',') as detaillist>
 							   <#assign p=detaillist?split(':')/>
-							   <a href="javascript:;" class='zm-item-tag' href='' data-topicid='${p[0]}'>${p[1]}</a>
+							   <a href="javascript:void(0);" class='zm-item-tag' href='' data-topicid='${p[0]}'>${p[1]}</a>
 							</#list>
 							<#if topicsDetail.createperson==(Session.user.userid)!>
 							<a href="javascript:;" class="zu-edit-button" name="edit" data-topicsid='${topicsDetail.id}' data-topicsclass='${topicsDetail.topicsclass}'>
@@ -73,13 +73,18 @@
 							<a href="javascript:;" name="addcomment" class="toggle-comment meta-item" id='topiccomment' data-commentcount='${topicsDetail.commentsum}'>
 							 <i class="z-icon-comment"></i>${topicsDetail.commentsum}条评论
 							</a>
-                            <a href="javascript:;" name="report-question" class="report meta-item" data-commentbyid='${topicsDetail.createperson}' data-topiccommentid='${topicsDetail.id}' data-reporttype='5'>
+                            <a href="javascript:;" name="report-question" class="report meta-item" data-commentbyid='${topicsDetail.createperson}' data-topiccommentid='${topicsDetail.id}' data-reporttype='11'>
 							  <i class="z-icon-report-o"></i>举报
 					        </a>
+					        <#if (Session.user)??>
+                              <span class="zg-bull">•</span>
+                              <a href="javascript:void(0)" name="invite" class="meta-item" id='invite'>邀请回答</a>
+                            </#if>
 					        <span  class='meta-item'>分享到</span>
-                          <a href="javascript:void(0);" onclick="toShare(1,'${topicsDetail.title}');" class="log_sina png" title="分享到新浪微博"></a>
-                          <a href="javascript:void(0);" onclick="toShare(2,'${topicsDetail.title}');" class="log_qq png"  title="分享到QQ空间"></a>
-                          <a href="javascript:void(0);" onclick="toShare(3,'${topicsDetail.title}');" class="log_wx png" title="分享到微信"></a>
+                            <a href="javascript:void(0);" onclick="toShare(1,'${topicsDetail.title}');" class="log_sina png" title="分享到新浪微博"></a>
+                            <a href="javascript:void(0);" onclick="toShare(2,'${topicsDetail.title}');" class="log_qq png"  title="分享到QQ空间"></a>
+                            <a href="javascript:void(0);" onclick="toShare(3,'${topicsDetail.title}');" class="log_wx png" title="分享到微信"></a>
+                            
                       </div>
                       <div class='topiccommtemplate'></div>
                   </div>
@@ -255,8 +260,11 @@
         
 
         <div class="plus-main-sidebar">
-		     <div class="searchresright">
-	            <a class="upload-btn bg-index" href="/51jobplusCore/sharein/searchuploadFile"></a>
+		     <div class="searchresright share-plaza">
+	            <a class="share-icon bg-index" href="/51jobplusCore/sharein/searchuploadFile?type=1"></a>
+	            <a target="_blank" href="javascript:void(0)" class="text">
+				  文档---话题---书籍---课程---文章---站点
+				</a>
 	         </div>
 			 <div class='zm-relate-answer'>
 			 <div class="zm-side-section">
@@ -347,6 +355,7 @@
      <a id="topicbacktop" title="回到顶部" href="#topictop" style="bottom: 300px; display: none;"></a>
      <#include "/mydocs/commonTemplate/detailjs/detailjs.ftl"/>
      <script type="text/javascript" src="/51jobplusCore/scripts/pj_mycentertopic.js"></script>
+     <script type="text/javascript" src="/51jobplusCore/scripts/pj_msgbox.js"></script>
 
   </body>
 

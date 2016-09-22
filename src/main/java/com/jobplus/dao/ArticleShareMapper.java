@@ -12,6 +12,7 @@ public interface ArticleShareMapper {
      * @return
      */
     List<ArticleShare> getList(ArticleShare record);
+    int getListCount(ArticleShare record);
 	
     int deleteByPrimaryKey(Integer id);
 

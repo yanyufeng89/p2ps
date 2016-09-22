@@ -182,20 +182,25 @@ function docDownLoad(obj){
     var title=$('input[name=docname]').val();
     docurl=docurl.substring(0,docurl.indexOf('.swf'))+'.'+docsuffix;
 	var docid=$('input[name=docid]').val();
+	//文档下载路径
+	var filePath = docurl+'?filename='+title+'.'+docsuffix;
 	 //关掉下载框
 	 $('.modal-dialog-bg').remove();
      $('.modal-wrapper').remove();
 	 $.ajax({
 	    	type:"POST",
 	      	url:projectName+"docs/downloadDocs",
-	      	data:{downvalue:downvalue,id:docid,userid:docCreatePerson},
+	      	data:{downvalue:downvalue,id:docid,userid:docCreatePerson,filePath:filePath},
 	    	dataType:"json",
 	    	 async:false, 
 	    	success:function(data){
 	    		if(data.returnStatus=='000'){//返回成功
 	    			window.location.href=docurl+'?filename='+title+'.'+docsuffix;
 	    			$('#docfollow').attr('data-downvalue','0');
-	    		}else{
+	    		}else if(data.returnStatus=='-999'){
+	    			//文档资源不存在 或者url不合法
+	    			/*console.log("文档资源不存在 或者url不合法");*/
+	    			window.location.href='404.html'
 	    			
 	    		}
 	       }

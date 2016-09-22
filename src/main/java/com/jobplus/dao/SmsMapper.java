@@ -28,6 +28,7 @@ public interface SmsMapper {
 	 * @return
 	 */
 	List<Sms> getAllSms(Sms record);
+	int getAllSmsCount(Sms record);
 
 	/**
 	 * 获取系统消息列表

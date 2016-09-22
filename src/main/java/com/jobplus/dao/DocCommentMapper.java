@@ -27,4 +27,5 @@ public interface DocCommentMapper {
 	 * @return
 	 */
 	List<DocComment> getList(DocComment record);
+	int getListCount(DocComment record);
 }

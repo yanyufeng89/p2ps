@@ -68,43 +68,85 @@ $(function(){
 	$('.mark_read').live('click',function(){
 		var $this=$(this);
 		var type=$('input[name=currenttype]').val();
-		$.ajax({
-			type:"POST",
-			url:projectName+"myCenter/makeSmsRead",
-			dataType:"json",
-			success:function(data){
-				if(data.returnStatus=='000'){
-					$this.addClass('current').siblings().removeClass('current');
-					if(type=='0'){
-						$('.myAllMessage ul').empty();
-						//当全部标记为已读   未读消息的条数就是0
-						$('.unread_count').html('0');
+		$.confirm({
+			'title'		: '确认全部标记为已读',
+			'message'	: "确认全部标记为已读吗?",
+			'buttons'	: {
+				'确认'	: {
+					'class'	: 'blue',
+					'action': function(){
+						makeSmsRead($this,type);
+						
 					}
-				}else{
-					
+				},
+				'取消'	: {
+					'class'	: 'gray',
+					'action': function(){}
 				}
 			}
-		})
+		});
+		
 	});
 
 	//清空所有通知
 	$('.empty-allnews').live('click',function(){
 		var $this=$(this);
-		$.ajax({
-			type:"POST",
-			url:projectName+"myCenter/delSms",
-			dataType:"json",
-			success:function(data){
-				if(data.returnStatus=='000'){
-					$this.addClass('current').siblings().removeClass('current');
-					$('.myAllMessage ul').empty();
-					//当清空所有消息  未读消息的条数变成0  全部消息变成0
-					$('.unread_count').html('0');
-					$('.read_count').html('0');
-				}else{
-					
+		$.confirm({
+			'title'		: '确认清空所有通知',
+			'message'	: "确认清空所有通知吗?",
+			'buttons'	: {
+				'确认'	: {
+					'class'	: 'blue',
+					'action': function(){
+						delSms($this);
+						
+					}
+				},
+				'取消'	: {
+					'class'	: 'gray',
+					'action': function(){}
 				}
 			}
-		})
+		});
 	});
 })
+
+function makeSmsRead($this,type) {
+	$.ajax({
+		type : "POST",
+		url : projectName + "myCenter/makeSmsRead",
+		dataType : "json",
+		success : function(data) {
+			if (data.returnStatus == '000') {
+				$this.addClass('current').siblings().removeClass('current');
+				if (type == '0') {
+					$('.myAllMessage ul').empty();
+					$('.page-inner').empty();
+					// 当全部标记为已读 未读消息的条数就是0
+					$('.unread_count').html('0');
+				}
+			} else {
+
+			}
+		}
+	})
+}
+function delSms($this){
+	$.ajax({
+		type:"POST",
+		url:projectName+"myCenter/delSms",
+		dataType:"json",
+		success:function(data){
+			if(data.returnStatus=='000'){
+				$this.addClass('current').siblings().removeClass('current');
+				$('.myAllMessage ul').empty();
+				$('.page-inner').empty();
+				//当清空所有消息  未读消息的条数变成0  全部消息变成0
+				$('.unread_count').html('0');
+				$('.read_count').html('0');
+			}else{
+				
+			}
+		}
+	})
+}

@@ -101,13 +101,16 @@ public class SitesServiceImpl implements ISitesService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());
+		int count = sitesDao.getSharedSiteListCount(record);
+		if(count < 1)
+			return page;
 		List<Sites> list = sitesDao.getSharedSiteList(record);
 		if (list.size() > 0) {
 			for (Sites course : list) {
 				// 用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -131,13 +134,16 @@ public class SitesServiceImpl implements ISitesService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());
+		int count = sitesDao.getCollectedSiteListCount(record);
+		if(count < 1)
+			return page;
 		List<Sites> list = sitesDao.getCollectedSiteList(record);
 		if (list.size() > 0) {
 			for (Sites course : list) {
 				// 用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getMyCollect().getColltime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 

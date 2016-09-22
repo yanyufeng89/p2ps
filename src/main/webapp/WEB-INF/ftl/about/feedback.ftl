@@ -22,7 +22,7 @@
            <#include "/mydocs/commonTemplate/aboutnav/aboutnav.ftl"/>
          </div>
          <div class='right'>
-           <img alt='' src='/51jobplusCore/image/feedback.jpg' width='942' height='120'>
+           <img alt='' src='/51jobplusCore/image/feedback.jpg' width='100%' height='120'>
            <div class='feedback'>
              <div class='slogan'>您的建议/问题<span>(500字以内)<span></div>
              <textarea  id='uEditorAbout' class='uEditorAbout' placeholder='在这里输入建议/问题' style='display:none'></textarea>	

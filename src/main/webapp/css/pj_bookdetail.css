@@ -3,7 +3,7 @@
 }
 .doc-basic,.book-basic{
 	margin-left: 14px;
-    width: 837px;
+    width: 850px;
     margin-bottom: 23px;
 }
 .book-basic .infor { 
@@ -245,17 +245,11 @@
     margin: 0!important;
     padding-top: 0!important;
 }
-.related-book-right a{
-	 width: 220px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-}
-.related-book-right span{
+
+.related-book-right span,.related-doc-right span{
 	vertical-align: top;
 }
-.related-book-right P,.related-book-right span{
+.related-book-right P,.related-book-right span,.related-doc-right span{
 	font-size:12px;
 	color:#090909;
     padding-top: 0px!important; 
@@ -385,7 +379,7 @@ input[type=text], input[type=password]:focus {
 }
 .commentcontent {
     height: 166px;
-    width: 826px;
+    width: 840px;
     padding: 5px;
     border: 1px solid #e5e5e5;
     background: white;

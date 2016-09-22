@@ -103,6 +103,14 @@
 			</otherwise>
 		</choose>
 	</select>
+	<!-- 统计总数		个人中心：我的粉丝列表 getMyFansList -->
+	<select id="getMyFansListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.User" >
+		select COUNT( at.userid) from tbl_attention at RIGHT join tbl_user t on
+		t.userId = at.userId
+		left join tbl_operationSum p on t.userId = p.userid
+		where at.collType='tbl_user'
+		and at.objectId = #{userid,jdbcType=INTEGER} 
+	</select>
 	<!-- 个人中心：我关注的人列表  getAttenManList   -->
 	<select id="getAttenManList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.User" >
 		select
@@ -125,6 +133,12 @@
 				limit #{defaultPageSize,jdbcType=INTEGER}
 			</otherwise>
 		</choose>
+	</select>
+	<!-- 统计总数		个人中心：我关注的人列表  getAttenManList   -->
+	<select id="getAttenManListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.User" >
+		select COUNT(at.objectId) from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
+		where at.collType='tbl_user'
+		and at.userid = #{userid,jdbcType=INTEGER} 
 	</select>
 
 

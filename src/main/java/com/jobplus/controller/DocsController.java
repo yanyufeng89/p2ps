@@ -2,6 +2,8 @@ package com.jobplus.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -85,8 +87,8 @@ public class DocsController {
 			 docsService.upload(files, request, response);
 		}
 		//防止重复提交   转发到静态页面
-		
-	     return "redirect:success?num="+(files.length-1);  
+		int num = files.length == 0 ?files.length:(files.length - 1);
+	     return "redirect:success?num="+num;  
 	  }  
 	
 
@@ -322,9 +324,32 @@ public class DocsController {
 	 */
 	@RequestMapping(value = "/downloadDocs")
 	@ResponseBody
-	public String downloadDocs(HttpServletRequest request, HttpServletResponse response,Docs doc) {
+	public String downloadDocs(HttpServletRequest request, HttpServletResponse response,Docs doc,@RequestParam(required = true)String filePath) {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
+			//判断文件是否可以下载
+			int state = -1;
+			if (filePath == null || filePath.length() <= 1) {
+				baseResponse.setReturnMsg("文件url不正确");
+				baseResponse.setReturnStatus(ConstantManager.INVALID_STATUS);
+				return JSON.toJSONString(baseResponse);
+			}
+			try {
+				URL url = new URL(filePath);
+				HttpURLConnection con = (HttpURLConnection) url.openConnection();
+				state = con.getResponseCode();
+				if (state != 200) {
+					//URL不可用！
+					baseResponse.setReturnMsg("您访问的文件不存在");
+					baseResponse.setReturnStatus(ConstantManager.INVALID_STATUS);
+					return JSON.toJSONString(baseResponse);
+				}
+			} catch (Exception ex) {
+				baseResponse.setReturnMsg("您访问的文件不存在");
+				baseResponse.setReturnStatus(ConstantManager.INVALID_STATUS);
+				return JSON.toJSONString(baseResponse);
+			}
+			
 			String userid = (String) request.getSession().getAttribute("userid");//doc.setDownvalue(3);"30";//
 			if (!StringUtils.isBlank(userid)&&doc.getId()!=null&&doc.getDownvalue()!=null) {
 				MyCollect record= new MyCollect();
@@ -333,6 +358,7 @@ public class DocsController {
 				//COLLECTTYPES = { "tbl_docs", "tbl_topics", "tbl_books", "tbl_courses", "tbl_article", "tbl_sites" };
 				record.setCollecttype(record.getCOLLECTTYPES()[0]);
 				record.setObjectid(doc.getId());
+				
 				record = docsService.downloadDoc(record,doc);
 				if(record!=null){
 					// 更新用户操作统计数 存入session

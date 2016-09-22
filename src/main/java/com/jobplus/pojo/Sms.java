@@ -58,8 +58,9 @@ public class Sms extends PageParent implements Serializable{
 	*51站点新增推荐   52站点新增评论 	 53站点点赞							18
 	*61文档新增推荐   62文档新增评论	 63文档点赞							21
 	*3关注了你发布的话题  
+	*80邀请回答
     * */
-    private Integer []SMSTYPES= {0,1,2,11,12,13,14,15,21,22,31,32,33,41,42,43,51,52,53,61,62,63,3};
+    private Integer []SMSTYPES= {0,1,2,11,12,13,14,15,21,22,31,32,33,41,42,43,51,52,53,61,62,63,3,80};
     
     private String []TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",
 			"tbl_docs_comment",
@@ -145,6 +146,7 @@ public class Sms extends PageParent implements Serializable{
 51站点新增推荐   52站点新增评论 	 53站点点赞							18
 61文档新增推荐   62文档新增评论	 63文档点赞							21
 	3关注话题	
+	80邀请回答
 	 */
 	public Integer[] getSMSTYPES() {
 		return SMSTYPES;

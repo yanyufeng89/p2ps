@@ -36,12 +36,12 @@
 		content
 	</sql>
   <!-- 我发布的话题 -->
-  <select id="getMyTopicsUploaded" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="getMyTopicsUploaded" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.Topics" >
 		select
 		<include refid="Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-	,(select count(*) from tbl_topics t where 1 =1 AND t.createPerson = #{createperson,jdbcType=INTEGER} AND t.isValid = 1) as pageCount 
+	<!-- ,(select count(*) from tbl_topics t where 1 =1 AND t.createPerson = #{createperson,jdbcType=INTEGER} AND t.isValid = 1) as pageCount --> 
 	from tbl_topics t
 	where 1 =1
 	AND t.createPerson = #{createperson,jdbcType=INTEGER}
@@ -56,6 +56,10 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>
+	</select>
+  <!-- 统计总数   	 我发布的话题 -->
+  <select id="getMyTopicsUploadedCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+	select count(*) from tbl_topics t where 1 =1 AND t.createPerson = #{createperson,jdbcType=INTEGER} AND t.isValid = 1
 	</select>
   
   <!-- 批量逻辑删除topics-->
@@ -88,6 +92,9 @@
     ,(select group_concat(userid) as fansIds  from tbl_attention where objectid=#{id,jdbcType=INTEGER} and colltype='tbl_topics') as fansIds
     from tbl_topics t left join tbl_user u on t.createPerson  = u.userid
     where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
   </select>
   
   
@@ -98,13 +105,20 @@
     <include refid="Blob_Column_List" />
     from tbl_topics
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
   </select>
   
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_topics
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_topics
     where ID = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   
   <!--由于是新增记录       各个sum初始化为0   时间改为now() -->
   <insert id="insert" parameterType="com.jobplus.pojo.Topics" >
@@ -239,7 +253,6 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-        lastEditTime = Now(),
       <if test="createperson != null" >
         createPerson = #{createperson,jdbcType=INTEGER},
       </if>
@@ -279,6 +292,7 @@
       <if test="isvalid != null" >
         isValid = #{isvalid,jdbcType=INTEGER},
       </if>
+      lastEditTime = Now()
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -332,11 +346,11 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    ,(select count(*) from tbl_topics t where 1 =1
+ <!--    ,(select count(*) from tbl_topics t where 1 =1
     <if test="topicstype != null and topicstype != ''" >
       AND t.topicstype like concat('%',#{topicstype},'%')
     </if>
-      AND t.isValid = 1) as pageCount
+      AND t.isValid = 1) as pageCount -->
     from tbl_topics t
     where 1 =1
     <if test="topicstype != null and topicstype != ''" >
@@ -360,11 +374,11 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    ,(select count(*) from tbl_topics t where 1 =1
+  <!--   ,(select count(*) from tbl_topics t where 1 =1
     <if test="topicstype != null and topicstype != ''" >
       AND t.topicstype like concat('%',#{topicstype},'%')
     </if>
-    AND t.isValid = 1) as pageCount
+    AND t.isValid = 1) as pageCount -->
     from tbl_topics t
     where 1 =1
     <if test="topicstype != null and topicstype != ''" >
@@ -388,11 +402,11 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    ,(select count(*) from tbl_topics t where 1 =1
+   <!--  ,(select count(*) from tbl_topics t where 1 =1
     <if test="topicstype != null and topicstype != ''" >
       AND t.topicstype like concat('%',#{topicstype},'%')
     </if>
-    AND t.isValid = 1) as pageCount
+    AND t.isValid = 1) as pageCount -->
     from tbl_topics t
     where 1 =1
     <if test="topicstype != null and topicstype != ''" >
@@ -417,11 +431,11 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    ,(select count(*) from tbl_topics t where 1 =1
+    <!-- ,(select count(*) from tbl_topics t where 1 =1
     <if test="topicstype != null and topicstype != ''" >
       AND t.topicstype like concat('%',#{topicstype},'%')
     </if>
-    AND t.isValid = 1) as pageCount
+    AND t.isValid = 1) as pageCount -->
     from tbl_topics t
     where 1 =1
     <if test="topicstype != null and topicstype != ''" >
@@ -438,5 +452,40 @@
         limit #{defaultPageSize,jdbcType=INTEGER}
       </otherwise>
     </choose>-->
+  </select>
+  <!--统计总数   		 精彩-->
+  <select id="getHotTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+      AND t.isValid = 1
+  </select>
+
+  <!--统计总数		最新话题-->
+  <select id="getLatestTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+  </select>
+
+  <!--统计总数		待回答话题-->
+  <select id="getWaitReplyTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+  </select>
+
+  <!--统计总数		精彩问答-->
+  <select id="getHotReplyTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
   </select>
 </mapper>

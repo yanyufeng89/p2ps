@@ -3,9 +3,9 @@
 <div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
 	   <div class="zg-right">
 	     {#if $T.attenlist.fansIds==1}
-		  <button data-userid="{$T.attenlist.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
+		  <button data-userid="{$T.attenlist.userid}" class="zg-btn  small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
 		 {#else}
-		 <button  data-userid="{$T.attenlist.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注</button>
+		 <button  data-userid="{$T.attenlist.userid}" class="zg-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注</button>
 		 {#/if}
 	   </div>
 	   <a title="{$T.attenlist.username}" data-userid="{$T.attenlist.userid}" class="zm-item-link-avatar"  target='_blank' href="/51jobplusCore/myHome/getHomePage?userid={$T.attenlist.userid}">

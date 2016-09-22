@@ -553,6 +553,97 @@
        	}
     });
  }
+  function findUser(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"skills/findUser/"+"提利昂·兰尼斯特·蔡园菁",
+        	data:{condition:"2"},
+        	dataType:"json",
+        	success:function(data){
+        		console.log(data); 
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function findSkill(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"skills/findSkill/"+"软件",
+        	data:{condition:"2"},
+        	dataType:"json",
+        	success:function(data){
+        		console.log(data); 
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  
+  function updSkill(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myHome/updSkill",
+        	data:{skillitem:"1:软件开发,2:软件测试,3:项目管理"},
+        	dataType:"json",
+        	success:function(data){
+        		console.log(data); 
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function askPeople(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"topics/askPeople",
+        	data:{id:329,title:"你经历过最奇葩的上市公司财报会议 (Earnings Conference Call) 是怎样的？",objCreatepersonPg:"30"},//话题id , 话题title , 被邀请人useid
+        	dataType:"json",
+        	success:function(data){
+        	//	console.log(data); 
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function skillsinsert(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"skills/insert",
+        	data:{skillIds:"999,998,997",skillname:"八九政治"},
+        	dataType:"json",
+        	success:function(data){
+        	 console.log(data); 
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
+  function updSkill(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"myHome/updSkill",
+        	data:{skillIds:"1,2,3,6",skillitem:"3:项目管理,1:软件开发,2:软件测试"},
+        	dataType:"json",
+        	success:function(data){
+        	 console.log(data); 
+        		if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		}
+       	}
+    });
+ }
   
   
   
@@ -589,6 +680,12 @@
 	<input type="button" value="getCollectedBookList" onclick="getCollectedBookList()" /><br><br>
 	<input type="button" value="delComment" onclick="delComment()" /><br><br>
 	<input type="button" value="getReportInfoConfigList" onclick="getReportInfoConfigList()" /><br><br>
+	<input type="button" value="findSkill" onclick="findSkill()" /><br><br>
+	<input type="button" value="findUser" onclick="findUser()" /><br><br>
+	<input type="button" value="updSkill" onclick="updSkill()" /><br><br>
+	<input type="button" value="askPeople" onclick="askPeople()" /><br><br>
+	<input type="button" value="skillsinsert" onclick="skillsinsert()" /><br><br>
+	<input type="button" value="updSkill" onclick="updSkill()" /><br><br>
 	
 
 	<input type="text" oninput="getTagsByCondition(this.value)"><br><br>

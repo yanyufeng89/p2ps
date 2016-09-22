@@ -13,7 +13,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    padding: 12px;
+    padding:8px;
 }
 .popover .popover-content {
     background: #fff;
@@ -53,10 +53,10 @@
 .popover.top .arrow2 {
     bottom: 1px;
     left: 50%;
-    margin-left: -13px;
-    border-left: 13px solid transparent;
-    border-right: 13px solid transparent;
-    border-top: 13px solid #fff;
+    margin-left: -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #fff;
 }
 
 
@@ -122,10 +122,10 @@
 .popover.top .arrow {
     bottom: 0;
     left: 50%;
-    margin-left: -13px;
-    border-left: 13px solid transparent;
-    border-right: 13px solid transparent;
-    border-top: 13px solid #ccc;
+    margin-left: -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #ccc;
 
 }
 .popover .arrow, .popover .arrow2 {
@@ -136,8 +136,8 @@
 .pinwheel_wrap {
 	position: absolute;
 	z-index: 9999;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
+	border-radius:2px;
+	-moz-border-radius: 2px;
 }
 .zh-profile-card .lower .operation .zg-icon.pm {
     background-position: 0 -148px;
@@ -151,7 +151,7 @@
     margin-left: -13px;
     border-left: 13px solid transparent;
     border-right: 13px solid transparent;
-   border-bottom: 13px solid #ccc;
+    border-bottom: 13px solid #ccc;
    /*  border-bottom: 13px solid #fff; */
 }
 .popover.bottom .arrow2 {

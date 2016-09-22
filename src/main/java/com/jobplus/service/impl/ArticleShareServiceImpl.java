@@ -66,12 +66,15 @@ public class ArticleShareServiceImpl implements IArticleShareService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = articleShareDao.getListCount(record);
+		if(count < 1)
+			return page;
 		List<ArticleShare> list = articleShareDao.getList(record);
 		if (list.size() > 0) {
 			for (ArticleShare courseShare : list) {// 设置时间用于页面显示
 				courseShare.setUserCommentTime(DateUtils.formatDate(courseShare.getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -86,7 +89,7 @@ public class ArticleShareServiceImpl implements IArticleShareService {
 		ret = articleShareDao.insert(record);
 		if (ret > 0 && record.getArticleid() != null) {
 			// 对应文章的评论数 + 1
-			updTableColumnService.updNums(3, 1, 0, 1, record.getArticleid());
+			updTableColumnService.updNums(4, 1, 0, 1, record.getArticleid());
 			// 用于前端显示
 			record.setUserCommentTime(
 					DateUtils.formatDate(new java.sql.Date(new java.util.Date().getTime()), "yyyy-MM-dd"));
@@ -112,25 +115,25 @@ public class ArticleShareServiceImpl implements IArticleShareService {
 	@Override
 	public int insertSelective(ArticleShare record) {
 		
-		return 0;
+		return articleShareDao.insertSelective(record);
 	}
 
 	@Override
 	public ArticleShare selectByPrimaryKey(Integer id) {
 		
-		return null;
+		return articleShareDao.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(ArticleShare record) {
 		
-		return 0;
+		return articleShareDao.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(ArticleShare record) {
 		
-		return 0;
+		return articleShareDao.updateByPrimaryKey(record);
 	}
 
 }

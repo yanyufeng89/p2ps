@@ -13,9 +13,11 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.ModifiableSolrParams;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.jobplus.pojo.SkillLibrary;
 import com.jobplus.pojo.Tags;
 
 /**
@@ -36,21 +38,63 @@ public class SolrJUtils {
 
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(SolrJUtils.class);
 
-	private static HttpSolrClient tagClient = new HttpSolrClient("http://192.168.0.39:18080/solr/tagsCore");
+	private static String solrIp;
 
-	private static HttpSolrClient topClient = new HttpSolrClient("http://192.168.0.39:18080/solr/topicsCore");
+	private static String solrPort;
 
-	private static HttpSolrClient userClient = new HttpSolrClient("http://192.168.0.39:18080/solr/userCore");
+	private static String basePath;
 
-	private static HttpSolrClient docClient = new HttpSolrClient("http://192.168.0.39:18080/solr/docCore");
+	@Value("${slor.basepath}")
+	public void setBasePath(String basePath) {
+		
+		SolrJUtils.basePath = basePath;
 
-	private static HttpSolrClient bookClient = new HttpSolrClient("http://192.168.0.39:18080/solr/bookCore");
+		SolrJUtils.tagClient = new HttpSolrClient(basePath + "tagsCore");
 
-	private static HttpSolrClient articleClient = new HttpSolrClient("http://192.168.0.39:18080/solr/articleCore");
+		SolrJUtils.topClient = new HttpSolrClient(basePath + "topicsCore");
 
-	private static HttpSolrClient coursesClient = new HttpSolrClient("http://192.168.0.39:18080/solr/coursesCore");
+		SolrJUtils.userClient = new HttpSolrClient(basePath + "userCore");
 
-	private static HttpSolrClient sitesClient = new HttpSolrClient("http://192.168.0.39:18080/solr/sitesCore");
+		SolrJUtils.docClient = new HttpSolrClient(basePath + "docCore");
+
+		SolrJUtils.bookClient = new HttpSolrClient(basePath + "bookCore");
+
+		SolrJUtils.articleClient = new HttpSolrClient(basePath + "articleCore");
+
+		SolrJUtils.coursesClient = new HttpSolrClient(basePath + "coursesCore");
+
+		SolrJUtils.sitesClient = new HttpSolrClient(basePath + "sitesCore");
+
+		SolrJUtils.skillClient = new HttpSolrClient(basePath + "skillCore");
+	}
+
+	@Value("${slor.ip}")
+	public void setSolrIp(String solrIp) {
+		SolrJUtils.solrIp = solrIp;
+	}
+
+	@Value("${slor.port}")
+	public void setSolrPort(String solrPort) {
+		SolrJUtils.solrPort = solrPort;
+	}
+
+	private static HttpSolrClient tagClient;
+
+	private static HttpSolrClient topClient;
+
+	private static HttpSolrClient userClient;
+
+	private static HttpSolrClient docClient;
+
+	private static HttpSolrClient bookClient;
+
+	private static HttpSolrClient articleClient;
+
+	private static HttpSolrClient coursesClient;
+
+	private static HttpSolrClient sitesClient;
+
+	private static HttpSolrClient skillClient;
 
 	/**
 	 * 根据关键字和类型获取对应的标签
@@ -73,40 +117,95 @@ public class SolrJUtils {
 		return JSON.toJSONString(rsp.getResults());
 	}
 
-	
-	/** 
-     * 添加标签到索引库 
-     */  
-    public  static void addTagsIndexToSolr(Tags tag){  
-         try {  
-            //创建一个http连接  
-             //构造文档和域  
-             SolrInputDocument doc = new SolrInputDocument();   
-             //确认schema.xml中是否有id，name，price这几个域  
-             //<field name="id" type="string" indexed="true" stored="true" required="true" />   
-             //<field name="sku" type="text_en_splitting_tight" indexed="true" stored="true" omitNorms="true"/>  
-             //<field name="name" type="text_general" indexed="true" stored="true"/>  
-               
-             //添加域  
-             doc.addField( "id", tag.getId());     
-             doc.addField("tagname", tag.getTagname());  
-             doc.addField( "tagtype",tag.getTagtype());    
-               
-               
-             //批量添加文档  
-             Collection<SolrInputDocument> docs = new  ArrayList<SolrInputDocument>();     
-             docs.add( doc );     
-  
-             tagClient.add(docs);  
-             tagClient.commit();  
-          }catch (SolrServerException e) {  
-            e.printStackTrace();  
-          }catch (IOException e) {  
-            e.printStackTrace();  
-          }  
-    }  
-	
-	
+	/**
+	 * 添加技能到索引库
+	 */
+	public static void addSkillIndexToSolr(SkillLibrary skill) {
+		try {
+			// 创建一个http连接
+			// 构造文档和域
+			SolrInputDocument doc = new SolrInputDocument();
+			// 确认schema.xml中是否有id，name，price这几个域
+			// <field name="id" type="string" indexed="true" stored="true"
+			// required="true" />
+			// <field name="sku" type="text_en_splitting_tight" indexed="true"
+			// stored="true" omitNorms="true"/>
+			// <field name="name" type="text_general" indexed="true"
+			// stored="true"/>
+
+			// 添加域
+			doc.addField("id", skill.getId());
+			doc.addField("skillname", skill.getSkillname());
+
+			// 批量添加文档
+			Collection<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
+			docs.add(doc);
+
+			skillClient.add(docs);
+			skillClient.commit();
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 根据关键字获取对应的技能
+	 * 
+	 * @return
+	 */
+	public static String findSkill(String Condition) {
+		ModifiableSolrParams solrParams = new ModifiableSolrParams();
+		solrParams.set("q", "skillname:" + Condition);
+		QueryResponse rsp = new QueryResponse();
+		try {
+			rsp = skillClient.query(solrParams);
+			// logger.info(JSON.toJSONString(rsp.getResults()));
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String str = "{\"skillList\":" + JSON.toJSONString(rsp.getResults())
+				+ ",\"returnMsg\":\"SUCCESS\",\"returnStatus\":\"000\"}";
+		return str;
+	}
+
+	/**
+	 * 添加标签到索引库
+	 */
+	public static void addTagsIndexToSolr(Tags tag) {
+		try {
+			// 创建一个http连接
+			// 构造文档和域
+			SolrInputDocument doc = new SolrInputDocument();
+			// 确认schema.xml中是否有id，name，price这几个域
+			// <field name="id" type="string" indexed="true" stored="true"
+			// required="true" />
+			// <field name="sku" type="text_en_splitting_tight" indexed="true"
+			// stored="true" omitNorms="true"/>
+			// <field name="name" type="text_general" indexed="true"
+			// stored="true"/>
+
+			// 添加域
+			doc.addField("id", tag.getId());
+			doc.addField("tagname", tag.getTagname());
+			doc.addField("tagtype", tag.getTagtype());
+
+			// 批量添加文档
+			Collection<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
+			docs.add(doc);
+
+			tagClient.add(docs);
+			tagClient.commit();
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 根据关键字和类型获取对应的标签
 	 * 
@@ -342,9 +441,12 @@ public class SolrJUtils {
 	 * 
 	 * @return
 	 */
-	public static String findUser(String Condition) {
+	public static String findUser(String Condition, String userId) {
 		ModifiableSolrParams solrParams = new ModifiableSolrParams();
 		solrParams.set("q", "allcontent:" + Condition);
+		if (null != userId && userId.length() > 0) {
+			solrParams.set("fq", "!id:" + userId);
+		}
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = userClient.query(solrParams);
@@ -376,7 +478,16 @@ public class SolrJUtils {
 
 	public static List findAll(String Condition, String sharedType, String protoType, String tags, String pages,
 			String rows) {
-		String shards = "192.168.0.39:18080/solr/topicsCore,192.168.0.39:18080/solr/docCore,192.168.0.39:18080/solr/coursesCore,192.168.0.39:18080/solr/bookCore,192.168.0.39:18080/solr/articleCore,192.168.0.39:18080/solr/sitesCore";
+		StringBuffer solrBase = new StringBuffer(SolrJUtils.solrIp).append(":").append(SolrJUtils.solrPort)
+				.append("/solr/");
+
+		StringBuffer solrShards = new StringBuffer();
+		solrShards.append(solrBase).append("topicsCore,").append(solrBase).append("docCore,").append(solrBase)
+				.append("coursesCore,").append(solrBase).append("bookCore,").append(solrBase).append("articleCore,")
+				.append(solrBase).append("sitesCore");
+		// String shards =
+		// "192.168.0.39:18080/solr/topicsCore,192.168.0.39:18080/solr/docCore,192.168.0.39:18080/solr/coursesCore,192.168.0.39:18080/solr/bookCore,192.168.0.39:18080/solr/articleCore,192.168.0.39:18080/solr/sitesCore";
+		String shards = solrShards.toString();
 		ModifiableSolrParams solrParams = new ModifiableSolrParams();
 		SolrQuery filterQuery = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
@@ -430,9 +541,12 @@ public class SolrJUtils {
 			e.printStackTrace();
 		}
 		List<Object> dataList = new ArrayList<Object>();
-		if(null!=rsp.getResults()){
-			
+		if (null != rsp.getResults()) {
+
 			dataList.add(rsp.getResults().getNumFound());
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}else{
+			dataList.add(0);
 			dataList.add(JSON.toJSONString(rsp.getResults()));
 		}
 

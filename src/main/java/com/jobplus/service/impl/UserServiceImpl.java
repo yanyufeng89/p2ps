@@ -292,9 +292,13 @@ public class UserServiceImpl implements IUserService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		
+		int count = userDao.getMyFansListCount(record);
+		if(count < 1)
+			return page;
 		List<User> list = userDao.getMyFansList(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 			// for (User User : list) {// 设置时间用于页面显示
 			// User.setUserShareTime(DateUtils.formatDate(User.getCreatetime(),
@@ -304,7 +308,7 @@ public class UserServiceImpl implements IUserService {
 		return page;
 	}
 	 /**
-     * 个人中心：我的粉丝列表
+     * 个人中心：我关注的人列表
      * @param User record
      * @return
      */
@@ -314,9 +318,12 @@ public class UserServiceImpl implements IUserService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = userDao.getAttenManListCount(record);
+		if(count < 1)
+			return page;
 		List<User> list = userDao.getAttenManList(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -509,6 +516,7 @@ public class UserServiceImpl implements IUserService {
 	 * @param gridQuery
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<String, Object> getAllUsers(GridQuery gridQuery) {
 		User record = gridQuery.getCondition() == null ? new User() : (User) gridQuery.getCondition();

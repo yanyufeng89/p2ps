@@ -26,6 +26,7 @@ public interface SuggestionMapper {
      */
     public int getAllSugCount(Suggestion record);
     public List<Suggestion> getAllSug(Suggestion record);
-    
+    public int dealSug(Integer id);
+
     
 }

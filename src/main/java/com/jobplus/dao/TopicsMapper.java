@@ -40,7 +40,7 @@ public interface TopicsMapper {
      * @return
      */
     List<Topics> getMyTopicsUploaded(Topics record);
-//    List<Topics> getMyTopicsUploaded(@Param(value="userID")String userID);
+    int getMyTopicsUploadedCount(Topics record);
     /**
      * 批量逻辑删除话题
      * @param condition
@@ -62,6 +62,7 @@ public interface TopicsMapper {
      * @return
      */
     List<Topics> getHotTopics(Topics record);
+    int getHotTopicsCount(Topics record);
 
     /**
      * 最新话题
@@ -70,6 +71,7 @@ public interface TopicsMapper {
      * @return
      */
     List<Topics> getLatestTopics(Topics record);
+    int getLatestTopicsCount(Topics record);
 
     /**
      * 待回答话题
@@ -78,6 +80,7 @@ public interface TopicsMapper {
      * @return
      */
     List<Topics> getWaitReplyTopics(Topics record);
+    int getWaitReplyTopicsCount(Topics record);
 
     /**
      * 精彩问答
@@ -86,4 +89,5 @@ public interface TopicsMapper {
      * @return
      */
     List<Topics> getHotReplyTopics(Topics record);
+    int getHotReplyTopicsCount(Topics record);
 }

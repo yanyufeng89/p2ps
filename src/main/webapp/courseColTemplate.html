@@ -1,14 +1,14 @@
  <!-- 个人主页 课程--课程收藏 -->
  {#foreach $T.colCoursePage as collist}
 	  <li>
-	       <div class='w446 fs14 fc3 ib titlehidden'>
+	       <div class='w525 fs14 fc3 ib titlehidden'>
 	           <div class="checkbox chk" data-courseid="{$T.collist.myCollect.id}" data-name="{$T.collist.coursesname}"></div>
 	           <a href="/51jobplusCore/{$T.detail}?id={$T.collist.myCollect.id}" target="_blank" title="{$T.collist.coursesname}">{$T.collist.coursesname}</a>  
 	       </div>
-	       <div class='w165 ib ilbookc'>
+	       <div class='w140 ib ilbookc'>
 	            {$T.collist.collectsum}
 	       </div>
-	       <div class='w165 ib ilbook'>
+	       <div class='w140 ib ilbook'>
 	           {#if $T.collist.userShareTime}
 	            {$T.collist.userShareTime}
 	           {#/if}

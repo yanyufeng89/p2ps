@@ -59,9 +59,12 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = topicsCommentDao.getMyTopicsCommentsCount(record);
+		if(count < 1)
+			return page;
 		List<TopicsComment> list = topicsCommentDao.getMyTopicsComments(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 			for (TopicsComment topicsComment : list) {
 				topicsComment.setShowcreatetime(DateUtils.formatDate(topicsComment.getCreatetime(), "yyyy-MM-dd"));
@@ -99,9 +102,12 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = topicsCommentDao.getPartTopicsCommentsCount(record);
+		if(count < 1)
+			return page;
 		List<TopicsComment> list = topicsCommentDao.getPartTopicsComments(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 			for (TopicsComment topicsComment2 : list) {
 				topicsComment2.setShowcreatetime(DateUtils.formatDate(topicsComment2.getCreatetime(), "yyyy-MM-dd"));
@@ -262,9 +268,12 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = topicsCommentDao.getTopicsCommentsByTopicIdCount(record);
+		if(count < 1)
+			return page;
 		List<TopicsComment> list = topicsCommentDao.getTopicsCommentsByTopicId(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 			for (TopicsComment comment : list) {// 设置时间用于页面显示
 				comment.setShowcreatetime(DateUtils.formatDate(comment.getCreatetime(), "yyyy-MM-dd"));

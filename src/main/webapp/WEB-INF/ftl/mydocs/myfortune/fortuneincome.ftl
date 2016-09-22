@@ -35,11 +35,14 @@
 		<ul>
 		    <ul id="accordion">
 		      <li>
-		         <div class="my-doc link"><p>
+		         <div class="my-doc link">
+				  <p>
 		           <a href='/51jobplusCore/myCenter/getMyHeadTop'>
 		             <span class="icon-ken"></span>我的知识库
 		           </a>
-		             <b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
+		             <b class="iconfont up-arrow doc-arrow-btn"></b>
+				  </p>
+				 </div>
 		         <ul class="submenu">
 	                 <li id="mydocument"><a href="/51jobplusCore/myCenter/getMyDocsUploaded"><span class="icon-doc"></span>我的文档</a></li>
 	                 <li id="mytopic"><a href="/51jobplusCore/myCenter/getMyTopicsUploaded"><span class="icon-topic"></span>我的话题</a></li>
@@ -80,7 +83,7 @@
 		</div>
 		<div class="uc-main">
 		  <div class="uc-head" style="padding:0;width:950px;">
-		    <#include "/mydocs/commonTemplate/confansinfo/confansinfo.ftl"/>
+		    <#include "/mydocs/commonTemplate/confansinfo/confansinfoshare.ftl"/>
 		 </div>
 		 <div class='fortunecontent maincontent'>
 		    <div class="uc-head-bottom">
@@ -93,18 +96,18 @@
 		   </div>
 		   <div class='docs-list-box'>
 		     <div class='status-box'>
-			   <div class='w335 ib'>财富收益</div>
-			   <div class='w335 ib'>收益数</div>
-			   <div class='w204 ib'>时间</div>
+			   <div class='w366 ib'>财富收益</div>
+			   <div class='w366 ib'>收益数</div>
+			   <div class='w140 ib'>时间</div>
 			 </div>
 			 <div class='docs-list'>
 			   <ul>
 			     <#if (actDPage)??>
 				   <#list actDPage.list as list>
 					 <li>
-					   <div class='w335 ib ilfortune'>${list.changecause}</div>
-					   <div class='w335 ib ilfortune'>${list.changevalue}财富值</div>
-					   <div class='w204 ib ilfortune'>${list.createtime?string("yyyy-MM-dd HH:mm:ss")}</div>
+					   <div class='w366 ib ilfortune'>${list.changecause}</div>
+					   <div class='w366 ib ilfortune'>${list.changevalue}财富值</div>
+					   <div class='w140 ib ilfortune'>${list.createtime?string("yyyy-MM-dd HH:mm:ss")}</div>
 					 </li>
 				  </#list>
 				 </#if>

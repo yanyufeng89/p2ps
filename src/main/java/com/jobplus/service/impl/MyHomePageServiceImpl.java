@@ -1,5 +1,6 @@
 package com.jobplus.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import com.jobplus.pojo.EducationBgrd;
 import com.jobplus.pojo.MyHomePage;
 import com.jobplus.pojo.OperationSum;
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.PersonalSkill;
 import com.jobplus.pojo.User;
 import com.jobplus.pojo.VisitHistory;
 import com.jobplus.pojo.WorkExper;
@@ -23,6 +25,7 @@ import com.jobplus.service.IAttentionService;
 import com.jobplus.service.IEducationBgrdService;
 import com.jobplus.service.IMyHomePageService;
 import com.jobplus.service.IOperationSumService;
+import com.jobplus.service.IPersonalSkillService;
 import com.jobplus.service.ISmsFilterService;
 import com.jobplus.service.ISmsService;
 import com.jobplus.service.IUserService;
@@ -52,6 +55,8 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 	private IMyHomePageService myHomePageService;
 	@Resource
 	private IAttentionService attentionService;
+	@Resource
+	private IPersonalSkillService personalSkillService;
 
 	/**
 	 * 获取最近分享的6类
@@ -67,13 +72,16 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = myHomePageDao.getRecentShareCount(record);
+		if(count < 1)
+			return page;
 		List<MyHomePage> list = myHomePageDao.getRecentShare(record);
 		if (list.size() > 0) {
 			for (MyHomePage hp : list) {
 			//拼接URl
 				hp.setObjurl(request.getContextPath() + hp.getUrlMap().get(hp.getType())+ hp.getId());
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -93,9 +101,18 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		
 		List<MyHomePage> list = null;
+		int count = 0;
 		if("tbl_books".equals(record.getTableName())){
+			count = myHomePageDao.getOneSharesJustToBooksCount(record);
+			if(count < 1)
+				list = new ArrayList<MyHomePage>();
+			else
 			 list = myHomePageDao.getOneSharesJustToBooks(record);
 		}else{
+			count = myHomePageDao.getOneSharesCount(record);
+			if(count < 1)
+				list = new ArrayList<MyHomePage>();
+			else
 			list = myHomePageDao.getOneShares(record);
 		}
 		if (list.size() > 0) {
@@ -103,7 +120,7 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 				hp.setObjurl(request.getContextPath() + hp.getUrlMap().get(record.getTableName())+ hp.getId());
 				hp.setTableName(record.getTableName());
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -140,25 +157,24 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		EducationBgrd edb = new EducationBgrd();
 		edb.setUserid(Integer.parseInt(userid));
 		List<EducationBgrd> eduList = educationBgrdService.getExperList(edb);
-
+		// 个人技能
+		PersonalSkill personalSkill = new  PersonalSkill();
+		personalSkill.setUserid(Integer.parseInt(userid));
+		personalSkill = personalSkillService.selectByRecord(personalSkill);
+		
 		// 获取当前url
 		StringBuffer url = request.getRequestURL();
 		if (request.getQueryString() != null) {
 			url.append("?");
 			url.append(request.getQueryString());
 		}
-		// logger.info("getHomePage 个人主页 workExList:" +
-		// JSON.toJSONString(workExList));
-		// logger.info("getHomePage 个人主页 userInfo:" +
-		// JSON.toJSONString(userInfo));
-		// logger.info("getHomePage 个人主页 eduList:" +
-		// JSON.toJSONString(eduList));
 
 		mv.addObject("visitors", visitors);
 		mv.addObject("userInfo", userInfo);
 		mv.addObject("workExList", workExList);
 		mv.addObject("eduList", eduList);
 		mv.addObject("homePageUrl", url);
+		mv.addObject("personalSkill", personalSkill);
 		// 教育背景和工作经历放入session中 '最近访问的人'页面需要
 		request.getSession().setAttribute("workExList", workExList);
 		request.getSession().setAttribute("eduList", eduList);

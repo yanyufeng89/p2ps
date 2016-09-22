@@ -21,7 +21,13 @@ public interface BookShareMapper {
 //    int updateByPrimaryKey(BookShare record);
     
     
+    /**
+     * 获取评论列表
+     * @param record
+     * @return
+     */
     List<BookShare> getList(BookShare record);
+    int getListCount(BookShare record);
     
     /**
 	 * 获取书籍分享详情用以编辑  

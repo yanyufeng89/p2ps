@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.jobplus.dao.SuggestionMapper;
 import com.jobplus.pojo.GridQuery;
-import com.jobplus.pojo.Page;
 import com.jobplus.pojo.Suggestion;
 import com.jobplus.service.ISequenceService;
 import com.jobplus.service.ISuggestionService;
@@ -25,7 +24,7 @@ public class SuggestionServiceImpl implements ISuggestionService {
 
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
-		return 0;
+		return suggestionDao.deleteByPrimaryKey(id);
 	}
 
 	@Override
@@ -35,12 +34,19 @@ public class SuggestionServiceImpl implements ISuggestionService {
 		int ret = suggestionDao.insert(record);
 		return ret;
 	}
+
+	@Override
+	public int dealSug(Integer id) {
+		return suggestionDao.dealSug(id);
+	}
+
 	/**
 	 * 获取所有建议反馈
 	 * 
 	 * @param record
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<String, Object> getAllSug(GridQuery gridQuery) {
 		Suggestion record = gridQuery.getCondition() == null ? new Suggestion() : (Suggestion) gridQuery.getCondition();
@@ -61,7 +67,7 @@ public class SuggestionServiceImpl implements ISuggestionService {
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		List<Suggestion> list = suggestionDao.getAllSug(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;

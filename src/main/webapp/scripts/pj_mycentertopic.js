@@ -5,7 +5,7 @@ $(function(){
 	//获取用户信息
 	getCurrentUser();
 	editor=UM.getEditor('uEditorCustom',{
-		initialFrameWidth :830,//设置编辑器宽度
+		initialFrameWidth :846,//设置编辑器宽度
 		initialFrameHeight:150,//设置编辑器高度
 		scaleEnabled:true
 	});
@@ -93,7 +93,6 @@ $(function(){
     		topicFollow($(this),1,'1',createperson,topicid,titlename);
     		$(this).attr('data-actiontype','0');
     	}
-    	 
     })
 
     //单独一个点击文本框 选中或者反选
@@ -231,7 +230,7 @@ $(function(){
     	}
     	else
     	umtor=UM.getEditor('topiceditor',{
-    		initialFrameWidth :830,//设置编辑器宽度
+    		initialFrameWidth :846,//设置编辑器宽度
     		initialFrameHeight:150,//设置编辑器高度
     		scaleEnabled:true
     	});
@@ -585,6 +584,10 @@ $(function(){
     })
     //话题详情评论加载列表
     $('#topiccomment').toggle(function(){
+    	//邀请回答显示时默认执行一次点击事件
+    	if($('#invite-container').is(':visible')){
+    		$('#invite').trigger("click")
+    	}
     	var $child=$(this).children();
     	$(this).empty().append($child).append('收起评论');
     	var createperson=$('input[name=createperson]').val();
@@ -668,11 +671,50 @@ $(function(){
     	}
     	
     },function(){
+    	$('#invite-container').hide();
     	var commentcount=$(this).parent().nextAll('.panel-container').find('.zm-item-comment').size();
     	var $children=$(this).children();
     	$(this).empty().append($children).append(commentcount+'条评论');
     	$(this).parents('.zm-meta-panel').nextAll('.panel-container').hide();
     })
+    
+    //邀请回答
+	$('#invite').toggle(function(){
+		//话题评论显示时默认执行一次点击
+		if($('#panel-container').is(':visible')){
+    		$('#topiccomment').trigger("click")
+    	}
+		$(this).html('收起邀请');
+		if($('#invite-container').length>0){
+			$('#invite-container').show();
+		}else{
+			$('.pagetemplate').setTemplateURL(projectName+'inviteToAnswer.html');
+	    	$('.pagetemplate').processTemplate();
+	    	$(this).parents('.zm-item-meta').append($('.pagetemplate').html());
+	    	$('.pagetemplate').empty();
+	    	
+		}
+	},function(){
+		$('#panel-container').hide();
+		$(this).html('邀请回答');
+		$('#invite-container').hide();
+	})
+    //邀请输入框输入时
+	$('#invite-person').live('input propertychange',function(){
+		var oldval,newval;
+		oldval=$('input[name=invite-content]').val();
+		newval=$(this).val();
+		if(newval !== null &&newval !== undefined&&$.trim(newval).length!=0&&$.trim(oldval).length!=$.trim(newval).length){
+			findInvitePerson(newval);
+		}else if($.trim(newval).length==0){
+			$('.suggest-persons').empty();
+		}
+		$('input[name=invite-content]').val(newval);
+	})
+	//邀请回答按钮点击
+	$('.invite-button').live('click',function(){
+		askPeople($(this));
+	})
     //话题详情评论里面的每条评论点击回复
     $('.zm-comment-ft .reply').live('click',function(){
     	appendreply($(this),'comment');
@@ -812,7 +854,71 @@ $(function(){
     //定时刷新界面去掉因上面设置高度
     setInterval("cancelHeight()",1000); 
     /*--end--*/
+    
+    
+   
 })
+//邀请回答按钮点击
+function askPeople(obj){
+	var userid=obj.attr('data-userid');
+	var topictitle=$('input[name=titlename]').val();
+	var topicid=$('input[name=titleid]').val();
+	$.ajax({
+		type:'POST',
+		url:projectName+"topics/askPeople",
+		data:{id:topicid,title:topictitle,objCreatepersonPg:userid},
+		dataType:"json",
+     	async:false,
+     	success:function(data){
+     		if(data.returnStatus=='000'){
+     			ZENG.msgbox.show('邀请成功!',4, 3000);
+     		}else{
+     			
+     		}
+     	}
+	})
+}
+//获取邀请的人或者根据技能搜索邀请的人
+function findInvitePerson(val){
+	$('.spinner-gray').show();
+	$('#suggest-persons-wrapper ul').empty();
+	var nskillitem='';
+	$.ajax({
+		type:'POST',
+		url:projectName+"skills/findUser/"+val,
+		dataType:"json",
+     	async:false,
+     	success:function(data){
+	     	if(data.length>0){//返回成功
+	     		//追加邀请人
+	     		$.each(data,function(index,item){
+	     		  if(item.skillitem!=undefined){
+	     			 if(item.skillitem.indexOf(',')!=-1){
+		     				$.each(item.skillitem.split(','),function(index,item1){
+		     					nskillitem+=item1.split(':')[1]+',';
+		     				})
+		     				item.skillitem=nskillitem.substring(0,nskillitem.length-1)
+		     		  }else{
+		     				item.skillitem=item.skillitem.split(':')[1];
+		     		  } 
+	     		  }
+	     		})
+	     		var data={
+	     				personData:data,
+	     		}
+	     		$('.headiconintotem').setTemplateURL(projectName+'invitePersonInfo.html');
+	     		$('.headiconintotem').processTemplate(data);
+	     		$('#suggest-persons-wrapper ul').append($('.headiconintotem').html());
+	     		$('.headiconintotem').empty();
+	     		intoUserInfo();
+	     	}else{
+	     		$('#suggest-persons-wrapper ul').append('<li class="noresult"><span>没有找到你想邀请的人</span></li>');
+	     	}
+	     	$('.spinner-gray').hide();
+	   }
+  })
+}
+
 //定时刷新界面去掉因上面设置高度
 function cancelHeight() { 
   if($('#zh-question-answer-form-wrap .edui-popup-emotion').is(':hidden')){
@@ -1035,7 +1141,6 @@ function updateTopics(){
      	dataType:"json",
      	success:function(data){
      		if(data.returnStatus=='000'){//返回成功
-     			
         		console.log(data);
         		alert("success");
         		

@@ -23,6 +23,7 @@ public class TypeConfigServiceImpl implements ITypeConfigService{
 	 * 获取所有的父级分类
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TypeConfig> getAllParentTypeConfigs() {
 		List<TypeConfig> list = null;

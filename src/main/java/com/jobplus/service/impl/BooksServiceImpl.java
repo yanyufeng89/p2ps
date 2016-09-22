@@ -186,13 +186,16 @@ public class BooksServiceImpl implements IBooksService {
 		Page<Books> page = new Page<Books>();
 		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
 		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
-		record.setPageSize(page.getPageSize());	
+		record.setPageSize(page.getPageSize());
+		int count = booksDao.getSharedBookListCount(record);
+		if(count < 1)
+			return page;
 		List<Books> list = booksDao.getSharedBookList(record);
-		if(list.size()>0){
+		if(null!=list && list.size()>0){
 			for (Books book : list) {
 				book.setUserShareTime(DateUtils.formatDate(book.getBookShare().getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(),record.getPageNo());
+			page.initialize((long)count,record.getPageNo());
 			page.setList(list);
 		}
 		
@@ -219,9 +222,12 @@ public class BooksServiceImpl implements IBooksService {
 		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
 		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());		
+		int count = booksDao.getCollectedBookListCount(record);
+		if(count < 1)
+			return page;
 		List<Books> list = booksDao.getCollectedBookList(record);
-		if(list.size()>0){
-			page.initialize(list.get(0).getPageCount(),record.getPageNo());
+		if(null!=list && list.size()>0){
+			page.initialize((long)count,record.getPageNo());
 			page.setList(list);
 		}	
 		

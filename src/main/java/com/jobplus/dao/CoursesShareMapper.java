@@ -24,4 +24,5 @@ public interface CoursesShareMapper {
 	 * @return
 	 */
 	List<CoursesShare> getList(CoursesShare record);
+	int getListCount(CoursesShare record);
 }

@@ -29,6 +29,7 @@ public interface SitesMapper {
 	 * @return
 	 */
 	public List<Sites> getSharedSiteList(Sites record);
+	int getSharedSiteListCount(Sites record);
 
 	/**
 	 * 我收藏的站点列表
@@ -37,6 +38,7 @@ public interface SitesMapper {
 	 * @return
 	 */
 	public List<Sites> getCollectedSiteList(Sites record);
+	int getCollectedSiteListCount(Sites record);
 
 	/**
 	 * 批量删除我分享的站点

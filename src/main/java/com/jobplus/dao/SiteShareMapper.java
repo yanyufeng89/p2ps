@@ -24,4 +24,5 @@ public interface SiteShareMapper {
 	 * @return
 	 */
 	List<SiteShare> getList(SiteShare record);
+	int getListCount(SiteShare record);
 }

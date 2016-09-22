@@ -101,7 +101,7 @@ $(function(){
     	answerreplyCancel($(this));
     })
 	
-	//右侧部分始终固定在顶部(话题详情页  书籍详情页)
+	/*//右侧部分始终固定在顶部(话题详情页  书籍详情页)
 	 if($('.plus-main-sidebar').length){
 		 var t=$('.plus-main-sidebar').offset().top;
 		 var mh = $('.plus-main-content').height();
@@ -117,7 +117,7 @@ $(function(){
 	 			$('.plus-main-sidebar').css('position','');
 	 		}
 	 	})
-	 }
+	 }*/
 	
 	//关掉弹出层(举报)
     $('.modal-dialog-title-close').live('click',function(){
@@ -299,8 +299,7 @@ function getCurrentUser(){
 
 
 //关注人或话题  function topicFollow(obj,objecttype,type)
-function topicFollow(obj,objecttype,type,createperson,titleid,titlename)//objecttype 0:用户  1：话题    actionType 1关注，0取消关注    type代表个人主页话题关注列表
-{  
+function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objecttype 0:用户  1：话题    actionType 1关注，0取消关注    type代表个人主页话题关注列表  
 	var objectId,objectNamePg;
 	if(objecttype==0){
 		objectId=obj.attr('data-userid');	

@@ -89,13 +89,16 @@ public class ArticleServiceImpl implements IArticleService{
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());
+		int count = articleDao.getSharedArticleListCount(record);
+		if(count < 1)
+			return page;
 		List<Article> list = articleDao.getSharedArticleList(record);
 		if (list.size() > 0) {
 			for (Article course : list) {
 				//用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -119,12 +122,15 @@ public class ArticleServiceImpl implements IArticleService{
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());
+		int count = articleDao.getCollectedArticleListCount(record);
+		if(count < 1)
+			return page;
 		List<Article> list = articleDao.getCollectedArticleList(record);
 		if (list.size() > 0) {
 			for (Article course : list) {
 				course.setUserShareTime(DateUtils.formatDate(course.getMyCollect().getColltime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -239,31 +245,31 @@ public class ArticleServiceImpl implements IArticleService{
 	@Override
 	public int insertSelective(Article record) {
 		
-		return 0;
+		return articleDao.insertSelective(record);
 	}
 
 	@Override
 	public Article selectByPrimaryKey(Integer id) {
 		
-		return null;
+		return articleDao.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(Article record) {
 		
-		return 0;
+		return articleDao.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int updateByPrimaryKeyWithBLOBs(Article record) {
 		
-		return 0;
+		return articleDao.updateByPrimaryKeyWithBLOBs(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(Article record) {
 		
-		return 0;
+		return articleDao.updateByPrimaryKey(record);
 	}
 
 }

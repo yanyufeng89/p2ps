@@ -49,6 +49,7 @@ import com.jobplus.service.IReportInfoService;
 import com.jobplus.service.ISitesService;
 import com.jobplus.service.ISmsService;
 import com.jobplus.service.ITypeConfigService;
+import com.jobplus.service.IUpdTableColumnService;
 import com.jobplus.service.IUserService;
 import com.jobplus.service.IVisitHistoryService;
 import com.jobplus.utils.ConstantManager;
@@ -90,6 +91,8 @@ public class MyCenterController2 {
 	private IReportInfoService reportService;
 	@Resource
 	private IVisitHistoryService visitHistoryService;
+	@Resource
+	private IUpdTableColumnService updTableColumnService;
 	
 	
 	/**
@@ -273,9 +276,24 @@ public class MyCenterController2 {
 	 */
 	@RequestMapping(value = "/get3WInfo")
 	@ResponseBody
-	public String get3WInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = true)String url) {
+	public String get3WInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = true)String url, @RequestParam(required = true)String tableName) {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
+			String userid = (String) request.getSession().getAttribute("userid");
+			if(!StringUtils.isBlank(userid)){
+				int count = updTableColumnService.hasSharedUrl(tableName, Integer.parseInt(userid), url);
+				if(count > 0){
+					baseResponse.setReturnStatus(ConstantManager.INVALID_STATUS);
+					baseResponse.setReturnMsg("这个链接您已经分享过了！");
+					return JSON.toJSONString(baseResponse);
+				}
+					
+			}else{
+				baseResponse.setReturnStatus(ConstantManager.INVALID_STATUS);
+				baseResponse.setReturnMsg("用户未登录");
+				return JSON.toJSONString(baseResponse);
+			}			
+			
 			String regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]" ;
 			Pattern patt = Pattern.compile(regex);
 			Matcher matcher = patt.matcher(url);

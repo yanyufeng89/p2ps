@@ -54,7 +54,8 @@ public class ReportInfo extends PageParent implements Serializable{
     /**
      * 举报类型枚举  对应 表名   "tbl_user","tbl_article","tbl_books","tbl_courses","tbl_docs","tbl_topics","tbl_topics_comment" REPORTTYPE_INDEX
      */
-    private String[] REPORTTYPES = {"tbl_user","tbl_article","tbl_books","tbl_courses","tbl_docs","tbl_topics","tbl_topics_comment","tbl_sites"};    
+    private String[] REPORTTYPES = {"tbl_user","tbl_article_share","tbl_books_share","tbl_courses_share","tbl_docs_comment","tbl_topics_comment","tbl_sites_share"//6
+    		,"tbl_article","tbl_books","tbl_courses","tbl_docs","tbl_topics","tbl_sites"};    
     /**
      * 用于定义枚举类的下标  
      */

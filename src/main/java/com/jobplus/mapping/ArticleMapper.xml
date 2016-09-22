@@ -43,8 +43,7 @@
     <include refid="Base_Column_List2" />
     ,
     <include refid="Blob_Column_List" />    
-    ,(select count(*) from tbl_article where userId = #{userid,jdbcType=INTEGER} and isValid = 1) as pageCount 
-    
+    <!-- ,(select count(*) from tbl_article where userId = #{userid,jdbcType=INTEGER} and isValid = 1) as pageCount  -->
     from tbl_article t
     where userId = #{userid,jdbcType=INTEGER}
     and isValid = 1
@@ -58,6 +57,10 @@
 		</otherwise>
 	</choose>
   </select>
+  <select id="getSharedArticleListCount" parameterType="com.jobplus.pojo.Article" resultType="java.lang.Integer">
+   select count(*) from tbl_article where userId = #{userid,jdbcType=INTEGER} and isValid = 1
+  </select>
+  
     <!-- 我收藏的文章列表  getCollectedArticleList -->
   <select id="getCollectedArticleList" parameterType="com.jobplus.pojo.Article" resultMap="ResultMapWithBLOBs">
     select 
@@ -66,11 +69,11 @@
     <include refid="Blob_Column_List" />
      ,
     <include refid="collect_List" />   
-    ,(select count(*)   from tbl_article t  JOIN tbl_collect myc ON t.id = myc.objectId   
+   <!--  ,(select count(*)   from tbl_article t  JOIN tbl_collect myc ON t.id = myc.objectId   
 	    where   t.isValid = 1 
 	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
 	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
-	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount
+	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount -->
     from tbl_article t  JOIN tbl_collect myc ON t.id = myc.objectId   
     where   t.isValid = 1 
     AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
@@ -85,6 +88,13 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>
+  </select>
+  <select id="getCollectedArticleListCount" parameterType="com.jobplus.pojo.Article" resultType="java.lang.Integer">
+   select count(*)   from tbl_article t  JOIN tbl_collect myc ON t.id = myc.objectId   
+	    where   t.isValid = 1 
+	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
+	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
+	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}
   </select>
     <!-- 批量删除我分享的文章列表 -->
   <update id="delSharedArticle" parameterType="com.jobplus.pojo.Article">
@@ -116,6 +126,9 @@
     tcl.actionType = 1 AND tcl.objectId = #{id,jdbcType=INTEGER}) AS collectIds
     from tbl_article t left join tbl_user u on t.userid = u.userid
     where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
   </select>
   
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
@@ -125,11 +138,18 @@
     <include refid="Blob_Column_List" />
     from tbl_article
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_article
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+ <!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_article
     where ID = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   <insert id="insert" parameterType="com.jobplus.pojo.Article" >
     insert into tbl_article (ID, title, articleurl, 
       articleImg, userId, articleClass, 
@@ -272,7 +292,7 @@
         isValid = #{isvalid,jdbcType=INTEGER},
       </if>
       <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+        updateTime = now(),
       </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -307,7 +327,7 @@
       articleClass = #{articleclass,jdbcType=VARCHAR},
       articleType = #{articletype,jdbcType=VARCHAR},
       isValid = #{isvalid,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},
@@ -326,7 +346,7 @@
       articleClass = #{articleclass,jdbcType=VARCHAR},
       articleType = #{articletype,jdbcType=VARCHAR},
       isValid = #{isvalid,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},

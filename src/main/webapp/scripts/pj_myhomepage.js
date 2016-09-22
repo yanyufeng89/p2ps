@@ -46,13 +46,13 @@ $(function(){
     })
     
     //个人中心版块展开与收起
-	var li =$("#recommended-sections ul li:gt(2)");
+	var li =$("#recommended-sections ul li:gt(5)");
     li.hide();
-    $("#recommended-sections ul").css('height','176px');
+    $("#recommended-sections ul").css('height','326px');
     $("#recommended-sections .view-bar").click(function(){
     	if(li.is(':visible')){
 			 li.slideUp('fast');
-			 $("#recommended-sections ul").css('height','176px');
+			 $("#recommended-sections ul").css('height','326px');
 			 $(this).removeClass('view-less-bar').addClass('view-more-bar');
 			 $(this).find('span').html('展开');
 		}else{
@@ -296,6 +296,61 @@ $(function(){
     	
        //$(this).addClass('disabled');
     })
+    
+    //添加技能
+    $('.recommended-section-skill .recommended-section-add').live('click',function(){
+	   if($('.background-skills-container').length==0){
+	   		$('.homepageTemplate').setTemplateURL(projectName+'mySkillTemplate.html');
+	       	var data={
+	       			birthdayone:0,
+	       			birthdaytwo:0,
+	       			ismarry:'',
+	       			isEdit:0,
+	       	}
+	       	$('.homepageTemplate').processTemplate(data);
+	       	$('#recommended-sections').append($('.homepageTemplate').html());
+	       	$('.homepageTemplate').empty();
+	       	window.location.href='#skill0';
+	   	}else{
+	   		window.location.href='#skill0';
+	   		$('#skill0').css('border-color','#0867c5');
+	   	}
+    })
+    //修改技能
+    $('a[name=editskill],#addcontinuousskill').live('click',function(){
+    	var skillid=$(this).attr('data-skillid');
+    	var skillitem=$(this).attr('data-skillitem');
+    	var tb='[';
+    	for(var i=0;i<skillitem.split(',').length;i++){
+    		tb+='{"id":'+skillitem.split(",")[i].split(":")[0]+',"name":"'+skillitem.split(",")[i].split(":")[1]+'"},';
+    	}
+    	tb=tb.substring(0,tb.length-1);
+    	tb+=']';
+    	var data={
+    			skillid:skillid,
+    			skillitem:jQuery.parseJSON(tb),
+    			skillitems:skillitem
+    	}
+    	$('.homepageTemplate').setTemplateURL(projectName+'mySkillTemplate.html');
+    	$('.homepageTemplate').processTemplate(data);
+    	$(this).parents('.background-skills-container').after($('.homepageTemplate').html());
+       	$('.homepageTemplate').empty();
+       	$(this).parents('.background-skills-container').remove();
+    })
+    //取消修改技能
+    $('a[name=myskillcancel]').live('click',function(){
+    	var skillitem=$(this).attr('data-skillitem');
+    	var id=$(this).attr('data-skillid');
+    	if(skillitem.length==0){
+    		$('.background-skills-container').remove();
+    	}else{
+    		cancelSkills(skillitem,id,$(this));
+    	}
+    })
+    //删除技能
+    $('a[name=removeskill]').live('click',function(){
+    	$(this).parent().remove();
+    })
     //修改基本信息的生日
     $('a[name=editbirthday],a[name=editintroinfo],a[name=editmarriage]').live('click',function(){
     	editMyIntroInfo($(this));
@@ -493,6 +548,7 @@ $(function(){
    $('a[name=editoncompany],a[name=editonschool]').live('click',function(){
 	   $('#'+$(this).attr('href').substring(1)).css('border-color','#0867c5')
    })
+
    //修改我的联系方式
    $('a[name=editemail],a[name=editphone]').live('click',function(){
 	   var email=$('input[name=email]').val();
@@ -527,7 +583,11 @@ $(function(){
     $('.detail-list .zg-btn,.profile-actions .zg-btn,#zh-profile-follows-list .zg-btn').live('click',function(){
     	addFollows($(this));
     })
-    
+    //技能点击保存
+    $('a[name=myskillsave]').live('click',function(){
+    	var id=$(this).attr('data-skillid');
+    	SaveSkills(id,$(this));
+    })
     //回到顶部
     $("#backcentertop,#backaboutmetop").mousemove(function(){
      	$("#backcentertop,#backaboutmetop").css("background-position-x", "-28px");
@@ -572,7 +632,6 @@ $(function(){
     //他的粉丝
     $('#otherfans').live('click',function(){
     	otherFans($(this));
-    	
     })
 })
 //定时刷新界面上边框的颜色
@@ -1385,5 +1444,84 @@ function updUserInfo() {
 //加载用户信息
 function intoUserInfo(){
 	$('.uhead,.zm-item-link-avatar,.author-link').pinwheel();
+}
+
+//创建技能(根据输入的条件查询  有就直接筛选  没有就创建)
+function  getSkillsByCondition(obj){
+	var oldval,newval;
+	oldval=$('input[name=currentskillval]').val();
+	newval=$(obj).val();
+	if(newval !== null &&newval !== undefined&&$.trim(newval).length!=0&&$.trim(oldval).length!=$.trim(newval).length){
+		findSkills(newval,$(obj));
+	}else if($.trim(newval).length==0){
+		   $(obj).parent().find('div:last-child').remove();
+		   $('input[name=currentskillval').val('');
+		   $('#skill0').height('145px');
+	}
 	
+}
+//查找技能
+function findSkills(conds,obj){
+	$.ajax({
+		type:'POST',
+		url:projectName+"skills/findSkill/ "+conds,
+		dataType:"JSON",
+     	async:false,
+     	success:function(data){
+     		if(data.returnStatus=='000'){
+     			$('input[name=currentskillval]').val(conds);
+     			obj.chosen(data,obj,'skill',conds);
+     		}else{
+     			
+     		}
+     	}		
+	})
+}
+//保存技能
+function SaveSkills(id,obj){
+	var skills='';
+	var skillIds='';
+	$('#skillinputtags a').each(function(){
+		skills+=$(this).attr('id')+":"+$(this).data('name')+",";
+		//技能ids
+		skillIds+= $(this).attr('id')+",";
+	})
+	skills=skills.substring(0,skills.length-1);
+	skillIds=skillIds.substring(0,skillIds.length-1);
+	if(skills.length==0){
+		$('.background-skills-container').remove();
+//		return false;
+	}
+	$.ajax({
+		type:'POST',
+		url:projectName+"myHome/updSkill",
+		data:{skillitem:skills,id:id,skillIds:skillIds},
+		dataType:"JSON",
+     	async:false,
+     	success:function(data){
+     		if(data.returnStatus=='000'){  
+     			cancelSkills(skills,$.trim(id)==''?data.obj.id:id,obj);	
+     		}else{
+     			
+     		}
+     	}
+	})
+}
+function cancelSkills(skills,id,obj){
+	var tb='[';
+ 	for(var i=0;i<skills.split(',').length;i++){
+ 		tb+='{"id":'+skills.split(",")[i].split(":")[0]+',"name":"'+skills.split(",")[i].split(":")[1]+'"},';
+ 	}
+ 	tb=tb.substring(0,tb.length-1);
+ 	tb+=']';
+		var data={
+ 			skillid:id,
+ 			skillitem:jQuery.parseJSON(tb),
+ 			skillitems:skills
+ 	}
+ 	$('.homepageTemplate').setTemplateURL(projectName+'saveSkill.html');
+ 	$('.homepageTemplate').processTemplate(data);
+ 	obj.parents('.background-skills-container').after($('.homepageTemplate').html());
+    	$('.homepageTemplate').empty();
+     obj.parents('.background-skills-container').remove();
 }

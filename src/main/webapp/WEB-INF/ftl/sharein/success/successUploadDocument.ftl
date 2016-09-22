@@ -43,7 +43,6 @@
 						<a class="goon-upload log-xsend"  href="/51jobplusCore/sharein/searchuploadFile?type=0">继续分享</a>
 					  </div>
 					</div>
-					
 					<div class="successupload-notice">
                     <h4>
                       温馨提示

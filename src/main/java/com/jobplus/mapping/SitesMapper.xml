@@ -43,8 +43,7 @@
     <include refid="Base_Column_List2" />
     ,
     <include refid="Blob_Column_List" />    
-    ,(select count(*) from tbl_sites where userId = #{userid,jdbcType=INTEGER} and isValid = 1) as pageCount 
-    
+    <!-- ,(select count(*) from tbl_sites where userId = #{userid,jdbcType=INTEGER} and isValid = 1) as pageCount  -->
     from tbl_sites t
     where userId = #{userid,jdbcType=INTEGER}
     and isValid = 1
@@ -58,6 +57,10 @@
 		</otherwise>
 	</choose>
   </select>
+   <!-- 统计总数    我分享的站点列表 getSharedSiteListCount  --> 
+  <select id="getSharedSiteListCount" parameterType="com.jobplus.pojo.Sites" resultType="java.lang.Integer">
+    select count(*) from tbl_sites where userId = #{userid,jdbcType=INTEGER} and isValid = 1
+  </select>
   <!-- 我收藏的站点列表  getCollectedSiteList -->
   <select id="getCollectedSiteList" parameterType="com.jobplus.pojo.Sites" resultMap="ResultMapWithBLOBs">
     select 
@@ -66,11 +69,6 @@
     <include refid="Blob_Column_List" />
      ,
     <include refid="collect_List" />   
-    ,(select count(*)   from tbl_sites t  JOIN tbl_collect myc ON t.id = myc.objectId   
-	    where   t.isValid = 1 
-	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
-	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
-	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount
     from tbl_sites t  JOIN tbl_collect myc ON t.id = myc.objectId   
     where   t.isValid = 1 
     AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
@@ -85,6 +83,14 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>
+  </select>
+  <!-- 统计总数     我收藏的站点列表  getCollectedSiteList -->
+  <select id="getCollectedSiteListCount" parameterType="com.jobplus.pojo.Sites" resultType="java.lang.Integer">
+    select count(*)   from tbl_sites t  JOIN tbl_collect myc ON t.id = myc.objectId   
+	    where   t.isValid = 1 
+	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
+	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
+	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}
   </select>
     <!-- 批量删除我分享的站点列表 -->
   <update id="delSharedSites" parameterType="com.jobplus.pojo.Sites">
@@ -116,6 +122,9 @@
     tcl.actionType = 1 AND tcl.objectId = #{id,jdbcType=INTEGER}) AS collectIds
     from tbl_sites t left join tbl_user u on t.userid = u.userid
     where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
   </select>
   
   
@@ -126,11 +135,18 @@
     <include refid="Blob_Column_List" />
     from tbl_sites
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_sites
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_sites
     where ID = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   <insert id="insert" parameterType="com.jobplus.pojo.Sites" >
     insert into tbl_sites (ID, title, siteUrl, 
       siteImg, siteClass, siteType, 
@@ -270,7 +286,7 @@
         isValid = #{isvalid,jdbcType=INTEGER},
       </if>
       <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+        updateTime = now(),
       </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -296,6 +312,7 @@
       <if test="intro != null" >
         intro = #{intro,jdbcType=LONGVARCHAR},
       </if>
+      updateTime = now()
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -307,7 +324,7 @@
       siteClass = #{siteclass,jdbcType=VARCHAR},
       siteType = #{sitetype,jdbcType=VARCHAR},
       isValid = #{isvalid,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},
@@ -326,7 +343,7 @@
       siteClass = #{siteclass,jdbcType=VARCHAR},
       siteType = #{sitetype,jdbcType=VARCHAR},
       isValid = #{isvalid,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},

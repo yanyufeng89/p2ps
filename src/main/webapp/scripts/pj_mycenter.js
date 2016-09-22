@@ -92,10 +92,7 @@ $(function(){
     $('.operation .zm-rich-follow-btn').live('click',function(){
     	topicFollow($(this),0)
     })
-    /*//粉丝 关注界面 右边浏览人点击关注与取消关注
-    $('.iteminfo .zg-btn').live('click',function(){
-    	addFollows($(this));
-    })*/
+
     //最近访问列表   加载更多
     $('.pj-load-more').live('click',function(){
     	$(this).addClass('loading').empty().append("<span class='capture-loading'></span>加载中");

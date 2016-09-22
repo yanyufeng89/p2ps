@@ -70,5 +70,7 @@ public interface ITopicsService {
 	 * @return
 	 */
 	public Page<Topics> searchTopics(int theme, Topics record);
+	
+//	public askPeople()
 
 }

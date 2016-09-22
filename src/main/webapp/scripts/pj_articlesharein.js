@@ -67,7 +67,7 @@ function get3WInfo(url){
 	$.ajax({
 		type:"POST",
 		url:projectName+"/myCenter/get3WInfo",
-		data:{url:url},
+		data:{url:url,tableName:'tbl_article'},
 		dataType:"json",
      	success:function(data){
      		if(data.returnStatus=='000'){//返回成功
@@ -76,15 +76,17 @@ function get3WInfo(url){
     	    	$('#upload-article-container').show();
     	    	$('input[name=articleurl]').val(url);
     	    	
-    	    	$('.capture-loading').prev().val('确定');
-    			$('.capture-loading').hide();
+    	    	
     	    	//文章详情
 	            initTitleInfoBySearchArticle(data);
     		}else{//返回失败
-    			
-    		}
-    		
+    			var $child=$('.articlepreview').nextAll('.error').children();
+    			$('.articlepreview').nextAll('.error').empty().append($child).append(data.returnMsg).show();
+    		}   
+     		$('.capture-loading').prev().val('确定');
+    		$('.capture-loading').hide();
     	}
+		
 	})
 }
 //文章详情

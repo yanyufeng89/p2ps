@@ -44,8 +44,7 @@
     <include refid="Base_Column_List2" />
     ,
     <include refid="Blob_Column_List" />    
-    ,(select count(*) from tbl_courses where userId = #{userid,jdbcType=INTEGER} and isValid = 1) as pageCount 
-    
+    <!-- ,(select count(*) from tbl_courses where userId = #{userid,jdbcType=INTEGER} and isValid = 1) as pageCount -->     
     from tbl_courses t
     where userId = #{userid,jdbcType=INTEGER}
     and isValid = 1
@@ -59,6 +58,10 @@
 		</otherwise>
 	</choose>
   </select>
+ <!-- 统计数      我分享的课程列表   --> 
+  <select id="getSharedCourseListCount" parameterType="com.jobplus.pojo.Courses" resultType="java.lang.Integer">
+   select count(*) from tbl_courses where userId = #{userid,jdbcType=INTEGER} and isValid = 1
+  </select>
   <!-- 我收藏的课程列表  getCollectedCourseList -->
   <select id="getCollectedCourseList" parameterType="com.jobplus.pojo.Courses" resultMap="ResultMapWithBLOBs">
     select 
@@ -67,11 +70,11 @@
     <include refid="Blob_Column_List" />
      ,
     <include refid="collect_List" />   
-    ,(select count(*)   from tbl_courses t  JOIN tbl_collect myc ON t.id = myc.objectId   
+   <!--  ,(select count(*)   from tbl_courses t  JOIN tbl_collect myc ON t.id = myc.objectId   
 	    where   t.isValid = 1 
 	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
 	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
-	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount
+	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount -->
     from tbl_courses t  JOIN tbl_collect myc ON t.id = myc.objectId   
     where   t.isValid = 1 
     AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
@@ -86,6 +89,14 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>
+  </select>
+  <!-- 统计数      我收藏的课程列表  getCollectedCourseList -->
+  <select id="getCollectedCourseListCount" parameterType="com.jobplus.pojo.Courses" resultType="java.lang.Integer">
+    select count(*)   from tbl_courses t  JOIN tbl_collect myc ON t.id = myc.objectId   
+	    where   t.isValid = 1 
+	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
+	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
+	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}
   </select>
     <!-- 批量删除我分享的课程列表 -->
   <update id="delSharedCourses" parameterType="com.jobplus.pojo.Courses">
@@ -117,6 +128,9 @@
     tcl.actionType = 1 AND tcl.objectId = #{id,jdbcType=INTEGER}) AS collectIds
     from tbl_courses t left join tbl_user u on t.userid = u.userid
     where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
   </select>
   
   <!-- <select id="selectByRecord" parameterType="com.jobplus.pojo.Courses" resultMap="ResultMapWithBLOBs">
@@ -138,11 +152,18 @@
     <include refid="Blob_Column_List" />
     from tbl_courses
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update tbl_courses
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tbl_courses
     where ID = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   <insert id="insert" parameterType="com.jobplus.pojo.Courses">
     insert into tbl_courses (ID, coursesName, coursesUrl, 
       coursesImg, userId, coursesClass, 
@@ -285,7 +306,7 @@
         isValid = #{isvalid,jdbcType=INTEGER},
       </if>
       <if test="updatetime != null">
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+        updateTime = now(),
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -320,7 +341,7 @@
       coursesClass = #{coursesclass,jdbcType=VARCHAR},
       coursesType = #{coursestype,jdbcType=VARCHAR},
       isValid = #{isvalid,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},
@@ -339,7 +360,7 @@
       coursesClass = #{coursesclass,jdbcType=VARCHAR},
       coursesType = #{coursestype,jdbcType=VARCHAR},
       isValid = #{isvalid,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},

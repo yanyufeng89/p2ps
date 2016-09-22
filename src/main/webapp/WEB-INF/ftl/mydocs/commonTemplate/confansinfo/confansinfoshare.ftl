@@ -20,9 +20,9 @@
 		     </#if>
 		   </a>
 	  </div>
-	  <div style="float:right">
-	     <a href='javascript:void(0);' onclick="share();" target='_blank' class='head-sharein'></a>
-	  </div>
+	  
+	     <a href='javascript:void(0);' onclick="share();" target='_blank' class='head-sharein' style='float:right'></a>
+	  
 </div>
 <script type="text/javascript">
     function share() {

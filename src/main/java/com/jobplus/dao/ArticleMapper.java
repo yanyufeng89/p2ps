@@ -14,6 +14,7 @@ public interface ArticleMapper {
      * @return
      */
     public List<Article> getSharedArticleList(Article record); 
+    int getSharedArticleListCount(Article record); 
     
     /**
      * 我收藏的文章列表
@@ -21,6 +22,7 @@ public interface ArticleMapper {
      * @return
      */
     public List<Article> getCollectedArticleList(Article record); 
+    int getCollectedArticleListCount(Article record); 
     
     /**
      * 批量删除我分享的文章

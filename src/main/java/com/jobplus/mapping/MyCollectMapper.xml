@@ -28,9 +28,8 @@
     select 
     <include refid="Base_Column_List2" />
     <include refid="tb_docs_colums_list" />
-    ,(select count(*) from tbl_collect t  JOIN ${collecttype} p where t.objectId = p.ID  AND t.actionType = '${actionType}'
-    	AND t.userId = #{userid,jdbcType=INTEGER} AND t.collectType = '${collecttype}') as pageCount 
-    
+   <!--  ,(select count(*) from tbl_collect t  JOIN ${collecttype} p where t.objectId = p.ID  AND t.actionType = '${actionType}'
+    	AND t.userId = #{userid,jdbcType=INTEGER} AND t.collectType = '${collecttype}') as pageCount  -->
     from tbl_collect t  JOIN ${collecttype} p
     where t.objectId = p.ID 
     AND
@@ -47,6 +46,11 @@
 				limit #{defaultPageSize,jdbcType=INTEGER}
 			</otherwise>
 	</choose>
+  </select>
+  <!-- 统计总数   个人中心-我的文档列表   getMyDocsList-->
+  <select id="getMyDocsListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.MyCollect" >
+    select count(*) from tbl_collect t  JOIN ${collecttype} p where t.objectId = p.ID  AND t.actionType = '${actionType}'
+    	AND t.userId = #{userid,jdbcType=INTEGER} AND t.collectType = '${collecttype}'
   </select>
   
   <!-- 个人中心-我的话题列表   getMyTopicsList    未完成     -->
@@ -68,6 +72,7 @@
 			</otherwise>
 	</choose>
   </select>
+
  
 
  <!-- 批量删除Mycollects -->

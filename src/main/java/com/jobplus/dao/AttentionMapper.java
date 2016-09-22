@@ -38,6 +38,7 @@ public interface AttentionMapper {
      * @return
      */
     List<Attention> getMyAttentionList(Attention attention);
+    int getMyAttentionListCount(Attention attention);
     
     /**
      * 批量删除我的关注

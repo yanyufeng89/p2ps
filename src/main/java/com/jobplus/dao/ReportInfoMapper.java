@@ -26,5 +26,6 @@ public interface ReportInfoMapper {
      */
     int getAllReportInfoCount(ReportInfo record);    
     List<ReportInfo> getAllReportInfo(ReportInfo record);
-    
+
+    int dealComplaints(Integer id);
 }

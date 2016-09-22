@@ -35,11 +35,14 @@
 		<ul>
 		    <ul id="accordion">
 		      <li>
-		         <div class="my-doc link"><p>
-		              <a href='/51jobplusCore/myCenter/getMyHeadTop'>
-		                <span class="icon-ken"></span>我的知识库
-		              </a>
-		                <b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
+		         <div class="my-doc link">
+					  <p>
+						  <a href='/51jobplusCore/myCenter/getMyHeadTop'>
+							<span class="icon-ken"></span>我的知识库
+						  </a>
+							<b class="iconfont up-arrow doc-arrow-btn"></b>
+					 </p>
+				 </div>
 		         <ul class="submenu">
 	                 <li id="mydocument"><a href="/51jobplusCore/myCenter/getMyDocsUploaded"><span class="icon-doc"></span>我的文档</a></li>
 	                 <li id="mytopic"><a href="/51jobplusCore/myCenter/getMyTopicsUploaded"><span class="icon-topic"></span>我的话题</a></li>
@@ -84,9 +87,9 @@
 		</div>
 		</div>
 		<div class="uc-main">
-		   
-		  <#include "/mydocs/commonTemplate/confansinfo/confansinfo.ftl"/>
-		
+		    <div class="uc-head" style="padding:0;width:950px;">
+				<#include "/mydocs/commonTemplate/confansinfo/confansinfoshare.ftl"/>
+			</div>	
 		   <div id="allnews" class="maincontent">
 			<div class="uc-news">
 			   <div class="console-box">

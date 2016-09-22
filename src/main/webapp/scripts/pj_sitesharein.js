@@ -4,7 +4,6 @@ $(function(){
 	getAllParentTypeConfigs('sitetype');
 	//输入链接点击确定
 	$('.sitepreview').live('click',function(){
-		
 		var url=$('#searchsite').val();
 		var $child=$(this).nextAll('.error').children();
 		if($.trim(url)==''){
@@ -54,21 +53,22 @@ function get3WInfo(url){
 	$.ajax({
 		type:"POST",
 		url:projectName+"/myCenter/get3WInfo",
-		data:{url:url},
+		data:{url:url,tableName:'tbl_sites'},
 		dataType:"json",
      	success:function(data){
      		if(data.returnStatus=='000'){//返回成功
      			$('#upload-initsite-container').hide();
     	    	$('#upload-site-container').show();
     	    	$('input[name=siteurl]').val(url);
-    	    	$('.capture-loading').prev().val('确定');
-    			$('.capture-loading').hide();
+    	    	
     	    	//站点详情
 	            initTitleInfoBySearchSite(data);
     		}else{//返回失败
-    			
+    			var $child=$('.sitepreview').nextAll('.error').children();
+    			$('.sitepreview').nextAll('.error').empty().append($child).append(data.returnMsg).show();
     		}
-    		
+     		$('.capture-loading').prev().val('确定');
+			$('.capture-loading').hide();
     	}
 	})
 }

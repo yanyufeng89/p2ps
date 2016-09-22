@@ -25,5 +25,6 @@ public interface AccountDetailMapper {
      * @return
      */
     List<AccountDetail> getListByRecord(AccountDetail record);
+    int getListByRecordCount(AccountDetail record);
     
 }

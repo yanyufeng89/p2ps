@@ -27,12 +27,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.alibaba.fastjson.JSON;
+import com.jobplus.pojo.SkillLibrary;
 import com.jobplus.pojo.Tags;
 import com.jobplus.utils.SolrJUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class) // 表示继承了SpringJUnit4ClassRunner类
 @WebAppConfiguration(value = "src/main/webapp")
-
 @ContextConfiguration(locations = { "classpath:spring-application.xml" })
 public class TestSolr2 {
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(TestSolr2.class);
@@ -136,5 +136,31 @@ public class TestSolr2 {
 		tag.setTagtype("0");
 		solrJUtils.addTagsIndexToSolr(tag);
 	}
+	
+	@Test
+	public void addSkill() throws Exception {
+		// doc 48 /book 8/article 12/courses 44/site topics 42
+		SkillLibrary skill = new SkillLibrary();
+		skill.setId(123456789);
+		skill.setSkillname("工程制造");
+		solrJUtils.addSkillIndexToSolr(skill);
+	}
+	@Test
+	public void findSkill()throws Exception{
+       //查询a和b下面的数据，
+		System.out.println("++++++++++++++++++++++"+solrJUtils.findSkill("软件"));
+		System.out.println("++++++++++++++++++++++"+solrJUtils.findUser("anan.wang","29"));
+        HttpSolrClient sc = new HttpSolrClient("http://192.168.0.39:18080/solr/skillCore");
+        ModifiableSolrParams solrParams = new ModifiableSolrParams();
+        solrParams.set("q", "skillname:"+"*");
+        //solrParams.set("q.op", "AND");//设置查询关系
+        QueryResponse rsp = sc.query(solrParams);
+        System.out.println("命中数量："+rsp.getResults().getNumFound());
+        logger.info(JSON.toJSONString(rsp.getResults()));
+        for(SolrDocument sd:rsp.getResults()){
+            System.out.println(sd);
+        }
+        sc.close();
+    }
 
 }

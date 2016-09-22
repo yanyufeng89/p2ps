@@ -69,14 +69,15 @@ public class IndexController {
 	 *
 	 * @return
 	 */
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/knowledgeBaseIndex", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		mv = homePageService.getHome(mv);
 		mv.addObject("latestDatas", indexService.getLatestShareData());
 		mv.addObject("hotShareDataMap", indexService.getHotShareDataMap());
 		mv.addObject("recommDatas", indexService.getHotRecommData());
-		mv.setViewName("index");
+		mv.addObject("indexPage", "1");
+		mv.setViewName("knowledgeBaseIndex");
 		// logger.info("**首页信息** mv=="+mv);
 		return mv;
 	}
@@ -157,7 +158,8 @@ public class IndexController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView redirectToIndex(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/index");
+		mv.setViewName("index");
+		mv.addObject("indexPage", "0");
 		return mv;
 	}
 
@@ -229,6 +231,12 @@ public class IndexController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("currentPage", page);
 		mv.setViewName("about/" + page);
+		return mv;
+	}
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public ModelAndView knowledgeBaseIndex(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 }

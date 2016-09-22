@@ -46,6 +46,7 @@ public interface DocsMapper {
      * @return
      */
     List<Docs> getMyDocsUploaded(Docs record);
+    int getMyDocsUploadedCount(Docs record);
     
     /**
      * 批量逻辑删除文档

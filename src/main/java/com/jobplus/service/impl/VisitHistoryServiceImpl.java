@@ -45,7 +45,7 @@ public class VisitHistoryServiceImpl implements IVisitHistoryService {
 	@Override
 	public int insertSelective(VisitHistory record) {
 		
-		return 0;
+		return visitHistoryDao.insertSelective(record);
 	}
 
 	//最近访问我的主页的人
@@ -55,12 +55,15 @@ public class VisitHistoryServiceImpl implements IVisitHistoryService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = visitHistoryDao.getRecentVistorsCount(record); 
+		if(count < 1)
+			return page;
 		List<VisitHistory> list = visitHistoryDao.getRecentVistors(record);
 		if (list.size() > 0) {
 			for (VisitHistory vh : list) {// 设置时间用于页面显示
 				vh.setShowVTime(DateUtils.formatDate(vh.getVisittime(), "yyyy-MM-dd HH:mm:ss"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;

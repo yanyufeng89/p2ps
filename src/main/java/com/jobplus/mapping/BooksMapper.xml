@@ -48,10 +48,8 @@
     <include refid="Blob_Column_List" />
     ,
     <include refid="books_share_Column_List" />
-
-	,(select count(*) from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID where 1 = 1 AND t.isvalid = 1 AND bs.commentBy IS NULL AND bs.isdelete = 0
-	AND bs.userID = #{bookShare.userid,jdbcType=INTEGER}) as pageCount 
-
+<!-- 	,(select count(*) from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID where 1 = 1 AND t.isvalid = 1 AND bs.commentBy IS NULL AND bs.isdelete = 0
+	AND bs.userID = #{bookShare.userid,jdbcType=INTEGER}) as pageCount  -->
 	from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID
 	where 1 = 1
 	AND t.isvalid = 1
@@ -69,6 +67,11 @@
 		</otherwise>
 	</choose>
   </select>
+  <!-- 统计总数    个人中心我分享的书籍列表     getSharedBookList 排除自己评论：commentBy为空 -->
+  <select id="getSharedBookListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Books">
+    select count(*) from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID where 1 = 1 AND t.isvalid = 1 AND bs.commentBy IS NULL AND bs.isdelete = 0
+	AND bs.userID = #{bookShare.userid,jdbcType=INTEGER}
+  </select>
   <!-- 个人中心我收藏的书籍列表     getCollectedBookList -->
   <select id="getCollectedBookList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Books">
     select 
@@ -76,10 +79,9 @@
     ,
     <include refid="Blob_Column_List" />
     ,
-    <include refid="collect_List" />
-    
-    ,(select count(*) from tbl_books t JOIN tbl_collect myc ON t.id = myc.objectId  where 1 = 1 AND t.isvalid = 1 AND myc.userId = #{myCollect.userid,jdbcType=INTEGER} AND myc.collectType =  #{myCollect.collecttype,jdbcType=VARCHAR}
-    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount 
+    <include refid="collect_List" />    
+  <!--   ,(select count(*) from tbl_books t JOIN tbl_collect myc ON t.id = myc.objectId  where 1 = 1 AND t.isvalid = 1 AND myc.userId = #{myCollect.userid,jdbcType=INTEGER} AND myc.collectType =  #{myCollect.collecttype,jdbcType=VARCHAR}
+    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount  -->
     
     from tbl_books t JOIN tbl_collect myc ON t.id = myc.objectId 
     
@@ -99,6 +101,11 @@
 	</choose>
     
   </select> 
+  <!-- 统计总数     个人中心我收藏的书籍列表     getCollectedBookList -->
+  <select id="getCollectedBookListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Books">
+ 	select count(*) from tbl_books t JOIN tbl_collect myc ON t.id = myc.objectId  where 1 = 1 AND t.isvalid = 1 AND myc.userId = #{myCollect.userid,jdbcType=INTEGER} AND myc.collectType =  #{myCollect.collecttype,jdbcType=VARCHAR}
+    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}
+  </select> 
   <!-- 书籍主体 -->
   <select id="selectRecord" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -110,6 +117,8 @@
     
     from tbl_books t <!-- left join tbl_user u on t.createPerson  = u.userid -->
     where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
   </select>
   
   
@@ -121,11 +130,18 @@
     <include refid="Blob_Column_List" />
     from tbl_books
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_books
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_books
     where ID = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   <insert id="insert" parameterType="com.jobplus.pojo.Books" >
     insert into tbl_books (ID, bookname, author, 
       press, bookImg, bookClass, 
@@ -254,7 +270,7 @@
         recommendSum = #{recommendsum,jdbcType=INTEGER},
       </if>
       <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+        updateTime = now(),
       </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -276,7 +292,7 @@
       isValid = #{isvalid,jdbcType=INTEGER},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       intro = #{intro,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=INTEGER}
@@ -292,7 +308,7 @@
       isValid = #{isvalid,jdbcType=INTEGER},
       collectSum = #{collectsum,jdbcType=INTEGER},
       recommendSum = #{recommendsum,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=INTEGER}
   </update>

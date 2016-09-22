@@ -21,8 +21,8 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import com.alibaba.fastjson.JSON;
 import com.jobplus.pojo.EducationBgrd;
 import com.jobplus.pojo.MyHomePage;
-import com.jobplus.pojo.OperationSum;
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.PersonalSkill;
 import com.jobplus.pojo.Sms;
 import com.jobplus.pojo.SmsFilter;
 import com.jobplus.pojo.User;
@@ -33,12 +33,14 @@ import com.jobplus.service.IAttentionService;
 import com.jobplus.service.IEducationBgrdService;
 import com.jobplus.service.IMyHomePageService;
 import com.jobplus.service.IOperationSumService;
+import com.jobplus.service.IPersonalSkillService;
 import com.jobplus.service.ISmsFilterService;
 import com.jobplus.service.ISmsService;
 import com.jobplus.service.IUserService;
 import com.jobplus.service.IVisitHistoryService;
 import com.jobplus.service.IWorkExperService;
 import com.jobplus.utils.ConstantManager;
+import com.jobplus.utils.SolrJUtils;
 
 /**
  * 我的主页相关
@@ -69,6 +71,10 @@ public class MyHomeController {
 	private IMyHomePageService myHomePageService;
 	@Resource
 	private IAttentionService attentionService;
+	@Resource
+	private SolrJUtils solrJUtils;
+	@Resource
+	private IPersonalSkillService personalSkillService;
 	
 	
 	
@@ -476,21 +482,37 @@ public class MyHomeController {
 			return JSON.toJSONString(baseResponse);
 		}
 	}	
-	
-	
-	
-	
 	/**
-	 * 内部方法 获取用户操作统计
+	 * 新增 或者 删除  个人技能
 	 */
-	public OperationSum getOperationSum(HttpServletRequest request) {
-		String userid = (String) request.getSession().getAttribute("userid");
-		if (!StringUtils.isBlank(userid)) {
-			OperationSum operationSum = new OperationSum();
-			operationSum = operationSumService.selectByPrimaryKey(Integer.parseInt(userid));
-			logger.info("**getOperationSum**获取用户操作统计*****operationSum=="+JSON.toJSONString(operationSum));
-			return operationSum;
+	@RequestMapping(value = "/updSkill")
+	@ResponseBody
+	public String updSkill(HttpServletRequest request, HttpServletResponse response, PersonalSkill record, @RequestParam(required = false)String skillIds) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			int ret = 0;
+			String userid = (String) request.getSession().getAttribute("userid");
+			if (!StringUtils.isBlank(userid)) {
+				record.setUserid(Integer.parseInt(userid));
+				ret = personalSkillService.insertOrUpdSkill(record,skillIds);
+				if (ret > 0) {
+					baseResponse.setObj(record);
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				} else {
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					baseResponse.setReturnMsg("添加个人技能失败");
+				}
+			}
+			logger.info("**updWorkExpInfo*个人主页 添加个人技能**ret="+ret+"**record==" + JSON.toJSONString(record));
+			return JSON.toJSONString(baseResponse);
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**updWorkExpInfo*个人主页 添加个人技能失败*      失败   999****" + e.getMessage());
+			return JSON.toJSONString(baseResponse);
 		}
-		return null;
 	}
+	
+	
 }

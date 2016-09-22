@@ -74,12 +74,15 @@ public class SiteShareServiceImpl implements ISiteShareService{
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = siteShareDao.getListCount(record);
+		if(count < 1)
+			return page;
 		List<SiteShare> list = siteShareDao.getList(record);
 		if (list.size() > 0) {
 			for (SiteShare courseShare : list) {// 设置时间用于页面显示
 				courseShare.setUserCommentTime(DateUtils.formatDate(courseShare.getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;

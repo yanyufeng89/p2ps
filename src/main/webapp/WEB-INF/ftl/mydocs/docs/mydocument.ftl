@@ -127,7 +127,7 @@
 		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		               </div>
 		               <div class="status-box">
-		                   <div class="w335 ib"><div class="checkbox select-all"></div>文档名称</div>						   
+		                   <div class="w342 ib"><div class="checkbox select-all"></div>文档名称</div>						   
 						   <div class="w140 ib">下载次数</div>
 						   <div class="w140 ib">收藏次数</div>
 						   <div class="w140 ib">上传时间</div>
@@ -138,7 +138,7 @@
 					       <#if (docsPage)??>
 							      <#list docsPage.list as list>
 								         <li>
-								          <div class='w335 fs14 fc3 ib dochidden'>
+								          <div class='w342 fs14 fc3 ib dochidden'>
 								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}" ></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
 								             <#if list.title?index_of(list.docsuffix)!=-1>
@@ -147,7 +147,6 @@
 								             <#else>
 								                 <a href="/51jobplusCore/docs/getDocsDetail?id=${list.id}" data-isconverter='${list.isconverter}'  class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
 								             </#if>
-								             
 								          </div>
 								          <div class='w140 ib il'>
 								           <#if (list.downsum)??>
@@ -209,16 +208,16 @@
 		                     <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		                  </div>
 			               <div class="status-box">
-							   <div class="w525 ib"><div class="checkbox select-all"></div>文档名称</div>
+							   <div class="w560 ib"><div class="checkbox select-all"></div>文档名称</div>
 							   <div class="w204 ib">上传时间</div>
-							   <div class="w165 ib">操作</div>
+							   <div class="w119 ib">操作</div>
 						   </div>
 						   <div class="docs-list">
 						      <ul>
 					           <#if (docsPage)??>
 							      <#list docsPage.list as list>
 								         <li>
-								          <div class='w525 fs14 fc3 ib dochidden'>
+								          <div class='w560 fs14 fc3 ib dochidden'>
 								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}"></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
 								             <#if list.title?index_of(list.docsuffix)!=-1>
@@ -231,7 +230,7 @@
 								          <div class="w204 ib">
 								              ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
-								          <div class='w165 ib operate'>
+								          <div class='w119 ib operate'>
 								              <a href='/51jobplusCore/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
 								                <b class="iconfont pr2"></b>修改
 								              </a>
@@ -278,9 +277,9 @@
 		                     <span class="remove" data-type='1' ><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		                   </div>
 			               <div class="status-box">
-							   <div class="w525 ib"><div class="checkbox select-all"></div>文档名称</div>
+							   <div class="w560 ib"><div class="checkbox select-all"></div>文档名称</div>
 							   <div class="w204 ib">上传时间</div>
-							   <div class="w165 ib">操作</div>
+							   <div class="w119 ib">操作</div>
 						   </div>
 						   <div class="docs-list">
 						    <ul>
@@ -288,7 +287,7 @@
 							      <#list docsPage.list as list>
 							        
 								       <li>
-								          <div class='w525 fs14 fc3 ib dochidden'>
+								          <div class='w560 fs14 fc3 ib dochidden'>
 								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}"></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
 								             
@@ -302,7 +301,7 @@
 								          <div class="w204 ib">
 								             ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
-								          <div class='w165 ib operate'>
+								          <div class='w119 ib operate'>
 								              <a href='/51jobplusCore/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
 								                <b class="iconfont pr2"></b>修改
 								              </a>
@@ -351,17 +350,17 @@
 		              <span class="remove" data-type='0' data-actiontype='0'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		           </div>
 	               <div class="status-box">
-					  <div class="w450 ib"><div class="checkbox select-all"></div>文档名称</div>
-					  <div class="w165 ib">下载次数</div>
-					  <div class="w165 ib">下载时间</div>
-					  <div class="w119 ib">操作</div>
+					  <div class="w525 ib"><div class="checkbox select-all"></div>文档名称</div>
+					  <div class="w140 ib">下载次数</div>
+					  <div class="w140 ib">下载时间</div>
+					  <div class="w92 ib">操作</div>
 				   </div>
 				   <div class="docs-list">
 				   <ul>
 				     <#if (myDownloadPage)??>
 				         <#list myDownloadPage.list as list>
 				             <li>
-				                <div class='w450 fs14 fc3 ib dochidden'>
+				                <div class='w525 fs14 fc3 ib dochidden'>
 					                  <div class="checkbox chk" data-docid="${list.id}" data-name="${list.docs.title}"></div>
 									  <b class="ic ic-${list.docs.docsuffix?lower_case} mr14"></b>
 									<#if list.docs.title?index_of(list.docs.docsuffix)!=-1> 
@@ -371,13 +370,13 @@
 				                        <a href="/51jobplusCore/docs/getDocsDetail?id=${list.objectid}" target="_blank" title="${list.docs.title}">${list.docs.title}</a>
 				                    </#if>
 				                </div>
-				                <div class='w165 ib il'>
+				                <div class='w140 ib il'>
 				                  ${list.docs.downsum}
 				                </div>
-				                <div class='w165 ib'>
+				                <div class='w140 ib'>
 				                  ${list.colltime?string("yyyy-MM-dd")}
 				                </div>
-				                <div class='w119 ib operate'>
+				                <div class='w92 ib operate'>
 				                   <span data-id='${list.id}' data-name='${list.docs.title}' data-type='0' data-actiontype='0'>
 					                  <b class="iconfont pr2"></b>
 					                                            删除
@@ -425,17 +424,17 @@
 		              <span class="remove" data-type='0' data-actiontype='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		           </div>
 	               <div class="status-box">
-					  <div class="w450 ib"><div class="checkbox select-all"></div>文档名称</div>
-					  <div class="w165 ib">收藏次数</div>
-					  <div class="w165 ib">收藏时间</div>
-					  <div class="w119 ib">操作</div>
+					  <div class="w525 ib"><div class="checkbox select-all"></div>文档名称</div>
+					  <div class="w140 ib">收藏次数</div>
+					  <div class="w140 ib">收藏时间</div>
+					  <div class="w92 ib">操作</div>
 				   </div>
 				   <div class="docs-list">
 				     <ul>
 				       <#if (myCollectPage)??>
 				         <#list myCollectPage.list as list>
 				             <li>
-				                <div class='w450 fs14 fc3 ib dochidden'>
+				                <div class='w525 fs14 fc3 ib dochidden'>
 				                  <div class="checkbox chk" data-docid="${list.id}" data-name="${list.docs.title}"></div>
 								  <b class="ic ic-${list.docs.docsuffix?lower_case} mr14"></b>
 								  <#if list.docs.title?index_of(list.docs.docsuffix)!=-1>
@@ -445,13 +444,13 @@
 								     <a href="/51jobplusCore/docs/getDocsDetail?id=${list.objectid}" target="_blank" title="${list.docs.title}">${list.docs.title}</a>
 				                  </#if>
 				                </div>
-				                <div class='w165 ib il'>
+				                <div class='w140 ib il'>
 				                  ${list.docs.collectsum}
 				                </div>
-				                <div class='w165 ib'>
+				                <div class='w140 ib'>
 				                 ${list.colltime?string("yyyy-MM-dd")}
 				                </div>
-				                <div class='w119 ib operate'>
+				                <div class='w92 ib operate'>
 				                   <span data-id='${list.id}' data-name='${list.docs.title}' data-type='0' data-actiontype='1'>
 					                  <b class="iconfont pr2"></b>
 					                                            删除

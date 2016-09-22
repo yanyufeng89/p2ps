@@ -121,7 +121,7 @@
 		                 <span class="remove" data-type='0'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		               </div>
 		               <div class="status-box">
-		                   <div class="w335 ib"><div class="checkbox select-all"></div>书籍名称</div>
+		                   <div class="w356 ib"><div class="checkbox select-all"></div>书籍名称</div>
 		                   <div class="w140 ib">推荐语</div>
 						   <div class="w92 ib">作者</div>
 						   <div class="w92 ib">收藏次数</div>
@@ -134,7 +134,7 @@
 					       <#if (sharedBookPage)??>
 					          <#list sharedBookPage.list as list>
 					            <li>
-					              <div class='w335 fs14 fc3 ib titlehidden'>
+					              <div class='w356 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-commentid="${list.bookShare.id}" data-bookid='${list.id}' data-name="${list.bookname}"></div>
                                       <a href="/51jobplusCore/books/getBookDetail?id=${list.id}" target="_blank" title="${list.bookname}">${list.bookname}</a>  
                                    </div>
@@ -208,7 +208,7 @@
 		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		            </div>
 	               <div class="status-box">
-		                   <div class="w356 ib"><div class="checkbox select-all"></div>书籍名称</div>
+		                   <div class="w366 ib"><div class="checkbox select-all"></div>书籍名称</div>
 						   <div class="w92 ib">作者</div>
 						   <div class="w125 ib">出版社</div>
 						   <div class="w92 ib">收藏次数</div>
@@ -221,7 +221,7 @@
 			          <#if (collectedBookPage.list)??>
 			             <#list collectedBookPage.list as sharelist>
 			                   <li>
-					              <div class='w356 fs14 fc3 ib titlehidden'>
+					              <div class='w366 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-bookid="${sharelist.id}" data-commentid='${sharelist.myCollect.id}' data-name="${sharelist.bookname}"></div>
                                       <a href="/51jobplusCore/books/getBookDetail?id=${sharelist.id}" target="_blank" title="${sharelist.bookname}">${sharelist.bookname}</a>  
                                    </div>

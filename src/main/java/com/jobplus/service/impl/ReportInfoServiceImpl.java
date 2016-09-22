@@ -85,6 +85,11 @@ public class ReportInfoServiceImpl implements IReportInfoService{
 		}
 		return GridDataUtil.getGridMap(gridQuery.getRows(), gridQuery.getPage(), count, list);
 	}
+
+	@Override
+	public int dealComplaints(Integer id) {
+		return reportInfoDao.dealComplaints(id);
+	}
 	/*public Page<ReportInfo> getAllReportInfo(ReportInfo record) {
 		Page<ReportInfo> page = new Page<ReportInfo>();
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
@@ -92,7 +97,7 @@ public class ReportInfoServiceImpl implements IReportInfoService{
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		List<ReportInfo> list = reportInfoDao.getAllReportInfo(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;

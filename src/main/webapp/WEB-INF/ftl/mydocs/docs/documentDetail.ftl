@@ -289,8 +289,11 @@
 		</#if>	
 	    </div>
         <div class="plus-main-sidebar">
-		     <div class="searchresright">
-	            <a class="upload-btn bg-index" href="/51jobplusCore/sharein/searchuploadFile"></a>
+		     <div class="searchresright share-plaza">
+	            <a class="share-icon bg-index" href="/51jobplusCore/sharein/searchuploadFile?type=0"></a>
+				<a target="_blank" href="javascript:void(0)" class="text">
+				  文档---话题---书籍---课程---文章---站点
+				</a>
 	         </div>
 			 <div class='zm-relate-book'>
 			   <div class='zm-side-section'>
@@ -366,7 +369,7 @@
 					    <ul>
 						 <#list record.relatedList as samelist>
 						  <li>
-							 <div class='related-book-right'>
+							 <div class='related-doc-right'>
 							   <span>
 							        <b class="ic ic-${samelist.docSuffix?lower_case} mr14"></b>
 							        <#if samelist.title?index_of(samelist.docSuffix)!=-1>
@@ -376,13 +379,8 @@
 							          <a href='/51jobplusCore/docs/getDocsDetail?id=${samelist.data_id}'>${samelist.title}</a>
 							        </#if>
 							   </span>
-							   <span>
-									   <#if (samelist.replySum)??>
-									    ${samelist.replySum}
-									   <#else>
-									    0
-									   </#if>
-									      人评价
+							   <span class='num'>
+									   <#if (samelist.replySum)??>${samelist.replySum}<#else>0</#if>人评价
 							   </span>
 							 </div>
 						  </li>

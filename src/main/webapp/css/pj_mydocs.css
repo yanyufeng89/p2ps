@@ -83,10 +83,11 @@
 }
 .docs-list ul li a{
 	 font-size: 12px;
+	 margin-right:10px;
 }
 
 .ilbookc{
-	left:30px;
+	left:20px;
 }
 .pr3 {
 	padding-right:3px
@@ -159,11 +160,20 @@
 .w226 {
 	width:226px
 }
+.w214 {
+	width:214px
+}
 .w335 {
 	width:335px
 }
+.w342 {
+	width:342px
+}
 .w356 {
 	width:356px
+}
+.w366 {
+	width:366px
 }
 .w380 {
 	width:380px
@@ -177,11 +187,14 @@
 .w446 {
 	width:446px
 }
-.w330{
-	width:330px
+.w340{
+	width:340px
 }
-.w525 {
+.w525{
 	width:525px
+}
+.w560 {
+	width:560px
 }
 .w450 {
 	width:450px;
@@ -193,8 +206,10 @@
 	*zoom:1;
 	vertical-align:middle;
 	position:relative;
-	*position:static
+	*position:static;
+	text-align: left;
 }
+
 .uc-main {
 	float:left;
 	border-right:1px solid #e5e5e5;
@@ -207,19 +222,12 @@
 	/* width:950px  */
 	width:79.08%;
 }
-/* @-moz-document url-prefix(){Firefox
-       .uc-aside{
-             min-height: 807px!important;
-        }
-       .uc-main{
-             min-height: 808px!important;
-        }
-} */
-#doc #bd,.concerncontent{
+
+/* #doc #bd,.concerncontent{
 	max-width:1200px;
     clear: both;
     overflow: hidden;
-}
+} */
 
 .concerncontent .fansleft,#sharecontent .fansleft{
 	position:relative;
@@ -267,8 +275,10 @@
 	margin: 0 auto;
 }
 #bd .bd-wrap {
-	width:100%;
-	margin:0 auto
+	width: 100%;
+    margin: 0 auto;
+    min-width: 960px;
+    max-width: 1200px;
 }
 #bd .mod-head {
     background: url(../image/head_bg_f5cf0b2f.jpg) 0 0 no-repeat;
@@ -535,9 +545,7 @@
     width: 220px;
     margin: 0 auto;
 }
-.uc-aside .user-name .name-link,.uc-aside .user-level a{
-    color: #090909;
-}
+
 .uc-aside .user-level {
     color: #fff;
     font-size: 13px;
@@ -930,7 +938,6 @@
     font-size: 14px;
     height: 46px;
     line-height: 45px;
-    border-bottom: 1px solid #f4f4f4;
     padding-left: 15px;
 }
 .uc-mydocfocus .console-box {
@@ -1040,9 +1047,6 @@
     width: 446px;
 }
 
-.w92 {
-    width: 92px;
-}
 .w119 {
     width: 119px;
 }
@@ -1052,10 +1056,6 @@
 
 .draggable-doc .move-tip {
     color: #8d9082;
-}
-
-.ib {
-    text-align: left;
 }
 .mr16 {
     margin-right: 16px;
@@ -1768,11 +1768,11 @@
 
 #bd #bd-1{
 	float:left;
-	width: 865px
+	width: 880px
 }
 #bd #bd-2{
 	float:right;
-	width:325px;
+	width:310px;
 	margin-top: 20px;
 }
 li[class^=recommended-section-] {
@@ -1785,11 +1785,10 @@ li[class^=recommended-section-] {
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
     -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
     box-shadow: 0 1px 1px rgba(0,0,0,0.15),-1px 0 0 rgba(0,0,0,0.03),1px 0 0 rgba(0,0,0,0.03),0 1px 0 rgba(0,0,0,0.12);
-    margin-top:6px;
-    margin-left:6px;
+    margin:10px 0 0 10px;
     border: 1px solid #cccfd3;
     height: 145px;
-    width:32%;
+    width:31.6%;
     position: relative;
 }
 .recommended-section-content {
@@ -1825,6 +1824,9 @@ li[class^=recommended-section-] {
 }
 .introinfo{
 	background-position:0 -218px;
+}
+.skill{
+	background-position:0 -316px;
 }
 .educationinfo{
 	background-position:-48px -218px;
@@ -1879,16 +1881,7 @@ li[class^=recommended-section-].recommended-section-honor .recommended-section-c
     content: "\e03b";
     background-color: #dc4b89;
 }
-li[class^=recommended-section-].recommended-section-skill .recommended-section-content:before {
-    font-weight: normal;
-    font-style: normal;
-    text-decoration: inherit;
-    speak: none;
-    font-size: 32px;
-    color: #fff;
-    content: "\e03b";
-    background-color: #dc4b89;
-}
+
 li[class^=recommended-section-].recommended-section-ccpm .recommended-section-content:before {
     font-weight: normal;
     font-style: normal;
@@ -1975,8 +1968,6 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	margin-top:10px;
 	border: 1px solid #cccfd3;
     background: #fff;
-    overflow: hidden;
-    zoom: 1;
 }
 #self-sections {
 	border: 1px solid #cccfd3;
@@ -2011,7 +2002,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 }
 .birthday,.background-selfinfo-container .intro,.education,.graduate, .major,.company,.onjob,.workposition
 ,.workdescription{
-	width:600px;
+	/* width:600px; */
     font-size:14px;
 	clear:both;
 	position: relative;
@@ -2046,7 +2037,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 }
 .advertisement{
 	background-image:url(../image/mycenter.png);
-	width:325px;
+	width:310px;
 	height:100px;
 }
 
@@ -2193,9 +2184,8 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 .mr14 {
     margin-right: 14px;
 }
-
 .il{
-	left:26px;
+	left:28px;
 }
 .iltopic{
 	left:14px;
@@ -2235,7 +2225,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	cursor: pointer;
 }
 .topic-disblue{
-   background: #eee;  
+   background: linear-gradient(to bottom,#f8f8f9,#e6e6e8)!important;
    color: #666!important;
 }
 
@@ -2246,8 +2236,8 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 .topic-disblue,.topic-blue{
 	border-radius:2px;
     width:98px;
-    line-height:28px;
-    height:28px;
+    line-height:30px;
+    height:30px;
     text-align: center;
     box-sizing: border-box;
     border: 1px solid #ddd;
@@ -2283,8 +2273,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	background-position:0 -85px;
 	width:198px;
 	height:45px;
-	margin:28px 24px 0 0 !important;
-	cursor:pointer;
+	margin:24px 24px 0 0 !important;
 	display: inline-block;
 }
 .head-sharein:hover{
@@ -2318,7 +2307,8 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 .zm-profile-section-item:last-child{
 	border-bottom:none;
 }
-.zg-clear:before, .zg-clear:after {
+.zg-empty:before, .zg-empty:after{
+	clear:both;
     content: "\0020";
     display: block;
     height: 0;
@@ -2345,8 +2335,11 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
     background: #eee;
     color: #666;
     border: 1px solid #e5e5e5;
+    
 }
-
+.zg-btn{
+	height:30px;
+}
 .zm-list-content-title {
     margin: 0;
     font-size:14px;
@@ -2554,6 +2547,9 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
     height:16px!important;
     line-height:16px!important;
  }
+ .schoolname,.companyname,.professioninfo,.positioninfo,.workcontent{
+    display: inline-flex;
+ }
  .workdescription .content{
     width: 493px!important;
     height:56px!important;
@@ -2573,7 +2569,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
      position: relative;
      outline:none;
  }
- #addcontinuous,#addcontinuouswork{
+ #addcontinuous,#addcontinuouswork,#addcontinuousskill{
     float:right;
     height: 30px;
     line-height: 30px;
@@ -2585,10 +2581,10 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
     border-radius: 2px;
     display: inline-block;
     text-decoration: none;
-    border: 1px solid #EAE5E5;
+    border: 1px solid #d6d6d6;
     font-weight:500;
  }
- #addcontinuous span,#addcontinuouswork span{
+ #addcontinuous span,#addcontinuouswork span,#addcontinuousskill span{
     color: #0867c5;
     font-size: 18px;
     font-weight: 700;
@@ -2701,4 +2697,41 @@ input.text, textarea.text {
     letter-spacing: 2px;
     border-radius: 2px;
     font-size: 15px;
+}
+a.zg-r3px{
+	width:60px;
+}
+.manage-skills{
+    box-shadow: 0 1px 3px rgba(0,0,0,.1) inset;
+    border: 1px solid #ccc!important;
+    padding: 5px 8px 2px;
+    position: relative;
+    margin:15px;
+    width: 830px;
+}
+.skills-detail{
+	margin: 15px 15px 20px 15px;
+}
+.manage-skills  .label-input-label {
+    line-height: 23px;
+    color: #999!important;
+}
+.manage-skills .zu-question-suggest-skill-input {
+    width: 120px;
+    border: 0 none;
+    font-size: 12px;
+    outline: none;
+    font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
+}
+.skill-error{
+	display: none; 
+    font-size: 12px;
+    color: #666;
+    font-weight: 400;
+    margin-right:6px;
+}
+.skillzone{
+	margin-right:10px;
+	font-size:14px;
 }

@@ -65,20 +65,9 @@
 		</foreach>
 	</insert>
 	<!-- 我上传的文档 -->
-	<select id="getMyDocsUploaded" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
+	<select id="getMyDocsUploaded" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.Docs">
 		select
-		<include refid="Base_Column_List" />
-		,(select count(*) from tbl_docs t where 1 =1 AND t.userId = #{userid} AND t.isValid = 1
-			<choose>
-				<when test="ispublic !=null">
-					and isPublic = #{ispublic,jdbcType=INTEGER}
-				</when>
-				<otherwise>
-					and isPublic = 1
-				</otherwise>
-			</choose>) as pageCount 
-		
+		<include refid="Base_Column_List2" />
 		from tbl_docs t
 		where 1 =1
 		AND t.userId = #{userid}
@@ -101,6 +90,18 @@
 				limit #{defaultPageSize,jdbcType=INTEGER}
 			</otherwise>
 		</choose>
+	</select>
+	<!-- 统计数     我上传的文档 -->
+	<select id="getMyDocsUploadedCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Docs">
+		select count(*) from tbl_docs t where 1 =1 AND t.userId = #{userid} AND t.isValid = 1
+			<choose>
+				<when test="ispublic !=null">
+					and isPublic = #{ispublic,jdbcType=INTEGER}
+				</when>
+				<otherwise>
+					and isPublic = 1
+				</otherwise>
+			</choose>
 	</select>
 <!-- 批量逻辑删除docs -->
   <update id="deleteDocs" parameterType="java.lang.Integer" >
@@ -132,7 +133,9 @@
     
     from tbl_docs t left join tbl_user u on t.userid = u.userid
     where t.ID = #{id,jdbcType=INTEGER}
-    
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
   </select>
   
   
@@ -143,11 +146,18 @@
     <include refid="Base_Column_List" />
     from tbl_docs
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_docs
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_docs
     where ID = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   <insert id="insert" parameterType="com.jobplus.pojo.Docs" >
     insert into tbl_docs (ID, title, description, 
       filePath, docPages, createTime, 
@@ -308,7 +318,7 @@
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastedittime != null" >
-        lastEditTime = #{lastedittime,jdbcType=TIMESTAMP},
+        lastEditTime = now(),
       </if>
       <if test="userid != null" >
         userId = #{userid,jdbcType=INTEGER},
@@ -359,7 +369,7 @@
       filePath = #{filepath,jdbcType=VARCHAR},
       docPages = #{docpages,jdbcType=CHAR},
       createTime = #{createtime,jdbcType=TIMESTAMP},
-      lastEditTime = #{lastedittime,jdbcType=TIMESTAMP},
+      lastEditTime = now(),
       userId = #{userid,jdbcType=INTEGER},
       collectSum = #{collectsum,jdbcType=INTEGER},
       downSum = #{downsum,jdbcType=INTEGER},

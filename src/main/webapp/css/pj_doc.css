@@ -7,15 +7,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .topic-error{
 	display:none;
 	font-size: 13px;
     color: #c33;
     font-weight: 400;
 }
-
-
 .ic-msg {
 	vertical-align: -4px;
 	margin-right: 4px;

@@ -157,7 +157,7 @@
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastupdatetime != null" >
-        lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
+        lastUpdateTime = now(),
       </if>
       <if test="tier != null" >
         tier = #{tier,jdbcType=INTEGER},
@@ -173,7 +173,7 @@
       typeGroup = #{typegroup,jdbcType=VARCHAR},
       isValid = #{isvalid,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP},
-      lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
+      lastUpdateTime = now(),
       tier = #{tier,jdbcType=INTEGER}
     where typeId = #{typeid,jdbcType=INTEGER}
   </update>

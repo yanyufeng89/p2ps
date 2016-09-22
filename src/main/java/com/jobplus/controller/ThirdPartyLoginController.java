@@ -8,7 +8,8 @@ import com.jobplus.service.IUserService;
 import com.jobplus.thirdparty.weibo4j.Users;
 import com.jobplus.thirdparty.weibo4j.model.User;
 import com.jobplus.thirdparty.weibo4j.model.WeiboException;
-import com.jobplus.thirdparty.weibo4j.util.BareBonesBrowserLaunch;
+import com.jobplus.utils.HttpClientUtils;
+import com.jobplus.utils.ParsProperFile;
 import com.qq.connect.QQConnectException;
 import com.qq.connect.api.OpenID;
 import com.qq.connect.javabeans.AccessToken;
@@ -31,6 +32,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 public class ThirdPartyLoginController {
@@ -76,54 +78,29 @@ public class ThirdPartyLoginController {
             String accessToken = null;
             String openID = null;
             if (accessTokenObj.getAccessToken().equals("")) {
-                System.out.print("没有获取到响应参数");
+                ModelAndView mv = new ModelAndView();
+                mv.setViewName("500");
+                return mv;
             } else {
                 accessToken = accessTokenObj.getAccessToken();
-                request.getSession().setAttribute("demo_access_token", accessToken);
-
                 // 利用获取到的accessToken 去获取当前用的openid -------- start
                 OpenID openIDObj = new OpenID(accessToken);
                 openID = openIDObj.getUserOpenID();
-                System.out.println("欢迎你，代号为 " + openID + " 的用户!");
-                System.out.println("<a href=" + "shuoshuoDemo.html" + " target=\"_blank\">去看看发表说说的demo吧</a>");
-                // 利用获取到的accessToken 去获取当前用户的openid --------- end
-                HttpClient htc = new HttpClient();
-                Response rsp = htc.get("https://graph.qq.com/user/get_user_info?oauth_consumer_key=101341795&access_token=" + accessToken + "&openid=" + openID + "&format=json");
-                String str2 = rsp.asString();
-                /**
-                 * ret	返回码
-                 msg	如果ret<0，会有相应的错误信息提示，返回数据全部用UTF-8编码。
-                 nickname	用户在QQ空间的昵称。
-                 figureurl	大小为30×30像素的QQ空间头像URL。
-                 figureurl_1	大小为50×50像素的QQ空间头像URL。
-                 figureurl_2	大小为100×100像素的QQ空间头像URL。
-                 figureurl_qq_1	大小为40×40像素的QQ头像URL。
-                 figureurl_qq_2	大小为100×100像素的QQ头像URL。需要注意，不是所有的用户都拥有QQ的100x100的头像，但40x40像素则是一定会有。
-                 gender	性别。 如果获取不到则默认返回"男"
-                 is_yellow_vip	标识用户是否为黄钻用户（0：不是；1：是）。
-                 vip	标识用户是否为黄钻用户（0：不是；1：是）
-                 yellow_vip_level	黄钻等级
-                 level	黄钻等级
-                 is_yellow_year_vip	标识是否为年费黄钻用户（0：不是； 1：是）
-                 */
-                JSONObject job = new JSONObject(str2);
-                System.out.println("<p> start -----------------------------------利用获取到的accessToken,openid 去获取用户在Qzone的昵称等信息 --------------------------- start </p>");
-                System.out.println("<br/>");
-                if ((int) job.get("ret") == 0) {
-                    System.out.println("姓名： " + job.getString("nickname") + "<br/>");
-                    System.out.println("性别： " + job.getString("gender") + "<br/>");
-                    System.out.println("<image src=" + job.getString("figureurl_qq_1") + " /><br/>");
-                    System.out.println("<image src=" + job.getString("figureurl_qq_2") + " /><br/>");
-                } else {
-                    System.out.println("很抱歉，我们没能正确获取到您的信息，原因是： " + job.getString("msg"));
-                }
-                System.out.println("<p> end -----------------------------------利用获取到的accessToken,openid 去获取用户在Qzone的昵称等信息 ---------------------------- end </p>");
+
                 OauthLoginInfo oauthLoginInfo = new OauthLoginInfo();
                 oauthLoginInfo.setOauthname(DataType.QQ.getValue());
                 oauthLoginInfo.setOauthaccesstoken(accessTokenObj.getAccessToken());
                 oauthLoginInfo.setOauthexpires(new Long(accessTokenObj.getExpireIn()).intValue());
                 oauthLoginInfo.setOauthopenid(openID);
-                return login(request, oauthLoginInfoService.getUserFromOauth(oauthLoginInfo), null);
+                OauthLoginInfo loginInfo = oauthLoginInfoService.selectByNameAndOpenId(oauthLoginInfo);
+                if (loginInfo == null) {
+                    HttpClient htc = new HttpClient();
+                    Response rsp = htc.get("https://graph.qq.com/user/get_user_info?oauth_consumer_key=101341795&access_token=" + accessToken + "&openid=" + openID + "&format=json");
+                    JSONObject userObj = new JSONObject(rsp.asString());
+                    oauthLoginInfo.setNickname(userObj.getString("nickname"));
+                    oauthLoginInfo.setHeadicon(userObj.getString("figureurl_qq_1"));
+                }
+                return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,8 +120,8 @@ public class ThirdPartyLoginController {
         response.setContentType("text/html;charset=utf-8");
         try {
             com.jobplus.thirdparty.weibo4j.Oauth oauth = new com.jobplus.thirdparty.weibo4j.Oauth();
-            BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
-        } catch (WeiboException e) {
+            response.sendRedirect(oauth.authorize("code"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -160,22 +137,94 @@ public class ThirdPartyLoginController {
     public ModelAndView weiboLoginCallback(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String code = request.getParameter("code");
+            String error_code = request.getParameter("error_code");
+            if (StringUtils.isNotBlank(error_code) && "21330".equals(error_code)) {
+                ModelAndView mv = new ModelAndView();
+                mv.setViewName("index");
+                return mv;
+            }
             com.jobplus.thirdparty.weibo4j.Oauth oauth = new com.jobplus.thirdparty.weibo4j.Oauth();
             com.jobplus.thirdparty.weibo4j.http.AccessToken accessToken = oauth.getAccessTokenByCode(code);
             if (accessToken == null) {
-
+                ModelAndView mv = new ModelAndView();
+                mv.setViewName("500");
+                return mv;
             } else {
                 Users um = new Users(accessToken.getAccessToken());
-                User user = um.showUserById(accessToken.getUid());
-                System.out.println("weibo------------------------------" + user.toString());
                 OauthLoginInfo oauthLoginInfo = new OauthLoginInfo();
                 oauthLoginInfo.setOauthname(DataType.WEIBO.getValue());
+                oauthLoginInfo.setOauthopenid(accessToken.getUid());
                 oauthLoginInfo.setOauthaccesstoken(accessToken.getAccessToken());
                 oauthLoginInfo.setOauthexpires(Integer.parseInt(accessToken.getExpireIn()));
-                oauthLoginInfo.setOauthopenid(accessToken.getUid());
-                return login(request, oauthLoginInfoService.getUserFromOauth(oauthLoginInfo), null);
+                OauthLoginInfo loginInfo = oauthLoginInfoService.selectByNameAndOpenId(oauthLoginInfo);
+                if (loginInfo == null) {
+                    User user = um.showUserById(accessToken.getUid());
+                    oauthLoginInfo.setNickname(user.getName());
+                    oauthLoginInfo.setHeadicon(user.getProfileImageUrl());
+                }
+                return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
             }
         } catch (WeiboException e) {
+            e.printStackTrace();
+        }
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("500");
+        return mv;
+    }
+
+    /**
+     * 微信登录
+     *
+     * @param response
+     */
+    @RequestMapping(value = "/authorize/wechat/login", method = RequestMethod.GET)
+    public void wechatLogin(HttpServletResponse response) {
+        response.setContentType("text/html;charset=utf-8");
+        try {
+            String url = "https://open.weixin.qq.com/connect/qrconnect?appid=" + ParsProperFile.getString("wechat.AppID") + "&redirect_uri=" + ParsProperFile.getString("wechat.redirect_URI") + "&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
+            response.sendRedirect(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 微信回调
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping(value = "/authorize/wechat/callback")
+    public ModelAndView wechatLoginCallback(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String code = request.getParameter("code");
+            //获取access_token
+            String tokenStr = HttpClientUtils.doGet("https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + ParsProperFile.getString("wechat.AppID") + "&secret=" + ParsProperFile.getString("wechat.AppSecret") + "&code=" + code + "&grant_type=authorization_code");
+            if (StringUtils.isBlank(tokenStr) || tokenStr.indexOf("errcode") > -1) {
+                ModelAndView mv = new ModelAndView();
+                mv.setViewName("500");
+                return mv;
+            }
+            JSONObject tokenObj = new JSONObject(tokenStr);
+            String access_token = tokenObj.getString("access_token");
+            String expires_in = tokenObj.getString("expires_in");
+            String openid = tokenObj.getString("openid");
+            OauthLoginInfo oauthLoginInfo = new OauthLoginInfo();
+            oauthLoginInfo.setOauthname(DataType.WECHAT.getValue());
+            oauthLoginInfo.setOauthaccesstoken(access_token);
+            oauthLoginInfo.setOauthexpires(Integer.parseInt(expires_in));
+            oauthLoginInfo.setOauthopenid(openid);
+            OauthLoginInfo loginInfo = oauthLoginInfoService.selectByNameAndOpenId(oauthLoginInfo);
+            //获取用户信息
+            if (loginInfo == null) {
+                String userStr = HttpClientUtils.doGet("https://api.weixin.qq.com/sns/userinfo?access_token=" + access_token + "&openid=" + openid);
+                JSONObject userObj = new JSONObject(userStr);
+                oauthLoginInfo.setNickname(transStringCoding(userObj.getString("nickname")));
+                oauthLoginInfo.setHeadicon(userObj.getString("headimgurl"));
+            }
+            return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         ModelAndView mv = new ModelAndView();
@@ -195,14 +244,14 @@ public class ThirdPartyLoginController {
         ModelAndView mv = new ModelAndView();
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {
-            mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:" + backurl : "redirect:/index");
+            mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:" + backurl : "redirect:/");
             return mv;
         }
         try {
             String username = user.getUsername();
             String password = "";
             user = userService.findUserByName(username);
-            if (null != user && password.equals(user.getPasswd()) && user.getIsvalid() != 0) {
+            if (user != null && user.getIsvalid().intValue() != 0) {
                 username = String.valueOf(user.getUserid());
             } else {
                 // 返回前端数据设置
@@ -237,7 +286,7 @@ public class ThirdPartyLoginController {
                 mv.addObject("message", "登录成功");
                 mv.addObject("user", user);
                 // 返回视图名设置
-                mv.setViewName("redirect:/index");
+                mv.setViewName("redirect:/");
             }
             return mv;
         } catch (AuthenticationException e) {
@@ -248,5 +297,11 @@ public class ThirdPartyLoginController {
             mv.setViewName("login");
             return mv;
         }
+    }
+
+    public String transStringCoding(String str) throws UnsupportedEncodingException {
+        if (StringUtils.isNotBlank(str))
+            return new String(str.getBytes("ISO-8859-1"), "UTF-8");
+        return null;
     }
 }

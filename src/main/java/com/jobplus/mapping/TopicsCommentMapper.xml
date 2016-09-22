@@ -52,14 +52,15 @@
 	<include refid="tbl_topics_Column_List" />
 	,
 	strip_tags(commContent) as commContent
-	 ,(select count(*) from tbl_topics_comment t JOIN tbl_topics p ON t.topicsId = p.ID where 1 = 1
-			AND t.userId = #{userid,jdbcType=INTEGER} AND t.isDelete = 0) as pageCount 	
+<!-- 	 ,(select count(*) from tbl_topics_comment t JOIN tbl_topics p ON t.topicsId = p.ID where 1 = 1
+			AND t.userId = #{userid,jdbcType=INTEGER} AND t.isDelete = 0) as pageCount  -->	
 			
 	from tbl_topics_comment t JOIN tbl_topics p
 	ON t.topicsId = p.ID
 	where 1 = 1
 	AND t.userId = #{userid,jdbcType=INTEGER}
-	AND t.isDelete = 0
+	<!-- 资源必须未被删除 -->
+	and t.isdelete = 0
 	ORDER BY t.updateTime DESC
 	<choose>
 		<when test="pageNo !=null">
@@ -69,6 +70,11 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>
+	</select>
+  <!-- 统计总数    		我回复过的话题    getMyTopicsComments -->
+  <select id="getMyTopicsCommentsCount" resultType="java.lang.Integer"  parameterType="java.lang.Integer" >
+	select count(*) from tbl_topics_comment t JOIN tbl_topics p ON t.topicsId = p.ID where 1 = 1
+			AND t.userId = #{userid,jdbcType=INTEGER} AND t.isDelete = 0 and p.isValid = 1
 	</select>
 
   <!-- <delete id="deleteTopicsComments" parameterType="java.lang.Integer" >
@@ -104,15 +110,12 @@
 			group_concat(userid)
 		FROM
 			tbl_topics_isliked where commid = t.id) AS likedIds
-	 ,(select count(*) FROM tbl_topics_comment t JOIN tbl_user u ON t.userId = u.userId WHERE	isdelete = 0
-		AND topicsId = #{topicsid,jdbcType=INTEGER} 	
-		AND type = 1	
-		) as pageCount 	
-	
 	FROM
 		tbl_topics_comment t 
 	JOIN tbl_user u ON t.userId = u.userId
-	WHERE	isdelete = 0
+	WHERE	<!-- 资源必须未被删除 -->
+		 t.isdelete = 0
+		 and u.isValid = 1
 	AND
 	topicsId = #{topicsid,jdbcType=INTEGER} 	
 	AND
@@ -136,11 +139,17 @@
 		</otherwise>
 	</choose>
   </select>
+  <!-- 统计总数   	获取某条话题的所有回答   关联用户表的用户名和用户头像     （用于话题详情页的展示）     （用于话题详情页的展示） getTopicsCommentsByTopicId type 回复类型    回答1 评论2-->
+  <select id="getTopicsCommentsByTopicIdCount" resultType="java.lang.Integer"  parameterType="com.jobplus.pojo.TopicsComment" >
+	select count(*) FROM tbl_topics_comment t JOIN tbl_user u ON t.userId = u.userId WHERE	isdelete = 0
+		AND topicsId = #{topicsid,jdbcType=INTEGER} 	
+		AND type = 1	
+		
+  </select>
 
 
 	<!-- 获取话题的评论 或者 话题下回答的评论 通过parentCommId获取 getPartTopicsComments -->
-	<select id="getPartTopicsComments" resultMap="BaseResultMap"
-		parameterType="java.lang.Integer">
+	<select id="getPartTopicsComments" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.TopicsComment" >
 		select
 		<include refid="Base_Column_List2" />
 		,
@@ -152,25 +161,6 @@
 		u.headIcon AS tmpHeadIcon,
 		comm.likedIds AS
 		likedIds
-
-		
-		 ,(select count(*) FROM (select commId,group_concat(userid) as likedIds from
-			tbl_topics_isliked group by commId) as comm RIGHT JOIN
-			tbl_topics_comment t on comm.commId = t.id LEFT JOIN tbl_user u on
-			t.userid= u.userid LEFT
-			JOIN tbl_user uc on t.commentBy = uc.userid
-			WHERE
-			1 = 1 AND t.isdelete = 0
-			<if test="parentcommid != null and parentcommid != ''">
-				AND parentCommId = #{parentcommid,jdbcType=INTEGER}
-			</if>
-			<if test="topicsid != null and topicsid != ''">
-				AND topicsId = #{topicsid,jdbcType=INTEGER}
-			</if>
-			<if test="type != null and type != ''">
-				AND type = #{type,jdbcType=INTEGER}
-			</if>
-		) as pageCount
 
 		FROM
 		(select commId,group_concat(userid) as likedIds from
@@ -201,6 +191,25 @@
 			</otherwise>
 		</choose>
 	</select>
+	<!-- 统计总数		 获取话题的评论 或者 话题下回答的评论 通过parentCommId获取 getPartTopicsComments -->
+	<select id="getPartTopicsCommentsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.TopicsComment" >
+		select count(*) FROM (select commId,group_concat(userid) as likedIds from
+			tbl_topics_isliked group by commId) as comm RIGHT JOIN
+			tbl_topics_comment t on comm.commId = t.id LEFT JOIN tbl_user u on
+			t.userid= u.userid LEFT
+			JOIN tbl_user uc on t.commentBy = uc.userid
+			WHERE
+			1 = 1 AND t.isdelete = 0
+			<if test="parentcommid != null and parentcommid != ''">
+				AND parentCommId = #{parentcommid,jdbcType=INTEGER}
+			</if>
+			<if test="topicsid != null and topicsid != ''">
+				AND topicsId = #{topicsid,jdbcType=INTEGER}
+			</if>
+			<if test="type != null and type != ''">
+				AND type = #{type,jdbcType=INTEGER}
+			</if>
+	</select>
   <!-- 点赞取消点赞    -->
     <update id="updateLikeSum" parameterType="com.jobplus.pojo.TopicsComment" >
     update tbl_topics_comment
@@ -226,11 +235,18 @@
     <include refid="Blob_Column_List" />
     from tbl_topics_comment
     where id = #{id,jdbcType=INTEGER}
+    <!-- 资源必须未被删除 -->
+		and isdelete = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_topics_comment
+    set isdelete = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_topics_comment
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   <!-- 部分数据字段设置为默认值         updateTime, createTime -->
   <insert id="insert" parameterType="com.jobplus.pojo.TopicsComment" >
     insert into tbl_topics_comment (id, topicsId, rootCommID, 
@@ -390,7 +406,6 @@
       <if test="isdelete != null" >
         isdelete = #{isdelete,jdbcType=INTEGER},
       </if>
-        updateTime = Now(),
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -412,7 +427,7 @@
       <if test="isPublic != null" >
         isPublic = #{isPublic,jdbcType=INTEGER},
       </if>
-     
+      updateTime = Now()
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>

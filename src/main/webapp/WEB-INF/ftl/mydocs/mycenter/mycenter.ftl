@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html class="expanded">
-    
+<html class="expanded">   
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -222,12 +221,25 @@
 									  <button class="recommended-section-add" data-addtype='1'>添加经历</button>
 									</#if>
                                 </li>
+								<li class="recommended-section-skill">
+                                    <div class="recommended-section-content">
+									    <a class='skill recommendedimg'></a>
+                                        <h5 class="recommended-section-title">技能专长</h5>
+                                        <p class="recommended-section-value-statement">列出技能,提高8倍人气</p>
+								    </div>
+                                    <button class="recommended-section-add">添加技能</button>
+                                </li>
+								<li class="recommended-section-langue">
+								</li>
+								<li class="recommended-section-langue">
+								</li>
                                 <li class="recommended-section-hobby" style='display:none'>
                                     <div class="recommended-section-content">
                                         <h5 class="recommended-section-title">兴趣爱好</h5>
                                         <p class="recommended-section-value-statement">列出信息,提高3倍人气</p></div>
                                     <button class="recommended-section-add">添加信息</button>
                                 </li>
+								
                                 <li class="recommended-section-langue" style='display:none'>
                                     <div class="recommended-section-content">
                                         <h5 class="recommended-section-title">兴趣爱好</h5>
@@ -240,12 +252,7 @@
                                         <p class="recommended-section-value-statement">列出信息,提高3倍人气</p></div>
                                     <button class="recommended-section-add">添加经历</button>
                                 </li>
-                                <li class="recommended-section-skill" style='display:none'>
-                                    <div class="recommended-section-content">
-                                        <h5 class="recommended-section-title">技能专长</h5>
-                                        <p class="recommended-section-value-statement">列出信息,提高3倍人气</p></div>
-                                    <button class="recommended-section-add">添加信息</button>
-                                </li>
+                               
                                 <li class="recommended-section-ccpm" style='display:none'>
                                     <div class="recommended-section-content">
                                         <h5 class="recommended-section-title">资格认证</h5>
@@ -264,7 +271,7 @@
                             </div>
                         </div>
                        <#if ((userInfo.ismarry)?? && userInfo.ismarry?length gt 0 && userInfo.ismarry!=2) || ((userInfo.birthdayone)?? && userInfo.birthdayone?length gt 0) || ((userInfo.birthdaytwo)?? &&  userInfo.birthdaytwo?length gt 0) || ((userInfo.description)?? &&  userInfo.description?length gt 0)>
-							<div class="background-selfinfo-container section-container" id='self-info-detail'>
+							<div class="background-selfinfo-container section-container zg-empty" id='self-info-detail'>
 							    <input type='hidden' name='ismarry' value='<#if (userInfo.ismarry)??>${userInfo.ismarry}</#if>'>
 							    <input type='hidden' name='birthdayone' value='<#if (userInfo.birthdayone)??>${userInfo.birthdayone} </#if>'>
 							    <input type='hidden' name='birthdaytwo' value='<#if (userInfo.birthdaytwo)??>${userInfo.birthdaytwo} </#if>'>
@@ -311,10 +318,10 @@
 					    <#list eduList as edulist>
 						 <#if edulist_index==0>
 						 <#assign edittype=1 />
-					     <div class="background-education-container section-container" id='education${edulist_index}'>
+					     <div class="background-education-container section-container zg-empty" id='education${edulist_index}'>
 						<#else>
 						 <#assign edittype=0 />
-						 <div class="background-education-container section-container education-container" id='education${edulist_index}'>
+						 <div class="background-education-container section-container education-container zg-empty" id='education${edulist_index}'>
 						</#if>
 							   <input type='hidden' name='school' value='${edulist.school?html}'>
 							   <input type='hidden' name='major' value='${edulist.major?html}'>
@@ -370,10 +377,10 @@
 					    <#list workExList as worklist>
 						   <#if worklist_index==0>
 							 <#assign edittype=1 />
-							 <div class="background-workexperience-container section-container" id='work${worklist_index}'>
+							 <div class="background-workexperience-container section-container zg-empty" id='work${worklist_index}'>
 							<#else>
 							 <#assign edittype=0 />
-							 <div class="background-workexperience-container section-container workexperience-container" id='work${worklist_index}'>
+							 <div class="background-workexperience-container section-container workexperience-container zg-empty" id='work${worklist_index}'>
 						   </#if>
 						       <input type='hidden' name='companyname' value=' <#if (worklist.company)?? && worklist.company?length gt 0>${worklist.company?html}'</#if>>
 							   <input type='hidden' name='description' value=' <#if (worklist.description)?? && worklist.description?length gt 0>${worklist.description?html}'</#if>>
@@ -435,6 +442,27 @@
 						</#list>
 					  </#if>
                     </div>
+					<#if (personalSkill)?? && (personalSkill.skillitem)?length gt 1>
+					  <#list personalSkill as skill>
+					      <div class="background-skills-container section-container zg-empty" id='skill0'>
+						    <div class="header">
+								<span>技能专长</span> 
+								<a href="javascript:void(0)" id="addcontinuousskill" class="add-all ml20  add-all-able" data-skillid='${skill.id}' data-skillitem='${skill.skillitem}'>
+								  <span>+</span>&nbsp;继续添加
+								</a>
+						    </div>
+						    <div class="skills-detail zg-empty">
+							  <#list skill.skillitem?split(',') as items>
+							     <#assign item=items?split(':')/>
+								 <span class='skillzone' data-skillid='${item[0]}'>${item[1]}</span>
+							  </#list>
+							  <a href="javascript:;" class="zu-edit-button" name="editskill" data-skillid='${skill.id}' data-skillitem='${skill.skillitem}'>
+							      <i class="zu-edit-button-icon"></i>修改
+							  </a>
+							</div>
+						  </div>
+					  </#list>
+					</#if>
                 </div>
                 <div id="bd-2">
                     <div class="advertisement">
@@ -496,7 +524,9 @@
             <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
             <script type="text/javascript" src="/51jobplusCore/scripts/jquery-1.8.0.min.js"></script>
             <script type="text/javascript" src="/51jobplusCore/scripts/jquery-jtemplates.js"></script> 
+            <script type="text/javascript" src="/51jobplusCore/scripts/pj_randomid.js"></script>
             <script type="text/javascript" src="/51jobplusCore/scripts/pj_constant.js"></script>
+            <script type="text/javascript" src="/51jobplusCore/scripts/pj_chosen.js"></script>
             <script type="text/javascript" src="/51jobplusCore/scripts/pj_loadPmAndsmg.js"></script>
             <script type="text/javascript" src="/51jobplusCore/scripts/pj_publicMethod.js"></script>
             <script type="text/javascript" src="/51jobplusCore/scripts/jquery.pinwheel-0.1.0.js"></script>

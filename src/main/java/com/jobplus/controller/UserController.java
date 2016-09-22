@@ -4,9 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -28,6 +26,7 @@ public class UserController {
 	@Resource
 	private IUserService userService;
 
+	@SuppressWarnings("rawtypes")
 	@Resource
 	private RedisTemplate redisTemplate;
 
@@ -46,7 +45,7 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		// 返回前端数据设置
 		// 返回视图名设置
-		mv.setViewName("redirect:/index");
+		mv.setViewName("redirect:/");
 		
 		// 个人操作数之类的信息放入session
 		userService.getMyHeadTopAndOper(request);
@@ -178,6 +177,7 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/changePassword")
 	@ResponseBody
 	public String changePassword(HttpServletRequest request, User user) {

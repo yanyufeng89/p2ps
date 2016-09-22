@@ -185,7 +185,7 @@
         tier = #{tier,jdbcType=INTEGER},
       </if>
       <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+        updateTime = now(),
       </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -209,7 +209,7 @@
       rootId = #{rootid,jdbcType=INTEGER},
       tagType = #{tagtype,jdbcType=CHAR},
       tier = #{tier,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       creator = #{creator,jdbcType=INTEGER},
       isvalid = #{isvalid,jdbcType=INTEGER},

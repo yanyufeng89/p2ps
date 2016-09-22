@@ -1,0 +1,32 @@
+<div class="background-skills-container section-container zg-empty" id='skill0'>
+  <div class="header">
+	<span>技能专长</span> 
+	<a href="javascript:void(0)" id="addcontinuousskill" class="add-all ml20  add-all-able"  data-skillid='{$T.skillid}' data-skillitem='{$T.skillitems}'>
+	  <span>+</span>&nbsp;继续添加
+	</a>
+  </div>
+  <div class="manage-skills  zg-empty">
+      <div class="zg-inline" id="skillinputtags">
+         {#foreach $T.skillitem as skill}
+            <div class="zm-tag-editor-edit-item">
+            <span class="nor">{$T.skill.name}</span>
+            <a id="{$T.skill.id}"  data-name='{$T.skill.name}' href="javascript:void(0)" class="zm-tag-editor-remove-button"
+              name="removeskill">
+            </a>
+            </div>
+         {#/for}
+      </div>
+      <div class="zm-tag-editor-command-buttons-wrap zg-left">
+        <input type="hidden" name="currentskillval" value="">
+        <input class="zu-question-suggest-skill-input label-input-label" type="text" role="combobox"  id="searchSkill" aria-autocomplete="list" placeholder="添加技能专长" oninput="getSkillsByCondition(this)">
+        <label class="err-tip" style="display:none;">最多添加50个技能</label>
+       </div>
+  </div>  
+  <div class="zm-command">
+    <span class="skill-error">
+        <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+    </span>
+    <a class="zm-command-cancel"  name="myskillcancel" href="javascript:;" data-skillid='{$T.skillid}' data-skillitem='{$T.skillitems}' style='font-size:14px;font-weight:500;'>取消</a>
+    <a class="zg-r3px zg-btn-blue" name="myskillsave" href="javascript:;" data-skillid='{$T.skillid}'>保存</a>
+  </div>
+</div>

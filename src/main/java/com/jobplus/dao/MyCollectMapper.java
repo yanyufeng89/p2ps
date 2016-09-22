@@ -27,6 +27,7 @@ public interface MyCollectMapper {
      * @return
      */
     List<MyCollect> getMyDocsList(MyCollect record);
+    int getMyDocsListCount(MyCollect record);
     
     /**
      * 个人中心-我的话题列表
@@ -34,6 +35,7 @@ public interface MyCollectMapper {
      * @return
      */
     List<MyCollect> getMyTopicsList(MyCollect record);
+    int getMyTopicsListCount(MyCollect record);
     
     /**
      * 批量逻辑删除我的收藏和下载

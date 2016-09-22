@@ -48,9 +48,12 @@ public class AttentionServiceImpl implements IAttentionService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count =  attentionDao.getMyAttentionListCount(record);
+		if(count < 1)
+			return page;
 		List<Attention> list =  attentionDao.getMyAttentionList(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 			for (Attention att : list) {// 设置时间用于页面显示
 				att.setShowAttentiontime(DateUtils.formatDate(att.getAttentiontime(), "yyyy-MM-dd"));

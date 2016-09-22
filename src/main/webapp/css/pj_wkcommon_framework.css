@@ -13,18 +13,18 @@
 	font-size:xx-large;
 	content:" x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x "
 }
-.main {
+/* .main {
 	display:table-cell;
 	*display:block;
 	width:auto;
 	_position:relative;
 	_right:-3px;
 	_margin-left:-3px
-}
- #hd .top-search-box,.ui-nav .inner,#bd,.concerncontent{
+} */
+/*  #hd .top-search-box,.ui-nav .inner,#bd,.concerncontent{
 	width:1200px;
 	margin:0 auto;
-} 
+}  */
 .ir {
 	display:inline-block;
 	border:0;

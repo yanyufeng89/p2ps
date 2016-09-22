@@ -24,7 +24,7 @@
     </dd>
     <dd>
         <a href="javascript:void(0);" class="current">
-            渠道管理
+            互联网+
         </a>
     </dd>
     <dd>
@@ -41,7 +41,7 @@
     </dd>
     <dd>
         <a href="javascript:void(0);" class="current">
-            机械设计
+            工业4.0
         </a>
     </dd>
     <dd>

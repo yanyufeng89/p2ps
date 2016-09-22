@@ -45,6 +45,15 @@
 		</otherwise>
 	</choose>  
   </select>
+  <!-- 统计总数			最近访问的人    -->
+  <select id="getRecentVistorsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.VisitHistory"  >
+   select count(*) from tbl_visitHistory t left join tbl_user u
+	    on t.visitorId = u.userId join tbl_operationSum p on t.visitorId = p.userid
+	    where t.userId = #{userid,jdbcType=INTEGER}
+	    <if test="visittype != null" >
+	     and  visitType =  #{visittype,jdbcType=INTEGER}
+	    </if>
+  </select>
   
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

@@ -33,7 +33,7 @@
 	<include refid="join_tbl_topics_Column_List2" />
 	,
 	<include refid="tbl_topics_Column_List" />
-	,(select count(*) from tbl_attention t JOIN ${colltype} p where t.objectId = p.ID AND t.userId = #{userid,jdbcType=INTEGER} AND p.isValid = 1) as pageCount 	
+	<!-- ,(select count(*) from tbl_attention t JOIN ${colltype} p where t.objectId = p.ID AND t.userId = #{userid,jdbcType=INTEGER} AND p.isValid = 1) as pageCount --> 	
 
 	from tbl_attention t JOIN ${colltype} p
 	where t.objectId = p.ID
@@ -49,6 +49,10 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>
+</select> 
+  <select id="getMyAttentionListCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+	select count(*) from tbl_attention t JOIN ${colltype} p 
+		where t.objectId = p.ID AND t.userId = #{userid,jdbcType=INTEGER} AND p.isValid = 1
 </select> 
   
   <!-- 批量删除我的关注 deleteAttentions-->

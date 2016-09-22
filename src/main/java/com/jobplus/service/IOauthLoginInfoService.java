@@ -25,5 +25,5 @@ public interface IOauthLoginInfoService {
      * @param record
      * @return
      */
-    User getUserFromOauth(OauthLoginInfo record);
+    User getUserFromOauth(OauthLoginInfo loginInfo, OauthLoginInfo record);
 }

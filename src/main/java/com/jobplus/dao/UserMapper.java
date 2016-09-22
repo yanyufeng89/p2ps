@@ -45,12 +45,14 @@ public interface UserMapper {
      * @return
      */
     List<User> getMyFansList(User record);    
+    int getMyFansListCount(User record);    
     /**
      * 个人中心：我关注的人列表
      * @param User record
      * @return
      */
     List<User> getAttenManList(User record);
+    int getAttenManListCount(User record);
 
     /**
      * 查询

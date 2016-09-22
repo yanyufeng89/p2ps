@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -45,6 +46,10 @@ public class AccountController {
 			HttpServletResponse response, AccountDetail record) {
 		ModelAndView mv = new ModelAndView();
 		String userid = (String) request.getSession().getAttribute("userid");
+		if(StringUtils.isBlank(userid)){
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
 		Account act = new Account();
 		act.setUserid(Integer.parseInt(userid));
 		act = accountService.getAccountByUserId(Integer.parseInt(userid));

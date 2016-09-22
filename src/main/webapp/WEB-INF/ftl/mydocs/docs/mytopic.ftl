@@ -118,7 +118,7 @@
 		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		               </div>
 		               <div class="status-box">
-						  <div class="w330 ib"><div class="checkbox select-all"></div>话题名称</div>
+						  <div class="w340 ib"><div class="checkbox select-all"></div>话题名称</div>
 						  <div class="w92 ib">关注</div>
 						  <div class="w92 ib">回复</div>
 						  <div class="w92 ib">点赞</div>
@@ -131,7 +131,7 @@
                               <#list topicsPage.list as list>
                                 <#if (list.ispublic==1)>
                                   <li>
-                                    <div class='w330 fs14 fc3 ib titlehidden'>
+                                    <div class='w340 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-topicid="${list.id}" data-name="${list.title}"></div>
                                       <a href="/51jobplusCore/topics/getTopicsDetail?topicId=${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
                                     </div>
@@ -203,7 +203,7 @@
 		               <span class="remove" data-type='2'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		           </div>
 	               <div class="status-box">
-					  <div class="w330 ib"><div class="checkbox select-all"></div>话题名称</div>
+					  <div class="w340 ib"><div class="checkbox select-all"></div>话题名称</div>
 					  <div class="w92 ib">点赞</div>
 					  <div class="w92 ib">回复</div>
 					  <div class="w92 ib">关注</div>
@@ -215,7 +215,7 @@
 				       <#if (attentionPage)??>
 				         <#list attentionPage.list as alist>
 				           <li>
-				             <div class='w330 fs14 fc3 ib titlehidden'>
+				             <div class='w340 fs14 fc3 ib titlehidden'>
 				                <div class="checkbox chk" data-topicid="${alist.id}" data-name="${alist.topics.title}"></div>
                                 <a href="/51jobplusCore/topics/getTopicsDetail?topicId=${alist.objectid}" target="_blank" title="${alist.topics.title}">${alist.topics.title}</a>  
 				             </div>
@@ -283,9 +283,9 @@
 		           </div>
 	               <div class="status-box">
 					  <div class="w450 ib"><div class="checkbox select-all"></div>话题名称</div>
-					  <div class="w165 ib">回复</div>
+					  <div class="w214 ib">回复</div>
 					  <div class="w140 ib">回复时间</div>
-					  <div class="w119 ib">操作</div>
+					  <div class="w92 ib">操作</div>
 				   </div>
 				   <div class="docs-list">
 				     <ul>
@@ -296,7 +296,7 @@
 				              <div class="checkbox chk" data-topicid="${clist.id}" data-name="${clist.topics.title}"></div>
                               <a href="/51jobplusCore/topics/getTopicsDetail?topicId=${clist.topicsid}" target="_blank" title="${clist.topics.title}">${clist.topics.title}</a>  
 				            </div>
-				            <div class='w165 ib replayhidden' >
+				            <div class='w214 ib replayhidden' >
 				              <#if (clist.commcontent)??>
 				               <p title='${clist.commcontent?replace('white-space: normal;', '')}'> 
 					                ${clist.commcontent?replace('white-space: normal;', '')}
@@ -308,7 +308,7 @@
 				                  ${clist.createtime?string("yyyy-MM-dd")}
 				                </#if>
 				            </div>
-				            <div class='w119 ib operate'>
+				            <div class='w92 ib operate'>
 						       <span data-id='${clist.id}' data-name='${clist.topics.title}' data-type='0'> 
 				                  <b class="iconfont pr2"></b>
 				                    删除

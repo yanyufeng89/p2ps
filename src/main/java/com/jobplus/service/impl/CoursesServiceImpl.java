@@ -103,31 +103,31 @@ public class CoursesServiceImpl implements ICoursesService{
 	@Override
 	public int insertSelective(Courses record) {
 		
-		return 0;
+		return coursesDao.insertSelective(record);
 	}
 
 	@Override
 	public Courses selectByPrimaryKey(Integer id) {
 		
-		return null;
+		return coursesDao.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(Courses record) {
 		
-		return 0;
+		return coursesDao.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int updateByPrimaryKeyWithBLOBs(Courses record) {
 		
-		return 0;
+		return coursesDao.updateByPrimaryKeyWithBLOBs(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(Courses record) {
 		
-		return 0;
+		return coursesDao.updateByPrimaryKey(record);
 	}
 
 	//我分享的课程列表
@@ -137,13 +137,16 @@ public class CoursesServiceImpl implements ICoursesService{
 		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
 		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());	
+		int count = coursesDao.getSharedCourseListCount(record);
+		if(count < 1)
+			return page;
 		List<Courses> list = coursesDao.getSharedCourseList(record);
-		if(list.size()>0){
+		if(null!=list && list.size()>0){
 			for (Courses course : list) {
 				//用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(),record.getPageNo());
+			page.initialize((long)count,record.getPageNo());
 			page.setList(list);
 		}
 		return page;
@@ -165,13 +168,16 @@ public class CoursesServiceImpl implements ICoursesService{
 		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
 		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());	
+		int count = coursesDao.getCollectedCourseListCount(record);
+		if(count < 1)
+			return page;
 		List<Courses> list = coursesDao.getCollectedCourseList(record);
-		if(list.size()>0){
+		if(null!=list && list.size()>0){
 			for (Courses course : list) {
 				//用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getMyCollect().getColltime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(),record.getPageNo());
+			page.initialize((long)count,record.getPageNo());
 			page.setList(list);
 		}
 		

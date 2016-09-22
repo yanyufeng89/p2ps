@@ -30,4 +30,5 @@ public interface VisitHistoryMapper {
      * @return
      */
     List<VisitHistory> getRecentVistors(VisitHistory record);
+    int getRecentVistorsCount(VisitHistory record);
 }

@@ -12,6 +12,8 @@ public interface ISuggestionService {
 
 	int insert(Suggestion record);
 
+	int dealSug(Integer id);
+
 	/**
 	 * 获取所有建议反馈
 	 * @param record

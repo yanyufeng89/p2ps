@@ -41,19 +41,19 @@
 		</if> ) as pageCount 
 	from tbl_suggestion t
 	where 1 = 1
-	<if test="isdeal != null">
-		and isdeal = #{isdeal,jdbcType=INTEGER}
-	</if>
-	<if test="id != null">
-		and sugUserId = #{id,jdbcType=INTEGER}
-	</if>
-	<if test="sugtel != null">
-		and sugTel = #{sugtel,jdbcType=CHAR}
-	</if>
-	<if test="sugemail != null">
-		and sugEmail = #{sugemail,jdbcType=CHAR}
-	</if>
-	ORDER BY t.sugTime DESC
+   <if test="isdeal != null">
+       and isdeal = #{isdeal,jdbcType=INTEGER}
+   </if>
+   <if test="id != null">
+       and sugUserId = #{id,jdbcType=INTEGER}
+   </if>
+   <if test="sugtel != null and sugtel!=''">
+       and sugTel like concat('%',#{sugtel},'%')
+   </if>
+   <if test="sugemail != null and sugemail!=''">
+       and sugEmail like concat('%',#{sugemail},'%')
+   </if>
+       ORDER BY t.sugTime DESC
 	<choose>
 		<when test="pageNo !=null">
 			limit #{limitSt},#{pageSize}
@@ -64,28 +64,22 @@
 	</choose>
   </select>
   <!-- 总数  -->
-   <select id="getAllSug" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Suggestion" >
+   <select id="getAllSugCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Suggestion" >
    select count(*) from tbl_suggestion t
 		where 1 = 1
-		<if test="isdeal != null">
-			and isdeal = #{isdeal,jdbcType=INTEGER}
-		</if>
-		<if test="id != null">
-			and sugUserId = #{id,jdbcType=INTEGER}
-		</if>
-		<if test="sugtel != null">
-			and sugTel = #{sugtel,jdbcType=CHAR}
-		</if>
-		<if test="sugemail != null">
-			and sugEmail = #{sugemail,jdbcType=CHAR}
-		</if> 
+       <if test="isdeal != null">
+           and isdeal = #{isdeal,jdbcType=INTEGER}
+       </if>
+       <if test="id != null">
+           and sugUserId = #{id,jdbcType=INTEGER}
+       </if>
+       <if test="sugtel != null and sugtel!=''">
+           and sugTel like concat('%',#{sugtel},'%')
+       </if>
+       <if test="sugemail != null and sugemail!=''">
+           and sugEmail like concat('%',#{sugemail},'%')
+       </if>
   </select>
-  
-  
-  
-  
-  
-  
   
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -210,4 +204,11 @@
       sugCauseId = #{sugcauseid,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+    <update id="dealSug" parameterType="java.lang.Integer" >
+        update tbl_suggestion
+        set isDeal = 1
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+
 </mapper>

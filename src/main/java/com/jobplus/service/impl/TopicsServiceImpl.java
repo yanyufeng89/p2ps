@@ -57,7 +57,7 @@ public class TopicsServiceImpl implements ITopicsService {
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		
-		return 0;
+		return topicsDao.deleteByPrimaryKey(id);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class TopicsServiceImpl implements ITopicsService {
 	@Override
 	public int insertSelective(Topics record) {
 		
-		return 0;
+		return topicsDao.insertSelective(record);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class TopicsServiceImpl implements ITopicsService {
 	public int updateByPrimaryKeyWithBLOBs(Topics record) {
 		
 
-		return 0;
+		return topicsDao.updateByPrimaryKeyWithBLOBs(record);
 	}
 
 	/**
@@ -139,9 +139,12 @@ public class TopicsServiceImpl implements ITopicsService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = topicsDao.getMyTopicsUploadedCount(record);
+		if(count < 1)
+			return page;
 		List<Topics> list = topicsDao.getMyTopicsUploaded(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 			for (Topics topics : list) {// 设置时间用于页面显示
 				topics.setShowcreatetime(DateUtils.formatDate(topics.getCreatetime(), "yyyy-MM-dd"));
@@ -217,6 +220,7 @@ public class TopicsServiceImpl implements ITopicsService {
 	 * @param record
 	 * @return
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
     public Page<Topics> searchTopics(int theme, Topics record) {
         List<Topics> list = null;
@@ -229,12 +233,28 @@ public class TopicsServiceImpl implements ITopicsService {
 				}
 			}
 			if (theme == 1) {//热门话题
+				int count = topicsDao.getHotTopicsCount(record);
+				if(count < 1)
+					list = null;
+				else
                 list = topicsDao.getHotTopics(record);
             } else if (theme == 2) {//最新话题
+            	int count = topicsDao.getLatestTopicsCount(record);
+				if(count < 1)
+					list = null;
+				else
                 list = topicsDao.getLatestTopics(record);
             } else if (theme == 3) {//等待回答
+            	int count = topicsDao.getWaitReplyTopicsCount(record);
+				if(count < 1)
+					list = null;
+				else
                 list = topicsDao.getWaitReplyTopics(record);
             } else if (theme == 4) {//精彩问答
+            	int count = topicsDao.getHotReplyTopicsCount(record);
+				if(count < 1)
+					list = null;
+				else
                 list = topicsDao.getHotReplyTopics(record);
             }
             if (list != null && list.size() > 0)

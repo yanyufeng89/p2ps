@@ -33,4 +33,6 @@ public interface IReportInfoService {
 	 */
 	public Map<String, Object> getAllReportInfo(GridQuery gridQuery);
 //	public Page<ReportInfo> getAllReportInfo(ReportInfo record);
+
+	int dealComplaints(Integer id);
 }

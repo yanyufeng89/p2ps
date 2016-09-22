@@ -122,10 +122,10 @@
 		                </div>
 		              <div class="status-box">
 		                   <div class="w356 ib"><div class="checkbox select-all"></div>文章名称</div>
-						   <div class="w165 ib">推荐语</div>
+						   <div class="w204 ib">推荐语</div>
 						   <div class="w125 ib">收藏次数</div>
-						   <div class="w125 ib">分享时间</div>
-						   <div class="w76 ib">操作</div>
+						   <div class="w119 ib">分享时间</div>
+						   <div class="w92 ib">操作</div>
 					   </div>
 					   <div class="docs-list">
 					     <ul>
@@ -136,7 +136,7 @@
                                    	  <div class="checkbox chk" data-courseid="${list.id}" data-name="${list.title}"></div>
                                       <a href="/51jobplusCore/article/getArticleDetail?id=${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
                                    </div>
-                                   <div class='w165 ib replayhidden'>
+                                   <div class='w204 ib replayhidden'>
                                        <#if (list.recommend)??>
                                          <p title='${list.recommend}'>
                                             ${list.recommend}
@@ -148,7 +148,7 @@
                                          ${list.collectsum}
                                        </#if>
 	                                </div>
-	                                <div class='w125 ib ilbook'>
+	                                <div class='w119 ib ilbook'>
 	                                       <#if (list.createtime?string("yyyy-MM-dd"))??>
 	                                         ${list.createtime?string("yyyy-MM-dd")}
 	                                       </#if>
@@ -199,9 +199,9 @@
 		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		           </div>
 	               <div class="status-box">
-					  <div class="w446 ib"><div class="checkbox select-all"></div>文章名称</div>
-					  <div class="w165 ib">收藏次数</div>
-					  <div class="w165 ib">收藏时间</div>
+					  <div class="w525 ib"><div class="checkbox select-all"></div>文章名称</div>
+					  <div class="w140 ib">收藏次数</div>
+					  <div class="w140 ib">收藏时间</div>
 					  <div class="w92 ib">操作</div>
 				   </div>
 				   <div class="docs-list">
@@ -209,16 +209,16 @@
 				       <#if (colArticlePage)??>
 				        <#list colArticlePage.list as collist>
 				          <li>
-				            <div class='w446 fs14 fc3 ib titlehidden'>
+				            <div class='w525 fs14 fc3 ib titlehidden'>
                                	  <div class="checkbox chk" data-courseid="${collist.myCollect.id}" data-name="${collist.title}"></div>
                                   <a href="/51jobplusCore/article/getArticleDetail?id=${collist.myCollect.objectid}" target="_blank" title="${collist.title}">${collist.title}</a>  
                             </div>
-                            <div class='w165 ib ilbookc'>
+                            <div class='w140 ib ilbookc'>
                                <#if (collist.collectsum)??>
                                  ${collist.collectsum}
                                </#if>
                             </div>
-                            <div class='w165 ib ilbook'>
+                            <div class='w140 ib ilbook'>
                                <#if (collist.myCollect.colltime?string("yyyy-MM-dd"))??>
                                  ${collist.myCollect.colltime?string("yyyy-MM-dd")}
                                </#if>

@@ -59,6 +59,7 @@ public class UpdTableColumnServiceImpl implements IUpdTableColumnService{
 
 
 	/**
+	 * 后台管理删除某一个
 	 * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
 				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
 	 * @param id
@@ -67,10 +68,25 @@ public class UpdTableColumnServiceImpl implements IUpdTableColumnService{
 	 */
 	@Transactional
 	@Override
-	public int delOneById(Integer tableName, Integer id) {
+	public int delOneById(String tableName, Integer id) {
 		int ret = 0;
 		try {
-			ret = updTableColumnDao.delOneById(UpdTableColumn.TABLENAMES[tableName], id);
+			ret = updTableColumnDao.delOneById(tableName, id);
+		} catch (Exception e) {
+			return ret;
+		}
+		return ret;
+	}
+
+
+	/**
+	 * 是否已经分享了链接 
+	 */
+	@Override
+	public int hasSharedUrl(String tableName, Integer userid,String url) {
+		int ret = 0;
+		try {
+			ret = updTableColumnDao.hasSharedUrl(tableName, userid, url);
 		} catch (Exception e) {
 			return ret;
 		}

@@ -1,15 +1,16 @@
 $(function () {
     //绑定查询事件
     $("#filterCollapse li span").click(function (e) {
-        $(this).siblings().removeClass("active");
+    	$(this).parents('li').find('span').removeClass("active")
+        /*$(this).siblings().removeClass("active");*/
         $(this).addClass("active");
         reloadPage();
     });
 })
 
 function reloadPage() {
-    var theme = $("#filterCollapse li.first span.active").attr("data-index");
-    var topicstype = $("#filterCollapse li.last span.active").attr("data-index");
+    var theme = $("#filterCollapse li.last span.active").attr("data-index");
+    var topicstype = $("#filterCollapse li.first span.active").attr("data-index");
     $.ajax({
         type: "POST",
         url: projectName + "topics/fore/search/" + theme,
@@ -19,6 +20,7 @@ function reloadPage() {
         success: function (data) {
             var datamodel = {
                 topicsPage: data.topicsPage.list,
+                topiclen:data.topicsPage.count,
             }
             //加载模板
             $('.pagetemplate').setTemplateURL(projectName + 'topicSearchTemplate.html');

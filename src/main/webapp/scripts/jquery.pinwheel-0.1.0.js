@@ -39,7 +39,7 @@ var userInfo;
 					if(booktype=='1'){
 						targetTop = refOffset.top - targetHeight - arrowSize+70;
 					}else{
-						targetTop = refOffset.top - targetHeight - arrowSize-6;
+						targetTop = refOffset.top - targetHeight - arrowSize;
 					}
 					
 					targetLeft = refOffset.left-65;

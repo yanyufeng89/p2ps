@@ -320,13 +320,11 @@ function initMyFansPageData(page){
 			$.each(data.myFansPage.list,function(index,item){
     			if(item.fansIds!=undefined){
     				if(item.fansIds.indexOf(',')!=-1){
-                        $.each(item.fansIds.split(','),function(index1,item1){
-                        	if(item1==userInfo.userid){
-                        		item.fansIds=1;
-                        	}else{
-                        		item.fansIds=0;
-                        	}
-                        })
+    					if($.inArray(String(userInfo.userid), item.fansIds.split(','))!=-1){
+    						item.fansIds=1;
+    					}else{
+    						item.fansIds=0;
+    					}
     				}else{
     					if(item.fansIds==userInfo.userid){
     						item.fansIds=1;
@@ -412,6 +410,7 @@ function initDocPrivatePageData(page){
 	     		$.each(data.docsPage.list,function(index,item){
 	     			if(item.title.indexOf(item.docsuffix)!=-1)
 					item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)	
+					item.docsuffix=item.docsuffix.toLowerCase()
 				})
      			var datamodel={
      					docsPage:data.docsPage.list,
@@ -436,6 +435,7 @@ function initDocDrafPageData(page){
      		$.each(data.docsPage.list,function(index,item){
      			if(item.title.indexOf(item.docsuffix)!=-1)
 				item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)	
+				item.docsuffix=item.docsuffix.toLowerCase()
 			})
  			var datamodel={
  					docsPage:data.docsPage.list,
@@ -460,6 +460,7 @@ function initDocDownPageData(page){
 	     		$.each(data.myDownloadPage.list,function(index,item){
 	     			if(item.docs.title.indexOf(item.docs.docsuffix)!=-1)
 					item.docs.title=item.docs.title.substring(0,item.docs.title.indexOf(item.docs.docsuffix)-1)	
+					item.docs.docsuffix=item.docs.docsuffix.toLowerCase()
 				})
      			var datamodel={
      					myDownloadPage:data.myDownloadPage.list,
@@ -484,7 +485,8 @@ function initDocColPageData(page){
      		    $.each(data.myCollectPage.list,function(index,item){
      		    	item.downsum=item.collectsum;
      		    	if(item.docs.title.indexOf(item.docs.docsuffix)!=-1)
-     		    	item.docs.title=item.docs.title.substring(0,item.docs.title.indexOf(item.docs.docsuffix)-1)	
+     		    	item.docs.title=item.docs.title.substring(0,item.docs.title.indexOf(item.docs.docsuffix)-1)
+     		    	item.docs.docsuffix=item.docs.docsuffix.toLowerCase()
      		    })
      			var datamodel={
      		    	myDownloadPage:data.myCollectPage.list,
@@ -866,8 +868,8 @@ function initFortuneComeOrExpendPageData(page,type){
 }
 //话题专区--加载话题列表
 function initTopicPageData(page){
-	var theme = $("#filterCollapse li.first span.active").attr("data-index");
-	var topicstype = $("#filterCollapse li.last span.active").attr("data-index");
+	var theme = $("#filterCollapse li.last span.active").attr("data-index");
+	var topicstype = $("#filterCollapse li.first span.active").attr("data-index");
 	$.ajax({
 		type:"POST",
 		url:projectName + "topics/fore/search/" + theme,
@@ -877,12 +879,15 @@ function initTopicPageData(page){
 		success:function(data){
 			var datamodel={
 				topicsPage:data.topicsPage.list,
+				topiclen:data.topicsPage.count
 			}
 			//加载模板
 			$('.pagetemplate').setTemplateURL(projectName+'topicSearchTemplate.html');
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').empty().append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
+			//跳到顶部
+			window.scrollTo(0,0);
 		}
 	})
 }
@@ -910,12 +915,14 @@ function initSearch(page){
 			var datamodel={
 				result:array,
 			}
-		
+			
 			//加载模板
 			$('.pagetemplate').setTemplateURL(projectName+'searchTemplate.html');
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').empty().append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
+			//跳到顶部
+			window.scrollTo(0,0);
 		}
 	})
 }

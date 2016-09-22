@@ -17,7 +17,7 @@
   <select id="getListByRecord" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.AccountDetail" >
     select 
     <include refid="Base_Column_List" />
-     ,(select count(*) from tbl_accountDetail t
+     <!-- ,(select count(*) from tbl_accountDetail t
 		where t.accountId = #{accountid,jdbcType=INTEGER}
 		<if test="changeitem != null">
 			and t.changeItem = #{changeitem,jdbcType=INTEGER}
@@ -27,7 +27,7 @@
 		</if>
 		<if test="changetype != null">
 			and t.changeType = #{changetype,jdbcType=CHAR}
-		</if>) as pageCount 
+		</if>) as pageCount  -->
     
 	from tbl_accountDetail t
 	where t.accountId = #{accountid,jdbcType=INTEGER}
@@ -49,6 +49,19 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>
+  </select>
+  <select id="getListByRecordCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.AccountDetail" >
+   select count(*) from tbl_accountDetail t
+		where t.accountId = #{accountid,jdbcType=INTEGER}
+		<if test="changeitem != null">
+			and t.changeItem = #{changeitem,jdbcType=INTEGER}
+		</if>
+		<if test="changecause != null">
+			and t.changeCause = #{changecause,jdbcType=VARCHAR}
+		</if>
+		<if test="changetype != null">
+			and t.changeType = #{changetype,jdbcType=CHAR}
+		</if>
   </select>
   
   

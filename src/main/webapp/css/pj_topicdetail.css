@@ -390,10 +390,10 @@ ul.filter-wrapper li span lable {
     padding-left: 42px;
 }
 
-.bg-index {
+/* .bg-index {
     background: transparent url(../image/selected.png) no-repeat scroll;
 }
-
+ */
 ._CommentItem_avatarLink_3V51 {
     float: left;
     margin: 4px 1em 0 0;
@@ -477,7 +477,7 @@ ul.filter-wrapper li span lable {
 }
 .icon-spike {
     position: absolute;
-    top: -8px;
+    top: -6px;
     left: 23px;
     width: 13px;
     height: 8px;
@@ -501,7 +501,7 @@ ul.filter-wrapper li span lable {
 }
 
 .comment-app-holder, .zm-comment-box {
-    max-width: 830px;
+    max-width: 846px;
 }
 .zg-icon-comment-reply{
 	width:11px;
@@ -728,13 +728,7 @@ ul.filter-wrapper li span lable {
 .zh-question-related-questions ul li{
 	font-size:12px;
 }
-.zh-question-related-questions a{
-	width: 220px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-}
+
 .zh-question-related-questions span{
 	    vertical-align: top;
 }
@@ -752,3 +746,105 @@ ul.filter-wrapper li span lable {
 	padding:10px 0 7px 0;
 	border-bottom: 1px solid #e5e5e5;
 } 
+.question-invitetoans-panel .invite-title{
+	padding: 12px;
+}
+.question-invitetoans-panel {
+    position: relative;
+    margin:10px 0 35px;
+    color: #222;
+    border: 1px solid #ddd;
+    border-radius:2px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    max-width:846px;
+}
+.question-invitetoans-panel .icon-spike {
+    left:140px;
+}
+.question-invitetoans-panel .input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+.question-invitetoans-panel .search-input {
+    padding-right: 20px;
+    width:192px;
+    line-height: 15px;
+    color: #444;
+}
+
+.question-invitetoans-panel .input-wrapper .zg-icon {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -6px;
+}
+.question-invitetoans-panel .invite-title .spinner-gray {
+    float: right;
+    display:none;
+    margin-top: 9px;
+    background: url(../image/loading_1.gif) center center no-repeat;
+    width: 30px;
+    height: 30px;
+    opacity: .5;
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    cursor: not-allowed;
+}
+/* .spinner-gray, .spinner-lightgray {
+    display: inline-block;
+    margin: 0 5px;
+    width: 14px;
+    height: 15px;
+    vertical-align: -3px;
+    background-size: 14px 15px;
+    background-repeat: no-repeat;
+    background-image: url(/static/revved/img/spinner/grey-loading.b016b1c7.gif);
+} */
+.suggest-persons .person .content {
+    min-height: 30px;
+    overflow: hidden;
+    font-size:13px;
+}
+.question-invitetoans-panel .invite-status {
+    margin-left:5px;
+    font-size:13px;
+    color: #999;
+}
+.suggest-persons .person .invite-button {
+    outline: 0;
+    float: right;
+    padding: 4px 10px;
+}
+.suggest-persons .person .describe .zg-link {
+    float: left;
+    color: #259;
+}
+.suggest-persons .person .describe {
+    padding-right: 12px;
+    line-height: 1.2;
+    color: #999;
+    word-wrap: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.suggest-persons .person .skill {
+    margin-top: 3px;
+    color: #999;
+}
+.suggest-persons .person:first-child {
+    padding-top: 6px;
+}
+.suggest-persons .person {
+    margin: 0 12px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    height: 36px;
+    overflow: hidden;
+}
+.suggest-persons .noresult{
+	color: #999;
+	font-size:13px;
+	margin: 0 12px 12px 12px;
+}

@@ -39,6 +39,7 @@ public interface CoursesMapper {
      * @return
      */
     public List<Courses> getSharedCourseList(Courses record); 
+    int getSharedCourseListCount(Courses record); 
     
     /**
      * 我收藏的课程列表
@@ -46,6 +47,7 @@ public interface CoursesMapper {
      * @return
      */
     public List<Courses> getCollectedCourseList(Courses record); 
+    int getCollectedCourseListCount(Courses record); 
     
     /**
      * 批量删除我分享的书籍

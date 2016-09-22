@@ -223,10 +223,14 @@ public class DocsServiceImpl implements IDocsService {
 		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
 		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());	
+		int count = docsDao.getMyDocsUploadedCount(record);
+		if(count < 1)
+			return page;
+		
 		List<Docs> list = docsDao.getMyDocsUploaded(record);
-		if(list.size()>0){
+		if(null!=list && list.size()>0){
 			
-			page.initialize(list.get(0).getPageCount(),record.getPageNo());
+			page.initialize((long)count,record.getPageNo());
 			page.setList(list);
 			for (Docs docs : list) {
 				//用于前端页面显示
@@ -262,21 +266,21 @@ public class DocsServiceImpl implements IDocsService {
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		
-		return 0;
+		return docsDao.deleteByPrimaryKey(id);
 	}
 
 
 	@Override
 	public int insert(Docs record) {
 		
-		return 0;
+		return docsDao.insert(record);
 	}
 
 
 	@Override
 	public int insertSelective(Docs record) {
 		
-		return 0;
+		return docsDao.insertSelective(record);
 	}
 
 

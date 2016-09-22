@@ -33,37 +33,37 @@ public class DocCommentServiceImpl implements IDocCommentService {
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		
-		return 0;
+		return docCommentDao.deleteByPrimaryKey(id);
 	}
 
 	@Override
 	public int insert(DocComment record) {
 		
-		return 0;
+		return docCommentDao.insert(record);
 	}
 
 	@Override
 	public int insertSelective(DocComment record) {
 		
-		return 0;
+		return docCommentDao.insertSelective(record);
 	}
 
 	@Override
 	public DocComment selectByPrimaryKey(Integer id) {
 		
-		return null;
+		return docCommentDao.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(DocComment record) {
 		
-		return 0;
+		return docCommentDao.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int updateByPrimaryKeyWithBLOBs(DocComment record) {
 		
-		return 0;
+		return docCommentDao.updateByPrimaryKeyWithBLOBs(record);
 	}
 
 	@Override
@@ -72,12 +72,15 @@ public class DocCommentServiceImpl implements IDocCommentService {
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = docCommentDao.getListCount(record);
+		if(count < 1)
+			return page;
 		List<DocComment> list = docCommentDao.getList(record);
 		if (list.size() > 0) {
 			for (DocComment courseShare : list) {// 设置时间用于页面显示
 				courseShare.setUserCommentTime(DateUtils.formatDate(courseShare.getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;

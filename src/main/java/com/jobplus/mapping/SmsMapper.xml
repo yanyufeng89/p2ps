@@ -100,7 +100,7 @@
     ,
     <include refid="Blob_Column_List" />
     ,u.userName as sendUserName
-    ,(select count(*) from tbl_sms t left join tbl_user u on t.senderId = u.userId
+ <!--    ,(select count(*) from tbl_sms t left join tbl_user u on t.senderId = u.userId
 	    where receivedid = #{receivedid,jdbcType=INTEGER}
 	    <if test="smstype != null" >
 	    AND
@@ -108,7 +108,7 @@
 	    </if>  
 	    <if test="islook != null" >
 	     and   t.islook = #{islook,jdbcType=INTEGER}
-	      </if> ) as pageCount 
+	      </if> ) as pageCount  -->
     
     from tbl_sms t left join tbl_user u on t.senderId = u.userId
     where receivedid = #{receivedid,jdbcType=INTEGER}
@@ -128,6 +128,18 @@
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
 	</choose>  
+  </select> 
+  <!-- 统计总数      获取所有消息     -->
+  <select id="getAllSmsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Sms" >
+    select count(*) from tbl_sms t left join tbl_user u on t.senderId = u.userId
+	    where receivedid = #{receivedid,jdbcType=INTEGER}
+	    <if test="smstype != null" >
+	    AND
+	       t.smsType =  #{smstype,jdbcType=INTEGER}
+	    </if>  
+	    <if test="islook != null" >
+	     and   t.islook = #{islook,jdbcType=INTEGER}
+	      </if> 
   </select> 
   <select id="justForObjName"  resultMap="ResultMapForObj" parameterType="java.lang.String">
     select DISTINCT ${colName}  ,

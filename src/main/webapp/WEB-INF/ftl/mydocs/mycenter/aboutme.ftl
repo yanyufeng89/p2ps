@@ -190,7 +190,7 @@
                     </div>
 					
                      <#if ((userInfo.ismarry)?? && userInfo.ismarry?length gt 0 && userInfo.ismarry!=2) || ((userInfo.birthdayone)?? && userInfo.birthdayone?length gt 0) || ((userInfo.birthdaytwo)?? &&  userInfo.birthdaytwo?length gt 0) || ((userInfo.description)?? &&  userInfo.description?length gt 0)>
-							<div class="background-selfinfo-container section-container" style='display:none'>
+							<div class="background-selfinfo-container section-container zg-empty" style='display:none'>
 								<div class="header">
 									<span>个人信息</span>
 								</div>
@@ -231,10 +231,10 @@
 					    <#list eduList as edulist>
 						 <#if edulist_index==0>
 						 <#assign edittype=1 />
-					     <div class="background-education-container section-container" id='education${edulist_index}' style='display:none'>
+					     <div class="background-education-container section-container zg-empty" id='education${edulist_index}' style='display:none'>
 						<#else>
 						 <#assign edittype=0 />
-						 <div class="background-education-container section-container education-container" id='education${edulist_index}' style='display:none'>
+						 <div class="background-education-container section-container education-container zg-empty" id='education${edulist_index}' style='display:none'>
 						</#if>
 							
                              <#if edulist_index==0>
@@ -282,10 +282,10 @@
 					    <#list workExList as worklist>
 						   <#if worklist_index==0>
 							 <#assign edittype=1 />
-							 <div class="background-workexperience-container section-container" id='work${worklist_index}' style='display:none'>
+							 <div class="background-workexperience-container section-container zg-empty" id='work${worklist_index}' style='display:none'>
 							<#else>
 							 <#assign edittype=0 />
-							 <div class="background-workexperience-container section-container workexperience-container" id='work${worklist_index}' style='display:none'>
+							 <div class="background-workexperience-container section-container workexperience-container zg-empty" id='work${worklist_index}' style='display:none'>
 						   </#if>
 						      
 							   <#if worklist_index==0>
@@ -334,6 +334,21 @@
 							  </div>
 						</#list>
 					  </#if>
+					  <#if (personalSkill)?? && personalSkill?size gt 0>
+					  <#list personalSkill as skill>
+					      <div class="background-skills-container section-container zg-empty" id='skill0' style='display:none'>
+						    <div class="header">
+								<span>技能专长</span> 						
+						    </div>
+						    <div class="skills-detail zg-empty">
+							  <#list skill.skillitem?split(',') as items>
+							     <#assign item=items?split(':')/>
+								 <span class='skillzone' data-skillid='${item[0]}'>${item[1]}</span>
+							  </#list>
+							</div>
+						  </div>
+					  </#list>
+					</#if>
                       <div class="profile-navbar clearfix">
 					    <a class="pjallshare" href="javascript:void(0)">
 						   所有分享

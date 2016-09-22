@@ -33,21 +33,14 @@
 		uc.userName as
 		commentbyName,
 		uc.headIcon as commentbyHeadIcon
-		,(select count(*) from tbl_sites_share t LEFT JOIN tbl_user u on t.userID = u.userid LEFT JOIN tbl_user uc on t.commentby = uc.userid
-			 where 1=1
-			<!-- 站点详情不需要和userid 
-			<if test="userid != null"> AND
-				t.userID = #{userid,jdbcType=INTEGER}
-			</if> -->
-			<if test="siteid != null">
-				and t.siteID = #{siteid,jdbcType=INTEGER}
-			</if>
-		)as pageCount 
 		
 		from tbl_sites_share t LEFT JOIN tbl_user u on t.userID = u.userid
 		LEFT JOIN tbl_user uc on t.commentby = uc.userid
 
 		where 1=1
+		<!-- 资源必须未被删除 -->
+		and t.isdelete = 0
+		and u.isValid = 1
 		<!-- 站点详情不需要和userid 
 		 <if test="userid != null"> AND
 			t.userID = #{userid,jdbcType=INTEGER}
@@ -64,17 +57,39 @@
 			</otherwise>
 		</choose>
 	</select>
+  <!-- getListCount -->
+	<select id="getListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.CoursesShare">
+		select count(*) from tbl_sites_share t LEFT JOIN tbl_user u on t.userID = u.userid LEFT JOIN tbl_user uc on t.commentby = uc.userid
+			 where 1=1
+			 <!-- 资源必须未被删除 -->
+			and t.isdelete = 0
+			and u.isValid = 1
+			<!-- 站点详情不需要和userid 
+			<if test="userid != null"> AND
+				t.userID = #{userid,jdbcType=INTEGER}
+			</if> -->
+			<if test="siteid != null">
+				and t.siteID = #{siteid,jdbcType=INTEGER}
+			</if>
+	</select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tbl_sites_share
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 资源必须未被删除 -->
+		and isdelete = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_sites_share
+    set isdelete = 1
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_sites_share
     where ID = #{id,jdbcType=INTEGER}
-  </delete>
+  </delete> -->
   <insert id="insert" parameterType="com.jobplus.pojo.SiteShare" >
     insert into tbl_sites_share (ID, siteID, userID, 
       knsite, extendeds, recommend, 
@@ -183,7 +198,7 @@
         commentby = #{commentby,jdbcType=INTEGER},
       </if>
       <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+        updateTime = now(),
       </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -191,6 +206,7 @@
       <if test="likesum != null" >
         likeSum = #{likesum,jdbcType=INTEGER},
       </if>
+      updateTime = now()
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -203,7 +219,7 @@
       recommend = #{recommend,jdbcType=VARCHAR},
       isdelete = #{isdelete,jdbcType=INTEGER},
       commentby = #{commentby,jdbcType=INTEGER},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       likeSum = #{likesum,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}

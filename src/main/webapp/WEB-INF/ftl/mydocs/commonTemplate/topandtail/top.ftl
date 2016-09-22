@@ -75,10 +75,10 @@
           </div>
           <ul class='pj_tnav_wrap'>
             <li>
-					<a href="/51jobplusCore/index" class="current" target='_self'>首页</a>
+					<a href="/51jobplusCore/index" <#if indexPage==0>class='current'</#if> target='_self'>首页</a>
 		    </li>
             <li>
-					<a href="/51jobplusCore/index"  target='_self'>知识库</a>
+					<a href="/51jobplusCore/knowledgeBaseIndex"  target='_self' <#if indexPage==1>class='current'</#if>>知识库</a>
 		    </li>
 		    <li>
 					<a href="/51jobplusCore/about/newbie_guide" target='_blank'>使用攻略</a>

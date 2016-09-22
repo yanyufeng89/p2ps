@@ -32,20 +32,27 @@ public class MycollectServiceImpl implements IMyCollectService{
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
 		record.setPageSize(page.getPageSize());
+		int count = mycollectDao.getMyDocsListCount(record);
+		if(count < 1)
+			return page;
 		List<MyCollect> list = mycollectDao.getMyDocsList(record);
 		if (list.size() > 0) {
 			for (MyCollect myCollect : list) {// 设置时间 用于页面显示
 				myCollect.setShowcolltime(DateUtils.formatDate(myCollect.getColltime(), "yyyy-MM-dd"));
 			}
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
 	}
 
+	//暂时没有用到  FIXME 
 	@Override
 	public List<MyCollect> getMyTopicsList(MyCollect record) {
 		List<MyCollect> list = new ArrayList<>();
+		int count = mycollectDao.getMyTopicsListCount(record);
+		if(count  < 1)
+			return null;
 		list = mycollectDao.getMyTopicsList(record);
 		return list;
 	}

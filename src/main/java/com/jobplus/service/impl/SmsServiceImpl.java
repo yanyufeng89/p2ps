@@ -69,6 +69,7 @@ public class SmsServiceImpl implements ISmsService{
 		map.put("62","评论了你分享的文档");
 		map.put("63","赞了你分享的文档");
 		map.put("3","关注了你发布的话题");
+		map.put("80","邀请您回答");
 //		[]TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",5
 //				"tbl_docs_comment tt right join tbl_docs t on tt.docId = t.ID",
 //				"tbl_books_share tt right join tbl_books t on tt.bookID = t.ID",
@@ -339,9 +340,12 @@ public class SmsServiceImpl implements ISmsService{
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
 		record.setPageSize(page.getPageSize());
 		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		int count = smsDao.getAllSmsCount(record);
+		if(count < 1)
+			return page;
 		List<Sms> list = smsDao.getAllSms(record);
 		if (list.size() > 0) {
-			page.initialize(list.get(0).getPageCount(), record.getPageNo());
+			page.initialize((long)count, record.getPageNo());
 			page.setList(list);
 			for (Sms bookShare : list) {// 设置时间用于页面显示
 				bookShare.setSenOrReTime(DateUtils.formatDate(bookShare.getSendtime(), "yyyy-MM-dd HH:mm:ss"));

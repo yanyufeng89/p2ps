@@ -61,7 +61,7 @@ public class LoginController {
 		ModelAndView mv = new ModelAndView();
 		Subject currentUser = SecurityUtils.getSubject();
 		if (currentUser.isAuthenticated()) {
-			mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:"+backurl : "redirect:/index");
+			mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:"+backurl : "redirect:/");
 			return mv;
 		}
 		try {
@@ -103,7 +103,7 @@ public class LoginController {
 				mv.addObject("message", "登录成功");
 				mv.addObject("user", user);
 				// 返回视图名设置
-				mv.setViewName("redirect:/index");
+				mv.setViewName("redirect:/");
 			}
 			return mv;
 		} catch (AuthenticationException e) {
@@ -126,7 +126,7 @@ public class LoginController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("message", "你已成功登出");
 		// 返回视图名设置
-		mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:"+backurl : "redirect:/index");
+		mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:"+backurl : "redirect:/");
 		logger.info("用户[" + SecurityUtils.getSubject().getPrincipal() + "]退出登录!");
 		return mv;
 	}

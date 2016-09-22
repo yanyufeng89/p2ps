@@ -65,21 +65,22 @@ function get3WInfo(url){
 	$.ajax({
 		type:"POST",
 		url:projectName+"/myCenter/get3WInfo",
-		data:{url:url},
+		data:{url:url,tableName:'tbl_courses'},
 		dataType:"json",
      	success:function(data){
      		if(data.returnStatus=='000'){//返回成功
      			$('#upload-initcourse-container').hide();
     	    	$('#upload-course-container').show();
     	    	$('input[name=coursesurl]').val(url);
-    	    	$('.capture-loading').prev().val('确定');
-    			$('.capture-loading').hide();
+    	    	
     	    	//课程详情
 	            initTitleInfoBySearchCourse(data);
     		}else{//返回失败
-    			
+    			var $child=$('.coursepreview').nextAll('.error').children();
+    			$('.coursepreview').nextAll('.error').empty().append($child).append(data.returnMsg).show();
     		}
-    		
+     		$('.capture-loading').prev().val('确定');
+			$('.capture-loading').hide();
     	}
 	})
 }

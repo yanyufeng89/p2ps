@@ -38,41 +38,18 @@
 		commentbyName,
 		uc.headIcon as commentbyHeadIcon
 		,(select GROUP_CONCAT(lik.userid) FROM tbl_book_isliked lik  where  lik.commId =t.ID ) as likedIds
-		,(select count(*) from tbl_books_share t LEFT JOIN tbl_user u on t.userID =u.userid LEFT JOIN tbl_user uc on t.commentby = uc.userid
-			where 1 = 1
-			<if test="bookid != null"> AND
-				bookID = #{bookid,jdbcType=INTEGER}
-			</if>
-			AND
-			isdelete = 0
-			<if test="bookid != null"> AND
-				bookID = #{bookid,jdbcType=INTEGER}
-			</if>
-			<!--FIXME 书籍评论列表不需要用户id
-		 	<if test="userid != null"> AND
-				t.userID = #{userid,jdbcType=INTEGER}
-			</if>
-			<if test="commentby != null"> AND
-				commentby = #{commentby,jdbcType=INTEGER}
-			</if> --> )as pageCount 
-			
+
 		from tbl_books_share t LEFT JOIN tbl_user u on t.userID =
 		u.userid
 		LEFT JOIN tbl_user uc on t.commentby = uc.userid
 
 		where 1 = 1
-		AND
-		isdelete = 0
+		<!-- 资源必须未被删除 -->
+		and t.isdelete = 0
+		and u.isValid = 1
 		<if test="bookid != null"> AND
 			bookID = #{bookid,jdbcType=INTEGER}
 		</if>
-		<!--FIXME 书籍评论列表不需要用户id
-	 	<if test="userid != null"> AND
-			t.userID = #{userid,jdbcType=INTEGER}
-		</if>
-		<if test="commentby != null"> AND
-			commentby = #{commentby,jdbcType=INTEGER}
-		</if> -->
 		<choose>
 			<when test="pageNo !=null">
 				limit #{limitSt},#{pageSize}
@@ -83,6 +60,21 @@
 		</choose>
 
 	</select>
+  <!-- getList统计总数 -->
+	<select id="getListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.BookShare">
+		select count(*) from tbl_books_share t LEFT JOIN tbl_user u on
+		t.userID =u.userid LEFT JOIN tbl_user uc on t.commentby = uc.userid
+		where 1 = 1
+		<!-- 资源必须未被删除 -->
+		and t.isdelete = 0
+		and u.isValid = 1
+		<if test="bookid != null"> AND
+			bookID = #{bookid,jdbcType=INTEGER}
+		</if>
+		<if test="bookid != null"> AND
+			bookID = #{bookid,jdbcType=INTEGER}
+		</if>
+	</select>
 	<!-- 获取书籍分享详情用以编辑 -->
   <select id="getBookShareDetailForEdit" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -90,6 +82,8 @@
     <include refid="books_Column_List" />
     from tbl_books_share t join tbl_books b on t.bookID = b.ID
     where 1= 1
+    <!-- 资源必须未被删除 -->
+		and t.isdelete = 0
     AND t.ID = #{id,jdbcType=INTEGER}
   </select>
   <!-- deleteByConditions -->
@@ -109,6 +103,8 @@
     <include refid="Base_Column_List" />
     from tbl_books_share
     where ID = #{id,jdbcType=INTEGER}
+    <!-- 资源必须未被删除 -->
+		and isdelete = 0
   </select>
 	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		update tbl_books_share
@@ -247,7 +243,7 @@
         shareClass = #{shareclass,jdbcType=VARCHAR},
       </if>
       <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+        updateTime = now(),
       </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -270,7 +266,7 @@
       commentby = #{commentby,jdbcType=INTEGER},
       shareType = #{sharetype,jdbcType=VARCHAR},
       shareClass = #{shareclass,jdbcType=VARCHAR},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateTime = now(),
       createTime = #{createtime,jdbcType=TIMESTAMP},
       likeSum = #{likesum,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}

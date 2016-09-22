@@ -33,11 +33,20 @@ public interface IUpdTableColumnService {
 	int updNums(Integer tableName, Integer tableColumn, Integer addOrDec, Integer AdOrDeNum, Integer objId);
 	
 	/**
+	 * 后台管理删除某一个
 	 * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
 				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
 	 * @param id
 	 * @param tableName
 	 * @return
 	 */
-	int delOneById(Integer tableName,Integer id);
+	int delOneById(String tableName,Integer id);
+	
+	/**
+	 * 是否已经分享了链接 
+	 * @param tableName
+	 * @param userid
+	 * @return
+	 */
+	int hasSharedUrl(String tableName,Integer userid,String url);
 }

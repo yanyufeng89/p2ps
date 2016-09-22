@@ -132,18 +132,18 @@
                         <b class="arrow icon-angle-down"></b>
                     </a>
 
-                    <ul class="submenu">
+                    <ul class="submenu" style="display: block;">
                         <li>
                             <a href="javascript:void(0);" onclick="reloadFrame('/backstage/complaints',this)">
                                 <i class="icon-double-angle-right"></i>
-                                投诉管理
+                                用户投诉
                             </a>
                         </li>
 
                         <li>
                             <a href="javascript:void(0);" onclick="reloadFrame('/backstage/suggest',this)">
                                 <i class="icon-double-angle-right"></i>
-                                建议管理
+                                用户建议
                             </a>
                         </li>
                     </ul>
@@ -259,8 +259,8 @@
 <script src="/51jobplusCore/manage/js/layer/layer.js"></script>
 <script>
     function reloadFrame(url,ts) {
-        $(".submenu li").removeClass("active");
-        $(ts).parent().addClass("active").siblings().removeClass("active");
+        $(".nav-list li").removeClass("active");
+        $(ts).parent().addClass("active");
         $("iframe").attr("src", "/51jobplusCore/manage" + url);
     }
 

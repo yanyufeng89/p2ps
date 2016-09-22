@@ -138,7 +138,7 @@
 		             <a href="javascript:;" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox" data-recommend='${booklist.userid}' data-recommendname='${booklist.userName}' data-relationid='${booklist.id}'> 
 						<i class="z-icon-comment"></i>评论
 				     </a>
-					 <a href="javascript:;" class="meta-item zu-autohide js-report" data-commentbyid="${booklist.userid}" data-topiccommentid="${booklist.id}" data-reporttype='7'>
+					 <a href="javascript:;" class="meta-item zu-autohide js-report" data-commentbyid="${booklist.userid}" data-topiccommentid="${booklist.id}" data-reporttype='6'>
 					    <i class="z-icon-report-o"></i>举报
 					 </a>
 		           </div>
@@ -180,8 +180,11 @@
 		</#if>		
 	    </div>
         <div class="plus-main-sidebar">
-		     <div class="searchresright">
-	            <a class="upload-btn bg-index" href="/51jobplusCore/sharein/searchuploadFile"></a>
+		     <div class="searchresright share-plaza">
+	            <a class="share-icon bg-index" href="/51jobplusCore/sharein/searchuploadFile?type=5"></a>
+	            <a target="_blank" href="javascript:void(0)" class="text">
+				 文档---话题---书籍---课程---文章---站点
+				</a>
 	         </div>
 			 <div class='zm-relate-book'>
 			   <div class='zm-side-section'>
@@ -253,13 +256,8 @@
 							   <span>
 							        <a href='/51jobplusCore/courses/getCourseDetail?id=${samelist.data_id}'>${samelist.title}</a>
 							   </span>
-							    <span>
-									   <#if (samelist.replySum)??>
-									    ${samelist.replySum}
-									   <#else>
-									    0
-									   </#if>
-									      人浏览
+							    <span class='num'>
+								  <#if (samelist.replySum)??> ${samelist.replySum}<#else>0</#if>人浏览
 								</span>
 							 </div>
 						  </li>

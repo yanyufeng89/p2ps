@@ -33,6 +33,7 @@ public interface TopicsCommentMapper {
      * @return
      */
     List<TopicsComment> getMyTopicsComments(TopicsComment record);
+    int getMyTopicsCommentsCount(TopicsComment record);
     /**
 	 * 个人中心--批量删除我的回复
 	 * 
@@ -47,6 +48,7 @@ public interface TopicsCommentMapper {
      * @return
      */
     List<TopicsComment> getTopicsCommentsByTopicId(TopicsComment record);//topicsid  sortType
+    int getTopicsCommentsByTopicIdCount(TopicsComment record);//topicsid  sortType
 //    List<TopicsComment> getTopicsCommentsByTopicId(@Param(value="TopicId")Integer TopicId,@Param(value="sortType")Integer sortType);
     
     /**
@@ -55,6 +57,7 @@ public interface TopicsCommentMapper {
 	 * @return
 	 */
 	public List<TopicsComment> getPartTopicsComments(TopicsComment topicsComment);
+	int getPartTopicsCommentsCount(TopicsComment topicsComment);
     
     
 }

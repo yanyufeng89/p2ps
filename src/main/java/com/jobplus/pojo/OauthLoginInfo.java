@@ -22,6 +22,8 @@ public class OauthLoginInfo implements Serializable{
 
     private String nickname;
 
+    private String headicon;
+
     public Integer getId() {
         return id;
     }
@@ -76,5 +78,13 @@ public class OauthLoginInfo implements Serializable{
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getHeadicon() {
+        return headicon;
+    }
+
+    public void setHeadicon(String headicon) {
+        this.headicon = headicon;
     }
 }
