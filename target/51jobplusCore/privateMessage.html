@@ -1,0 +1,37 @@
+<div class="modal-dialog-bg" style="opacity: 0.5;" aria-hidden="true"></div>
+<div class="modal-wrapper">
+  <div class="modal-dialog" tabindex="0" role="dialog" aria-labelledby=":4w">
+    <div class="modal-dialog-title">
+      <span class="modal-dialog-title-text" id=":4w" role="heading">发送私信</span>
+      <span class="modal-dialog-title-close" role="button" tabindex="0" aria-label="Close"></span>
+    </div>
+	<div class="modal-dialog-content">
+	  <div class="zm-pm-wrap">
+	    <dl class="zm-form-table zm-form-table-medium">
+	      <dt class="zm-form-table-head zm-form-table-head-align-middle">
+	        <label class="zg-medium-gray">发给：</label></dt>
+	      <dd class="zm-form-table-field">
+	        <div class="zm-pm-selector-wrap">
+	          <div class="zg-user-name" style="padding: 4px 0 0 3px;">{$T.name}
+	            <!-- <a class="zm-profile-email-history-link" href="/inbox/8077724000">私信记录 »</a> -->
+	          </div>
+	          <input class="zg-form-text-input zm-pm-user-selector label-input-label" type="text" placeholder="搜索用户" aria-label="搜索用户" role="combobox" aria-autocomplete="list" style="display: none;"></div>
+	      </dd>
+	      <dt class="zm-form-table-head zm-form-table-head-align-middle">
+	        <label class="zg-medium-gray">内容：</label></dt>
+	      <dd class="zm-form-table-field zm-form-table-field-last" style='margin-left:0'>
+	          <textarea class="zg-editor-input pj-seamless-input-origin-element"></textarea
+	      </dd>
+	    </dl>
+	    <div class="zh-pm-warnmsg" style="display:none;text-align:right;color:#C3412F; font-size:14px"></div>
+	    <div class="pj-command zg-clear">
+	      <div class="zm-item-meta zg-left" style="margin: 0 0 0 57px;">
+	        <span class="zg-text-counter" style="display:none">还可以输入 500 字</span>
+	        <span class="additional-info"></span>
+	      </div>
+	      <a name="cancel" href="javascript:;" class="zm-command-cancel">取消</a>
+	      <a name="send" href="javascript:;" class="zg-btn-blue" id="zh-question-pm-send-button"  data-receivedid="{$T.receivedid}">发送</a>
+	   </div>
+	  </div>
+	</div>
+  </div>

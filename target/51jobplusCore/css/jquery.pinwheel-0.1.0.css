@@ -1,0 +1,164 @@
+#pj-tooltip {
+    position: absolute;
+    background: 0 0;
+    z-index: 100;
+    -webkit-animation: .05s ease-in both;
+    animation: .05s ease-in both;
+    width:376px;
+}
+.popover.top {
+    margin-top: -6px;
+}
+.popover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding:8px;
+}
+.popover .popover-content {
+    background: #fff;
+    border: solid 1px #ccc;
+    border-radius:2px;
+    overflow: hidden;
+}
+.zh-profile-card {
+    width: 380px;
+}
+.zh-profile-card .upper {
+    background: #fff;
+    min-height: 50px;
+}
+.zh-profile-card .upper{
+    border: 1px solid transparent;
+    padding: 20px 20px 14px 20px;
+}
+.zh-profile-card .lower {
+    background: #fff;
+    border: 1px solid transparent;
+    padding: 0 20px 20px 20px;
+}
+
+.zh-profile-card .lower .meta .item:last-child {
+    border-right: 0 none;
+}
+.zh-profile-card .lower .meta .item:hover {
+	color:#698ebf
+}
+.zh-profile-card .lower .meta .item:hover .key {
+	color:inherit
+}
+.zh-profile-card .upper a.avatar-link {
+    position: relative;
+}
+.popover.top .arrow2 {
+    bottom: 1px;
+    left: 50%;
+    margin-left: -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #fff;
+}
+
+
+.zh-profile-card .upper .icon {
+    margin-left: 3px;
+}
+
+.icon-profile-male {
+    background-position: -144px -110px;
+}
+.zh-profile-card .upper div.tagline {
+    font-size: 13px;
+    color: #222;
+    padding:4px 0 0 38px;
+}
+
+.zh-profile-card .lower .meta .item:first-child {
+    padding-left: 0;
+}
+.zh-profile-card .lower .meta .item {
+    float: left;
+    padding: 0 12px;
+    color: inherit;
+    text-decoration: none;
+}
+.zh-profile-card .lower .meta .item .value {
+    font-size: 15px;
+    font-weight: 700;
+}
+.zh-profile-card .lower .meta .item .value, .zh-profile-card .lower .meta .item .key {
+    display: block;
+    text-align: center;
+}
+
+.zh-profile-card .lower .meta .item .key {
+    font-size: 12px;
+    color: #999;
+    padding-top: 6px;
+}
+
+.zh-profile-card .lower .operation .zg-btn, .zh-profile-card .lower .operation .zg-btn-white, .zh-profile-card .lower .operation button {
+    float: left;
+    height: 32px;
+    margin:8px 0 0 10px;
+    vertical-align: middle;
+    width:78px!important;
+    font-family:"Microsoft YaHei";
+	_font-family:"Microsoft YaHei";
+}
+.zg-btn {
+    display: block;
+    text-align: center;
+    min-width: 78px;
+    font-size: 12px;
+    text-decoration: none!important;
+    padding: 1px;
+    font-weight: 400;
+    line-height: 18px;
+    border-radius: 2px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.popover.top .arrow {
+    bottom: 0;
+    left: 50%;
+    margin-left: -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #ccc;
+
+}
+.popover .arrow, .popover .arrow2 {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+.pinwheel_wrap {
+	position: absolute;
+	z-index: 9999;
+	border-radius:2px;
+	-moz-border-radius: 2px;
+}
+.zh-profile-card .lower .operation .zg-icon.pm {
+    background-position: 0 -148px;
+    width: 17px;
+    height: 14px;
+    text-indent: -999em;
+}
+.popover.bottom .arrow {
+    top: 0;
+    left: 50%;
+    margin-left: -13px;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 13px solid #ccc;
+   /*  border-bottom: 13px solid #fff; */
+}
+.popover.bottom .arrow2 {
+    top: 1px;
+    left: 50%;
+    margin-left: -13px;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 13px solid #fff;
+}

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.PersonalSkillMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.PersonalSkill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="isEndorsements" property="isendorsements" jdbcType="INTEGER" />
+    <result column="endorsementsMe" property="endorsementsme" jdbcType="INTEGER" />
+    <result column="endorsementsOther" property="endorsementsother" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="extendInfo" property="extendinfo" jdbcType="VARCHAR" />
+    <result column="extendInfo2" property="extendinfo2" jdbcType="VARCHAR" />
+    <result column="extendInfo3" property="extendinfo3" jdbcType="VARCHAR" />
+    <result column="extendInfo4" property="extendinfo4" jdbcType="VARCHAR" />
+    <result column="extendInfo5" property="extendinfo5" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.PersonalSkill" extends="BaseResultMap" >
+    <result column="skillItem" property="skillitem" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, isEndorsements, endorsementsMe, endorsementsOther, createTime, updateTime, 
+    extendInfo, extendInfo2, extendInfo3, extendInfo4, extendInfo5
+  </sql>
+  <sql id="Blob_Column_List" >
+    skillItem
+  </sql>
+	<select id="selectByRecord" resultMap="ResultMapWithBLOBs"
+		parameterType="com.jobplus.pojo.PersonalSkill">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tbl_personalskill
+		where 1 = 1
+		<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="userid != null">
+			and userid = #{userid,jdbcType=INTEGER}
+		</if>
+		<if test="skillitem != null">
+			and skillitem = #{skillitem,jdbcType=LONGVARCHAR}
+		</if>
+	</select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_personalskill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_personalskill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.PersonalSkill" >
+    insert into tbl_personalskill (id, userId, isEndorsements, 
+      endorsementsMe, endorsementsOther, createTime, 
+      updateTime, extendInfo, extendInfo2, 
+      extendInfo3, extendInfo4, extendInfo5, 
+      skillItem)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{isendorsements,jdbcType=INTEGER}, 
+      #{endorsementsme,jdbcType=INTEGER}, #{endorsementsother,jdbcType=INTEGER}, now(), 
+      now(), #{extendinfo,jdbcType=VARCHAR}, #{extendinfo2,jdbcType=VARCHAR}, 
+      #{extendinfo3,jdbcType=VARCHAR}, #{extendinfo4,jdbcType=VARCHAR}, #{extendinfo5,jdbcType=VARCHAR}, 
+      #{skillitem,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.PersonalSkill" >
+    insert into tbl_personalskill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="isendorsements != null" >
+        isEndorsements,
+      </if>
+      <if test="endorsementsme != null" >
+        endorsementsMe,
+      </if>
+      <if test="endorsementsother != null" >
+        endorsementsOther,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="extendinfo != null" >
+        extendInfo,
+      </if>
+      <if test="extendinfo2 != null" >
+        extendInfo2,
+      </if>
+      <if test="extendinfo3 != null" >
+        extendInfo3,
+      </if>
+      <if test="extendinfo4 != null" >
+        extendInfo4,
+      </if>
+      <if test="extendinfo5 != null" >
+        extendInfo5,
+      </if>
+      <if test="skillitem != null" >
+        skillItem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="isendorsements != null" >
+        #{isendorsements,jdbcType=INTEGER},
+      </if>
+      <if test="endorsementsme != null" >
+        #{endorsementsme,jdbcType=INTEGER},
+      </if>
+      <if test="endorsementsother != null" >
+        #{endorsementsother,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extendinfo != null" >
+        #{extendinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo2 != null" >
+        #{extendinfo2,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo3 != null" >
+        #{extendinfo3,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo4 != null" >
+        #{extendinfo4,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo5 != null" >
+        #{extendinfo5,jdbcType=VARCHAR},
+      </if>
+      <if test="skillitem != null" >
+        #{skillitem,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.PersonalSkill" >
+    update tbl_personalskill
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="isendorsements != null" >
+        isEndorsements = #{isendorsements,jdbcType=INTEGER},
+      </if>
+      <if test="endorsementsme != null" >
+        endorsementsMe = #{endorsementsme,jdbcType=INTEGER},
+      </if>
+      <if test="endorsementsother != null" >
+        endorsementsOther = #{endorsementsother,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = now(),
+      </if>
+      <if test="extendinfo != null" >
+        extendInfo = #{extendinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo2 != null" >
+        extendInfo2 = #{extendinfo2,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo3 != null" >
+        extendInfo3 = #{extendinfo3,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo4 != null" >
+        extendInfo4 = #{extendinfo4,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo5 != null" >
+        extendInfo5 = #{extendinfo5,jdbcType=VARCHAR},
+      </if>
+      <if test="skillitem != null" >
+        skillItem = #{skillitem,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.PersonalSkill" >
+    update tbl_personalskill
+    set userId = #{userid,jdbcType=INTEGER},
+      isEndorsements = #{isendorsements,jdbcType=INTEGER},
+      endorsementsMe = #{endorsementsme,jdbcType=INTEGER},
+      endorsementsOther = #{endorsementsother,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = Now(),
+      extendInfo = #{extendinfo,jdbcType=VARCHAR},
+      extendInfo2 = #{extendinfo2,jdbcType=VARCHAR},
+      extendInfo3 = #{extendinfo3,jdbcType=VARCHAR},
+      extendInfo4 = #{extendinfo4,jdbcType=VARCHAR},
+      extendInfo5 = #{extendinfo5,jdbcType=VARCHAR},
+      skillItem = #{skillitem,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.PersonalSkill" >
+    update tbl_personalskill
+    set userId = #{userid,jdbcType=INTEGER},
+      isEndorsements = #{isendorsements,jdbcType=INTEGER},
+      endorsementsMe = #{endorsementsme,jdbcType=INTEGER},
+      endorsementsOther = #{endorsementsother,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = now(),
+      extendInfo = #{extendinfo,jdbcType=VARCHAR},
+      extendInfo2 = #{extendinfo2,jdbcType=VARCHAR},
+      extendInfo3 = #{extendinfo3,jdbcType=VARCHAR},
+      extendInfo4 = #{extendinfo4,jdbcType=VARCHAR},
+      extendInfo5 = #{extendinfo5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

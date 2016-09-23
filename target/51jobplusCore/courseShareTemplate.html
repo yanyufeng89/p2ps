@@ -1,0 +1,28 @@
+<!-- 个人主页 课程--课程分享 -->
+{#foreach $T.shaCoursePage as sharelist}
+ <li>
+    <div class='w356 fs14 fc3 ib titlehidden'>
+          <div class="checkbox chk" data-courseid="{$T.sharelist.id}" data-name="{$T.sharelist.coursesname}"></div>
+                <a href="/51jobplusCore/{$T.detail}?id={$T.sharelist.id}" target="_blank" title="{$T.sharelist.coursesname}">{$T.sharelist.coursesname}</a>  
+          </div>
+          <div class='w204 ib replayhidden'>
+             <p title='{$T.sharelist.recommend}'>
+                {$T.sharelist.recommend}
+             </p>
+          </div>
+          <div class='w125 ib ilbookc'>
+	             {$T.sharelist.collectsum}
+          </div>
+          <div class='w119 ib ilbook'>
+                 {#if $T.sharelist.userShareTime}
+			         {$T.sharelist.userShareTime}
+			     {#/if}
+           </div>
+           <div class='w92 ib operate'>
+			<span data-courseid='{$T.sharelist.id}' data-name='{$T.sharelist.coursesname}' class='cancelshare'>
+			         <b class="iconfont pr2"></b>
+			                                   删除
+			</span>
+  </div>
+ </li>
+{#/for}

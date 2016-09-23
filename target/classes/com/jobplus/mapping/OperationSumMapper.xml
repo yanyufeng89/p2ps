@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.OperationSumMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.OperationSum" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="docShareSum" property="docsharesum" jdbcType="INTEGER" />
+    <result column="docDownSum" property="docdownsum" jdbcType="INTEGER" />
+    <result column="docCollSum" property="doccollsum" jdbcType="INTEGER" />
+    <result column="topicsShareSum" property="topicssharesum" jdbcType="INTEGER" />
+    <result column="topicsComSum" property="topicscomsum" jdbcType="INTEGER" />
+    <result column="topicsAtteSum" property="topicsattesum" jdbcType="INTEGER" />
+    <result column="bookShareSum" property="booksharesum" jdbcType="INTEGER" />
+    <result column="bookCollSum" property="bookcollsum" jdbcType="INTEGER" />
+    <result column="articleShareSum" property="articlesharesum" jdbcType="INTEGER" />
+    <result column="articleCollSum" property="articlecollsum" jdbcType="INTEGER" />
+    <result column="coursesShareSum" property="coursessharesum" jdbcType="INTEGER" />
+    <result column="coursesCollSum" property="coursescollsum" jdbcType="INTEGER" />
+    <result column="sitesShareSum" property="sitessharesum" jdbcType="INTEGER" />
+    <result column="sitesCollSum" property="sitescollsum" jdbcType="INTEGER" />
+    <result column="attentionSum" property="attentionsum" jdbcType="INTEGER" />
+    <result column="fansSum" property="fanssum" jdbcType="INTEGER" />
+    <result column="operatorTime" property="operatortime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userid, docShareSum, docDownSum, docCollSum, topicsShareSum, topicsComSum, topicsAtteSum, 
+    bookShareSum, bookCollSum, articleShareSum, articleCollSum, coursesShareSum, coursesCollSum, 
+    sitesShareSum, sitesCollSum, attentionSum, fansSum, operatorTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,(docShareSum + topicsShareSum + bookShareSum + articleShareSum + coursesShareSum + sitesShareSum) AS allshresum
+    from tbl_operationSum
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_operationSum
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.OperationSum" >
+    insert into tbl_operationSum (userid, docShareSum, docDownSum, 
+      docCollSum, topicsShareSum, topicsComSum, 
+      topicsAtteSum, bookShareSum, bookCollSum, 
+      articleShareSum, articleCollSum, coursesShareSum, 
+      coursesCollSum, sitesShareSum, sitesCollSum, attentionSum, fansSum,
+      operatorTime)
+    values (#{userid,jdbcType=INTEGER}, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, #{operatortime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.OperationSum" >
+    insert into tbl_operationSum
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="docsharesum != null" >
+        docShareSum,
+      </if>
+      <if test="docdownsum != null" >
+        docDownSum,
+      </if>
+      <if test="doccollsum != null" >
+        docCollSum,
+      </if>
+      <if test="topicssharesum != null" >
+        topicsShareSum,
+      </if>
+      <if test="topicscomsum != null" >
+        topicsComSum,
+      </if>
+      <if test="topicsattesum != null" >
+        topicsAtteSum,
+      </if>
+      <if test="booksharesum != null" >
+        bookShareSum,
+      </if>
+      <if test="bookcollsum != null" >
+        bookCollSum,
+      </if>
+      <if test="articlesharesum != null" >
+        articleShareSum,
+      </if>
+      <if test="articlecollsum != null" >
+        articleCollSum,
+      </if>
+      <if test="coursessharesum != null" >
+        coursesShareSum,
+      </if>
+      <if test="coursescollsum != null" >
+        coursesCollSum,
+      </if>
+      <if test="sitessharesum != null" >
+        sitesShareSum,
+      </if>
+      <if test="sitescollsum != null" >
+        sitesCollSum,
+      </if>
+      <if test="attentionsum != null" >
+        attentionSum,
+      </if>
+      <if test="fanssum != null" >
+        fansSum,
+      </if>
+      <if test="operatortime != null" >
+        operatorTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="docsharesum != null" >
+        #{docsharesum,jdbcType=INTEGER},
+      </if>
+      <if test="docdownsum != null" >
+        #{docdownsum,jdbcType=INTEGER},
+      </if>
+      <if test="doccollsum != null" >
+        #{doccollsum,jdbcType=INTEGER},
+      </if>
+      <if test="topicssharesum != null" >
+        #{topicssharesum,jdbcType=INTEGER},
+      </if>
+      <if test="topicscomsum != null" >
+        #{topicscomsum,jdbcType=INTEGER},
+      </if>
+      <if test="topicsattesum != null" >
+        #{topicsattesum,jdbcType=INTEGER},
+      </if>
+      <if test="booksharesum != null" >
+        #{booksharesum,jdbcType=INTEGER},
+      </if>
+      <if test="bookcollsum != null" >
+        #{bookcollsum,jdbcType=INTEGER},
+      </if>
+      <if test="articlesharesum != null" >
+        #{articlesharesum,jdbcType=INTEGER},
+      </if>
+      <if test="articlecollsum != null" >
+        #{articlecollsum,jdbcType=INTEGER},
+      </if>
+      <if test="coursessharesum != null" >
+        #{coursessharesum,jdbcType=INTEGER},
+      </if>
+      <if test="coursescollsum != null" >
+        #{coursescollsum,jdbcType=INTEGER},
+      </if>
+      <if test="sitessharesum != null" >
+        #{sitessharesum,jdbcType=INTEGER},
+      </if>
+      <if test="sitescollsum != null" >
+        #{sitescollsum,jdbcType=INTEGER},
+      </if>
+      <if test="attentionsum != null" >
+        #{attentionsum,jdbcType=INTEGER},
+      </if>
+      <if test="fanssum != null" >
+        #{fanssum,jdbcType=INTEGER},
+      </if>
+      <if test="operatortime != null" >
+        #{operatortime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.OperationSum" >
+    update tbl_operationSum
+    <set >
+      <if test="docsharesum != null" >
+        docShareSum = #{docsharesum,jdbcType=INTEGER},
+      </if>
+      <if test="docdownsum != null" >
+        docDownSum = #{docdownsum,jdbcType=INTEGER},
+      </if>
+      <if test="doccollsum != null" >
+        docCollSum = #{doccollsum,jdbcType=INTEGER},
+      </if>
+      <if test="topicssharesum != null" >
+        topicsShareSum = #{topicssharesum,jdbcType=INTEGER},
+      </if>
+      <if test="topicscomsum != null" >
+        topicsComSum = #{topicscomsum,jdbcType=INTEGER},
+      </if>
+      <if test="topicsattesum != null" >
+        topicsAtteSum = #{topicsattesum,jdbcType=INTEGER},
+      </if>
+      <if test="booksharesum != null" >
+        bookShareSum = #{booksharesum,jdbcType=INTEGER},
+      </if>
+      <if test="bookcollsum != null" >
+        bookCollSum = #{bookcollsum,jdbcType=INTEGER},
+      </if>
+      <if test="articlesharesum != null" >
+        articleShareSum = #{articlesharesum,jdbcType=INTEGER},
+      </if>
+      <if test="articlecollsum != null" >
+        articleCollSum = #{articlecollsum,jdbcType=INTEGER},
+      </if>
+      <if test="coursessharesum != null" >
+        coursesShareSum = #{coursessharesum,jdbcType=INTEGER},
+      </if>
+      <if test="coursescollsum != null" >
+        coursesCollSum = #{coursescollsum,jdbcType=INTEGER},
+      </if>
+      <if test="sitessharesum != null" >
+        sitesShareSum = #{sitessharesum,jdbcType=INTEGER},
+      </if>
+      <if test="sitescollsum != null" >
+        sitesCollSum = #{sitescollsum,jdbcType=INTEGER},
+      </if>
+      <if test="attentionsum != null" >
+        attentionSum = #{attentionsum,jdbcType=INTEGER},
+      </if>
+      <if test="fanssum != null" >
+        fansSum = #{fanssum,jdbcType=INTEGER},
+      </if>
+      <if test="operatortime != null" >
+        operatorTime = now(),
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <!-- updOperationSum -->
+  <update id="updOperationSum" parameterType="com.jobplus.pojo.OperationSum" >
+    
+    update tbl_operationSum
+    set ${tableColum} = CASE
+    WHEN ( ${tableColum} ${addOrDecrease} ${AdOrDeNum} )  <![CDATA[ <= ]]>   0 THEN 0
+    ELSE ( ${tableColum} ${addOrDecrease} ${AdOrDeNum} )
+    END
+    ,operatorTime = now()
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.OperationSum" >
+    update tbl_operationSum
+    set docShareSum = #{docsharesum,jdbcType=INTEGER},
+      docDownSum = #{docdownsum,jdbcType=INTEGER},
+      docCollSum = #{doccollsum,jdbcType=INTEGER},
+      topicsShareSum = #{topicssharesum,jdbcType=INTEGER},
+      topicsComSum = #{topicscomsum,jdbcType=INTEGER},
+      topicsAtteSum = #{topicsattesum,jdbcType=INTEGER},
+      bookShareSum = #{booksharesum,jdbcType=INTEGER},
+      bookCollSum = #{bookcollsum,jdbcType=INTEGER},
+      articleShareSum = #{articlesharesum,jdbcType=INTEGER},
+      articleCollSum = #{articlecollsum,jdbcType=INTEGER},
+      coursesShareSum = #{coursessharesum,jdbcType=INTEGER},
+      coursesCollSum = #{coursescollsum,jdbcType=INTEGER},
+      sitesShareSum = #{sitessharesum,jdbcType=INTEGER},
+      sitesCollSum = #{sitescollsum,jdbcType=INTEGER},
+      attentionSum = #{attentionsum,jdbcType=INTEGER},
+      fansSum = #{fanssum,jdbcType=INTEGER},
+      operatorTime = now()
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.SkillLibraryMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.SkillLibrary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="skillName" property="skillname" jdbcType="CHAR" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="rootId" property="rootid" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="useSum" property="usesum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, skillName, parentId, rootId, updateTime, createTime, creator, isvalid, useSum
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_skilllibrary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 增加技能使用数    skillIds 技能id  1,2,3,4-->
+  <update id="updSkillUsesum" parameterType="java.lang.String">
+    update tbl_skilllibrary
+    set useSum = useSum + 1
+    where id in ( ${skillIds} )
+  </update>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_skilllibrary
+    set isvalid = 0
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_skilllibrary
+    where id = #{id,jdbcType=INTEGER}
+  </delete> -->
+  <insert id="insert" parameterType="com.jobplus.pojo.SkillLibrary" >
+    insert into tbl_skilllibrary (id, skillName, parentId, 
+      rootId, updateTime, createTime, 
+      creator, isvalid, useSum
+      )
+    values (#{id,jdbcType=INTEGER}, #{skillname,jdbcType=CHAR}, #{parentid,jdbcType=INTEGER}, 
+      #{rootid,jdbcType=INTEGER}, now(), now(), 
+      #{creator,jdbcType=INTEGER}, 1, 0
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.SkillLibrary" >
+    insert into tbl_skilllibrary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="skillname != null" >
+        skillName,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="rootid != null" >
+        rootId,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="usesum != null" >
+        useSum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="skillname != null" >
+        #{skillname,jdbcType=CHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="rootid != null" >
+        #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="usesum != null" >
+        #{usesum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.SkillLibrary" >
+    update tbl_skilllibrary
+    <set >
+      <if test="skillname != null" >
+        skillName = #{skillname,jdbcType=CHAR},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="rootid != null" >
+        rootId = #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = now(),
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="usesum != null" >
+        useSum = #{usesum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.SkillLibrary" >
+    update tbl_skilllibrary
+    set skillName = #{skillname,jdbcType=CHAR},
+      parentId = #{parentid,jdbcType=INTEGER},
+      rootId = #{rootid,jdbcType=INTEGER},
+      updateTime = now(),
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      useSum = #{usesum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

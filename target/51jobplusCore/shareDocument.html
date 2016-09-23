@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html class="expanded">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>
+             上传文档
+    </title> 
+    <link rel="stylesheet" type="text/css" href="css/pj_wkcommon_framework.css">
+    <link rel="stylesheet" type="text/css" href="css/pj_wkcommon_base.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/pj_upload.css">
+  </head>
+  <body>
+   
+    <div id="doc" class="page">
+      <div id="header">
+      <div class="header-row">
+          <div class="header-alignleft">
+             <div class="header-contact-info">
+               
+             </div>
+          </div>
+          <div class="header-alignright">
+             <div class="header-secondary-menu">
+               <ul id="menu-top-new" class="menu">
+                 <li id="menu-item-1" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1">
+                   <!--  <a href="login.html"><span class="menu-text">请登录</span></a> -->
+                 </li> 
+                 <li id="menu-item-2" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2">
+                     <!-- <a href="registration.html"><span class="menu-text">注册</span></a> -->
+                 </li>
+               </ul>
+             </div>
+          </div>
+      </div>
+     </div>
+      <div id="hd">
+        <div class="box top-search-box">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <img src="image/pluslogo.png" class="img-responsive"></a>
+          </div>
+        </div>
+      </div>
+      <div id="bd">
+       
+        <div class="upload-doc"></div>
+        <div class="bd-wrap">
+        <div class="body">
+            <div class="main">
+              <div id="upload-ext-info-container" class="task-info upload-ext-info-container mb10"
+              style="display:none;">
+              </div>
+              <div id="upload-widget" class="upload-widget ">
+                
+                <div id="upload-init-container" style="display: block;">
+                <div class="upload-steps clearfix">
+					<ul>
+						<li class="step-num active">1<span class="tips">上传文档</span>
+						</li>
+						<li class="step-bar"></li>
+						<li class="step-num">2<span class="tips">补充信息</span>
+						</li>
+						<li class="step-bar"></li>
+						<li class="step-num">3<span class="tips">完成上传</span>
+					</ul>
+						</li>
+				 </div>
+                 <div class="mod mod-upload">
+                   <div class="bdbook" style="">
+	                      <a class="titleinfo">【文档】</a>
+	                     <span class="titlename">请上传文档</span>
+	                     <div class="link after file-box">
+				             <form action="upload" method="post" enctype="multipart/form-data">
+					            <input type='file' name='textfield' id='textfield' class='txtdocument' />
+					            <input type='button' class='btnpreview' value='浏览...' />
+					            <!-- <input type="file" name="fileField" class="file" id="fileField" size="28" onclick="a" /> -->
+					            <input type="file" name="fileField" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
+					             <input type="submit" value="" class="btn2"  />
+					            
+					        </form>
+	                     </div>
+	                     <div class="bar after">
+					        <div class="btn-disblue"><a href="uploadDocument.html">确定</a></div>
+					        <div class="btn-blue btn-feedspush">确定</div>
+					        <div class="btn btn-cancle">取消</div>
+					        <div class="btn-loading push-loading"></div>
+	                     </div>
+	                    </div>
+                  </div>
+                  <div class="upload-intro-query clearfix">
+                               <h4>
+                      分享推荐：
+                      <span>
+                       每成功分享一篇公开文档即可获得一定的财富奖励哦！
+                      </span>
+                    </h4>
+                     <ul>
+                      <li class="">
+                        创业/创新
+                      </li>
+                      <li class="query-box">
+                      咨询/财务
+                      </li>
+                      <li class="">
+      IT/互联网
+                      </li>
+                      <li class="query-box">
+                        工程/技术
+                      </li>
+                      <li class="">
+                      市场/销售
+                      </li>
+                      <li class="query-box">
+                        供应/制造
+                      </li>
+                      <li class="">
+                       创意/设计
+                      </li>
+                      <li class="query-box">
+                       媒体/服务
+                      </li>
+                      <li class="">
+                        笔译/翻译
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="upload-notice">
+                    <h4>
+                      温馨提示
+                    </h4>
+                    <ol>
+                      <li>
+                        1.您可以上传日常积累和撰写的课程资料，如模板、总结，支持多种文档类型：
+                      </li>
+                      <li class="doc-type">
+                        <b class="ic ic-doc mr5">
+                        </b>
+                        doc,docx
+                        <b class="ic ic-ppt ml10 mr5">
+                        </b>
+                        ppt,pptx
+                        <b class="ic ic-xls ml10 mr5">
+                        </b>
+                        xls,xlsx
+                        <b class="ic ic-vsd ml10 mr5">
+                        </b>
+                        vsd
+                        <b class="ic ic-pot ml10 mr5">
+                        </b>
+                        pot
+                        <b class="ic ic-pps ml10 mr5">
+                        </b>
+                        pps
+                        <b class="ic ic-rtf ml10 mr5">
+                        </b>
+                        rtf
+                        <b class="ic ic-wps mr5">
+                        </b>
+                        wps 
+                        <b class="ic ic-pdf ml10 mr5">
+                        </b>
+                        pdf
+                        <b class="ic ic-txt ml10 mr5">
+                        </b>
+                        txt
+                      </li>
+                      <li>
+                        2.如果您不想上传文档给他人看，只想自己阅读使用，可以将文档上传为私有文档，当然，文档的显示设置可以随时修改，公开文档和私有文档可以随时切换，满足您的阅读需求；
+                      </li>
+                      <li>
+                        3.上传涉及侵权内容的文档将会被移除，严禁上传含有淫秽色情及低俗信息等文档，详情请看
+                        <a href="#" target="_blank">
+                          文档协议
+                        </a>
+                        和
+                        <a href="#" target="_blank">
+                       用户规则
+                        </a>
+                        让我们一起携手共同打造健康的知识库；
+                      </li>
+                      <li>
+                        4.上传有问题需要帮助？查看
+                                         <a href="#" target="_blank">
+                          文档帮助
+                        </a>
+                        和
+                        <a href="#" target="_blank">
+                       意见反馈
+                        </a>
+                        ；
+                      </li>
+                      <li>
+                        5.亲，友情提示：您上传私有文档将不涉及财富收支及兑换；分享文档的大小限制在20M以内。
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+                <div id="upload-files-container" class="mod mod-upload mod-upload-no-edia-all"
+                style="display:none;">
+                  <div class="upload-steps clearfix">
+                    <ul>
+                      <li class="step-num active">
+                        1
+                        <span class="tips">
+                          选择文档
+                        </span>
+                      </li>
+                      <li class="step-bar active">
+                      </li>
+                      <li class="step-num active">
+                        2
+                        <span class="tips">
+                          补充信息
+                        </span>
+                      </li>
+                      <li class="step-bar">
+                      </li>
+                      <li class="step-num">
+                        3
+                        <span class="tips">
+                          完成上传
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="hd edit-all-head">
+                    <span class="act btn-submit-all-wrap logSend" data-logsend="{&#39;send&#39;:[&#39;submit&#39;,&#39;upload&#39;,{&#39;subtype&#39;:&#39;finishupload&#39;}]}">
+                      <a id="btn-edit-all" class="btn-edit-all" href="#">
+                        批量填写信息
+                      </a>
+                      <a id="btn-cancel-update" class="btn-cancel-update" href="#">
+                        取消附件更新
+                      </a>
+                      <span class="flash-occupying ml20">
+                        &nbsp;
+                      </span>
+                      <a href="#" id="btn-submit-all" class="submit-all submit-all-disabled  ml20">
+                        <i class="iconfont">
+                          
+                        </i>
+                        &nbsp;确认上传
+                      </a>
+                    </span>
+                    <h3 id="item-message-all" class="item-message-all">
+                      <span>
+                      </span>
+                    </h3>
+                  </div>
+                  <div class="bd">
+                    <div class="upload-all" id="upload-all" style="display:none;">
+                    </div>
+                    <div class="upload-list" id="upload-list">
+                    </div>
+                  </div>
+                </div>
+                <div id="upload-success-container" class="upload-success-container" style="">
+                  <div class="upload-steps clearfix">
+                    <ul>
+                      <li class="step-num active">
+                        1
+                        <span class="tips">
+                          选择文档
+                        </span>
+                      </li>
+                      <li class="step-bar active">
+                      </li>
+                      <li class="step-num active">
+                        2
+                        <span class="tips">
+                          补充信息
+                        </span>
+                      </li>
+                      <li class="step-bar active">
+                      </li>
+                      <li class="step-num active">
+                        3
+                        <span class="tips">
+                          完成上传
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="hd">
+                    <div class="hd-wrap">
+                      <h1>
+                        <span class="ic ic-success">
+                        </span>
+                        恭喜！文档上传成功
+                      </h1>
+                      <p>
+                        <span class="success-upload-tips">
+                          文档通过审核后，即可收到财富值奖励
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#">
+                          查看已上传文档
+                        </a>
+                        &gt;
+                      </p>
+                      <a class="goon-upload log-xsend" data-logxsend="[1, 100711, {&quot;index&quot;: 4}]"
+                      href="javascript:void function(){location.reload();}()">
+                        继续上传
+                      </a>
+                    </div>
+                  </div>
+                  <div class="bd">
+                    <div class="bd-wrap clearfix">
+                      <h2>
+                        <span class="title-emphasize">
+                          高赏金
+                        </span>
+                        悬赏任务
+                        <span class="title-tips">
+                          上传悬赏话题，获取下载券奖励
+                        </span>
+                        <a class="title-more" target="_blank" href="#">
+                          更多&gt;
+                        </a>
+                      </h2>
+                      <div class="award-cards clearfix">
+                        <ul class="award-ul-wrap clearfix">
+                        </ul>
+                        <div class="award-nav">
+                          <span class="active">
+                          </span>
+                          <span>
+                          </span>
+                          <span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="task-upload-success-container" class="task-upload-success-container">
+                  <h1>
+                    <i class="iconfont">
+                      
+                    </i>
+                    上传成功，话题被采纳后即可获得赏金
+                  </h1>
+                  <p>
+                    话题被审核公开后，悬赏者将选择是否采纳，您在
+                    <a href="#" target="_blank">
+                      悬赏任务
+                    </a>
+                    中可以看到文档状态
+                  </p>
+                  <p class="nav">
+                    <a href="#">
+                      返回当前悬赏任务
+                    </a>
+                    <a href="#" target="_blank">
+                      查看已上传的文档
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="ft">
+        <div class="footer">
+          <p>
+            <span class="cr">
+              &#169;2016&nbsp;Baidu
+            </span>
+            &nbsp;
+            <a href="#" class="Bidu" target="_blank">
+              使用百度前必读
+            </a>
+            &nbsp;|&nbsp;
+            <a href="#" class="Xieyi"
+            target="_blank">
+              文库协议
+            </a>
+            &nbsp;|&nbsp;
+            <a href="#" class="Xieyi" target="_blank">
+              广告服务
+            </a>
+            &nbsp;|&nbsp;
+            <a href="#" class="Xieyi"
+            target="_blank">
+              企业文库
+            </a>
+            &nbsp;|&nbsp;
+            <a href="#" class="Xieyi"
+            target="_blank">
+              网站地图
+            </a>
+          </p>
+        </div>
+      </div>
+     </div>
+      <div id="footer">
+      <div class="fusion-row">
+		<div class="fusion-copyright-content">
+		  <div class="fusion-copyright-notice" style="padding-bottom: 0px;">
+			<div>Copyright © 2016-2017 jobplus.com.cn All rights reserved JobPlus 版权所有 苏ICP备16046992号<</div>
+		 </div>
+		</div>
+	  </div>
+    </div>
+    
+
+  
+    <script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="scripts/pj_content.js">
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,76 @@
+<!-- 话题专区 -->
+{#foreach $T.topicsPage as topiclist}
+    <div class="item">
+        <div class='topicdivision-content'>
+            <div class='topicdivision-left'>
+                <div class="title">
+                    <a target="_blank" href="javascript:void(0);" onclick="toHref('tbl_topics',{$T.topiclist.id})" title="{$T.topiclist.title}">{$T.topiclist.title}</a>
+                </div>
+                {#if $T.topiclist.intro}
+                    <div class="newsinfo" title="{$T.topiclist.intro}">
+                        <p>
+                           {$T.topiclist.intro}
+                        </p>
+                    </div>
+                {#else}
+                    <div class="newsinfo">
+                        <p></p>
+                    </div>
+                {#/if}
+                <div class="tools">
+                    <div class="zm-meta-panel">
+                        <a  class="answer-date-link meta-item" target="_blank" href="javascript:void(0);">编辑于&nbsp;
+                            {#if $T.topiclist.showcreatetime}
+                              {$T.topiclist.showcreatetime}
+                            {#/if}</a>
+
+                        <a href="javascript:void(0);" name="addcomment" class="meta-item toggle-comment js-comment">
+                            <i class="z-icon-concern"></i>
+                            {#if $T.topiclist.followssum}
+                                {$T.topiclist.followssum}
+                            {#else}
+                                 0
+                            {#/if}人关注
+                        </a>
+
+                        <a href="javascript:void(0);" class="meta-item zu-autohide js-thank">
+                            <i class="z-icon-thank"></i>
+                            {#if $T.topiclist.likesum}
+                                {$T.topiclist.likesum}
+                            {#else}
+                                0
+                            {#/if}人赞
+                        </a>
+
+                        <a href="javascript:void(0);;" class="meta-item zu-autohide js-share goog-inline-block goog-menu-button">
+                            <i class="z-icon-comment"></i>
+                            {#if $T.topiclist.replysum}
+                               {$T.topiclist.replysum}
+                            {#else}
+                               0
+                            {#/if}人回答
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class='topicdivision-right'>
+                <div class="picno">
+                    <div class="pic">
+                        <div class="picx">
+                            {#if $T.topiclist.topicimg}
+                                <div class="pict">
+                                    <img src='{$T.topiclist.topicimg}' alt=''>
+                                </div>
+                            {#else}
+                                    <div class="pict">
+                                        <img src='/51jobplusCore/image/9c65abe0be4bcf8.jpg_100x100.jpg' alt=''>
+                                    </div>
+                            {#/if}
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+{#/for}
+

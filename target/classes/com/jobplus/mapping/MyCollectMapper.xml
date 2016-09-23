@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.MyCollectMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.MyCollect" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="collectType" property="collecttype" jdbcType="VARCHAR" />
+    <result column="objectId" property="objectid" jdbcType="INTEGER" />
+    <result column="folderId" property="folderid" jdbcType="INTEGER" />
+    <result column="collTime" property="colltime" jdbcType="TIMESTAMP" />
+    <result column="actionType" property="actionType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, userId, collectType, objectId, folderId, collTime,actionType
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.ID, t.userId, t.collectType, t.objectId, t.folderId, t.collTime,t.actionType
+  </sql>
+  
+  <!-- tb_docs_colums_list -->
+  <sql id="tb_docs_colums_list" >
+    ,p.ID as "docs.id", p.title as "docs.title", p.description as "docs.description", p.filePath as "docs.filePath", p.docPages  as "docs.docPages", p.createTime  as "docs.createTime", p.lastEditTime as "docs.lastEditTime", p.userId as "docs.userId", p.collectSum as "docs.collectSum", 
+    p.downSum as "docs.downSum", p.readSum as "docs.readSum", p.likeSum as "docs.likesum", p.downValue as "docs.downValue", p.docSuffix as "docs.docSuffix", p.docType as "docs.docType", p.docClass as "docs.docClass", p.isPublic as "docs.isPublic"
+  </sql>
+  
+  <!-- 个人中心-我的文档列表   getMyDocsList-->
+  <select id="getMyDocsList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyCollect" >
+    select 
+    <include refid="Base_Column_List2" />
+    <include refid="tb_docs_colums_list" />
+   <!--  ,(select count(*) from tbl_collect t  JOIN ${collecttype} p where t.objectId = p.ID  AND t.actionType = '${actionType}'
+    	AND t.userId = #{userid,jdbcType=INTEGER} AND t.collectType = '${collecttype}') as pageCount  -->
+    from tbl_collect t  JOIN ${collecttype} p
+    where t.objectId = p.ID 
+    AND
+    t.actionType = '${actionType}'
+    AND
+    t.userId = #{userid,jdbcType=INTEGER}
+    AND t.collectType = '${collecttype}'
+    ORDER BY t.collTime DESC 
+    <choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+	</choose>
+  </select>
+  <!-- 统计总数   个人中心-我的文档列表   getMyDocsList-->
+  <select id="getMyDocsListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.MyCollect" >
+    select count(*) from tbl_collect t  JOIN ${collecttype} p where t.objectId = p.ID  AND t.actionType = '${actionType}'
+    	AND t.userId = #{userid,jdbcType=INTEGER} AND t.collectType = '${collecttype}'
+  </select>
+  
+  <!-- 个人中心-我的话题列表   getMyTopicsList    未完成     -->
+  <select id="getMyTopicsList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyCollect" >
+    select 
+    <include refid="Base_Column_List2" />
+    <include refid="tb_docs_colums_list" />
+    from tbl_collect t  JOIN ${collecttype} p
+    ON t.objectId = p.ID
+    where t.objectId = p.ID
+    t.actionType = 
+    
+    <choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY t.collTime DESC
+			</otherwise>
+	</choose>
+  </select>
+
+ 
+
+ <!-- 批量删除Mycollects -->
+  <delete  id="deleteMycollects" parameterType="java.lang.Integer" >
+     delete from tbl_collect 
+    where ID in 
+    	<foreach collection="condition" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+  </delete>
+  <!-- 删除记录 -->
+  <delete  id="delMycollects" parameterType="java.lang.Integer" >
+     delete from tbl_collect 
+    where 
+        userId = #{userid,jdbcType=INTEGER}
+      
+      <if test="collecttype != null" >
+       AND collectType = '${collecttype}'
+      </if>
+      <if test="objectid != null" >
+        AND objectId = #{objectid,jdbcType=INTEGER}
+      </if>
+      <if test="actionType != null" >
+       AND  actionType = #{actionType,jdbcType=VARCHAR}
+      </if>
+  </delete>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_collect
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_collect
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.MyCollect" >
+    insert into tbl_collect (ID, userId, collectType, 
+      objectId, folderId, collTime, actionType
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{collecttype,jdbcType=VARCHAR}, 
+      #{objectid,jdbcType=INTEGER}, #{folderid,jdbcType=INTEGER}, Now(), #{actionType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.MyCollect" >
+    insert into tbl_collect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="collecttype != null" >
+        collectType,
+      </if>
+      <if test="objectid != null" >
+        objectId,
+      </if>
+      <if test="folderid != null" >
+        folderId,
+      </if>
+      <if test="colltime != null" >
+        collTime,
+      </if>
+      <if test="actionType != null" >
+        actionType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="collecttype != null" >
+        #{collecttype, jdbcType=VARCHAR},
+      </if>
+      <if test="objectid != null" >
+        #{objectid,jdbcType=INTEGER},
+      </if>
+      <if test="folderid != null" >
+        #{folderid,jdbcType=INTEGER},
+      </if>
+      <if test="colltime != null" >
+        #{colltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actionType != null" >
+        #{actionType, jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.MyCollect" >
+    update tbl_collect
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="collecttype != null" >
+        collectType = #{collecttype, jdbcType=VARCHAR},
+      </if>
+      <if test="objectid != null" >
+        objectId = #{objectid,jdbcType=INTEGER},
+      </if>
+      <if test="folderid != null" >
+        folderId = #{folderid,jdbcType=INTEGER},
+      </if>
+      <if test="colltime != null" >
+        collTime = #{colltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actionType != null" >
+        actionType = #{actionType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.MyCollect" >
+    update tbl_collect
+    set userId = #{userid,jdbcType=INTEGER},
+      collectType = #{collecttype,jdbcType=VARCHAR},
+      objectId = #{objectid,jdbcType=INTEGER},
+      folderId = #{folderid,jdbcType=INTEGER},
+      collTime = #{colltime,jdbcType=TIMESTAMP},
+      actionType = #{actionType,jdbcType=VARCHAR},
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

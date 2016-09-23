@@ -1,0 +1,37 @@
+<div class="zm-tag-editor-editor">
+    <div class="zg-inline zg-clear" id='topictagedit' >
+      {#foreach $T.table as topic}  
+         <div class="zm-tag-editor-edit-item">
+            <span class="nor">{$T.topic.name}</span>
+            <a id="{$T.topic.id}"  data-name='{$T.topic.name}' href="#" class="zg-r3px zm-tag-editor-remove-button"
+            name="remove">
+            </a>
+        </div>
+      {#/for}
+    </div>
+    {#if $T.taglen=='5'}
+      <div class="zg-section zm-tag-editor-command-buttons-wrap" style="display: none;">
+    {#else}
+     <div class="zg-section zm-tag-editor-command-buttons-wrap">
+    {#/if}
+        <input type='hidden' name='currenttagval' value=''>
+        <input class="zg-form-text-input zg-mr15" type="text" placeholder="搜索话题"
+        aria-label="搜索话题" title="搜索话题" role="combobox" aria-autocomplete="list" oninput="getTagsByCondition(this,'topictag')"
+        aria-haspopup="false" id='topictag'>
+        <a href="#" name="close">
+            完成
+        </a>
+    </div>
+    {#if $T.taglen=='5'}
+        <div class="zm-tag-editor-maxcount zg-section">
+    {#else}
+        <div class="zm-tag-editor-maxcount zg-section" style="display: none;">
+    {#/if}
+        <span>
+            最多只能为一个话题绑定 5个标签
+        </span>
+        <a href="#" name="close">
+            完成
+        </a>
+    </div>
+</div>

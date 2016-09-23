@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="my" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://192.168.0.39:3306/jobdb" userId="jobplus"
+			password="3er4#ER$" />
+
+		<javaModelGenerator targetPackage="com.jobplus.pojo"
+			targetProject="D:/jobplus/workspace/51jobplusCore/src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="com.jobplus.mapping"
+			targetProject="D:/jobplus/workspace/51jobplusCore/src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator targetPackage="com.jobplus.dao"
+			targetProject="D:/jobplus/workspace/51jobplusCore/src/main/java"
+			type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table tableName="tbl_mobilesms" domainObjectName="MobileSms"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+
+		<table tableName="v_user_role_resource" domainObjectName="VuserRoles"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_operationSum" domainObjectName="OperationSum"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_visitHistory" domainObjectName="VisitHistory"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_user" domainObjectName="User"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		
+		<table tableName="tbl_educationBgrd" domainObjectName="EducationBgrd"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		
+		<table tableName="tbl_workExper" domainObjectName="WorkExper"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+
+		<table tableName="tbl_role" domainObjectName="Role"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_user_role" domainObjectName="UserRole"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		<table tableName="tbl_resource" domainObjectName="Resource"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		<table tableName="tbl_role_resource" domainObjectName="RoleResource"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_collect" domainObjectName="MyCollect"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_myfolder" domainObjectName="MyFolder"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_attention" domainObjectName="Attention"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_account" domainObjectName="Account"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_accountDetail" domainObjectName="AccountDetail"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_typeConfig" domainObjectName="TypeConfig"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_tags" domainObjectName="Tags"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_sms" domainObjectName="Sms"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_indexGenerate" domainObjectName="IndexGenerate"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+
+		<table tableName="tbl_sysLoginLog" domainObjectName="SysLoginLog"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+
+		<table tableName="tbl_smsFilter" domainObjectName="SmsFilter"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_sequence" domainObjectName="Sequence"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_docs" domainObjectName="Docs"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		<table tableName="tbl_docs_comment" domainObjectName="DocComment"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_docs_isliked" domainObjectName="DocsLiked"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_topics" domainObjectName="Topics"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_topics_comment" domainObjectName="TopicsComment"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+
+		<table tableName="tbl_books" domainObjectName="Books"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_books_share" domainObjectName="BookShare"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		
+		<table tableName="tbl_book_isliked" domainObjectName="BookLiked"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_article" domainObjectName="Article"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_article_share" domainObjectName="ArticleShare"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_courses" domainObjectName="Courses"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_courses_share" domainObjectName="CoursesShare"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_sites" domainObjectName="Sites"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+
+		<table tableName="tbl_sites_share" domainObjectName="SiteShare"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table> 
+		
+		<table tableName="tbl_topics_isliked" domainObjectName="TopicsLiked"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_article_isliked" domainObjectName="ArticleLiked"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		<table tableName="tbl_courses_isliked" domainObjectName="CoursesLiked"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		<table tableName="tbl_sites_isliked" domainObjectName="SitesLiked"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table> 
+		 
+		<table tableName="tbl_reportInfo" domainObjectName="ReportInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		<table tableName="tbl_reportInfo_config" domainObjectName="ReportInfoConfig"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_latesdata" domainObjectName="LatesdataInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_hotdata" domainObjectName="HotdataInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_hotrecomm" domainObjectName="HotReommInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_oauth_login" domainObjectName="OauthLoginInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_"
+				replaceString="" />
+		</table>
+		
+		<table tableName="tbl_suggestion" domainObjectName="Suggestion"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_personalskill" domainObjectName="PersonalSkill"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_skilllibrary" domainObjectName="SkillLibrary"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+
+	</context>
+</generatorConfiguration>

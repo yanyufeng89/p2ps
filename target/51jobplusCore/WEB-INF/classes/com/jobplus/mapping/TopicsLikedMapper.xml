@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.TopicsLikedMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.TopicsLiked" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <id column="commId" property="commid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.jobplus.pojo.TopicsLiked" >
+    delete from tbl_topics_isliked
+    where userid = #{userid,jdbcType=INTEGER}
+      and commId = #{commid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.TopicsLiked" >
+    insert into tbl_topics_isliked (userid, commId)
+    values (#{userid,jdbcType=INTEGER}, #{commid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.TopicsLiked" >
+    insert into tbl_topics_isliked
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="commid != null" >
+        commId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commid != null" >
+        #{commid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

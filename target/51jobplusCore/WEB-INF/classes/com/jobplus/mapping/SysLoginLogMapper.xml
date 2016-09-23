@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.SysLoginLogMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.SysLoginLog" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="loginTime" property="logintime" jdbcType="TIMESTAMP" />
+    <result column="userIp" property="userip" jdbcType="CHAR" />
+    <result column="serviceIp" property="serviceip" jdbcType="CHAR" />
+    <result column="loginMode" property="loginmode" jdbcType="INTEGER" />
+    <result column="sessionId" property="sessionid" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="seed" property="seed" jdbcType="VARCHAR" />
+    <result column="stepSum" property="stepsum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, userId, loginTime, userIp, serviceIp, loginMode, sessionId, url, seed, stepSum
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_sysLoginLog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_sysLoginLog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.SysLoginLog" >
+    insert into tbl_sysLoginLog (ID, userId, loginTime, 
+      userIp, serviceIp, loginMode, 
+      sessionId, url, seed, 
+      stepSum)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{logintime,jdbcType=TIMESTAMP}, 
+      #{userip,jdbcType=CHAR}, #{serviceip,jdbcType=CHAR}, #{loginmode,jdbcType=INTEGER}, 
+      #{sessionid,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{seed,jdbcType=VARCHAR}, 
+      #{stepsum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.SysLoginLog" >
+    insert into tbl_sysLoginLog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="logintime != null" >
+        loginTime,
+      </if>
+      <if test="userip != null" >
+        userIp,
+      </if>
+      <if test="serviceip != null" >
+        serviceIp,
+      </if>
+      <if test="loginmode != null" >
+        loginMode,
+      </if>
+      <if test="sessionid != null" >
+        sessionId,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="seed != null" >
+        seed,
+      </if>
+      <if test="stepsum != null" >
+        stepSum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="logintime != null" >
+        #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userip != null" >
+        #{userip,jdbcType=CHAR},
+      </if>
+      <if test="serviceip != null" >
+        #{serviceip,jdbcType=CHAR},
+      </if>
+      <if test="loginmode != null" >
+        #{loginmode,jdbcType=INTEGER},
+      </if>
+      <if test="sessionid != null" >
+        #{sessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="seed != null" >
+        #{seed,jdbcType=VARCHAR},
+      </if>
+      <if test="stepsum != null" >
+        #{stepsum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.SysLoginLog" >
+    update tbl_sysLoginLog
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="logintime != null" >
+        loginTime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userip != null" >
+        userIp = #{userip,jdbcType=CHAR},
+      </if>
+      <if test="serviceip != null" >
+        serviceIp = #{serviceip,jdbcType=CHAR},
+      </if>
+      <if test="loginmode != null" >
+        loginMode = #{loginmode,jdbcType=INTEGER},
+      </if>
+      <if test="sessionid != null" >
+        sessionId = #{sessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="seed != null" >
+        seed = #{seed,jdbcType=VARCHAR},
+      </if>
+      <if test="stepsum != null" >
+        stepSum = #{stepsum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.SysLoginLog" >
+    update tbl_sysLoginLog
+    set userId = #{userid,jdbcType=INTEGER},
+      loginTime = #{logintime,jdbcType=TIMESTAMP},
+      userIp = #{userip,jdbcType=CHAR},
+      serviceIp = #{serviceip,jdbcType=CHAR},
+      loginMode = #{loginmode,jdbcType=INTEGER},
+      sessionId = #{sessionid,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      seed = #{seed,jdbcType=VARCHAR},
+      stepSum = #{stepsum,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

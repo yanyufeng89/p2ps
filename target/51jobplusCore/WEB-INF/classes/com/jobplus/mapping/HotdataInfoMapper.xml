@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.HotdataInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.HotdataInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="shreadType" property="shreadtype" jdbcType="VARCHAR" />
+    <result column="dataType" property="datatype" jdbcType="CHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="imgUrl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="linkUrl" property="linkurl" jdbcType="VARCHAR" />
+    <result column="dataId" property="dataid" jdbcType="INTEGER" />
+    <result column="lastEditTime" property="lastedittime" jdbcType="TIMESTAMP" />
+    <result column="createUser" property="createuser" jdbcType="INTEGER" />
+    <result column="kpi" property="kpi" jdbcType="INTEGER" />
+    <result column="kpi2" property="kpi2" jdbcType="INTEGER" />
+    <result column="kpi3" property="kpi3" jdbcType="INTEGER" />
+    <result column="extendInfo" property="extendinfo" jdbcType="VARCHAR" />
+    <result column="extendInfo2" property="extendinfo2" jdbcType="VARCHAR" />
+    <result column="extendInfo3" property="extendinfo3" jdbcType="VARCHAR" />
+    <result column="extendInfo4" property="extendinfo4" jdbcType="VARCHAR" />
+    <result column="extendInfo5" property="extendinfo5" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.HotdataInfo" extends="BaseResultMap" >
+    <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, shreadType, dataType, tags, imgUrl, linkUrl, dataId, lastEditTime, createUser, 
+    kpi, kpi2, kpi3, extendInfo, extendInfo2, extendInfo3, extendInfo4, extendInfo5, 
+    createTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    intro
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_hotdata
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_hotdata
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.HotdataInfo" >
+    insert into tbl_hotdata (id, title, shreadType, 
+      dataType, tags, imgUrl, 
+      linkUrl, dataId, lastEditTime, 
+      createUser, kpi, kpi2, 
+      kpi3, extendInfo, extendInfo2, 
+      extendInfo3, extendInfo4, extendInfo5, 
+      createTime, intro)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{shreadtype,jdbcType=VARCHAR}, 
+      #{datatype,jdbcType=CHAR}, #{tags,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
+      #{linkurl,jdbcType=VARCHAR}, #{dataid,jdbcType=INTEGER}, #{lastedittime,jdbcType=TIMESTAMP}, 
+      #{createuser,jdbcType=INTEGER}, #{kpi,jdbcType=INTEGER}, #{kpi2,jdbcType=INTEGER}, 
+      #{kpi3,jdbcType=INTEGER}, #{extendinfo,jdbcType=VARCHAR}, #{extendinfo2,jdbcType=VARCHAR}, 
+      #{extendinfo3,jdbcType=VARCHAR}, #{extendinfo4,jdbcType=VARCHAR}, #{extendinfo5,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{intro,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.HotdataInfo" >
+    insert into tbl_hotdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="shreadtype != null" >
+        shreadType,
+      </if>
+      <if test="datatype != null" >
+        dataType,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="imgurl != null" >
+        imgUrl,
+      </if>
+      <if test="linkurl != null" >
+        linkUrl,
+      </if>
+      <if test="dataid != null" >
+        dataId,
+      </if>
+      <if test="lastedittime != null" >
+        lastEditTime,
+      </if>
+      <if test="createuser != null" >
+        createUser,
+      </if>
+      <if test="kpi != null" >
+        kpi,
+      </if>
+      <if test="kpi2 != null" >
+        kpi2,
+      </if>
+      <if test="kpi3 != null" >
+        kpi3,
+      </if>
+      <if test="extendinfo != null" >
+        extendInfo,
+      </if>
+      <if test="extendinfo2 != null" >
+        extendInfo2,
+      </if>
+      <if test="extendinfo3 != null" >
+        extendInfo3,
+      </if>
+      <if test="extendinfo4 != null" >
+        extendInfo4,
+      </if>
+      <if test="extendinfo5 != null" >
+        extendInfo5,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="shreadtype != null" >
+        #{shreadtype,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null" >
+        #{datatype,jdbcType=CHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkurl != null" >
+        #{linkurl,jdbcType=VARCHAR},
+      </if>
+      <if test="dataid != null" >
+        #{dataid,jdbcType=INTEGER},
+      </if>
+      <if test="lastedittime != null" >
+        #{lastedittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=INTEGER},
+      </if>
+      <if test="kpi != null" >
+        #{kpi,jdbcType=INTEGER},
+      </if>
+      <if test="kpi2 != null" >
+        #{kpi2,jdbcType=INTEGER},
+      </if>
+      <if test="kpi3 != null" >
+        #{kpi3,jdbcType=INTEGER},
+      </if>
+      <if test="extendinfo != null" >
+        #{extendinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo2 != null" >
+        #{extendinfo2,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo3 != null" >
+        #{extendinfo3,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo4 != null" >
+        #{extendinfo4,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo5 != null" >
+        #{extendinfo5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.HotdataInfo" >
+    update tbl_hotdata
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="shreadtype != null" >
+        shreadType = #{shreadtype,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null" >
+        dataType = #{datatype,jdbcType=CHAR},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        imgUrl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkurl != null" >
+        linkUrl = #{linkurl,jdbcType=VARCHAR},
+      </if>
+      <if test="dataid != null" >
+        dataId = #{dataid,jdbcType=INTEGER},
+      </if>
+      <if test="lastedittime != null" >
+        lastEditTime = #{lastedittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        createUser = #{createuser,jdbcType=INTEGER},
+      </if>
+      <if test="kpi != null" >
+        kpi = #{kpi,jdbcType=INTEGER},
+      </if>
+      <if test="kpi2 != null" >
+        kpi2 = #{kpi2,jdbcType=INTEGER},
+      </if>
+      <if test="kpi3 != null" >
+        kpi3 = #{kpi3,jdbcType=INTEGER},
+      </if>
+      <if test="extendinfo != null" >
+        extendInfo = #{extendinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo2 != null" >
+        extendInfo2 = #{extendinfo2,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo3 != null" >
+        extendInfo3 = #{extendinfo3,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo4 != null" >
+        extendInfo4 = #{extendinfo4,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo5 != null" >
+        extendInfo5 = #{extendinfo5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.HotdataInfo" >
+    update tbl_hotdata
+    set title = #{title,jdbcType=VARCHAR},
+      shreadType = #{shreadtype,jdbcType=VARCHAR},
+      dataType = #{datatype,jdbcType=CHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      imgUrl = #{imgurl,jdbcType=VARCHAR},
+      linkUrl = #{linkurl,jdbcType=VARCHAR},
+      dataId = #{dataid,jdbcType=INTEGER},
+      lastEditTime = #{lastedittime,jdbcType=TIMESTAMP},
+      createUser = #{createuser,jdbcType=INTEGER},
+      kpi = #{kpi,jdbcType=INTEGER},
+      kpi2 = #{kpi2,jdbcType=INTEGER},
+      kpi3 = #{kpi3,jdbcType=INTEGER},
+      extendInfo = #{extendinfo,jdbcType=VARCHAR},
+      extendInfo2 = #{extendinfo2,jdbcType=VARCHAR},
+      extendInfo3 = #{extendinfo3,jdbcType=VARCHAR},
+      extendInfo4 = #{extendinfo4,jdbcType=VARCHAR},
+      extendInfo5 = #{extendinfo5,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      intro = #{intro,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.HotdataInfo" >
+    update tbl_hotdata
+    set title = #{title,jdbcType=VARCHAR},
+      shreadType = #{shreadtype,jdbcType=VARCHAR},
+      dataType = #{datatype,jdbcType=CHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      imgUrl = #{imgurl,jdbcType=VARCHAR},
+      linkUrl = #{linkurl,jdbcType=VARCHAR},
+      dataId = #{dataid,jdbcType=INTEGER},
+      lastEditTime = #{lastedittime,jdbcType=TIMESTAMP},
+      createUser = #{createuser,jdbcType=INTEGER},
+      kpi = #{kpi,jdbcType=INTEGER},
+      kpi2 = #{kpi2,jdbcType=INTEGER},
+      kpi3 = #{kpi3,jdbcType=INTEGER},
+      extendInfo = #{extendinfo,jdbcType=VARCHAR},
+      extendInfo2 = #{extendinfo2,jdbcType=VARCHAR},
+      extendInfo3 = #{extendinfo3,jdbcType=VARCHAR},
+      extendInfo4 = #{extendinfo4,jdbcType=VARCHAR},
+      extendInfo5 = #{extendinfo5,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_hotdata
+  </select>
+
+  <delete id="deleteAll">
+    delete from tbl_hotdata
+  </delete>
+
+  <select id="getHotDatas" resultMap="BaseResultMap" parameterType="String">
+    (select title,docType as shreadType,'DOC' as dataType,docClass as tags,'' as imgUrl,readUrl as linkUrl,ID as dataId,lastEditTime,userId as createUser,createTime,collectSum as kpi,recommendSum as kpi2,readSum as kpi3 from tbl_docs where docType like concat('%',#{condition},'%') order by downSum desc,collectSum desc,likeSum desc,readSum desc,id desc limit 5)
+    union
+    (select title,topicsType as shreadType,'TOPICS' as dataType,topicsClass as tags,'' as imgUrl,'' as linkUrl,ID as dataId,lastEditTime,createPerson as createUser,createTime,collectSum as kpi,replySum as kpi2,readSum as kpi3 from tbl_topics where topicsType like concat('%',#{condition},'%') order by likeSum desc,followsSum desc,replySum desc,commentSum desc,id desc limit 5)
+    union
+    (select DISTINCT b.bookname as title,b.bookType as shreadType,'BOOK' as dataType,b.bookClass as tags,b.bookImg as imgUrl,'' as linkUrl,b.ID as dataId,b.updateTime as lastEditTime,'' as createUser,b.createTime,collectSum as kpi,recommendSum as kpi2,0 as kpi3 from tbl_books_share s inner join tbl_books b on s.bookID=b.id where bookType like concat('%',#{condition},'%') order by b.recommendSum desc,b.collectSum desc,s.id desc limit 5)
+    union
+    (select coursesName as title,coursesType as shreadType,'COURSES' as dataType,coursesClass as tags,coursesImg as imgUrl,coursesUrl as linkUrl,ID as dataId,updateTime as lastEditTime,userId as createUser,createTime,collectSum as kpi,recommendSum as kpi2,readSum as kpi3 from tbl_courses where coursesType like concat('%',#{condition},'%') order by likeSum desc,collectSum desc,recommendSum desc,readSum desc,id desc limit 5)
+    union
+    (select title,articleType as shreadType,'ARTICLE' as dataType,articleClass as tags,articleImg as imgUrl,articleurl as linkUrl,ID as dataId,updateTime as lastEditTime,userId as createUser,createTime,collectSum as kpi,recommendSum as kpi2,readSum as kpi3 from tbl_article where articleType like concat('%',#{condition},'%') order by likeSum desc,collectSum desc,recommendSum desc,readSum desc,id desc limit 5)
+    union
+    (select title,siteType as shreadType,'SITES' as dataType,siteClass as tags,siteImg as imgUrl,siteUrl as linkUrl,ID as dataId,updateTime as lastEditTime,userId as createUser,createTime,collectSum as kpi,recommendSum as kpi2,readSum as kpi3 from tbl_sites where siteType like concat('%',#{condition},'%') order by likeSum desc,collectSum desc,recommendSum desc,readSum desc,id desc limit 5)
+  </select>
+
+  <select id="getByDataidAndType" resultMap="BaseResultMap" parameterType="Map">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_hotdata
+    where dataid=#{dataid} and datatype=#{datatype}
+  </select>
+</mapper>

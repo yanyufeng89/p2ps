@@ -1,0 +1,39 @@
+<div class="modal-dialog-bg" style="opacity: 0.5; width: 1920px; height: 12986px;" aria-hidden="true"></div>
+<div class="modal-wrapper">
+  <div class="modal-dialog" tabindex="0" role="dialog" aria-labelledby=":4w">
+    <div class="modal-dialog-title">
+      <span class="modal-dialog-title-text" id=":4w" role="heading">举报</span>
+      <span class="modal-dialog-title-close" role="button" tabindex="0" aria-label="Close"></span>
+    </div>
+    <div class="modal-dialog-content" style="margin: 0px; padding: 0px;">
+      <div class="ReportMenu">
+        <div class='dialog-report'>
+           <span>举报理由</span>
+           <ul id="reportReasons"> 
+			  {#foreach $T.reportreason as reportreason}			     
+			     {#if $T.reportreason$index==$T.reportreasonlength}
+				      <li class="block-report-reasons-o">
+						  <input type="radio" id="{$T.reportreason.id}" name="reason" data-type='1'/>
+						     <label for="{$T.reportreason.id}">{$T.reportreason.reportinfo}</label>
+						  <input type="text" class="block-report-reasons-txt" />
+			          </li> 
+		         {#else}
+			         <li>
+				       <input type="radio" id="{$T.reportreason.id}" name="reason" data-type='0'>
+				       <label for="{$T.reportreason.id}">{$T.reportreason.reportinfo}</label>
+				     </li> 
+			     {#/if}
+			  {#/for}
+		  </ul>
+		 
+        </div>
+        <div class="zh-pm-warnmsg" style="display:none;text-align:right;color:#C3412F; font-size:12px;padding:0 18px 0 0;">
+          
+        </div>
+        <div class="ReportMenu-actions">
+          <button class="zg-btn-blue topicreport" id='topicreport' data-userreportid="{$T.commentbyid}"  data-topiccommentid='{$T.topiccommentid}' data-reporttype='{$T.reporttype}'>举报</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

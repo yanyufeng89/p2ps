@@ -1,0 +1,41 @@
+<!-- 我的关注列表加载更多 -->
+{#foreach $T.concernlist as list}
+<div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
+	   <div class="zg-right">
+
+	      {#if ($T.list.fansIds=='0')}
+		     <button data-userid="{$T.list.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow" data-actiontype="1">关注</button>
+		  {#else}
+		     <button data-userid="{$T.list.userid}" data-a='1' class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
+		  {#/if}
+	   </div>
+	   <a title="{$T.list.username}" class="zm-item-link-avatar" href="#">
+	      {#if $T.list.headicon}
+		    <img src="{$T.list.headicon}" class="zm-item-img-avatar">
+		  {#else}
+		    <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+		  {#/if}
+	   </a>
+	   <div class="zm-list-content-medium">
+			<h2 class="zm-list-content-title">
+			  <a href="#" class="zg-link author-link" title="{$T.list.username}">{$T.list.username}</a>
+			</h2>
+			<div class="ellipsis">
+			    <span class="bio">
+			       {#if $T.list.description}
+					   {$T.list.description}
+				   {#/if}
+			    </span>
+			</div>
+			<div class="details zg-gray">
+			<a target="_blank" href="/people/jing-si-cong-28/followers" class="zg-link-gray-normal">
+			  {$T.list.operationSum.attentionsum}关注
+			</a>
+			<a class="zg-link-gray-normal">/</a>
+			<a target="_blank" href="/people/jing-si-cong-28/asks" class="zg-link-gray-normal">
+			   {$T.list.operationSum.fanssum}粉丝
+			</a>
+			</div>
+	  </div>
+ </div>
+{#/for}

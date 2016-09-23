@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.ReportInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.ReportInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="reportUserId" property="reportuserid" jdbcType="INTEGER" />
+    <result column="reportTel" property="reporttel" jdbcType="CHAR" />
+    <result column="reportByUserId" property="reportbyuserid" jdbcType="INTEGER" />
+    <result column="reportTargetId" property="reporttargetid" jdbcType="INTEGER" />
+    <result column="reportType" property="reporttype" jdbcType="VARCHAR" />
+    <result column="reportTime" property="reporttime" jdbcType="DATE" />
+    <result column="isDeal" property="isdeal" jdbcType="INTEGER" />
+    <result column="reportCauseId" property="reportcauseid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.ReportInfo" extends="BaseResultMap" >
+    <result column="reportCause" property="reportcause" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, reportUserId, reportTel, reportByUserId, reportTargetId, reportType, reportTime, 
+    isDeal, reportCauseId
+  </sql>
+  <sql id="Blob_Column_List" >
+    reportCause
+  </sql>
+  
+  <select id="getAllReportInfoCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.ReportInfo" >
+   select count(*)  from tbl_reportInfo t
+	    where 1 = 1
+	      <if test="reporttype != null" >
+	        and reporttype = #{reporttype,jdbcType=VARCHAR}
+	      </if>
+	      <if test="reporttime != null" >
+	        and reporttime > #{reporttime,jdbcType=DATE}
+	      </if>
+	      <if test="isdeal != null" >
+	        and isdeal = #{isdeal,jdbcType=INTEGER}
+	      </if>
+	      <if test="reportcauseid != null" >
+	        and reportcauseid = #{reportcauseid,jdbcType=INTEGER}
+	      </if>
+	       <if test="id != null" >
+	        and  id = #{id,jdbcType=INTEGER}
+	      </if>
+  </select>
+  
+  <!-- 获取举报信息列表  -->
+  <select id="getAllReportInfo" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.ReportInfo" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,(select count(*)  from tbl_reportInfo t
+	    where 1 = 1
+	      <if test="reporttype != null" >
+	        and reporttype = #{reporttype,jdbcType=VARCHAR}
+	      </if>
+	      <if test="reporttime != null" >
+	        and reporttime > #{reporttime,jdbcType=DATE}
+	      </if>
+	      <if test="isdeal != null" >
+	        and isdeal = #{isdeal,jdbcType=INTEGER}
+	      </if>
+	      <if test="reportcauseid != null" >
+	        and reportcauseid = #{reportcauseid,jdbcType=INTEGER}
+	      </if>
+	       <if test="id != null" >
+	        and  id = #{id,jdbcType=INTEGER}
+	      </if> ) as pageCount     
+    
+    from tbl_reportInfo t
+    where 1 = 1
+      <if test="reporttype != null" >
+        and reporttype = #{reporttype,jdbcType=VARCHAR}
+      </if>
+      <if test="reporttime != null" >
+        and reporttime > #{reporttime,jdbcType=DATE}
+      </if>
+      <if test="isdeal != null" >
+        and isdeal = #{isdeal,jdbcType=INTEGER}
+      </if>
+      <if test="reportcauseid != null" >
+        and reportcauseid = #{reportcauseid,jdbcType=INTEGER}
+      </if>
+       <if test="id != null" >
+        and  id = #{id,jdbcType=INTEGER}
+      </if>
+    ORDER BY t.reportTime DESC
+     <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose> 
+  </select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_reportInfo
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_reportInfo
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.ReportInfo" >
+    insert into tbl_reportInfo (ID, reportUserId, reportTel, 
+      reportByUserId, reportTargetId, reportType, 
+      reportTime, isDeal, reportCauseId, 
+      reportCause)
+    values (#{id,jdbcType=INTEGER}, #{reportuserid,jdbcType=INTEGER}, #{reporttel,jdbcType=CHAR}, 
+      #{reportbyuserid,jdbcType=INTEGER}, #{reporttargetid,jdbcType=INTEGER}, #{reporttype,jdbcType=VARCHAR}, 
+      Now(), 0, #{reportcauseid,jdbcType=INTEGER}, 
+      #{reportcause,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.ReportInfo" >
+    insert into tbl_reportInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="reportuserid != null" >
+        reportUserId,
+      </if>
+      <if test="reporttel != null" >
+        reportTel,
+      </if>
+      <if test="reportbyuserid != null" >
+        reportByUserId,
+      </if>
+      <if test="reporttargetid != null" >
+        reportTargetId,
+      </if>
+      <if test="reporttype != null" >
+        reportType,
+      </if>
+      <if test="reporttime != null" >
+        reportTime,
+      </if>
+      <if test="isdeal != null" >
+        isDeal,
+      </if>
+      <if test="reportcauseid != null" >
+        reportCauseId,
+      </if>
+      <if test="reportcause != null" >
+        reportCause,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="reportuserid != null" >
+        #{reportuserid,jdbcType=INTEGER},
+      </if>
+      <if test="reporttel != null" >
+        #{reporttel,jdbcType=CHAR},
+      </if>
+      <if test="reportbyuserid != null" >
+        #{reportbyuserid,jdbcType=INTEGER},
+      </if>
+      <if test="reporttargetid != null" >
+        #{reporttargetid,jdbcType=INTEGER},
+      </if>
+      <if test="reporttype != null" >
+        #{reporttype,jdbcType=VARCHAR},
+      </if>
+      <if test="reporttime != null" >
+        #{reporttime,jdbcType=DATE},
+      </if>
+      <if test="isdeal != null" >
+        #{isdeal,jdbcType=INTEGER},
+      </if>
+      <if test="reportcauseid != null" >
+        #{reportcauseid,jdbcType=INTEGER},
+      </if>
+      <if test="reportcause != null" >
+        #{reportcause,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.ReportInfo" >
+    update tbl_reportInfo
+    <set >
+      <if test="reportuserid != null" >
+        reportUserId = #{reportuserid,jdbcType=INTEGER},
+      </if>
+      <if test="reporttel != null" >
+        reportTel = #{reporttel,jdbcType=CHAR},
+      </if>
+      <if test="reportbyuserid != null" >
+        reportByUserId = #{reportbyuserid,jdbcType=INTEGER},
+      </if>
+      <if test="reporttargetid != null" >
+        reportTargetId = #{reporttargetid,jdbcType=INTEGER},
+      </if>
+      <if test="reporttype != null" >
+        reportType = #{reporttype,jdbcType=VARCHAR},
+      </if>
+      <if test="reporttime != null" >
+        reportTime = #{reporttime,jdbcType=DATE},
+      </if>
+      <if test="isdeal != null" >
+        isDeal = #{isdeal,jdbcType=INTEGER},
+      </if>
+      <if test="reportcauseid != null" >
+        reportCauseId = #{reportcauseid,jdbcType=INTEGER},
+      </if>
+      <if test="reportcause != null" >
+        reportCause = #{reportcause,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.ReportInfo" >
+    update tbl_reportInfo
+    set reportUserId = #{reportuserid,jdbcType=INTEGER},
+      reportTel = #{reporttel,jdbcType=CHAR},
+      reportByUserId = #{reportbyuserid,jdbcType=INTEGER},
+      reportTargetId = #{reporttargetid,jdbcType=INTEGER},
+      reportType = #{reporttype,jdbcType=VARCHAR},
+      reportTime = #{reporttime,jdbcType=DATE},
+      isDeal = #{isdeal,jdbcType=INTEGER},
+      reportCauseId = #{reportcauseid,jdbcType=INTEGER},
+      reportCause = #{reportcause,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.ReportInfo" >
+    update tbl_reportInfo
+    set reportUserId = #{reportuserid,jdbcType=INTEGER},
+      reportTel = #{reporttel,jdbcType=CHAR},
+      reportByUserId = #{reportbyuserid,jdbcType=INTEGER},
+      reportTargetId = #{reporttargetid,jdbcType=INTEGER},
+      reportType = #{reporttype,jdbcType=VARCHAR},
+      reportTime = #{reporttime,jdbcType=DATE},
+      isDeal = #{isdeal,jdbcType=INTEGER},
+      reportCauseId = #{reportcauseid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="dealComplaints" parameterType="java.lang.Integer" >
+    update tbl_reportInfo
+    set isDeal = 1
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

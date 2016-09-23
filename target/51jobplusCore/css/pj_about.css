@@ -1,0 +1,97 @@
+.pj-container{
+	max-width: 1200px;
+    clear: both;
+    overflow: hidden;
+    margin:0 auto;
+    margin-top: 35px;
+    position: relative;
+    z-index: 2;
+    background: #fff;  
+}
+.pj-container .left{
+	position:relative;
+    float:left;
+    width:20.1%;
+    min-height: 800px;
+    border: 1px solid #d6d6d6;
+}
+.pj-container .right{
+	margin-left:12px;
+	border:1px solid #d6d6d6;
+	position:relative;
+    float:left;
+    width:78.5%;
+    min-height: 800px;
+}
+.menuhome{
+	height:38px;
+	line-height:38px;
+	font-size: 16px;
+	text-align: center;
+	color:#fff;
+	background:#1b85d5;
+	border-top-right-radius:16px;
+}
+.pj-container .leftnav li{
+	text-align: center;
+    height:34px;
+	line-height:34px;
+	cursor:pointer;
+}
+.pj-container .leftnav a{
+	font-size:14px;
+	color:#090909;
+}
+.pj-container .leftnav a.active{
+	color:#1b85d5;
+}
+.feedback{
+	margin:30px 0 0 38px
+}
+.feedback .slogan{
+	font-size:18px;
+	font-weight:bold;
+	color:#090909;
+	margin-bottom:6px;
+}
+.feedback span{
+	color:#666;
+}
+.feedback input{
+	height:30px;
+	line-height:30px;
+	border: 1px solid #d6d6d6;
+	padding-left:6px;
+	font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
+    outline:none;
+}
+.email,.mobile{
+	margin-top:16px;
+	color:#090909;
+	font-size:14px;
+}
+.email input{
+	width:400px;
+}
+.mobile input{
+	width:500px;
+}
+.btn-send{
+	font-family: "Microsoft YaHei";
+    _font-family: "Microsoft YaHei";
+	font-size:16px;
+	background: #1b85d5;
+	border-radius:2px;
+	float:right;
+	width:60px!important;
+    text-align: center;
+    border: 1px solid #e5e5e5!important;
+    color:#fff;
+    cursor:pointer;
+    margin-right:38px;
+}
+.btn-send:hover{
+	background:#0867c5;
+}
+

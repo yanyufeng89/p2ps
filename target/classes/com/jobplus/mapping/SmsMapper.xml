@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.SmsMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Sms" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="senderId" property="senderid" jdbcType="INTEGER" />
+    <result column="receivedId" property="receivedid" jdbcType="INTEGER" />
+    <result column="sendTime" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="isLook" property="islook" jdbcType="INTEGER" />
+    <result column="smsType" property="smstype" jdbcType="INTEGER" />
+    <result column="smsTitle" property="smstitle" jdbcType="VARCHAR" />
+    <result column="relationId" property="relationid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Sms" extends="BaseResultMap" >
+    <result column="smsContent" property="smscontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapForObj" type="com.jobplus.pojo.Sms" >
+  	<result column="receivedId" property="receivedid" jdbcType="INTEGER" />
+    <result column="objectName" property="objectName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, senderId, receivedId, sendTime, isLook, smsType, smsTitle, relationId
+  </sql>
+  <sql id="Blob_Column_List" >
+    smsContent
+  </sql>
+  
+  <!-- 未读消息总数(除私信) getNewSmsSum -->
+  <select id="getNewSmsSum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select 
+   	count(*)
+    from tbl_sms 
+    where receivedId = #{userid,jdbcType=INTEGER}
+    and isLook = 0  and smsType <![CDATA[ <>  ]]> 1
+    order by sendTime desc
+  </select>
+  <!-- 未读私信总数 getPrivateSmsSum -->
+  <select id="getPrivateSmsSum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select 
+   	count(*)
+    from tbl_sms 
+    where receivedId = #{userid,jdbcType=INTEGER}
+    and isLook = 0 and smsType = 1
+    order by sendTime desc
+  </select>
+  <!-- 未读消息总数 geSmsSum -->
+  <select id="geSmsSum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select 
+   	count(*)
+    from tbl_sms 
+    where receivedId = #{userid,jdbcType=INTEGER}
+  </select>
+  <!-- 弹窗显示未读消息列表   暂时定义6条 -->
+  <select id="getNewSms" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Sms" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,u.userName as sendUserName
+    from tbl_sms t left join tbl_user u on t.senderId = u.userId
+    where receivedid = #{receivedid,jdbcType=INTEGER}
+    and isLook = 0
+    <choose>
+		<when test="smstype !=null">
+			 AND
+       smsType =  #{smstype,jdbcType=INTEGER}
+		</when>
+		<otherwise>
+			 AND
+       smsType <![CDATA[ <>  ]]> 1
+		</otherwise>
+	</choose>
+	order by t.sendTime desc
+    limit 6
+  </select>
+  <!-- 批量标记为已读     传递ID即为单个,否则全部 -->
+  <update id="makeReadSms" parameterType="com.jobplus.pojo.Sms">
+	update tbl_sms
+	set
+	isLook = 1
+	where 1 = 1
+	and  receivedId = #{receivedid,jdbcType=INTEGER}
+	 <if test="id != null" >
+       and id = #{id,jdbcType=INTEGER}
+      </if>
+ </update>
+ <!-- 批量删除消息   只有单个和全部两种 传递ID即为单个,否则全部  -->
+ <delete id="delSms" parameterType="com.jobplus.pojo.Sms" >
+    delete from tbl_sms
+  	where 1 = 1
+	and  receivedId = #{receivedid,jdbcType=INTEGER}
+	 <if test="id != null" >
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+  </delete>
+  <!-- 获取所有消息     -->
+  <select id="getAllSms" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Sms" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,u.userName as sendUserName
+ <!--    ,(select count(*) from tbl_sms t left join tbl_user u on t.senderId = u.userId
+	    where receivedid = #{receivedid,jdbcType=INTEGER}
+	    <if test="smstype != null" >
+	    AND
+	       t.smsType =  #{smstype,jdbcType=INTEGER}
+	    </if>  
+	    <if test="islook != null" >
+	     and   t.islook = #{islook,jdbcType=INTEGER}
+	      </if> ) as pageCount  -->
+    
+    from tbl_sms t left join tbl_user u on t.senderId = u.userId
+    where receivedid = #{receivedid,jdbcType=INTEGER}
+    <if test="smstype != null" >
+    AND
+       t.smsType =  #{smstype,jdbcType=INTEGER}
+    </if>  
+    <if test="islook != null" >
+       and t.islook = #{islook,jdbcType=INTEGER}
+      </if>
+    order by t.sendTime desc
+    <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>  
+  </select> 
+  <!-- 统计总数      获取所有消息     -->
+  <select id="getAllSmsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Sms" >
+    select count(*) from tbl_sms t left join tbl_user u on t.senderId = u.userId
+	    where receivedid = #{receivedid,jdbcType=INTEGER}
+	    <if test="smstype != null" >
+	    AND
+	       t.smsType =  #{smstype,jdbcType=INTEGER}
+	    </if>  
+	    <if test="islook != null" >
+	     and   t.islook = #{islook,jdbcType=INTEGER}
+	      </if> 
+  </select> 
+  <select id="justForObjName"  resultMap="ResultMapForObj" parameterType="java.lang.String">
+    select DISTINCT ${colName}  ,
+    ( select u.userName as sendUserName from tbl_user where u.userid = )
+    from ${tableName}
+    where t.id = ${id}
+  </select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_sms
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_sms
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.Sms" >
+    insert into tbl_sms (id, senderId, receivedId, 
+      sendTime, isLook, smsType, 
+      smsTitle, relationId, smsContent
+      )
+    values (#{id,jdbcType=INTEGER}, #{senderid,jdbcType=INTEGER}, #{receivedid,jdbcType=INTEGER}, 
+      Now(), 0, #{smstype,jdbcType=INTEGER}, 
+      #{smstitle,jdbcType=VARCHAR}, #{relationid,jdbcType=INTEGER}, #{smscontent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Sms" >
+    insert into tbl_sms
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="senderid != null" >
+        senderId,
+      </if>
+      <if test="receivedid != null" >
+        receivedId,
+      </if>
+      <if test="sendtime != null" >
+        sendTime,
+      </if>
+      <if test="islook != null" >
+        isLook,
+      </if>
+      <if test="smstype != null" >
+        smsType,
+      </if>
+      <if test="smstitle != null" >
+        smsTitle,
+      </if>
+      <if test="relationid != null" >
+        relationId,
+      </if>
+      <if test="smscontent != null" >
+        smsContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="senderid != null" >
+        #{senderid,jdbcType=INTEGER},
+      </if>
+      <if test="receivedid != null" >
+        #{receivedid,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="islook != null" >
+        #{islook,jdbcType=INTEGER},
+      </if>
+      <if test="smstype != null" >
+        #{smstype,jdbcType=INTEGER},
+      </if>
+      <if test="smstitle != null" >
+        #{smstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="relationid != null" >
+        #{relationid,jdbcType=INTEGER},
+      </if>
+      <if test="smscontent != null" >
+        #{smscontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Sms" >
+    update tbl_sms
+    <set >
+      <if test="senderid != null" >
+        senderId = #{senderid,jdbcType=INTEGER},
+      </if>
+      <if test="receivedid != null" >
+        receivedId = #{receivedid,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="islook != null" >
+        isLook = #{islook,jdbcType=INTEGER},
+      </if>
+      <if test="smstype != null" >
+        smsType = #{smstype,jdbcType=INTEGER},
+      </if>
+      <if test="smstitle != null" >
+        smsTitle = #{smstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="relationid != null" >
+        relationId = #{relationid,jdbcType=INTEGER},
+      </if>
+      <if test="smscontent != null" >
+        smsContent = #{smscontent,jdbcType=LONGVARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.Sms" >
+    update tbl_sms
+    set senderId = #{senderid,jdbcType=INTEGER},
+      receivedId = #{receivedid,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      isLook = #{islook,jdbcType=INTEGER},
+      smsType = #{smstype,jdbcType=INTEGER},
+      smsTitle = #{smstitle,jdbcType=VARCHAR},
+      relationId = #{relationid,jdbcType=INTEGER},
+      smsContent = #{smscontent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Sms" >
+    update tbl_sms
+    set senderId = #{senderid,jdbcType=INTEGER},
+      receivedId = #{receivedid,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      isLook = #{islook,jdbcType=INTEGER},
+      smsType = #{smstype,jdbcType=INTEGER},
+      smsTitle = #{smstitle,jdbcType=VARCHAR},
+      relationId = #{relationid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

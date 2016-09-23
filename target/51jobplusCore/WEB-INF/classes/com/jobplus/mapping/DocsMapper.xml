@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.DocsMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Docs" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="filePath" property="filepath" jdbcType="VARCHAR" />
+    <result column="docPages" property="docpages" jdbcType="CHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="lastEditTime" property="lastedittime" jdbcType="TIMESTAMP" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="collectSum" property="collectsum" jdbcType="INTEGER" />
+    <result column="downSum" property="downsum" jdbcType="INTEGER" />
+    <result column="readSum" property="readsum" jdbcType="INTEGER" />
+    <result column="likeSum" property="likesum" jdbcType="INTEGER" />
+    <result column="recommendSum" property="recommendsum" jdbcType="INTEGER" />
+    <result column="downValue" property="downvalue" jdbcType="INTEGER" />
+    <result column="docSuffix" property="docsuffix" jdbcType="VARCHAR" />
+    <result column="docType" property="doctype" jdbcType="VARCHAR" />
+    <result column="docClass" property="docclass" jdbcType="VARCHAR" />
+    <result column="isPublic" property="ispublic" jdbcType="INTEGER" />
+    <result column="isValid" property="isvalid" jdbcType="INTEGER" />
+    <result column="isconverter" property="isconverter" jdbcType="INTEGER" />    
+    <result column="readUrl" property="readurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, title, description, filePath, docPages, createTime, lastEditTime, userId, collectSum, 
+    downSum, readSum, likeSum, recommendSum,downValue, docSuffix, docType, docClass, isPublic, isValid, isconverter, readUrl
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.ID, t.title, t.description, t.filePath, t.docPages, t.createTime, t.lastEditTime, t.userId, t.collectSum, t.downSum, 
+    t.readSum, t.likeSum, t.recommendSum,downValue, t.docSuffix, t.docType, t.docClass, t.isPublic, t.isValid, t.isconverter, t.readUrl
+  </sql>
+
+	<!-- 插入多条记录       由于是默认第一次插入 所以部分字段插入了默认值 --><!-- <include refid="menuColumns"/> -->
+	<insert id="insertDocs" parameterType="java.util.List">
+		insert into tbl_docs (ID, title, description,
+		filePath, docPages,
+		createTime,
+		lastEditTime, userId, collectSum,
+		downSum, readSum,
+		likeSum,recommendSum,downValue,
+		docSuffix,  docType, docClass,
+		isPublic, isValid,isconverter)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			<!-- (#{id}, #{titile}, #{description}, #{filepath}, #{docpages}, #{createtime}, 
+				#{lastedittime}, #{userid}, #{collectsum}, #{downsum}, #{readsum}, #{likesum}, 
+				#{downvalue}, #{doctype}, #{docclass}, #{ispublic}) -->
+			(#{item.id,jdbcType=INTEGER}, #{item.title,jdbcType=VARCHAR},
+			#{item.description,jdbcType=VARCHAR},
+			#{item.filepath,jdbcType=VARCHAR}, 0,
+			NOW(),
+			NOW(),
+			#{item.userid,jdbcType=INTEGER}, 0,
+			0, 0,
+			0,	0,		
+			#{item.downvalue,jdbcType=INTEGER},
+			#{item.docsuffix,jdbcType=VARCHAR}, #{item.doctype,jdbcType=VARCHAR},
+			#{item.docclass,jdbcType=VARCHAR},
+			#{item.ispublic,jdbcType=INTEGER},
+			1,0)
+		</foreach>
+	</insert>
+	<!-- 我上传的文档 -->
+	<select id="getMyDocsUploaded" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.Docs">
+		select
+		<include refid="Base_Column_List2" />
+		from tbl_docs t
+		where 1 =1
+		AND t.userId = #{userid}
+
+		AND t.isValid = 1
+		<choose>
+			<when test="ispublic !=null">
+				and isPublic = #{ispublic,jdbcType=INTEGER}
+			</when>
+			<otherwise>
+				and isPublic = 1
+			</otherwise>
+		</choose>		
+		 ORDER BY t.createTime DESC 
+		<choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+	<!-- 统计数     我上传的文档 -->
+	<select id="getMyDocsUploadedCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Docs">
+		select count(*) from tbl_docs t where 1 =1 AND t.userId = #{userid} AND t.isValid = 1
+			<choose>
+				<when test="ispublic !=null">
+					and isPublic = #{ispublic,jdbcType=INTEGER}
+				</when>
+				<otherwise>
+					and isPublic = 1
+				</otherwise>
+			</choose>
+	</select>
+<!-- 批量逻辑删除docs -->
+  <update id="deleteDocs" parameterType="java.lang.Integer" >
+    update tbl_docs 
+    set 
+      isValid = 0
+    where ID in 
+    	<foreach collection="condition" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+  </update>
+  <!-- 阅读次数++  updateReadSum  -->
+  <update id="updateReadSum" parameterType="java.lang.Integer" >
+    update tbl_docs 
+    set 
+      readSum = readSum + 1
+    where ID = #{id,jdbcType=INTEGER}
+  </update> 
+  
+  <!-- 查询文档主体 -->
+  <select id="selectRecord" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List2" />
+    ,u.userName as "objCreator.userName",u.headIcon as "objCreator.headIcon",u.userid as "objCreator.userid"
+     ,(SELECT group_concat(tlk.userid) FROM tbl_docs_isliked tlk WHERE tlk.docId = #{id,jdbcType=INTEGER})AS likedIds,
+    (SELECT group_concat(tcl.userid) FROM tbl_collect tcl WHERE tcl.collectType = "tbl_docs"  AND 
+    tcl.actionType = 1 AND tcl.objectId = #{id,jdbcType=INTEGER}) AS collectIds
+    
+    from tbl_docs t left join tbl_user u on t.userid = u.userid
+    where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
+  </select>
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_docs
+    where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
+  </select>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_docs
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_docs
+    where ID = #{id,jdbcType=INTEGER}
+  </delete> -->
+  <insert id="insert" parameterType="com.jobplus.pojo.Docs" >
+    insert into tbl_docs (ID, title, description, 
+      filePath, docPages, createTime, 
+      lastEditTime, userId, collectSum, 
+      downSum, readSum, likeSum, recommendSum,
+      downValue, docSuffix, docType, 
+      docClass, isPublic,isValid)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{filepath,jdbcType=VARCHAR}, #{docpages,jdbcType=CHAR}, Now(), 
+      Now(), #{userid,jdbcType=INTEGER}, #{collectsum,jdbcType=INTEGER}, 
+      #{downsum,jdbcType=INTEGER}, #{readsum,jdbcType=INTEGER}, #{likesum,jdbcType=INTEGER}, #{recommendsum,jdbcType=INTEGER},
+      #{downvalue,jdbcType=INTEGER}, #{docsuffix,jdbcType=VARCHAR}, #{doctype,jdbcType=VARCHAR}, 
+      #{docclass,jdbcType=VARCHAR}, #{ispublic,jdbcType=INTEGER},#{isvalid,jdbcType=INTEGER},#{isconverter,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Docs" >
+    insert into tbl_docs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="filepath != null" >
+        filePath,
+      </if>
+      <if test="docpages != null" >
+        docPages,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="lastedittime != null" >
+        lastEditTime,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="collectsum != null" >
+        collectSum,
+      </if>
+      <if test="downsum != null" >
+        downSum,
+      </if>
+      <if test="readsum != null" >
+        readSum,
+      </if>
+      <if test="likesum != null" >
+        likeSum,
+      </if>
+      <if test="recommendsum != null" >
+        recommendsum,
+      </if>
+      <if test="downvalue != null" >
+        downValue,
+      </if>
+      <if test="docsuffix != null" >
+        docSuffix,
+      </if>
+      <if test="doctype != null" >
+        docType,
+      </if>
+      <if test="docclass != null" >
+        docClass,
+      </if>
+      <if test="ispublic != null" >
+        isPublic,
+      </if>
+      <if test="isvalid != null" >
+        isValid,
+      </if>
+      <if test="isconverter != null" >
+        isconverter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="docpages != null" >
+        #{docpages,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastedittime != null" >
+        #{lastedittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="downsum != null" >
+        #{downsum,jdbcType=INTEGER},
+      </if>
+      <if test="readsum != null" >
+        #{readsum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="recommendsum != null" >
+        #{recommendsum,jdbcType=INTEGER},
+      </if>
+      <if test="downvalue != null" >
+        #{downvalue,jdbcType=INTEGER},
+      </if>
+      <if test="docsuffix != null" >
+        #{docsuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="doctype != null" >
+        #{doctype,jdbcType=VARCHAR},
+      </if>
+      <if test="docclass != null" >
+        #{docclass,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null" >
+        #{ispublic,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="isconverter != null" >
+        #{isconverter,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Docs" >
+    update tbl_docs
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filePath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="docpages != null" >
+        docPages = #{docpages,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastedittime != null" >
+        lastEditTime = now(),
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        collectSum = #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="downsum != null" >
+        downSum = #{downsum,jdbcType=INTEGER},
+      </if>
+      <if test="readsum != null" >
+        readSum = #{readsum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        likeSum = #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="recommendsum != null" >
+        recommendSum = #{recommendsum,jdbcType=INTEGER},
+      </if>
+      <if test="downvalue != null" >
+        downValue = #{downvalue,jdbcType=INTEGER},
+      </if>
+      <if test="docsuffix != null" >
+        docSuffix = #{docsuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="doctype != null" >
+        docType = #{doctype,jdbcType=VARCHAR},
+      </if>
+      <if test="docclass != null" >
+        docClass = #{docclass,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null" >
+        isPublic = #{ispublic,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isValid = #{isvalid,jdbcType=INTEGER}
+      </if>
+      <if test="isconverter != null" >
+        isconverter = #{isconverter,jdbcType=INTEGER}
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Docs" >
+    update tbl_docs
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      filePath = #{filepath,jdbcType=VARCHAR},
+      docPages = #{docpages,jdbcType=CHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      lastEditTime = now(),
+      userId = #{userid,jdbcType=INTEGER},
+      collectSum = #{collectsum,jdbcType=INTEGER},
+      downSum = #{downsum,jdbcType=INTEGER},
+      readSum = #{readsum,jdbcType=INTEGER},
+      likeSum = #{likesum,jdbcType=INTEGER},
+      recommendSum = #{recommendsum,jdbcType=INTEGER},
+      downValue = #{downvalue,jdbcType=INTEGER},
+      docSuffix = #{docsuffix,jdbcType=VARCHAR},
+      docType = #{doctype,jdbcType=VARCHAR},
+      docClass = #{docclass,jdbcType=VARCHAR},
+      isPublic = #{ispublic,jdbcType=INTEGER},
+      isconverter = #{isconverter,jdbcType=INTEGER}
+       <if test="isvalid != null" >
+        ,isValid = #{isvalid,jdbcType=INTEGER},
+      </if>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

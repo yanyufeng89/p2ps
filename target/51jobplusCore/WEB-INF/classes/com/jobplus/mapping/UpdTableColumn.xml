@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.UpdTableColumnMapper" >
+  <!-- <resultMap id="BaseResultMap" type="com.jobplus.pojo.UpdTableColum" >
+    <id column="ID" property="id" jdbcType="INTEGER" /> 
+    <result column="bookID" property="bookid" jdbcType="INTEGER" />
+    <result column="userID" property="userid" jdbcType="INTEGER" />
+    <result column="recommend" property="recommend" jdbcType="VARCHAR" />
+    <result column="knsite" property="knsite" jdbcType="VARCHAR" />
+    <result column="extendeds" property="extendeds" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="commentby" property="commentby" jdbcType="INTEGER" />
+    <result column="shareType" property="sharetype" jdbcType="VARCHAR" />
+    <result column="shareClass" property="shareclass" jdbcType="VARCHAR" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="likeSum" property="likesum" jdbcType="INTEGER" />
+  </resultMap> -->
+ 
+  <!-- Integer objectId; String tableName; String tableColumn; String addOrDecrease; Integer AdOrDeNum; -->
+ <update id="updTableColumn" parameterType="com.jobplus.pojo.UpdTableColumn" >
+  	update ${tableName}
+  	set ${tableColumn} = CASE 
+  	WHEN ( ${tableColumn} ${addOrDecrease} ${AdOrDeNum} )  <![CDATA[ <= ]]>   0 THEN 0
+    ELSE ( ${tableColumn} ${addOrDecrease} ${AdOrDeNum} )
+    END  	
+  	where id = #{objectId}
+  </update>
+  
+   <!-- <delete id="delOneById" parameterType="java.lang.String" >
+    delete from ${tableName}
+    where id = ${id}
+  </delete> -->
+   <update id="delOneById" parameterType="java.lang.String" >
+    update ${tableName} t
+    set 
+    <choose>
+		<when test="tableName == 'tbl_article' or tableName == 'tbl_courses' or tableName == 'tbl_docs' or tableName == 'tbl_sites' or 
+		 	tableName == 'tbl_topics' or tableName == 'tbl_books' ">
+			t.isValid = 0
+		</when>
+		<when test="tableName == 'tbl_article_share' or tableName == 'tbl_courses_share' or tableName == 'tbl_docs_comment' or tableName == 'tbl_sites_share' or 
+		 	tableName == 'tbl_topics_comment' or tableName == 'tbl_books_share' ">
+			t.isDelete = 1
+		</when>
+	</choose>
+    where t.id = ${id}
+  </update>
+  <!-- 是否已经分享过链接 -->
+  <select id="hasSharedUrl" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    SELECT count(*)
+	  FROM ${tableName} t WHERE 1 = 1 
+	  and t.userId = ${userid}
+	  and t.isValid = 1
+	  <choose>
+		<when test="tableName == 'tbl_article'">
+			and t.articleurl = '${url}'
+		</when>
+		<when test="tableName == 'tbl_courses'" >
+        and t.coursesurl = '${url}'
+		</when>
+		<when test="tableName == 'tbl_sites'" >
+        and t.siteUrl = '${url}'
+		</when>
+		<otherwise>
+			and t.articleurl = '${url}'
+		</otherwise>
+	</choose>
+	<!--  <if test="tableName == 'tbl_article'" >
+        and t.articleurl = ${url}
+     </if>
+     <if test="tableName == 'tbl_courses'" >
+        and t.coursesurl = ${url}
+      </if>
+      <if test="tableName == 'tbl_sites'" >
+        and t.siteUrl = ${url}
+      </if> -->
+  </select>
+  
+  
+  <!-- <update id="updTableColumn" parameterType="com.jobplus.pojo.UpdTableColumn" >
+  	update tbl_books
+  	set collectsum = collectsum + 999
+  	where id = 1
+  </update> -->
+</mapper>

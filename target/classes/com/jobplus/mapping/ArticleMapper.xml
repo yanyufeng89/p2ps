@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Article" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="articleurl" property="articleurl" jdbcType="VARCHAR" />
+    <result column="articleImg" property="articleimg" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="articleClass" property="articleclass" jdbcType="VARCHAR" />
+    <result column="articleType" property="articletype" jdbcType="VARCHAR" />
+    <result column="isValid" property="isvalid" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="collectSum" property="collectsum" jdbcType="INTEGER" />
+    <result column="recommendSum" property="recommendsum" jdbcType="INTEGER" />
+    <result column="likeSum" property="likesum" jdbcType="INTEGER" />
+    <result column="readSum" property="readsum" jdbcType="INTEGER" />
+    <result column="recommend" property="recommend" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Article" extends="BaseResultMap" >
+    <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, title, articleurl, articleImg, userId, articleClass, articleType, isValid, updateTime, 
+    createTime, collectSum, recommendSum, likeSum, readSum, recommend
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.ID, t.title, t.articleurl, t.articleImg, t.userId, t.articleClass, t.articleType, t.isValid, t.updateTime, 
+    t.createTime, t.collectSum, t.recommendSum, t.likeSum, t.readSum, t.recommend
+  </sql>
+  <!-- collect表字段 -->
+  <sql id="collect_List" >
+    myc.ID AS "myCollect.id", myc.userId AS "myCollect.userid", myc.collectType AS "myCollect.collecttype", myc.objectId AS "myCollect.objectid", 
+    myc.folderId AS "myCollect.folderid", myc.collTime AS "myCollect.colltime",myc.actionType AS "myCollect.actiontype"
+  </sql>
+  <sql id="Blob_Column_List" >
+    intro
+  </sql>
+   <!-- 我分享的文章列表   --> 
+  <select id="getSharedArticleList" parameterType="com.jobplus.pojo.Article" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />    
+    <!-- ,(select count(*) from tbl_article where userId = #{userid,jdbcType=INTEGER} and isValid = 1) as pageCount  -->
+    from tbl_article t
+    where userId = #{userid,jdbcType=INTEGER}
+    and isValid = 1
+    order by t.createTime DESC
+     <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+  </select>
+  <select id="getSharedArticleListCount" parameterType="com.jobplus.pojo.Article" resultType="java.lang.Integer">
+   select count(*) from tbl_article where userId = #{userid,jdbcType=INTEGER} and isValid = 1
+  </select>
+  
+    <!-- 我收藏的文章列表  getCollectedArticleList -->
+  <select id="getCollectedArticleList" parameterType="com.jobplus.pojo.Article" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+     ,
+    <include refid="collect_List" />   
+   <!--  ,(select count(*)   from tbl_article t  JOIN tbl_collect myc ON t.id = myc.objectId   
+	    where   t.isValid = 1 
+	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
+	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
+	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}) as pageCount -->
+    from tbl_article t  JOIN tbl_collect myc ON t.id = myc.objectId   
+    where   t.isValid = 1 
+    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
+    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
+    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}
+    order by myc.collTime DESC
+    <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+  </select>
+  <select id="getCollectedArticleListCount" parameterType="com.jobplus.pojo.Article" resultType="java.lang.Integer">
+   select count(*)   from tbl_article t  JOIN tbl_collect myc ON t.id = myc.objectId   
+	    where   t.isValid = 1 
+	    AND myc.userId = #{myCollect.userid,jdbcType=INTEGER}
+	    AND myc.collectType = #{myCollect.collecttype,jdbcType=VARCHAR}
+	    AND myc.actionType = #{myCollect.actionType,jdbcType=INTEGER}
+  </select>
+    <!-- 批量删除我分享的文章列表 -->
+  <update id="delSharedArticle" parameterType="com.jobplus.pojo.Article">
+    update tbl_article
+    set 
+      isValid = 0      
+    where ID in 
+    	<foreach collection="condition" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+  </update>
+  <!-- 浏览一次+1 -->
+  <update id="updateReadSum" parameterType="java.lang.Integer">
+    update tbl_article
+    set 
+      readSum = readSum + 1      
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+<select id="selectByRecord" parameterType="com.jobplus.pojo.Article" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,u.userName as "objCreator.userName",u.headIcon as "objCreator.headIcon",u.userid as "objCreator.userid"
+    ,(SELECT group_concat(tlk.userid) FROM tbl_article_isliked tlk WHERE tlk.articleId = #{id,jdbcType=INTEGER})AS likedIds,
+    (SELECT group_concat(tcl.userid) FROM tbl_collect tcl WHERE tcl.collectType = "tbl_article"  AND 
+    tcl.actionType = 1 AND tcl.objectId = #{id,jdbcType=INTEGER}) AS collectIds
+    from tbl_article t left join tbl_user u on t.userid = u.userid
+    where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_article
+    where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
+  </select>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_article
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+ <!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_article
+    where ID = #{id,jdbcType=INTEGER}
+  </delete> -->
+  <insert id="insert" parameterType="com.jobplus.pojo.Article" >
+    insert into tbl_article (ID, title, articleurl, 
+      articleImg, userId, articleClass, 
+      articleType, isValid, updateTime, 
+      createTime, collectSum, recommendSum, 
+      likeSum, readSum, recommend, 
+      intro)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{articleurl,jdbcType=VARCHAR}, 
+      #{articleimg,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{articleclass,jdbcType=VARCHAR}, 
+      #{articletype,jdbcType=VARCHAR}, 1, Now(), 
+      Now(), 0, 0, 
+      0, 0, #{recommend,jdbcType=VARCHAR}, 
+      #{intro,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Article" >
+    insert into tbl_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="articleurl != null" >
+        articleurl,
+      </if>
+      <if test="articleimg != null" >
+        articleImg,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="articleclass != null" >
+        articleClass,
+      </if>
+      <if test="articletype != null" >
+        articleType,
+      </if>
+      <if test="isvalid != null" >
+        isValid,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="collectsum != null" >
+        collectSum,
+      </if>
+      <if test="recommendsum != null" >
+        recommendSum,
+      </if>
+      <if test="likesum != null" >
+        likeSum,
+      </if>
+      <if test="readsum != null" >
+        readSum,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="articleurl != null" >
+        #{articleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="articleimg != null" >
+        #{articleimg,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="articleclass != null" >
+        #{articleclass,jdbcType=VARCHAR},
+      </if>
+      <if test="articletype != null" >
+        #{articletype,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectsum != null" >
+        #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="recommendsum != null" >
+        #{recommendsum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="readsum != null" >
+        #{readsum,jdbcType=INTEGER},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Article" >
+    update tbl_article
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="articleurl != null" >
+        articleurl = #{articleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="articleimg != null" >
+        articleImg = #{articleimg,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="articleclass != null" >
+        articleClass = #{articleclass,jdbcType=VARCHAR},
+      </if>
+      <if test="articletype != null" >
+        articleType = #{articletype,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isValid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = now(),
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectsum != null" >
+        collectSum = #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="recommendsum != null" >
+        recommendSum = #{recommendsum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        likeSum = #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="readsum != null" >
+        readSum = #{readsum,jdbcType=INTEGER},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.Article" >
+    update tbl_article
+    set title = #{title,jdbcType=VARCHAR},
+      articleurl = #{articleurl,jdbcType=VARCHAR},
+      articleImg = #{articleimg,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=INTEGER},
+      articleClass = #{articleclass,jdbcType=VARCHAR},
+      articleType = #{articletype,jdbcType=VARCHAR},
+      isValid = #{isvalid,jdbcType=INTEGER},
+      updateTime = now(),
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      collectSum = #{collectsum,jdbcType=INTEGER},
+      recommendSum = #{recommendsum,jdbcType=INTEGER},
+      likeSum = #{likesum,jdbcType=INTEGER},
+      readSum = #{readsum,jdbcType=INTEGER},
+      recommend = #{recommend,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Article" >
+    update tbl_article
+    set title = #{title,jdbcType=VARCHAR},
+      articleurl = #{articleurl,jdbcType=VARCHAR},
+      articleImg = #{articleimg,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=INTEGER},
+      articleClass = #{articleclass,jdbcType=VARCHAR},
+      articleType = #{articletype,jdbcType=VARCHAR},
+      isValid = #{isvalid,jdbcType=INTEGER},
+      updateTime = now(),
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      collectSum = #{collectsum,jdbcType=INTEGER},
+      recommendSum = #{recommendsum,jdbcType=INTEGER},
+      likeSum = #{likesum,jdbcType=INTEGER},
+      readSum = #{readsum,jdbcType=INTEGER},
+      recommend = #{recommend,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

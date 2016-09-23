@@ -1,0 +1,77 @@
+#upload-initcourse-container .bdcourse {
+    border: 1px dashed #a1a1a1;
+    background: #fff;
+    display: inline-block;
+    outline: 0;
+    padding: 60px 75px 70px 55px;
+}
+#upload-initcourse-container, #upload-course-container {
+    border: 1px solid #cdcdcd;
+}
+.edit-table .edit-class-sub {
+    height: 223px!important;
+}
+.add-question-title-form .booksimg, .add-question-title-form .booksinfo {
+    float: left;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+.add-question-title-form .booksinfo {
+    margin-left: 16px;
+}
+
+.courseedit .content {
+    height: 168px;
+    padding: 5px;
+    line-height: 20px;
+    width: 93.8%;
+    border: solid 1px #ccc;
+    background: white;
+    color: #999;
+    font-size: 12px;
+    height: 94px;
+    display: block;
+}
+
+.sharedetail {
+    display: none;
+    width: 852px;
+    background: #FFF;
+    margin: 0 30px 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    position: relative;
+    z-index: 26;
+}
+
+
+.sharedetail .bdcourse {
+    border: 1px dashed #a1a1a1;
+    background: #fff;
+    display: inline-block;
+    outline: 0;
+    padding: 60px 75px 70px 55px;
+}
+.showoverlay {
+    opacity: 1;
+    visibility: visible;
+}
+.header-overlay, .share-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    z-index: 16;
+    opacity: 0;
+    background: rgba(0,0,0,.4);
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+.header-overlay {
+    height: 40px;
+    z-index: 10000;
+}

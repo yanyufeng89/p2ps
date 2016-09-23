@@ -1,0 +1,74 @@
+ <!-- 话题详情加载更多 -->
+ {#foreach $T.topiclist as list}
+ <div tabindex="-1" class="zm-item-answer  zm-item-expanded">
+	<div class="answer-head">
+	<div class="zm-item-answer-author-info">
+
+	   <a class="zm-item-link-avatar avatar-link" href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target="_blank">
+
+	   {#if $T.list.tmpHeadIcon}
+	     {#if $T.list.isPublic==1}
+	        <img src="{$T.list.tmpHeadIcon}" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype="0">
+	     {#else}
+	        <img src="{$T.list.tmpHeadIcon}" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype="0">
+	     {#/if}
+	   {#else}
+	      {#if $T.list.isPublic==1}
+	         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	      {#else}
+	         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	      {#/if}
+	   {#/if}
+	   </a>
+	   {#if $T.list.isPublic==1}
+	    <span class="author-link" data-tip="" target="_blank"  data-userid='{$T.list.userid}' data-moduletype='0'>
+	     <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target="_blank">{$T.list.tmpUserName}</a>
+	    </span>
+	   {#else}
+	     <span class="anonymous-user" data-tip="" target="_blank"  data-userid='{$T.list.userid}' data-moduletype='0'>匿名用户</span>
+	   {#/if}
+    
+	
+	
+	</div>
+
+	</div>
+	<div class="zm-item-rich-text expandable js-collapse-body">
+
+	<div class="zm-editable-content clearfix">
+	 {#if $T.list.commcontent}
+	   {$T.list.commcontent}
+	 {#/if}
+	</div>
+	
+	
+	</div>
+	
+	<div class="zm-item-meta answer-actions clearfix js-contentActions">
+		<div class="zm-meta-panel">
+		
+		<a itemprop="url" class="answer-date-link meta-item"  target="_blank" href="javascript:;">编辑&nbsp;{$T.list.showcreatetime}</a>
+		
+		<a href="javascript:;" name="addcomment" class="meta-item toggle-comment js-comment" data-answer='{$T.list.id}'  data-commentcount='{$T.list.replysum}' data-createperson='{$T.list.userid}'> 
+		  <i class="z-icon-comment"></i>{$T.list.replysum}条评论
+		</a>
+		 {#if ($T.list.likedIds=='0')}
+			   <a href="javascript:;" class="meta-item zu-autohide js-thank" data-topiccommentid='{$T.list.id}' data-like='1' data-likecount='{$T.list.likesum}' data-createperson='{$T.list.userid}'>
+					<i class="z-icon-thank"></i>
+					{$T.list.likesum}赞
+			    </a>
+		   {#else}
+				<a href="javascript:;" class="meta-item zu-autohide js-thank" data-topiccommentid='{$T.list.id}' data-like='0' data-likecount='{$T.list.likesum}' data-createperson='{$T.list.userid}'>
+					<i class="z-icon-thank"></i>
+					取消赞({$T.list.likesum})
+				</a>
+		   {#/if}
+		<a href="javascript:;" class="meta-item zu-autohide js-share goog-inline-block goog-menu-button"><i class="z-icon-share"></i>分享</a>
+		
+		<a href="javascript:;" class="meta-item zu-autohide js-report" data-commentbyid='{$T.list.userid}' data-topiccommentid='{$T.list.id}' data-reporttype='5'><i class="z-icon-report-o"></i>举报</a>
+
+		</div>
+	    
+	</div>
+</div>
+{#/for}

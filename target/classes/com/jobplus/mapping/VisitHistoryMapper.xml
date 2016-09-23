@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.VisitHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.VisitHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="visitorId" property="visitorid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="visitTime" property="visittime" jdbcType="TIMESTAMP" />
+    <result column="visitUrl" property="visiturl" jdbcType="VARCHAR" />
+    <result column="visitType" property="visittype" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, visitorId, userId, visitTime, visitUrl, visitType
+  </sql>
+  <sql id="Base_Column_List2" >
+    t.id, t.visitorId, t.userId, t.visitTime, t.visitUrl, t.visitType
+  </sql>
+  <!-- 最近访问的人    -->
+  <select id="getRecentVistors" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.VisitHistory"  >
+    select 
+    <include refid="Base_Column_List2" />
+    ,u.userName as userName,u.headIcon as headIcon,u.description as description,p.attentionsum as attentionsum,p.fanssum as fanssum
+    ,(select group_concat(userid)  from tbl_attention where objectId = t.visitorId and colltype='tbl_user') as fansIds
+    ,(select count(*) from tbl_visitHistory t left join tbl_user u
+	    on t.visitorId = u.userId join tbl_operationSum p on t.visitorId = p.userid
+	    where t.userId = #{userid,jdbcType=INTEGER}
+	    <if test="visittype != null" >
+	     and  visitType =  #{visittype,jdbcType=INTEGER}
+	    </if> ) as pageCount 
+    
+    from tbl_visitHistory t left join tbl_user u
+    on t.visitorId = u.userId join tbl_operationSum p on t.visitorId = p.userid
+    where t.userId = #{userid,jdbcType=INTEGER}
+    <if test="visittype != null" >
+     and  visitType =  #{visittype,jdbcType=INTEGER}
+    </if>
+    
+    ORDER BY t.visitTime DESC
+    <choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			 limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>  
+  </select>
+  <!-- 统计总数			最近访问的人    -->
+  <select id="getRecentVistorsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.VisitHistory"  >
+   select count(*) from tbl_visitHistory t left join tbl_user u
+	    on t.visitorId = u.userId join tbl_operationSum p on t.visitorId = p.userid
+	    where t.userId = #{userid,jdbcType=INTEGER}
+	    <if test="visittype != null" >
+	     and  visitType =  #{visittype,jdbcType=INTEGER}
+	    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_visitHistory
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_visitHistory
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  
+  
+  <insert id="insertOrUpdate" parameterType="com.jobplus.pojo.VisitHistory">
+
+	<selectKey keyProperty="count" resultType="int" order="BEFORE">
+		SELECT COUNT(*) FROM tbl_visitHistory 
+		WHERE TO_DAYS(visitTime) = TO_DAYS(NOW()) 
+		AND visitorId =  #{visitorid,jdbcType=INTEGER} AND userId = #{userid,jdbcType=INTEGER} 
+		and visitUrl = #{visiturl,jdbcType=VARCHAR} and visitType = #{visittype,jdbcType=INTEGER}
+	</selectKey>
+	<if test="count > 0">
+		update tbl_visitHistory
+    	set 
+	      visitTime = now()
+	    where TO_DAYS(visitTime) = TO_DAYS(NOW()) 
+		AND visitorId =  #{visitorid,jdbcType=INTEGER} AND userId = #{userid,jdbcType=INTEGER} 
+		and visitUrl = #{visiturl,jdbcType=VARCHAR} and visitType = #{visittype,jdbcType=INTEGER}
+	</if>
+	<if test="count==0">
+	insert into tbl_visitHistory (id, visitorId, userId, visitTime, visitUrl, visitType)
+	values (#{id,jdbcType=INTEGER},
+	#{visitorid,jdbcType=INTEGER},
+	#{userid,jdbcType=INTEGER},
+	Now(),
+	#{visiturl,jdbcType=VARCHAR}, #{visittype,jdbcType=INTEGER}
+	)
+	</if>
+</insert>
+  
+  
+  
+  
+  
+  <insert id="insert" parameterType="com.jobplus.pojo.VisitHistory" >
+    insert into tbl_visitHistory (id, visitorId, userId, 
+      visitTime, visitUrl, visitType
+      )
+    values (#{id,jdbcType=INTEGER}, #{visitorid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      Now(), #{visiturl,jdbcType=VARCHAR}, #{visittype,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.VisitHistory" >
+    insert into tbl_visitHistory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="visitorid != null" >
+        visitorId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="visittime != null" >
+        visitTime,
+      </if>
+      <if test="visiturl != null" >
+        visitUrl,
+      </if>
+      <if test="visittype != null" >
+        visitType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="visitorid != null" >
+        #{visitorid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="visittime != null" >
+        #{visittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visiturl != null" >
+        #{visiturl,jdbcType=VARCHAR},
+      </if>
+      <if test="visittype != null" >
+        #{visittype,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.VisitHistory" >
+    update tbl_visitHistory
+    <set >
+      <if test="visitorid != null" >
+        visitorId = #{visitorid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="visittime != null" >
+        visitTime = #{visittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visiturl != null" >
+        visitUrl = #{visiturl,jdbcType=VARCHAR},
+      </if>
+      <if test="visittype != null" >
+        visitType = #{visittype,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.VisitHistory" >
+    update tbl_visitHistory
+    set visitorId = #{visitorid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      visitTime = #{visittime,jdbcType=TIMESTAMP},
+      visitUrl = #{visiturl,jdbcType=VARCHAR},
+      visitType = #{visittype,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

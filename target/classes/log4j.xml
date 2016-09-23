@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>     
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+
+	<!-- [BUSINESS] 记录和跟踪业务逻辑执行过程 [PERFORMANCE] 记录和跟踪代码执行情况 [SECURITY] 记录外部对系统进行的各项操作 -->
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%d{yyyy-MM-dd HH:mm:ss\} %-5p] [%t] %c{2\} - %m%n" />
+		</layout>
+		<!--过滤器设置输出的级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="DEBUG" />
+			<param name="levelMax" value="FATAL" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+		<!-- 过滤器，当AcceptOnMatch设置为“false”时，可以把日志包含有“[SECURITY]”的信息过滤掉 -->
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="[SECURITY]" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+		<!-- 过滤器，当AcceptOnMatch设置为“false”时，可以把日志包含有“[BUSINESS]”的信息过滤掉 -->
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="[BUSINESS]" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+		<!-- 过滤器，当AcceptOnMatch设置为“false”时，可以把日志包含有“[PERFORMANCE]”的信息过滤掉 -->
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="[PERFORMANCE]" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="[SYSTEM]" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+
+	</appender>
+	<appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/jobplus.log" /><!-- 设置日志输出文件名 -->
+		<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="Append" value="true" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%d{yyyy-MM-dd HH:mm:ss\} %-5p] [%t] %c{2\} - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Mybatis and SQL -->
+	<logger name="org.apache.ibatis" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="org.mybatis.spring" additivity="true">
+		<level value="ERROR" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+	<logger name="java.sql" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="java.sql.Connection" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="java.sql.Statement" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="java.sql.PreparedStatement" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<!-- Spring        -->
+	<logger name="org.springframework" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+
+
+	<!-- 根logger的设置 -->
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="fileAppender" />
+	</root>
+</log4j:configuration>

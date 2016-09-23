@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.OauthLoginInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.OauthLoginInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="oauthName" property="oauthname" jdbcType="CHAR" />
+    <result column="oauthOpenId" property="oauthopenid" jdbcType="VARCHAR" />
+    <result column="oauthAccessToken" property="oauthaccesstoken" jdbcType="VARCHAR" />
+    <result column="oauthExpires" property="oauthexpires" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, oauthName, oauthOpenId, oauthAccessToken, oauthExpires
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_oauth_login
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_oauth_login
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.OauthLoginInfo" >
+    insert into tbl_oauth_login (id, userId, oauthName, 
+      oauthOpenId, oauthAccessToken, oauthExpires
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{oauthname,jdbcType=CHAR}, 
+      #{oauthopenid,jdbcType=VARCHAR}, #{oauthaccesstoken,jdbcType=VARCHAR}, #{oauthexpires,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.OauthLoginInfo" >
+    insert into tbl_oauth_login
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="oauthname != null" >
+        oauthName,
+      </if>
+      <if test="oauthopenid != null" >
+        oauthOpenId,
+      </if>
+      <if test="oauthaccesstoken != null" >
+        oauthAccessToken,
+      </if>
+      <if test="oauthexpires != null" >
+        oauthExpires,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="oauthname != null" >
+        #{oauthname,jdbcType=CHAR},
+      </if>
+      <if test="oauthopenid != null" >
+        #{oauthopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthaccesstoken != null" >
+        #{oauthaccesstoken,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthexpires != null" >
+        #{oauthexpires,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.OauthLoginInfo" >
+    update tbl_oauth_login
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="oauthname != null" >
+        oauthName = #{oauthname,jdbcType=CHAR},
+      </if>
+      <if test="oauthopenid != null" >
+        oauthOpenId = #{oauthopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthaccesstoken != null" >
+        oauthAccessToken = #{oauthaccesstoken,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthexpires != null" >
+        oauthExpires = #{oauthexpires,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.OauthLoginInfo" >
+    update tbl_oauth_login
+    set userId = #{userid,jdbcType=INTEGER},
+      oauthName = #{oauthname,jdbcType=CHAR},
+      oauthOpenId = #{oauthopenid,jdbcType=VARCHAR},
+      oauthAccessToken = #{oauthaccesstoken,jdbcType=VARCHAR},
+      oauthExpires = #{oauthexpires,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByNameAndOpenId" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.OauthLoginInfo" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_oauth_login
+    where oauthname = #{oauthname,jdbcType=CHAR} and oauthopenid = #{oauthopenid,jdbcType=VARCHAR}
+  </select>
+</mapper>

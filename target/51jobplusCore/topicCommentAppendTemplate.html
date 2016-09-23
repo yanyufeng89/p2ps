@@ -1,0 +1,70 @@
+
+{#foreach $T.topicscommentList as commlist}
+<div class="zm-item-comment" data-id="" tabindex="-1" aria-label="评论">
+  <a class="zg-anchor-hidden" name="comment-{$T.commlist.typeid}"></a>
+  <a class="zm-item-link-avatar" target='_blank'  href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.userid}'  data-moduletype="0">
+    {#if $T.commlist.tmpHeadIcon}
+             <img src="{$T.commlist.tmpHeadIcon}" class="zm-item-img-avatar" data-userid="{$T.commlist.userid}">
+    {#else}
+             <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-userid="{$T.commlist.userid}">
+    {#/if}
+  </a>
+  <div class="zm-comment-content-wrap">
+    <div class="zm-comment-hd">
+      {#if $T.commlist.commentby}
+                {#if $T.commlist.tmpUserName}
+	            <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.userid}' target='_blank' class="zg-link" data-userid='{$T.commlist.userid}' data-moduletype="0" data-original_title="{#if $T.commlist.tmpUserName}{$T.commlist.tmpUserName}{#else} 匿名用户{#/if}">
+	                   {$T.commlist.tmpUserName}
+			    </a>
+			      {#else}
+	                                                  匿名用户
+	              {#/if}
+				<span class="desc">回复</span>
+				<a  href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.commentby}' target='_blank' class="zg-link" data-userid='{$T.commlist.commentby}' data-moduletype="0"  data-original_title="{$T.commlist.commentbyUserName}">{$T.commlist.commentbyUserName}</a>
+            {#else} 
+              {#if $T.commlist.tmpUserName}
+				<a  href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.userid}' target='_blank' class="zg-link" data-userid='{$T.commlist.userid}' data-userid='{$T.commlist.userid}' data-moduletype="0"  data-original_title="{#if $T.commlist.tmpUserName}{$T.commlist.tmpUserName}{#else} 匿名用户{#/if}">
+	                   {$T.commlist.tmpUserName}
+	            </a>
+	            {#else}
+	                                                  匿名用户
+	            {#/if}
+       {#/if}
+    </div>
+    <div class="zm-comment-content"> {$T.commlist.commcontent}</div>
+    <!-- 判断当前用户是否为自己 -->
+       {#if $T.commlist.userid != $T.userid}
+          <div class="zm-comment-ft">
+            <span class="_CommentItem_likes_2hey"  data-reactid="{$T.commlist.likedIds}">
+               <span data-reactid="{$T.commlist.likedIds}">{$T.commlist.likesum}</span>
+               <span data-reactid="{$T.commlist.likedIds}"> 赞</span>
+            </span>
+            <span class="date">{$T.commlist.showcreatetime}</span>
+            <a href="javascript:void(0)" class="reply zm-comment-op-link" name="reply_comment"  data-commentid='{$T.commlist.userid}' data-name='{$T.commlist.tmpUserName}' data-relationid='{$T.commlist.id}'>
+              <i class="zg-icon zg-icon-comment-reply"></i>回复
+            </a>
+            {#if $T.commlist.likedIds==1}
+            <a href="javascript:void(0)" class="like zm-comment-op-link " name="like_comment" data-topiccommentid='{$T.commlist.id}' data-like='0' data-relationid='{$T.commlist.id}' data-createperson='{$T.commlist.userid}'>
+              <i class="zg-icon zg-icon-comment-like"></i>取消赞
+            </a>
+           {#else}
+             <a href="javascript:void(0)" class="like zm-comment-op-link " name="like_comment" data-topiccommentid='{$T.commlist.id}' data-like='1' data-relationid='{$T.commlist.id}' data-createperson='{$T.commlist.userid}'>
+              <i class="zg-icon zg-icon-comment-like"></i>赞
+            </a>
+           {#/if}
+           
+            <a href="javascript:void(0)" name="report" class="report zm-comment-op-link needsfocus"  data-commentbyid='{$T.commlist.userid}' data-topiccommentid='{$T.commlist.id}'  data-reporttype='6'>
+              <i class="zg-icon zg-icon-comment-report"></i>举报</a>
+          </div>
+          {#else}
+          <div class="zm-comment-ft">
+		      <span class="date">{$T.commlist.showcreatetime}</span>
+		      <a href="javascript:void(0)" class="del zm-comment-op-link needsfocus" name="delcomment" data-reply='{$T.commlist.id}'>
+		          <i class="zg-icon zg-icon-comment-del"></i>删除
+		      </a>
+          </div>
+       {#/if}
+    <div class="zm-comment-form" style="display:none"></div>
+  </div>
+</div>
+{#/for}

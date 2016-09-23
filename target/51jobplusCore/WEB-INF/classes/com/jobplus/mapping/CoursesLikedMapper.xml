@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.CoursesLikedMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.CoursesLiked" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <id column="coursesId" property="coursesid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.jobplus.pojo.CoursesLiked" >
+    delete from tbl_courses_isliked
+    where userid = #{userid,jdbcType=INTEGER}
+      and coursesId = #{coursesid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.CoursesLiked" >
+    insert into tbl_courses_isliked (userid, coursesId)
+    values (#{userid,jdbcType=INTEGER}, #{coursesid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.CoursesLiked" >
+    insert into tbl_courses_isliked
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="coursesid != null" >
+        coursesId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="coursesid != null" >
+        #{coursesid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

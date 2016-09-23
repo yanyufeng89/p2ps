@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.TagsMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Tags" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tagName" property="tagname" jdbcType="CHAR" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="rootId" property="rootid" jdbcType="INTEGER" />
+    <result column="tagType" property="tagtype" jdbcType="CHAR" />
+    <result column="tier" property="tier" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="isvalid" property="isvalid" jdbcType="INTEGER" />
+    <result column="useSum" property="usesum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tagName, parentId, rootId, tagType, tier, updateTime, createTime, creator, isvalid,useSum
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_tags
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 获取所有的父节点  tags add by Jerry -->
+  <select id="getAllParentTags" resultMap="BaseResultMap">
+    SELECT 
+	<include refid="Base_Column_List" />
+	 FROM tbl_tags t WHERE t.parentId = 0 ORDER BY t.id 
+  </select>
+  <!-- 获取所有的子节点  tags add by Jerry -->
+  <select id="getAllChildrenTags" resultMap="BaseResultMap">
+  	<![CDATA[ 
+		SELECT p.tagName as tagName ,q.tagName as parentTagName FROM
+		(SELECT t.tagName as tagName,t.parentId as parID FROM tbl_tags t WHERE t.parentId <> 0 ORDER BY t.id )p,tbl_tags q
+		WHERE q.id = p.parID
+ 	]]>
+  </select>
+  <!-- 根据父节点ID 获取子节点list  -->
+  <select id="getChildTagsByParentID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_tags
+    where parentId = #{parentId,jdbcType=INTEGER}
+  </select>
+  <!-- 获取所有的标签  -->
+  <select id="getAllTags" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_tags
+    where 1 = 1
+  </select>
+  <!-- 根据条件模糊查询标签  -->
+  <select id="getTagsByCondition" resultMap="BaseResultMap"  parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_tags t
+    where 1 =1 
+    <if test="condition != null and condition != ''">
+				AND t.tagName  LIKE
+				concat('%',#{condition},'%')
+				AND t.tagType = #{tagType}
+	</if>
+  </select>
+  
+  <!-- tags使用数  加1  -->
+   <update id="addOrDecreaseTagUsenumer"  parameterType="java.lang.String" >
+    update tbl_tags
+    set 
+      useSum = useSum + 1
+    where id in
+    <if test="addArray != null" >
+    	<foreach collection="addArray" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </if>
+  </update>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_tags
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.Tags" >
+    insert into tbl_tags (id, tagName, parentId, 
+      rootId, tagType, tier, 
+      updateTime, createTime, creator, 
+      isvalid,useSum)
+    values (#{id,jdbcType=INTEGER}, #{tagname,jdbcType=CHAR}, 0, 
+      0, #{tagtype,jdbcType=CHAR}, #{tier,jdbcType=INTEGER}, 
+      now(), now(), #{creator,jdbcType=INTEGER}, 
+      1,1)
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Tags" >
+    insert into tbl_tags
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tagname != null" >
+        tagName,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="rootid != null" >
+        rootId,
+      </if>
+      <if test="tagtype != null" >
+        tagType,
+      </if>
+      <if test="tier != null" >
+        tier,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="usesum != null" >
+        useSum
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tagname != null" >
+        #{tagname,jdbcType=CHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="rootid != null" >
+        #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="tagtype != null" >
+        #{tagtype,jdbcType=CHAR},
+      </if>
+      <if test="tier != null" >
+        #{tier,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="usesum != null" >
+        #{usesum,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Tags" >
+    update tbl_tags
+    <set >
+      <if test="tagname != null" >
+        tagName = #{tagname,jdbcType=CHAR},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="rootid != null" >
+        rootId = #{rootid,jdbcType=INTEGER},
+      </if>
+      <if test="tagtype != null" >
+        tagType = #{tagtype,jdbcType=CHAR},
+      </if>
+      <if test="tier != null" >
+        tier = #{tier,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = now(),
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="usesum != null" >
+        useSum = #{usesum,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Tags" >
+    update tbl_tags
+    set tagName = #{tagname,jdbcType=CHAR},
+      parentId = #{parentid,jdbcType=INTEGER},
+      rootId = #{rootid,jdbcType=INTEGER},
+      tagType = #{tagtype,jdbcType=CHAR},
+      tier = #{tier,jdbcType=INTEGER},
+      updateTime = now(),
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      isvalid = #{isvalid,jdbcType=INTEGER},
+      useSum = #{usesum,jdbcType=INTEGER},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.VuserRolesMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.VuserRoles" >
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="roleId" property="roleid" jdbcType="INTEGER" />
+    <result column="roleName" property="rolename" jdbcType="CHAR" />
+    <result column="resId" property="resid" jdbcType="INTEGER" />
+    <result column="resourceName" property="resourcename" jdbcType="CHAR" />
+    <result column="authority" property="authority" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.jobplus.pojo.VuserRoles" >
+    insert into v_user_role_resource (userId, userName, roleId, 
+      roleName, resId, resourceName, 
+      authority)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{roleid,jdbcType=INTEGER}, 
+      #{rolename,jdbcType=CHAR}, #{resid,jdbcType=INTEGER}, #{resourcename,jdbcType=CHAR}, 
+      #{authority,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.VuserRoles" >
+    insert into v_user_role_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="roleid != null" >
+        roleId,
+      </if>
+      <if test="rolename != null" >
+        roleName,
+      </if>
+      <if test="resid != null" >
+        resId,
+      </if>
+      <if test="resourcename != null" >
+        resourceName,
+      </if>
+      <if test="authority != null" >
+        authority,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="rolename != null" >
+        #{rolename,jdbcType=CHAR},
+      </if>
+      <if test="resid != null" >
+        #{resid,jdbcType=INTEGER},
+      </if>
+      <if test="resourcename != null" >
+        #{resourcename,jdbcType=CHAR},
+      </if>
+      <if test="authority != null" >
+        #{authority,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

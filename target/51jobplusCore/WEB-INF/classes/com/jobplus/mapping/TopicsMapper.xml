@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.TopicsMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Topics" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="lastEditTime" property="lastedittime" jdbcType="TIMESTAMP" />
+    <result column="createPerson" property="createperson" jdbcType="INTEGER" />
+    <result column="followsSum" property="followssum" jdbcType="INTEGER" />
+    <result column="readSum" property="readsum" jdbcType="INTEGER" />
+    <result column="replySum" property="replysum" jdbcType="INTEGER" />
+    <result column="likeSum" property="likesum" jdbcType="INTEGER" />
+    <result column="futilitySum" property="futilitysum" jdbcType="INTEGER" />
+    <result column="collectSum" property="collectsum" jdbcType="INTEGER" />    
+    <result column="commentSum" property="commentsum" jdbcType="INTEGER" />
+    <result column="topicsType" property="topicstype" jdbcType="VARCHAR" />
+    <result column="topicsClass" property="topicsclass" jdbcType="VARCHAR" />
+    <result column="isPublic" property="ispublic" jdbcType="INTEGER" />
+    <result column="isValid" property="isvalid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Topics" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+	<sql id="Base_Column_List">
+		ID, title, createTime, lastEditTime, createPerson, followsSum, readSum,
+		replySum,
+		likeSum, futilitySum, collectSum, commentSum, topicsType, topicsClass,
+		isPublic, isValid
+	</sql>
+	<sql id="Base_Column_List2">
+		t.ID,t.title,t.createTime,t.lastEditTime,t.createPerson,t.followsSum,t.readSum,t.replySum,
+		t.likeSum,t.futilitySum,t.collectSum,t.commentSum,t.topicsType,t.topicsClass,t.isPublic,t.isValid
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+  <!-- 我发布的话题 -->
+  <select id="getMyTopicsUploaded" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.Topics" >
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+	<!-- ,(select count(*) from tbl_topics t where 1 =1 AND t.createPerson = #{createperson,jdbcType=INTEGER} AND t.isValid = 1) as pageCount --> 
+	from tbl_topics t
+	where 1 =1
+	AND t.createPerson = #{createperson,jdbcType=INTEGER}
+
+	AND t.isValid = 1
+	ORDER BY t.createTime DESC
+	<choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+	</select>
+  <!-- 统计总数   	 我发布的话题 -->
+  <select id="getMyTopicsUploadedCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+	select count(*) from tbl_topics t where 1 =1 AND t.createPerson = #{createperson,jdbcType=INTEGER} AND t.isValid = 1
+	</select>
+  
+  <!-- 批量逻辑删除topics-->
+  <update id="deleteTopics" parameterType="java.lang.Integer" >
+    update tbl_topics 
+    set 
+      isValid = 0
+    where ID in 
+    	<foreach collection="condition" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+  </update>
+  <!-- 批量逻辑删除updateFollowsSum-->
+  <update id="updateFollowsSum" parameterType="java.lang.Integer" >
+    update tbl_topics 
+    set 
+      followsSum = followsSum + #{value,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- 获取话题详情 -->
+  <select id="selectRecord" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,u.userName as "objCreator.userName",u.headIcon as "objCreator.headIcon",u.userid as "objCreator.userid"
+    ,(select group_concat(userid) as fansIds  from tbl_attention where objectid=#{id,jdbcType=INTEGER} and colltype='tbl_topics') as fansIds
+    from tbl_topics t left join tbl_user u on t.createPerson  = u.userid
+    where t.ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and t.isValid = 1
+    and u.isValid = 1
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_topics
+    where ID = #{id,jdbcType=INTEGER}
+    <!-- 必须是有效资源 -->
+    and isValid = 1
+  </select>
+  
+  
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tbl_topics
+    set isValid = 0
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_topics
+    where ID = #{id,jdbcType=INTEGER}
+  </delete> -->
+  
+  <!--由于是新增记录       各个sum初始化为0   时间改为now() -->
+  <insert id="insert" parameterType="com.jobplus.pojo.Topics" >
+    insert into tbl_topics (ID, title, createTime, 
+      lastEditTime, createPerson, followsSum, 
+      readSum, replySum, likeSum, 
+      futilitySum, collectSum, commentSum, topicsType, 
+      topicsClass, isPublic, content, isValid
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, NOW(), 
+      NOW(), #{createperson,jdbcType=INTEGER}, 0, 
+      0, 0, 0, 
+      0, 0, 0, #{topicstype,jdbcType=VARCHAR}, 
+      #{topicsclass,jdbcType=VARCHAR}, #{ispublic,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR},1
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Topics" >
+    insert into tbl_topics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="lastedittime != null" >
+        lastEditTime,
+      </if>
+      <if test="createperson != null" >
+        createPerson,
+      </if>
+      <if test="followssum != null" >
+        followsSum,
+      </if>
+      <if test="readsum != null" >
+        readSum,
+      </if>
+      <if test="replysum != null" >
+        replySum,
+      </if>
+      <if test="likesum != null" >
+        likeSum,
+      </if>
+      <if test="futilitysum != null" >
+        futilitySum,
+      </if>
+      <if test="collectsum != null" >
+        collectSum,
+      </if>
+      <if test="commentsum != null" >
+        commentsum,
+      </if>
+      <if test="topicstype != null" >
+        topicsType,
+      </if>
+      <if test="topicsclass != null" >
+        topicsClass,
+      </if>
+      <if test="ispublic != null" >
+        isPublic,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastedittime != null" >
+        #{lastedittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createperson != null" >
+        #{createperson,jdbcType=INTEGER},
+      </if>
+      <if test="followssum != null" >
+        #{followssum,jdbcType=INTEGER},
+      </if>
+      <if test="readsum != null" >
+        #{readsum,jdbcType=INTEGER},
+      </if>
+      <if test="replysum != null" >
+        #{replysum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="futilitysum != null" >
+        #{futilitysum,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="commentsum != null" >
+        #{commentsum,jdbcType=INTEGER},
+      </if>
+      <if test="topicstype != null" >
+        #{topicstype,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsclass != null" >
+        #{topicsclass,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null" >
+        #{ispublic,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Topics" >
+    update tbl_topics
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+        lastEditTime = Now(),
+      <if test="createperson != null" >
+        createPerson = #{createperson,jdbcType=INTEGER},
+      </if>
+      <if test="followssum != null" >
+        followsSum = #{followssum,jdbcType=INTEGER},
+      </if>
+      <if test="readsum != null" >
+        readSum = #{readsum,jdbcType=INTEGER},
+      </if>
+      <if test="replysum != null" >
+        replySum = #{replysum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        likeSum = #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="futilitysum != null" >
+        futilitySum = #{futilitysum,jdbcType=INTEGER},
+      </if>
+      <if test="collectsum != null" >
+        collectSum = #{collectsum,jdbcType=INTEGER},
+      </if>
+      <if test="commentsum != null" >
+        commentSum = #{commentsum,jdbcType=INTEGER},
+      </if>
+      <if test="topicstype != null" >
+        topicsType = #{topicstype,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsclass != null" >
+        topicsClass = #{topicsclass,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null" >
+        isPublic = #{ispublic,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isValid = #{isvalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.Topics" >
+    update tbl_topics
+    set title = #{title,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      lastEditTime = Now(),
+      createPerson = #{createperson,jdbcType=INTEGER},
+      followsSum = #{followssum,jdbcType=INTEGER},
+      readSum = #{readsum,jdbcType=INTEGER},
+      replySum = #{replysum,jdbcType=INTEGER},
+      likeSum = #{likesum,jdbcType=INTEGER},
+      futilitySum = #{futilitysum,jdbcType=INTEGER},
+      collectSum = #{collectsum,jdbcType=INTEGER},
+      commentSum = #{commentsum,jdbcType=INTEGER},
+      topicsType = #{topicstype,jdbcType=VARCHAR},
+      topicsClass = #{topicsclass,jdbcType=VARCHAR},
+      isPublic = #{ispublic,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+      <if test="isvalid != null" >
+        ,isValid = #{isvalid,jdbcType=INTEGER}
+      </if>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Topics" >
+    update tbl_topics
+    set title = #{title,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      lastEditTime = Now(),
+      createPerson = #{createperson,jdbcType=INTEGER},
+      followsSum = #{followssum,jdbcType=INTEGER},
+      readSum = #{readsum,jdbcType=INTEGER},
+      replySum = #{replysum,jdbcType=INTEGER},
+      likeSum = #{likesum,jdbcType=INTEGER},
+      futilitySum = #{futilitysum,jdbcType=INTEGER},
+      collectSum = #{collectsum,jdbcType=INTEGER},
+      commentSum = #{commentsum,jdbcType=INTEGER},
+      topicsType = #{topicstype,jdbcType=VARCHAR},
+      topicsClass = #{topicsclass,jdbcType=VARCHAR},
+      isPublic = #{ispublic,jdbcType=INTEGER}
+      <if test="isvalid != null" >
+        ,isValid = #{isvalid,jdbcType=INTEGER}
+      </if>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--精彩-->
+  <select id="getHotTopics" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+ <!--    ,(select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+      AND t.isValid = 1) as pageCount -->
+    from tbl_topics t
+    where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+    order by t.replySum desc,t.commentSum desc,t.followsSum desc,t.likeSum desc,t.id desc
+    <!--<choose>
+      <when test="pageNo !=null">
+        limit #{limitSt},#{pageSize}
+      </when>
+      <otherwise>
+        limit #{defaultPageSize,jdbcType=INTEGER}
+      </otherwise>
+    </choose>-->
+  </select>
+
+  <!--最新话题-->
+  <select id="getLatestTopics" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+  <!--   ,(select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1) as pageCount -->
+    from tbl_topics t
+    where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+    ORDER BY t.id DESC
+    <!--<choose>
+      <when test="pageNo !=null">
+        limit #{limitSt},#{pageSize}
+      </when>
+      <otherwise>
+        limit #{defaultPageSize,jdbcType=INTEGER}
+      </otherwise>
+    </choose>-->
+  </select>
+
+  <!--待回答话题-->
+  <select id="getWaitReplyTopics" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+   <!--  ,(select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1) as pageCount -->
+    from tbl_topics t
+    where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+    AND t.replySum = 0
+    ORDER BY t.id DESC
+    <!--<choose>
+      <when test="pageNo !=null">
+        limit #{limitSt},#{pageSize}
+      </when>
+      <otherwise>
+        limit #{defaultPageSize,jdbcType=INTEGER}
+      </otherwise>
+    </choose>-->
+  </select>
+
+  <!--精彩问答-->
+  <select id="getHotReplyTopics" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    <!-- ,(select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1) as pageCount -->
+    from tbl_topics t
+    where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+    AND t.replySum > 0
+    ORDER BY t.likeSum desc,t.replySum desc,t.commentSum desc,t.followsSum desc,t.id desc
+    <!--<choose>
+      <when test="pageNo !=null">
+        limit #{limitSt},#{pageSize}
+      </when>
+      <otherwise>
+        limit #{defaultPageSize,jdbcType=INTEGER}
+      </otherwise>
+    </choose>-->
+  </select>
+  <!--统计总数   		 精彩-->
+  <select id="getHotTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+      AND t.isValid = 1
+  </select>
+
+  <!--统计总数		最新话题-->
+  <select id="getLatestTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+  </select>
+
+  <!--统计总数		待回答话题-->
+  <select id="getWaitReplyTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+  </select>
+
+  <!--统计总数		精彩问答-->
+  <select id="getHotReplyTopicsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Topics" >
+    select count(*) from tbl_topics t where 1 =1
+    <if test="topicstype != null and topicstype != ''" >
+      AND t.topicstype like concat('%',#{topicstype},'%')
+    </if>
+    AND t.isValid = 1
+  </select>
+</mapper>

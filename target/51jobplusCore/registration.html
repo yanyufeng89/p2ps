@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>
+               注册
+    </title>
+    <meta name="viewport" content="width=1230"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+    <link rel="stylesheet" href="/51jobplusCore/css/css.css" type="text/css" charset="UTF-8">
+    <link rel="stylesheet" href="/51jobplusCore/css/login.css" type="text/css">
+    <link rel="stylesheet" href="/51jobplusCore/scripts/layer.css" id="layui_layer_skinlayercss">  
+    <link rel="stylesheet" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
+    <script type="text/javascript" src="/51jobplusCore/scripts/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/51jobplusCore/scripts/layer.js"></script>
+    <script type="text/javascript" src="/51jobplusCore/scripts/pj_reg_ajax.js"></script>
+    <script type='text/javascript' src='/51jobplusCore/scripts/js.KinerCode.js'></script>
+    <script type='text/javascript' src='/51jobplusCore/scripts/pj_authcode.js'></script>
+  </head>
+  
+  <body class="login" style="background:#fff;">
+    <div class="top-header">
+       <div class='header-row'>
+         <div class="header-alignleft">
+             <div class="header-contact-info">
+               <img src="/51jobplusCore/image/website-banners.png" class="img-responsive">
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="login-head">
+      <a class="navbar-brand" href="/51jobplusCore/index">
+        <img src="image/pluslogo.png" class="img-responsive">
+      </a>
+    </div>
+	    <div class="reg_content">
+		  <div class='pj-bgimg'><img src='/51jobplusCore/image/login-bg.jpg' alt='' width='660' height='445'></div>
+	      <div class="logoin_cont">
+	        <div class="reg_h1_tit">
+	          <ul class="reg_ul_list">
+	            <li  id="reg1" class="reg_cur">
+	              <a class="reg_h1_icon">
+	                个人注册
+	              </a>
+	            </li>
+	            
+	          </ul>
+	        </div>
+	        <div class="register_box">
+	          <form class="register_Switching_box" id="regtype1" method="post" action="user/reg">
+	            <ul class="register_list">
+	              <li class="mt20">
+	                <span id="pass1">
+	                  <input type="text" placeholder="昵称" 
+	                  id="username" name="username" onblur="reg_checkAjax(&#39;username&#39;);" class="placeholder loginname"
+	                  value="">
+	                </span>
+	                <span class="reg_tips reg_tips_red" id="ajax_username" style="display: none;">
+	                </span>
+	              </li>
+	              <li class="mt20 reg_re2">
+	                <input type="text" class="placeholder loginname" id="email" name="email" placeholder="请输入手机/邮箱"
+	                onblur="reg_checkAjax(&#39;email&#39;);">
+	                <span class="reg_tips reg_tips_red" id="ajax_email" style="display: none;">
+	                </span>
+	              </li>
+	              <li class="mt20">
+	                <span id="pass1">
+	                  <input type="password" placeholder="输入6位以上的密码，区分大小写字母" onkeyup="uppassword(1)"
+	                  id="password1" name="passwd" onblur="reg_checkAjax(&#39;password1&#39;);" class="placeholder loginname"
+	                  value="">
+	                </span>
+	                <span class="reg_tips reg_tips_red" id="ajax_password1" style="display: none;">
+	                </span>
+	              </li>
+	              <li class="reg_re mt20">
+	                <div class="kg_lgn_psw_strong">
+	                  <div class="kg_lgn_psw_txt">
+	                    密码强度:弱
+	                  </div>
+	                  <div class="kg_lgn_psw_strong_cnt">
+	                    <span id="pass1_1" class="psw_span">
+	                    </span>
+	                    <span id="pass2_1" class="psw_span ">
+	                    </span>
+	                    <span id="pass3_1" class="psw_span ">
+	                    </span>
+	                  </div>
+	                  <div class="kg_lgn_psw_txt">
+	                    强
+	                  </div>
+	                  <div class="psw_xs" onmousemove="showtip(1)" onmouseout="hidetip(1)">
+	                    <a href="javascript:showpw(1);" id="showpw1" class="psw_xs_a">
+	                      显示密码
+	                    </a>
+	                    <div class="psw_xs_tips" id="tip1" style="display: none;">
+	                      你可以点击这里检查已填写的密码
+	                    </div>
+	                  </div>
+	                </div>
+	              </li>
+	             <li class="mt20">
+	                <input id="CheckCode" placeholder="验证码" type="text" class="logoin_text_yz"
+	                maxlength="4">
+	                <div id="vcode_imgs1"  class="logoin_text_yz" style="margin-left:10px;"> 
+	                
+	                </div>
+	               
+	                <span class="reg_yz_look">
+	                  看不清？
+	                  <a href="javascript:check_codes(1);" class="registe_a">
+	                    换一张
+	                  </a>
+	                </span>
+	              </li> 
+	              <input type='hidden' name='verification_code' value=''>
+	             
+	              <li class="mt20" style="display:none;" id="regcode">
+	                <input id="mobliecode"  placeholder="短信验证码" type="text" class="logoin_text_yz"
+	                maxlength="6" style="padding:0 5px 0 5px;margin-top:3px">
+	                <span>
+	                  <input type="button" value="获取手机验证码" class="register_submit" onclick="sendmsg(this,'getpw')"
+	                  id="phonecode" data-messagetype='0' style="width:160px;">
+	                </span>
+	              </li>
+	              
+	              <li class="m10">
+	                <input type="checkbox" id="xieyi" class="logoin_check" value="1" checked="checked">
+	                我已阅读并自愿遵守
+	                <a href="#" target="_blank" class="reg_yhxy">
+	                  用户协议
+	                </a>
+	              </li>
+	              <li class="mt20">
+	                <input type="button" class="register_submit" onclick="check_user(this);" value="注册">
+	              </li>
+	            </ul>
+	          </form>
+	        </div>
+	        <div class="already-register">
+	          已有账户，
+	          <a href="login.html">
+	            请登录
+	          </a>
+	        </div>
+	      </div>
+	    </div>
+	    <input type="hidden" id="usertype" value="1">
+	    <input type="hidden" id="regtype" value="0">
+	    <input type="hidden" id="send" value="0">
+ 
+      <div id="ft">    
+      <div class="ft-share">
+        <a href="#" class="png weibo"></a>
+        <a href="#" class="png qq"></a>
+        <a href="#" class="png weixin"></a>
+      </div>
+	  <div class="ft-border"></div>
+	  <div class="ft-container">
+		   <section>
+			<div class="row">
+			  <div class="col-md-12">
+				<div class="row links-section">
+				   <div class="col-md-3">
+					 <h2>关于我们</h2>
+					 <p><a href="/51jobplusCore/about/company_profile" target='_blank'>公司介绍</a></p>
+					 <p><a href="/51jobplusCore/about/talent_recruitment" target='_blank'>人才招聘</a></p>
+					 <p><a href="/51jobplusCore/about/contact_way" target='_blank'>联系方式</a></p>
+					 <p><a href="/51jobplusCore/about/news" target='_blank'>资讯动态</a></p>
+				   </div>
+				   <div class="col-md-3">
+					 <h2>商务合作</h2>
+					 <p><a href="/51jobplusCore/about/channel_cooperation" target='_blank'>渠道合作</a></p>
+					 <p><a href="/51jobplusCore/about/network_union" target='_blank'>网络联盟</a></p>
+					 <p><a href="/51jobplusCore/about/expert_cooperating" target='_blank'>专家合作</a></p>
+				   </div>
+				   <div class="col-md-3">
+					  <h2>法律声明</h2>
+					  <p><a href="/51jobplusCore/about/terms_service" target='_blank'>服务条款</a></p>
+					  <p><a href="/51jobplusCore/about/copyright_statement" target='_blank'>权利声明</a></p>
+					  <p><a href="/51jobplusCore/about/privacy_statement" target='_blank'>隐私声明</a></p>
+				   </div>
+				   <div class="col-md-4">
+					  <h2>帮助中心</h2>
+					 <p><a href="/51jobplusCore/about/newbie_guide" target='_blank'>使用攻略</a></p>
+					  <p><a href="/51jobplusCore/about/feedback" target='_blank'>建议反馈</a></p>
+					  <p><a href="/51jobplusCore/about/contactus" target='_blank'>联系客服</a></p>
+				   </div>
+				   <div class="col-md-5">
+					  <span class="pj-two-dimensional">
+					     <img src='/51jobplusCore/image/twodimen.jpg' alt=''>
+					  </span>
+					  <div class="tc_richscan gray9">微信扫一扫</div>
+				   </div>
+				  
+				</div>
+			  </div>
+			</div>
+		  </section>
+      </div>
+    </div>
+    <div  class="footnote">
+      <div class="fusion-row">
+		<div class="fusion-copyright-content">
+		  <div class="fusion-copyright-notice" style="padding-bottom: 0px;">
+			<div>Copyright © 2016-2017 jobplus.com.cn All rights reserved JobPlus 版权所有 苏ICP备16046992号<</div>
+		 </div>
+		</div>
+	  </div>
+   </div>
+	  </div>
+    </div>
+ 
+    </div>
+   
+  </body>
+
+</html>

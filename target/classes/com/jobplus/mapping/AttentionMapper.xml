@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.AttentionMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.Attention" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="objectId" property="objectid" jdbcType="INTEGER" />
+    <result column="collType" property="colltype" jdbcType="VARCHAR" />
+    <result column="isNotify" property="isnotify" jdbcType="INTEGER" />
+    <result column="attentionTime" property="attentiontime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, userId, objectId, collType, isNotify, attentionTime
+  </sql>
+  
+  <!-- join_tbl_topics_Column_List2  -->
+  <sql id="join_tbl_topics_Column_List2" >
+    t.ID, t.userId, t.objectId, t.collType, t.isNotify, t.attentionTime
+  </sql>
+  <!-- tbl_topics_Column_List  -->
+  <sql id="tbl_topics_Column_List" >
+  p.ID as "topics.ID", p.title  as "topics.title", p.createTime  as "topics.createTime", p.lastEditTime  as "topics.lastEditTime", 
+  p.createPerson  as "topics.createPerson", p.followsSum  as "topics.followsSum", p.readSum  as "topics.readSum", 
+  p.replySum  as "topics.replySum", p.likeSum  as "topics.likeSum", p.futilitySum  as "topics.futilitySum", 
+  p.collectSum  as "topics.collectSum", p.topicsType  as "topics.topicsType", p.topicsClass  as "topics.topicsClass", 
+  p.isPublic  as "topics.isPublic", p.isValid  as "topics.isValid"
+  </sql>
+  
+  <!-- 获取我关注的话题  list   getMyAttentionList-->
+  <select id="getMyAttentionList" resultMap="BaseResultMap"
+	parameterType="java.lang.String">
+	select
+	<include refid="join_tbl_topics_Column_List2" />
+	,
+	<include refid="tbl_topics_Column_List" />
+	<!-- ,(select count(*) from tbl_attention t JOIN ${colltype} p where t.objectId = p.ID AND t.userId = #{userid,jdbcType=INTEGER} AND p.isValid = 1) as pageCount --> 	
+
+	from tbl_attention t JOIN ${colltype} p
+	where t.objectId = p.ID
+	AND
+	t.userId = #{userid,jdbcType=INTEGER}
+	AND p.isValid = 1
+	ORDER BY t.attentionTime DESC
+	<choose>
+		<when test="pageNo !=null">
+			limit #{limitSt},#{pageSize}
+		</when>
+		<otherwise>
+			limit #{defaultPageSize,jdbcType=INTEGER}
+		</otherwise>
+	</choose>
+</select> 
+  <select id="getMyAttentionListCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+	select count(*) from tbl_attention t JOIN ${colltype} p 
+		where t.objectId = p.ID AND t.userId = #{userid,jdbcType=INTEGER} AND p.isValid = 1
+</select> 
+  
+  <!-- 批量删除我的关注 deleteAttentions-->
+  <delete id="deleteAttentions" parameterType="java.lang.Integer" >
+    delete from tbl_attention
+    where ID in
+   		 <foreach collection="condition" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+  </delete>
+  <!-- 我关注的人总数 getAttenManSum -->
+  <select id="getAttenManSum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select 
+    count(objectId)
+    from tbl_attention
+    where userid = #{userid,jdbcType=INTEGER}
+    and collType = 'tbl_user'
+  </select>
+  <!-- 我的粉丝总数 -->
+  <select id="getFansSum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select 
+    count(userId)
+    from tbl_attention
+    where objectId = #{userid,jdbcType=INTEGER}
+    and collType = 'tbl_user'
+  </select>
+  <!-- 我关注的人 ids -->
+  <select id="getAttenMan" parameterType="java.lang.Integer" resultType="java.lang.String" >
+    select 
+    GROUP_CONCAT(objectId)
+    from tbl_attention
+    where userid = #{userid,jdbcType=INTEGER}
+    and collType = 'tbl_user'
+  </select>
+  <!-- 我的粉丝  ids -->
+  <select id="getFans" parameterType="java.lang.Integer" resultType="java.lang.String" >
+    select 
+    GROUP_CONCAT(userId)
+    from tbl_attention
+    where objectId = #{userid,jdbcType=INTEGER}
+    and collType = 'tbl_user'
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_attention
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_attention
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  
+   <delete id="deleteByAttentionInfo" parameterType="com.jobplus.pojo.Attention" >
+    delete from tbl_attention
+    where userid = #{userid,jdbcType=INTEGER} and objectid = #{objectid,jdbcType=INTEGER} and colltype=#{colltype,jdbcType=VARCHAR} 
+  </delete> 
+	 <!-- 插入记录如果存在 就不执行      isNotify  暂时   设置为默认值1   -->
+ 	 <insert id="insertOrUpdate" parameterType="com.jobplus.pojo.Attention" >
+		<selectKey keyProperty="isExit" resultType="int" order="BEFORE">
+			SELECT count(*) FROM tbl_attention t WHERE t.userId =#{userid,jdbcType=INTEGER} 
+			and t.objectId =#{objectid,jdbcType=INTEGER} and t.collType =#{colltype,jdbcType=VARCHAR}
+		</selectKey>
+			<if test="isExit > 0">
+			<!-- 返回0   表示同一个不能关注多次 -->
+				SELECT count(*) FROM tbl_attention t WHERE 1 = 0
+			</if>
+		<!-- <if test="isExit > 0">
+			update tbl_attention
+			set
+			attentionTime = now()
+			 WHERE t.userId =#{userid,jdbcType=INTEGER} 
+			and t.objectId =#{objectid,jdbcType=INTEGER} and t.collType =#{colltype,jdbcType=VARCHAR}
+		</if> -->
+		<if test="isExit==0">
+			insert into tbl_attention (ID, userId, objectId, 
+		      collType, isNotify, attentionTime
+		      )
+		    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{objectid,jdbcType=INTEGER}, 
+		      #{colltype,jdbcType=VARCHAR}, 1, now()
+		      )
+		</if>
+	</insert>
+  
+  
+  
+  
+  
+  
+  
+  <!-- 此处 isNotify  暂时   设置为默认值1   -->
+  <insert id="insert" parameterType="com.jobplus.pojo.Attention" >
+    insert into tbl_attention (ID, userId, objectId, 
+      collType, isNotify, attentionTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{objectid,jdbcType=INTEGER}, 
+      #{colltype,jdbcType=VARCHAR}, 1, now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.Attention" >
+    insert into tbl_attention
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="objectid != null" >
+        objectId,
+      </if>
+      <if test="colltype != null" >
+        collType,
+      </if>
+      <if test="isnotify != null" >
+        isNotify,
+      </if>
+      <if test="attentiontime != null" >
+        attentionTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="objectid != null" >
+        #{objectid,jdbcType=INTEGER},
+      </if>
+      <if test="colltype != null" >
+        #{colltype,jdbcType=VARCHAR},
+      </if>
+      <if test="isnotify != null" >
+        #{isnotify,jdbcType=INTEGER},
+      </if>
+      <if test="attentiontime != null" >
+        #{attentiontime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Attention" >
+    update tbl_attention
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="objectid != null" >
+        objectId = #{objectid,jdbcType=INTEGER},
+      </if>
+      <if test="colltype != null" >
+        collType = #{colltype,jdbcType=VARCHAR},
+      </if>
+      <if test="isnotify != null" >
+        isNotify = #{isnotify,jdbcType=INTEGER},
+      </if>
+      <if test="attentiontime != null" >
+        attentionTime = #{attentiontime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Attention" >
+    update tbl_attention
+    set userId = #{userid,jdbcType=INTEGER},
+      objectId = #{objectid,jdbcType=INTEGER},
+      collType = #{colltype,jdbcType=VARCHAR},
+      isNotify = #{isnotify,jdbcType=INTEGER},
+      attentionTime = #{attentiontime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
