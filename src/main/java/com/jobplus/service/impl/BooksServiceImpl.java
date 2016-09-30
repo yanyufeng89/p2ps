@@ -191,7 +191,7 @@ public class BooksServiceImpl implements IBooksService {
 		if(count < 1)
 			return page;
 		List<Books> list = booksDao.getSharedBookList(record);
-		if(null!=list && list.size()>0){
+		if(list.size()>0){
 			for (Books book : list) {
 				book.setUserShareTime(DateUtils.formatDate(book.getBookShare().getCreatetime(), "yyyy-MM-dd"));
 			}
@@ -226,7 +226,7 @@ public class BooksServiceImpl implements IBooksService {
 		if(count < 1)
 			return page;
 		List<Books> list = booksDao.getCollectedBookList(record);
-		if(null!=list && list.size()>0){
+		if(list.size()>0){
 			page.initialize((long)count,record.getPageNo());
 			page.setList(list);
 		}	

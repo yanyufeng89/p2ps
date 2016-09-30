@@ -8,7 +8,7 @@
                我的分享
     </title> 
    <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
-   <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_mycenter.css">
+   <link rel="stylesheet" type="text/css" href="/css/pj_mycenter.css">
   </head>
   <body>
      <div id="doc" class="page">

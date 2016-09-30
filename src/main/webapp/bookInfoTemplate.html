@@ -6,16 +6,12 @@
         {#if $T.bookSimpleInformation.bookimg}
           <img class="Bvatar Bvatar-xs" src="{$T.bookSimpleInformation.bookimg}">
           {#else}
-          <img class="Bvatar Bvatar-xs" src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg">
+          <img class="Bvatar Bvatar-xs" src="/image/1b48b5a75c71597_100x100.jpg">
         {#/if}
         </div>
         <div class='authorinfo'>
-          <p class="bookauthoinfo">[书籍]
-            <span class='bookdescription'>{$T.bookSimpleInformation.bookname}</span>
-          </p>
-          <p class="bookauthoinfo">
-                        作者:<span class='bookdescription'>{$T.bookSimpleInformation.author}</span>
-          </p>
+          <p class="bookauthoinfo"><span class='bookdescription textoverflow'>书籍:{$T.bookSimpleInformation.bookname}</span></p>
+          <p class="bookauthoinfo"><span class='bookdescription'>作者:{$T.bookSimpleInformation.author}</span></p>
          </div>
       </div>
     </div>

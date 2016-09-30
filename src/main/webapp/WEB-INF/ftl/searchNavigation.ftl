@@ -2,20 +2,21 @@
 <html>
   
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
            导航搜索
     </title>
     <meta name="viewport" content="width=1230"/> 
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_searchres.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_index.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_simplePagination.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" type="text/css" href="/css/pj_searchres.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_base.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_index.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_simplePagination.css">
   </head>
   
-  <body  id="top">
+  <body  id="searchtop">
     <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
 
     <div class='division-banner'>
@@ -43,18 +44,18 @@
 	 <div class='pj-searches-left'>
 		<div id="searches" class="searches">
 		<#-- 
-		 <form id="searchresForm" class="searchForm" name="searchForm" action="/51jobplusCore/search/" method="get">
+		 <form id="searchresForm" class="searchForm" name="searchForm" action="/search/" method="get">
 		 -->
 		   <div class="searchForm">
 			<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
 			<#-- 
 			<input type="submit" id="searchres_button" class="search_icon" value="知识搜索">
 			-->
-			<input type="button" id="searchres_button" class="search_icon" onclick="javascript:reloadPage();" value="知识搜索">
-			<input type="text" id="searchres_input" class="search_input ui-autocomplete-input" name="Condition" tabindex="1" maxlength="64" autocomplete="off" 
-			placeholder="JobPlus海量知识库" style="color: rgb(153, 153, 153);" value="${preCondition}" onkeypress="if(event.keyCode==13){reloadPage();};">
+			<input type="button" id="searchres_button" class="search_icon" onclick="javascript:reloadPage();" value="知识搜索" style='width:140px'>
+			<input type="text" id="searchres_input" class="search_input ui-autocomplete-input" name="Condition"  style='width:552px' tabindex="1" maxlength="64" autocomplete="off" 
+			placeholder="JobPlus海量知识库" style="color: rgb(153, 153, 153);" value="${preCondition}" onkeypress="if(event.keyCode==13){reloadPage();};" >
 			<input type="hidden" name="fromSearch" id="fromSearches" value="true">
-			<input type="botton" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="searches-form-submit" value="分类搜索" onclick="javascript:reloadPage();">
+			<input type="botton" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="searches-form-submit" value="分类搜索" onclick="javascript:reloadPage();" style='width:140px'>
 		  </div>
 		  <#--  
 		  </form>
@@ -140,12 +141,12 @@
               <li class="last">
                     <dl class="title">知识类型:</dl>
 	                <span data-objtype="" <#if (preProtoType == 0)||(preProtoType == "")>class="active"</#if>>所有</span>
-					<span data-objtype="doc" <#if preProtoType?? && preProtoType == "doc">class="active"</#if>>文档</span>
-	                <span data-objtype="topics" <#if preProtoType?? && preProtoType == "topics">class="active"</#if>>话题</span>
-	                <span data-objtype="book" <#if preProtoType?? && preProtoType == "book">class="active"</#if>>书籍</span>
-	                <span data-objtype="courses" <#if preProtoType?? && preProtoType == "courses">class="active"</#if>>课程</span>
-	                <span data-objtype="article" <#if preProtoType?? && preProtoType == "article">class="active"</#if>>文章</span>
-	                <span data-objtype="site" <#if preProtoType?? && preProtoType == "site">class="active"</#if>>站点</span>
+					<span data-objtype="1" <#if preProtoType?? && preProtoType == "1">class="active"</#if>>文档</span>
+	                <span data-objtype="5" <#if preProtoType?? && preProtoType == "5">class="active"</#if>>话题</span>
+	                <span data-objtype="6" <#if preProtoType?? && preProtoType == "6">class="active"</#if>>书籍</span>
+	                <span data-objtype="3" <#if preProtoType?? && preProtoType == "3">class="active"</#if>>课程</span>
+	                <span data-objtype="2" <#if preProtoType?? && preProtoType == "2">class="active"</#if>>文章</span>
+	                <span data-objtype="4" <#if preProtoType?? && preProtoType == "4">class="active"</#if>>站点</span>
               </li>
             </div>
           </ul>
@@ -158,7 +159,13 @@
   <#--查询结果集-->
   <#assign resultList=result?eval />
   <#list resultList as item>
-  <#if item.protoType == "doc">
+   <#--<#if item.protoType == "doc">
+   doc 1
+	article 2
+	courses 3
+	site 4
+	topics 5  -->
+   <#if item.protoType == "1">
   		<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
@@ -202,7 +209,7 @@
 						 </div>
 					 </div>
                 </div>
-  <#elseif item.protoType == "book">
+  <#elseif item.protoType == "6">
   			<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
@@ -245,7 +252,7 @@
 						 </div>
 					 </div>
                 </div>
-  <#elseif item.protoType == "article">
+  <#elseif item.protoType == "2">
   				<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
@@ -286,7 +293,7 @@
 						 </div>
 					 </div>
                 </div>
-  <#elseif item.protoType == "courses">
+  <#elseif item.protoType == "3">
   				<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
@@ -328,7 +335,7 @@
 						 </div>
 					 </div>
                 </div>
-  <#elseif item.protoType == "site">
+  <#elseif item.protoType == "4">
   			<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
@@ -424,7 +431,7 @@
 			     <div class='emptyList'>
 				   <div class='empty-tip'>
 				       <div class="empty-img">
-					      <img src="/51jobplusCore/image/angry.png" alt="">
+					      <img src="/image/angry.png" alt="">
 					   </div>
 					   <div class="empty-info">
 							对不起，没有找到满足搜索条件的信息<br>
@@ -471,19 +478,26 @@
    </div>
    <div class='pj-searches-right'>
 	   <div class="share-plaza">
-	            <a class="share-icon bg-index" href="/51jobplusCore/sharein/searchuploadFile"></a>
+	            <a class="share-icon bg-index" href="/sharein/searchuploadFile"></a>
 	            <a target="_blank" href="javascript:void(0)" class="text">
 				 文档---话题---书籍---课程---文章---站点
 				</a>
 	   </div>
+	   <div class='pj_jsonp ad_exposure'>
+	      <img src='/image/ad_exposure_1.jpg' alt='' width='310' height='278'>
+	   </div>
+	   <div class='pj_jsonp ad_exposure'>
+	      <img src='/image/ad_exposure_2.jpg' alt='' width='310' height='278'>
+	   </div>
    </div>
   </div>
     <div class='pagetemplate'></div>
-    <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
+    <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
+    <a id="searchbacktop" title="回到顶部" href="#searchtop" class='back-to-top' style="bottom: 300px; display: none;"></a>
 	<#include "/mydocs/commonTemplate/pmorsmgjs/pmorsmg.ftl"/> 
-	<script type="text/javascript" src="/51jobplusCore/scripts/jquery.media.js"></script>
-	<script type="text/javascript" src="/51jobplusCore/scripts/pj_searchResult.js"></script>
-	<script type='text/javascript' src='/51jobplusCore/scripts/jquery.simplePagination.js'></script>
+	<script type="text/javascript" src="/scripts/jquery.media.js"></script>
+	<script type="text/javascript" src="/scripts/pj_searchResult.js"></script>
+	<script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
 	<script type="text/javascript">
         <#if (reCount) gt 0>
             $(function () {

@@ -166,7 +166,8 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		StringBuffer url = request.getRequestURL();
 		if (request.getQueryString() != null) {
 			url.append("?");
-			url.append(request.getQueryString());
+			url.append("userid="+userid);
+//			url.append(request.getQueryString());
 		}
 
 		mv.addObject("visitors", visitors);

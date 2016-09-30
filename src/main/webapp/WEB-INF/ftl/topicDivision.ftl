@@ -2,20 +2,21 @@
 <html>
   
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
             话题专区
     </title>
     <meta name="viewport" content="width=1230"/> 
-    <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_searchres.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_index.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_simplePagination.css">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"> 
+    <link rel="stylesheet" type="text/css" href="/css/pj_searchres.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_base.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_index.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_simplePagination.css">
   </head>
   
-  <body>
+  <body id="topdivisiontop">
     <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
     <div class='division-banner'>
 	  <span>JobPlus知识库>话题专区</span>
@@ -84,7 +85,7 @@
 									 <div class='topicdivision-content'>
 										 <div class='topicdivision-left'>
 											 <div class="title">
-												 <a target="_blank" href="javascript:void(0);" onclick="toHref('tbl_topics',${data.id})" title="${data.title}">${data.title}</a>
+												 <a  href="javascript:void(0);" onclick="toHref('tbl_topics',${data.id})" title="${data.title}">${data.title}</a>
 											 </div>
 											 <div class="newsinfo" <#if data.intro??>title="${data.intro}"</#if>>
 												 <p>
@@ -122,7 +123,7 @@
 															 </div>
 														 <#else>
 															 <div class="pict">
-																<img src='/51jobplusCore/image/default/65.jpg' alt=''>
+																<img src='/image/default/65.jpg' alt=''>
 															 </div>
 														 </#if>
 													 </div>
@@ -139,7 +140,7 @@
 						 <div class='emptyList'>
 						   <div class='empty-tip'>
 							   <div class="empty-img">
-								  <img src="/51jobplusCore/image/angry.png" alt="">
+								  <img src="/image/angry.png" alt="">
 							   </div>
 							   <div class="empty-info">
 									对不起，没有找到满足搜索条件的信息<br>
@@ -170,20 +171,27 @@
 		</div>
         <div class='pj-topics-right'>
 		  <div class="share-plaza">
-	            <a class="share-icon bg-index" href="/51jobplusCore/sharein/searchuploadFile?type=1"></a>
+	            <a class="share-icon bg-index" href="/sharein/searchuploadFile?type=1"></a>
 	            <a target="_blank" href="javascript:void(0)" class="text">
 				   文档---话题---书籍---课程---文章---站点
 				</a>
 	      </div>
+	      <div class='pj_jsonp ad_exposure'>
+	        <img src='/image/ad_exposure_3.jpg' alt='' width='310' height='278'>
+	      </div>
+	     <div class='pj_jsonp ad_exposure'>
+	      <img src='/image/ad_exposure_4.jpg' alt='' width='310' height='278'>
+	     </div>
 		</div>
     </div>
   
    
     <div class='pagetemplate'></div>
     <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
+    <a id="topdivisionbacktop" title="回到顶部" href="#topdivisiontop" class='back-to-top' style="bottom: 300px; display: none;"></a>
 	<#include "/mydocs/commonTemplate/pmorsmgjs/pmorsmg.ftl"/>
-    <script type='text/javascript' src='/51jobplusCore/scripts/jquery.simplePagination.js'></script>
-	<script type="text/javascript" src="/51jobplusCore/scripts/pj_topicdivision.js"></script>
+    <script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
+	<script type="text/javascript" src="/scripts/pj_topicdivision.js"></script>
     <script type="text/javascript">
         <#if (topicsPage.list)??>
             $(function () {

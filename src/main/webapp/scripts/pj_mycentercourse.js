@@ -112,33 +112,16 @@ $(function(){
     	courseLike($(this));
     })
     
-    //回到顶部
-    $("#coursebacktop").mousemove(function(){
-    	$("#coursebacktop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#coursebacktop").css("background-position-x", "0");
-    })
-
-    /*当界面下拉到一定位置出现向上的箭头 start*/
-    $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
-            $("#coursebacktop").fadeIn("fast");  
-        } else{  
-            $("#coursebacktop").fadeOut("fast");  
-        }  
-    });
-   /*当界面下拉到一定位置出现向上的箭头 end*/
-    
    //课程详情页加载更多
     $('.loadmore').live('click',function(){
     	$(this).addClass('loading').empty().append("<span class='capture-loading'></span>加载中");
     	courseLoadMore($(this))
     });
-    $('#courseurl').live('click',function(){
+   /* $('#courseurl').live('click',function(){
     	var url=$(this).attr('data-url');
     	url=url.substr(0,7).toLowerCase()=="http://"?url:"http://"+url;
     	window.location.href=url;
-    })
+    })*/
 })
 //课程加载更多
 function courseLoadMore(obj){
@@ -147,7 +130,7 @@ function courseLoadMore(obj){
     var coursesid=$('input[name=courseid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"courses/loadComments",
+      	url:"/courses/loadComments",
       	data:{pageNo:Number(pageNo)+1,coursesid:coursesid},
     	dataType:"json",
     	success:function(data){
@@ -161,8 +144,9 @@ function courseLoadMore(obj){
           	   $(".headiconintotem").empty();
           	   $('.loadmore').attr('data-pageno',Number(pageNo)+1);
           	   obj.removeClass('loading').empty().append('更多');
-          	   if(Number(sumpage)==Number(pageNo)+1)
-          		 $('.loadmore').hide();
+          	   if(Number(sumpage)==Number(pageNo)+1){
+          		 $('.loadmore').hide().prev().css('border-bottom','none'); 
+          	   }
           	   intoUserInfo();
     		}else{
     			
@@ -179,7 +163,7 @@ function courseLike(obj){
 	var coursesname=$('input[name=coursename]').val();
 	$.ajax({
 		type:"POST",
-      	url:projectName+"courses/clickLikeOnCourse",
+      	url:"/courses/clickLikeOnCourse",
       	data:{likeOperate:islike,id:coursesid,objCreatepersonPg:courseCreatePerson,relationidPg:coursesid,objectNamePg:coursesname},
       	dataType:"json",
       	success:function(data){
@@ -209,7 +193,7 @@ function collectCourse(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"courses/collectCourses",
+      	url:"/courses/collectCourses",
       	data:{actionType:actiontype,objectid:coursesid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -239,7 +223,7 @@ function cancelCommtent(obj){
 	var coursesid=$('input[name=courseid]').val();
 	$.ajax({
 	    type:"POST",
-     	url:projectName+"courses/delComment",
+     	url:"/courses/delComment",
      	data:{id:recommend,coursesid:coursesid},
      	dataType:"json",
      	success:function(data){
@@ -257,7 +241,7 @@ function cancelCommtent(obj){
 function delSharedCourses(conditions,obj){
 	   $.ajax({
 	    	type:"POST",
-	    	url:projectName+"courses/delSharedCourses",
+	    	url:"/courses/delSharedCourses",
 	    	data:{condition:conditions},
 	    	dataType:"json",
 	    	success:function(data){
@@ -287,7 +271,7 @@ function delSharedCourses(conditions,obj){
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_courses"},
    	dataType:"json",
    	success:function(data){
@@ -330,7 +314,7 @@ function insertComment(obj,type){
 	 var commentby=obj.attr('data-recommend');
 	 //被推荐人的名字
 	 var recommendname=obj.attr('data-recommendname');
-	 var objectName=$('input[name=articlename]').val();
+	 var objectName=$('input[name=coursename]').val();
 	 //评论内容
 	 if(type==0){
 	   commendcontent=obj.parent().prev().val();
@@ -342,6 +326,9 @@ function insertComment(obj,type){
        commendcontent=$('.commentcontent').val();
        relationid=coursesid;
      }
+	 if($.trim(commendcontent).length==0){
+		 return false;
+	 }
 	 var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
 	 if(len>1000){
 	 		if(obj.parent().find('span').length==0)
@@ -352,7 +339,7 @@ function insertComment(obj,type){
 	 var $this=obj;
 	 $.ajax({
 		type:"POST",
-       	url:projectName+"courses/addComment",
+       	url:"/courses/addComment",
        	data:{coursesid:coursesid,recommend:commendcontent,commentby:commentby,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid,objectNamePg:objectName},
        	dataType:"json",
        	success:function(data){

@@ -4,6 +4,7 @@ $(function(){
 	getAllParentTypeConfigs('sitetype');
 	//输入链接点击确定
 	$('.sitepreview').live('click',function(){
+		$('.sitepreview').nextAll('.error').hide();
 		var url=$('#searchsite').val();
 		var $child=$(this).nextAll('.error').children();
 		if($.trim(url)==''){
@@ -12,8 +13,7 @@ $(function(){
 		}
 		//判断链接是否合法   
 	     if(isURL(url)){
-	    	$('.capture-loading').prev().val('');
-	 		$('.capture-loading').show();
+	    	$(this).addClass('capture-loading').removeClass('tocapture');
 	    	//后台判断是否能够拼通链接
 	        get3WInfo(url);
 	     }else{
@@ -25,13 +25,11 @@ $(function(){
 	//确认分享
 	$('#sharesite').live('click',function(){
 		//推荐理由必填
-		$('textarea[name=recommend]').each(function(){
-			if($.trim($(this).val()).length==0){
-				$(this).nextAll().css('display','inline-block');
-                $(this).focus();
-                return false;
-			}
-		})
+		if($.trim($('textarea[name=recommend]').val()).length==0){
+			$('textarea[name=recommend]').nextAll().css('display','inline-block');
+            $('textarea[name=recommend]').focus();
+            return false;
+		}
 		//分类
 		if($('input[name=sitetype]').val()==''||$('input[name=sitetype]').val().indexOf('undefined')!=-1){
 			$('#pj-modal-dialog-siteclassify').show();
@@ -46,29 +44,49 @@ $(function(){
 		
 		$('#siteaddForm').submit();
 	})
+	//确定
+	$('#btnsitesure').live('click',function(){
+		$(this).addClass('capture-loading').html('');
+		if($.trim($('#searchsite').val()).length==0){
+			var $child=$('.sitepreview').nextAll('.error').children();
+			$('.sitepreview').nextAll('.error').empty().append($child).append('请输入正确的链接').show();
+	    	return false;
+		}else{
+	    	$.ajax({
+	    		type:"POST",
+	    		url:"/myCenter/get3WInfo",
+	    		data:{url:$('#searchsite').val(),tableName:'tbl_sites'},
+	    		dataType:"json",
+	    		success:function(data){
+	    			if(data.returnStatus=='000'){
+	    				$('input[name=siteurl]').val(data.obj.url);
+	    				//站点详情
+	    				initTitleInfoBySearchSite(data);
+	    				$('#upload-initsite-container').hide();
+	    		    	$('#upload-site-container').show();
+	    			}
+	    		}
+	    	})
+	    	
+		}
+	})
 })
 
 //判断输入的链接是否拼通
 function get3WInfo(url){
 	$.ajax({
 		type:"POST",
-		url:projectName+"/myCenter/get3WInfo",
+		url:"/myCenter/get3WInfo",
 		data:{url:url,tableName:'tbl_sites'},
 		dataType:"json",
      	success:function(data){
      		if(data.returnStatus=='000'){//返回成功
-     			$('#upload-initsite-container').hide();
-    	    	$('#upload-site-container').show();
-    	    	$('input[name=siteurl]').val(url);
-    	    	
-    	    	//站点详情
-	            initTitleInfoBySearchSite(data);
+    	    	$("#btnsitesure").removeClass("btn-disblue").addClass("btn-blue");
     		}else{//返回失败
     			var $child=$('.sitepreview').nextAll('.error').children();
     			$('.sitepreview').nextAll('.error').empty().append($child).append(data.returnMsg).show();
     		}
-     		$('.capture-loading').prev().val('确定');
-			$('.capture-loading').hide();
+     		    $('.sitepreview').removeClass('capture-loading').addClass('tocapture');
     	}
 	})
 }
@@ -92,23 +110,4 @@ function initTitleInfoBySearchSite(data){
 		
 		$('.add-course-title-form').append(container_div);
 }
-//判断是否是合格的URL
-function isURL_old (str_url) {// 验证url  
-    var strRegex="^((https|http|rtsp|mms)?://)"  
-    + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@  
-    + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184  
-    + "|" // 允许IP和DOMAIN（域名）  
-    + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.  
-    + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名  
-    + "[a-z]{2,6})" // first level domain- .com or .museum  
-    + "(:[0-9]{1,4})?" // 端口- :80  
-    + "((/?)|" // a slash isn't required if there is no file name  
-    + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$"; 
-    var re=new RegExp(strRegex); 
-    return re.test(str_url); 
-} 
-
-//判断是否是合格的URL
-function isURL(str_url){
-    return!!str_url.match(/(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g);
-}
+ 

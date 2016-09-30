@@ -3,21 +3,21 @@
 <div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
 	   <div class="zg-right">
 	      {#if ($T.list.fansIds=='0')}
-		     <button data-userid="{$T.list.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow" data-actiontype="1">关注</button>
+		     <button data-userid="{$T.list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow" data-actiontype="1">关注</button>
 		  {#else}
-		     <button data-userid="{$T.list.userid}" data-a='1' class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
+		     <button data-userid="{$T.list.visitorid}" data-a='1' class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
 		  {#/if}
 	   </div>
-	   <a title="{$T.list.username}" class="zm-item-link-avatar" target="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}" data-userid='{$T.list.userid}'>
+	   <a title="{$T.list.username}" class="zm-item-link-avatar" target="_blank" href="/myHome/getHomePage?userid={$T.list.visitorid}" data-userid='{$T.list.visitorid}'>
 	      {#if $T.list.headIcon}
 		    <img src="{$T.list.headIcon}" class="zm-item-img-avatar">
 		  {#else}
-		    <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+		    <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
 		  {#/if}
 	   </a>
 	   <div class="zm-list-content-medium">
 			<h2 class="zm-list-content-title">
-			  <a  href="/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}" data-userid='{$T.list.userid}' target="_blank" class="zg-link author-link" title="{$T.list.userName}">{$T.list.userName}</a>
+			  <a  href="/myHome/getHomePage?userid={$T.list.visitorid}" data-userid='{$T.list.visitorid}' target="_blank" class="zg-link author-link" title="{$T.list.userName}">{$T.list.userName}</a>
 			</h2>
 			<div class="ellipsis">
 			    <span class="bio">

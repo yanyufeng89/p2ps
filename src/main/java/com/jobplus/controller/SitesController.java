@@ -119,7 +119,7 @@ public class SitesController {
 				mv.setViewName("404");
 				return mv;
 			}
-			logger.info("**getSiteDetail*获取站点详情****record==" + JSON.toJSONString(record));
+//			logger.info("**getSiteDetail*获取站点详情****record==" + JSON.toJSONString(record));
 			mv.addObject("record", record);
 			if("7".equals(isAdmin)){
 				//后台管理员查看

@@ -21,7 +21,7 @@
 		   </a>
 	  </div>
 	  
-	     <a href='javascript:void(0);' onclick="share();" target='_blank' class='head-sharein' style='float:right'></a>
+	     <a href='javascript:void(0);' onclick="share();" class='head-sharein' style='float:right'></a>
 	  
 </div>
 <script type="text/javascript">
@@ -38,6 +38,6 @@
             type = 4;
         else if (currentUrl.indexOf("getSharedSiteList") > -1)
             type = 5;
-        window.open("/51jobplusCore/sharein/searchuploadFile?type=" + type);
+        window.open("/sharein/searchuploadFile?type=" + type);
     }
 </script>

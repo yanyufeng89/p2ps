@@ -18,7 +18,7 @@
   </div>
  {#/if}
   <div class="education">
-           学校名称:&nbsp;&nbsp;
+     <label>学校名称:</label>
      <span class='schoolname'>
        <textarea name="school" class="content" style="resize: none" placeholder="填写学校名称"></textarea>    
         <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
@@ -29,8 +29,7 @@
   <div class='graduate'>
     <span class='schoolinfo'>
        <span class="schooltime">
-                         在校时间:&nbsp;&nbsp;
-              
+             <label>在校时间:</label>
              <input type="text" class="schoolstartTime" readonly='readonly' value='{$T.schoolstartTime}' id='schoolstartTime{$T.randomid}'/>
 		   --
 		     <input type="text" class="schoolendTime" readonly='readonly' value='{$T.schoolendTime}' id='schoolendTime{$T.randomid}'/>
@@ -43,7 +42,7 @@
   </div>
   <div class='major'>
     <span class='professioninfo'>
-	         所学专业:&nbsp;&nbsp;
+	     <label> 所学专业:</label>
 	     <span class='profession'>
 	       <textarea name="major" class="content" style="resize: none" placeholder="填写专业名称"></textarea>   
 	     </span>

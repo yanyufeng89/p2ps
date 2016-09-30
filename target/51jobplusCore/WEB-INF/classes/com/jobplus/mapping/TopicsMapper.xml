@@ -253,7 +253,6 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-        lastEditTime = Now(),
       <if test="createperson != null" >
         createPerson = #{createperson,jdbcType=INTEGER},
       </if>
@@ -293,6 +292,7 @@
       <if test="isvalid != null" >
         isValid = #{isvalid,jdbcType=INTEGER},
       </if>
+      lastEditTime = Now()
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>

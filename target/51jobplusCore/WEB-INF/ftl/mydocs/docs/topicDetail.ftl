@@ -4,11 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-           话题详细
+           ${topicsDetail.title}_JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_simplePagination.css">
-    <link rel='stylesheet' type='text/css' href='/51jobplusCore/css/pj_topicdetail.css'>
+    <link rel="stylesheet" type="text/css" href="/css/pj_simplePagination.css">
+    <link rel='stylesheet' type='text/css' href='/css/pj_topicdetail.css'>
   </head>
   <body id='topictop'>
     <div  class="page">
@@ -77,8 +77,9 @@
 							  <i class="z-icon-report-o"></i>举报
 					        </a>
 					        <#if (Session.user)??>
-                              <span class="zg-bull">•</span>
-                              <a href="javascript:void(0)" name="invite" class="meta-item" id='invite'>邀请回答</a>
+					          <span class="zg-bull">•</span>
+                              <a href="javascript:void(0)" name="invite" class="meta-item invite" id='invite'>邀请回答
+                              </a>
                             </#if>
 					        <span  class='meta-item'>分享到</span>
                             <a href="javascript:void(0);" onclick="toShare(1,'${topicsDetail.title}');" class="log_sina png" title="分享到新浪微博"></a>
@@ -94,11 +95,11 @@
                         <#if (sortType=='1')>
                           <input type='hidden' name='sorttype' value='2'>
 						  <span class="lbl">按时间排序</span>
-						  <a class="lbl" href="/51jobplusCore/topics/getTopicsDetail?topicId=${topicsDetail.id}&sortType=2">按点赞排序</a>
+						  <a class="lbl" href="/topics/getTopicsDetail?topicId=${topicsDetail.id}&sortType=2">按点赞排序</a>
                         <#else>
                          <input type='hidden' name='sorttype' value='1'>
                           <span class="lbl">按点赞排序</span>
-						  <a class="lbl" href="/51jobplusCore/topics/getTopicsDetail?topicId=${topicsDetail.id}&sortType=1">按时间排序</a>
+						  <a class="lbl" href="/topics/getTopicsDetail?topicId=${topicsDetail.id}&sortType=1">按时间排序</a>
                         </#if>  
 						<i class="zg-icon zg-icon-double-arrow"></i>
 						</div>
@@ -113,7 +114,7 @@
 							<div class="answer-head">
 							<div class="zm-item-answer-author-info">
 
-							   <a class="zm-item-link-avatar avatar-link" href='/51jobplusCore/myHome/getHomePage?userid=${list.userid}' target="_blank">
+							   <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage?userid=${list.userid}' target="_blank">
 
 							   <#if (list.tmpHeadIcon)??&&list.tmpHeadIcon?length gt 0>
 							     <#if (list.isPublic==1)>
@@ -123,9 +124,9 @@
 							     </#if>
 							    <#else>
 							      <#if (list.isPublic==1)>
-							         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='${list.userid}' data-moduletype='0'>
+							         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='${list.userid}' data-moduletype='0'>
 							      <#else>
-							         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='${list.userid}' data-moduletype='0'>
+							         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='${list.userid}' data-moduletype='0'>
 							      </#if>
 							   </#if>
 							   <#if (list.isPublic==1)>
@@ -217,15 +218,15 @@
 						<div class="zm-editable-content" style="display: none;"><a href="javascript:;" class="zu-edit-button" name="edit"><i class="zu-edit-button-icon"></i>修改</a></div>
 						<div class="pj-editable-editor-wrap" style="">
 							<div class="zh-answer-form clearfix">
-							   <a href='/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}' class="zm-item-link-avatar" target='_blank'>
+							   <a href='/myHome/getHomePage?userid=${Session.user.userid}' class="zm-item-link-avatar" target='_blank'>
 								 <#if (Session.user.headicon)??&&Session.user.headicon?length gt 0>
 								   <img src="${Session.user.headicon}" class="zm-list-avatar" data-userid='${Session.user.userid}' data-moduletype='0'>
 								  <#else>
-								   <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar" data-userid='${Session.user.userid}' data-moduletype='0'>
+								   <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar" data-userid='${Session.user.userid}' data-moduletype='0'>
 								 </#if>
 							   </a>
 							    <div class="zu-answer-form-title">
-									<a href='/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}' target='_blank' title="<#if (Session.user)??>${Session.user.username}</#if>" data-userid='${Session.user.userid}' class='author-link' data-moduletype='0'>
+									<a href='/myHome/getHomePage?userid=${Session.user.userid}' target='_blank' title="<#if (Session.user)??>${Session.user.username}</#if>" data-userid='${Session.user.userid}' class='author-link' data-moduletype='0'>
 									  <#if (Session.user)??>
 									   ${Session.user.username}
 									  </#if>
@@ -252,7 +253,7 @@
 					 <#else>
 					    <div class="col-md-6 col-md-offset-3 login-after-comments" style="text-align: center;">
 				               <span class="hidden-xs" style="line-height:50px;font-size: 16px;color: #090909;">登录后才能发布回答</span><br>
-				               <span class="comments-login-register hidden-xs loginprompt-null" style="margin-left: 20px;margin-right:10px;"><a  target='_blank' href='javascript:toLogin();'>登录</a> |  <a  target='_blank' href='/51jobplusCore/registration.html'>立即注册</a> </span>
+				               <span class="comments-login-register hidden-xs loginprompt-null" style="margin-left: 20px;margin-right:10px;"><a href='javascript:void(0);' onclick="toLogin();">登录</a> |  <a  target='_blank' href='/registration.html'>立即注册</a> </span>
 			            </div>
 					 </#if>
 					</div>
@@ -261,12 +262,12 @@
 
         <div class="plus-main-sidebar">
 		     <div class="searchresright share-plaza">
-	            <a class="share-icon bg-index" href="/51jobplusCore/sharein/searchuploadFile?type=1"></a>
+	            <a class="share-icon bg-index" href="/sharein/searchuploadFile?type=1"></a>
 	            <a target="_blank" href="javascript:void(0)" class="text">
 				  文档---话题---书籍---课程---文章---站点
 				</a>
 	         </div>
-			 <div class='zm-relate-answer'>
+			 <div class='zm-relate-content'>
 			 <div class="zm-side-section">
 				<div class="zm-side-section-inner" id="zh-question-side-header-wrap">
 
@@ -312,12 +313,12 @@
 				  <#if (topicsDetail.fansList)??>
 				   <#list topicsDetail.fansList as fanlist>
 
-				     <a title="${fanlist.username}" target='_blank' href='/51jobplusCore/myHome/getHomePage?userid=${fanlist.userid}' data-moduletype='0'>
+				     <a title="${fanlist.username}" target='_blank' href='/myHome/getHomePage?userid=${fanlist.userid}' data-moduletype='0'>
 				 
 					   <#if (fanlist.headicon)?? && fanlist.headicon?length gt 0>
 					     <img src="${fanlist.headicon}" class="zm-item-img-avatar" data-moduletype='0' data-userid='${fanlist.userid}'>
 					   <#else>
-					     <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-moduletype='0' data-userid='${fanlist.userid}'>
+					     <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-moduletype='0' data-userid='${fanlist.userid}'>
 					   </#if>
 					</a>
 				  </#list>
@@ -336,7 +337,7 @@
 					<#if (topicsDetail.relatedList)??>
 					   <#list topicsDetail.relatedList as relatelist>
 						<li>
-							 <a class="question_link" href="/51jobplusCore/topics/getTopicsDetail?topicId=${relatelist.data_id}" data-id="${relatelist.id}">${relatelist.title}</a> 
+							 <a class="question_link" href="/topics/getTopicsDetail?topicId=${relatelist.data_id}" data-id="${relatelist.id}">${relatelist.title}</a> 
 							 <span class="num">${relatelist.replySum}个回答</span>
 						</li>
 					  </#list>
@@ -346,16 +347,18 @@
 					</div>
 		    </div>
            </div>
-
+           <div class='pj_jsonp ad_exposure'>
+	            <img src='/image/ad_exposure_6.jpg' alt='' width='310' height='278'>
+	       </div>  
         </div>
 		   </div>
         </div>
       </div> 
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
-     <a id="topicbacktop" title="回到顶部" href="#topictop" style="bottom: 300px; display: none;"></a>
+     <a id="topicbacktop" title="回到顶部" href="#topictop"  class='back-to-top' style="bottom: 300px; display: none;"></a>
      <#include "/mydocs/commonTemplate/detailjs/detailjs.ftl"/>
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_mycentertopic.js"></script>
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_msgbox.js"></script>
+     <script type="text/javascript" src="/scripts/pj_mycentertopic.js"></script>
+     <script type="text/javascript" src="/scripts/pj_msgbox.js"></script>
 
   </body>
 

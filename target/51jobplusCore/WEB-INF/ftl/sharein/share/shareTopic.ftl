@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>话题分享</title>
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_topic.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/jquery.autocomplete.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/uedit/themes/default/css/umeditor.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_topic.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.autocomplete.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/uedit/themes/default/css/umeditor.css" charset="UTF-8">
    </head>
   
   <body>
@@ -41,51 +41,59 @@
                       </div>
                       <div class="link after">
                         <input type='hidden' name='pj-autocomplete' value=''>
-                        <input type="text" id="js-before-ask" class='txtdocument' placeholder="请输入你的问题" value='' autocomplete="off" data-searchtype='0' />
-                        <input type='button' class='topicpreview iwanttoask' value='确定'>
+                        <input type="text" id="js-before-ask" class='txttopic' placeholder="请输入你的问题" value='' autocomplete="off" data-searchtype='0' />
+                        <#--<input type='button' class='topicpreview iwanttoask' value='确定'>-->
                         <span class="capture-loading" style="display: none;"></span>
                         <p class="error" style="display: none;">
                           <i class="tips_icon"></i>请输入话题</p>
                         <div class="ask-renderer" role='listbox' id='ask-renderer'>
                         </div>
+                        <div class="bar after">
+						    <a class="btnsure btn-blue" id='btntopicsure' href='javascript:void(0)'>确定</a>
+						    <a href='/sharein/searchuploadFile' class='btn-cancleupload'>取消</a>
+						    <div class="btn-loading push-loading"></div>
+		                 </div>
                       </div>
                     </div>
                   </div>
                   <div class="upload-intro-query clearfix">
-                    <h4>
-                    话题推荐
-                     </h4>
-                     <span class='pj-encourage'>每成功分享一个话题即可获得一定的财富奖励哦!</span>
-                     <ul>
+                     <h4>推荐分享</h4>
+                    <ul>
                       <li class="">
-                        搜索头条
+                       创新创业
                       </li>
                       <li class="query-box">
-                       新闻热点
+                      工业4.0
                       </li>
                       <li class="">
-                      科技创新
+                       新型材料
                       </li>
                       <li class="query-box">
-                        投资理财
+                      互联网+
                       </li>
                       <li class="">
-                       军事历史
+                      企业管理 
                       </li>
                       <li class="query-box">
-         IT互联网
+                         互联网运营
                       </li>
                       <li class="">
-                       社会与法
+                       供应链金融
                       </li>
                       <li class="query-box">
-                       体育运动
+                       新媒体
                       </li>
                       <li class="">
-                       娱乐媒体
+                      融资股权
                       </li>
                       <li class="query-box">
-                      生活休闲
+                       生物医药
+                      </li>
+                       <li class="">
+                    财务管理
+                      </li>
+                      <li class="query-box">
+                       大数据
                       </li>
                     </ul>
                   </div>
@@ -95,24 +103,27 @@
                     </h4>
                     <ol>
                       <li>
-                        1.话题分享应遵循客观、真实、简洁、明确、规范的原则,提问尽可能简洁明了,尽量避开太广泛的问题;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
                       </li>
                       <li>
-                        2.分享和已有问题完全重复的问题将会被移除,为避免重复,提问前可想进行搜索;
+                        2.话题分享应遵循客观、真实、简洁、明确、规范的原则，提问尽可能简洁明了，尽量避免太宽泛的问题;
                       </li>
                       <li>
-                        3.严禁分享含有辱骂他人,淫秽色情以及低俗信息等话题;
+                        3.禁止提问辱骂他人、含有淫秽色情及低俗信息等话题;
                       </li>
                       <li>
-                        4.提问有问题需要帮助？查看
+                        4.提问有问题需要帮助？详情请查看知识库
                         <a href="#" target="_blank">
-                                                                 知识库帮助
+                                                                 服务条款
+                        </a>和
+                        <a href="#" target="_blank">
+                                                                帮助中心
                         </a>
                       </li>
                     </ol>
                   </div>
                 </div>
-                <form method='post' action='/51jobplusCore/topics/add' enctype="multipart/form-data" id='topicaddForm' onkeydown="if(event.keyCode==13)return false;" >
+                <form method='post' action='/topics/add' enctype="multipart/form-data" id='topicaddForm' onkeydown="if(event.keyCode==13)return false;" >
                   <input type='hidden' name='content' value=''>
                   <input type='hidden' name='topicsclass' value=''>
                   <input type='hidden' name='ispublic' value=''>
@@ -137,6 +148,9 @@
                           <i class="iconfont"></i>&nbsp;发布
                         </a>
                        </span>
+                       <h3 id="item-message-all" class="item-message-all item-message-all-ok">
+                                                               请补充话题信息，完成上传
+                       </h3>
                     </div>
                     
                     <div id="uploadtopic-list" class="uploadtopic-list">
@@ -242,7 +256,7 @@
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchTopic" oninput="getTagsByCondition(this,'topic')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
-                                      <span class="topic-error">
+                                      <span class="pj-warmprompt">
                                            <b class="ic ic-msg" style="background-position: -47px -144px;"></b>至少添加一个标签
                                       </span>
                                      </td>
@@ -274,8 +288,8 @@
         </div>
       <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
       <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
-      <script type="text/javascript" src="/51jobplusCore/scripts/pj_topicsharein.js"></script>
-      <script type="text/javascript" src="/51jobplusCore/scripts/jquery.autocomplete.js"></script>
+      <script type="text/javascript" src="/scripts/pj_topicsharein.js"></script>
+      <script type="text/javascript" src="/scripts/jquery.autocomplete.js"></script>
   </body>
 
 </html>

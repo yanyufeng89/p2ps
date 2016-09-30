@@ -3,6 +3,7 @@ package com.jobplus.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -112,6 +113,7 @@ public class Common {
 
     /**
      * 生成6位随机验证码，且首位不为0
+     *
      * @return
      */
     public static String random() {
@@ -163,5 +165,33 @@ public class Common {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    /**
+     * url编码
+     *
+     * @param url
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    public static String encoderUrl(String url) throws UnsupportedEncodingException {
+        if (StringUtils.isNotBlank(url)) {
+            return java.net.URLEncoder.encode(url, "UTF-8").replaceAll("%3F", "?").replaceAll("%2F", "/").replaceAll("%3D","=");
+        }
+        return url;
+    }
+
+    /**
+     * 将emoji表情替换成*
+     *
+     * @param source
+     * @return 过滤后的字符串
+     */
+    public static String filterEmoji(String source) {
+        if(StringUtils.isNotBlank(source)){
+            return source.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "*");
+        }else{
+            return source;
+        }
     }
 }

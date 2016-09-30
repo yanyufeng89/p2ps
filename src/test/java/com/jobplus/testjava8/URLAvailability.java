@@ -2,7 +2,6 @@ package com.jobplus.testjava8;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 /**
  * 文件名称为：URLAvailability.java 文件功能简述： 描述一个URL地址是否有效
@@ -52,9 +51,5 @@ public class URLAvailability {
 		URLAvailability u = new URLAvailability();
 		u.isConnect(
 				"http://192.168.0.39:8199/docsDir/2016/09/08/60fceb755c14458394efa8eb046484ed1473320436794.txt?filename=%E5%A4%87%E6%B3%A8.txt");
-		
-		List list = null;
-		System.out.println(list.size());
-		
 	}
 }

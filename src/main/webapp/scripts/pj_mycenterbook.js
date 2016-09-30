@@ -99,7 +99,7 @@ $(function(){
 		var $this=$(this);
 		$.ajax({
 			type:"POST",
-         	url:projectName+"books/clickOnLike",
+         	url:"/books/clickOnLike",
          	data:{id:reasonid,likeOperate:islike,topObjId:bookid,objectNamePg:objectNamePg,relationidPg:reasonid,objCreatepersonPg:recommend},
          	dataType:"json",
          	success:function(data){
@@ -154,24 +154,6 @@ $(function(){
     	topicFollow($(this),0)
     })
     
-    //回到顶部
-    $("#bookbacktop").mousemove(function(){
-    	$("#bookbacktop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#bookbacktop").css("background-position-x", "0");
-    });
-    /*当界面下拉到一定位置出现向上的箭头 start*/
-    $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
-            $("#bookbacktop").fadeIn("fast");  
-        }  
-        else  
-        {  
-            $("#bookbacktop").fadeOut("fast");  
-        }  
-    });
-   /*当界面下拉到一定位置出现向上的箭头 end*/
-    
     //书籍详情页加载更多
     $('.loadmore').live('click',function(){
     	$(this).addClass('loading').empty().append("<span class='capture-loading'></span>加载中");
@@ -185,7 +167,7 @@ function bookLoadMore(obj){
     var bookid=$('input[name=bookid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"books/loadComments",
+      	url:"/books/loadComments",
       	data:{pageNo:Number(pageNo)+1,bookid:bookid},
     	dataType:"json",
     	success:function(data){
@@ -220,8 +202,10 @@ function bookLoadMore(obj){
           	   $(".headiconintotem").empty();
           	   $('.loadmore').attr('data-pageno',Number(pageNo)+1);
           	   obj.removeClass('loading').empty().append('更多');
-          	   if(Number(sumpage)==Number(pageNo)+1)
-          		 $('.loadmore').hide();
+          	   if(Number(sumpage)==Number(pageNo)+1){
+          		 $('.loadmore').hide().prev().css('border-bottom','none'); 
+          	   }
+          		
           	   intoUserInfo();
     		}else{
     			
@@ -236,7 +220,7 @@ function collectBook(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"books/collectBook",
+      	url:"/books/collectBook",
       	data:{actionType:actiontype,objectid:bookid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -267,7 +251,7 @@ function cancelCommtent(obj){
 	var bookid=$('input[name=bookid]').val();
 	$.ajax({
 	    type:"POST",
-     	url:projectName+"books/delComment",
+     	url:"/books/delComment",
      	data:{id:recommend,commentby:commentby,bookid:bookid},
      	dataType:"json",
      	success:function(data){
@@ -290,7 +274,7 @@ function intoUserInfo(){
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_books"},
    	dataType:"json",
    	success:function(data){
@@ -322,7 +306,7 @@ function deleteMyCollects(conditions,obj){
 function delComment(conditions,obj){
 	   $.ajax({
     	type:"POST",
-    	url:projectName+"books/delComment",
+    	url:"/books/delComment",
     	data:{condition:conditions},
     	dataType:"json",
     	success:function(data){
@@ -372,6 +356,9 @@ function insertComment(obj,type){
 		 //被评论人
 		 objCreatepersonPg=$('input[name=bookCreatePerson]').val();
 	 }
+	 if($.trim(commendcontent).length==0){
+		 return false;
+	 }
 	 var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
 	 if(len>1000){
 	 		if(obj.parent().find('span').length==0)
@@ -383,7 +370,7 @@ function insertComment(obj,type){
 	 var $this=obj;
 	 $.ajax({
 		    type:"POST",
-         	url:projectName+"books/insertComment",
+         	url:"/books/insertComment",
          	data:{bookid:bookid,recommend:commendcontent,commentby:commentby,objectNamePg:bookname,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid},
          	dataType:"json",
          	success:function(data){

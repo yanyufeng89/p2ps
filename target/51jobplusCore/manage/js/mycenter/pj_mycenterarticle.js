@@ -87,21 +87,7 @@ $(function(){
 	$('._CommentForm_actions_ooEq [name=answeraddnew]').live('click',function(){
 		insertComment($(this),'0');
 	});
-	 //回到顶部
-    $("#articlebacktop").mousemove(function(){
-    	$("#articlebacktop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#articlebacktop").css("background-position-x", "0");
-    })
-    /*当界面下拉到一定位置出现向上的箭头 start*/
-    $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
-            $("#articlebacktop").fadeIn("fast");  
-        }else{  
-            $("#articlebacktop").fadeOut("fast");  
-        }  
-    });
-    /*当界面下拉到一定位置出现向上的箭头 end*/
+	
    //文章详情  删除推荐语
 	$('.js-cancel').live('click',function(){
 		cancelCommtent($(this));
@@ -145,7 +131,7 @@ function articleLoadMore(obj){
     var articleid=$('input[name=articleid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"article/loadComments",
+      	url:"/article/loadComments",
       	data:{pageNo:Number(pageNo)+1,articleid:articleid},
     	dataType:"json",
     	success:function(data){
@@ -175,7 +161,7 @@ function collectArticle(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"article/collectArticle",
+      	url:"/article/collectArticle",
       	data:{actionType:actiontype,objectid:articleid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -208,7 +194,7 @@ function articleLike(obj){
 	var objectNamePg=$('input[name=articlename]').val();
 	$.ajax({
 		type:"POST",
-      	url:projectName+"article/clickLikeOnArticle",
+      	url:"/article/clickLikeOnArticle",
       	data:{likeOperate:islike,id:articleid,relationidPg:articleid,objectNamePg:objectNamePg,objCreatepersonPg:objCreatepersonPg},
       	dataType:"json",
       	success:function(data){
@@ -243,7 +229,7 @@ function cancelCommtent(obj){
 	
 	$.ajax({
 	    type:"POST",
-     	url:projectName+"manage/backstage/delComment",
+     	url:"/manage/backstage/delComment",
      	data:{id:recommend,tableName:tableName},//articleid:articleid,
      	dataType:"json",
      	success:function(data){
@@ -261,7 +247,7 @@ function cancelCommtent(obj){
 function delSharedArticle(conditions,obj){
 	   $.ajax({
 	    	type:"POST",
-	    	url:projectName+"article/delSharedArticle",
+	    	url:"/article/delSharedArticle",
 	    	data:{condition:conditions},
 	    	dataType:"json",
 	    	success:function(data){
@@ -292,7 +278,7 @@ function delSharedArticle(conditions,obj){
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_article"},
    	dataType:"json",
    	success:function(data){
@@ -354,7 +340,7 @@ function insertComment(obj,type){
 	 var $this=obj;
 	 $.ajax({
 		type:"POST",
-       	url:projectName+"article/addComment",
+       	url:"/article/addComment",
        	data:{articleid:articleid,recommend:commendcontent,commentby:commentby,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid,objectNamePg:objectName},
        	dataType:"json",
        	success:function(data){

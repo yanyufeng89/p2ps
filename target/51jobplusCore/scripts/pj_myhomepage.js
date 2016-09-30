@@ -125,7 +125,7 @@ $(function(){
     });
     //关注人
     $('.operation .zm-rich-follow-btn').live('click',function(){
-    	topicFollow($(this),0)
+    	topicFollow($(this),0);
     })
     //点击修改职位
     $('a[name=editposition]').live('click',function(){
@@ -290,10 +290,9 @@ $(function(){
         	$('#recommended-sections').append($('.homepageTemplate').html());
         	$('.homepageTemplate').empty();
     	}else{
-    		window.location.href='#self-info-detail';
     		$('.background-selfinfo-container').css('border-color','#0867c5');
     	}
-    	
+    	window.location.href='#self-info-detail';
        //$(this).addClass('disabled');
     })
     
@@ -310,11 +309,10 @@ $(function(){
 	       	$('.homepageTemplate').processTemplate(data);
 	       	$('#recommended-sections').append($('.homepageTemplate').html());
 	       	$('.homepageTemplate').empty();
-	       	window.location.href='#skill0';
 	   	}else{
-	   		window.location.href='#skill0';
 	   		$('#skill0').css('border-color','#0867c5');
 	   	}
+	    window.location.href='#skill0';
     })
     //修改技能
     $('a[name=editskill],#addcontinuousskill').live('click',function(){
@@ -582,30 +580,28 @@ $(function(){
      //关注与取消关注人
     $('.detail-list .zg-btn,.profile-actions .zg-btn,#zh-profile-follows-list .zg-btn').live('click',function(){
     	addFollows($(this));
+    	var actiontype=$(this).attr('data-actiontype');
+    	var userid=$(this).attr('data-userid');
+    	//当前区域同一用户变成相同状态
+    	$('.zg-btn').each(function(){
+    		if($(this).attr('data-userid')==userid){
+    			if(actiontype==1){
+    				$(this).removeClass('zg-btn-follow').addClass('zg-btn-unfollow');
+    				$(this).empty().html('取消关注');
+    				$(this).attr('data-actiontype','0');
+    			}else{
+    				$(this).removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
+    				$(this).empty().html('关注');
+    				$(this).attr('data-actiontype','1');
+    			}
+    		}
+    	})
     })
     //技能点击保存
     $('a[name=myskillsave]').live('click',function(){
     	var id=$(this).attr('data-skillid');
     	SaveSkills(id,$(this));
     })
-    //回到顶部
-    $("#backcentertop,#backaboutmetop").mousemove(function(){
-     	$("#backcentertop,#backaboutmetop").css("background-position-x", "-28px");
-     }).mouseleave(function(){
-     	$("#backcentertop,#backaboutmetop").css("background-position-x", "0");
-    })
-         
-     /*首页当界面下拉到一定位置出现向上的箭头 start*/
-     $(window).scroll(function(){  
-         if ($(window).scrollTop()>100){  
-             $("#backcentertop,#backaboutmetop").fadeIn("fast");  
-         }  
-         else  
-         {  
-             $("#backcentertop,#backaboutmetop").fadeOut("fast");  
-         }  
-     });
-    /*首页当界面下拉到一定位置出现向上的箭头 end*/
     
     //个人主页文档加载更多
     /*tbl_docs  tbl_article   tbl_sites tbl_topics                  title  
@@ -645,7 +641,7 @@ function otherAtten(obj){
 	var userid=obj.attr('data-userid');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyAttenMan",
+		url:"/myCenter/getMyAttenMan",
 		data:{userid:userid},
 		dataType:"json",
 		success:function(data){
@@ -676,6 +672,7 @@ function otherAtten(obj){
 			 $('.pagetemplate').setTemplateURL(projectName+'otherAttenAndFansTemplate.html');
 			 $('.pagetemplate').processTemplate(model);
 			 $('#zh-profile-follows-list .zh-general-list').empty().append($('.pagetemplate').html());
+			 $('.pjfans-load-more,.pjatten-load-more').remove();
 			 $('.pagetemplate').empty();
 			 $('#zh-profile-follows-list .zm-profile-fansandatten-name').html('他关注的人');
 			 if(data.user.userid==(userInfo==undefined?'':userInfo.userid)){
@@ -707,7 +704,7 @@ function otherFans(obj){
 	var userid=obj.attr('data-userid');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyFans",
+		url:"/myCenter/getMyFans",
 		data:{userid:userid},
 		dataType:"json",
 		success:function(data){
@@ -739,6 +736,7 @@ function otherFans(obj){
 			 $('.pagetemplate').setTemplateURL(projectName+'otherAttenAndFansTemplate.html');
 			 $('.pagetemplate').processTemplate(model);
 			 $('#zh-profile-follows-list .zh-general-list').empty().append($('.pagetemplate').html());
+			 $('.pjfans-load-more,.pjatten-load-more').remove();
 			 $('.pagetemplate').empty();
 			 if(data.user.userid==(userInfo==undefined?'':userInfo.userid)){
 				 $('#zh-profile-follows-list .zm-profile-fansandatten-name').html('我的粉丝'); 
@@ -748,7 +746,7 @@ function otherFans(obj){
 			 $('#zh-profile-follows-list').show();
 			 //判断当前是否有加载更多
 			 if(data.myFansPage.last>1){
-				 var mhtml='<a href="javascript:;" data-pageno="1" data-isfans="1" data-userid='+data.user.userid+' data-sumpage='+data.myFansPage.last+' class="zg-btn-white zg-r3px zu-button-more pjfans-load-more">更多</a>'  
+				 var mhtml='<a href="javascript:void(0);" data-pageno="1" data-isfans="1" data-userid='+data.user.userid+' data-sumpage='+data.myFansPage.last+' class="zg-btn-white zg-r3px zu-button-more pjfans-load-more">更多</a>'  
 			 }
 			 $('#zh-profile-follows-list').append(mhtml);
 			 //加载更多去掉
@@ -771,7 +769,7 @@ function loadShareData(obj){
 	var tablecolumn2=obj.attr('data-tablecolumn2');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myHome/getOneShares",
+		url:"/myHome/getOneShares",
 		data:{userid:userid,tableName:tablename,tableColumn:tablecolumn,tableColumn2:tablecolumn2},
 		dataType:"json",
         success:function(data){
@@ -800,7 +798,7 @@ function loadMoreData(obj){
 	var sumpage=obj.data('sumpage');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myHome/getOneShares",
+		url:"/myHome/getOneShares",
 		data:{userid:userid,tableName:tablename,tableColumn:tablecolumn,pageNo:Number(pageNo)+1,tableColumn2:tablecolumn2},
 		dataType:"json",
         success:function(data){
@@ -822,7 +820,7 @@ function loadMoreFansAndAttenData(obj){
 	if(isfans=='1'){
 		$.ajax({
 			type:"POST",
-			url:projectName+"myCenter/getMyFans",
+			url:"/myCenter/getMyFans",
 			data:{userid:userid,pageNo:Number(pageNo)+1},
 			dataType:"json",
 			ansyc:false,
@@ -830,13 +828,11 @@ function loadMoreFansAndAttenData(obj){
 	        	$.each(data.myFansPage.list,function(index,item){
 	    			if(item.fansIds!=undefined){
 	    				if(item.fansIds.indexOf(',')!=-1){
-	                        $.each(item.fansIds.split(','),function(index1,item1){
-	                        	if(item1==(userInfo==undefined?'':serInfo.userid)){
-	                        		item.fansIds=1;
-	                        	}else{
-	                        		item.fansIds=0;
-	                        	}
-	                        })
+	                        if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
 	    				}else{
 	    					if(item.fansIds==(userInfo==undefined?'':serInfo.userid)){
 	    						item.fansIds=1;
@@ -867,7 +863,7 @@ function loadMoreFansAndAttenData(obj){
 	}else{
 		$.ajax({
 			type:"POST",
-			url:projectName+"myCenter/getMyAttenMan",
+			url:"/myCenter/getMyAttenMan",
 			data:{userid:userid,pageNo:Number(pageNo)+1},
 			dataType:"json",
 			ansyc:false,
@@ -923,8 +919,8 @@ function loadMoreHtml(shares,name,tablename){
 	var shtml='';
 	$.each(shares,function(index,item){
 		shtml+='<li>'
-	    shtml+='  <span class="allnewscontent">分享了'+name
-	    shtml+='     <a href='+getLinkUrl(tablename,item.id)+' target="_blank">'+item.objName+'</a>'
+	    shtml+='  <span class="allnewscontent textoverflow">分享了'+name
+	    shtml+='     <a href='+getLinkUrl(tablename,item.id)+' target="_blank" title="'+item.objName+'">'+item.objName+'</a>'
 	    shtml+=' </span>'	
 	    shtml+=' <span class="smsdate zg-right">'+formatDate(item.createtime)+'</span>'
 	    shtml+='</li>'	
@@ -939,7 +935,7 @@ function loadMoreHtml(shares,name,tablename){
 	 var actiontype=obj.attr('data-actionType');
 	 $.ajax({
 			type:"POST",
-			url:projectName+"myCenter/addFollows",
+			url:"/myCenter/addFollows",
 			data:{objectType:'0',objectid:userid,actionType:actiontype},
 			dataType:"json",
 	        success:function(data){
@@ -962,7 +958,7 @@ function loadMoreHtml(shares,name,tablename){
 function saveMyContanct(email,phone){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:{email:email,mobile:phone},
 	    dataType:"json",
 	    success:function(data){
@@ -1010,7 +1006,7 @@ function saveEducationBg(schoolname,schoolstartTime,schoolendTime,profession,obj
 	    var currentid=obj.parents('.background-education-container').find('input[name=currentid]').val();
 		$.ajax({
 			type:'POST',
-		    url:projectName+"myHome/updEduInfo",
+		    url:"/myHome/updEduInfo",
 		    data:{school:schoolname,major:profession,starttime:schoolstartTime,endtime:schoolendTime,id:currentid},
 		    dataType:"json",
 		    success:function(data){
@@ -1028,7 +1024,7 @@ function saveWorkExperience(companyname,onjobstartTime,onjobendTime,position,des
 	var currentid=obj.parents('.background-workexperience-container').find('input[name=currentid]').val();
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updWorkExpInfo",
+	    url:"/myHome/updWorkExpInfo",
 	    data:{company:companyname,jobtitle:position,starttime:onjobstartTime,endtime:onjobendTime,id:currentid,description:description},
 	    dataType:"json",
 	    success:function(data){
@@ -1146,9 +1142,9 @@ function editWorkData(companyname,onjobstartTime,onjobendTime,jobtitle,descripti
 	if(companyname!='')
 		obj.parents('.background-workexperience-container').next().find('.companyname textarea[name=company]').val(companyname);
 	if(description!='')
-		obj.parents('.background-workexperience-container').next().find('.workcontent textarea[name=description]').val(description);
+		obj.parents('.background-workexperience-container').next().find('textarea[name=description]').val(description);
 	if(jobtitle!='')
-		obj.parents('.background-workexperience-container').next().find('.position textarea[name=position]').val(jobtitle);
+		obj.parents('.background-workexperience-container').next().find('textarea[name=position]').val(jobtitle);
 	$('#jobstartTime'+randomid).dateSelect();
 	$('#jobendTime'+randomid).dateSelect();
 	obj.parents('.background-workexperience-container').remove();
@@ -1187,7 +1183,7 @@ function hiddenSelfInfo(obj){
 function updateSelfInfo(birthdayday,birthdaymonth,marriage,description){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:{birthdayone:birthdaymonth,birthdaytwo:birthdayday,ismarry:marriage,description:description},
 	    dataType:"json",
 	    success:function(data){
@@ -1271,7 +1267,7 @@ function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,descr
 		hiddenWorkExperience();
 	}
 	if(companyname!=''){
-		obj.parents('.background-workexperience-container').find('.company .companyname').text(companyname);
+		obj.parents('.background-workexperience-container').find('.companyname').text(companyname);
 		obj.parents('.background-workexperience-container').find('input[name=companyname]').val(companyname);
 		obj.parents('.background-workexperience-container').find('a[name=editscompanyname]').show();
 	}
@@ -1314,7 +1310,7 @@ function hiddenCiteArea(){
 function updateCityOrProvince(city,province){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:{city:city,province:province},
 	    dataType:"json",
 	    success:function(data){
@@ -1331,7 +1327,7 @@ function updateCityOrProvince(city,province){
 function updateColumn(val,column){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:column+val,
 	    dataType:"json",
 	    success:function(data){
@@ -1396,6 +1392,9 @@ function previewImage(file){
                div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
              }
          }
+         else{
+        	 ZENG.msgbox.show('抱歉，上传失败 ，请上传小于2M的图片!', 5, 3000);return false;
+         }
          
    }
 function clacImgZoomParam( maxWidth, maxHeight, width, height ){
@@ -1426,7 +1425,7 @@ function clacImgZoomParam( maxWidth, maxHeight, width, height ){
 function updUserInfo() {  
     var formData = new FormData($("#previewImage")[0]);  
     $.ajax({  
-    	 url:projectName+"myHome/updUserInfo",
+    	 url:"/myHome/updUserInfo",
          type: 'POST',  
          data: formData,  
          async: false,  
@@ -1456,7 +1455,7 @@ function  getSkillsByCondition(obj){
 	}else if($.trim(newval).length==0){
 		   $(obj).parent().find('div:last-child').remove();
 		   $('input[name=currentskillval').val('');
-		   $('#skill0').height('145px');
+           $('#skill0').height($('#skillinputtags').height()+140+'px');
 	}
 	
 }
@@ -1464,7 +1463,7 @@ function  getSkillsByCondition(obj){
 function findSkills(conds,obj){
 	$.ajax({
 		type:'POST',
-		url:projectName+"skills/findSkill/ "+conds,
+		url:"/skills/findSkill/ "+conds,
 		dataType:"JSON",
      	async:false,
      	success:function(data){
@@ -1480,18 +1479,22 @@ function findSkills(conds,obj){
 //保存技能
 function SaveSkills(id,obj){
 	var skills='';
+	var skillIds='';
 	$('#skillinputtags a').each(function(){
 		skills+=$(this).attr('id')+":"+$(this).data('name')+",";
+		//技能ids
+		skillIds+= $(this).attr('id')+",";
 	})
 	skills=skills.substring(0,skills.length-1);
+	skillIds=skillIds.substring(0,skillIds.length-1);
 	if(skills.length==0){
 		$('.background-skills-container').remove();
-		return false;
+//		return false;
 	}
 	$.ajax({
 		type:'POST',
-		url:projectName+"myHome/updSkill",
-		data:{skillitem:skills,id:id},
+		url:"/myHome/updSkill",
+		data:{skillitem:skills,id:id,skillIds:skillIds},
 		dataType:"JSON",
      	async:false,
      	success:function(data){

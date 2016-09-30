@@ -218,7 +218,8 @@
       <if test="likeOperate != null" >
         likeSum = likeSum + #{likeOperate,jdbcType=INTEGER},
       </if>
-     
+      
+     updateTime = now()
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -406,7 +407,6 @@
       <if test="isdelete != null" >
         isdelete = #{isdelete,jdbcType=INTEGER},
       </if>
-        updateTime = Now(),
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -428,7 +428,7 @@
       <if test="isPublic != null" >
         isPublic = #{isPublic,jdbcType=INTEGER},
       </if>
-     
+      updateTime = Now()
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>

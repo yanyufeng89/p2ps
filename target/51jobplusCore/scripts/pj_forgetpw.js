@@ -53,7 +53,7 @@ function forgetpw(){
 function Isexistsmoble(usertel,type){
 	var flag=true;
 	$.ajax({
-		url:"/51jobplusCore/user/check/"+usertel+"/"+type,
+		url:"/user/check/"+usertel+"/"+type,
 		type : "POST", 
 		data :{id:usertel},
 		dataType:"json",
@@ -87,7 +87,7 @@ function checksendcode(sendtype){
 	 }
 	 $.ajax({
 			type:"POST",
-	      	url:"/51jobplusCore/mobilesms/checkSms",
+	      	url:"/mobilesms/checkSms",
 	      	data:{smsId:verification_code,validateCode:code},
 	    	dataType:"json",
 	    	async:false,
@@ -131,7 +131,7 @@ function editpw(){
 		 }
 		 $.ajax({
 				type:"POST",
-		      	url:"/51jobplusCore/user/changePassword",
+		      	url:"/user/changePassword",
 		      	data:col,
 		    	dataType:"json",
 		    	async:false,

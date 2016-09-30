@@ -1,5 +1,21 @@
 <!-- 话题专区 -->
-{#foreach $T.topicsPage as topiclist}
+{#if $T.topiclen==0}
+    <div class='resultList'>
+		 <div class='emptyList'>
+		   <div class='empty-tip'>
+			   <div class="empty-img">
+				  <img src="/image/angry.png" alt="">
+			   </div>
+			   <div class="empty-info">
+					对不起，没有找到满足搜索条件的信息<br>
+					你可以修改你的搜索条件
+				</div>
+		   </div>
+		   <div class="cline"></div>
+		 </div>
+	</div>
+{#else}
+  {#foreach $T.topicsPage as topiclist}
     <div class="item">
         <div class='topicdivision-content'>
             <div class='topicdivision-left'>
@@ -63,7 +79,7 @@
                                 </div>
                             {#else}
                                     <div class="pict">
-                                        <img src='/51jobplusCore/image/9c65abe0be4bcf8.jpg_100x100.jpg' alt=''>
+                                        <img src='/image/default/65.jpg' alt=''>
                                     </div>
                             {#/if}
                         </div>
@@ -72,5 +88,5 @@
             </div>
          </div>
     </div>
-{#/for}
-
+  {#/for}
+{#/if}

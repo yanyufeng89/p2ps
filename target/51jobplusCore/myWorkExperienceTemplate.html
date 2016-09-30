@@ -1,7 +1,7 @@
 {#if $T.isContinueAdd==1}
-<div class="background-workexperience-container section-container" id='workchor{$T.anchor}'>
+<div class="background-workexperience-container section-container zg-empty" id='workchor{$T.anchor}'>
 {#else}
-<div class="background-workexperience-container section-container workexperience-container" id='work{$T.anchor}'>
+<div class="background-workexperience-container section-container workexperience-container zg-empty" id='work{$T.anchor}'>
 {#/if}
   <input type='hidden' name='isedit' value='{$T.isEdit}'>
   <input type='hidden' name='companyname' value='{$T.companyname}'>
@@ -19,19 +19,17 @@
   </div>
  {#/if}
   <div class="company">
-           公司名称:&nbsp;&nbsp;
-     <span class='companyname'>
-       <textarea name="company" class="content" style="resize: none" placeholder="填写公司名称"></textarea>    
-       <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
-       <span class="item-msg-content"  style="display:none">请填写公司名称</span>
-    </span>
-    <a href="javascript:;" class="zu-edit-button" name="editscompanyname" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+       <label>公司名称:</label>
+       <span class='companyname'>
+	       <textarea name="company" class="content" style="resize: none" placeholder="填写公司名称"></textarea>    
+	       <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+	       <span class="item-msg-content"  style="display:none">请填写公司名称</span>
+       </span>
+       <a href="javascript:;" class="zu-edit-button" name="editscompanyname" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
   </div>
   <div class='onjob'>
-    <span class='onjobinfo'>
        <span class="onjobtime">
-                         在职时间:&nbsp;&nbsp;
-              
+          <label>在职时间:</label>
              <input type="text" class="onjobstartTime" value='{$T.onjobstartTime}' readonly='readonly' id='jobstartTime{$T.randomid}'/>
 		   --
 		     <input type="text" class="onjobendTime" value='{$T.onjobendTime}' readonly='readonly' id='jobendTime{$T.randomid}'/>
@@ -40,25 +38,24 @@
              <span class="item-msg-content"  style="display:none">请选择在职时间</span>
       </span>
       <a href="javascript:;" class="zu-edit-button" name="editsonjobtime"  data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
-    </span>
   </div>
   <div class='workposition'>
-    <span class='positioninfo'>
-	          工作职位:&nbsp;&nbsp;
-	     <span class='position'>
-	       <textarea name="position" class="content" style="resize: none" placeholder="填写工作职位"></textarea>   
-	     </span>
+    <div class='positioninfo'>
+	     <label> 工作职位:</label>
+	    <span class='position'>
+	       <textarea name="position" class="content"  placeholder="填写工作职位"></textarea>   
+	    </span>
 	    <a href="javascript:;" class="zu-edit-button" name="editsposition" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
-    </span>
+    </div>
   </div>
   <div class='workdescription'>
-    <span class='description'>
-	        工作内容:&nbsp;&nbsp;
+    <div class='description'>
+	     <label> 工作内容:</label>
 	     <span class='workcontent'>
-	       <textarea name="description" class="content" style="resize: none" placeholder="填写工作内容"></textarea>   
+	       <textarea name="description" class="content"  placeholder="填写工作内容"></textarea>   
 	     </span>
 	    <a href="javascript:;" class="zu-edit-button" name="editsdescription" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
-    </span>
+    </div>
   </div>
   <div class="zm-command">
     <a class="zm-command-cancel" data-company='{$T.companyname}' data-description='{$T.description}' data-jobtitle='{$T.jobtitle}' data-onjobstartTime='{$T.onjobstartTime}' data-onjobendTime='{$T.onjobendTime}' data-currentid='{$T.currentid}'  name="myworkcancel" href="javascript:;" style='font-size:14px;font-weight:500;'>取消</a>

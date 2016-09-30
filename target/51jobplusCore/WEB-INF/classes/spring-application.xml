@@ -84,7 +84,6 @@
 		<property name="poolConfig" ref="jedisPoolConfig" />
 		<property name="hostName" value="${redis.ip}" />
 		<property name="port" value="${redis.port}" />
-		<property name="timeout" value="${redis.timeout}" />
 		<property name="password" value="${redis.password}" />
 	</bean>
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
@@ -128,6 +127,7 @@
 				/**.html = anon
 				/login = anon
 				/registration.html = anon
+				/favicon.ico = anon
 				/user/reg = anon
 				/user/changePassword = anon
 				/user/check/** = anon
@@ -154,6 +154,7 @@
 				/about/** = anon
 				/error/** = anon
 				/manage/login = anon
+				/manage/backstage/** = roles[admin]
 				/manage/avatars/** = anon
 				/manage/css/** = anon
 				/manage/font/** = anon

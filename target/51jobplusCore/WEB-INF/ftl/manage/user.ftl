@@ -57,7 +57,7 @@
             datatype: "json",
             height: 350,
             colModel: [
-                {name: 'id', key: 'true', hidedlg: true, hidden: true},
+                {name: 'userid', key: 'true', hidedlg: true, hidden: true},
                 {label: '用户名', name: 'username', width: '100', sortable: false},
                 {label: '邮箱', name: 'email', width: '100', sortable: false},
                 {label: '手机', name: 'mobile', width: '100', sortable: false},
@@ -83,7 +83,8 @@
                 updatePagerIcons(this);
                 var rowIds = $("#jqGrid").jqGrid('getDataIDs');
                 for (var i = 0; i < rowIds.length; i++) {
-                    var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deleteUser(' + rowIds[i] + ');">删除</button>';
+                    var rowData = $("#jqGrid").jqGrid('getRowData', rowIds[i]);
+                    var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deleteUser(' + rowData.userid + ');">删除</button>';
                     $("#jqGrid").jqGrid("setRowData", rowIds[i], {operates: operate});
                 }
             }

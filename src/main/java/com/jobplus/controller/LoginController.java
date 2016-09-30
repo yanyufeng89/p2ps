@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jobplus.utils.Common;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -22,22 +23,24 @@ import com.jobplus.service.ISysLoginLogService;
 import com.jobplus.service.IUserService;
 import com.jobplus.utils.SHAUtil;
 
+import java.io.UnsupportedEncodingException;
+
 @Controller
 public class LoginController {
 	/**
 	 * 实际的登录代码 如果登录成功，跳转至首页；登录失败，则将失败信息反馈对用户
-	 * 
+	 *
 	 * @param request
 	 * @param model
 	 * @return
 	 */
 	@Resource
 	private IUserService userService;
-	
+
 	@SuppressWarnings("rawtypes")
 	@Resource
 	private RedisTemplate redisTemplate;
-	
+
 	@Resource
 	private ISysLoginLogService sysLoginLogService;
 
@@ -54,7 +57,7 @@ public class LoginController {
 
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, User user, @RequestParam(required = false, defaultValue = "") String backurl) {
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, User user, @RequestParam(required = false, defaultValue = "") String backurl) throws UnsupportedEncodingException {
 		// 注册成功将用户信息存入session
 		//SavedRequest savedRequest = WebUtils.getSavedRequest(request);
 		//savedRequest.getRequestUrl();
@@ -72,7 +75,6 @@ public class LoginController {
 				username = String.valueOf(user.getUserid());
 			} else {
 				// 返回前端数据设置
-				mv.addObject("message", "用户名或密码错误");
 				mv.addObject("backurl", backurl);
 				// 返回视图名设置
 				mv.setViewName("login");
@@ -97,10 +99,9 @@ public class LoginController {
 				token.clear();
 			}
 			if (StringUtils.isNotBlank(backurl)) {
-				mv.setViewName("redirect:" + backurl);
+				mv.setViewName("redirect:" + Common.encoderUrl(backurl));
 			} else {
 				// 返回前端数据设置
-				mv.addObject("message", "登录成功");
 				mv.addObject("user", user);
 				// 返回视图名设置
 				mv.setViewName("redirect:/");
@@ -108,7 +109,6 @@ public class LoginController {
 			return mv;
 		} catch (AuthenticationException e) {
 			// 返回前端数据设置
-			mv.addObject("message", "用户名或密码错误");
 			mv.addObject("backurl", backurl);
 			// 返回视图名设置
 			mv.setViewName("login");
@@ -124,7 +124,6 @@ public class LoginController {
 		String seesionId = request.getSession().getId();
 		redisTemplate.delete(seesionId);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("message", "你已成功登出");
 		// 返回视图名设置
 		mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:"+backurl : "redirect:/");
 		logger.info("用户[" + SecurityUtils.getSubject().getPrincipal() + "]退出登录!");

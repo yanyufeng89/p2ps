@@ -8,7 +8,7 @@ $(function(){
 	    if(islook=='0'){
 	    	$.ajax({
 				type:"POST",
-				url:projectName+"myCenter/getSmsDetail",
+				url:"/myCenter/getSmsDetail",
 				data:{id:id,islook:0},
 				dataType:"json",
 				success:function(data){
@@ -33,7 +33,7 @@ $(function(){
 		var $this=$(this);
 		$.ajax({
 			type:"POST",
-			url:projectName+"myCenter/delSms",
+			url:"/myCenter/delSms",
 			data:{id:id},
 			dataType:"json",
 			success:function(data){
@@ -134,7 +134,7 @@ function makeSmsRead($this,type) {
 function delSms($this){
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/delSms",
+		url:"/myCenter/delSms",
 		dataType:"json",
 		success:function(data){
 			if(data.returnStatus=='000'){

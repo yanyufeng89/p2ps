@@ -7,7 +7,7 @@
 	    </div>
 	    <div class="skills-detail zg-empty">
 		  {#foreach $T.skillitem as skill}
-			 <a href="javascript:void(0);" class='zm-item-tag' href='' data-skillid='{$T.skill.id}'>{$T.skill.name}</a>
+			 <span  class='skillzone'  data-skillid='{$T.skill.id}'>{$T.skill.name}</span>
 		  {#/for}
 		  <a href="javascript:;" class="zu-edit-button" name="editskill" data-skillid='{$T.skillid}' data-skillitem='{$T.skillitems}'>
 		      <i class="zu-edit-button-icon"></i>修改

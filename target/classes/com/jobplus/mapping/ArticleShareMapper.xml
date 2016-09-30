@@ -39,7 +39,7 @@ t.createTime, t.likeSum
 		where 1=1
 		<!-- 资源必须未被删除 -->
 		and t.isdelete = 0
-		and uc.isValid = 1
+		and u.isValid = 1
 		<if test="userid != null"> AND
 			t.userID = #{userid,jdbcType=INTEGER}
 		</if>

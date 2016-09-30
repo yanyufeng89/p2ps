@@ -38,15 +38,13 @@
 						</div>
 						<div class='addtreasure'>
 						              系统自动给您加上<span class="success-upload-tips">${num}财富值</span>的奖励
+						      <a href="/myCenter/getMyDocsUploaded" class='checkshare'>查看已分享的文档>></a>
 						 </div>
-						 <a href="/51jobplusCore/myCenter/getMyDocsUploaded" class='checkshare'>查看已分享的文档>></a>
-						<a class="goon-upload log-xsend"  href="/51jobplusCore/sharein/searchuploadFile?type=0">继续分享</a>
+						<a class="goon-upload log-xsend"  href="/sharein/searchuploadFile?type=0">继续分享</a>
 					  </div>
 					</div>
 					<div class="successupload-notice">
-                    <h4>
-                      温馨提示
-                    </h4>
+                    <h4> 温馨提示</h4>
                     <ol>
                       <li>
                         1.如果你发现一节好的教程,可以推荐给更多的朋友,让更多的人一起学习;

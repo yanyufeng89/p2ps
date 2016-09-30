@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <title>个人主页</title>
         <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
-        <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_mycenter.css">
-        <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/jquery.pinwheel-0.1.0.css">
+        <link rel="stylesheet" type="text/css" href="/css/pj_mycenter.css">
+        <link rel="stylesheet" type="text/css" href="/css/jquery.pinwheel-0.1.0.css">
  </head>
     <body id='aboutmetop'>
         <div class="page">
@@ -19,7 +19,7 @@
                                <#if (userInfo.headicon)??>
                                  <img src="${userInfo.headicon}" width="120" height="120">
                                <#else>
-                                 <img src="/51jobplusCore/image/myphoto.jpg" width="120" height="120">
+                                 <img src="/image/myphoto.jpg" width="120" height="120">
                                </#if>
                             </div>
                             
@@ -109,7 +109,7 @@
                                  <div class="profile-actions">
                                  <#if (userInfo.userid?string==(Session.user.userid?string)!)>
 									   <div class="profile-actions">
-                                           <a href="/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}" class="preview-profile button-primary" target="_self">返回编辑界面</a>
+                                           <a href="/myHome/getHomePage?userid=${Session.user.userid}" class="preview-profile button-primary" target="_self">返回编辑界面</a>
 									  </div>
 								 <#else>
 								  <#if (userInfo.fansIds)??>
@@ -190,32 +190,23 @@
                     </div>
 					
                      <#if ((userInfo.ismarry)?? && userInfo.ismarry?length gt 0 && userInfo.ismarry!=2) || ((userInfo.birthdayone)?? && userInfo.birthdayone?length gt 0) || ((userInfo.birthdaytwo)?? &&  userInfo.birthdaytwo?length gt 0) || ((userInfo.description)?? &&  userInfo.description?length gt 0)>
-							<div class="background-selfinfo-container section-container" style='display:none'>
+							<div class="background-selfinfo-container section-container zg-empty" style='display:none'>
 								<div class="header">
 									<span>个人信息</span>
 								</div>
 								<div class="birthday">
 								  <#if (userInfo.birthdayone)?? && userInfo.birthdayone?length gt 0>
-									<span class='birth'>生日:&nbsp;&nbsp;${userInfo.birthdayone}月${userInfo.birthdaytwo}日</span>
+									<span class='birth'><label>生日:</label>${userInfo.birthdayone}月${userInfo.birthdaytwo}日</span>
 								  <#else>
-								    <span class='birth'>生日:&nbsp;&nbsp;</span>
+								    <span class='birth'><label>生日:</label></span>
 								  </#if>
-									<span class='marr'>
+									
 									<#if (userInfo.ismarry)?? && userInfo.ismarry!=2 && userInfo.ismarry?length gt 0>
-									  <span class="marriage">婚姻状况:&nbsp;&nbsp;
-									  
-									    <#if userInfo.ismarry==1>
-									    已婚
-									    <#elseif userInfo.ismarry==0>
-									    未婚
-									    </#if>
-								     
-									  </span>
-									 
+									  <span class="marriage"><label>婚姻状况:</label>	<#if userInfo.ismarry==1> 已婚<#elseif userInfo.ismarry==0> 未婚</#if></span>
 									 <#else>
 									   <span class="marriage">婚姻状况:&nbsp;&nbsp;</span>
 									 </#if>
-									</span>
+									
 								</div>
 								<div class="header">
 									<span>自我简介</span>
@@ -231,10 +222,10 @@
 					    <#list eduList as edulist>
 						 <#if edulist_index==0>
 						 <#assign edittype=1 />
-					     <div class="background-education-container section-container" id='education${edulist_index}' style='display:none'>
+					     <div class="background-education-container section-container zg-empty" id='education${edulist_index}' style='display:none'>
 						<#else>
 						 <#assign edittype=0 />
-						 <div class="background-education-container section-container education-container" id='education${edulist_index}' style='display:none'>
+						 <div class="background-education-container section-container education-container zg-empty" id='education${edulist_index}' style='display:none'>
 						</#if>
 							
                              <#if edulist_index==0>
@@ -243,7 +234,7 @@
 							 </div>
 							 </#if>
 							  <div class="education">
-									   学校名称:&nbsp;&nbsp;
+									   <label>学校名称:</label>
 								<#if (edulist.school)?? && edulist.school?length gt 0>
 								 <span class='schoolname'>
                                      ${edulist.school?html}
@@ -255,9 +246,10 @@
 							  <div class='graduate'>
 								<span class='schoolinfo'>
 								   <span class="schooltime">
-									  在校时间:&nbsp;&nbsp;
+									  <label>在校时间:</label>
 									<#if (edulist.starttime)??>
-									  ${edulist.starttime?date}--${edulist.endtime?date}
+									  <#-- ${edulist.starttime?date}--${edulist.endtime?date} -->
+									  ${edulist.starttime?string("yyyy年MM月dd日")}--${edulist.endtime?string("yyyy年MM月dd日")}
 									 
 									</#if>
 								  </span>
@@ -266,7 +258,7 @@
 							  </div>
 							  <div class='major'>
 								<span class='professioninfo'>
-										 所学专业:&nbsp;&nbsp;
+										 <label>所学专业:</label>
 								  <#if (edulist.major)?? && edulist.major?length gt 0>
 									 <span class='profession'>
 									   ${edulist.major?html}
@@ -282,10 +274,10 @@
 					    <#list workExList as worklist>
 						   <#if worklist_index==0>
 							 <#assign edittype=1 />
-							 <div class="background-workexperience-container section-container" id='work${worklist_index}' style='display:none'>
+							 <div class="background-workexperience-container section-container zg-empty" id='work${worklist_index}' style='display:none'>
 							<#else>
 							 <#assign edittype=0 />
-							 <div class="background-workexperience-container section-container workexperience-container" id='work${worklist_index}' style='display:none'>
+							 <div class="background-workexperience-container section-container workexperience-container zg-empty" id='work${worklist_index}' style='display:none'>
 						   </#if>
 						      
 							   <#if worklist_index==0>
@@ -294,7 +286,7 @@
 								 </div>
 							   </#if>
 								  <div class="company">
-									   公司名称:&nbsp;&nbsp;
+									  <label> 公司名称:</label>
 									 <#if (worklist.company)?? && worklist.company?length gt 0>
 									   <span class='companyname'>
 									      ${worklist.company?html}
@@ -304,16 +296,17 @@
 								  <div class='onjob'>
 									<span class='onjobinfo'>
 									   <span class="onjobtime">
-										 在职时间:&nbsp;&nbsp;
+										<label> 在职时间:</label>
 											<#if (worklist.starttime)?? && worklist.starttime?length gt 0>
-												  ${worklist.starttime?date}--${worklist.endtime?date}												 
+												  <#-- ${worklist.starttime?date}--${worklist.endtime?date} --> 
+												  ${worklist.starttime?string("yyyy年MM月dd日")}--${worklist.endtime?string("yyyy年MM月dd日")}												 
 										    </#if>
 									  </span>
 									</span>
 								  </div>
 								  <div class='workposition'>
 										<span class='positioninfo'>
-											工作职位:&nbsp;&nbsp;
+											<label>工作职位:</label>
 										  <#if (worklist.jobtitle)?? && worklist.jobtitle?length gt 0>
 											 <span class='position'>
 											    ${worklist.jobtitle?html}
@@ -323,7 +316,7 @@
 								  </div>
 								  <div class='workdescription'>
 									<span class='description'>
-											工作内容:&nbsp;&nbsp;
+											<label>工作内容:</label>
 									 <#if (worklist.description)?? && worklist.description?length gt 0>
 										 <span class='workcontent'>
 										   ${worklist.description?html}
@@ -431,9 +424,9 @@
 						    <#if (shares)?? &&shares?size gt 0>
 							  <#list shares.list as slist>
 								 <li>
-								   <span class="allnewscontent">
+								   <span class="allnewscontent textoverflow">
 								      分享了文档										
-									<a href="${request.getContextPath()}/docs/getDocsDetail?id=${slist.id}"  target="_blank">${slist.objName}</a>
+									<a href="${request.getContextPath()}/docs/getDocsDetail?id=${slist.id}"  target="_blank" title='${slist.objName}'>${slist.objName}</a>
 								   </span>
 								   <span class="smsdate zg-right">${slist.createtime?string("yyyy-MM-dd")}</span>
 								 </li>
@@ -516,7 +509,7 @@
                        <div class="recent-seeme">
                             <span>最近访问</span>
 							<#if userInfo.userid==(Session.user.userid)!>
-                               <span class='more'><a href='/51jobplusCore/myHome/moreRecentVistors?userid=${userInfo.userid}' self="_blank">更多>></a></span>
+                               <span class='more'><a href='/myHome/moreRecentVistors?userid=${userInfo.userid}' self="_blank">更多>></a></span>
 							</#if>
                        </div>
 						
@@ -524,16 +517,16 @@
 						  <#if (visitors)??>
 							<#list visitors.list as list>
 								 <div class='iteminfo'>
-									<a class="uhead" href='/51jobplusCore/myHome/getHomePage?userid=${list.visitorid}' data-userid="${list.visitorid}">
+									<a class="uhead" href='/myHome/getHomePage?userid=${list.visitorid}' data-userid="${list.visitorid}">
 									 <#if (list.headIcon)??>
 									   <img class="uname" src="${list.headIcon}" alt="" data-userid="${list.visitorid}">
 									 <#else>
-									   <img class='unname' src='/51jobplusCore/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid="${list.visitorid}">
+									   <img class='unname' src='/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid="${list.visitorid}">
 									 </#if>
 								   </a>
 								   
 								   <div class='visitorcontent'>
-									 <a href='/51jobplusCore/myHome/getHomePage?userid=${list.visitorid}' target="_blank" class="uhead" data-userid="${list.visitorid}">${list.userName}</a>
+									 <a href='/myHome/getHomePage?userid=${list.visitorid}' target="_blank" class="uhead" data-userid="${list.visitorid}">${list.userName}</a>
 									 <div class="meta"><span>${list.visittime?string("yyyy-MM-dd HH:mm:ss")}</span></div>
 								   </div>
 								   <span class='zg-right'> 
@@ -566,14 +559,14 @@
                 </div>
             </div>
             <div class='pagetemplate'></div>
-            <a id="backaboutmetop" title="回到顶部" href="#aboutmetop" style="display: none; bottom:300px;"></a>
+            <a id="backaboutmetop" title="回到顶部" href="#aboutmetop" class='back-to-top' style="display: none; bottom:300px;"></a>
             <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
-            <script type="text/javascript" src="/51jobplusCore/scripts/jquery-1.8.0.min.js"></script>
-            <script type="text/javascript" src="/51jobplusCore/scripts/jquery-jtemplates.js"></script> 
-            <script type="text/javascript" src="/51jobplusCore/scripts/pj_constant.js"></script>
-            <script type="text/javascript" src="/51jobplusCore/scripts/jquery.pinwheel-0.1.0.js"></script>
-            <script type="text/javascript" src="/51jobplusCore/scripts/pj_publicMethod.js"></script>
-            <script type="text/javascript" src="/51jobplusCore/scripts/pj_loadPmAndsmg.js"></script>
-            <script type="text/javascript" src="/51jobplusCore/scripts/pj_myhomepage.js" charset="UTF-8"></script>
+            <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
+            <script type="text/javascript" src="/scripts/jquery-jtemplates.js"></script> 
+            <script type="text/javascript" src="/scripts/pj_constant.js"></script>
+            <script type="text/javascript" src="/scripts/jquery.pinwheel-0.1.0.js"></script>
+            <script type="text/javascript" src="/scripts/pj_publicMethod.js"></script>
+            <script type="text/javascript" src="/scripts/pj_loadPmAndsmg.js"></script>
+            <script type="text/javascript" src="/scripts/pj_myhomepage.js" charset="UTF-8"></script>
     </body>
 </html>

@@ -2,7 +2,6 @@ package com.jobplus.pojo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class HotdataInfo implements Serializable{
     /**

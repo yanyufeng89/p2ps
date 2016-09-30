@@ -119,7 +119,7 @@ public class CoursesController {
 				mv.setViewName("404");
 				return mv;
 			}
-			logger.info("**getCourseDetail*获取课程详情****record==" + JSON.toJSONString(record));
+//			logger.info("**getCourseDetail*获取课程详情****record==" + JSON.toJSONString(record));
 			mv.addObject("record", record);
 			if("7".equals(isAdmin)){
 				//后台管理员查看

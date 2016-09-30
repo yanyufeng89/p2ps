@@ -2,24 +2,24 @@
 {#foreach $T.courseslist as list}
      <div class='item'>
          <div class='media-left'>
-           <a class='uhead' href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target='_blank' data-userid='{$T.list.userid}'>
+           <a class='uhead' href='/myHome/getHomePage?userid={$T.list.userid}' target='_blank' data-userid='{$T.list.userid}'>
               {#if $T.list.userHeadIcon}
 		        <img class='uname' src="{$T.list.userHeadIcon}" alt=""  data-userid='{$T.list.userid}' data-moduletype='1'>
 		        {#else}
-		        <img class='uname' src='/51jobplusCore/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid='{$T.list.userid}' data-moduletype='1'>
+		        <img class='uname' src='/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid='{$T.list.userid}' data-moduletype='1'>
 		      {#/if}
 		   </a>
               {#if $T.list.commentbyName}
 	            <span class="uname" data-userid='{$T.list.userid}'>
-	               <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target='_blank'>{$T.list.userName}</a>
+	               <a href='/myHome/getHomePage?userid={$T.list.userid}' target='_blank'>{$T.list.userName}</a>
 	              <span class="desc">&nbsp;回复&nbsp;</span>
 	               <span class="uname"  data-userid='{$T.list.commentby}' data-moduletype='1'>
-	                 <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.commentby}' target='_blank'>{$T.list.commentbyName}</a>
+	                 <a href='/myHome/getHomePage?userid={$T.list.commentby}' target='_blank'>{$T.list.commentbyName}</a>
 	               </span>
 	            </span>
 	           {#else}
 	            <span class="uname" data-userid='{$T.list.userid}' data-moduletype='1'>
-	                <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target='_blank'>{$T.list.userName}</a>
+	                <a href='/myHome/getHomePage?userid={$T.list.userid}' target='_blank'>{$T.list.userName}</a>
 	            </span>
 		      {#/if}
            

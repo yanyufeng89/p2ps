@@ -119,6 +119,7 @@
     update tbl_docs 
     set 
       readSum = readSum + 1
+      ,lastEditTime = now()
     where ID = #{id,jdbcType=INTEGER}
   </update> 
   

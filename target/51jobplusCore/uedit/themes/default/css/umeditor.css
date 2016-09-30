@@ -36,6 +36,7 @@
     word-wrap:break-word;
     font-size:12px;
     font-family:sans-serif;
+    background:#f9f9f9
 }
 .edui-editor-body.focus{border:1px solid #5c9dff}
 .edui-editor-body table{margin:10px 0 10px;border-collapse:collapse;display:table;}

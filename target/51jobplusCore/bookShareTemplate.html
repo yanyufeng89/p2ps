@@ -1,14 +1,14 @@
 <!-- 个人主页 书籍--书籍分享 -->
 {#foreach $T.sharedBookPage as sharelist}
 <li>
-    <div class="w335 fs14 fc3 ib titlehidden">
+    <div class="w356 fs14 fc3 ib titlehidden">
         <div class="checkbox chk" data-commentid="{$T.sharelist.bookShare.id}" data-bookid="{$T.sharelist.id}" data-name="{$T.sharelist.bookname}">
         </div>
-        <a href="/51jobplusCore/books/getBookDetail?id={$T.sharelist.id}" target="_blank" title="{$T.sharelist.bookname}">
+        <a href="/books/getBookDetail?id={$T.sharelist.id}" target="_blank" title="{$T.sharelist.bookname}">
             {$T.sharelist.bookname}
         </a>
     </div>
-    <div class="w140 ib replayhidden">
+    <div class="w140 ib recommendhidden">
         <p title="{$T.sharelist.bookShare.recommend}">
            {$T.sharelist.bookShare.recommend}
         </p>

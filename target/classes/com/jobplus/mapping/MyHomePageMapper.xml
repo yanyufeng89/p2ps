@@ -54,8 +54,8 @@
   <!-- getOneShares -->
   <select id="getOneShares" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyHomePage" >
     select 
-    id,  ${tableColumn} as objName ,createTime
-    ,(select count(*) from ${tableName} where ${tableColumn2} = #{userid,jdbcType=INTEGER} and isValid=1
+    id,  ${tableColumn} as objName ,createtime
+   <!--  ,(select count(*) from ${tableName} where ${tableColumn2} = #{userid,jdbcType=INTEGER} and isValid=1
 	    <choose>
 			<when test="tableName =='tbl_topics' or tableName =='tbl_docs'">
 			and	isPublic = 1
@@ -65,7 +65,7 @@
 		<when test="tableName =='tbl_docs'">
 		and	isConverter = 1
 		</when>
-	</choose>  ) as pageCount
+	</choose>  ) as pageCount -->
     from ${tableName}
     where ${tableColumn2} = #{userid,jdbcType=INTEGER} and isValid=1
     <choose>

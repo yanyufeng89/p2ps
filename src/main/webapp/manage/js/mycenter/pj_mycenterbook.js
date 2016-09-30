@@ -99,7 +99,7 @@ $(function(){
 		var $this=$(this);
 		$.ajax({
 			type:"POST",
-         	url:projectName+"books/clickOnLike",
+         	url:"/books/clickOnLike",
          	data:{id:reasonid,likeOperate:islike,topObjId:bookid,objectNamePg:objectNamePg,relationidPg:reasonid,objCreatepersonPg:recommend},
          	dataType:"json",
          	success:function(data){
@@ -185,7 +185,7 @@ function bookLoadMore(obj){
     var bookid=$('input[name=bookid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"books/loadComments",
+      	url:"/books/loadComments",
       	data:{pageNo:Number(pageNo)+1,bookid:bookid},
     	dataType:"json",
     	success:function(data){
@@ -236,7 +236,7 @@ function collectBook(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"books/collectBook",
+      	url:"/books/collectBook",
       	data:{actionType:actiontype,objectid:bookid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -268,7 +268,7 @@ function cancelCommtent(obj){
 	var tableName=obj.attr('data-tableName');
 	$.ajax({
 	    type:"POST",
-	    url:projectName+"manage/backstage/delComment",
+	    url:"/manage/backstage/delComment",
      	data:{id:recommend,tableName:tableName},//commentby:commentby,bookid:bookid
      	dataType:"json",
      	success:function(data){
@@ -291,7 +291,7 @@ function intoUserInfo(){
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_books"},
    	dataType:"json",
    	success:function(data){
@@ -323,7 +323,7 @@ function deleteMyCollects(conditions,obj){
 function delComment(conditions,obj){
 	   $.ajax({
     	type:"POST",
-    	url:projectName+"books/delComment",
+    	url:"/books/delComment",
     	data:{condition:conditions},
     	dataType:"json",
     	success:function(data){
@@ -384,7 +384,7 @@ function insertComment(obj,type){
 	 var $this=obj;
 	 $.ajax({
 		    type:"POST",
-         	url:projectName+"books/insertComment",
+         	url:"/books/insertComment",
          	data:{bookid:bookid,recommend:commendcontent,commentby:commentby,objectNamePg:bookname,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid},
          	dataType:"json",
          	success:function(data){

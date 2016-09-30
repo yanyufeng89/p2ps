@@ -70,6 +70,7 @@
     update tbl_tags
     set 
       useSum = useSum + 1
+      ,updateTime = now()
     where id in
     <if test="addArray != null" >
     	<foreach collection="addArray" item="item" index="index"

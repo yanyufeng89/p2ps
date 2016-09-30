@@ -82,7 +82,6 @@
             gridComplete: function () {
                 updatePagerIcons(this);
                 var rowIds = $("#jqGrid").jqGrid('getDataIDs');
-                console.log(rowIds);
                 for (var i = 0; i < rowIds.length; i++) {
                     var rowData = $("#jqGrid").jqGrid('getRowData', rowIds[i]);
                     var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deleteUser(' + rowData.userid + ');">删除</button>';

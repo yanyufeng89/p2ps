@@ -77,18 +77,20 @@ public class DocsController {
 	 */
 	@RequestMapping("/upload")  
 	  public String upload(@RequestParam(value="fileField",required=false) MultipartFile[] files,HttpServletRequest request,HttpServletResponse response,Docs record) throws IllegalStateException, IOException {
-		
+		String rest = "redirect:success";
+		String num = "?num=";
 		// 用于编辑功能
 		String docId = request.getParameter("docId");
 		if(!StringUtils.isBlank(docId)){//编辑
 			record.setId(Integer.parseInt(docId));
 			docsService.updateByPrimaryKeySelective(record);
+			num += "0";
 		}else{// 多文件上传
-			 docsService.upload(files, request, response);
+			num += docsService.upload(files, request, response);
 		}
-		//防止重复提交   转发到静态页面
-		int num = files.length == 0 ?files.length:(files.length - 1);
-	     return "redirect:success?num="+num;  
+		//防止重复提交   转发到静态页面   定义财富值是2
+//		int num = files.length == 0 ?files.length*new AccountDetail().getCHANGEVALUES()[1]:(files.length - 1)*new AccountDetail().getCHANGEVALUES()[1];
+	     return rest+num;  
 	  }  
 	
 
@@ -108,7 +110,7 @@ public class DocsController {
 			mv.setViewName("404");
 			return mv;
 		}
-		logger.info("*****getDocsDetail 文档详情*******record=="+JSON.toJSONString(record));
+//		logger.info("*****getDocsDetail 文档详情*******record=="+JSON.toJSONString(record));
 		mv.addObject("record", record);
 		if("7".equals(isAdmin)){
 			//后台管理员查看

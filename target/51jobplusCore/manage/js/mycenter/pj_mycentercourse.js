@@ -147,7 +147,7 @@ function courseLoadMore(obj){
     var coursesid=$('input[name=courseid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"courses/loadComments",
+      	url:"/courses/loadComments",
       	data:{pageNo:Number(pageNo)+1,coursesid:coursesid},
     	dataType:"json",
     	success:function(data){
@@ -179,7 +179,7 @@ function courseLike(obj){
 	var coursesname=$('input[name=coursename]').val();
 	$.ajax({
 		type:"POST",
-      	url:projectName+"courses/clickLikeOnCourse",
+      	url:"/courses/clickLikeOnCourse",
       	data:{likeOperate:islike,id:coursesid,objCreatepersonPg:courseCreatePerson,relationidPg:coursesid,objectNamePg:coursesname},
       	dataType:"json",
       	success:function(data){
@@ -209,7 +209,7 @@ function collectCourse(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"courses/collectCourses",
+      	url:"/courses/collectCourses",
       	data:{actionType:actiontype,objectid:coursesid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -240,7 +240,7 @@ function cancelCommtent(obj){
 	var tableName=obj.attr('data-tableName');
 	$.ajax({
 	    type:"POST",
-	    url:projectName+"manage/backstage/delComment",
+	    url:"/manage/backstage/delComment",
 	    data:{id:recommend,tableName:tableName},//data:{id:recommend,coursesid:coursesid},
      	dataType:"json",
      	success:function(data){
@@ -258,7 +258,7 @@ function cancelCommtent(obj){
 function delSharedCourses(conditions,obj){
 	   $.ajax({
 	    	type:"POST",
-	    	url:projectName+"courses/delSharedCourses",
+	    	url:"/courses/delSharedCourses",
 	    	data:{condition:conditions},
 	    	dataType:"json",
 	    	success:function(data){
@@ -288,7 +288,7 @@ function delSharedCourses(conditions,obj){
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_courses"},
    	dataType:"json",
    	success:function(data){
@@ -353,7 +353,7 @@ function insertComment(obj,type){
 	 var $this=obj;
 	 $.ajax({
 		type:"POST",
-       	url:projectName+"courses/addComment",
+       	url:"/courses/addComment",
        	data:{coursesid:coursesid,recommend:commendcontent,commentby:commentby,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid,objectNamePg:objectName},
        	dataType:"json",
        	success:function(data){

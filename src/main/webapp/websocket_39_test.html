@@ -11,11 +11,11 @@
 		var socket;
 
 		if ('WebSocket' in window) {
-			socket = new WebSocket("ws://localhost:8080/51jobplusCore/ws");
+			socket = new WebSocket("ws://localhost:8080/ws");
 		} else if ('MozWebSocket' in window) {
-			socket = new MozWebSocket("ws://localhost:8080/51jobplusCore/ws");
+			socket = new MozWebSocket("ws://localhost:8080/ws");
 		} else {
-			socket = new SockJS("http://localhost:8080/51jobplusCore/ws/sockjs");
+			socket = new SockJS("http://localhost:8080/ws/sockjs");
 		}
 
 		socket.onopen = function(event) {

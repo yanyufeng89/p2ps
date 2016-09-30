@@ -38,9 +38,9 @@
 						</div>
 						<div class='addtreasure'>
 						              系统自动给您加上<span class="success-upload-tips">1财富值</span>的奖励
+						      <a href="/myCenter/getSharedCourseList" class='checkshare'>查看已分享的课程>></a>
 						 </div>
-						 <a href="/51jobplusCore/myCenter/getSharedCourseList" class='checkshare'>查看已分享的课程>></a>
-						<a class="goon-upload log-xsend"  href="/51jobplusCore/sharein/searchuploadFile?type=3">继续分享</a>
+						 <a class="goon-upload log-xsend"  href="/sharein/searchuploadFile?type=3">继续分享</a>
 					  </div>
 					</div>
 					

@@ -205,7 +205,7 @@ var userInfo;
 					if(booktype=='1'){//得到书籍的详情
 						  ajaxLoader = $.ajax({
 								type:'POST',
-								url:projectName+"books/getBookSimpleInfo",
+								url:"/books/getBookSimpleInfo",
 								data:{id:bookid},
 								dataType:"json",
 				        	    success:function(data){
@@ -230,7 +230,7 @@ var userInfo;
 					   intoUserInfo();
 					   ajaxLoader = $.ajax({
 							type:'POST',
-							url:projectName+"myCenter/getUserSimpleInformation?userId="+userid,
+							url:"/myCenter/getUserSimpleInformation?userId="+userid,
 							dataType:"json",
 			        	    success:function(data){
 			        	    	if(data.returnStatus=='000'){

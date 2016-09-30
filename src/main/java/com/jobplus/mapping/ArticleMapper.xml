@@ -111,7 +111,8 @@
   <update id="updateReadSum" parameterType="java.lang.Integer">
     update tbl_article
     set 
-      readSum = readSum + 1      
+      readSum = readSum + 1  
+      , updateTime = now()   
     where ID = #{id,jdbcType=INTEGER}
   </update>
 

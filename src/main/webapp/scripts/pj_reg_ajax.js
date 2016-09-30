@@ -24,7 +24,7 @@ function reg_checkAjax(id){
 		}else{
 			//1 是用户名  2是手机号  3是邮箱
 			$.ajax({
-					url:"/51jobplusCore/user/check/"+obj+"/"+type,
+					url:"/user/check/"+obj+"/"+type,
 					type : "POST", 
 					data :{id:obj},
 					dataType:"json",
@@ -294,7 +294,7 @@ function check_user(){
 	//验证输入的验证码和手机或者邮箱获取的验证码是否一致
 	$.ajax({
 		type:"POST",
-      	url:"/51jobplusCore/mobilesms/checkSms",
+      	url:"/mobilesms/checkSms",
       	data:{smsId:verificationcode,validateCode:moblie_code},
     	dataType:"json",
     	async:false,
@@ -372,7 +372,7 @@ function sendmsg(obj,mtype){
 	showtime(60,messagetype,mtype);
 	$.ajax({
 		type:"POST",
-      	url:"/51jobplusCore/mobilesms/sendSms",
+      	url:"/mobilesms/sendSms",
       	data:{mobileNo:moblie},
     	dataType:"json",
     	success:function(data){

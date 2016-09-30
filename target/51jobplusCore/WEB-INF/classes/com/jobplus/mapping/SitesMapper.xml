@@ -107,7 +107,8 @@
   <update id="updateReadSum" parameterType="java.lang.Integer">
     update tbl_sites
     set 
-      readSum = readSum + 1      
+      readSum = readSum + 1
+      ,updateTime = now()      
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
@@ -312,6 +313,7 @@
       <if test="intro != null" >
         intro = #{intro,jdbcType=LONGVARCHAR},
       </if>
+      updateTime = now()
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>

@@ -87,6 +87,22 @@ $(function(){
     //粉丝列表 关注列表 最近访问  点击关注 与取消关注
     $('.maincontent .zg-btn,#zh-profile-current-visit-list .zg-btn').live('click',function(){
     	addFollows($(this));
+    	var actiontype=$(this).attr('data-actiontype');
+    	var userid=$(this).attr('data-userid');
+    	//当前区域同一用户变成相同状态
+    	$('.zg-btn').each(function(){
+    		if($(this).attr('data-userid')==userid){
+    			if(actiontype==1){
+    				$(this).removeClass('zg-btn-follow').addClass('zg-btn-unfollow');
+    				$(this).empty().html('取消关注');
+    				$(this).attr('data-actiontype','0');
+    			}else{
+    				$(this).removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
+    				$(this).empty().html('关注');
+    				$(this).attr('data-actiontype','1');
+    			}
+    		}
+    	})
     })
     //关注人
     $('.operation .zm-rich-follow-btn').live('click',function(){
@@ -113,7 +129,7 @@ function initSelfAttenMan(obj){
 	var userid=obj.attr('data-userid');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyAttenMan",
+		url:"/myCenter/getMyAttenMan",
 		data:{userid:userid},
 		dataType:"json",
 		success:function(data){
@@ -136,7 +152,7 @@ function initSelfAttenMan(obj){
 				 $('.maincontent').after(initPagingHtml('myattenpaging'));
 			 }
 			 //加载分页
-	        $.getScript('/51jobplusCore/scripts/jquery.simplePagination.js',function(){
+	        $.getScript('/scripts/jquery.simplePagination.js',function(){
 	    			$("#myattenpaging").pagination({
 	    				items:data.attenManPage.count,
 	    				itemsOnPage:data.attenManPage.pageSize,
@@ -144,7 +160,7 @@ function initSelfAttenMan(obj){
 	    				moduleType:'myattenlist'
 	    			})
 	    		});
-	        $('.maincontent').css('padding','0 16px 0 16px');
+	        $('.maincontent').css('padding','20px 16px 0 16px');
 	        intoUserInfo();
 		}
 	})
@@ -168,7 +184,7 @@ function initSelfFans(obj){
 	var userid=obj.attr('data-userid');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyFans",
+		url:"/myCenter/getMyFans",
 		data:{userid:userid},
 		dataType:"json",
 		success:function(data){
@@ -209,7 +225,7 @@ function initSelfFans(obj){
 				 $('.maincontent').after(initPagingHtml('myfanspaging'));
 			 }
 			 //加载分页
-	        $.getScript('/51jobplusCore/scripts/jquery.simplePagination.js',function(){
+	        $.getScript('/scripts/jquery.simplePagination.js',function(){
 	    			$("#myfanspaging").pagination({
 	    				items:data.myFansPage.count,
 	    				itemsOnPage:data.myFansPage.pageSize,
@@ -217,7 +233,7 @@ function initSelfFans(obj){
 	    				moduleType:'myfanslist'
 	    			})
 	    	});
-	        $('.maincontent').css('padding','0 16px 0 16px');
+	        $('.maincontent').css('padding','20px 16px 0 16px');
 	        intoUserInfo();
 		  }
 		})
@@ -229,7 +245,7 @@ function visitorLoadMore(obj){
 	    var userid=obj.data('data-userid');
 	    $.ajax({
 	    	type:"POST",
-	      	url:projectName+"myHome/moreRecentVistors",
+	      	url:"/myHome/moreRecentVistors",
 	      	data:{pageNo:Number(pageNo)+1,userid:userid},
 	    	dataType:"json",
 	    	success:function(data){
@@ -278,7 +294,7 @@ function visitorLoadMore(obj){
 	 var actiontype=obj.attr('data-actionType');
 	 $.ajax({
 			type:"POST",
-			url:projectName+"myCenter/addFollows",
+			url:"/myCenter/addFollows",
 			data:{objectType:'0',objectid:userid,actionType:actiontype},
 			dataType:"json",
 	        success:function(data){

@@ -105,6 +105,8 @@
                     var obj = data.obj;
                     var html = '<td><a href="' + obj.objUrl + '" target="_blank">' + obj.objId + '</a></td><td><a href="' + obj.objUrl + '" target="_blank">' + obj.objName + '</a></td><td>&emsp;<button class="btn btn-xs btn-danger" onclick="deleteResource(' + obj.objId + ',\'' + obj.objTblName + '\')"><i class="icon-trash bigger-120"></i></button></td>';
                     $("tbody").append(html);
+                }else{
+                    $("tbody").append('<td colspan="3">暂无数据</td>');
                 }
             }
         });

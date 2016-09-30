@@ -1,17 +1,17 @@
 <div class="zm-item-comment" data-id="" tabindex="-1" aria-label="评论">
   <a class="zg-anchor-hidden" name="comment-"></a>
-  <a  class="zm-item-link-avatar"  href='/51jobplusCore/myHome/getHomePage?userid={$T.userinfo.userid}' target='_blank'>
+  <a  class="zm-item-link-avatar"  href='/myHome/getHomePage?userid={$T.userinfo.userid}' target='_blank'>
   {#if $T.userinfo.headicon}
     <img src="{$T.userinfo.headicon}" class="zm-item-img-avatar"  data-userid='{$T.userinfo.userid}' data-moduletype="0">
   {#else}
-    <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-userid='{$T.userinfo.userid}' data-moduletype="0">
+    <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-userid='{$T.userinfo.userid}' data-moduletype="0">
   {#/if}
   </a>
   <div class="zm-comment-content-wrap">
     <div class="zm-comment-hd">
     {#if $T.commentby}
       {#if $T.userinfo.username}
-       <a href='/51jobplusCore/myHome/getHomePage?userid={$T.userinfo.userid}' target='_blank' class="zg-link" data-original_title="{$T.userinfo.username}" data-userid='{$T.userinfo.userid}'  data-moduletype="0">
+       <a href='/myHome/getHomePage?userid={$T.userinfo.userid}' target='_blank' class="zg-link" data-original_title="{$T.userinfo.username}" data-userid='{$T.userinfo.userid}'  data-moduletype="0">
              {$T.userinfo.username}
       </a>
       {#else}
@@ -19,10 +19,10 @@
        {#/if}
       <span class="desc">回复 </span>
 
-	     <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.commentby}' target='_blank' class="zg-link" data-userid='{$T.commentby}'  data-original_title="{$T.commentname}">{$T.commentname}</a>
+	     <a  href='/myHome/getHomePage?userid={$T.commentby}' target='_blank' class="zg-link" data-userid='{$T.commentby}'  data-original_title="{$T.commentname}">{$T.commentname}</a>
      {#else}
       {#if $T.userinfo.username}
-       <a href='/51jobplusCore/myHome/getHomePage?userid={$T.userinfo.userid}' target='_blank' class="zg-link" data-original_title="{$T.userinfo.username}" data-userid='{$T.userinfo.userid}'  data-moduletype="0">
+       <a href='/myHome/getHomePage?userid={$T.userinfo.userid}' target='_blank' class="zg-link" data-original_title="{$T.userinfo.username}" data-userid='{$T.userinfo.userid}'  data-moduletype="0">
              {$T.userinfo.username}              
        </a>
       {#else}

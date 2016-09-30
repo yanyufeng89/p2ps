@@ -4,7 +4,7 @@
 	<div class="answer-head">
 	<div class="zm-item-answer-author-info">
 
-	   <a class="zm-item-link-avatar avatar-link" href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target="_blank">
+	   <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage?userid={$T.list.userid}' target="_blank">
 
 	   {#if $T.list.tmpHeadIcon}
 	     {#if $T.list.isPublic==1}
@@ -14,15 +14,15 @@
 	     {#/if}
 	   {#else}
 	      {#if $T.list.isPublic==1}
-	         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
 	      {#else}
-	         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
 	      {#/if}
 	   {#/if}
 	   </a>
 	   {#if $T.list.isPublic==1}
 	    <span class="author-link" data-tip="" target="_blank"  data-userid='{$T.list.userid}' data-moduletype='0'>
-	     <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target="_blank">{$T.list.tmpUserName}</a>
+	     <a  href='/myHome/getHomePage?userid={$T.list.userid}' target="_blank">{$T.list.tmpUserName}</a>
 	    </span>
 	   {#else}
 	     <span class="anonymous-user" data-tip="" target="_blank"  data-userid='{$T.list.userid}' data-moduletype='0'>匿名用户</span>

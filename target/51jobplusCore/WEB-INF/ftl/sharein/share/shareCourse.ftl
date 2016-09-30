@@ -8,7 +8,7 @@
              课程分享
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_course.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_course.css">
   </head>
   <body>
     
@@ -37,56 +37,64 @@
 				 </div>
                  <div class="mod mod-upload">
                    <div class="bdcourse" style="">
-	                     <a class="titleinfo">【课程】</a>
-	                     <span class="titlename">请输入分享的课程链接</span>
+					     <div class="titleinfo">
+							 <span>【课程】</span>
+							 <span style='font-weight:500'>请输入分享的课程链接</span>
+						 </div>
 	                     <div class="link after">
+	                        <input type='hidden' name='isverify' value='0'>
 				            <input type="text" id="searchcourse" class='coursedocument' placeholder="请输入链接...">
-				            <input type="button" class="coursepreview" value="确定">
-				            <span class="capture-loading" style="display: none;"></span>
+				            <#--<input type="button" class="coursepreview" value="确定">-->
+				            <span class="tocapture active coursepreview"></span>
 				            <p class="error" style="display: none;">
 				              <i class="tips_icon"></i>
 				            </p>
+							<div class="bar after">
+								<a class="btn-disblue btnsure" id="btncoursesure" href="javascript:void(0)">确定</a>
+								<a href="/sharein/searchuploadFile" class="btn-cancleupload">取消</a>
+								<div class="btn-loading push-loading"></div>
+		                    </div>
 	                     </div>
 	                 </div>
                   </div>
                   <div class="upload-intro-query clearfix">
-                    <h4>
-                      课程推荐
-                     
-                    </h4>
-                     <span class='pj-encourage'>
-                     每成功分享一节课程即可获得一定的财富奖励哦!
-                      </span>
+                   <h4>推荐分享</h4>
                     <ul>
                       <li class="">
-                        平面设计
+                       创新创业
                       </li>
                       <li class="query-box">
-                        三维设计和CAD
+                      工业4.0
                       </li>
                       <li class="">
-                        Web前端
+                       新型材料
                       </li>
                       <li class="query-box">
-                       编程语言
+                      互联网+
                       </li>
                       <li class="">
-                        数据库
+                      企业管理 
                       </li>
                       <li class="query-box">
-                        操作系统
+                         互联网运营
                       </li>
                       <li class="">
-                        办公应用
+                       供应链金融
                       </li>
                       <li class="query-box">
-                     互联网络
+                       新媒体
                       </li>
                       <li class="">
-                    多媒体开发
+                      融资股权
                       </li>
                       <li class="query-box">
-                        网络应用
+                       生物医药
+                      </li>
+                       <li class="">
+                    财务管理
+                      </li>
+                      <li class="query-box">
+                       大数据
                       </li>
                     </ul>
                   </div>
@@ -96,24 +104,27 @@
                     </h4>
                     <ol>
                       <li>
-                        1.如果你发现一节好的教程,可以推荐给更多的朋友,让更多的人一起学习;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
                       </li>
                       <li>
-                        2.分享和已分享的课程重复将会被移除,为避免重复,分享前可想进行搜索;
+                        2.如果您发现一节好的在线语音或视频课程，可以分享出来，让更多的人一起学习;
                       </li>
                       <li>
-                        3.严禁分享含有辱骂他人,淫秽色情以及低俗信息等视频链接;
+                        3.严禁分享含有辱骂他人、淫秽色情及低俗信息等视频和音频链接;
                       </li>
                       <li>
-                        4.课程分享有问题需要帮助？查看
+                        4.课程分享有问题需要帮助？详情请查看知识库
                         <a href="#" target="_blank">
-                                                                 知识库帮助
+                                                              服务条款
+                        </a>和
+                        <a href="#" target="_blank">
+                                                              帮助中心
                         </a>
                       </li>
                     </ol>
                   </div>
                 </div>
-			  <form method="post" action="/51jobplusCore/myCenter/shareCourse" enctype="multipart/form-data" id='courseaddForm' onkeydown="if(event.keyCode==13)return false;" >
+			  <form method="post" action="/myCenter/shareCourse" enctype="multipart/form-data" id='courseaddForm' onkeydown="if(event.keyCode==13)return false;" >
                 <div id="upload-course-container" style="display:none;">
                   <div class="upload-steps clearfix">
                     <ul>
@@ -144,21 +155,13 @@
 				  
                   <div class="nhd nedit-all-head">
                       <span class="act btn-submit-all-wrap logSend">
-                        <!-- <a href="javascript:;" id="btn-addcourse-all" class="add-all ml20   add-all-able">
-                          <span>+</span>&nbsp;继续添加
-                        </a> -->
-                        
+                        <a href="" id="btn-cancel-all" class="add-all ml20  add-all-able" style="width:60px;">取消</a>
                         <a id="sharecourse" class="submit-all ml20  submit-all-able">
                           <i class="iconfont"></i>&nbsp;确认分享
                         </a>
                        </span>
                        <h3  class="item-message-all item-message-all-ok">
-                        <span>请补充课程信息，完成分享
-                        <br>
-                        <span class="item-message-all-subtitle">审核通过后，您将获得
-                          <span class="item-reward-wealth">1财富值</span>的奖励
-                        </span>
-                        </span>
+                                                                         请补充课程信息，完成分享
                        </h3>
                    </div>
 				   <div id="uploadcourse-list" class="uploadcourse-list">
@@ -234,6 +237,9 @@
                                           aria-autocomplete="list" placeholder="搜索标签"  oninput="getTagsByCondition(this,'doc')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
+                                      <span class="pj-warmprompt">
+                                           <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+                                      </span>
                                      </td>
                                   </tr>
                                 </tbody>
@@ -272,7 +278,7 @@
       </div>
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_coursesharein.js"> </script>            
+     <script type="text/javascript" src="/scripts/pj_coursesharein.js"> </script>            
   </body>
 
 </html>

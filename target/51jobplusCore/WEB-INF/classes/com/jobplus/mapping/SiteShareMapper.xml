@@ -206,6 +206,7 @@
       <if test="likesum != null" >
         likeSum = #{likesum,jdbcType=INTEGER},
       </if>
+      updateTime = now()
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>

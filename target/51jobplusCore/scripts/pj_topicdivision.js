@@ -20,6 +20,7 @@ function reloadPage() {
         success: function (data) {
             var datamodel = {
                 topicsPage: data.topicsPage.list,
+                topiclen:data.topicsPage.count,
             }
             //加载模板
             $('.pagetemplate').setTemplateURL(projectName + 'topicSearchTemplate.html');

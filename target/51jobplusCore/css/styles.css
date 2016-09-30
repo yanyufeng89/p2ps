@@ -79,20 +79,6 @@
 	width:400px;
 }
 
-#footer a.tzine,a.tzine:visited{
-	background:url(../image/tzine.png) no-repeat right top;
-	border:none;
-	text-decoration:none;
-	color:#fff;
-	font-size:12px;
-	height:70px;
-	left:50%;
-	line-height:31px;
-	margin:23px 0 0 110px;
-	position:absolute;
-	top:0;
-	width:290px;
-}
 
 a, a:visited {
 	outline:none;

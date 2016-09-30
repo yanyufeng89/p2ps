@@ -23,7 +23,21 @@
   	set ${tableColumn} = CASE 
   	WHEN ( ${tableColumn} ${addOrDecrease} ${AdOrDeNum} )  <![CDATA[ <= ]]>   0 THEN 0
     ELSE ( ${tableColumn} ${addOrDecrease} ${AdOrDeNum} )
-    END  	
+    END 
+    <choose>
+		<when test="tableName == 'tbl_docs' or tableName == 'tbl_topics'">
+			,lastEditTime = now()
+		</when>
+		<otherwise>
+			,updateTime = now()
+		</otherwise>
+		<!-- <when test="tableName == 'tbl_article' or tableName == 'tbl_courses' or tableName == 'tbl_docs' or tableName == 'tbl_sites' or 
+		 	tableName == 'tbl_topics' or tableName == 'tbl_books' ">
+			t.isValid = 0
+		</when> -->
+	</choose>
+    
+    	
   	where id = #{objectId}
   </update>
   

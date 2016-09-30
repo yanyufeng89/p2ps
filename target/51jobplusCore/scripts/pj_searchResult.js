@@ -74,7 +74,7 @@ $(function () {
         $(this).addClass("active");
         reloadPage();
     });
-
+    
 
 })
 

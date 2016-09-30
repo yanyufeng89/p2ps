@@ -43,7 +43,7 @@ public interface IDocsService {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	public int upload(MultipartFile[] files,HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException ;
+	public String upload(MultipartFile[] files,HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException ;
 	
 	
 	/**

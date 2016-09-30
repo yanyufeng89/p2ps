@@ -17,7 +17,8 @@
     display: block;
     font-size: 12px;
     margin: 20px 16px;
-    line-height: 28px;
+    height:31px;
+    line-height: 31px;
     width:96%;
     position: relative;
 }
@@ -80,9 +81,7 @@
 	float:right;
 	margin-right:20px;
 }
-.report{
-	color:#adacac;
-}
+
 .zm-editable-content .title{
 	font-weight:bold;
 	font-size:16px;
@@ -91,7 +90,6 @@
 .zm-tag-editor-labels .zm-item-tag{
 	font-size:14px;
 	color:#0867c5;
-	text-decoration:none;
 	line-height:25px;
 	height:25px;
 }
@@ -117,7 +115,7 @@ img{
     margin: 3px 0 0 5px;
     visibility: visible;
 }
-.zm-tag-editor-remove-button {
+/* .zm-tag-editor-remove-button {
     margin: 3px 6px 0 0;
     float: left;
     width: 15px;
@@ -128,9 +126,8 @@ img{
     text-indent: -9000px;
     background: url(../image/sprites.png) no-repeat -264px -141px;
     border-radius: 8px;
-}
+} */
 .zm-tag-editor-command-buttons-wrap {
-    position: relative;
     font-size:14px;
     color:#0867c5;
 }
@@ -148,53 +145,20 @@ input[type=text], input[type=password]:focus {
     border: 1px solid #e5e5e5;
 }
 
-.zm-tag-editor-maxcount {
+.zm-tag-editor-maxcount,.pj-warmprompt{
     color: #999;
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 4px;
 }
 
 .zm-tag-editor-maxcount span {
     margin-right: 15px;
 }
-.zm-tag-editor-command-buttons-wrap .ac-renderer {
-    width: 160px;
-    top:33px;
-    left: 4px;
-    position: absolute;
-    float: left;
-    z-index: 10;
-    background: #fff;
-    border: 1px solid #999;
-    border: 0 none rgba(0,0,0,0);
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.5);
-    font-size: 12px;
-    color:gray;
-}
-.ac-active {
-    background-color: #0867c5;
-}
-.ac-row,.ac-create{
-    cursor: pointer;
-    padding: 8px;
-    zoom: 1;
-    clear: both;
-}
 
-.zg-left span {
-    padding-left: 5px;
-    vertical-align: 0;
+.topictagedit{
+	zoom:1;
+	overflow:hidden;
 }
-.zu-autocomplete-row-name {
-    display: block;
-    height: 1.2em;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 
 .Sorter a.lbl:hover {
 	background-color:#eee
@@ -235,11 +199,11 @@ input[type=text], input[type=password]:focus {
     position: absolute;
     width: 1px;
 }
-.zm-relate-answer{
+/* .zm-relate-answer{
    border: 1px solid #e5e5e5;
    margin-top:10px;
    background:#fff;
-}
+} */
 .bdcs-search-form-submit {
     border: 2px solid #0867c5;
     height: 37px;
@@ -427,13 +391,6 @@ ul.filter-wrapper li span lable {
     color: #444;
     margin-top: 10px;
 }
-._CommentItem_footer_46v8, ._CommentItem_footer_46v8 button {
-    font-size: .95em;
-}
-._CommentItem_likes_2hey {
-    float: right;
-    padding-right: 2px;
-}
 ._CommentBox_list_10_K,.zm-comment-list{
     padding-left: 1em;
     padding-right: 1em;
@@ -456,6 +413,7 @@ ul.filter-wrapper li span lable {
     background: none;
     cursor: pointer;
     color: #999;
+    font-size:12px;
 }
 #zh-question-detail .zm-editable-content{
 	padding-top:0;
@@ -477,7 +435,7 @@ ul.filter-wrapper li span lable {
 }
 .icon-spike {
     position: absolute;
-    top: -6px;
+    top: -8px;
     left: 23px;
     width: 13px;
     height: 8px;
@@ -814,7 +772,7 @@ ul.filter-wrapper li span lable {
 .suggest-persons .person .invite-button {
     outline: 0;
     float: right;
-    padding: 4px 10px;
+    margin-left:6px;
 }
 .suggest-persons .person .describe .zg-link {
     float: left;
@@ -837,11 +795,9 @@ ul.filter-wrapper li span lable {
     padding-top: 6px;
 }
 .suggest-persons .person {
-    margin: 0 12px;
-    padding-top: 18px;
-    padding-bottom: 18px;
-    height: 36px;
-    overflow: hidden;
+    margin:18px 12px 18px 12px;
+ /*    height: 36px;
+    overflow: hidden; */
 }
 .suggest-persons .noresult{
 	color: #999;

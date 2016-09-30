@@ -2,11 +2,11 @@
   <div class="popover-content no-hovercard">
     <div class="zh-profile-card member">
       <div class="upper">
-        <a class="avatar-link" target="_blank" href='/51jobplusCore/myHome/getHomePage?userid={$T.userid}'>
+        <a class="avatar-link" target="_blank" href='/myHome/getHomePage?userid={$T.userid}'>
           {#if $T.userSimpleInformation.headicon}
               <img class="Avatar Avatar--xs" src="{$T.userSimpleInformation.headicon}">
           {#else}
-              <img class="Avatar Avatar--xs" src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg">
+              <img class="Avatar Avatar--xs" src="/image/1b48b5a75c71597_100x100.jpg">
           {#/if}
           {#if $T.userSimpleInformation.username}
              <span class="name">{$T.userSimpleInformation.username}</span>
@@ -22,7 +22,7 @@
       </div>
       <div class="lower clearfix">
         <div class="meta">
-          <a class="item" target="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+          <a class="item" target="_blank" href="/myHome/getHomePage?userid={$T.userid}">
             <span class="value">
               {#if $T.userSimpleInformation.operationSum.attentionsum}
 	              {$T.userSimpleInformation.operationSum.attentionsum}
@@ -32,7 +32,7 @@
             </span>
             <span class="key">关注</span>
            </a>
-          <a class="item" target="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+          <a class="item" target="_blank" href="/myHome/getHomePage?userid={$T.userid}">
             <span class="value">
             {#if $T.userSimpleInformation.operationSum.fanssum}
 	              {$T.userSimpleInformation.operationSum.fanssum}
@@ -43,7 +43,7 @@
             <span class="key">粉丝</span>
           </a>
             {#if $T.cutuserid==$T.userid}
-	          <a class="item" target="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+	          <a class="item" target="_blank" href="/myHome/getHomePage?userid={$T.userid}">
 	            <span class="value">
 	            {#if $T.userSimpleInformation.operationSum.allshresum}
 		              {$T.userSimpleInformation.operationSum.allshresum}
@@ -54,7 +54,7 @@
 	              <span class="key">我的分享</span>
 	          </a>
 	      {#else}
-	          <a class="item" self="_blank" href="/51jobplusCore/myHome/getHomePage?userid={$T.userid}">
+	          <a class="item" self="_blank" href="/myHome/getHomePage?userid={$T.userid}">
 	            <span class="value">
 	            {#if $T.userSimpleInformation.operationSum.allshresum}
 		              {$T.userSimpleInformation.operationSum.allshresum}

@@ -546,7 +546,7 @@ public class SolrJUtils {
 			dataList.add(rsp.getResults().getNumFound());
 			dataList.add(JSON.toJSONString(rsp.getResults()));
 		}else{
-			dataList.add(0);
+			dataList.add(0L);
 			dataList.add(JSON.toJSONString(rsp.getResults()));
 		}
 

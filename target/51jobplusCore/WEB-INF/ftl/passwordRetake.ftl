@@ -8,10 +8,10 @@
     </title>
     <meta name="viewport" content="width=1230"/> 
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" href="/51jobplusCore/scripts/layer.css" id="layui_layer_skinlayercss"> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_passretake.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_base.css" charset="UTF-8">
+    <link rel="stylesheet" href="/scripts/layer.css" id="layui_layer_skinlayercss"> 
+    <link rel="stylesheet" type="text/css" href="/css/pj_passretake.css" charset="UTF-8">
     <#include "/mydocs/commonTemplate/pwretake/pwretake.ftl"/> 
   </head>
   <body>

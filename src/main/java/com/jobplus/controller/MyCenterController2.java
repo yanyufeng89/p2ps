@@ -346,6 +346,9 @@ public class MyCenterController2 {
 		} catch (Exception e) {
 			WwwInfo wInfo = new WwwInfo();
 			wInfo.setTitle(url);
+			wInfo.setIntro("");
+			wInfo.setImgUrl("");
+			wInfo.setUrl(url);
 			baseResponse.setObj(wInfo);
 			baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
 			logger.info("**get3WInfo*获取url 简介      失败   ****" + e.getMessage());

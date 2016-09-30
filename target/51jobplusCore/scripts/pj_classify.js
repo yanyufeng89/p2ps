@@ -42,7 +42,7 @@ $(function(){
 function getChildTypeConfigsByParent(id){
 	   $.ajax({
     	type:"POST",
-    	url:"/51jobplusCore/tags/getChildTypeConfigsByParent",
+    	url:"/tags/getChildTypeConfigsByParent",
     	data:{parentTypeId:id},
     	dataType:"json",
     	async:false,
@@ -63,7 +63,7 @@ function getAllParentTypeConfigs(type){
 	   clatype=type;
 	   $.ajax({
      	type:"POST",
-     	url:"/51jobplusCore/tags/getAllParentTypeConfigs",
+     	url:"/tags/getAllParentTypeConfigs",
      	//data:{parentTypeId:100},
      	dataType:"json",
      	success:function(data){

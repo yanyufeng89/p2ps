@@ -97,7 +97,7 @@ public class TopicsController {
 		mv.addObject("record", record);
 		// 返回视图名设置
 		mv.setViewName("redirect:success");
-		logger.info("**addTop*话题、提问 发布 （新增话题）***record==" + JSON.toJSONString(record));
+		logger.info("**addTop*话题、提问 发布 （新增话题）***record==" );//+ JSON.toJSONString(record));
 		return mv;
 	}
 	
@@ -139,7 +139,7 @@ public class TopicsController {
 			mv.setViewName("404");
 			return mv;
 		}
-		logger.info("getTopicsDetail话题详情   包括话题的回答    粉丝列表   相关话题列表   sortType排序方式      1是时间排序      2是评论数排序    默认按照时间排序   TopicsComment record=== "+JSON.toJSONString(record)+"*****");
+//		logger.info("getTopicsDetail话题详情   包括话题的回答    粉丝列表   相关话题列表   sortType排序方式      1是时间排序      2是评论数排序    默认按照时间排序   TopicsComment record=== "+JSON.toJSONString(record)+"*****");
 //		logger.info("****getTopicsDetail*******topicsDetail**"+JSON.toJSONString(topicsDetail));
 		
 		mv.addObject("topicsDetail", topicsDetail);
@@ -174,8 +174,8 @@ public class TopicsController {
 			Page<TopicsComment> topicsCommentList = topicsCommentService.getSortTopicsCommentsByTopicId(record);
 			logger.info("***/getSortTopicsCommentsByTopicId****按排序要求获取话题下面的回答 列表**   TopicsComment record=== "
 					+ JSON.toJSONString(record) + "*****");
-			logger.info("***/getSortTopicsCommentsByTopicId****按排序要求获取话题下面的回答 列表**topicsCommentList**"
-					+ JSON.toJSONString(topicsCommentList));
+			logger.info("***/getSortTopicsCommentsByTopicId****按排序要求获取话题下面的回答 列表**topicsCommentList**");
+//					+ JSON.toJSONString(topicsCommentList));
 			basesResponse.setObj(topicsCommentList);
 			basesResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
 			basesResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
@@ -204,8 +204,8 @@ public class TopicsController {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
 			Page<TopicsComment> topicsCommentPage = topicsCommentService.getPartTopicsComments(topicsComment);
-			logger.info("**getPartTopicsComment 获取话题的评论 或者 话题下回答的评论 **topicsCommentList=="
-					+ JSON.toJSONString(topicsCommentPage));
+			logger.info("**getPartTopicsComment 获取话题的评论 或者 话题下回答的评论 **topicsCommentList==");
+//					+ JSON.toJSONString(topicsCommentPage));
 			baseResponse.setObj(topicsCommentPage);
 			baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
 			baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
@@ -246,7 +246,7 @@ public class TopicsController {
 					topicsCommentResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
 				}
 				
-				logger.info("**insertTopicsComment **话题 新增回答**topicsComment=="+JSON.toJSONString(comment));
+				logger.info("**insertTopicsComment **话题 新增回答**topicsComment ");//+JSON.toJSONString(comment));
 				return JSON.toJSONString(topicsCommentResponse);
 			} else {
 				topicsCommentResponse.setReturnStatus(ConstantManager.ERROR_STATUS);

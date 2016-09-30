@@ -21,8 +21,13 @@ function sugSubmit(){
 	var sugMobile = $.trim($("#sugMobile").val());
 	var sugEmail =  $.trim($("#sugEmail").val());
 	var sugContent = editor.getContent();
+	var len=sugContent.length+(sugContent.match(/[^\x00-\xff]/g) ||"").length;
+	
+	if(len>4294000000){// 2^32 = 4294967296
+		ZENG.msgbox.show('反馈内容不能大于3000字!', 5, 3000);return false;
+	}
 	if(!UM.getEditor('uEditorAbout').hasContents()){
-		ZENG.msgbox.show('请输入反馈内容!', 5, 3000);return false;;return false;
+		ZENG.msgbox.show('请输入反馈内容!', 5, 3000);return false;
 	}
 	if(sugEmail=="" && sugMobile==""){
 		ZENG.msgbox.show('手机或者邮箱不能为空!', 5, 3000);return false;
@@ -36,7 +41,7 @@ function sugSubmit(){
 	}
 	$.ajax({
 	type:"POST",
-  	url:"/51jobplusCore/suggestion/add",
+  	url:"/suggestion/add",
   	data:{sugtel:sugMobile,sugemail:sugEmail,sugcontent:sugContent},
 	dataType:"json",
 	success:function(data){

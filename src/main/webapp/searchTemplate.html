@@ -1,12 +1,12 @@
 <!-- 搜索专区 -->
 {#foreach $T.result as item}
 <!-- {$T.item.protoType} -->
-{#if $T.item.protoType == "doc"}
+{#if $T.item.protoType == "1"}
   		<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/docs/getDocsDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;' >【文档】{$T.item.title}</a>
+							 <a target="_blank" href="/docs/getDocsDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;' >【文档】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
 							 <p>{$T.item.description}</p>
@@ -41,10 +41,10 @@
 											 	{#if $T.item.imgUrl.length > 5}
 											 		{$T.item.imgUrl}
 											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
+											 		/image/search_default.jpg
 											 	{#/if}
 											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
+											 	/image/search_default.jpg
 											 {#/if}
 											 ' alt=''></div>
 									 </div>
@@ -53,12 +53,12 @@
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "book"}
+  {#elseif $T.item.protoType == "6"}
   			<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/books/getBookDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
+							 <a target="_blank" href="/books/getBookDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
 							 <p>{$T.item.description}</p>
@@ -91,10 +91,10 @@
 											 	{#if $T.item.imgUrl.length > 5}
 											 		{$T.item.imgUrl}
 											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
+											 		/image/search_default.jpg
 											 	{#/if}
 											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
+											 	/image/search_default.jpg
 											 {#/if}
 											 ' alt=''></div>
 									 </div>
@@ -103,12 +103,12 @@
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "article"}
+  {#elseif $T.item.protoType == "2"}
   				<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/article/getArticleDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
+							 <a target="_blank" href="/article/getArticleDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
 							 <p>{$T.item.description}</p>
@@ -140,10 +140,10 @@
 											 	{#if $T.item.imgUrl.length > 5}
 											 		{$T.item.imgUrl}
 											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
+											 		/image/search_default.jpg
 											 	{#/if}
 											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
+											 	/image/search_default.jpg
 											 {#/if}
 											 ' alt=''></div>
 									 </div>
@@ -152,12 +152,12 @@
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "courses"}
+  {#elseif $T.item.protoType == "3"}
   				<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/courses/getCourseDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
+							 <a target="_blank" href="/courses/getCourseDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
 							 <p>{$T.item.description} </p>
@@ -190,10 +190,10 @@
 											 	{#if $T.item.imgUrl.length > 5}
 											 		{$T.item.imgUrl}
 											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
+											 		/image/search_default.jpg
 											 	{#/if}
 											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
+											 	/image/search_default.jpg
 											 {#/if}
 											 ' alt=''></div>
 									 </div>
@@ -202,12 +202,12 @@
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "site"}
+  {#elseif $T.item.protoType == "4"}
   			<div class="item" id="item-1">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/sites/getSiteDetail?id={$T.item.data_id}" title="{$T.item.title}"  style='margin-left: -6px;'>【站点】{$T.item.title}</a>
+							 <a target="_blank" href="/sites/getSiteDetail?id={$T.item.data_id}" title="{$T.item.title}"  style='margin-left: -6px;'>【站点】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
 							 <p>{$T.item.description}</p>
@@ -239,10 +239,10 @@
 											 	{#if $T.item.imgUrl.length > 5}
 											 		{$T.item.imgUrl}
 											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
+											 		/image/search_default.jpg
 											 	{#/if}
 											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
+											 	/image/search_default.jpg
 											 {#/if}
 											 ' alt=''></div>
 									 </div>
@@ -258,7 +258,7 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/topics/getTopicsDetail?topicId={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
+							 <a target="_blank" href="/topics/getTopicsDetail?topicId={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.title}">
 							 <p>{$T.item.title}</p>
@@ -291,10 +291,10 @@
 											 	{#if $T.item.imgUrl.length > 5}
 											 		{$T.item.imgUrl}
 											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
+											 		/image/search_default.jpg
 											 	{#/if}
 											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
+											 	/image/search_default.jpg
 											 {#/if}
 											 ' alt=''></div>
 									 </div>

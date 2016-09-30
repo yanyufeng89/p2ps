@@ -81,15 +81,15 @@ $(function(){
     //取消关注
     $('.attention span').live('click',function(){
     	var topicid=$(this).data('topicid');
-    	var $btn=$(this).find('input[type=botton]');
+    	var $btn=$(this).find('a');
     	var createperson=$(this).data('createperson');
     	var titlename=$(this).data('titlename');
     	if($btn.hasClass('topic-disblue')){
-    		$btn.removeClass('topic-disblue').addClass('topic-blue').val('关注');
+    		$btn.removeClass('topic-disblue').addClass('topic-blue').html('关注');
     		deleteAttentions(topicid.toString(),$(this));
     		$(this).attr('data-actiontype','1');
     	}else{
-    		$btn.removeClass('topic-blue').addClass('topic-disblue').val('取消关注');
+    		$btn.removeClass('topic-blue').addClass('topic-disblue').html('取消关注');
     		topicFollow($(this),1,'1',createperson,topicid,titlename);
     		$(this).attr('data-actiontype','0');
     	}
@@ -192,7 +192,7 @@ $(function(){
     	
     	$.ajax({
     		type:'POST',
-    	    url:projectName+"myCenter/updateTopics",
+    	    url:"/myCenter/updateTopics",
     	    data:{id:titleid,title:titlename},
     	    dataType:"json",
     	    success:function(data){
@@ -255,7 +255,7 @@ $(function(){
     	}
     	$.ajax({
     		type:'POST',
-    	    url:projectName+"myCenter/updateTopics",
+    	    url:"/myCenter/updateTopics",
     	    data:{id:titleid,content:about},
     	    dataType:"json",
     	    success:function(data){
@@ -271,7 +271,6 @@ $(function(){
     })
     //话题详情--回答里面的评论收起或展开
     $('#zh-question-answer-wrap .js-comment').live('click',function(){
-    	userInfo=$('#currentUserId');
        	$(this).toggle(function(){
         	var $child=$(this).children();
         	$(this).empty().append($child).append('收起评论');
@@ -286,36 +285,36 @@ $(function(){
         	else{
             	$.ajax({
             		type:'POST',
-            		url:projectName+"topics/getPartTopicsComment",
+            		url:"/topics/getPartTopicsComment",
             		data:{parentcommid:answerid,type:2,relationidPg:answerid,objectNamePg:objectName,objCreatepersonPg:createperson},
             	    dataType:"json",
             	    success:function(data){
            	    	if(data.returnStatus=='000'){//返回成功
            	    		$.each(data.obj.list,function(index,item){
-            	    			if(item.likedUsers!=undefined){
-            	    				if(item.likedUsers.indexOf(',')!=-1){
-            	    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.likedUsers.split(','))!=-1){
-            	    						item.likedUsers=1;
+            	    			if(item.likedIds!=undefined){
+            	    				if(item.likedIds.indexOf(',')!=-1){
+            	    					if($.inArray(String(userInfo.userid), item.likedIds.split(','))!=-1){
+            	    						item.likedIds=1;
             	    					}else{
-            	    						item.likedUsers=0;
+            	    						item.likedIds=0;
             	    					}
             	    				}else{
-            	    					if(item.likedUsers==(userInfo==undefined?'':userInfo.userid)){
-            	    						item.likedUsers=1;
+            	    					if(item.likedIds==String(userInfo.userid)){
+            	    						item.likedIds=1;
             	    					}else{
-            	    						item.likedUsers=0;
+            	    						item.likedIds=0;
             	    					}
             	    					
             	    				}
     	        	    		}else{
-    	        	    			item.likedUsers=0;
+    	        	    			item.likedIds=0;
     	        	    		}
             	    	})
            	    	 	var datamodel={
            	    				answerid:answerid,
            	    				topicscommentList:data.obj.list,
            	    				topiccount:data.obj.list.length,
-           	    				userid:userInfo==undefined?'':userInfo.userid,
+           	    				userid:String(userInfo.userid),
            	    				createperson:createperson,
            	    				objectName:objectName,
            	    		}
@@ -392,7 +391,7 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,objCreatepersonPg:createperson,objectNamePg:name,relationidPg:topicid},
     	    dataType:"json",
     	    success:function(data){
@@ -441,7 +440,7 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,parentcommid:parentcommid,relationidPg:parentcommid,objCreatepersonPg:createperson,objectNamePg:objectName},
     	    dataType:"json",
     	    success:function(data){
@@ -491,7 +490,7 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,commentby:commentby,objCreatepersonPg:commentby,relationidPg:relationid,objectNamePg:objectname},
     	    dataType:"json",
     	    success:function(data){
@@ -547,7 +546,7 @@ $(function(){
      	$this=$(this);
      	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,commentby:commentby,parentcommid:parentcommid,objectNamePg:objectName,relationidPg:relationid,objCreatepersonPg:commentby},
     	    dataType:"json",
     	    success:function(data){
@@ -602,7 +601,7 @@ $(function(){
     	else{
         	$.ajax({
         		type:'POST',
-        		url:projectName+"topics/getPartTopicsComment",
+        		url:"/topics/getPartTopicsComment",
         		data:{topicsid:topicid,type:'3'},
         	    dataType:"json",
         	    success:function(data){
@@ -653,7 +652,7 @@ $(function(){
        	    		$('.zm-item-link-avatar').pinwheel();
        	            $('.zg-link').pinwheel();
        	            //为了分页
-       	    		$.getScript('/51jobplusCore/scripts/jquery.simplePagination.js',function(){
+       	    		$.getScript('/scripts/jquery.simplePagination.js',function(){
        	    			$("#topiccompaging").pagination({
        	    				items:data.obj.count,
        	    				itemsOnPage:data.obj.pageSize,
@@ -766,10 +765,11 @@ $(function(){
     	}
     	var $this=$(this);
     	var isPublic=$('input[type=checkbox]').is(':checked')?0:1;
-    	if(!UM.getEditor('uEditorCustom').hasContents())return false;
+    	//判断不为空 或者是在IE浏览器下umeditor插件 会把placeholder属性转换为P标签里面的内容
+    	if(!UM.getEditor('uEditorCustom').hasContents()||commcontent=='<p>在这里输入回答</p>"')return false;
     	$.ajax({
     		type:"POST",
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{commcontent:commcontent,type:1,topicsid:topicsid,isPublic:isPublic,objCreatepersonPg:objCreateperson,relationidPg:topicsid,objectNamePg:topicname},
     	    dataType:"json",
             success:function(data){
@@ -783,6 +783,7 @@ $(function(){
             			topicsComment:data.topicsComment,
             			commcontent:commcontent,
             			ispublic:isPublic,
+            			topicname:topicname
             		}
             		$('.anscommtemplate').setTemplateURL(projectName+'answerTemplate.html',null, {filter_data: false});
             		$('.anscommtemplate').processTemplate(datamodel);
@@ -816,25 +817,6 @@ $(function(){
     	topicFollow($(this),1,undefined,createperson,titleid,titlename)
     })
     
-   //回到顶部
-   $("#topicbacktop").mousemove(function(){
-    	$("#topicbacktop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#topicbacktop").css("background-position-x", "0");
-    })
-    
-    /*当界面下拉到一定位置出现向上的箭头 start*/
-    $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
-            $("#topicbacktop").fadeIn("fast");  
-        }  
-        else  
-        {  
-            $("#topicbacktop").fadeOut("fast");  
-        }  
-    });
-    /*当界面下拉到一定位置出现向上的箭头 end*/
-   
     //话题详情加载更多
     $('.loadmore').live('click',function(){
     	$(this).addClass('loading').empty().append("<span class='capture-loading'></span>加载中");
@@ -865,7 +847,7 @@ function askPeople(obj){
 	var topicid=$('input[name=titleid]').val();
 	$.ajax({
 		type:'POST',
-		url:projectName+"topics/askPeople",
+		url:"/topics/askPeople",
 		data:{id:topicid,title:topictitle,objCreatepersonPg:userid},
 		dataType:"json",
      	async:false,
@@ -885,7 +867,7 @@ function findInvitePerson(val){
 	var nskillitem='';
 	$.ajax({
 		type:'POST',
-		url:projectName+"skills/findUser/"+val,
+		url:"/skills/findUser/"+val,
 		dataType:"json",
      	async:false,
      	success:function(data){
@@ -895,7 +877,7 @@ function findInvitePerson(val){
 	     		  if(item.skillitem!=undefined){
 	     			 if(item.skillitem.indexOf(',')!=-1){
 		     				$.each(item.skillitem.split(','),function(index,item1){
-		     					nskillitem+=item1.split(':')[1]+',';
+		     					nskillitem+=item1.split(':')[1]+'，';
 		     				})
 		     				item.skillitem=nskillitem.substring(0,nskillitem.length-1)
 		     		  }else{
@@ -933,7 +915,7 @@ function topicLoadMore(obj){
     var topicid=$('#content input[name=titleid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"topics/getSortTopicsCommentsByTopicId",
+      	url:"/topics/getSortTopicsCommentsByTopicId",
       	data:{pageNo:Number(pageNo)+1,topicsid:topicid,sortType:sorttype},
     	dataType:"json",
     	success:function(data){
@@ -968,8 +950,9 @@ function topicLoadMore(obj){
           	   $(".headiconintotem").empty();
           	   $('.loadmore').attr('data-pageno',Number(pageNo)+1);
           	   obj.removeClass('loading').empty().append('更多');
-          	   if(Number(sumpage)==Number(pageNo)+1)
+          	   if(Number(sumpage)==Number(pageNo)+1){
           		 $('.loadmore').hide();
+          	   }
           	   intoUserInfo();
     		}else{
     			
@@ -999,7 +982,7 @@ function deleteTopics(conditions,obj){
 	   console.log(s)*/;
   	   $.ajax({
          	type:"POST",
-         	url:projectName+"myCenter/deleteTopics",
+         	url:"/myCenter/deleteTopics",
          	data:{condition:conditions},
          	dataType:"json",
          	success:function(data){
@@ -1036,7 +1019,7 @@ function deleteAttentions(conditions,obj){
 	   console.log(s);*/
 	   $.ajax({
        	type:"POST",
-       	url:projectName+"myCenter/deleteAttentions",
+       	url:"/myCenter/deleteAttentions",
        	data:{condition:conditions},
        	dataType:"json",
        	success:function(data){
@@ -1069,7 +1052,7 @@ function deleteAttentions(conditions,obj){
 function deleteTopicsComments(conditions,obj){
 	   $.ajax({
        	type:"POST",
-       	url:projectName+"myCenter/deleteTopicsComments",
+       	url:"/myCenter/deleteTopicsComments",
        	data:{condition:conditions},
        	dataType:"json",
        	success:function(data){
@@ -1109,7 +1092,7 @@ function deleteTopicsComments(conditions,obj){
 		if($.trim(conds).length>0){
 		 $.ajax({
 	         	type:"POST",
-	         	url:projectName+"tags/findClass/"+conds,
+	         	url:"/tags/findClass/"+conds,
 	         	//data:{condition:100},
 	         	dataType:"json",
 	         	success:function(data){
@@ -1136,7 +1119,7 @@ function deleteTopicsComments(conditions,obj){
 function updateTopics(){
 	   $.ajax({
      	type:"POST",
-     	url:projectName+"/myCenter/updateTopics",
+     	url:"//myCenter/updateTopics",
      	data:{id:2,topicsclass:"测试话题标签",content:"<p><img src='http://192.168.0.39:8199/2016/07/01/1fe0d531d23540d99e94e6001bd46d9f.png' _src='http://192.168.0.39:8199/2016/07/01/1fe0d531d23540d99e94e6001bd46d9f.png'/></p>",topicsclass:"100:语文"},
      	dataType:"json",
      	success:function(data){
@@ -1170,7 +1153,7 @@ function topicLike(obj,type){
 	}
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/clickOnLike",
+     	url:"/myCenter/clickOnLike",
      	data:{id:commid,likeOperate:isLiked,objectNamePg:objectName,objCreatepersonPg:createperson,relationidPg:commid,topObjId:topObjId},
      	dataType:"json",
      	success:function(data){
@@ -1278,7 +1261,7 @@ function cancelnewreply(obj,type){
 	$this=obj;
 	$.ajax({
        	type:"POST",
-       	url:projectName+"topics/delCommentOnTopDetail",
+       	url:"/topics/delCommentOnTopDetail",
        	data:{id:replyid,type:operatetype,topicsid:topicsid,parentcommid:parentcommId},
        	dataType:"json",
        	success:function(data){

@@ -1,25 +1,25 @@
 <meta name="description" content="User login page"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<link href="/51jobplusCore/manage/css/bootstrap.min.css" rel="stylesheet"/>
-<link rel="stylesheet" href="/51jobplusCore/manage/css/font-awesome.min.css"/>
-<link rel="stylesheet" href="/51jobplusCore/manage/css/jquery-ui-1.10.3.full.min.css"/>
-<link rel="stylesheet" href="/51jobplusCore/manage/css/ui.jqgrid.css"/>
+<link href="/manage/css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="/manage/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="/manage/css/jquery-ui-1.10.3.full.min.css"/>
+<link rel="stylesheet" href="/manage/css/ui.jqgrid.css"/>
 
-<link rel="stylesheet" href="/51jobplusCore/manage/css/ace.min.css"/>
-<link rel="stylesheet" href="/51jobplusCore/manage/css/ace-rtl.min.css"/>
-<link rel="stylesheet" href="/51jobplusCore/manage/css/ace-skins.min.css"/>
+<link rel="stylesheet" href="/manage/css/ace.min.css"/>
+<link rel="stylesheet" href="/manage/css/ace-rtl.min.css"/>
+<link rel="stylesheet" href="/manage/css/ace-skins.min.css"/>
 
-<script src="/51jobplusCore/manage/js/jquery-1.10.2.min.js"></script>
-<script src="/51jobplusCore/manage/js/bootstrap.min.js"></script>
-<script src="/51jobplusCore/manage/js/typeahead-bs2.min.js"></script>
-<script src="/51jobplusCore/manage/js/date-time/bootstrap-datepicker.min.js"></script>
-<script src="/51jobplusCore/manage/js/jqGrid/jquery.jqGrid.min.js"></script>
-<script src="/51jobplusCore/manage/js/jqGrid/i18n/grid.locale-en.js"></script>
-<script src="/51jobplusCore/manage/js/ace-elements.min.js"></script>
-<script src="/51jobplusCore/manage/js/ace.min.js"></script>
+<script src="/manage/js/jquery-1.10.2.min.js"></script>
+<script src="/manage/js/bootstrap.min.js"></script>
+<script src="/manage/js/typeahead-bs2.min.js"></script>
+<script src="/manage/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="/manage/js/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="/manage/js/jqGrid/i18n/grid.locale-en.js"></script>
+<script src="/manage/js/ace-elements.min.js"></script>
+<script src="/manage/js/ace.min.js"></script>
 <script type="text/javascript">
-    var $path_base = "/51jobplusCore";
+    var $path_base = "";
     function updatePagerIcons(table) {
         var replacement ={
             'ui-icon-seek-first': 'icon-double-angle-left bigger-140',

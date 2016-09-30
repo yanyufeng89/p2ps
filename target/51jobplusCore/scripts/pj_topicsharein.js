@@ -1,11 +1,12 @@
 var ispublic=true;
 var oldval,newval;
 $(function(){
-	//窗体加载的时候 焦点定位到文本框
-	$('#js-before-ask').focus();
+	/*//窗体加载的时候 焦点定位到文本框
+	$('#js-before-ask').focus();*/
 	//确定
-	$("#upload-inittopic-container").on('click','.iwanttoask',function(){
-		var askval=$("#js-before-ask").val().replace(/[ ]/g,"");//去掉空格
+	$("#upload-inittopic-container").on('click','#btntopicsure',function(){
+		 var askval=$("#js-before-ask").val();/*.replace(/[ ]/g,"");*///去掉空格
+		 $(this).addClass('capture-loading').html('');
 		 if(askval.length==0){
 			 $("#js-before-ask").parent().find('.error').show();
 			 return false;
@@ -108,17 +109,13 @@ $(function(){
 			tagid+=$(this).attr('id')+":"+$(this).data('name')+",";
 		});
 		if($.trim(tagid).length==0){
-			$('.topic-error').show();
+			$('.pj-warmprompt').show();
 			return false;
 		}
 		$("#topicaddForm input[name=topicsclass]").val(tagid.substring(0,tagid.length-1));
 		$("#topicaddForm").submit();
 	});
-	//取消
-	$("#btn-cancel-all").on('click',function(){
-		 $("#upload-inittopic-container").show();
-		 $("#upload-topicfiles-container").hide();
-	})
+
 	//input实时从数据库中筛选数据
 	$('#js-before-ask,#pj-question-suggest-title-content').bind('input propertychange',function(){
 		 var searchtype=$(this).attr('data-searchtype');
@@ -144,7 +141,7 @@ function sendFile(file,editor,welEditable) {
     $.ajax({
         data: data,
         type: "POST",
-        url: "/51jobplusCore/topics/album/uploadImage/999",
+        url: "/topics/album/uploadImage/999",
         cache: false,
         contentType: false,
         processData: false,
@@ -163,7 +160,7 @@ function findTitle(obj,flag){
    		if($.trim(conds).length>0){
    		 $.ajax({
 	         	type:"POST",
-	         	url:"/51jobplusCore/topics/findTitle/"+conds,
+	         	url:"/topics/findTitle/"+conds,
 	         	//data:{condition:100},
 	         	dataType:"json",
 	         	async:false,
@@ -197,7 +194,7 @@ function initTitleBySearchTopic(data,conds){
 		if(b.replysum==undefined)
 			b.replysum=0;
 		html+="<div class='ask-row' data-askid='"+b.data_id+"' data-answer-count"+b.replysum+"> ";
-		html+="   <a style='color:rgb(34,34,34)' target='_blank' href='/51jobplusCore/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
+		html+="   <a style='color:rgb(34,34,34)' target='_blank' href='/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
 	    html+="   <span class='ask-gray'>"+b.replySum+"个人回答问题</span>"
 		html+="</div>";
 	})
@@ -217,7 +214,7 @@ function initTitleContentBySearchTopic(data,conds){
 		if(b.replysum==undefined)
 			b.replysum=0;
 		html+="<div class='ask-row goog-zippy-header goog-zippy-collapsed' data-answer_id="+b.data_id+" data-answer_count='"+b.replysum+"'>";
-	    html+="<a style='color: rgb(34, 34, 34);' target='_blank' href='/51jobplusCore/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
+	    html+="<a style='color: rgb(34, 34, 34);' target='_blank' href='/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
 	    html+="   <span class='zm-ac-gray'>"+b.replySum+"个人回答问题</span>"
 		html+="</div>";
 	 })

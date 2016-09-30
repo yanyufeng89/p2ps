@@ -89,7 +89,13 @@ public class IndexController {
 	 * @param request
 	 * @param Condition 查询关键字
 	 * @param sharedType 分类    如果是0,赋值为"",查询所有
-	 * @param protoType 那种分类 doc/book/article/courses/sites/topics
+	 * @param protoType 那种分类 
+	 * 
+	 * 	doc 1
+		article 2
+		courses 3
+		site 4
+		topics 5  doc/book/article/courses/sites/topics
 	 * @param tags 标签
 	 * @param pages 第几页，默认第0页
 	 * @return
@@ -110,13 +116,13 @@ public class IndexController {
 		//搜索结果 List
 		List<?> resultList = homePageService.search(Condition, sharedType, protoType, tags, pages, pageSize);	
 		//搜索结构总条数
-		Long reCount = (Long)resultList.get(0);
+		Long reCount = resultList.size()>0?(Long)resultList.get(0):0L;
 		//搜索结果集
-		String result =  resultList.get(1).toString();
+		String result =  resultList.size()>0?resultList.get(1).toString():"";
 		
 		//搜索页导航
 		List<Map<String, Object>> searchTypeList = homePageService.getSearchTypes();
-		logger.info("********result=="+result);
+//		logger.info("********result=="+result);
 		logger.info("********Condition=="+Condition);
 		logger.info("********sharedType=="+sharedType);
 		logger.info("********protoType=="+protoType);

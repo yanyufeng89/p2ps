@@ -6,17 +6,18 @@
                登录
     </title>
     <meta name="viewport" content="width=1230"/> 
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" href="/51jobplusCore/css/css.css" type="text/css">
-    <link rel="stylesheet" href="/51jobplusCore/css/login.css" type="text/css">
-    <link rel="stylesheet" href="/51jobplusCore/scripts/layer.css" id="layui_layer_skinlayercss">
-    <link rel="stylesheet" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <script type="text/javascript" src="/51jobplusCore/scripts/jquery-1.8.0.min.js"></script>
-    <script src="/51jobplusCore/scripts/js.KinerCode.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/51jobplusCore/scripts/pj_authcode.js"></script> 
-    <script type="text/javascript" src="/51jobplusCore/scripts/layer.js"></script>
-    <script type="text/javascript" src="/51jobplusCore/scripts/pj_reg_ajax.js"></script>
-    <script src="/51jobplusCore/scripts/sockjs-0.3.min.js"></script>
+    <link rel="stylesheet" href="/css/css.css" type="text/css">
+    <link rel="stylesheet" href="/css/login.css" type="text/css">
+    <link rel="stylesheet" href="/scripts/layer.css" id="layui_layer_skinlayercss">
+    <link rel="stylesheet" href="/css/pj_wkcommon_base.css" charset="UTF-8">
+    <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
+    <script src="/scripts/js.KinerCode.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/scripts/pj_authcode.js"></script> 
+    <script language="javascript" src="/scripts/layer.js"></script>
+    <script type="text/javascript" src="/scripts/pj_reg_ajax.js"></script>
+    <script src="/scripts/sockjs-0.3.min.js"></script>
  </head>
   
   <body class="login" style="background:#fff;">
@@ -24,18 +25,18 @@
        <div class='header-row'>
          <div class="header-alignleft">
              <div class="header-contact-info">
-               <img src="/51jobplusCore/image/website-banners.png" class="img-responsive">
+               <img src="/image/website-banners.png" class="img-responsive">
              </div>
           </div>
        </div>
     </div>
     <div class="login-head">
-      <a class="navbar-brand" href="/51jobplusCore/index">
+      <a class="navbar-brand" href="/index">
         <img src="image/pluslogo.png" class="img-responsive">
       </a>
     </div>
       <div class="logoin_cont_box">
-	   <div class='pj-bgimg'><img src='/51jobplusCore/image/login-bg.jpg' alt='' width='660' height='445'></div>
+	   
        <form id="usertype1"  method="post" action="login<#if backurl??>?backurl=${backurl}</#if>">
         <div class="login_left">
           <div class="login_box_cont">
@@ -85,7 +86,7 @@
                   记住登录状态
                 </em>
               </span>
-              <a href="/51jobplusCore/index/fore/retakepwd" style='color:#0867c5'>
+              <a href="/index/fore/retakepwd" style='color:#0867c5'>
                 忘记密码？
               </a>
             </div>
@@ -102,11 +103,11 @@
                 其他方式登录：
               </div>
               <div class="pjlogin_qq">
-                <a href="/51jobplusCore/authorize/weibo/login" target="_self" class="pjlog_sina png" title="新浪微博">
+                <a href="/authorize/weibo/login" target="_self" class="pjlog_sina png" title="新浪微博">
                 </a>
-                <a href="/51jobplusCore/authorize/qq/login" target="_self" class="png" title="QQ">
+                <a href="/authorize/qq/login" target="_self" class="png" title="QQ">
                 </a>
-                <a href="/51jobplusCore/authorize/wechat/login" target="_self" class="pjlog_wx png" title="微信">
+                <a href="/authorize/wechat/login" target="_self" class="pjlog_wx png" title="微信">
                 </a>
               </div>
             </div>

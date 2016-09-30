@@ -31,7 +31,6 @@ public class TypeConfigServiceImpl implements ITypeConfigService{
 			list = (List<TypeConfig>) redisService.getObject(ConstantManager.REDIS_KEY_ALLPARENTTYPES);
 		else{
 			list = typeConfigDao.getAllParentTypeConfigs();
-			redisService.set(ConstantManager.REDIS_KEY_ALLPARENTTYPES,list);
 		}
 		return list;
 	}

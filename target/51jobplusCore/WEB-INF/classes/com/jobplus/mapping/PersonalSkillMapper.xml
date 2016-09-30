@@ -173,9 +173,10 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null" >
+       updateTime = now(),
+      <!-- <if test="updatetime != null" >
         updateTime = now(),
-      </if>
+      </if> -->
       <if test="extendinfo != null" >
         extendInfo = #{extendinfo,jdbcType=VARCHAR},
       </if>

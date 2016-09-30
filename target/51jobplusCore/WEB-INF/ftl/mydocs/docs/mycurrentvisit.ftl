@@ -7,7 +7,7 @@
         <title>最近访问</title>
         <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
     </head>
-    <body id='centertop'>
+    <body id='currentvisittop'>
         <div  class="page">
             <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
             <div id="bd" style="margin:0 auto; width:1200px">
@@ -18,7 +18,7 @@
                                <#if (Session.user.headicon)??>
                                  <img src="${Session.user.headicon}" width="120" height="120" id="imghead">
                                <#else>
-                                 <img src="/51jobplusCore/image/myphoto.jpg" width="120" height="120" id="imghead">
+                                 <img src="/image/myphoto.jpg" width="120" height="120" id="imghead">
                                </#if>
                                
                               </div>
@@ -115,7 +115,7 @@
                                 </div>
 								<div class="profile-aux">
                                       <div class="profile-actions">
-                                           <a href="/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}&isReview=1" class="preview-profile button-primary" target='_blank'>个人资料预览</a>
+                                           <a href="/myHome/getHomePage?userid=${Session.user.userid}&isReview=1" class="preview-profile button-primary" target='_blank'>个人资料预览</a>
 									  </div>
                                </div>
                             </div>
@@ -150,16 +150,16 @@
 									  <button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注</button>
 								  </#if>
 							   </div>
-								 <a title="${list.userName}"  target="_blank" class="zm-item-link-avatar"  data-userid='${list.visitorid}' href='/51jobplusCore/myHome/getHomePage?userid=${list.visitorid}'>
+								 <a title="${list.userName}"  target="_blank" class="zm-item-link-avatar"  data-userid='${list.visitorid}' href='/myHome/getHomePage?userid=${list.visitorid}'>
 								 <#if (list.headIcon)??>
 								   <img src="${list.headIcon}" class="zm-item-img-avatar">
 								 <#else>
-								   <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+								   <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
 								 </#if>
 							   </a>
 							   <div class="zm-list-content-medium">
 									<h2 class="zm-list-content-title">
-										<a  href='/51jobplusCore/myHome/getHomePage?userid=${list.visitorid}' target="_blank" data-userid='${list.visitorid}' class="zg-link author-link" title="${list.userName}">${list.userName}</a> 
+										<a  href='/myHome/getHomePage?userid=${list.visitorid}' target="_blank" data-userid='${list.visitorid}' class="zg-link author-link" title="${list.userName}">${list.userName}</a> 
 									</h2>
 									<div class="ellipsis">
 										<span class="bio">
@@ -199,7 +199,8 @@
                     </div>
                 </div>                    			
             </div>
-            <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 	
+            <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
+            <a id="visitbacktop" title="回到顶部" href="#currentvisittop" class='back-to-top' style="bottom: 300px; display: none;"></a>	
             <div class='homepageTemplate'></div>
             <div class='pagetemplate'></div>
             <#include "/mydocs/commonTemplate/bottomjs/bottomjs.ftl"/>

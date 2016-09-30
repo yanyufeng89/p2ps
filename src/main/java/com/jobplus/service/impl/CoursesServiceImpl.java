@@ -141,7 +141,7 @@ public class CoursesServiceImpl implements ICoursesService{
 		if(count < 1)
 			return page;
 		List<Courses> list = coursesDao.getSharedCourseList(record);
-		if(null!=list && list.size()>0){
+		if(list.size()>0){
 			for (Courses course : list) {
 				//用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getCreatetime(), "yyyy-MM-dd"));
@@ -172,7 +172,7 @@ public class CoursesServiceImpl implements ICoursesService{
 		if(count < 1)
 			return page;
 		List<Courses> list = coursesDao.getCollectedCourseList(record);
-		if(null!=list && list.size()>0){
+		if(list.size()>0){
 			for (Courses course : list) {
 				//用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getMyCollect().getColltime(), "yyyy-MM-dd"));

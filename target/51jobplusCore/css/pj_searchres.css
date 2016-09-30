@@ -410,13 +410,6 @@ ul.filter-wrapper input[type=button] {
     text-decoration: none;
 }
 
-.top-search-box, .ui-nav .inner, .screen-hd-wrap, #screen-bd, .cooperation-org, .footer {
-    min-width: 960px;
-    max-width: 1200px;
-    _width: 1200px;
-    margin: 0 auto;
-    padding: 0 10px;
-}
 .top-search-box {
     position: relative;
 }
@@ -520,6 +513,10 @@ ul.filter-wrapper input[type=button] {
 	float:left;
 	border: 1px solid #d6d6d6;
 	background: #fff;
+}
+.pj-searches-left .searches{
+	zoom:1;
+	overflow:hidden;
 }
 .pj-searches-right,.pj-topics-right{
 	width:310px;
