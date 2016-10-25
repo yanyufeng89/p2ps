@@ -1,32 +1,30 @@
 <!-- 搜索专区 -->
 {#foreach $T.result as item}
 <!-- {$T.item.protoType} -->
-{#if $T.item.protoType == "doc"}
-  		<div class="item" id="item-1">
+{#if $T.item.protoType == "1"}
+  		<div class="item">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/docs/getDocsDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;' >【文档】{$T.item.title}</a>
+							 <a target="_blank" href="/docs/getDocsDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;' >【文档】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
-							 <p>{$T.item.description}</p>
+							 <a target="_blank" href="/docs/getDocsDetail?id={$T.item.data_id}"> {$T.item.description}</a>
 						 </div>
-						 <div class="tools">
+						 <div class="tool">
 							 <div class="pj-meta-panel">
 								 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;{$T.item.createTime}</a>
 
-                                 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-preview"></i>
-									 {$T.item.readSum}人浏览
+                                 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+									 <i class="z-icon-preview"></i>{$T.item.readSum}人浏览
 								 </a>
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 {$T.item.likeSum}人赞
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+									 <i class="z-icon-thank"></i>{$T.item.likeSum}人赞
 								 </a>
-                                <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
+                                <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
 									 <i class="z-icon-download"></i>{$T.item.downSum}人下载
 								 </a>
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-share  goog-menu-button">
 									 <i class="z-icon-collect"></i>{$T.item.collectSum}人收藏
 								 </a>
 							 </div>
@@ -36,47 +34,36 @@
 							 <div class="picno">
 								 <div class="pic">
 									 <div class="picx">
-											 <div class="pict"><img src='
-											 {#if $T.item.imgUrl}
-											 	{#if $T.item.imgUrl.length > 5}
-											 		{$T.item.imgUrl}
-											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
-											 	{#/if}
-											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
-											 {#/if}
-											 ' alt=''></div>
+											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
 									 </div>
 								 </div>
 							 </div>
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "book"}
-  			<div class="item" id="item-1">
+  {#elseif $T.item.protoType == "6"}
+  			<div class="item">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/books/getBookDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
+							 <a target="_blank" href="/books/getBookDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
-							 <p>{$T.item.description}</p>
+							 <a target="_blank" href="/books/getBookDetail?id={$T.item.data_id}">{$T.item.description}</a>
 						 </div>
-						 <div class="tools">
+						 <div class="tool">
 							 <div class="pj-meta-panel">
 								 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;{$T.item.createTime}</a>
 
-								 <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
-									 <i class="z-icon-comment"></i>{$T.item.readSum}人推荐
+								 <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
+									 <i class="z-icon-comment"></i>{$T.item.replySum}人推荐
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 {$T.item.likeSum}人赞
-								 </a>
+								<!--  <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+									 <i class="z-icon-thank"></i>{$T.item.likeSum}人赞
+								 </a> -->
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-share  goog-menu-button">
 									 <i class="z-icon-collect"></i>{$T.item.collectSum}人收藏
 								 </a>
 							 </div>
@@ -86,47 +73,39 @@
 							 <div class="picno">
 								 <div class="pic">
 									 <div class="picx">
-											 <div class="pict"><img src='
-											 {#if $T.item.imgUrl}
-											 	{#if $T.item.imgUrl.length > 5}
-											 		{$T.item.imgUrl}
-											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
-											 	{#/if}
-											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
-											 {#/if}
-											 ' alt=''></div>
+											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
 									 </div>
 								 </div>
 							 </div>
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "article"}
-  				<div class="item" id="item-1">
+  {#elseif $T.item.protoType == "2"}
+  				<div class="item" >
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/article/getArticleDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
+							 <a target="_blank" href="/article/getArticleDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
 						 </div>
-						 <div class="newsinfo" title="{$T.item.description}">
-							 <p>{$T.item.description}</p>
-						 </div>
-						 <div class="tools">
+						 <!-- <div class="newsinfo" title="{$T.item.description}">
+							 <a target="_blank" href="/article/getArticleDetail?id={$T.item.data_id}">{$T.item.description}</a>
+						 </div> -->
+						 <div class="tool">
 							 <div class="pj-meta-panel">
                                  <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;{$T.item.createTime}</a>
-								 <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
+								 <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
 									 <i class="z-icon-preview"></i>{$T.item.readSum}人浏览
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 {$T.item.likeSum}人赞
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+									 <i class="z-icon-thank"></i>{$T.item.likeSum}人赞
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-share  goog-menu-button">
 									 <i class="z-icon-collect"></i>{$T.item.collectSum}人收藏
+								 </a>
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-playtour  goog-menu-button">
+									 <i class="z-icon-playtour"></i>{$T.item.downSum}人打赏
 								 </a>
 							 </div>
 						 </div>
@@ -135,47 +114,36 @@
 							 <div class="picno">
 								 <div class="pic">
 									 <div class="picx">
-											 <div class="pict"><img src='
-											 {#if $T.item.imgUrl}
-											 	{#if $T.item.imgUrl.length > 5}
-											 		{$T.item.imgUrl}
-											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
-											 	{#/if}
-											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
-											 {#/if}
-											 ' alt=''></div>
+											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
 									 </div>
 								 </div>
 							 </div>
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "courses"}
-  				<div class="item" id="item-1">
+  {#elseif $T.item.protoType == "3"}
+  				<div class="item">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/courses/getCourseDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
+							 <a target="_blank" href="/courses/getCourseDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
-							 <p>{$T.item.description} </p>
+							 <a target="_blank" href="/courses/getCourseDetail?id={$T.item.data_id}">{$T.item.description} </a>
 						 </div>
-						 <div class="tools">
+						 <div class="tool">
 							 <div class="pj-meta-panel">
 								<a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;{$T.item.createTime}</a>
 
-								 <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
+								 <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
 									 <i class="z-icon-preview"></i>{$T.item.readSum}人浏览
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 {$T.item.likeSum}人赞
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+									 <i class="z-icon-thank"></i>{$T.item.likeSum}人赞
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-share  goog-menu-button">
 									 <i class="z-icon-collect"></i>{$T.item.collectSum}人收藏
 								 </a>
 							 </div>
@@ -185,46 +153,35 @@
 							 <div class="picno">
 								 <div class="pic">
 									 <div class="picx">			 		
-											 <div class="pict"><img src='
-											 {#if $T.item.imgUrl}
-											 	{#if $T.item.imgUrl.length > 5}
-											 		{$T.item.imgUrl}
-											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
-											 	{#/if}
-											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
-											 {#/if}
-											 ' alt=''></div>
+											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
 									 </div>
 								 </div>
 							 </div>
 						 </div>
 					 </div>
                 </div>
-  {#elseif $T.item.protoType == "site"}
-  			<div class="item" id="item-1">
+  {#elseif $T.item.protoType == "4"}
+  			<div class="item">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/sites/getSiteDetail?id={$T.item.data_id}" title="{$T.item.title}"  style='margin-left: -6px;'>【站点】{$T.item.title}</a>
+							 <a target="_blank" href="/sites/getSiteDetail?id={$T.item.data_id}" title="{$T.item.title}"  style='margin-left: -6px;'>【站点】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
-							 <p>{$T.item.description}</p>
+							 <a target="_blank" href="/sites/getSiteDetail?id={$T.item.data_id}">{$T.item.description}</a>
 						 </div>
-						 <div class="tools">
+						 <div class="tool">
 							 <div class="pj-meta-panel">
 							     <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;{$T.item.createTime}</a>
-								 <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
+								 <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
 									 <i class="z-icon-preview"></i>{$T.item.readSum}人浏览
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 {$T.item.likeSum}人赞
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+									 <i class="z-icon-thank"></i>{$T.item.likeSum}人赞
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-share  goog-menu-button">
 									 <i class="z-icon-collect"></i>{$T.item.collectSum}人收藏
 								 </a>
 							 </div>
@@ -234,17 +191,7 @@
 							 <div class="picno">
 								 <div class="pic">
 									 <div class="picx">
-											 <div class="pict"><img src='
-											 {#if $T.item.imgUrl}
-											 	{#if $T.item.imgUrl.length > 5}
-											 		{$T.item.imgUrl}
-											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
-											 	{#/if}
-											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
-											 {#/if}
-											 ' alt=''></div>
+										<div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
 									 </div>
 								 </div>
 							 </div>
@@ -254,29 +201,28 @@
                 
   
   {#else}
-  		<div class="item" id="item-1">
+  		<div class="item">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/51jobplusCore/topics/getTopicsDetail?topicId={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
+							 <a target="_blank" href="/topics/getTopicsDetail?topicId={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
 						 </div>
-						 <div class="newsinfo" title="{$T.item.title}">
+						<!--  <div class="newsinfo" title="{$T.item.title}">
 							 <p>{$T.item.title}</p>
-						 </div>
-						 <div class="tools">
+						 </div> -->
+						 <div class="tool">
 							 <div class="pj-meta-panel">
 								 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">编辑于&nbsp;{$T.item.createTime}</a>
 
-								 <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
+								 <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
 									 <i class="z-icon-comment"></i>{$T.item.readSum}人评论
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 {$T.item.likeSum}人关注
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+									 <i class="z-icon-thank"></i>{$T.item.likeSum}人关注
 								 </a>
 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
+								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-share  goog-menu-button">
 									 <i class="z-icon-comment"></i>{$T.item.replySum}人回答
 								 </a>
 							 </div>
@@ -286,17 +232,7 @@
 							 <div class="picno">
 								 <div class="pic">
 									 <div class="picx">
-											 <div class="pict"><img src='
-											 {#if $T.item.imgUrl}
-											 	{#if $T.item.imgUrl.length > 5}
-											 		{$T.item.imgUrl}
-											 	{#else}
-											 		/51jobplusCore/image/search_default.jpg
-											 	{#/if}
-											 {#else}
-											 	/51jobplusCore/image/search_default.jpg
-											 {#/if}
-											 ' alt=''></div>
+											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
 									 </div>
 								 </div>
 							 </div>

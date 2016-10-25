@@ -38,6 +38,13 @@ public interface ArticleMapper {
      */
     int updateReadSum(Integer id);
     
+    /**
+     * 更新打赏次数  ++
+     * @param id
+     * @return
+     */
+    int updateSupportCount(Integer id);
+    
     Article selectByRecord(Article record);
     
 	int deleteByPrimaryKey(Integer id);

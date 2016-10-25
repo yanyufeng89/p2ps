@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.SchoolInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.SchoolInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="schoolName" property="schoolname" jdbcType="VARCHAR" />
+    <result column="schoolLogo" property="schoollogo" jdbcType="VARCHAR" />
+    <result column="schoolUrl" property="schoolurl" jdbcType="VARCHAR" />
+    <result column="schoolCity" property="schoolcity" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, schoolName, schoolLogo, schoolUrl, schoolCity
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_schoolInfo
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_schoolInfo
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.SchoolInfo" >
+    insert into tbl_schoolInfo (ID, schoolName, schoolLogo, 
+      schoolUrl, schoolCity)
+    values (#{id,jdbcType=INTEGER}, #{schoolname,jdbcType=VARCHAR}, #{schoollogo,jdbcType=VARCHAR}, 
+      #{schoolurl,jdbcType=VARCHAR}, #{schoolcity,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.SchoolInfo" >
+    insert into tbl_schoolInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="schoolname != null" >
+        schoolName,
+      </if>
+      <if test="schoollogo != null" >
+        schoolLogo,
+      </if>
+      <if test="schoolurl != null" >
+        schoolUrl,
+      </if>
+      <if test="schoolcity != null" >
+        schoolCity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="schoolname != null" >
+        #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="schoollogo != null" >
+        #{schoollogo,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolurl != null" >
+        #{schoolurl,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolcity != null" >
+        #{schoolcity,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.SchoolInfo" >
+    update tbl_schoolInfo
+    <set >
+      <if test="schoolname != null" >
+        schoolName = #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="schoollogo != null" >
+        schoolLogo = #{schoollogo,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolurl != null" >
+        schoolUrl = #{schoolurl,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolcity != null" >
+        schoolCity = #{schoolcity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.SchoolInfo" >
+    update tbl_schoolInfo
+    set schoolName = #{schoolname,jdbcType=VARCHAR},
+      schoolLogo = #{schoollogo,jdbcType=VARCHAR},
+      schoolUrl = #{schoolurl,jdbcType=VARCHAR},
+      schoolCity = #{schoolcity,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

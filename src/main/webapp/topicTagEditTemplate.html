@@ -1,5 +1,5 @@
 <div class="zm-tag-editor-editor">
-    <div class="zg-inline zg-clear" id='topictagedit' >
+    <div class="zg-clear topictagedit" id='topictagedit'>
       {#foreach $T.table as topic}  
          <div class="zm-tag-editor-edit-item">
             <span class="nor">{$T.topic.name}</span>
@@ -34,4 +34,7 @@
             完成
         </a>
     </div>
+    <span class="pj-warmprompt"  id='pj-warmprompt' style="display:none;">
+          <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+    </span>
 </div>

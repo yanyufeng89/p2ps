@@ -62,5 +62,10 @@ public interface SmsMapper {
     public int delSms(Sms record);
     
     public String justForObjName(@Param(value = "colName")String colName,@Param(value = "tableName")String tableName,@Param(value = "id")String id);
+    
+    /**
+     * 避免多次 关注同一人
+     */
+    int insertOrUpdateSms(Sms record);
 
 }

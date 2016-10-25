@@ -1,10 +1,10 @@
 <!-- 话题专区 -->
-{#if $T.topiclen==0}
+{#if $T.reCount==0}
     <div class='resultList'>
 		 <div class='emptyList'>
 		   <div class='empty-tip'>
 			   <div class="empty-img">
-				  <img src="/51jobplusCore/image/angry.png" alt="">
+				  <img src="/image/angry.png" alt="">
 			   </div>
 			   <div class="empty-info">
 					对不起，没有找到满足搜索条件的信息<br>
@@ -15,17 +15,17 @@
 		 </div>
 	</div>
 {#else}
-  {#foreach $T.topicsPage as topiclist}
+  {#foreach $T.result as item}
     <div class="item">
         <div class='topicdivision-content'>
             <div class='topicdivision-left'>
                 <div class="title">
-                    <a target="_blank" href="javascript:void(0);" onclick="toHref('tbl_topics',{$T.topiclist.id})" title="{$T.topiclist.title}">{$T.topiclist.title}</a>
+                    <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_topics',{$T.item.data_id})" title="{$T.item.title}">{$T.item.title}</a>
                 </div>
-                {#if $T.topiclist.intro}
-                    <div class="newsinfo" title="{$T.topiclist.intro}">
+                {#if $T.item.intro}
+                    <div class="newsinfo" title="{$T.item.intro}">
                         <p>
-                           {$T.topiclist.intro}
+                           {$T.item.intro}
                         </p>
                     </div>
                 {#else}
@@ -33,38 +33,22 @@
                         <p></p>
                     </div>
                 {#/if}
-                <div class="tools">
-                    <div class="zm-meta-panel">
-                        <a  class="answer-date-link meta-item" target="_blank" href="javascript:void(0);">编辑于&nbsp;
-                            {#if $T.topiclist.showcreatetime}
-                              {$T.topiclist.showcreatetime}
-                            {#/if}</a>
-
-                        <a href="javascript:void(0);" name="addcomment" class="meta-item toggle-comment js-comment">
-                            <i class="z-icon-concern"></i>
-                            {#if $T.topiclist.followssum}
-                                {$T.topiclist.followssum}
-                            {#else}
-                                 0
-                            {#/if}人关注
+                <div class="tool">
+                    <div class="pj-meta-panel">
+                        <a  class="answer-date-link pj-meta-item" target="_self" href="javascript:void(0);">
+                                                          编辑于&nbsp;{#if $T.item.updateTime}{$T.item.updateTime}{#/if}
                         </a>
 
-                        <a href="javascript:void(0);" class="meta-item zu-autohide js-thank">
-                            <i class="z-icon-thank"></i>
-                            {#if $T.topiclist.likesum}
-                                {$T.topiclist.likesum}
-                            {#else}
-                                0
-                            {#/if}人赞
+                        <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
+                            <i class="z-icon-concern"></i>{#if $T.item.collectSum}{$T.item.collectSum}{#else}0{#/if}人关注
                         </a>
 
-                        <a href="javascript:void(0);;" class="meta-item zu-autohide js-share goog-inline-block goog-menu-button">
-                            <i class="z-icon-comment"></i>
-                            {#if $T.topiclist.replysum}
-                               {$T.topiclist.replysum}
-                            {#else}
-                               0
-                            {#/if}人回答
+                        <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+                            <i class="z-icon-thank"></i>{#if $T.item.likeSum}{$T.item.likeSum}{#else}0{#/if}人赞
+                        </a>
+
+                        <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share">
+                            <i class="z-icon-comment"></i>{#if $T.item.replySum}{$T.item.replySum}{#else}0{#/if}人回答
                         </a>
                     </div>
                 </div>
@@ -73,13 +57,13 @@
                 <div class="picno">
                     <div class="pic">
                         <div class="picx">
-                            {#if $T.topiclist.topicimg}
+                            {#if $T.item.imgUrl}
                                 <div class="pict">
-                                    <img src='{$T.topiclist.topicimg}' alt=''>
+                                    <img src='{$T.item.imgUrl}' alt=''>
                                 </div>
                             {#else}
                                     <div class="pict">
-                                        <img src='/51jobplusCore/image/default/65.jpg' alt=''>
+                                        <img src='/image/default/65.jpg' alt=''>
                                     </div>
                             {#/if}
                         </div>

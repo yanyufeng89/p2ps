@@ -1,17 +1,17 @@
-var projectName = '/51jobplusCore/';
+var projectName = '/';
 var url_rules = {
-    "tbl_topics": "/topics/getTopicsDetail?topicId=",
-    "TOPICS": "/topics/getTopicsDetail?topicId=",
-    "tbl_books": "/books/getBookDetail?id=",
-    "BOOK": "/books/getBookDetail?id=",
-    "tbl_courses": "/courses/getCourseDetail?id=",
-    "COURSES": "/courses/getCourseDetail?id=",
-    "tbl_sites": "/sites/getSiteDetail?id=",
-    "SITES": "/sites/getSiteDetail?id=",
-    "tbl_article": "/article/getArticleDetail?id=",
-    "ARTICLE": "/article/getArticleDetail?id=",
-    "tbl_docs": "/docs/getDocsDetail?id=",
-    "DOC": "/docs/getDocsDetail?id="
+    "tbl_topics": "topics/getTopicsDetail?topicId=",
+    "TOPICS": "topics/getTopicsDetail?topicId=",
+    "tbl_books": "books/getBookDetail?id=",
+    "BOOK": "books/getBookDetail?id=",
+    "tbl_courses": "courses/getCourseDetail?id=",
+    "COURSES": "courses/getCourseDetail?id=",
+    "tbl_sites": "sites/getSiteDetail?id=",
+    "SITES": "sites/getSiteDetail?id=",
+    "tbl_article": "article/getArticleDetail?id=",
+    "ARTICLE": "article/getArticleDetail?id=",
+    "tbl_docs": "docs/getDocsDetail?id=",
+    "DOC": "docs/getDocsDetail?id="
 };
 
 
@@ -81,26 +81,32 @@ $.ajaxSetup({
         if (textStatus == "parsererror") {
             toLogin();
         } else if (textStatus == "error") {
-            alert("服务器忙，请稍后再试！");
+            //alert("服务器忙，请稍后再试！");
         }
     }
 });
 
-function getLoginUrl() {
-    var currentUrl = window.location.href;
-    return projectName + "login?backurl=" + encodeURI(currentUrl.substring(currentUrl.indexOf(projectName) + projectName.length, currentUrl.length));
+function getBackUrl() {
+    var currentUrl = window.location.href.replace("http://", "");
+    var backurl = encodeURI(currentUrl.substring(currentUrl.indexOf(projectName) + projectName.length, currentUrl.length));
+    if (backurl.startWith("?"))
+        backurl = "";
+    else if (backurl.indexOf("?message=") > -1) {
+        backurl = backurl.substring(0, backurl.indexOf("?message="));
+    }
+    return backurl;
 }
 
+function getLoginUrl() {
+    return projectName + "login?backurl=" + getBackUrl();
+}
 
 function toLogin() {
-    var currentUrl = window.location.href;
-    window.location.href = projectName + "login?backurl=" + encodeURI(currentUrl.substring(currentUrl.indexOf(projectName) + projectName.length, currentUrl.length));
+    window.location.href = projectName + "login?backurl=" + getBackUrl();
 }
 
-
 function toLogout() {
-    var currentUrl = window.location.href;
-    window.location.href = projectName + "logout?backurl=" + encodeURI(currentUrl.substring(currentUrl.indexOf(projectName) + projectName.length, currentUrl.length));
+    window.location.href = projectName + "logout?backurl=" + getBackUrl();
 }
 
 /**
@@ -121,9 +127,9 @@ function toShare(site, title) {
     window.open("http://www.jiathis.com/send/?webid=" + webid + "&url=" + encodeURI(window.location.href) + "&title=" + title + "&uid=1693856");
 }
 
-var addEvent = (function() {
+var addEvent = (function () {
     if (document.addEventListener) {
-        return function(el, type, fn) {
+        return function (el, type, fn) {
             if (el.length) {
                 for (var i = 0; i < el.length; i++) {
                     addEvent(el[i], type, fn);
@@ -133,14 +139,14 @@ var addEvent = (function() {
             }
         };
     } else {
-        return function(el, type, fn) {
+        return function (el, type, fn) {
             if (el.length) {
                 for (var i = 0; i < el.length; i++) {
                     addEvent(el[i], type, fn);
                 }
             } else {
                 el.attachEvent('on' + type,
-                    function() {
+                    function () {
                         return fn.call(el, window.event);
                     });
             }
@@ -150,11 +156,38 @@ var addEvent = (function() {
 
 addEvent(window, 'storage', function (event) {
     if (event.key == 'pmCount') {
-       // getpmCount();
+        // getpmCount();
         $('#menu-item-4 .zg-noti-number').html(localStorage.pmCount);
     }
     if (event.key == 'smsCount') {
-       // getSmsCount();
+        // getSmsCount();
         $('#menu-item-5 .zg-noti-number').html(localStorage.smsCount);
     }
 });
+
+String.prototype.startWith = function (str) {
+    if (str == null || str == "" || this.length == 0 || str.length > this.length)
+        return false;
+    if (this.substr(0, str.length) == str)
+        return true;
+    else
+        return false;
+    return true;
+}
+
+function setBackUrlCookie() {
+    var paramName = "backurl=";
+    var currentUrl = window.location.href.replace("http://", "");
+    var backurl = "";
+    if (currentUrl.indexOf(paramName) > -1)
+        backurl = encodeURI(currentUrl.substring(currentUrl.indexOf(paramName) + paramName.length, currentUrl.length));
+    $.cookie("backurl", backurl);
+}
+
+function deleteBackUrlCookie() {
+    $.cookie('backurl', '', {expires: -1});
+}
+
+function getBackUrlCookie() {
+    return $.cookie("backurl");
+}

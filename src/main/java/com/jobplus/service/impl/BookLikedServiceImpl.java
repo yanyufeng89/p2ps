@@ -52,7 +52,7 @@ public class BookLikedServiceImpl implements IBookLikedService{
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[8], record.getTopObjId(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[9],record.getRelationidPg(),record.getObjectNamePg());
+					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[9],record.getRelationidPg(),record.getObjectNamePg(),"");
 		}
 		return bookLikedDao.insert(record);
 	}

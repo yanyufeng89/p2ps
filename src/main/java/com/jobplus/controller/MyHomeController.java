@@ -1,6 +1,7 @@
 package com.jobplus.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -235,8 +237,14 @@ public class MyHomeController {
 	@RequestMapping(value = "/getHomePage")
 	@ResponseBody
 	public ModelAndView getHomePage(HttpServletRequest request,@RequestParam(required=true) String userid,@RequestParam(required=false) String isReview) throws Exception  {
-		
+
 		ModelAndView mv = new ModelAndView();
+		
+		if(StringUtils.isBlank(userid)){
+			mv.setViewName("404");
+			return mv;
+		}
+		
 		//当前登录人id
 		String cutUserid = (String) request.getSession().getAttribute("userid");
 		
@@ -293,7 +301,18 @@ public class MyHomeController {
 		logger.info("moreRecentVistors 加载更多最近访问的人    visitors:" + JSON.toJSONString(visitors));
 		//被访问的人的个人信息
 		User cutUser = userService.get(vh.getUserid());	
+		// 工作经验列表
+		WorkExper we = new WorkExper();
+		we.setUserid(vh.getUserid());
+		List<WorkExper> workExList = workExperService.getExperList(we);
+		// 教育背景列表
+		EducationBgrd edb = new EducationBgrd();
+		edb.setUserid(vh.getUserid());
+		List<EducationBgrd> eduList = educationBgrdService.getExperList(edb);
+
 		mv.addObject("cutUser",cutUser);
+		mv.addObject("cutUserWorkExList",workExList);
+		mv.addObject("cutUserEduList",eduList);
 		if (encoding.indexOf("application/json") != -1) {
 			//分页   post请求
 			Map<String, Page<VisitHistory>> map = new HashMap<String, Page<VisitHistory>>();
@@ -513,6 +532,20 @@ public class MyHomeController {
 			return JSON.toJSONString(baseResponse);
 		}
 	}
+
+	/**
+	 * 模糊搜索学校 
+	 */
+	@SuppressWarnings("static-access")
+	@ResponseBody
+	@RequestMapping(value = "/searchSchool/{condition}", method = RequestMethod.POST)
+	public String searchSchool(HttpServletRequest request, @PathVariable String condition) throws Exception {
+
+		return solrJUtils.findSchool(condition);
+
+	}
+	
+	
 	
 	
 }

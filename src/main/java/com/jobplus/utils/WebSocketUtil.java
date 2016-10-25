@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class WebSocketUtil {
 
-    public static String websocketIp = "192.168.0.39";
-    public static int websocketPort = 7397;
+    public static String websocketIp = ParsProperFile.getString("websocketIp");
+    public static int websocketPort = ParsProperFile.getInt("websocketPort");
 
     /**
      * 发送消息

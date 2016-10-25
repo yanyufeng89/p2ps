@@ -21,14 +21,11 @@
 				  <div id="upload-success-container" class="upload-success-container" style="display: block;">
 					<div class="upload-steps clearfix">
 					  <ul>
-						<li class="step-num active">1
-						  <span class="tips">输入链接</span></li>
+						<li class="step-num active">1<span class="tips">输入标题</span></li>
 						<li class="step-bar active"></li>
-						<li class="step-num active">2
-						  <span class="tips">补充信息</span></li>
+						<li class="step-num active">2<span class="tips">编辑内容</span></li>
 						<li class="step-bar active"></li>
-						<li class="step-num active">3
-						  <span class="tips">分享成功</span></li>
+						<li class="step-num active">3<span class="tips">发布成功</span></li>
 					  </ul>
 					</div>
 					<div class="hd">
@@ -38,9 +35,10 @@
 						</div>
 						<div class='addtreasure'>
 						              系统自动给您加上<span class="success-upload-tips">1财富值</span>的奖励
+						      <a href="/myCenter/getSharedArticleList" class='checkshare'>&nbsp;&nbsp;查看已分享的文章>></a>
 						 </div>
-						 <a href="/51jobplusCore/myCenter/getSharedArticleList" class='checkshare'>查看已分享的文章>></a>
-						<a class="goon-upload log-xsend"  href="/51jobplusCore/sharein/searchuploadFile?type=4">继续分享</a>
+						
+						<a class="goon-upload log-xsend"  href="/sharein/searchuploadFile?type=4">继续分享</a>
 					  </div>
 					</div>
 					

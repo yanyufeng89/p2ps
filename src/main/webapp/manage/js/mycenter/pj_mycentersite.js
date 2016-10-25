@@ -144,7 +144,7 @@ function siteLoadMore(obj){
     var siteid=$('input[name=siteid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"sites/loadComments",
+      	url:"/sites/loadComments",
       	data:{pageNo:Number(pageNo)+1,siteid:siteid},
     	dataType:"json",
     	success:function(data){
@@ -174,7 +174,7 @@ function collectSite(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"sites/collectSites",
+      	url:"/sites/collectSites",
       	data:{actionType:actiontype,objectid:siteid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -205,7 +205,7 @@ function cancelCommtent(obj){
 	var tableName=obj.attr('data-tableName');
 	$.ajax({
 	    type:"POST",
-	    url:projectName+"manage/backstage/delComment",//url:projectName+"sites/delComment",
+	    url:"/manage/backstage/delComment",//url:"/sites/delComment",
      	data:{id:recommend,tableName:tableName},//data:{id:recommend,siteid:siteid},
      	dataType:"json",
      	success:function(data){
@@ -223,7 +223,7 @@ function cancelCommtent(obj){
 function delSharedSite(conditions,obj){
 	   $.ajax({
 	    	type:"POST",
-	    	url:projectName+"sites/delSharedSites",
+	    	url:"/sites/delSharedSites",
 	    	data:{condition:conditions},
 	    	dataType:"json",
 	    	success:function(data){
@@ -258,7 +258,7 @@ function siteLike(obj){
 	var sitesname=$('input[name=sitesname]').val();
 	$.ajax({
 		type:"POST",
-      	url:projectName+"sites/clickLikeOnSite",
+      	url:"/sites/clickLikeOnSite",
       	data:{likeOperate:islike,id:siteid,objCreatepersonPg:siteCreatePerson,relationidPg:siteid,objectNamePg:sitesname},
       	dataType:"json",
       	success:function(data){
@@ -285,7 +285,7 @@ function siteLike(obj){
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_sites"},
    	dataType:"json",
    	success:function(data){
@@ -350,7 +350,7 @@ function insertComment(obj,type){
 	 var $this=obj;
 	 $.ajax({
 		type:"POST",
-       	url:projectName+"sites/addComment",
+       	url:"/sites/addComment",
        	data:{siteid:siteid,recommend:commendcontent,commentby:commentby,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid,objectNamePg:objectName},
        	dataType:"json",
        	success:function(data){

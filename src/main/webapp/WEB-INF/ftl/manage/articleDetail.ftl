@@ -8,7 +8,7 @@
                文章详情
     </title> 
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
-    <link rel='stylesheet' type='text/css' href='/51jobplusCore/css/pj_bookdetail.css'>
+    <link rel='stylesheet' type='text/css' href='/css/pj_bookdetail.css'>
   </head>
   <body id='articletop'>
     <div class="page">
@@ -32,7 +32,7 @@
                              </div>
                              <div class='press'>
                                 <span class="tip">链接：</span>
-                                <a href='javascript:void(0)' data-url='${record.articleurl}' target='_blank' id='articleurl'>${record.articleurl}</a>
+                                <a href='javascript:void(0)' data-url='${record.articleurl}' target='_self' id='articleurl'>${record.articleurl}</a>
                              </div>
                              <div class='brief book-height course-height tool-height'>
                                <#if (record.intro)??>
@@ -108,27 +108,27 @@
 		     <#list  record.commentList.list as booklist>
 		       <div class='item'>
 		         <div class='media-left'>
-		           <a class='uhead' href='/51jobplusCore/myHome/getHomePage?userid=${booklist.userid}' target='_blank' data-userid='${booklist.userid}'>
+		           <a class='uhead' href='/myHome/getHomePage?userid=${booklist.userid}' target='_blank' data-userid='${booklist.userid}'>
 		             <#if (booklist.userHeadIcon)??>
 		               <img class='uname' src="${booklist.userHeadIcon}" alt=""  data-userid='${booklist.userid}' data-moduletype='1'>
 		             <#else>
-		               <img class='uname' src='/51jobplusCore/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid='${booklist.userid}' data-moduletype='1'>
+		               <img class='uname' src='/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid='${booklist.userid}' data-moduletype='1'>
 		             </#if>
 		             <#if (booklist.commentbyName)??>
-			                <a href='/51jobplusCore/myHome/getHomePage?userid=${booklist.userid}' class="uname" data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
+			                <a href='/myHome/getHomePage?userid=${booklist.userid}' class="uname" data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
 			                  <span class="desc">&nbsp;回复&nbsp;</span>
 			                <span class="uname"  data-userid='${booklist.commentby}' data-moduletype='1'>
-			                  <a href='/51jobplusCore/myHome/getHomePage?userid=${booklist.commentby}' target='_blank'>${booklist.commentbyName}</a>
+			                  <a href='/myHome/getHomePage?userid=${booklist.commentby}' target='_blank'>${booklist.commentbyName}</a>
 			                </span>
 		             <#else>
-			                <a href='/51jobplusCore/myHome/getHomePage?userid=${booklist.userid}' class='uname' data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
+			                <a href='/myHome/getHomePage?userid=${booklist.userid}' class='uname' data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
 		             </#if>
 		           </a>
 		         </div>
 		         <div class='media-right'>
 		           <div class="reason">${booklist.recommend?html}</div>
 		           <div class="operate">
-		             <a itemprop="url" class="answer-date-link meta-item" target="_blank" href="javascript:;">
+		             <a itemprop="url" class="answer-date-link meta-item" target="_self" href="javascript:;">
 		               <#if (booklist.createtime?string("yyyy-MM-dd"))??>
 		                  ${booklist.createtime?string("yyyy-MM-dd")}
 		               </#if>
@@ -156,11 +156,11 @@
 		<#--判断是否登录-->
 		<#if (Session.user)??>
 		    <div class='mycomment'>
-			  <a href='/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}' target='_blank' data-userid='${Session.user.userid}'>
+			  <a href='/myHome/getHomePage?userid=${Session.user.userid}' target='_blank' data-userid='${Session.user.userid}'>
 				 <#if (Session.user.headicon)??>
 				   <img src="${Session.user.headicon}" alt="" class='zm-list-avatar' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 <#else>
-				   <img src='/51jobplusCore/image/1b48b5a75c71597_100x100.jpg' alt="" class='zm-list-avatar' data-userid='${Session.user.userid}' data-moduletype='1'>
+				   <img src='/image/1b48b5a75c71597_100x100.jpg' alt="" class='zm-list-avatar' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 </#if>
 				 <span class="mycommentinfo">推荐语</span>
 			  </a>
@@ -176,13 +176,13 @@
 	    <#else>
 	        <div class="col-md-6 col-md-offset-3 login-after-comments" style="text-align: center;">
 	            <span class="hidden-xs" style="line-height:50px;font-size: 16px;color: #090909;">登录后才能发布评论</span><br>
-	            <span class="comments-login-register hidden-xs loginprompt-null" style="margin-left: 20px;margin-right:10px;"><a target='_blank' href='javascript:toLogin();'>登录</a> |  <a  target='_blank' href='/51jobplusCore/registration.html'>立即注册</a> </span>
+	            <span class="comments-login-register hidden-xs loginprompt-null" style="margin-left: 20px;margin-right:10px;"><a href='javascript:void(0);' onclick="toLogin();">登录</a> |  <a  target='_blank' href='/registration.html'>立即注册</a> </span>
 			 </div>
 		</#if>		
 	    </div>
         <div class="plus-main-sidebar">
 		     <div class="searchresright">
-	            <a class="upload-btn bg-index" href="/51jobplusCore/sharein/searchuploadFile"></a>
+	            <a class="upload-btn bg-index" target="_self" href="/sharein/searchuploadFile"></a>
 	         </div>
 			 <div class='zm-relate-book'>
 			   <div class='zm-side-section'>
@@ -227,11 +227,11 @@
 
 					<div class="list zu-small-avatar-list zg-clear">
 					<#list record.collectUsers as colllist>
-						<a title="${colllist.username}"  class="zm-item-link-avatar" href='/51jobplusCore/myHome/getHomePage?userid=${colllist.userid}' target='_blank' data-userid="${colllist.userid}" data-moduletype='1'>
+						<a title="${colllist.username}"  class="zm-item-link-avatar" href='/myHome/getHomePage?userid=${colllist.userid}' target='_blank' data-userid="${colllist.userid}" data-moduletype='1'>
 						   <#if (colllist.headicon)??>
 							 <img src="${colllist.headicon}" class="zm-item-img-avatar">
 						   <#else>
-							  <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+							  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
 						   </#if>
 						</a>
 				   </#list>
@@ -252,7 +252,7 @@
 						  <li>
 							 <div class='related-book-right'>
 							   <span>
-							        <a href='/51jobplusCore/article/getArticleDetail?id=${samelist.data_id}'>${samelist.title}</a>
+							        <a href='/article/getArticleDetail?id=${samelist.data_id}'>${samelist.title}</a>
 							         
 							   </span>
 							  <span>
@@ -278,7 +278,7 @@
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
      <a id="#articlebacktop" title="回到顶部" href="#articletop" style="bottom: 300px; display: none;"></a>
      <#include "/mydocs/commonTemplate/detailjs/detailjs.ftl"/>
-     <script type="text/javascript" src="/51jobplusCore/manage/js/mycenter/pj_mycenterarticle.js"></script>
+     <script type="text/javascript" src="/manage/js/mycenter/pj_mycenterarticle.js"></script>
   </body>
 
 </html>

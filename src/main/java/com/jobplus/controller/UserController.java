@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jobplus.pojo.User;
 import com.jobplus.service.IUserService;
+import com.jobplus.service.impl.RedisServiceImpl;
 
 @Controller
 @RequestMapping("/user")
@@ -26,9 +26,8 @@ public class UserController {
 	@Resource
 	private IUserService userService;
 
-	@SuppressWarnings("rawtypes")
 	@Resource
-	private RedisTemplate redisTemplate;
+	private RedisServiceImpl redisService;
 
 	/**
 	 * 用户注册
@@ -177,7 +176,6 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping("/changePassword")
 	@ResponseBody
 	public String changePassword(HttpServletRequest request, User user) {
@@ -186,7 +184,7 @@ public class UserController {
 		if (request.getSession().getAttribute("userid") != null) {
 			SecurityUtils.getSubject().logout();
 			String sessionId = request.getSession().getId();
-			redisTemplate.delete(sessionId);
+			redisService.del(sessionId);
 		}
 		return String.valueOf(state);
 	}

@@ -119,6 +119,7 @@
     update tbl_docs 
     set 
       readSum = readSum + 1
+      ,lastEditTime = now()
     where ID = #{id,jdbcType=INTEGER}
   </update> 
   
@@ -135,7 +136,7 @@
     where t.ID = #{id,jdbcType=INTEGER}
     <!-- 必须是有效资源 -->
     and t.isValid = 1
-    and u.isValid = 1
+   <!-- 	u.isValid = 1 -->
   </select>
   
   

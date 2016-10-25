@@ -4,7 +4,7 @@
 	<div class="answer-head">
 	<div class="zm-item-answer-author-info">
 
-	   <a class="zm-item-link-avatar avatar-link" href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target="_blank">
+	   <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage?userid={$T.list.userid}' target="_self">
 
 	   {#if $T.list.tmpHeadIcon}
 	     {#if $T.list.isPublic==1}
@@ -14,18 +14,18 @@
 	     {#/if}
 	   {#else}
 	      {#if $T.list.isPublic==1}
-	         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
 	      {#else}
-	         <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
 	      {#/if}
 	   {#/if}
 	   </a>
 	   {#if $T.list.isPublic==1}
-	    <span class="author-link" data-tip="" target="_blank"  data-userid='{$T.list.userid}' data-moduletype='0'>
-	     <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.list.userid}' target="_blank">{$T.list.tmpUserName}</a>
+	    <span class="author-link" data-tip=""  data-userid='{$T.list.userid}' data-moduletype='0'>
+	     <a  href='/myHome/getHomePage?userid={$T.list.userid}' target="_self">{$T.list.tmpUserName}</a>
 	    </span>
 	   {#else}
-	     <span class="anonymous-user" data-tip="" target="_blank"  data-userid='{$T.list.userid}' data-moduletype='0'>匿名用户</span>
+	     <span class="anonymous-user" data-tip="" data-userid='{$T.list.userid}' data-moduletype='0'>匿名用户</span>
 	   {#/if}
     
 	
@@ -47,7 +47,7 @@
 	<div class="zm-item-meta answer-actions clearfix js-contentActions">
 		<div class="zm-meta-panel">
 		
-		<a itemprop="url" class="answer-date-link meta-item"  target="_blank" href="javascript:;">编辑&nbsp;{$T.list.showcreatetime}</a>
+		<a itemprop="url" class="answer-date-link meta-item"  target="_self" href="javascript:;">编辑&nbsp;{$T.list.showcreatetime}</a>
 		
 		<a href="javascript:;" name="addcomment" class="meta-item toggle-comment js-comment" data-answer='{$T.list.id}'  data-commentcount='{$T.list.replysum}' data-createperson='{$T.list.userid}'> 
 		  <i class="z-icon-comment"></i>{$T.list.replysum}条评论

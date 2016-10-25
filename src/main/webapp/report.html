@@ -14,8 +14,8 @@
 			     {#if $T.reportreason$index==$T.reportreasonlength}
 				      <li class="block-report-reasons-o">
 						  <input type="radio" id="{$T.reportreason.id}" name="reason" data-type='1'/>
-						     <label for="{$T.reportreason.id}">{$T.reportreason.reportinfo}</label>
-						  <input type="text" class="block-report-reasons-txt" />
+						  <label for="{$T.reportreason.id}">{$T.reportreason.reportinfo}</label>
+						  <textarea placeholder="举报内容" name='reportcontent' class="block-report-reasons-txt"></textarea>
 			          </li> 
 		         {#else}
 			         <li>
@@ -31,7 +31,7 @@
           
         </div>
         <div class="ReportMenu-actions">
-          <button class="zg-btn-blue topicreport" id='topicreport' data-userreportid="{$T.commentbyid}"  data-topiccommentid='{$T.topiccommentid}' data-reporttype='{$T.reporttype}'>举报</button>
+          <button class="zg-btn-blue topicreport" id='topicreport' style='width:60px' data-userreportid="{$T.commentbyid}"  data-topiccommentid='{$T.topiccommentid}' data-reporttype='{$T.reporttype}'>举报</button>
         </div>
       </div>
     </div>

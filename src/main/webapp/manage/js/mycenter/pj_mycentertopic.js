@@ -191,7 +191,7 @@ $(function(){
     	
     	$.ajax({
     		type:'POST',
-    	    url:projectName+"myCenter/updateTopics",
+    	    url:"/myCenter/updateTopics",
     	    data:{id:titleid,title:titlename},
     	    dataType:"json",
     	    success:function(data){
@@ -254,7 +254,7 @@ $(function(){
     	}
     	$.ajax({
     		type:'POST',
-    	    url:projectName+"myCenter/updateTopics",
+    	    url:"/myCenter/updateTopics",
     	    data:{id:titleid,content:about},
     	    dataType:"json",
     	    success:function(data){
@@ -285,7 +285,7 @@ $(function(){
         	else{
             	$.ajax({
             		type:'POST',
-            		url:projectName+"topics/getPartTopicsComment",
+            		url:"/topics/getPartTopicsComment",
             		data:{parentcommid:answerid,type:2,relationidPg:answerid,objectNamePg:objectName,objCreatepersonPg:createperson},
             	    dataType:"json",
             	    success:function(data){
@@ -391,7 +391,7 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,objCreatepersonPg:createperson,objectNamePg:name,relationidPg:topicid},
     	    dataType:"json",
     	    success:function(data){
@@ -440,7 +440,7 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,parentcommid:parentcommid,relationidPg:parentcommid,objCreatepersonPg:createperson,objectNamePg:objectName},
     	    dataType:"json",
     	    success:function(data){
@@ -490,7 +490,7 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,commentby:commentby,objCreatepersonPg:commentby,relationidPg:relationid,objectNamePg:objectname},
     	    dataType:"json",
     	    success:function(data){
@@ -546,7 +546,7 @@ $(function(){
      	$this=$(this);
      	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,commentby:commentby,parentcommid:parentcommid,objectNamePg:objectName,relationidPg:relationid,objCreatepersonPg:commentby},
     	    dataType:"json",
     	    success:function(data){
@@ -597,7 +597,7 @@ $(function(){
     	else{
         	$.ajax({
         		type:'POST',
-        		url:projectName+"topics/getPartTopicsComment",
+        		url:"/topics/getPartTopicsComment",
         		data:{topicsid:topicid,type:'3'},
         	    dataType:"json",
         	    success:function(data){
@@ -648,7 +648,7 @@ $(function(){
        	    		$('.zm-item-link-avatar').pinwheel();
        	            $('.zg-link').pinwheel();
        	            //为了分页
-       	    		$.getScript('/51jobplusCore/scripts/jquery.simplePagination.js',function(){
+       	    		$.getScript('/scripts/jquery.simplePagination.js',function(){
        	    			$("#topiccompaging").pagination({
        	    				items:data.obj.count,
        	    				itemsOnPage:data.obj.pageSize,
@@ -725,7 +725,7 @@ $(function(){
     	if(!UM.getEditor('uEditorCustom').hasContents())return false;
     	$.ajax({
     		type:"POST",
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{commcontent:commcontent,type:1,topicsid:topicsid,isPublic:isPublic,objCreatepersonPg:objCreateperson,relationidPg:topicsid,objectNamePg:topicname},
     	    dataType:"json",
             success:function(data){
@@ -825,7 +825,7 @@ function topicLoadMore(obj){
     var topicid=$('#content input[name=titleid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"topics/getSortTopicsCommentsByTopicId",
+      	url:"/topics/getSortTopicsCommentsByTopicId",
       	data:{pageNo:Number(pageNo)+1,topicsid:topicid,sortType:sorttype},
     	dataType:"json",
     	success:function(data){
@@ -891,7 +891,7 @@ function deleteTopics(conditions,obj){
 	   console.log(s)*/;
   	   $.ajax({
          	type:"POST",
-         	url:projectName+"myCenter/deleteTopics",
+         	url:"/myCenter/deleteTopics",
          	data:{condition:conditions},
          	dataType:"json",
          	success:function(data){
@@ -928,7 +928,7 @@ function deleteAttentions(conditions,obj){
 	   console.log(s);*/
 	   $.ajax({
        	type:"POST",
-       	url:projectName+"myCenter/deleteAttentions",
+       	url:"/myCenter/deleteAttentions",
        	data:{condition:conditions},
        	dataType:"json",
        	success:function(data){
@@ -961,7 +961,7 @@ function deleteAttentions(conditions,obj){
 function deleteTopicsComments(conditions,obj){
 	   $.ajax({
        	type:"POST",
-       	url:projectName+"myCenter/deleteTopicsComments",
+       	url:"/myCenter/deleteTopicsComments",
        	data:{condition:conditions},
        	dataType:"json",
        	success:function(data){
@@ -1001,7 +1001,7 @@ function deleteTopicsComments(conditions,obj){
 		if($.trim(conds).length>0){
 		 $.ajax({
 	         	type:"POST",
-	         	url:projectName+"tags/findClass/"+conds,
+	         	url:"/tags/findClass/"+conds,
 	         	//data:{condition:100},
 	         	dataType:"json",
 	         	success:function(data){
@@ -1028,7 +1028,7 @@ function deleteTopicsComments(conditions,obj){
 function updateTopics(){
 	   $.ajax({
      	type:"POST",
-     	url:projectName+"/myCenter/updateTopics",
+     	url:"//myCenter/updateTopics",
      	data:{id:2,topicsclass:"测试话题标签",content:"<p><img src='http://192.168.0.39:8199/2016/07/01/1fe0d531d23540d99e94e6001bd46d9f.png' _src='http://192.168.0.39:8199/2016/07/01/1fe0d531d23540d99e94e6001bd46d9f.png'/></p>",topicsclass:"100:语文"},
      	dataType:"json",
      	success:function(data){
@@ -1063,7 +1063,7 @@ function topicLike(obj,type){
 	}
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/clickOnLike",
+     	url:"/myCenter/clickOnLike",
      	data:{id:commid,likeOperate:isLiked,objectNamePg:objectName,objCreatepersonPg:createperson,relationidPg:commid,topObjId:topObjId},
      	dataType:"json",
      	success:function(data){
@@ -1174,7 +1174,7 @@ function cancelnewreply(obj,type){
 	console.log($this);
 	$.ajax({
        	type:"POST",
-       	url:projectName+"manage/backstage/delComment",//url:projectName+"topics/delCommentOnTopDetail",
+       	url:"/manage/backstage/delComment",//url:"/topics/delCommentOnTopDetail",
        	data:{id:replyid,tableName:tableName},//data:{id:replyid,type:operatetype,topicsid:topicsid,parentcommid:parentcommId},
        	dataType:"json",
        	success:function(data){

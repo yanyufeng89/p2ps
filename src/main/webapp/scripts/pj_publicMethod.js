@@ -18,7 +18,7 @@ $(function(){
 		var reporttype=$(this).attr("data-reporttype");
 		
 		//举报原因
-		var reportcause=$('#reportReasons input[type=text]').val();
+		var reportcause=$('#reportReasons textarea[name=reportcontent]').val();
 		//举报选项的id
 		var reportcauseid='';
 		//1代表是其他理由
@@ -42,7 +42,7 @@ $(function(){
 		// 从0开始数  
 		$.ajax({
 			type:"POST",
-	     	url:projectName+"myCenter/reportReportInfo",
+	     	url:"/myCenter/reportReportInfo",
 	     	data:{reportuserid:userid,reporttel:tel,reportbyuserid:userreportid,reporttargetid:topiccommentid,
 	     		reportcause:reportcause,REPORTTYPE_INDEX:reporttype,reportcauseid:reportcauseid},
 	        dataType:"json",
@@ -101,6 +101,7 @@ $(function(){
     	answerreplyCancel($(this));
     })
 	
+    
 	/*//右侧部分始终固定在顶部(话题详情页  书籍详情页)
 	 if($('.plus-main-sidebar').length){
 		 var t=$('.plus-main-sidebar').offset().top;
@@ -158,7 +159,7 @@ $(function(){
     	}
     	$.ajax({
     		type:"POST",
-        	url:projectName+"myCenter/sendSmsPrivate",
+        	url:"/myCenter/sendSmsPrivate",
         	data:{receivedid:receivedid,smstype:1,smscontent:smscontent},
         	dataType:"json",
             success:function(data){
@@ -193,13 +194,34 @@ $(function(){
 		$(this).hide().prev().show();
 		$(this).parents('.brief').addClass('book-height');
 	})
+	 //回到顶部
+    $(".back-to-top").mousemove(function(){
+    	$(".back-to-top").css("background-position-x", "-28px");
+    }).mouseleave(function(){
+    	$(".back-to-top").css("background-position-x", "0");
+    })
+    /*当界面下拉到一定位置出现向上的箭头 start*/
+    $(window).scroll(function(){  
+        if ($(window).scrollTop()>100){  
+            $(".back-to-top").fadeIn("fast");  
+        }else{  
+            $(".back-to-top").fadeOut("fast");  
+        }  
+    });
+    /*当界面下拉到一定位置出现向上的箭头 end*/
+	
+	//6大类详情界面   当关注的人数  大于6人时  省略  
+	$('.fa-ellipsis-h').live('click',function(){
+		$(this).parents('.zu-small-avatar-list').hide();
+		$(this).parents('.zu-small-avatar-list').next().show();
+	})
 })
 
 //时间日期转换
 function formatDate(str){
 	var now=new Date(str);
 	var year=now.getFullYear();
-	var month=now.getMonth();
+	var month=now.getMonth()+1;
 	var date=now.getDate();
     var hours=now.getHours();
     var minute=now.getMinutes();
@@ -240,19 +262,26 @@ function answerreplyCancel(obj){
 	obj.parents('._CommentForm_root_1-ko').children(':first').empty().addClass('_InputBox_blur_3JWV')
 	obj.parents('.comment-app-holder').remove();
 }
+//获取请求的url的参数
+String.prototype.getQuery = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 
+    var r = this.substr(this.indexOf("\?") + 1).match(reg);
+
+    if (r != null) return unescape(r[2]); return null;
+ }
 //举报
 function topicReport(obj){
 	//被举报人
 	var commentbyid=obj.attr("data-commentbyid");
 	//被举报的话题
 	var bookcommentid=obj.attr("data-topiccommentid");
-	//举报类型  为了区分是书籍 还是话题举报  书籍举报是2  话题是6  课程是3  文章是1
+	//举报类型  为了区分是书籍 还是话题举报  书籍举报是2  话题是6  课程是3  文章评论1  文章7 
 	var reporttype=obj.attr("data-reporttype");
 	var datamodel='';
 	$.ajax({
 		type:"POST",
-    	url:projectName+"myCenter/getReportInfoConfigList",
+    	url:"/myCenter/getReportInfoConfigList",
     	dataType:"json",
     	async:false, 
         success:function(data){
@@ -283,7 +312,7 @@ function topicReport(obj){
 function getCurrentUser(){
 	$.ajax({
 		type:"POST",
-		url:projectName+"/myCenter/getCurrentUser",
+		url:"/myCenter/getCurrentUser",
 		dataType:"json",
 		success:function(data){
 			if(data.returnStatus=='000'){
@@ -311,7 +340,7 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
 	var actiontype=obj.attr('data-actionType');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/addFollows",
+		url:"/myCenter/addFollows",
 		data:{objectType:objecttype,objectid:objectId,actionType:actiontype,objectNamePg:titlename,objCreatepersonPg:createperson,relationidPg:titleid},
 		dataType:"json",
         success:function(data){
@@ -338,7 +367,7 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
             		}
             		else{
             			obj.removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
-            			obj.empty().html('关注');
+            			obj.empty().html('+关注');
             			obj.attr('data-actiontype','1');
             		} 
         	  }
@@ -358,7 +387,7 @@ var getTagsByCondition=function(obj,type){
 	if(conds !== null &&conds !== undefined&&$.trim(conds).length!=0&&$.trim(oldval).length!=$.trim(conds).length){
 		 $.ajax({
 	         	type:"POST",
-	         	url:"/51jobplusCore/tags/findClass/"+conds,
+	         	url:"/tags/findClass/"+conds,
 	         	//data:{condition:100},
 	         	dataType:"json",
 	         	success:function(data){
@@ -374,6 +403,22 @@ var getTagsByCondition=function(obj,type){
 		   $this.parent().find('input[name=currenttagval]').val('');
 		} 		
 }
+//判断是否是合格的URL
+function isURL (str_url) {// 验证url  
+    /*var strRegex="^((https|http|rtsp|mms)?://)"  
+    + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@  
+    + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184  
+    + "|" // 允许IP和DOMAIN（域名）  
+    + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.  
+    + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名  
+    + "[a-z]{2,6})" // first level domain- .com or .museum  
+    + "(:[0-9]{1,4})?" // 端口- :80  
+    + "((/?)|" // a slash isn't required if there is no file name  
+    + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$"; */
+	var strRegex=/((https|http|ftp|rtsp|mms):\/\/)?(([0-9a-z_!~*'().&=+$%-]+:)?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+\/?)/g;
+    var re=new RegExp(strRegex); 
+    return re.test(str_url); 
+} 
 /*window._bd_share_config = {
 	    "common": {
 	      "bdSnsKey": {},

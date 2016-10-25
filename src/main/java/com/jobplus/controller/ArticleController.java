@@ -20,6 +20,7 @@ import com.jobplus.pojo.ArticleShare;
 import com.jobplus.pojo.MyCollect;
 import com.jobplus.pojo.OperationSum;
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.SupportList;
 import com.jobplus.pojo.User;
 import com.jobplus.pojo.response.BaseResponse;
 import com.jobplus.service.IArticleLikedService;
@@ -121,7 +122,7 @@ public class ArticleController {
 				mv.setViewName("404");
 				return mv;
 			}
-			logger.info("**getArticleDetail*获取文章详情****record==" + JSON.toJSONString(record));
+//			logger.info("**getArticleDetail*获取文章详情****record==" + JSON.toJSONString(record));
 			mv.addObject("record",record);
 			if("7".equals(isAdmin)){
 				//后台管理员查看
@@ -331,5 +332,57 @@ public class ArticleController {
 			return JSON.toJSONString(baseResponse);
 		}
 	}
+	
+	/**
+	 * 文章打赏
+	 * @param request
+	 * @param response
+	 * @param record
+	 * @return
+	 */
+	@RequestMapping(value = "/reward", method = RequestMethod.POST)
+	@ResponseBody
+	public String reward(HttpServletRequest request, HttpServletResponse response, Article record) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			String userid = (String) request.getSession().getAttribute("userid");
+			if (!StringUtils.isBlank(userid)) {
+				//打赏记录
+				SupportList supt = new SupportList();
+				supt.setArticleid(record.getId());
+				supt.setUserid(Integer.parseInt(userid));
+				supt.setSupportvalue(record.getSupportValue());
+				
+				//打赏
+				int ret = articleService.reward(request,record, supt);
+				
+				if(ret > 0){
+					//更新用户操作数统计    存入session
+					userService.getMyHeadTopAndOper(request);
+					logger.info("*reward** 文章打赏  **Article record=="+ JSON.toJSONString(record));
+					baseResponse.setObj(record);
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				}else{
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					baseResponse.setReturnMsg("数据库更新失败");
+				}
+				
+				return JSON.toJSONString(baseResponse);
+			} else {
+				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				logger.info("*reward** 文章打赏    失败  999 登录失败*********");
+				return JSON.toJSONString(baseResponse);
+			}
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("*reward** 文章打赏    失败  999 *********" + e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
+	
+	
+	
 	
 }

@@ -41,6 +41,10 @@ public class Article extends PageParent implements Serializable{
 
     private String intro;
     
+    private Integer  supportValue;//打赏值	supportValue	int(8)	8	
+    
+    private Integer  supportCount;//打赏次数	supportCount	int(8)	8
+    
     private MyCollect myCollect;
 	/**
 	 * 用户分享时间 用于前端页面显示
@@ -78,7 +82,60 @@ public class Article extends PageParent implements Serializable{
 	 * 收藏的人  ids 
 	 */
 	private String collectIds;
-    
+	
+	/**
+	 * 打赏的人 ids
+	 */
+	private String rewardIds;
+	/**
+	 * 打赏的人  list
+	 */
+	private List<User> rewardUsers;  
+	
+	/**
+	 * 打赏发送打赏留言的载体
+	 */
+	private String smsContent;
+	
+	public String getSmsContent() {
+		return smsContent;
+	}
+
+	public void setSmsContent(String smsContent) {
+		this.smsContent = smsContent;
+	}
+
+	public List<User> getRewardUsers() {
+		return rewardUsers;
+	}
+
+	public void setRewardUsers(List<User> rewardUsers) {
+		this.rewardUsers = rewardUsers;
+	}
+
+	public String getRewardIds() {
+		return rewardIds;
+	}
+
+	public void setRewardIds(String rewardIds) {
+		this.rewardIds = rewardIds;
+	}
+
+	public Integer getSupportValue() {
+		return supportValue;
+	}
+
+	public void setSupportValue(Integer supportValue) {
+		this.supportValue = supportValue;
+	}
+
+	public Integer getSupportCount() {
+		return supportCount;
+	}
+
+	public void setSupportCount(Integer supportCount) {
+		this.supportCount = supportCount;
+	}
 
 	public Page<ArticleShare> getCommentList() {
 		return commentList;

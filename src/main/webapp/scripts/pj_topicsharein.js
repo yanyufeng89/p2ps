@@ -1,15 +1,26 @@
 var ispublic=true;
 var oldval,newval;
 $(function(){
-	//窗体加载的时候 焦点定位到文本框
-	$('#js-before-ask').focus();
+	/*//窗体加载的时候 焦点定位到文本框
+	$('#js-before-ask').focus();*/
 	//确定
-	$("#upload-inittopic-container").on('click','.iwanttoask',function(){
-		var askval=$("#js-before-ask").val().replace(/[ ]/g,"");//去掉空格
+	$("#upload-inittopic-container").on('click','#btntopicsure',function(){
+		 var istrue=true;
+		 var askval=$("#js-before-ask").val();/*.replace(/[ ]/g,"");*///去掉空格
+		 $(this).addClass('capture-loading').html('');
 		 if(askval.length==0){
-			 $("#js-before-ask").parent().find('.error').show();
+			 $("#js-before-ask").parent().find('.error').html('请输入话题').show();
+			 istrue=false;
+		 }else if(askval.length>50){
+			 $("#js-before-ask").parent().find('.error').html('已超出'+(askval.length-50)+'字').show();
+			 istrue=false;
+		 }
+		 if(!istrue){
+			 $('#js-before-ask').focus();
+			 $(this).removeClass('capture-loading').html('确定');
 			 return false;
 		 }
+		 //字数限制在50字以内
 		 $('input[name=pj-autocomplete]').val('');
 		 $('.capture-loading').show();
 		 $("#upload-inittopic-container").hide();
@@ -24,13 +35,12 @@ $(function(){
 	})
 	//实例化编辑器
 	 var editor=UM.getEditor('summernote',{
-			initialFrameWidth :560,//设置编辑器宽度
-			initialFrameHeight:150,//设置编辑器高度
+			initialFrameHeight:170,//设置编辑器高度  initialFrameWidth :563,//设置编辑器宽度563
 			scaleEnabled:true
 		});
 	//默认隐藏工具栏
 	$('.edui-container .edui-toolbar .edui-btn-toolbar').css('display','none');
-	$('.z-ico-textedit').live('click',function(){
+	$('.tr-inline-icon').live('click',function(){
 		$('.edui-container .edui-toolbar .edui-btn-toolbar').toggle();
 	})
 	//分类
@@ -48,26 +58,34 @@ $(function(){
    
    //UEditor点击全屏按钮事件
    $('.edui-btn-fullscreen').live('click',function(){
-   	if($('.edui-body-container').height()=='150'){
+   	if($('.edui-body-container').height()=='170'){
    		 $('.edui-body-container').css('height','950px');
-   		 $('.zg-noti-number,#ft,#footnote').hide();
+   		 /*$('.zg-noti-number,#ft,#footnote').hide();*/
+   		$('.editlayoutbook dd').eq(1).hide();
    	}else{
-   		 $('.edui-body-container').css('height','150px');
-   		 $('.zg-noti-number,#ft,#footnote').show();
+   		 $('.edui-body-container').css('height','170px');
+   		/* $('.zg-noti-number,#ft,#footnote').show();*/
+   		$('.editlayoutbook dd').eq(1).show();
    	}
  });
 
 	//发布
 	$("#btn-public-all").on('click',function(){
+		var ispublic=true;
 		//点击发布的时候  首先判断输入的内容是否符合要求  (标题不少于两个字  且 要带有问号)
 		var title=$("#pj-question-suggest-title-content").val();
 		if(title.length<=2){
-			$("#pj-modal-dialog-warnmsg-wrapper").show();
-			$('#pj-question-suggest-title-content').focus();
-			return false;
+			ispublic=false;
+		}
+		if(title.length>50){
+			$("#pj-modal-dialog-warnmsg-wrapper").find('.item-msg-content').html('已超出'+(title.length-50)+'字');
+			ispublic=false;
 		}
 		if(title.substring(title.length-1,title.length)!="?"&&title.substring(title.length-1,title.length)!="？"){
 			$("#pj-modal-dialog-warnmsg-wrapper").find('.item-msg-content').html('您还没有给问题添加问号');
+			ispublic=false;
+		}
+		if(!ispublic){
 			$("#pj-modal-dialog-warnmsg-wrapper").show();
 			$('#pj-question-suggest-title-content').focus();
 			return false;
@@ -108,17 +126,13 @@ $(function(){
 			tagid+=$(this).attr('id')+":"+$(this).data('name')+",";
 		});
 		if($.trim(tagid).length==0){
-			$('.topic-error').show();
+			$('.pj-warmprompt').show();
 			return false;
 		}
 		$("#topicaddForm input[name=topicsclass]").val(tagid.substring(0,tagid.length-1));
 		$("#topicaddForm").submit();
 	});
-	//取消
-	$("#btn-cancel-all").on('click',function(){
-		 $("#upload-inittopic-container").show();
-		 $("#upload-topicfiles-container").hide();
-	})
+
 	//input实时从数据库中筛选数据
 	$('#js-before-ask,#pj-question-suggest-title-content').bind('input propertychange',function(){
 		 var searchtype=$(this).attr('data-searchtype');
@@ -144,7 +158,7 @@ function sendFile(file,editor,welEditable) {
     $.ajax({
         data: data,
         type: "POST",
-        url: "/51jobplusCore/topics/album/uploadImage/999",
+        url: "/topics/album/uploadImage/999",
         cache: false,
         contentType: false,
         processData: false,
@@ -163,7 +177,7 @@ function findTitle(obj,flag){
    		if($.trim(conds).length>0){
    		 $.ajax({
 	         	type:"POST",
-	         	url:"/51jobplusCore/topics/findTitle/"+conds,
+	         	url:"/topics/findTitle/"+conds,
 	         	//data:{condition:100},
 	         	dataType:"json",
 	         	async:false,
@@ -197,7 +211,7 @@ function initTitleBySearchTopic(data,conds){
 		if(b.replysum==undefined)
 			b.replysum=0;
 		html+="<div class='ask-row' data-askid='"+b.data_id+"' data-answer-count"+b.replysum+"> ";
-		html+="   <a style='color:rgb(34,34,34)' target='_blank' href='/51jobplusCore/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
+		html+="   <a style='color:rgb(34,34,34)' target='_blank' href='/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
 	    html+="   <span class='ask-gray'>"+b.replySum+"个人回答问题</span>"
 		html+="</div>";
 	})
@@ -217,7 +231,7 @@ function initTitleContentBySearchTopic(data,conds){
 		if(b.replysum==undefined)
 			b.replysum=0;
 		html+="<div class='ask-row goog-zippy-header goog-zippy-collapsed' data-answer_id="+b.data_id+" data-answer_count='"+b.replysum+"'>";
-	    html+="<a style='color: rgb(34, 34, 34);' target='_blank' href='/51jobplusCore/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
+	    html+="<a style='color: rgb(34, 34, 34);' target='_blank' href='/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
 	    html+="   <span class='zm-ac-gray'>"+b.replySum+"个人回答问题</span>"
 		html+="</div>";
 	 })

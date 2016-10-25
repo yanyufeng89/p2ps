@@ -17,13 +17,49 @@
     id, userid, company, industry, department, jobTitle, description, startTime, endTime, 
     createTime
   </sql>
+  <sql id="Base_Column_List2" >
+    t.id, t.userid, t.company, t.industry, t.department, t.jobTitle, t.description, t.startTime, t.endTime, 
+    t.createTime
+  </sql>
   <!--  获取工作经历 list -->
   <select id="getList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.WorkExper" >
     select 
-    <include refid="Base_Column_List" />
-    from tbl_workExper
-    where userid = #{userid,jdbcType=INTEGER}
-    order by startTime desc
+    <include refid="Base_Column_List2" />
+   
+	,ttx.period as period
+    from tbl_workExper  t 
+    , 
+   (select    
+      ttx.id as ttxid,
+		CASE WHEN ttx.diffDay>=15 and ttx.diffMonth=11 THEN
+		CONCAT(ttx.diffYear+1,'年') 
+		ELSE
+		CONCAT( 
+			CASE  
+			WHEN ttx.diffYear>0 THEN
+			CONCAT(ttx.diffYear,'年') 
+			ELSE '' END,
+			CASE
+			WHEN ttx.diffMonth>0 and ttx.diffDay  <![CDATA[ < ]]>   15 THEN
+			CONCAT(ttx.diffMonth,'个月')
+			WHEN ttx.diffMonth=0 and ttx.diffDay  <![CDATA[ < ]]> 15 and ttx.diffYear!=0  THEN
+			'' 
+			ELSE 
+			CONCAT(ttx.diffMonth+1,'个月')
+			END
+		  )
+		end as period
+		from (
+		SELECT 
+		tbl.startTime,tbl.endTime,tbl.id as id,
+		TIMESTAMPDIFF(YEAR,tbl.startTime,tbl.endTime) as diffYear,
+		TIMESTAMPDIFF(MONTH,DATE_ADD(tbl.startTime,INTERVAL TIMESTAMPDIFF(YEAR,tbl.startTime,tbl.endTime) YEAR),tbl.endTime) as diffMonth,
+		TIMESTAMPDIFF(DAY,  DATE_ADD(tbl.startTime,INTERVAL TIMESTAMPDIFF(MONTH,tbl.startTime,tbl.endTime) MONTH),tbl.endTime) as diffDay
+		FROM tbl_workExper  tbl  where tbl.userid = #{userid,jdbcType=INTEGER})ttx)ttx
+    
+    where t.userid = #{userid,jdbcType=INTEGER}
+     and t.id = ttx.ttxid
+    order by t.startTime desc
   </select>
   
   

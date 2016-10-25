@@ -1,5 +1,6 @@
 var myreg = /^([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9\-]+@([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 var reg= /^[1][34578]\d{9}$/; //验证手机号码  
+var istrue=false;
 function reg_checkAjax(id){
 	var obj = $.trim($("#"+id).val());
 	var msg="";
@@ -24,12 +25,13 @@ function reg_checkAjax(id){
 		}else{
 			//1 是用户名  2是手机号  3是邮箱
 			$.ajax({
-					url:"/51jobplusCore/user/check/"+obj+"/"+type,
+					url:"/user/check/"+obj+"/"+type,
 					type : "POST", 
 					data :{id:obj},
 					dataType:"json",
+					async:false,
 					contentType: "application/text",
-                    success:function(data){
+                    success:function(data){                       
                        if(data==0){	
          					msg='填写正确！';
          					update_html(id,"1",msg);
@@ -45,6 +47,7 @@ function reg_checkAjax(id){
          						$('#mobliecode').attr('placeholder','短信验证码');
          						$('#phonecode').val('获取手机验证码').attr('data-messagetype','0');
          					}
+         					istrue=true;
          					return true;
          				}else{
          					if(myreg.test(obj)){
@@ -53,6 +56,7 @@ function reg_checkAjax(id){
          						var msg='该手机已存在！';
          					}
          					update_html(id,"0",msg);
+         					istrue=false;
          					return false;
          				} 
                      }
@@ -233,6 +237,7 @@ function showpw(id){
 		$("#showpw"+id).html('显示密码');
 	}
 }
+
 function TextToPassword(name){
 	var control=document.getElementById(name);
 	var newpassword = document.createElement("input");
@@ -294,7 +299,7 @@ function check_user(){
 	//验证输入的验证码和手机或者邮箱获取的验证码是否一致
 	$.ajax({
 		type:"POST",
-      	url:"/51jobplusCore/mobilesms/checkSms",
+      	url:"/mobilesms/checkSms",
       	data:{smsId:verificationcode,validateCode:moblie_code},
     	dataType:"json",
     	async:false,
@@ -340,7 +345,10 @@ function sendmsg(obj,mtype){
 	var messagetype=$(obj).attr('data-messagetype');
 	var moblie=$("#email").val();
 	var authcode=$("#CheckCode").val();
-	
+	reg_checkAjax("email")
+	if(!istrue){
+		return false;
+	};
 	if(!reg.test(moblie)&&!myreg.test(moblie)){
 		layer.msg('请输入正确的手机号码！', {offset:'36%',shade:0.3,shadeClose:true});
 		return false;
@@ -357,6 +365,7 @@ function sendmsg(obj,mtype){
 	  layer.msg('请输入正确的验证码！', {offset:'36%',shade:0.3,shadeClose:true});
 	  return false;  
 	}
+	
 	//mtype 不同表示两个界面 一个是找回密码界面获取验证码  一个是注册界面获取验证码
 	if(mtype=='forgetpw'){
 		if(messagetype=='1'){
@@ -372,15 +381,14 @@ function sendmsg(obj,mtype){
 	showtime(60,messagetype,mtype);
 	$.ajax({
 		type:"POST",
-      	url:"/51jobplusCore/mobilesms/sendSms",
+      	url:"/mobilesms/sendSms",
       	data:{mobileNo:moblie},
     	dataType:"json",
     	success:function(data){
     		if(data.returnStatus=='000'){
     			$('input[name=verification_code]').val(data.returnData);
-    			
     		}else{
-    			
+    			layer.msg('发送异常,请稍后再试！', {offset:'36%',shade:0.3,shadeClose:true});
     		}
     	}
 	})

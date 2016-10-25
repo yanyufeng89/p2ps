@@ -9,11 +9,11 @@
 
     <!-- basic styles -->
 
-    <link href="/51jobplusCore/manage/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/font-awesome.min.css"/>
+    <link href="/manage/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/manage/css/font-awesome.min.css"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/font-awesome-ie7.min.css"/>
+    <link rel="stylesheet" href="/manage/css/font-awesome-ie7.min.css"/>
     <![endif]-->
 
     <!-- page specific plugin styles -->
@@ -22,26 +22,26 @@
 
     <!-- ace styles -->
 
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/ace.min.css"/>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/ace-rtl.min.css"/>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/manage/css/ace.min.css"/>
+    <link rel="stylesheet" href="/manage/css/ace-rtl.min.css"/>
+    <link rel="stylesheet" href="/manage/css/ace-skins.min.css"/>
 
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/ace-ie.min.css"/>
+    <link rel="stylesheet" href="/manage/css/ace-ie.min.css"/>
     <![endif]-->
 
-    <link rel="stylesheet" href="/51jobplusCore/manage/js/layer/skin/layer.css"/>
+    <link rel="stylesheet" href="/manage/js/layer/skin/layer.css"/>
     <!-- inline styles related to this page -->
 
     <!-- ace settings handler -->
 
-    <script src="/51jobplusCore/manage/js/ace-extra.min.js"></script>
+    <script src="/manage/js/ace-extra.min.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
     <!--[if lt IE 9]>
-    <script src="/51jobplusCore/manage/js/html5shiv.js"></script>
-    <script src="/51jobplusCore/manage/js/respond.min.js"></script>
+    <script src="/manage/js/html5shiv.js"></script>
+    <script src="/manage/js/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -68,7 +68,7 @@
             <ul class="nav ace-nav">
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="/51jobplusCore/manage/avatars/avatar.png"/>
+                        <img class="nav-user-photo" src="/manage/avatars/avatar.png"/>
                         <span class="user-info">
 									<small>Welcome,</small>
                         ${Session.user.username}
@@ -170,7 +170,7 @@
         </div>
 
         <div class="main-content">
-            <iframe src="/51jobplusCore/manage/backstage/index" id="iframepage" onload="changeFrameHeight()" scrolling="no" frameborder="0" style="width: 100%;"></iframe>
+            <iframe src="/manage/backstage/index" id="iframepage" onload="changeFrameHeight()" scrolling="no" frameborder="0" style="width: 100%;"></iframe>
         </div><!-- /.main-content -->
 
         <div class="ace-settings-container" id="ace-settings-container">
@@ -228,40 +228,40 @@
 </div><!-- /.main-container -->
 
 <!-- basic scripts -->
-<script src="/51jobplusCore/manage/js/jquery-1.10.2.min.js"></script>
+<script src="/manage/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
-    if ("ontouchend" in document) document.write("<script src='/51jobplusCore/manage/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    if ("ontouchend" in document) document.write("<script src='/manage/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
 </script>
-<script src="/51jobplusCore/manage/js/bootstrap.min.js"></script>
-<script src="/51jobplusCore/manage/js/typeahead-bs2.min.js"></script>
+<script src="/manage/js/bootstrap.min.js"></script>
+<script src="/manage/js/typeahead-bs2.min.js"></script>
 
 <!-- page specific plugin scripts -->
 
 <!--[if lte IE 8]>
-<script src="/51jobplusCore/manage/js/excanvas.min.js"></script>
+<script src="/manage/js/excanvas.min.js"></script>
 <![endif]-->
 
-<script src="/51jobplusCore/manage/js/jquery-ui-1.10.3.custom.min.js"></script>
-<script src="/51jobplusCore/manage/js/jquery.ui.touch-punch.min.js"></script>
-<script src="/51jobplusCore/manage/js/jquery.slimscroll.min.js"></script>
-<script src="/51jobplusCore/manage/js/jquery.easy-pie-chart.min.js"></script>
-<script src="/51jobplusCore/manage/js/jquery.sparkline.min.js"></script>
-<script src="/51jobplusCore/manage/js/flot/jquery.flot.min.js"></script>
-<script src="/51jobplusCore/manage/js/flot/jquery.flot.pie.min.js"></script>
-<script src="/51jobplusCore/manage/js/flot/jquery.flot.resize.min.js"></script>
+<script src="/manage/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/manage/js/jquery.ui.touch-punch.min.js"></script>
+<script src="/manage/js/jquery.slimscroll.min.js"></script>
+<script src="/manage/js/jquery.easy-pie-chart.min.js"></script>
+<script src="/manage/js/jquery.sparkline.min.js"></script>
+<script src="/manage/js/flot/jquery.flot.min.js"></script>
+<script src="/manage/js/flot/jquery.flot.pie.min.js"></script>
+<script src="/manage/js/flot/jquery.flot.resize.min.js"></script>
 
 <!-- ace scripts -->
 
-<script src="/51jobplusCore/manage/js/ace-elements.min.js"></script>
-<script src="/51jobplusCore/manage/js/ace.min.js"></script>
+<script src="/manage/js/ace-elements.min.js"></script>
+<script src="/manage/js/ace.min.js"></script>
 
 <!-- inline scripts related to this page -->
-<script src="/51jobplusCore/manage/js/layer/layer.js"></script>
+<script src="/manage/js/layer/layer.js"></script>
 <script>
     function reloadFrame(url,ts) {
         $(".nav-list li").removeClass("active");
         $(ts).parent().addClass("active");
-        $("iframe").attr("src", "/51jobplusCore/manage" + url);
+        $("iframe").attr("src", "/manage" + url);
     }
 
     function changeFrameHeight(){
@@ -273,7 +273,7 @@
     }
 
     function logout() {
-        window.location.href = "/51jobplusCore/manage/backstage/logout";
+        window.location.href = "/manage/backstage/logout";
     }
 </script>
 </body>

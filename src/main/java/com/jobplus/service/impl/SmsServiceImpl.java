@@ -70,13 +70,9 @@ public class SmsServiceImpl implements ISmsService{
 		map.put("63","赞了你分享的文档");
 		map.put("3","关注了你发布的话题");
 		map.put("80","邀请您回答");
-//		[]TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",5
-//				"tbl_docs_comment tt right join tbl_docs t on tt.docId = t.ID",
-//				"tbl_books_share tt right join tbl_books t on tt.bookID = t.ID",
-//				"tbl_topics_comment tt right join tbl_topics t on tt.topicsID = t.ID",
-//				"tbl_courses_share tt right join tbl_courses t on tt.coursesID = t.ID",
-//				"tbl_article_share tt right join tbl_article t on tt.articleID = t.id",
-//				"tbl_sites_share tt right join tbl_sites t on tt.siteID = t.id"};
+		map.put("90","下载了您的文档");
+		map.put("100","打赏了您的文章");
+
 		urlMap.put("tbl_user","");
 		urlMap.put("tbl_topics","/topics/getTopicsDetail?topicId=");
 		urlMap.put("tbl_topics_comment","/topics/getTopicsDetail?topicId=");		
@@ -98,51 +94,11 @@ public class SmsServiceImpl implements ISmsService{
 		urlMap.put("tbl_docs_isLiked","/docs/getDocsDetail?id=");
 		
 		
-		
-//		urlMap.put("tbl_topics","/topics/getTopicsDetail?topicId=");
-//		urlMap.put("tbl_topics_comment tt right join tbl_topics t on tt.topicsID = t.ID","/topics/getTopicsDetail?topicId=");		
-//		urlMap.put("tbl_topics_isLiked tt right join tbl_topics t on tt.commId = t.ID","/topics/getTopicsDetail?topicId=");		
-//		urlMap.put("tbl_courses","/courses/getCourseDetail?id=");
-//		urlMap.put("tbl_courses_share tt right join tbl_courses t on tt.coursesID = t.ID","/courses/getCourseDetail?id=");		
-//		urlMap.put("tbl_courses_sLiked tt right join tbl_courses t on tt.coursesId = t.ID","/courses/getCourseDetail?id=");		
-//		urlMap.put("tbl_sites","/sites/getSiteDetail?id=");
-//		urlMap.put("tbl_sites_share tt right join tbl_sites t on tt.siteID = t.id","/sites/getSiteDetail?id=");		
-//		urlMap.put("tbl_sites_isliked tt right join tbl_sites t on tt.commId = t.id","/sites/getSiteDetail?id=");		
-//		urlMap.put("tbl_article","/article/getArticleDetail?id=");
-//		urlMap.put("tbl_article_share tt right join tbl_article t on tt.articleID = t.id","/article/getArticleDetail?id=");		
-//		urlMap.put("tbl_article_isLiked tt right join tbl_article t on tt.articleID = t.id","/article/getArticleDetail?id=");		
-//		urlMap.put("tbl_docs","/docs/getDocsDetail?id=");
-//		urlMap.put("tbl_docs_comment tt right join tbl_docs t on tt.docId = t.ID","/docs/getDocsDetail?id=");
-//		urlMap.put("tbl_books","/books/getBookDetail?id=");		
-//		urlMap.put("tbl_books_share tt right join tbl_books t on tt.bookID = t.ID","/books/getBookDetail?id=");
-//		urlMap.put("tbl_books_isLiked tt right join tbl_books t on tt.bookID = t.ID","/books/getBookDetail?id=");
-		
-//		tableColMap.put("tbl_topics","t.createPerson as receivedId ,t.title as objectName");
-//		tableColMap.put("tbl_topics_comment tt right join tbl_topics t on tt.topicsID = t.ID","t.createPerson as receivedId ,t.title as objectName");		
-//		tableColMap.put("tbl_topics_isLiked tt right join tbl_topics t on tt.commId = t.ID","t.createPerson as receivedId ,t.title as objectName");	
-//		
-//		tableColMap.put("tbl_courses","t.userId as receivedId ,t.coursesName as objectName");
-//		tableColMap.put("tbl_courses_share tt right join tbl_courses t on tt.coursesID = t.ID","t.userId as receivedId ,t.coursesName as objectName");		
-//		tableColMap.put("tbl_courses_sLiked tt right join tbl_courses t on tt.coursesId = t.ID","t.userId as receivedId ,t.coursesName as objectName");	
-//		
-//		tableColMap.put("tbl_sites","t.userId as receivedId ,t.title as objectName");
-//		tableColMap.put("tbl_sites_share tt right join tbl_sites t on tt.siteID = t.id","t.userId as receivedId ,t.title as objectName");		
-//		tableColMap.put("tbl_sites_isliked tt right join tbl_sites t on tt.commId = t.id","t.userId as receivedId ,t.title as objectName");		
-//		tableColMap.put("tbl_article","t.userId as receivedId ,title as objectName");
-//		tableColMap.put("tbl_article_share tt right join tbl_article t on tt.articleID = t.id","t.userId as receivedId ,t.title as objectName");		
-//		tableColMap.put("tbl_article_isLiked tt right join tbl_article t on tt.articleID = t.id","t.userId as receivedId ,t.title as objectName");		
-//		tableColMap.put("tbl_docs","t.userId as receivedId ,title as objectName");
-//		tableColMap.put("tbl_docs_comment tt right join tbl_docs t on tt.docId = t.ID","t.userId as receivedId ,t.title as objectName");
-//		
-//		tableColMap.put("tbl_books","t.createPerson as receivedId ,t.bookname as objectName");		
-//		tableColMap.put("tbl_books_share tt right join tbl_books t on tt.bookID = t.ID","t.createPerson as receivedId ,t.bookname as objectName");
-//		tableColMap.put("tbl_books_isLiked tt right join tbl_books t on tt.bookID = t.ID","t.createPerson as receivedId ,t.bookname as objectName");
-		
 	}	
 	//senderid   receivedid  smstype 
 	@Transactional
 	@Override
-	public int addNotice(User user, String contextPath, String tableName,Integer topObjId,Integer objCreateperson,Integer smsType,Integer relationid,String ObjectName) {
+	public int addNotice(User user, String contextPath, String tableName,Integer topObjId,Integer objCreateperson,Integer smsType,Integer relationid,String ObjectName,String content) {
 		int ret = 0;
 		if(user.getUserid().intValue() == objCreateperson.intValue()){
 			logger.info("**addNotice**对自己评论或者点赞：user.getUserid()=="+user.getUserid()+"  objCreateperson=="+objCreateperson);
@@ -159,7 +115,7 @@ public class SmsServiceImpl implements ISmsService{
 			if(sf == null){
 				logger.info("允许所有人发消息          SmsFilter=="+JSON.toJSONString(sf));
 				//允许所有人发消息
-				ret = this.sendSms(user, contextPath, tableName, topObjId, objCreateperson, smsType, relationid, ObjectName);
+				ret = this.sendSms(user, contextPath, tableName, topObjId, objCreateperson, smsType, relationid, ObjectName,content);
 				return ret;
 			}
 			if(sf.getFilterlevel().intValue()== sf.getFILTERLEVELS()[2].intValue()){
@@ -177,7 +133,7 @@ public class SmsServiceImpl implements ISmsService{
 							logger.info("只允许我关注的人发消息           fansIds=="+JSON.toJSONString(fansIds));
 							logger.info("当前用户是我关注的人, 可以发送信息           ids=="+ids +"    user.getUserid()=="+user.getUserid());
 							//当前用户是我关注的人, 可以发送信息
-							ret = this.sendSms(user, contextPath, tableName, topObjId, objCreateperson, smsType, relationid, ObjectName);
+							ret = this.sendSms(user, contextPath, tableName, topObjId, objCreateperson, smsType, relationid, ObjectName,content);
 							return ret;
 						}else{
 							logger.info("当前用户并不是是我关注的人, 不能发送私信          ids==" + ids +"    user.getUserid()=="+user.getUserid());
@@ -192,53 +148,73 @@ public class SmsServiceImpl implements ISmsService{
 			}else{
 				logger.info("允许所有人发消息          SmsFilter=="+JSON.toJSONString(sf));
 				//允许所有人发消息
-				ret = this.sendSms(user, contextPath, tableName, topObjId, objCreateperson, smsType, relationid, ObjectName);			
+				ret = this.sendSms(user, contextPath, tableName, topObjId, objCreateperson, smsType, relationid, ObjectName,content);			
 			}
 			return ret;
 		}
 	}
 	//内部方法  发送通知
-	private int sendSms(User user, String contextPath, String tableName,Integer topObjId,Integer objCreateperson,Integer smsType,Integer relationid,String ObjectName){
-		//新增消息通知 
-				Sms sms = new Sms();
-				//设置消息发送者    即当前用户
-				sms.setSenderid(user.getUserid());
-				//消息接收人   被评论人或者对象主体创建人
-				//如果被评论人不存在,则赋值为创建人
-				sms.setReceivedid(objCreateperson);
-				//设置消息类型
-				sms.setSmstype(smsType);
-				//设置消息主体ID
-				sms.setRelationid(relationid);
-				//设置对象主体名称
-				sms.setObjectName(ObjectName);
-				//设置发送消息人名字
-				sms.setSendUserName(user.getUsername());
-				
-				logger.info("****添加消息通知：Sms=="+JSON.toJSONString(sms));
-				logger.info("****添加消息通知：contextPath=="+contextPath+"***tableName=="+tableName);
-				//提示语
-				String tip = map.get(sms.getSmstype().toString());
-				//发送者url    sms.getSendUserName() + 
-				String userUrl = "<a href='"+ contextPath+"/user/mycenter?userid="+sms.getSenderid()+"'>" + "</a>";
-				//对象url
-				String objUrl = "<a href='"+contextPath+urlMap.get(tableName) +topObjId+ "'>" + sms.getObjectName() + "</a>";
-				String content ="";
-				if(tableName.equals("tbl_user")){
-					//拼接消息内容
-					content = userUrl + tip;
-				}else{
-					//拼接消息内容
-					content = userUrl + tip + objUrl;
-				}				
-				sms.setSmscontent(content);
-//				sms.setObjectName(objName);
-				logger.info("****添加消息通知：入库     Sms=="+JSON.toJSONString(sms));
-				//插入消息
-				int ret = this.insert(sms);	
-				//推送到接收人
-				WebSocketUtil.send(objCreateperson.toString(), smsType.toString());
-				return ret;
+	private int sendSms(User user, String contextPath, String tableName,Integer topObjId,Integer objCreateperson,Integer smsType,Integer relationid,String ObjectName,String content){
+		Sms sms = new Sms();
+		if(0 == smsType){//系统通知
+			//设置消息发送者     系统通知
+			sms.setSenderid(0);
+			//消息接收人   被评论人或者对象主体创建人
+			//如果被评论人不存在,则赋值为创建人
+			sms.setReceivedid(objCreateperson);
+			//设置消息类型
+			sms.setSmstype(smsType);
+//			//设置消息主体ID
+//			sms.setRelationid(relationid);
+//			//设置对象主体名称
+//			sms.setObjectName(ObjectName);
+//			//设置发送消息人名字
+//			sms.setSendUserName(user.getUsername());
+			sms.setSmscontent(content);
+			
+		}else{
+			//新增消息通知 
+			
+			//设置消息发送者    即当前用户
+			sms.setSenderid(user.getUserid());
+			//消息接收人   被评论人或者对象主体创建人
+			//如果被评论人不存在,则赋值为创建人
+			sms.setReceivedid(objCreateperson);
+			//设置消息类型
+			sms.setSmstype(smsType);
+			//设置消息主体ID
+			sms.setRelationid(relationid);
+			//设置对象主体名称
+			sms.setObjectName(ObjectName);
+			//设置发送消息人名字
+			sms.setSendUserName(user.getUsername());
+			
+			logger.info("****添加消息通知：Sms=="+JSON.toJSONString(sms));
+			logger.info("****添加消息通知：contextPath=="+contextPath+"***tableName=="+tableName);
+			//提示语
+			String tip = map.get(sms.getSmstype().toString());
+			//发送者url    sms.getSendUserName() +    暂时不需要 
+			String userUrl = "";//"<a target='_blank' href='"+ contextPath+"/user/mycenter?userid="+sms.getSenderid()+"'>" + "</a>";
+			//对象url
+			String objUrl = "<a target='_blank' href='"+contextPath+urlMap.get(tableName) +topObjId+ "'>" + sms.getObjectName() + "</a>";
+//			String content ="";
+			if(tableName.equals("tbl_user")){
+				//拼接消息内容
+				content = userUrl + tip + content;
+			}else{
+				//拼接消息内容
+				content = userUrl + tip + objUrl  + content;
+			}				
+			sms.setSmscontent(content);
+		}	
+		
+		// sms.setObjectName(objName);
+		logger.info("****添加消息通知：入库     Sms==" + JSON.toJSONString(sms));
+		// 插入消息
+		int ret = this.insert(sms);
+		// 推送到接收人
+		WebSocketUtil.send(objCreateperson.toString(), smsType.toString());
+		return ret;
 	}
 	
 	
@@ -418,7 +394,12 @@ public class SmsServiceImpl implements ISmsService{
 		int ret = 0;
 		int id = seqService.getSeqByTableName("tbl_sms");
 		record.setId(id);
-		ret = smsDao.insert(record);
+		//避免多次 关注同一人
+		if("关注了您".equals(record.getSmscontent()))
+			ret = smsDao.insertOrUpdateSms(record);
+		else{
+			ret = smsDao.insert(record);
+		}		
 		return ret;
 	}
 	/**
@@ -429,11 +410,23 @@ public class SmsServiceImpl implements ISmsService{
 	@Override
 	public int insertSmsAndNotice(Sms record) {
 		int ret = 0;
-		ret = smsDao.insert(record);
+		
+			ret = smsDao.insert(record);
 		//推送到接收人
 		WebSocketUtil.send(record.getReceivedid().toString(), record.getSmstype().toString());
 		return ret;
 	}
-
+	@Override
+	public int sendSysNotice(Integer userid, String content) {
+		int ret = this.sendSms(null, "", "", null, userid, 0, null, "", content);
+		return ret;
+	}
+/*	// FIXME  待完善
+	@Override
+	public int addNotices(User user, String userUrl, String content, String objUrl, String content2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+*/
 
 }

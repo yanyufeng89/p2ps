@@ -127,28 +127,6 @@ strong,.strong {
 	*zoom:1
 }
 
-h2,.h2 {
-	font-size:16px;
-	font-weight:700;
-	color:#333
-}
-/* h3,.h3 {
-	font-size:14px;
-	font-weight:700;
-	color:#333
-} */
-
-h5,.h5 {
-	font-size:12px;
-	font-weight:700;
-	color:#333
-}
-h6,.h6 {
-	font-size:11px;
-	font-weight:400;
-	color:#333
-}
-
 .gbma-d,.gbma-r,.gbma-u {
 	position:relative;
 	border-style:solid;
@@ -295,11 +273,11 @@ h6,.h6 {
 	background:transparent
 }
 
-.list:before,.list:after {
+.list:before,.list:after,.detail-list:before,.detail-list:after,.profile-func:before,.profile-func:after{
 	content:'';
 	display:table
 }
-.list:after {
+.list:after,.detail-list:after,.profile-func:after{
 	clear:both
 }
 .list {

@@ -17,43 +17,44 @@
     	
     	testForm.submit();
     }
+    function isConverted(){
+   	   $.ajax({
+          	type:"POST",
+          	url:"docs/isConverted",
+          	data:{id:113458},
+          	dataType:"json",
+          	success:function(data){
+          		//alert(data);
+         		console.log(data);
+          		if(data.returnStatus=='000'){//返回成功
+         			
+         		}else{//返回失败
+         			
+         		}
+         		
+         	}
+      });
+   }
+    function searchSchool(){
+   	   $.ajax({
+          	type:"POST",
+          	url:"myHome/searchSchool/"+"苏州",
+          	//data:{id:113458},
+          	dataType:"json",
+          	success:function(data){
+          		//alert(data);
+         		console.log(data);
+          		if(data.returnStatus=='000'){//返回成功
+         			
+         		}else{//返回失败
+         			
+         		}
+         		
+         	}
+      });
+   }
     
-  	//获取所有父节点
-    function getAllParentTypeConfigs(){
-  	   $.ajax({
-         	type:"POST",
-         	url:"docs/getAllParentTypeConfigs",
-         	//data:{parentTypeId:100},
-         	dataType:"json",
-         	success:function(data){
-         		if(data.returnStatus=='000'){//返回成功
-        			alert(data);
-            		console.log(data);
-        		}else{//返回失败
-        			
-        		}
-        		
-        	}
-     });
-  }
-   	//根据父级节点ID获取所有子节点   100是父节点ID
-    function getChildTypeConfigsByParent(){
- 	   $.ajax({
-        	type:"POST",
-        	url:"docs/getChildTypeConfigsByParentsss",
-        	data:{parentTypeId:100},
-        	dataType:"json",
-        	success:function(data){
-        		if(data.returnStatus=='000'){//返回成功
-        			alert(data);
-            		console.log(data);
-        		}else{//返回失败
-        			
-        		}
-        		
-        	}
-    });
- }
+
  
   	//获取所有子节点
     function getChildTypeConfigs(){
@@ -123,137 +124,7 @@
         	}
      });
   } 
-   	function getReportInfoConfigList(){
-  	   $.ajax({
-         	type:"POST",
-         	url:"myCenter/getReportInfoConfigList",
-         	//data:{condition:100},
-         	dataType:"json",
-         	success:function(data){
-         		if(data.returnStatus=='000'){//返回成功
-         			
-        			//alert(data.list);
-            		console.log(data);
-            		
-            		
-        		}else{//返回失败
-        			
-        		}
-        		
-        	}
-     });
-  } 
-   	function getSharedBookList(){
-  	   $.ajax({
-         	type:"POST",
-         	url:"myCenter/getSharedBookList",
-         	//data:{condition:100},
-         	dataType:"json",
-         	success:function(data){
-         		if(data.returnStatus=='000'){//返回成功
-         			
-        			alert(data.list);
-            		console.log(data);
-            		
-            		
-        		}else{//返回失败
-        			
-        		}
-        		
-        	}
-     });
-  } 
-   	function getCollectedBookList(){
-  	   $.ajax({
-         	type:"POST",
-         	url:"myCenter/getCollectedBookList",
-         	//data:{condition:100},
-         	dataType:"json",
-         	success:function(data){
-         		if(data.returnStatus=='000'){//返回成功
-         			
-        			alert(data.list);
-            		console.log(data);
-            		
-            		
-        		}else{//返回失败
-        			
-        		}
-        		
-        	}
-     });
-  } 
-  //我的文档   收藏和下载list     actionType 0 1
-   	function getMyDocsCollectedAndDowned(){
-  	   $.ajax({
-         	type:"POST",
-         	url:"myCenter/getMyDocsCollectedAndDowned/1",
-         	//data:{condition:100},
-         	dataType:"json",
-         	success:function(data){
-         		if(data.returnStatus=='000'){//返回成功
-         			
-            		console.log(data);
-            		
-            		
-        		}else{//返回失败
-        			alert("失败");
-        		}
-        		
-        	}
-     });
-  } 
-  
-  //批量删除文档    
-   	function deleteDocs(){
-   		var conditions ='139,140,141,142';
-	  	//console.log(conditions);
-	  	//console.log(JSON.stringify(conditions));
-	  	var s = JSON.stringify(conditions);
-  	   $.ajax({
-         	type:"POST",
-         	url:"myCenter/deleteDocs",
-         	data:{condition:s},
-         	dataType:"json",
-         	success:function(data){
-         		if(data.returnStatus=='000'){//返回成功
-         			
-        			//alert(data.list);
-            		console.log(data);
-            		
-            		
-        		}else{//返回失败
-        			
-        		}
-        		
-        	}
-     });
-  } 
-  //批量删除话题    
-   	function deleteTopics(){
-   		var conditions ='32,33,34,35';
-	  	//console.log(conditions);
-	  	//console.log(JSON.stringify(conditions));
-	  	var s = JSON.stringify(conditions);
-  	   $.ajax({
-         	type:"POST",
-         	url:"myCenter/deleteTopics",
-         	data:{condition:s},
-         	dataType:"json",
-         	success:function(data){
-         		if(data.returnStatus=='000'){//返回成功
-         			
-        			//alert(data.list);
-            		console.log(data);
-            		
-            		
-        		}else{//返回失败
-        			
-        		}
-        		
-        	}
-     });
-  } 
+   
   //获取操作总数
    	function getOperationSum(){
   	   $.ajax({
@@ -644,6 +515,23 @@
        	}
     });
  }
+  //文章打赏  	private Integer id    title   userid  supportValue;//打赏值	supportValue	int(8)	8	   supportCount;//打赏次数	supportCount	int(8)	8
+  function reward(){		
+ 	   $.ajax({
+        	type:"POST",
+        	url:"article/reward",
+        	data:{id:"1",userid:"2",supportValue:5,smsContent:"5毛拿去  不谢"},
+        	dataType:"json",
+        	success:function(data){
+        	 console.log(data); 
+        	 console.log("data.returnStatus=="+data.returnStatus);
+        		/* if(data.returnStatus=='000'){//返回成功        			
+           		console.log(data);  
+       		}else{//返回失败
+       		} */
+       	}
+    });
+ }
   
   
   
@@ -686,13 +574,16 @@
 	<input type="button" value="askPeople" onclick="askPeople()" /><br><br>
 	<input type="button" value="skillsinsert" onclick="skillsinsert()" /><br><br>
 	<input type="button" value="updSkill" onclick="updSkill()" /><br><br>
+	<input type="button" value="isConverted" onclick="isConverted()" /><br><br>
+	<input type="button" value="reward" onclick="reward()" /><br><br>
+	<input type="button" value="searchSchool" onclick="searchSchool()" /><br><br>
 	
 
 	<input type="text" oninput="getTagsByCondition(this.value)"><br><br>
 	<input type="text" oninput="getTagsByCondition(this.value)"><br><br>
 	
 	
-<a href="http://localhost:8080/51jobplusCore/myCenter/getBookShareDetailForEdit?id=1">getBookShareDetailForEdit</a><br>
+<a href="http://localhost:8080/myCenter/getBookShareDetailForEdit?id=1">getBookShareDetailForEdit</a><br>
 	<form action="topics/insertTopicsComment" method="post">
 		<input type="text" value="30" name="userid"> <input
 			type="text" value="7" name="topicsid"> <input type="text"
@@ -703,90 +594,6 @@
 	</form>
 
 
-
-
-	<!--                  <div class="mod mod-upload">
-                 <form id="testForm" action="upload" method="post" enctype="multipart/form-data">
-                   <div class="bdbook" style="">
-	                      <a class="titleinfo">【文档】</a>
-	                     <span class="titlename">请上传文档</span>
-	                     <div class="link after file-box">
-				             <form action="upload" method="post" enctype="multipart/form-data">
-					            <input type='file' name='textfield' id='textfield' class='txtdocument' />
-					            <input type='button' class='btnpreview' value='浏览...' />
-					            <input type="file" name="fileField" class="file" id="fileField" size="28" onclick="a" />
-					            <input type="file" name="fileField" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
-					             <input type="submit" value="" class="btn2"  />
-					            
-					        </form>
-	                     </div>
-	                     <div class="bar after">
-					        <div class="btn-disblue"><a href="uploadDocument.html">确定</a></div>
-					        <div class="btn-blue btn-feedspush">确定</div>
-					        <div class="btn btn-cancle">取消</div>
-					        <div class="btn-loading push-loading"></div>
-					        <input type="submit" value="确定"  />
-	                     </div>
-	                    </div>
-	                   </form>
-                  </div>
-
-
-	<div class="mod mod-upload">
-		<form action="docs/upload" method="post" enctype="multipart/form-data">
-			<div class="bdbook" style="">
-				<a class="titleinfo">【文档】</a> <span class="titlename">请上传文档</span>
-				<div class="link after file-box">
-					<input type='file'  multiple="multiple"  name='textfield' 
-						class='txtdocument' /> <input type='button' class='btnpreview'
-						value='浏览...' />
-
-					<input type="hidden"  name="downvalue" value="11" />
-					<input type="text" name="doctype" value="202" />
-				</div>
-				<div class="link after file-box">
-					<input type='file'  multiple="multiple"  name='textfield'
-						class='txtdocument' /> <input type='button' class='btnpreview'
-						value='浏览...' />
-
-					<input type="text"  name="downvalue" value="22" />
-					<input type="text"  name="doctype" value="101" />
-				</div>
-				<div class="bar after">
-					<div class="btn-disblue"><a href="uploadDocument.html">确定</a></div>
-					        <div class="btn-blue btn-feedspush">确定</div>
-					        <div class="btn btn-cancle">取消</div>
-					        <div class="btn-loading push-loading"></div>
-					<input type="submit" value="确定" id="submitID" />
-				</div>
-			</div>
-		</form>
-	</div>
-	<div >
-		<form action="topics/album/uploadImage/5" method="post" enctype="multipart/form-data">
-			<div class="bdbook" style="">
-				<a >【图片档】</a> <span >请上传图片</span>
-				<div class="link after file-box">
-					<input type='file'  multiple="multiple"  name='imageFile' 
-						class='txtdocument' /> <input type='button' class='btnpreview'
-						value='浏览...' />
-				</div>
-				<div class="bar after">
-					<input type="submit" value="确定" id="imageFilesubmitID" />
-				</div>
-			</div>
-		</form>
-	</div>
-	
-
-	<form action="topics/add" method="post" id="formX">
-	<input type="hidden"  id="testValue" name="testValue"/>
-	<div name="testP" id="testP">
-		<p name="content"><b>Hello Summernote</b><img src="data:image/jpeg;base64,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" data-filename="12.jpg" style="width: 293px;">
-		</p>		
-	</div>
-	<input type="button" value="确定" id="idss" onclick="confirmstestP()"/>
-	</form> -->
 	<script type="text/javascript">
 //模糊查询标题  	
 function confirmstestP(){
@@ -820,16 +627,6 @@ document.write(['<a class="qcShareQQDiv" href="http://connect.qq.com/widget/shar
 })();
 </script>
 
-<!-- JiaThis Button BEGIN --><div id="ckepop">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_weixin">微信</a> 
-<a href="http://www.jiathis.com/share"  class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a> </div> 
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1" charset="utf-8"></script>
-</div> <!-- JiaThis Button END -->
-<script src="http://connect.qq.com/widget/loader/loader.js" widget="shareqq" charset="utf-8"></script>
-	<br>
-	<br>
 	<br>
 </body>
 

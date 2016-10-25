@@ -61,6 +61,39 @@
 		<property name="order" value="0" />
 	</bean>
 	<!-- 配置freeMarker的模板路径 -->
+	<!-- http://blog.csdn.net/achilles12345/article/details/38085225
+		关于freemarker的classic_compatible属性的使用场景和解决
+		分类：freemarker
+		
+		
+		关于freemarker的classic_compatible属性网上资料很多的，不过大多数说的不是很全面。这里稍微补充一些。
+		
+		        在freemarker中的空值的处理，默认情况以${xxx}的方式取值会报错，我们一般都采用${xxx?if_exists} 的方式去处理，烦死人了。经过查资料，很多人都建议使用classic_compatible=true的方式来处理，目测单词的意思应该是：“兼容传统模式”的意思。但是经过使用发现这个属性设置为true时，也有很多其他问题，比如boolean值的处理，比如include指令必须使用绝对路径，总之也会带来很多烦人的事情。最后找到源码，在Freemarker源码的Configurable类的isClassicCompatible方法上找到了详细的注释，这里翻译下，不过本人英语比较差，可能会有错误，如果有人不确定可以去看源码。
+		
+		       原注释大意如下：
+		
+		       该方法返回Freemarker模板解析引擎是否工作在“Classic Compatibile”模式下。如果这个模式被激活，则Freemarker模板解析引擎将以以下的方式工作：（类似于1.7.x这个版本的运行方式，这个也是1.7.x的版本被称为“经典的Freemarker”的由来）。（译者注：以下的1、2、3、4、5、6是译者自己加的，方便读者看）
+		
+		       处理未定义的表达式，也就是说"expr"为null值。
+		
+		       1、作为像表达式“<assign varname=expr>”、“${expr}”、“ otherexpr == expr“、“otherexpr != expr”条件表达式或者是“hash[expr]”表达式的参数，这个参数将被当成空字符来对待。（译者注：这里注意空字符和null是不一样的).
+		
+		       2、作为“<list expr as item>”、“<foreach item in expr>”这样的表达式的参数，其循环体将不会被执行，和list的长度为0是一样的。
+		
+		       3、作为“<if>”或者其他布尔表达式命令的参数，空值将被当成是false来处理。非布尔数据模型或者逻辑操作数也可以放在“<if>”表达式中，空模型（长度为零的字符串，空的数组或者hash集合）都被当成是false来对待，其他情况下都被当成是true来处理。
+		
+		       4、当布尔值被当成字符串（比如用${...}输出，或者是和其他字符串连接），true值将被转换成“true”字符串处理，false值将被转换成空字符串。
+		
+		       5、提供给<list>和<foreach>的标量数据模型参数将被当成只包含一个该模型的list来处理。（译者注：就是说，传给<list>和<foreach>的参数不是list或者数组类型的，而是单个元素，则会被当成只有一个元素的list或者数组）
+		
+		       6、“<include>”标签的路径参数将被作为绝对路径处理。（译者注：这里很多网上的文档都没有提过，是本人经过观察发现的，然后从源码和其注释中找到的。在这种情况下，如果传入的ftl路径是相对路径，则会报找不到文件的异常）。
+		
+		       在其他方面，甚至是在兼容模式下，这个Freemaker解析引擎是2.1引擎，你不会因此而丢掉其他新的功能。
+		
+		
+		      以上就是译文， 那么如果我们设置了全局的classic_compatible属性，而在某个页面上又不想遵守这个属性该怎么办呢？这样就可以在当前这个页面上采用以下的办法，让当前的页面不再支持传统模式：<#setting classic_compatible=false> 
+		      
+	   -->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="templateLoaderPath" value="/WEB-INF/ftl/" />

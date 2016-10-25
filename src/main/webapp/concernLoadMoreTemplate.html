@@ -4,7 +4,7 @@
 	   <div class="zg-right">
 
 	      {#if ($T.list.fansIds=='0')}
-		     <button data-userid="{$T.list.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow" data-actiontype="1">关注</button>
+		     <button data-userid="{$T.list.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow" data-actiontype="1">+&nbsp;关注</button>
 		  {#else}
 		     <button data-userid="{$T.list.userid}" data-a='1' class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
 		  {#/if}
@@ -13,7 +13,7 @@
 	      {#if $T.list.headicon}
 		    <img src="{$T.list.headicon}" class="zm-item-img-avatar">
 		  {#else}
-		    <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+		    <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
 		  {#/if}
 	   </a>
 	   <div class="zm-list-content-medium">

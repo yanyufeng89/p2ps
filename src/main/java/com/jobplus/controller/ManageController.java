@@ -6,13 +6,16 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Path;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -239,17 +242,17 @@ public class ManageController {
      * 获取所有的建议反馈  分页
      */
     @RequestMapping(value = "/backstage/suggest", method = RequestMethod.GET)
-	public ModelAndView getAllSug() {
-    	 ModelAndView mv = new ModelAndView();
-         mv.setViewName("manage/suggest");
-         return mv;
-	}
+    public ModelAndView getAllSug() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("manage/suggest");
+        return mv;
+    }
 
-	@RequestMapping(value = "/backstage/suggest", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/backstage/suggest", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-	public String getAllSug(@RequestBody GridQuery<Suggestion> gridQuery) {
-		return gson.toJson(suggestionService.getAllSug(gridQuery));
-	}
+    public String getAllSug(@RequestBody GridQuery<Suggestion> gridQuery) {
+        return gson.toJson(suggestionService.getAllSug(gridQuery));
+    }
 
     @RequestMapping(value = "/backstage/suggest/deal/{id}", method = RequestMethod.POST)
     @ResponseBody
@@ -257,21 +260,21 @@ public class ManageController {
         return String.valueOf(suggestionService.dealSug(id));
     }
 
-	 /**
+    /**
      * 获取所有举报信息     *
      */
-	@RequestMapping(value = "/backstage/complaints", method = RequestMethod.GET)
-	public ModelAndView getAllReport() {
-		 ModelAndView mv = new ModelAndView();
-         mv.setViewName("manage/complaints");
-         return mv;
-	}
+    @RequestMapping(value = "/backstage/complaints", method = RequestMethod.GET)
+    public ModelAndView getAllReport() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("manage/complaints");
+        return mv;
+    }
 
-	@RequestMapping(value = "/backstage/complaints", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/backstage/complaints", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-	public String getAllReport(@RequestBody GridQuery<ReportInfo> gridQuery) {
-		return gson.toJson(reportService.getAllReportInfo(gridQuery));
-	}
+    public String getAllReport(@RequestBody GridQuery<ReportInfo> gridQuery) {
+        return gson.toJson(reportService.getAllReportInfo(gridQuery));
+    }
 
 
     @RequestMapping(value = "/backstage/complaints/deal/{id}", method = RequestMethod.POST)
@@ -282,8 +285,9 @@ public class ManageController {
 
     /**
      * 根据id type获取obj
-      TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
-				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
+     * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
+     * "tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
+     *
      * @param request
      * @param response
      * @param id
@@ -307,7 +311,7 @@ public class ManageController {
                     retMap.put("objName", obj.getTitle());
                     retMap.put("objTblName", "tbl_docs");
                     //
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs")+ id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs") + id + "&isAdmin=7");
                     break;
                 }
                 case "1": {
@@ -317,7 +321,7 @@ public class ManageController {
                     retMap.put("objCreator", "");
                     retMap.put("objName", obj.getBookname());
                     retMap.put("objTblName", "tbl_books");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books")+ id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books") + id + "&isAdmin=7");
                     break;
                 }
                 case "2": {
@@ -326,8 +330,8 @@ public class ManageController {
                     retMap.put("objId", id);
                     retMap.put("objCreator", obj.getCreateperson());
                     retMap.put("objName", obj.getTitle());
-                    retMap.put("objTblName", "tbl_topics");                    
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics")+ id + "&isAdmin=7");
+                    retMap.put("objTblName", "tbl_topics");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics") + id + "&isAdmin=7");
                     break;
                 }
                 case "3": {
@@ -337,7 +341,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getCoursesname());
                     retMap.put("objTblName", "tbl_courses");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses")+ id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses") + id + "&isAdmin=7");
                     break;
                 }
                 case "4": {
@@ -347,7 +351,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getTitle());
                     retMap.put("objTblName", "tbl_article");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article")+ id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article") + id + "&isAdmin=7");
                     break;
                 }
                 case "5": {
@@ -357,68 +361,68 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getTitle());
                     retMap.put("objTblName", "tbl_sites");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites")+ id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites") + id + "&isAdmin=7");
                     break;
                 }
                 case "6": {
-                	//文档评论
-                	DocComment obj = docCommentService.selectByPrimaryKey(id);
-                	retMap.put("objId", id);
-                	retMap.put("objCreator", obj.getUserid());
-                	retMap.put("objName", obj.getComments());
-                	retMap.put("objTblName", "tbl_docs_comment");
-                	retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs")+ obj.getDocid() + "&isAdmin=7");
-                	break;
+                    //文档评论
+                    DocComment obj = docCommentService.selectByPrimaryKey(id);
+                    retMap.put("objId", id);
+                    retMap.put("objCreator", obj.getUserid());
+                    retMap.put("objName", obj.getComments());
+                    retMap.put("objTblName", "tbl_docs_comment");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs") + obj.getDocid() + "&isAdmin=7");
+                    break;
                 }
                 case "7": {
-                	//书籍评论
-                	BookShare obj = bookShareService.selectByPrimaryKey(id);
-                	retMap.put("objId", id);
-                	retMap.put("objCreator", obj.getUserid());
-                	retMap.put("objName", obj.getRecommend());
-                	retMap.put("objTblName", "tbl_books_share");
-                	retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books")+ obj.getBookid() + "&isAdmin=7");
-                	break;
+                    //书籍评论
+                    BookShare obj = bookShareService.selectByPrimaryKey(id);
+                    retMap.put("objId", id);
+                    retMap.put("objCreator", obj.getUserid());
+                    retMap.put("objName", obj.getRecommend());
+                    retMap.put("objTblName", "tbl_books_share");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books") + obj.getBookid() + "&isAdmin=7");
+                    break;
                 }
                 case "8": {
-                	//话题评论
-                	TopicsComment obj = topicsCommentService.selectByPrimaryKey(id);
-                	retMap.put("objId", id);
-                	retMap.put("objCreator", obj.getUserid());
-                	retMap.put("objName", obj.getCommcontent());
-                	retMap.put("objTblName", "tbl_topics_comment");
-                	retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics")+ obj.getTopicsid() + "&isAdmin=7");
-                	break;
+                    //话题评论
+                    TopicsComment obj = topicsCommentService.selectByPrimaryKey(id);
+                    retMap.put("objId", id);
+                    retMap.put("objCreator", obj.getUserid());
+                    retMap.put("objName", obj.getCommcontent());
+                    retMap.put("objTblName", "tbl_topics_comment");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics") + obj.getTopicsid() + "&isAdmin=7");
+                    break;
                 }
                 case "9": {
-                	//课程评论
-                	CoursesShare obj = coursesShareService.selectByPrimaryKey(id);
-                	retMap.put("objId", id);
-                	retMap.put("objCreator", obj.getUserid());
-                	retMap.put("objName", obj.getRecommend());
-                	retMap.put("objTblName", "tbl_courses_share");
-                	retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses")+ obj.getCoursesid() + "&isAdmin=7");
-                	break;
+                    //课程评论
+                    CoursesShare obj = coursesShareService.selectByPrimaryKey(id);
+                    retMap.put("objId", id);
+                    retMap.put("objCreator", obj.getUserid());
+                    retMap.put("objName", obj.getRecommend());
+                    retMap.put("objTblName", "tbl_courses_share");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses") + obj.getCoursesid() + "&isAdmin=7");
+                    break;
                 }
                 case "10": {
-                	//文章评论
-                	ArticleShare obj = articleShareService.selectByPrimaryKey(id);
-                	retMap.put("objId", id);
-                	retMap.put("objCreator", obj.getUserid());
-                	retMap.put("objName", obj.getRecommend());
-                	retMap.put("objTblName", "tbl_article_share");
-                	retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article")+ obj.getArticleid() + "&isAdmin=7");
-                	break;
+                    //文章评论
+                    ArticleShare obj = articleShareService.selectByPrimaryKey(id);
+                    retMap.put("objId", id);
+                    retMap.put("objCreator", obj.getUserid());
+                    retMap.put("objName", obj.getRecommend());
+                    retMap.put("objTblName", "tbl_article_share");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article") + obj.getArticleid() + "&isAdmin=7");
+                    break;
                 }
                 case "11": {
-                	//站点评论
-                	SiteShare obj = siteShareService.selectByPrimaryKey(id);
-                	retMap.put("objId", id);
-                	retMap.put("objCreator", obj.getUserid());
-                	retMap.put("objName", obj.getRecommend());
-                	retMap.put("objTblName", "tbl_sites_share");
-                	retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites")+ obj.getSiteid() + "&isAdmin=7");
-                	break;
+                    //站点评论
+                    SiteShare obj = siteShareService.selectByPrimaryKey(id);
+                    retMap.put("objId", id);
+                    retMap.put("objCreator", obj.getUserid());
+                    retMap.put("objName", obj.getRecommend());
+                    retMap.put("objTblName", "tbl_sites_share");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites") + obj.getSiteid() + "&isAdmin=7");
+                    break;
                 }
 
                 default:
@@ -437,35 +441,51 @@ public class ManageController {
             return JSON.toJSONString(baseResponse);
         }
     }
-    
+
 
     /**
-   	 * 删除obj或者评论   
-   	 * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
-				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
-   	 * @return
-   	 */
-   	@RequestMapping(value = "/backstage/delObjOrComment", method = RequestMethod.POST)//, method = RequestMethod.POST
-   	@ResponseBody
-   	public String delObjOrComment(HttpServletRequest request, @RequestParam(required = true)Integer id,@RequestParam(required = true)String tableName) {
-   		BaseResponse baseResponse = new BaseResponse();
-   		try {
-   			int ret = 0;
-   			ret = updTableColumnService.delOneById(tableName, id);
-   			if (ret > 0) {
-   				logger.info("*delComment**--删除obj或者评论**record==");
-   				baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
-   			} else {
-   				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
-   				logger.info("*delComment** --删除obj或者评论    失败  999   删除失败*********");
-   			}
-   			return JSON.toJSONString(baseResponse);
-   		} catch (Exception e) {
-   			baseResponse.setReturnMsg(e.getMessage());
-   			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
-   			logger.info("*delComment** --删除obj或者评论    失败  999 *********" + e.getMessage());
-   			return JSON.toJSONString(baseResponse);
-   		}
-   	}
-       
+     * 删除obj或者评论
+     * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
+     * "tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
+     *
+     * @return
+     */
+    @RequestMapping(value = "/backstage/delObjOrComment", method = RequestMethod.POST)//, method = RequestMethod.POST
+    @ResponseBody
+    public String delObjOrComment(HttpServletRequest request, @RequestParam(required = true) Integer id, @RequestParam(required = true) String tableName) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            int ret = 0;
+            ret = updTableColumnService.delOneById(tableName, id);
+            if (ret > 0) {
+                logger.info("*delComment**--删除obj或者评论**record==");
+                baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+            } else {
+                baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+                logger.info("*delComment** --删除obj或者评论    失败  999   删除失败*********");
+            }
+            return JSON.toJSONString(baseResponse);
+        } catch (Exception e) {
+            baseResponse.setReturnMsg(e.getMessage());
+            baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+            logger.info("*delComment** --删除obj或者评论    失败  999 *********" + e.getMessage());
+            return JSON.toJSONString(baseResponse);
+        }
+    }
+
+    @RequestMapping(value = "/backstage/course/{id}", method = RequestMethod.GET)
+    public ModelAndView getCourse(@PathVariable Integer id) {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("course", coursesService.selectByPrimaryKey(id));
+        mv.setViewName("manage/editCourse");
+        return mv;
+    }
+
+    @RequestMapping(value = "/backstage/updateCourse")
+    @ResponseBody
+    public String updateCourse(HttpServletRequest request, HttpServletResponse response, Courses courses) {
+        if (courses.getCoursesimgFile() != null && StringUtils.isNotBlank(courses.getCoursesimgFile().getOriginalFilename()))
+            return gson.toJson(coursesService.updateByAdmin(courses.getCoursesimgFile(), request, response, courses));
+        return gson.toJson(coursesService.updateByAdmin(courses));
+    }
 }

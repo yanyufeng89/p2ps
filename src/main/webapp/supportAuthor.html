@@ -1,0 +1,32 @@
+<div class="modal-dialog-bg" style="opacity: 0.5; width: 1920px; height: 12986px;" aria-hidden="true"></div>
+<div class="modal-wrapper">
+  <div class="modal-dialog" tabindex="0" role="dialog" aria-labelledby=":4w">
+    <div class="modal-dialog-title">
+      <span class="modal-dialog-title-text"  role="heading">打赏</span>
+      <span class="modal-dialog-title-close" role="button" tabindex="0" aria-label="Close"></span>
+    </div>
+    <div class="modal-dialog-content" style="margin: 0px; padding: 0px;">
+      <div class="ReportMenu">
+        <div class='dialog-report' style='padding: 20px 20px 0 20px;'>
+           <span>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</span>
+           <ul id="support-reasons"> 
+             <div class='control-group'>
+                <label for="reward_amount" class='reward_amount'>财富值：</label>
+                <!-- <label class='moneyicon'></label> -->
+                <input value="2" type="text" name="reward[amount_in_yuan]" id="reward_amount_in_yuan">
+             </div>
+             <div class="control-group message">
+                 <textarea placeholder="给Ta留言" name="reward[message]" id="reward_message"></textarea>
+             </div>
+		   </ul>
+        </div>
+        <div class="zh-pm-warnmsg" style="display:none;text-align:right;color:#C3412F; font-size:12px;padding:0 18px 0 0;">
+          
+        </div>
+        <div class="ReportMenu-actions" style='padding-top:20px'>
+          <button class="zg-btn-blue topicreport" id='payment' data-userid={$T.userid} data-articleid={$T.articleid} data-sumValue='{$T.sumValue}'>立即支付</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

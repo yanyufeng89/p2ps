@@ -9,7 +9,7 @@ $(function(){
         if(ischecked=='0'){
         	$.ajax({
     			type:"POST",
-    			url:projectName+"myCenter/setSmsFilter",
+    			url:"/myCenter/setSmsFilter",
     			data:{filteritem:Number(filteritem),filterlevel:Number(filterlevel)},
     			dataType:"json",
     			success:function(data){

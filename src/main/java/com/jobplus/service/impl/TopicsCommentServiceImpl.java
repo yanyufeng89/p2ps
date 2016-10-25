@@ -150,7 +150,7 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 					// 添加消息通知
 					smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[9], record.getTopicsid(),
 							record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[3], record.getId(),
-							record.getObjectNamePg());
+							record.getObjectNamePg(),"");
 
 				} else if (record.getType() == ConstantManager.TBL_TOPICSCOMMENT_TYPE_REPLYCOMMENT) {// 回答的评论+1
 					if (record.getTopicsid() != null) {
@@ -161,7 +161,7 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 						// 添加消息通知
 						smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[9], record.getTopicsid(),
 								record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[6], record.getId(),
-								record.getObjectNamePg());
+								record.getObjectNamePg(),"");
 
 					}
 				} else if (record.getType() == ConstantManager.TBL_TOPICSCOMMENT_TYPE_TOPICCOMMENT) {// 话题的评论+1
@@ -173,7 +173,7 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 						// 添加消息通知
 						smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[9], record.getTopicsid(),
 								record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[5], record.getId(),
-								record.getObjectNamePg());
+								record.getObjectNamePg(),"");
 
 					}
 				}

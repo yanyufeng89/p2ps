@@ -47,7 +47,7 @@ public class TopicsLikedServiceImpl implements ITopicsLikedService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[10],record.getTopObjId(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[7], record.getRelationidPg(),record.getObjectNamePg());
+					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[7], record.getRelationidPg(),record.getObjectNamePg(),"");
 			
 		}
 		return ret;

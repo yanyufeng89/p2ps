@@ -28,7 +28,10 @@ $(function () {
         smsInfo($(this));
     })
     //回复私信
-    $('.zg-link-replypm').live('click', function (e) {
+    $('.zg-link-replypm,#site-mail').live('click', function (e) {
+    	//分为两个模块的发送  一个是在查看别人主页的时候发站点信息   一个是回复别人发给自己的信息  1表示站内信
+    	var issitemail=$(this).attr('data-issitemail');
+    	
         $('#top-nav-live-new1').hide();
         var receivedid = $(this).attr('data-receivedid');
         var name = $(this).attr('data-name');
@@ -38,9 +41,13 @@ $(function () {
         }
         $('.pagetemplate').setTemplateURL(projectName + 'privateMessage.html');
         $('.pagetemplate').processTemplate(datamodel);
-        $(this).parents('#top-nav-live-new1').after($('.pagetemplate').html());
+        if(issitemail=='1'){
+    		$('#backaboutmetop').after($('.pagetemplate').html());
+    	}else{
+    		$(this).parents('#top-nav-live-new1').after($('.pagetemplate').html());
+            $('.edui-container').css('z-index', '0');
+    	}
         $('.pagetemplate').empty();
-        $('.edui-container').css('z-index', '0');
         e.stopPropagation();
     })
 

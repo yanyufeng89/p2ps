@@ -113,7 +113,8 @@
   <update id="updateReadSum" parameterType="java.lang.Integer">
     update tbl_courses
     set 
-      readSum = readSum + 1      
+      readSum = readSum + 1  
+      ,updateTime = now()    
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
@@ -130,7 +131,7 @@
     where t.ID = #{id,jdbcType=INTEGER}
     <!-- 必须是有效资源 -->
     and t.isValid = 1
-    and u.isValid = 1
+    <!-- and u.isValid = 1 -->
   </select>
   
   <!-- <select id="selectByRecord" parameterType="com.jobplus.pojo.Courses" resultMap="ResultMapWithBLOBs">
@@ -369,5 +370,15 @@
       recommend = #{recommend,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
- 
+
+  <update id="updateByAdmin" parameterType="com.jobplus.pojo.Courses">
+    update tbl_courses
+    set
+        coursesName = #{coursesname,jdbcType=VARCHAR},
+        coursesUrl = #{coursesurl,jdbcType=VARCHAR},
+        coursesImg = #{coursesimg,jdbcType=VARCHAR},
+        updateTime = now(),
+        intro = #{intro,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -108,7 +108,7 @@ public class AttentionServiceImpl implements IAttentionService {
 					// 添加消息通知
 					smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[17], record.getObjectid(),
 							record.getObjectid(), new Sms().getSMSTYPES()[2], record.getRelationidPg(),
-							record.getObjectNamePg());
+							record.getObjectNamePg(),"");
 
 				}
 				if ("1".equals(record.getObjectType())) {
@@ -121,7 +121,7 @@ public class AttentionServiceImpl implements IAttentionService {
 					// 添加消息通知
 					smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[2], record.getObjectid(),
 							record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[2], record.getRelationidPg(),
-							record.getObjectNamePg());
+							record.getObjectNamePg(),"");
 				}
 			} else {
 				return ret;

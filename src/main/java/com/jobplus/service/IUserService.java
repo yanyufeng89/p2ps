@@ -116,5 +116,17 @@ public interface IUserService {
 	 * @return
 	 */
 	Map<String, Object> getAllUsers(GridQuery gridQuery);
+	
+	/**
+	 * 文章打赏的人
+	 */
+	public List<User> getRewardUsers(Integer articleId);
+	/**
+     * 统计个人用户完整度
+     *
+     * @param userId
+     * @return
+     */
+    int userInfoCompletion(int userId);
 
 }

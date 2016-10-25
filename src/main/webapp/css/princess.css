@@ -3023,32 +3023,7 @@ body .mod-skin-dialog .dialog-topbar {
 	vertical-align:middle;
 	margin-left:3px;
 }
-.award-list {
-	margin-bottom:-15px;
-}
-.z-multiple-award .award-list-item {
-	float:left;
-	_display:inline;
-	margin:0 2px 15px 0;
-	width:100px;
-}
-.z-multiple-award .award-name {
-	color:#777;
-	margin-top:6px;
-}
-.z-multiple-award:hover .award-name {
-	color:#2c76c0;
-}
-.z-multiple-award a:hover .award-name {
-	color:#09498b;
-}
-.award-name {
-	display:block;
-	text-align:center;
-}
-.z-single-award {
-	color:#999;
-}
+
 .z-img-ctn {
 	width:66px;
 	height:66px;
@@ -4836,7 +4811,6 @@ body .mod-skin-dialog .dialog-topbar {
 }
 .mod-right-nav .itb_i_small {
 	font-size:14px;
-	font-family: "microsoft yahei" "΢���ź�" "����";
 	font-weight:bold;
 }
 .mod-footer {
@@ -4876,29 +4850,6 @@ body .mod-skin-dialog .dialog-topbar {
     width: 250px;
 }
 
-.minbox2 {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 10px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #ccc;
-}
-.minbox2 .topic {
-    height: 35px;
-    padding: 0 10px;
-    line-height: 35px;
-    overflow: hidden;
-     background: #eee;
-}
-.minbox2 .topic h4 {
-    float: left;
-    font-size: 18px;
-}
-
-.minbox2 .box {
-    padding: 10px;
-}
 .usershow2 {
     position: relative;
     overflow: hidden;
@@ -4906,25 +4857,7 @@ body .mod-skin-dialog .dialog-topbar {
 .nodatamin .doc {
     margin-left: 40px;
 }
-.nodatamax .ico, .nodatamin .ico {
-    float: left;
-}
 
-.nodatamax .doc p, .nodatamin .doc p {
-    padding: 2px 0;
-    word-break: break-all;
-    word-wrap: break-word;
-}
-
-.minbox2 .topic h4 {
-    float: left;
-    font-size: 18px;
-    font-weight:600;
-}
-
-.minbox2 .box {
-    padding: 10px;
-}
 
 .usershow1 {
     position: relative;
@@ -4938,65 +4871,20 @@ body .mod-skin-dialog .dialog-topbar {
 .myDocList {
     padding: 0 0 10px 0;
 }
-.minbox2 .topic {
-	background: #eee;
-    height: 35px;
-    padding: 0 10px;
-    line-height: 35px;
-    overflow: hidden;
-}
-.nodatamax .doc h5, .nodatamin .doc h5 {
-    padding-bottom: 5px;
-    font-size: 18px;
-    color: #999;
-}
-.myRightMenu {
-    background: #fff;
-    padding: 1px 0 1px;
-}
+
 .myDocList .listmanage {
     padding: 0 0 10px;
     position: relative;
   
 }
 
-.myDocSource, .myFolder dt {
-    border-color: #ccc;
-}
 .listmanage .manage-tools {
     border-color: #ccc;
     border-style: solid;
     border-width: 1px;
     padding: 1px;
 }
-.myRightMenu i {
-    padding: 0 5px 0 0;
-}
-.myDocSource {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom-style: solid;
-    border-width: 1px;
-}
-.myDocSource li.current, .myFolder li.current {
-    background: #00a1e9;
-}
 
-.myDocSource li, .myFolder li {
-    height: 28px;
-    margin: 2px 0;
-    padding: 0 10px 0 10px;
-    line-height: 28px;
-}
-
-.myFolder dd {
-    padding: 0;
-}
-
-.myFolder ul {
-    height: auto;
-    overflow: hidden;
-}
 .manage-tools .toolsbox2 {
     position: relative;
     padding: 5px 10px;
@@ -5006,33 +4894,7 @@ body .mod-skin-dialog .dialog-topbar {
     overflow: hidden;
 }
 
-.manage-tools .toolsbox2 .viewTags1, .manage-tools .toolsbox2 .sorting1 {
-    float: left;
-    padding-right: 20px;
-}
 
-.viewTags1 {
-    overflow: hidden;
-}
-viewTags1 li.current {
-    background-position: 0 -48px;
-}
-.viewTags1 li.view3 {
-    background: url(../image/ViewTags1-view3.png) no-repeat;
-}
-.viewTags1 li.view2 {
-    background: url(../image/ViewTags1-view2.png) no-repeat;
-}
-.viewTags1 li.current {
-    background-position: 0 -48px;
-}
-.viewTags1 li.view1 {
-    background: url(../image/ViewTags1-view1.png) no-repeat;
-}
-.manage-tools .toolsbox2 .viewTags1, .manage-tools .toolsbox2 .sorting1 {
-    float: left;
-    padding-right: 20px;
-}
 .sorting1 {
     overflow: hidden;
 }
@@ -5081,20 +4943,6 @@ viewTags1 li.current {
     border-color: #ccc;
     color: #666;
 }
-.viewTags1 li {
-    float: left;
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-.myDocSource li.current a, .myFolder li.current a {
-    color: #fff;
-}
-.myDocSource li a, .myFolder li a {
-    color: #666;
-    text-decoration: none;
-}
 .minbox2 {
 	border-color: #ccc;
     position: relative;
@@ -5103,42 +4951,8 @@ viewTags1 li.current {
     border-style: solid;
     border-width: 1px;
 }
-.nodatamax .doc {
-    margin-left: 80px;
-    font-size: 14px;
-}
-.nodatamax, .nodatamin{
-    border: dashed 1px #ccc;
-    border-radius: 2px;
-    padding: 30px;
-    overflow: hidden;
-    color: #999;
-    padding: 20px 10px;
-}
-.isaid {
-    position: relative;
-}
-.isaid li {
-    padding: 0 0 20px;
-}
-.isaid .myphoto, .isaid .theword {
-    border-color: #ccc;
-}
-.isaid .itoSpeak, .isaid .theword {
-    position: relative;
-    margin-left: 80px;
-    min-height: 30px;
-}
-.itoSpeak {
-    padding: 0;
-}
-.itoSpeak .fast-say {
-    border-color: #ccc;
-}
-.itoSpeak .fast-say {
-    border-style: solid;
-    border-width: 1px;
-}
+
+
 .fast-say {
     border-style: solid;
     border-width: 1px;
@@ -5148,122 +4962,15 @@ viewTags1 li.current {
 .say-box {
     padding: 2px 5px;
 }
-.nomsgbox1 {
-    border-color: #fad0e3;
-    background: #fefafc;
-    color: #f28ab9;
-}
 
-.okmsgbox1, .nomsgbox1 {
-    top: -25px;
-    right: 0;
-    height: 25px;
-    padding: 0 5px;
-    border: solid 1px #d3eed7;
-    background: #fafdfb;
-    line-height: 25px;
-    white-space: nowrap;
-    color: #90d59b;
-}
-.okmsgbox1, .okmsgbox2, .nomsgbox1, .nomsgbox2 {
-    display: none;
-    position: absolute;
-    z-index: 3;
-    font-size: 12px;
-}
-.itoSpeak .say-shop {
-    margin: 0 0;
-    padding: 5px 0;
-}
-.say-shop {
-    background: #eee;
-}
-.say-shop {
-    height: 24px;
-    margin: 0 0px;
-    padding: 5px 0;
-}
-.say-shop .face {
-    float: left;
-    padding: 0 5px;
-}
 .smilies {
     position: relative;
 }
-.nomsgbox1 {
-    border-color: #fad0e3;
-    background: #fefafc;
-    color: #f28ab9;
-}
-.okmsgbox1, .nomsgbox1 {
-    top: -25px;
-    right: 0;
-    height: 25px;
-    padding: 0 5px;
-    border: solid 1px #d3eed7;
-    background: #fafdfb;
-    line-height: 25px;
-    white-space: nowrap;
-    color: #90d59b;
-}
 
-.smiliesbox {
-    display: none;
-    position: absolute;
-    z-index: 9;
-    top: -132px;
-    left: 0;
-    border: solid 1px #ccc;
-    background: #fff;
-    padding: 1px;
-}
-.smiliesbox td a {
-    display: block;
-}
-.smiliesbox table {
-    width: 100%;
-    border: none;
-}
-
-.say-shop .face img {
-    width: 24px;
-    height: 24px;
-}
-.smiliesbox .arrow {
-    position: absolute;
-    bottom: -5px;
-    left: 6px;
-    width: 9px;
-    height: 5px;
-    background: url(../image/smilies-arrow.png) no-repeat;
-}
-.say-shop .shop {
-    float: right;
-}
-.buttoncss2:hover {
-    background-position: -60px -25px;
-}
-
-.buttoncss2{
-	 width: 60px;
-    height: 25px;
-    margin: 0 5px;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 20px;
-    cursor: pointer;
-    border: none;
-    background: url(../image/button1-bg.png) no-repeat;
-    background-position: 0 -25px;
-    color: white;
-}
 .aboutme {
     padding-right: 10px;
 }
-.isaidTopic {
-    background: #eee;
-}
+
 .myprofile {
     position: relative;
     padding-bottom: 20px;
@@ -5323,141 +5030,22 @@ viewTags1 li.current {
 .myTable td {
     padding: 5px 10px;
 }
-.isaidTopic {
-    margin: 0 0 20px;
-    height: 45px;
-    line-height: 45px;
-    font-size: 14px;
-}
 
-.isaidTopic .year {
-    display: block;
-    float: left;
-    width: 60px;
-    height: 45px;
-    text-align: center;
-}
 
 em {
     font-style: italic;
 }
-.isaid .myphoto, .isaid .theword {
-    border-color: #ccc;
-}
-.isaid .myphoto {
-    position: relative;
-    float: left;
-    width: 56px;
-    height: 56px;
-    padding: 1px;
-    border-style: solid;
-    border-width: 1px;
-}
-.isaid .myphoto img {
-    width: 56px;
-    height: 56px;
-}
+
+
 .myprofile dt em a {
     background: #f6f6f6;
     padding: 0 20px;
     font-style: normal;
 }
 
-.isaid .myphoto, .isaid .theword {
-    border-color: #ccc;
-}
-.isaid .theword {
-    padding: 15px;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
-}
-.isaid .itoSpeak, .isaid .theword {
-    position: relative;
-    margin-left: 80px;
-    min-height: 30px;
-}
 
-.isaid .theword .word, .isaid .theword .itosay {
-    border-color: #eee;
-}
-
-.isaid .theword .word {
-    border: none;
-}
-.isaid .theword .tag {
-    height: 20px;
-    padding: 5px 0 0;
-    line-height: 20px;
-}
-.isaid .theword .time {
-    float: left;
-}
 .gray9 {
     color: #999!important;
 }
 
-.isaid .theword .shop {
-    float: right;
-}
 
-
-.isaid .theword .shop a {
-    padding-left: 10px;
-}
-
-
-.comment1 {
-    position: relative;
-    padding-top: 5px;
-}
-
-.comment1 .list {
-	 border-color: #eee;
-    position: relative;
-    border-top-style: solid;
-    border-top-width: 1px;
-    padding-top: 5px;
-}
-.isaid .myphoto {
-    position: relative;
-    float: left;
-    width: 56px;
-    height: 56px;
-    padding: 1px;
-    border-style: solid;
-    border-width: 1px;
-}
-
-.comment1 .formbox {
-    padding: 5px 0 0;
-}
-
-.isaid .theword .word, .isaid .theword .itosay {
-    border-color: #eee;
-}
-
-.comment1 .itosay {
-	border-color: #eee;
-    color: #999;
-    height: 25px;
-    padding: 0 5px;
-    border-style: solid;
-    border-width: 1px;
-    line-height: 25px;
-    cursor: text;
-}
-
-.isaid .theword .arrow {
-    background: url(../images/MsgArrow.png) no-repeat;
-    background-position: -18px 0;
-}
-
-.isaid .theword .arrow {
-    position: absolute;
-    z-index: 1;
-    top: 15px;
-    left: -9px;
-    width: 9px;
-    height: 17px;
-}

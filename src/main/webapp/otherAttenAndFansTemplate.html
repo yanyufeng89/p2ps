@@ -1,23 +1,28 @@
 <!-- 他关注的人 -->
+{#if $T.attenManPage.length==0}
+  <div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
+    <span class='nofanslist'>暂无关注信息</span>
+  </div>
+{#else}
 {#foreach $T.attenManPage as attenlist}
 <div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
 	   <div class="zg-right">
 	     {#if $T.attenlist.fansIds==1}
 		  <button data-userid="{$T.attenlist.userid}" class="zg-btn  small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
 		 {#else}
-		 <button  data-userid="{$T.attenlist.userid}" class="zg-btn small nth-0 zg-btn-follow"  data-actiontype='1'>关注</button>
+		 <button  data-userid="{$T.attenlist.userid}" class="zg-btn small nth-0 zg-btn-follow"  data-actiontype='1'>+&nbsp;关注</button>
 		 {#/if}
 	   </div>
-	   <a title="{$T.attenlist.username}" data-userid="{$T.attenlist.userid}" class="zm-item-link-avatar"  target='_blank' href="/51jobplusCore/myHome/getHomePage?userid={$T.attenlist.userid}">
+	   <a title="{$T.attenlist.username}" data-userid="{$T.attenlist.userid}" class="zm-item-link-avatar"  target='_blank' href="/myHome/getHomePage?userid={$T.attenlist.userid}">
 		   {#if $T.attenlist.headicon}
 			   <img src="{$T.attenlist.headicon}" class="zm-item-img-avatar">
 		   {#else}
-			   <img src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+			   <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
 		   {#/if}
 	   </a>
 	   <div class="zm-list-content-medium">
 			<h2 class="zm-list-content-title">
-			   <a href="/51jobplusCore/myHome/getHomePage?userid={$T.attenlist.userid}"  data-userid="{$T.attenlist.userid}"  target='_blank' class="zg-link author-link" title={$T.attenlist.username}>{$T.attenlist.username}</a>
+			   <a href="/myHome/getHomePage?userid={$T.attenlist.userid}"  data-userid="{$T.attenlist.userid}"  target='_blank' class="zg-link author-link" title={$T.attenlist.username}>{$T.attenlist.username}</a>
 			</h2>
 			<div class="ellipsis">
 			    <span class="bio">
@@ -27,12 +32,12 @@
 			    </span>
 			</div>
 			<div class="details zg-gray">
-			<a target="_blank" class="zg-link-gray-normal">
+			<a target="_self" class="zg-link-gray-normal">
 			 {$T.attenlist.operationSum.attentionsum}
 			     关注
 			</a>
 			<a class="zg-link-gray-normal">/</a>
-			<a target="_blank" class="zg-link-gray-normal">
+			<a target="_self" class="zg-link-gray-normal">
 			  {$T.attenlist.operationSum.fanssum} 
 			   粉丝
 			</a>
@@ -40,3 +45,4 @@
 	  </div>
 </div>
 {#/for}
+{/#if}

@@ -1,34 +1,35 @@
 var randomid=1;
 var userInfo;
 $(function(){
-
 	 //个人中心  点击联系方式
     $(".show-more-info").on('click',function(){
-    	//只有在看别人的主页的时候 才会有收起
-    	var ispackup=$(this).attr('data-ispackup');
     	$("#contact-info-section").toggle();
     	if($(this).find('.t-down').length==0){
     		$(this).find('.t-up').removeClass('t-up').addClass('t-down');
     	}else{
     		$(this).find('.t-down').removeClass('t-down').addClass('t-up');
     	}
-    	if(ispackup=='1'){
-    		if($('.section-container').is(':hidden')){
-        	    $('.section-container').show();
-        	}else{
-        		$('.section-container').hide();
-            }
-    		 if($(this).find('.contact').text()=='个人简介'){
-    			 $(this).find('.contact').html('<b class="t-up"></b>收起');
-    		     $('.zm-profile-section-wrap,#zh-profile-follows-list').hide();
-    		     $('.section-container').show();
-    		 }
-    		 else{
-    			 $(this).find('.contact').html('<b class="t-down"></b>个人简介')
-    			 $('.zm-profile-section-wrap').show();
-    		     $('.section-container,#zh-profile-follows-list').hide();
-    		 }
-    	}
+    	$('.background-education-container').last().addClass('section-border');
+    })
+    
+    //查看他人主页  点击个人资料
+    $('#personal-data').live('click',function(){
+    	addClassFun($(this));
+    	$('.section-container').show();
+    	$('.zm-profile-section-wrap,#zh-profile-follows-list,#profile-navbar,#fans-navbar').hide();
+    });
+   //查看他人主页  点击个人分享
+    $('#personal-share').live('click',function(){
+    	addClassFun($(this));
+    	$('.section-container,#fans-navbar,#zh-profile-follows-list').hide();
+    	$('#profile-navbar,.zm-profile-section-wrap').show();
+    })
+    //查看他人主页  点击个人关注
+    $('#personal-attention').live('click',function(){
+    	addClassFun($(this));
+    	$('#fans-navbar').show();
+    	$('#profile-navbar,.zm-profile-section-wrap,.section-container').hide();
+    	otherAtten($(this));
     })
     //定时刷新界面上选中的边框颜色
     setInterval("startrequest()",3000); 
@@ -44,7 +45,6 @@ $(function(){
     		$(this).find('.contact').html('详细信息');
     	}
     })
-    
     //个人中心版块展开与收起
 	var li =$("#recommended-sections ul li:gt(5)");
     li.hide();
@@ -125,7 +125,7 @@ $(function(){
     });
     //关注人
     $('.operation .zm-rich-follow-btn').live('click',function(){
-    	topicFollow($(this),0)
+    	topicFollow($(this),0);
     })
     //点击修改职位
     $('a[name=editposition]').live('click',function(){
@@ -264,12 +264,17 @@ $(function(){
     $('a[name=myintrosave]').live('click',function(){
     	var birthdayday=$.trim($('input[name=birthdaytwo]').val());
     	var birthdaymonth=$.trim($('input[name=birthdayone]').val());
-    	if((birthdayday!=''&&birthdaymonth=='')||(birthdayday==''&&birthdaymonth!='')){
-    		$('.birthday b').show();
-    		$('.birthday .item-msg-content').show();
-    		return false;
-    	}
-    	var marriage=$.trim($('input[name=ismarry]').val());
+		if (birthdaymonth == '0' || birthdayday == '0') {
+			$('.birthday b').show();
+			$('.birthday .item-msg-content').show();
+			return false;
+		}
+		var marriage = $.trim($('input[name=ismarry]').val());
+		if (marriage == '' || marriage == '2') {
+			$('.marriage b').show();
+			$('.marriage .item-msg-content').show();
+			return false;
+		}
     	var description=$('textarea[name=recommend]').val();
     	//同时界面上赋值
     	//更改数据库中对应个人信息字段
@@ -290,10 +295,9 @@ $(function(){
         	$('#recommended-sections').append($('.homepageTemplate').html());
         	$('.homepageTemplate').empty();
     	}else{
-    		window.location.href='#self-info-detail';
     		$('.background-selfinfo-container').css('border-color','#0867c5');
     	}
-    	
+    	window.location.href='#self-info-detail';
        //$(this).addClass('disabled');
     })
     
@@ -310,14 +314,13 @@ $(function(){
 	       	$('.homepageTemplate').processTemplate(data);
 	       	$('#recommended-sections').append($('.homepageTemplate').html());
 	       	$('.homepageTemplate').empty();
-	       	window.location.href='#skill0';
 	   	}else{
-	   		window.location.href='#skill0';
 	   		$('#skill0').css('border-color','#0867c5');
 	   	}
+	    window.location.href='#skill0';
     })
     //修改技能
-    $('a[name=editskill],#addcontinuousskill').live('click',function(){
+    $('a[name=editskill],#addcontinuousskill,button[name=addskill]').live('click',function(){
     	var skillid=$(this).attr('data-skillid');
     	var skillitem=$(this).attr('data-skillitem');
     	var tb='[';
@@ -333,9 +336,9 @@ $(function(){
     	}
     	$('.homepageTemplate').setTemplateURL(projectName+'mySkillTemplate.html');
     	$('.homepageTemplate').processTemplate(data);
-    	$(this).parents('.background-skills-container').after($('.homepageTemplate').html());
+    	$('#skill0').after($('.homepageTemplate').html());
        	$('.homepageTemplate').empty();
-       	$(this).parents('.background-skills-container').remove();
+       	$('#skill0').remove();
     })
     //取消修改技能
     $('a[name=myskillcancel]').live('click',function(){
@@ -356,80 +359,99 @@ $(function(){
     	editMyIntroInfo($(this));
     })
     //添加教育背景
-    $('.recommended-section-education .recommended-section-add,#addcontinuous,#control_gen_4').live('click',function(){
-    	//1表示继续添加  
+    $('.recommended-section-education .recommended-section-add,#addcontinuous,#control_gen_4,button[name=addschool]').live('click',function(){
+    	//0表示继续添加  
     	var addtype=$(this).attr('data-addtype'); 
-    	if($('.background-education-container').length==0||addtype==0){
-    		$('.homepageTemplate').setTemplateURL(projectName+'myEducationBgTemplate.html');
-        	var isContinueAdd='';
-        	if(addtype=='1'){
-        		isContinueAdd=1;
-        	}else{
-        		isContinueAdd=0;
-        		randomid++;
+    	//如果存在教育背景新增框    就提示先编辑未保存的 内容
+    	if(addtype==0){
+    		if($('.background-education-container').last().find('input[name=school]').val().length==0){
+        		var cutid=$('.background-education-container').last().attr('id');
+        		window.location.href='#'+cutid;
+        		//获取焦点
+        		$('#'+cutid+' textarea[name=school]').focus();
+        		return false;
         	}
-        	var $lastDiv=$('#recommended-sections').find('.background-education-container');
-        	var anchorlen=$lastDiv.length+1;
-        	var data={
-        			isContinueAdd:isContinueAdd,
-        			isEdit:0,
-        			randomid:randomid,
-        			anchor:anchorlen
-        	}
-        	$('.homepageTemplate').processTemplate(data);
-        	if($lastDiv.last().length==0){
-        		$('#recommended-sections').append($('.homepageTemplate').html());
-        	}else{
-        		$lastDiv.last().after($('.homepageTemplate').html());
-        	}
-        	$('.homepageTemplate').empty();
-        	window.location.href='#education'+anchorlen;
-        	$('#schoolstartTime'+randomid).dateSelect();
-        	$('#schoolendTime'+randomid).dateSelect();
-    	}else{
-    			window.location.href='#education0';
-    			$('#education0').css('border-color','#0867c5');
     	}
-    	
-    	
+        if($('.background-education-container').length==0||addtype==0){
+        		$('.homepageTemplate').setTemplateURL(projectName+'myEducationBgTemplate.html');
+            	var isContinueAdd='';
+            	if(addtype=='1'){
+            		isContinueAdd=1;
+            	}else{
+            		isContinueAdd=0;
+            		randomid++;
+            	}
+            	var $lastDiv=$('#recommended-sections').find('.background-education-container');
+            	var anchorlen=$lastDiv.length+1;
+            	var data={
+            			isContinueAdd:isContinueAdd,
+            			isEdit:0,
+            			randomid:randomid,
+            			anchor:anchorlen
+            	}
+            	$('.homepageTemplate').processTemplate(data);
+            	if($lastDiv.last().length==0){
+            		$('#recommended-sections').append($('.homepageTemplate').html());
+            	}else{
+            		$lastDiv.last().after($('.homepageTemplate').html());
+            	}
+            	$('.homepageTemplate').empty();
+            	window.location.href='#education'+anchorlen;
+            	$('#education'+anchorlen).css('background','#f9f9f9');
+            	$('#schoolstartTime'+randomid).dateSelect();
+            	$('#schoolendTime'+randomid).dateSelect();
+        	}else{
+        			window.location.href='#education1';
+        			$('#education1').css('border-color','#0867c5');
+        	}
+   
     });
     //点击添加工作经历
-    $('.recommended-section-work .recommended-section-add,#addcontinuouswork,#control_gen_3').live('click',function(){
+    $('.recommended-section-work .recommended-section-add,#addcontinuouswork,#control_gen_3,button[name=addjob]').live('click',function(){
     	var addtype=$(this).attr('data-addtype');
-    	if($('.background-workexperience-container').length==0||addtype==0){
-    		$('.homepageTemplate').setTemplateURL(projectName+'myWorkExperienceTemplate.html');
-        	var isContinueAdd='';
-        	if(addtype=='1'){
-        		$(this).addClass('disabled');
-        		isContinueAdd=1;
-            	
-        	}else{
-        		isContinueAdd=0;
-        		randomid++;
+    	if(addtype==0){
+    		//如果存在工作经历新增框    就提示先编辑未保存的 内容
+    		if($('.background-workexperience-container').last().find('input[name=jobtitle]').val().length==0){
+        		var cutid=$('.background-workexperience-container').last().attr('id');
+        		window.location.href='#'+cutid;
+        		//获取焦点
+        		$('#'+cutid+' textarea[name=position]').focus();
+        		return false;
         	}
-        	var $lastDiv=$('#recommended-sections').find('.background-workexperience-container');
-        	var anchorlen=$lastDiv.length+1;
-        	var data={
-        			isContinueAdd:isContinueAdd,
-        			isEdit:0,
-        			randomid:randomid,
-        			anchor:anchorlen
-        	}
-        	$('.homepageTemplate').processTemplate(data);
-        	if($lastDiv.last().length==0){
-        		$('#recommended-sections').append($('.homepageTemplate').html());
-        	}else{
-        		$lastDiv.last().after($('.homepageTemplate').html());
-        	}
-        	$('.homepageTemplate').empty();
-        	window.location.href='#work'+anchorlen;
-        	$('#jobstartTime'+randomid).dateSelect();
-        	$('#jobendTime'+randomid).dateSelect();
-    	}else{
-    			window.location.href='#work0';
-    			$('#work0').css('border-color','#0867c5');
     	}
-    	
+        if($('.background-workexperience-container').length==0||addtype==0){
+        		$('.homepageTemplate').setTemplateURL(projectName+'myWorkExperienceTemplate.html');
+            	var isContinueAdd='';
+            	if(addtype=='1'){
+            		/*$(this).addClass('disabled');*/
+            		isContinueAdd=1;
+            	}else{
+            		isContinueAdd=0;
+            		randomid++;
+            	}
+            	var $lastDiv=$('#recommended-sections').find('.background-workexperience-container');
+            	var anchorlen=$lastDiv.length+1;
+            	var data={
+            			isContinueAdd:isContinueAdd,
+            			isEdit:0,
+            			randomid:randomid,
+            			anchor:anchorlen
+            	}
+            	$('.homepageTemplate').processTemplate(data);
+            	if($lastDiv.last().length==0){
+            		$('#recommended-sections').append($('.homepageTemplate').html());
+            	}else{
+            		$lastDiv.last().after($('.homepageTemplate').html());
+            	}
+            	$('.homepageTemplate').empty();
+            	window.location.href='#work'+anchorlen;
+            	$('#work'+anchorlen).css('background','#f9f9f9');
+            	$('#jobstartTime'+randomid).dateSelect();
+            	$('#jobendTime'+randomid).dateSelect();
+        	}else{
+        			window.location.href='#work1';
+        			$('#work1').css('border-color','#0867c5');
+        	}
     })
     
     //工作经验点击保存
@@ -580,32 +602,30 @@ $(function(){
     })
     
      //关注与取消关注人
-    $('.detail-list .zg-btn,.profile-actions .zg-btn,#zh-profile-follows-list .zg-btn').live('click',function(){
+    $('.detail-list .zg-btn,.profile-func .zg-btn,#zh-profile-follows-list .zg-btn').live('click',function(){
     	addFollows($(this));
+    	var actiontype=$(this).attr('data-actiontype');
+    	var userid=$(this).attr('data-userid');
+    	//当前区域同一用户变成相同状态
+    	$('.zg-btn').each(function(){
+    		if($(this).attr('data-userid')==userid){
+    			if(actiontype==1){
+    				$(this).removeClass('zg-btn-follow').addClass('zg-btn-unfollow');
+    				$(this).empty().html('取消关注');
+    				$(this).attr('data-actiontype','0');
+    			}else{
+    				$(this).removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
+    				$(this).empty().html('+&nbsp;关注');
+    				$(this).attr('data-actiontype','1');
+    			}
+    		}
+    	})
     })
     //技能点击保存
     $('a[name=myskillsave]').live('click',function(){
     	var id=$(this).attr('data-skillid');
     	SaveSkills(id,$(this));
     })
-    //回到顶部
-    $("#backcentertop,#backaboutmetop").mousemove(function(){
-     	$("#backcentertop,#backaboutmetop").css("background-position-x", "-28px");
-     }).mouseleave(function(){
-     	$("#backcentertop,#backaboutmetop").css("background-position-x", "0");
-    })
-         
-     /*首页当界面下拉到一定位置出现向上的箭头 start*/
-     $(window).scroll(function(){  
-         if ($(window).scrollTop()>100){  
-             $("#backcentertop,#backaboutmetop").fadeIn("fast");  
-         }  
-         else  
-         {  
-             $("#backcentertop,#backaboutmetop").fadeOut("fast");  
-         }  
-     });
-    /*首页当界面下拉到一定位置出现向上的箭头 end*/
     
     //个人主页文档加载更多
     /*tbl_docs  tbl_article   tbl_sites tbl_topics                  title  
@@ -621,19 +641,118 @@ $(function(){
 		loadMoreFansAndAttenData($(this));
 	});
     //选择6大类获取分享的数据
-    $('.pjitem').live('click',function(){
+    $('#profile-navbar .pjitem').live('click',function(){
+    	addClassFun($(this));
     	loadShareData($(this));
     });
     //他的关注
-    $('#otheratten').live('click',function(){
+    $('#otheratten,#fans-navbar .pjitem:eq(0)').live('click',function(){
+    	addClassFun($(this));
     	otherAtten($(this));
-    	
     })
     //他的粉丝
-    $('#otherfans').live('click',function(){
+    $('#otherfans,#fans-navbar .pjitem:eq(1)').live('click',function(){
+    	addClassFun($(this));
     	otherFans($(this));
     })
+    //最近访问
+    $('#fans-navbar .pjitem:eq(2)').live('click',function(){
+    	addClassFun($(this));
+    	currVisitor($(this));
+    })
+    //右侧最近分享加载更多
+    $('#moreShare').live('click',function(){
+    	$('#personal-share').addClass('current').siblings().removeClass('current');
+    	$('.section-container,#fans-navbar,#zh-profile-follows-list').hide();
+    	$('#profile-navbar,.zm-profile-section-wrap').show();
+        $('#profile-navbar .pjitem:eq(0)').trigger("click");
+    })
+    //右侧最近访问加载更多
+    $('#moreVisitor').live('click',function(){
+    	$('#personal-attention').addClass('current').siblings().removeClass('current');
+    	$('#fans-navbar').show();
+    	$('#profile-navbar,.zm-profile-section-wrap,.section-container').hide();
+    	$('#fans-navbar .pjitem:eq(2)').trigger("click");
+    });
+    //最近访问加载更多
+    $('.pjvisitor-load-more').live('click',function(){
+    	addClassFun($(this));
+    	moreVisitor($(this));
+    });
+    //获取请求的url参数
+	var strHref = this.location.href;
+	//0表示点击用户图像上面的关注   1代表粉丝   2代表分享
+    var requesType = strHref.getQuery("requesType");
+    if(requesType!=null){
+    	if(requesType==0){
+    		$('#otheratten').trigger('click');
+    	}else if(requesType==1){
+    		$('#otherfans').trigger('click');
+    	}else{
+            $('#personal-share').trigger('click');
+    	}
+    }
 })
+function addClassFun(obj){
+	obj.addClass('current').siblings().removeClass('current');
+}
+//最近访问
+function currVisitor(obj){
+	var userid=obj.attr('data-userid');
+	$.ajax({
+		type:"POST",
+		url:"/myHome/moreRecentVistors",
+		data:{userid:userid},
+		dataType:"json",
+		success:function(data){
+			if(data.visitors.list.length==0){
+				 $('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无访问信息</span>");
+			}else{
+				$.each(data.visitors.list,function(index,item){
+	    			if(item.fansIds!=undefined){
+		    			if(item.fansIds.indexOf(',')!=-1){
+		    				if($.inArray(String(userInfo.userid), item.fansIds.split(','))!=-1){
+							item.fansIds=1;
+						}else{
+							item.fansIds=0;
+						}
+		    			}
+		    			else{
+		    				if(item.fansIds==userInfo.userid){
+		    					item.fansIds=1;
+		    				}
+		    				else{
+		    					item.fansIds=0;
+		    				}
+		    			}
+		    		}
+		    		else{
+		    			item.fansIds=0;
+		    		}
+	    		})
+				var datamodel={
+				   concernlist:data.visitors.list,
+				}
+				$('.pagetemplate').setTemplateURL(projectName+'visitLoadMoreTemplate.html');
+		        $('.pagetemplate').processTemplate(datamodel);
+		        $('#zh-profile-follows-list .zh-general-list').empty().append($('.pagetemplate').html());
+				$('.pjfans-load-more,.pjatten-load-more,.pjvisitor-load-more').remove();
+				$('.pagetemplate').empty();
+				 
+				 //判断当前是否有加载更多
+				 if(data.visitors.last>1){
+					 var mhtml='<a href="javascript:;" data-pageno="1"   data-userid='+userid+' data-sumpage='+data.visitors.last+' class="zg-btn-white zg-r3px zu-button-more pjvisitor-load-more">更多</a>'  
+				 }
+				 $('#zh-profile-follows-list').append(mhtml);
+				 $('#zh-profile-follows-list').show();
+				 $('#personal-attention').addClass('current').siblings().removeClass('current');
+				 $('#fans-navbar .pjitem:eq(2)').addClass('current').siblings().removeClass('current');
+				 intoUserInfo();
+			}
+			
+		 }
+		})
+}
 //定时刷新界面上边框的颜色
 function startrequest() { 
   $('.section-container').each(function(){
@@ -645,59 +764,60 @@ function otherAtten(obj){
 	var userid=obj.attr('data-userid');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyAttenMan",
+		url:"/myCenter/getMyAttenMan",
 		data:{userid:userid},
 		dataType:"json",
 		success:function(data){
-			$.each(data.attenManPage.list,function(index,item){
-    			if(item.fansIds!=undefined){
-    				if(item.fansIds.indexOf(',')!=-1){
-    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
-    						item.fansIds=1;
-    					}else{
-    						item.fansIds=0;
-    					}
-    				}else{
-    					if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
-    						item.fansIds=1;
-    					}else{
-    						item.fansIds=0;
-    					}
-    					
-    				}
-	    		}else{
-	    			item.fansIds=0;
-	    		}
-             }) 
-			 var model={
-					 attenManPage:data.attenManPage.list,
-			 }
-			 //加载他关注的人的数据模板
-			 $('.pagetemplate').setTemplateURL(projectName+'otherAttenAndFansTemplate.html');
-			 $('.pagetemplate').processTemplate(model);
-			 $('#zh-profile-follows-list .zh-general-list').empty().append($('.pagetemplate').html());
-			 $('.pagetemplate').empty();
-			 $('#zh-profile-follows-list .zm-profile-fansandatten-name').html('他关注的人');
-			 if(data.user.userid==(userInfo==undefined?'':userInfo.userid)){
-				 $('#zh-profile-follows-list .zm-profile-fansandatten-name').html('我关注的人'); 
-			 }else{
-				 $('#zh-profile-follows-list .zm-profile-fansandatten-name').html('他关注的人');
-			 }
-			 //判断当前是否有加载更多
-			 if(data.attenManPage.last>1){
-				 var mhtml='<a href="javascript:;" data-pageno="1"  data-isfans="0" data-userid='+data.user.userid+' data-sumpage='+data.attenManPage.last+' class="zg-btn-white zg-r3px zu-button-more pjatten-load-more">更多</a>'  
-			 }
-			 $('#zh-profile-follows-list').append(mhtml);
-			 
-			 $('#zh-profile-follows-list').show();
-			 //加载更多去掉
-			 $('#pjfans-load-more').remove();
-			 //显示当前层 隐藏其他层
-			 //隐藏个人信息
-			 $('.section-container,#contact-info-section,.zm-profile-section-wrap').hide();
-			 $('.contact').html('<b class="t-down"></b>个人简介');
-			 intoUserInfo();
-			
+			if(data.attenManPage.list.length==0){
+				 $('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无信息</span>");
+			}else{
+				$.each(data.attenManPage.list,function(index,item){
+	    			if(item.fansIds!=undefined){
+	    				if(item.fansIds.indexOf(',')!=-1){
+	    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
+	    				}else{
+	    					if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
+	    					
+	    				}
+		    		}else{
+		    			item.fansIds=0;
+		    		}
+	             }) 
+				 var model={
+						 attenManPage:data.attenManPage.list,
+				 }
+				 //加载他关注的人的数据模板
+				 $('.pagetemplate').setTemplateURL(projectName+'otherAttenAndFansTemplate.html');
+				 $('.pagetemplate').processTemplate(model);
+				 $('#zh-profile-follows-list .zh-general-list').empty().append($('.pagetemplate').html());
+				 $('.pjfans-load-more,.pjatten-load-more,.pjvisitor-load-more').remove();
+				 $('.pagetemplate').empty();
+				 
+				 //判断当前是否有加载更多
+				 if(data.attenManPage.last>1){
+					 var mhtml='<a href="javascript:;" data-pageno="1"  data-isfans="0" data-userid='+data.user.userid+' data-sumpage='+data.attenManPage.last+' class="zg-btn-white zg-r3px zu-button-more pjatten-load-more">更多</a>'  
+				 }
+				 $('#zh-profile-follows-list').append(mhtml);
+				 
+				 $('#zh-profile-follows-list').show();
+				/* //加载更多去掉
+				 $('#pjfans-load-more').remove();*/
+				 //显示当前层 隐藏其他层
+				 //隐藏个人信息
+				 $('.section-container,#contact-info-section,.zm-profile-section-wrap').hide();
+				 $('#fans-navbar').show();
+				 $('#personal-attention').addClass('current').siblings().removeClass('current');
+				 $('#fans-navbar .pjitem:eq(0)').addClass('current').siblings().removeClass('current');
+				 intoUserInfo();
+			}
 		}
 	})
 }
@@ -707,58 +827,61 @@ function otherFans(obj){
 	var userid=obj.attr('data-userid');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyFans",
+		url:"/myCenter/getMyFans",
 		data:{userid:userid},
 		dataType:"json",
 		success:function(data){
-			$.each(data.myFansPage.list,function(index,item){
-    			if(item.fansIds!=undefined){
-    				if(item.fansIds.indexOf(',')!=-1){
-    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
-    						item.fansIds=1;
-    					}else{
-    						item.fansIds=0;
-    					}
-    				}else{
-    					if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
-    						item.fansIds=1;
-    					}else{
-    						item.fansIds=0;
-    					}
-    					
-    				}
-	    		}else{
-	    			item.fansIds=0;
-	    		}
-             }) 
-             
-			 var model={
-					 attenManPage:data.myFansPage.list,
-			 }
-			 //加载他的粉丝数据模板
-			 $('.pagetemplate').setTemplateURL(projectName+'otherAttenAndFansTemplate.html');
-			 $('.pagetemplate').processTemplate(model);
-			 $('#zh-profile-follows-list .zh-general-list').empty().append($('.pagetemplate').html());
-			 $('.pagetemplate').empty();
-			 if(data.user.userid==(userInfo==undefined?'':userInfo.userid)){
-				 $('#zh-profile-follows-list .zm-profile-fansandatten-name').html('我的粉丝'); 
-			 }else{
-				 $('#zh-profile-follows-list .zm-profile-fansandatten-name').html('他的粉丝');
-			 }
-			 $('#zh-profile-follows-list').show();
-			 //判断当前是否有加载更多
-			 if(data.myFansPage.last>1){
-				 var mhtml='<a href="javascript:;" data-pageno="1" data-isfans="1" data-userid='+data.user.userid+' data-sumpage='+data.myFansPage.last+' class="zg-btn-white zg-r3px zu-button-more pjfans-load-more">更多</a>'  
-			 }
-			 $('#zh-profile-follows-list').append(mhtml);
-			 //加载更多去掉
-			 $('#pjatten-load-more').remove();
-			 //显示当前层 隐藏其他层
-			 //隐藏个人信息
-			 $('.section-container,#contact-info-section,.zm-profile-section-wrap').hide();
-			 $('.contact').html('<b class="t-down"></b>个人简介');
-			 intoUserInfo();
-			 
+			if(data.myFansPage.list.length==0){
+				$('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无信息</span>");
+			}else{
+				$.each(data.myFansPage.list,function(index,item){
+	    			if(item.fansIds!=undefined){
+	    				if(item.fansIds.indexOf(',')!=-1){
+	    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
+	    				}else{
+	    					if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
+	    					
+	    				}
+		    		}else{
+		    			item.fansIds=0;
+		    		}
+	             }) 
+	             
+				 var model={
+						 attenManPage:data.myFansPage.list,
+				 }
+				 //加载他的粉丝数据模板
+				 $('.pagetemplate').setTemplateURL(projectName+'otherAttenAndFansTemplate.html');
+				 $('.pagetemplate').processTemplate(model);
+				 $('#zh-profile-follows-list .zh-general-list').empty().append($('.pagetemplate').html());
+				 $('.pjfans-load-more,.pjatten-load-more,.pjvisitor-load-more').remove();
+				 $('.pagetemplate').empty();
+				 
+				 $('#zh-profile-follows-list').show();
+				 //判断当前是否有加载更多
+				 if(data.myFansPage.last>1){
+					 var mhtml='<a href="javascript:void(0);" data-pageno="1" data-isfans="1" data-userid='+data.user.userid+' data-sumpage='+data.myFansPage.last+' class="zg-btn-white zg-r3px zu-button-more pjfans-load-more">更多</a>'  
+				 }
+				 $('#zh-profile-follows-list').append(mhtml);
+				 /*//加载更多去掉
+				 $('#pjatten-load-more').remove();*/
+				 //显示当前层 隐藏其他层
+				 //隐藏个人信息
+				 $('.section-container,#contact-info-section,.zm-profile-section-wrap').hide();
+				 $('#fans-navbar').show();
+				 $('#personal-attention').addClass('current').siblings().removeClass('current');
+				 $('#fans-navbar .pjitem:eq(1)').addClass('current').siblings().removeClass('current');
+				 intoUserInfo();
+				 
+			}
 		}
 	})
 }
@@ -771,7 +894,7 @@ function loadShareData(obj){
 	var tablecolumn2=obj.attr('data-tablecolumn2');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myHome/getOneShares",
+		url:"/myHome/getOneShares",
 		data:{userid:userid,tableName:tablename,tableColumn:tablecolumn,tableColumn2:tablecolumn2},
 		dataType:"json",
         success:function(data){
@@ -780,15 +903,20 @@ function loadShareData(obj){
         	   if($('.pj-load-more').length>0)
         	   $('.pj-load-more').remove();
         	   if(Number(data.shares.last)>1){
-        		   var htm='<a href="javascript:void(0)"  data-pageno="1" data-tablecolumn2='+tablecolumn2+' data-tablename='+tablename+'  data-tablecolumn='+tablecolumn+' data-userid='+userid+' data-sumpage='+data.shares.last+' class="zg-btn-white zg-r3px zu-button-more pj-load-more">更多</a>'
-        		   $('#zh-profile-answers-inner-list').append(htm);
+        		   if(tablename==''){
+        			   var htm='<a href="javascript:void(0)"  data-pageno="1" data-tablecolumn2=""  data-tablename=""  data-tablecolumn="" data-userid='+userid+' data-sumpage='+data.shares.last+' class="zg-btn-white zg-r3px zu-button-more pj-load-more">更多</a>'
+        		   }else{
+        			   var htm='<a href="javascript:void(0)"  data-pageno="1" data-tablecolumn2='+tablecolumn2+' data-tablename='+tablename+'  data-tablecolumn='+tablecolumn+' data-userid='+userid+' data-sumpage='+data.shares.last+' class="zg-btn-white zg-r3px zu-button-more pj-load-more">更多</a>'
+        		   }
+        		  
+        		   $('#zh-profile-answers-inner-list').after(htm);
         	   }
         }
 	})
 	//显示当前层  隐藏其他层
 	$('#zh-profile-follows-list,.section-container,#contact-info-section').hide();
 	$('.zm-profile-section-wrap').show();
-	$('.contact').html('<b class="t-down"></b>个人简介')
+	/*$('.contact').html('<b class="t-down"></b>个人简介')*/
 }
 //加载更多分享的6大类的数据
 function loadMoreData(obj){
@@ -800,7 +928,7 @@ function loadMoreData(obj){
 	var sumpage=obj.data('sumpage');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myHome/getOneShares",
+		url:"/myHome/getOneShares",
 		data:{userid:userid,tableName:tablename,tableColumn:tablecolumn,pageNo:Number(pageNo)+1,tableColumn2:tablecolumn2},
 		dataType:"json",
         success:function(data){
@@ -822,7 +950,7 @@ function loadMoreFansAndAttenData(obj){
 	if(isfans=='1'){
 		$.ajax({
 			type:"POST",
-			url:projectName+"myCenter/getMyFans",
+			url:"/myCenter/getMyFans",
 			data:{userid:userid,pageNo:Number(pageNo)+1},
 			dataType:"json",
 			ansyc:false,
@@ -830,13 +958,11 @@ function loadMoreFansAndAttenData(obj){
 	        	$.each(data.myFansPage.list,function(index,item){
 	    			if(item.fansIds!=undefined){
 	    				if(item.fansIds.indexOf(',')!=-1){
-	                        $.each(item.fansIds.split(','),function(index1,item1){
-	                        	if(item1==(userInfo==undefined?'':serInfo.userid)){
-	                        		item.fansIds=1;
-	                        	}else{
-	                        		item.fansIds=0;
-	                        	}
-	                        })
+	                        if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
 	    				}else{
 	    					if(item.fansIds==(userInfo==undefined?'':serInfo.userid)){
 	    						item.fansIds=1;
@@ -862,12 +988,13 @@ function loadMoreFansAndAttenData(obj){
           	       obj.removeClass('loading').empty().append('更多');
           	     if(Number(sumpage)==Number(pageNo)+1)
           		   $('.pjfans-load-more').hide();
+          	     intoUserInfo();
 	        }
 		})
 	}else{
 		$.ajax({
 			type:"POST",
-			url:projectName+"myCenter/getMyAttenMan",
+			url:"/myCenter/getMyAttenMan",
 			data:{userid:userid,pageNo:Number(pageNo)+1},
 			dataType:"json",
 			ansyc:false,
@@ -887,10 +1014,60 @@ function loadMoreFansAndAttenData(obj){
 	          	   obj.removeClass('loading').empty().append('更多');
 	          	   if(Number(sumpage)==Number(pageNo)+1)
 	          		 $('.pjatten-load-more').hide();
+	          	 intoUserInfo();
 	        }
 		})
 	}
-	intoUserInfo();
+	
+}
+//最近访问加载更多
+function moreVisitor(obj){
+	var userid=obj.attr('data-userid');
+	var pageNo=obj.attr('data-pageno');
+	var sumpage=obj.data('sumpage');
+    $.ajax({
+    	type:"POST",
+      	url:"/myHome/moreRecentVistors",
+      	data:{pageNo:Number(pageNo)+1,userid:userid},
+    	dataType:"json",
+    	success:function(data){
+    		$.each(data.visitors.list,function(index,item){
+    			if(item.fansIds!=undefined){
+	    			if(item.fansIds.indexOf(',')!=-1){
+	    				if($.inArray(String(userInfo.userid), item.fansIds.split(','))!=-1){
+						item.fansIds=1;
+					}else{
+						item.fansIds=0;
+					}
+	    			}
+	    			else{
+	    				if(item.fansIds==userInfo.userid){
+	    					item.fansIds=1;
+	    				}
+	    				else{
+	    					item.fansIds=0;
+	    				}
+	    			}
+	    		}
+	    		else{
+	    			item.fansIds=0;
+	    		}
+    		})
+			var datamodel={
+			   concernlist:data.visitors.list,
+			}
+    		$('.pagetemplate').setTemplateURL(projectName+'visitLoadMoreTemplate.html');
+	      	$('.pagetemplate').processTemplate(datamodel);
+    		$('#zh-profile-follows-list .zh-general-list').append($('.pagetemplate').html());
+			$('.pagetemplate').empty();				
+   	        $('.pjvisitor-load-more').attr('data-pageno',Number(pageNo)+1);
+     	       obj.removeClass('loading').empty().append('更多');
+     	     if(Number(sumpage)==Number(pageNo)+1)
+     		   $('.pjvisitor-load-more').hide();
+     	    intoUserInfo();
+    	}
+      	
+    })
 }
 //根据点击表名转成对应中文
 function convertCh(tablename){
@@ -921,14 +1098,28 @@ function convertCh(tablename){
 //他的分享6大类切换--加载html   新增tablename add byJerry
 function loadMoreHtml(shares,name,tablename){
 	var shtml='';
-	$.each(shares,function(index,item){
-		shtml+='<li>'
-	    shtml+='  <span class="allnewscontent">分享了'+name
-	    shtml+='     <a href='+getLinkUrl(tablename,item.id)+' target="_blank">'+item.objName+'</a>'
-	    shtml+=' </span>'	
-	    shtml+=' <span class="smsdate zg-right">'+formatDate(item.createtime)+'</span>'
-	    shtml+='</li>'	
-	})
+	if(shares.length==0){
+		shtml='<span class="nosharelist">这家伙很懒，还没有分享'+name+'</span>';
+	}else if(tablename!=''){
+		$.each(shares,function(index,item){
+			shtml+='<li>'
+		    shtml+='  <div class="allnewscontent textoverflow">'
+		    shtml+='     <a href='+getLinkUrl(tablename,item.id)+' target="_blank" title="'+item.title+'"><span class="allnewsname">'+item.title+'</span></a>'
+		    shtml+='     <span class="smsdate zg-right">'+formatDate(item.createtime)+'</span>'
+		    shtml+=' </div>'	
+		    shtml+='</li>'	
+		})
+	}else{
+		$.each(shares,function(index,item){
+			shtml+='<li>'
+		    shtml+='  <div class="allnewscontent textoverflow">'
+		    shtml+='     ['+convertCh(item.type)+']<a href='+item.objurl+' target="_blank" title="'+item.title+'"><span class="allnewsname">'+item.title+'</span></a>'
+		    shtml+='     <span class="smsdate zg-right">'+formatDate(item.createtime)+'</span>'
+		    shtml+=' </div>'	
+		    shtml+='</li>'	
+		})
+	}
+	
 	return shtml;
 }
 
@@ -939,7 +1130,7 @@ function loadMoreHtml(shares,name,tablename){
 	 var actiontype=obj.attr('data-actionType');
 	 $.ajax({
 			type:"POST",
-			url:projectName+"myCenter/addFollows",
+			url:"/myCenter/addFollows",
 			data:{objectType:'0',objectid:userid,actionType:actiontype},
 			dataType:"json",
 	        success:function(data){
@@ -952,7 +1143,7 @@ function loadMoreHtml(shares,name,tablename){
 		          		else{
 		          			obj.removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
 		          			obj.attr('data-actiontype','1');
-		          			obj.empty().html('关注');
+		          			obj.empty().html('+&nbsp;关注');
 		          		} 
 	        	  }
 	        }
@@ -962,7 +1153,7 @@ function loadMoreHtml(shares,name,tablename){
 function saveMyContanct(email,phone){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:{email:email,mobile:phone},
 	    dataType:"json",
 	    success:function(data){
@@ -1010,7 +1201,7 @@ function saveEducationBg(schoolname,schoolstartTime,schoolendTime,profession,obj
 	    var currentid=obj.parents('.background-education-container').find('input[name=currentid]').val();
 		$.ajax({
 			type:'POST',
-		    url:projectName+"myHome/updEduInfo",
+		    url:"/myHome/updEduInfo",
 		    data:{school:schoolname,major:profession,starttime:schoolstartTime,endtime:schoolendTime,id:currentid},
 		    dataType:"json",
 		    success:function(data){
@@ -1028,7 +1219,7 @@ function saveWorkExperience(companyname,onjobstartTime,onjobendTime,position,des
 	var currentid=obj.parents('.background-workexperience-container').find('input[name=currentid]').val();
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updWorkExpInfo",
+	    url:"/myHome/updWorkExpInfo",
 	    data:{company:companyname,jobtitle:position,starttime:onjobstartTime,endtime:onjobendTime,id:currentid,description:description},
 	    dataType:"json",
 	    success:function(data){
@@ -1146,9 +1337,9 @@ function editWorkData(companyname,onjobstartTime,onjobendTime,jobtitle,descripti
 	if(companyname!='')
 		obj.parents('.background-workexperience-container').next().find('.companyname textarea[name=company]').val(companyname);
 	if(description!='')
-		obj.parents('.background-workexperience-container').next().find('.workcontent textarea[name=description]').val(description);
+		obj.parents('.background-workexperience-container').next().find('textarea[name=description]').val(description);
 	if(jobtitle!='')
-		obj.parents('.background-workexperience-container').next().find('.position textarea[name=position]').val(jobtitle);
+		obj.parents('.background-workexperience-container').next().find('textarea[name=position]').val(jobtitle);
 	$('#jobstartTime'+randomid).dateSelect();
 	$('#jobendTime'+randomid).dateSelect();
 	obj.parents('.background-workexperience-container').remove();
@@ -1158,10 +1349,12 @@ function editWorkData(companyname,onjobstartTime,onjobendTime,jobtitle,descripti
 function createEducationBgHtml(text){
 	var html='';
 	html+='<div class="header">';
-	html+='  <span>'+text+'</span>';
+	
 	if(text=='工作经历'){
+		html+='  <span class="education-icon">'+text+'</span>';
 		html+='  <a href="javascript:void(0)" id="addcontinuouswork" class="add-all ml20  add-all-able" data-addtype="0">';
 	}else{
+		html+='  <span class="work-icon">'+text+'</span>';
 		html+='  <a href="javascript:void(0)" id="addcontinuous" class="add-all ml20  add-all-able" data-addtype="0">';
 	}
 	html+='    <span>+</span>&nbsp;继续添加'
@@ -1187,7 +1380,7 @@ function hiddenSelfInfo(obj){
 function updateSelfInfo(birthdayday,birthdaymonth,marriage,description){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:{birthdayone:birthdaymonth,birthdaytwo:birthdayday,ismarry:marriage,description:description},
 	    dataType:"json",
 	    success:function(data){
@@ -1212,7 +1405,7 @@ function updateMyIntroData(birthdayday,birthdaymonth,marriage,description){
 		$('.birthday .birth').html(birthday);
 		$('a[name=editbirthday]').show();
 	}
-	
+
 	if(marriage!=''&&marriage!='2'){
 		if(marriage=='1'){
 			marriage='已婚'
@@ -1242,10 +1435,16 @@ function updateMyEducationData(schoolname,schoolstartTime,schoolendTime,professi
 	}
 	if(schoolstartTime!=''){
 		var starttime=obj.parents('.background-education-container').find('.schoolstartTime').val();
-		var endtime=obj.parents('.background-education-container').find('.schoolendTime').val()
-		obj.parents('.background-education-container').find('.graduate .schooltime').html("在校时间:&nbsp;&nbsp;"+starttime+'--'+endtime);
 		obj.parents('.background-education-container').find('input[name=starttime]').val(starttime);
+		starttime=new Date(Date.parse(starttime.replace(/-/g, '/')));
+		var endtime=obj.parents('.background-education-container').find('.schoolendTime').val();
 		obj.parents('.background-education-container').find('input[name=endtime]').val(endtime);
+		endtime=new Date(Date.parse(endtime.replace(/-/g, '/')));
+		//计算两个日期之间相差多少
+		var eduyears=better_time(starttime,endtime);
+		starttime=starttime.getFullYear()+'年'+fixZero(starttime.getMonth()+1,2)+'月'+starttime.getDate()+'日';
+		endtime=endtime.getFullYear()+'年'+fixZero(endtime.getMonth()+1,2)+'月'+endtime.getDate()+'日';
+		obj.parents('.background-education-container').find('.graduate .schooltime').html("在校时间:&nbsp;&nbsp;"+starttime+'&nbsp; – &nbsp;'+endtime+"&nbsp;&nbsp;"+"("+eduyears+")");
 		obj.parents('.background-education-container').find('a[name=editschooltime]').show();
 	}
 	if(profession!=''){
@@ -1271,16 +1470,24 @@ function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,descr
 		hiddenWorkExperience();
 	}
 	if(companyname!=''){
-		obj.parents('.background-workexperience-container').find('.company .companyname').text(companyname);
+		obj.parents('.background-workexperience-container').find('.companyname').text(companyname);
 		obj.parents('.background-workexperience-container').find('input[name=companyname]').val(companyname);
 		obj.parents('.background-workexperience-container').find('a[name=editscompanyname]').show();
 	}
 	if(onjobstartTime!=''){
 		var onjobstartTime=obj.parents('.background-workexperience-container').find('.onjobstartTime').val();
-		var onjobendTime=obj.parents('.background-workexperience-container').find('.onjobendTime').val();
-		obj.parents('.background-workexperience-container').find('.onjob .onjobtime').html("在职时间:&nbsp;&nbsp;"+onjobstartTime+'--'+onjobendTime);
 		obj.parents('.background-workexperience-container').find('input[name=onjobstartTime]').val(onjobstartTime);
+		onjobstartTime=new Date(Date.parse(onjobstartTime.replace(/-/g, '/')));
+		var onjobendTime=obj.parents('.background-workexperience-container').find('.onjobendTime').val();
 		obj.parents('.background-workexperience-container').find('input[name=onjobendTime]').val(onjobendTime);
+		onjobendTime=new Date(Date.parse(onjobendTime.replace(/-/g, '/')));
+		//计算两个日期之间相差多少
+		var workyears=better_time(onjobstartTime,onjobendTime);
+		onjobstartTime=onjobstartTime.getFullYear()+'年'+fixZero(onjobstartTime.getMonth()+1,2)+'月'+onjobstartTime.getDate()+'日';
+		onjobendTime=onjobendTime.getFullYear()+'年'+fixZero(onjobendTime.getMonth()+1,2)+'月'+onjobendTime.getDate()+'日';
+		
+		obj.parents('.background-workexperience-container').find('.onjob .onjobtime').html("在职时间:&nbsp;&nbsp;"+onjobstartTime+'&nbsp; – &nbsp;'+onjobendTime+"&nbsp;&nbsp;"+"("+workyears+")");
+		
 		obj.parents('.background-workexperience-container').find('a[name=editsonjobtime]').show();
 	}
 	if(position!=''){
@@ -1298,7 +1505,7 @@ function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,descr
 	//获取工作经验的第一个div层
 	var $firstDiv=$('#recommended-sections').find('.background-workexperience-container').first();
 	if($firstDiv.find('.header').length==0){
-		$firstDiv.find('.company').before(createEducationBgHtml('工作经历'));
+		$firstDiv.find('.workposition').before(createEducationBgHtml('工作经历'));
 		$firstDiv.removeClass('workexperience-container')
 	};
 	//赋值当前的id 为了之后修改
@@ -1314,7 +1521,7 @@ function hiddenCiteArea(){
 function updateCityOrProvince(city,province){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:{city:city,province:province},
 	    dataType:"json",
 	    success:function(data){
@@ -1331,7 +1538,7 @@ function updateCityOrProvince(city,province){
 function updateColumn(val,column){
 	$.ajax({
 		type:'POST',
-	    url:projectName+"myHome/updUserInfo",
+	    url:"/myHome/updUserInfo",
 	    data:column+val,
 	    dataType:"json",
 	    success:function(data){
@@ -1396,6 +1603,9 @@ function previewImage(file){
                div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
              }
          }
+         else{
+        	 ZENG.msgbox.show('抱歉，上传失败 ，请上传小于2M的图片!', 5, 3000);return false;
+         }
          
    }
 function clacImgZoomParam( maxWidth, maxHeight, width, height ){
@@ -1426,7 +1636,7 @@ function clacImgZoomParam( maxWidth, maxHeight, width, height ){
 function updUserInfo() {  
     var formData = new FormData($("#previewImage")[0]);  
     $.ajax({  
-    	 url:projectName+"myHome/updUserInfo",
+    	 url:"/myHome/updUserInfo",
          type: 'POST',  
          data: formData,  
          async: false,  
@@ -1455,8 +1665,8 @@ function  getSkillsByCondition(obj){
 		findSkills(newval,$(obj));
 	}else if($.trim(newval).length==0){
 		   $(obj).parent().find('div:last-child').remove();
-		   $('input[name=currentskillval').val('');
-		   $('#skill0').height('145px');
+		   $('input[name=currentskillval]').val('');
+           $('#skill0').height($('#skillinputtags').height()+140+'px');
 	}
 	
 }
@@ -1464,7 +1674,7 @@ function  getSkillsByCondition(obj){
 function findSkills(conds,obj){
 	$.ajax({
 		type:'POST',
-		url:projectName+"skills/findSkill/ "+conds,
+		url:"/skills/findSkill/ "+conds,
 		dataType:"JSON",
      	async:false,
      	success:function(data){
@@ -1489,12 +1699,13 @@ function SaveSkills(id,obj){
 	skills=skills.substring(0,skills.length-1);
 	skillIds=skillIds.substring(0,skillIds.length-1);
 	if(skills.length==0){
-		$('.background-skills-container').remove();
-//		return false;
+		$('.background-skills-container,button[name=addskill]').remove();
+		if(obj.attr('data-skillid')=='')
+		return false;
 	}
 	$.ajax({
 		type:'POST',
-		url:projectName+"myHome/updSkill",
+		url:"/myHome/updSkill",
 		data:{skillitem:skills,id:id,skillIds:skillIds},
 		dataType:"JSON",
      	async:false,
@@ -1524,4 +1735,32 @@ function cancelSkills(skills,id,obj){
  	obj.parents('.background-skills-container').after($('.homepageTemplate').html());
     	$('.homepageTemplate').empty();
      obj.parents('.background-skills-container').remove();
+}
+//判断两个日期相差多少年月
+function better_time(starttime,endtime){
+	var month='';
+	var day=endtime.getDate()-starttime.getDate();
+	if(endtime.getFullYear()==starttime.getFullYear()){
+		 month=endtime.getMonth()-starttime.getMonth();
+		if(parseInt(day)>=15||parseInt(month)==0){
+			month=month+1;
+		}
+		return month+'个月';
+	}else{
+		var year=endtime.getFullYear()-starttime.getFullYear()-1;
+		if(endtime.getMonth()!=starttime.getMonth()&&year!=0){
+			month=endtime.getMonth()+12-starttime.getMonth();
+		}else{
+			year=year+1;
+		}
+		if(parseInt(day)>=15){
+			month=month+1;
+		}
+		if(parseInt(month)>12){
+			year=year+1;
+			month=month-12;
+		}
+		return String(parseInt(year)==0?'':(year+'年'))+String(month==''?'':(month+'个月'));
+	}
+	
 }

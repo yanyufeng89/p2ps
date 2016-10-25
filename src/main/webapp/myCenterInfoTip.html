@@ -16,7 +16,7 @@
 	                          {#foreach $T.baseResponse as list}
 	                             <div class='zm-noti7-content-item' data-id='{$T.list.id}' data-ispmorsms='1' data-islook='0'>
 	                               <div class='author-list'>
-	                                  <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.senderid}'>{$T.list.sendUserName}:</a>
+	                                  <a href='/myHome/getHomePage?userid={$T.list.senderid}' target='_blank'>{$T.list.sendUserName}:</a>
 	                                  <span class='pmcontent' title='{$T.list.smscontent}'>{$T.list.smscontent}</span>
 	                               </div>
 	                               <div class='zg-gray zu-pm-item-meta'>
@@ -32,7 +32,7 @@
                                 <div class='zm-noti7-content-item' data-id='{$T.list.id}' data-ispmorsms='0' data-islook='0'>
 	                               <span class='author-list'>
 	                                  <span class='sms-icon-{$T.list.smstype}'></span>
-	                                  <a href='/51jobplusCore/myHome/getHomePage?userid={$T.list.senderid}'>{$T.list.sendUserName}:</a>
+	                                  <a href='/myHome/getHomePage?userid={$T.list.senderid}' target='_blank'>{$T.list.sendUserName}:</a>
 	                                  <span class='smscontent'>{$T.list.smscontent}</span>
 	                               </span>
 	                               <div class='zg-gray zu-pm-item-meta'>
@@ -51,8 +51,8 @@
            </div>
            <div class="bottom-live-border bottom"></div>
            <div class="top-live-footer">
-             <a href="/51jobplusCore/myCenter/getAllSms" class="popup-footer-all popup-right">查看全部 »</a>
-             <a href="/51jobplusCore/myCenter/getSmsFilterParm" class="popup-footer-set" title="通知设置"><i class="popup-icon icon-settings"></i></a>
+             <a href="/myCenter/getAllSms" class="popup-footer-all popup-right">查看全部 »</a>
+             <a href="/myCenter/getSmsFilterParm" class="popup-footer-set" title="通知设置"><i class="popup-icon icon-settings"></i></a>
            </div>
        </div>
 </div>

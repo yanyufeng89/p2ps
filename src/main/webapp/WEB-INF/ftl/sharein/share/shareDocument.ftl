@@ -8,7 +8,6 @@
              上传文档
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_doc.css">
   </head>
   <body>
    
@@ -23,7 +22,7 @@
               style="display:none;">
               </div>
               <div id="upload-widget" class="upload-widget ">
-               <form method="post"  enctype="multipart/form-data" id ='test11form' action='/51jobplusCore/docs/upload' onkeydown="if(event.keyCode==13)return false;" >
+               <form method="post"  enctype="multipart/form-data" id ='test11form' action='/docs/upload'>
                 <input type='hidden' name='docId' value=''>
                 <div id="upload-init-container" style="display: block;">
 	                 <div class="upload-steps clearfix">
@@ -40,16 +39,20 @@
 					 </div>
                  <div class="mod mod-upload">
                    <div class="bddoc" style="">
-	                     <a class="titleinfo">【文档】</a>
-	                     <span class="titlename">请选择上传文档</span>
+				         <div class="titleinfo">
+	                       <span>【文档】</span>
+	                       <span style='font-weight:500'>请选择上传文档</span>
+						 </div>
 	                     <div class="link after file-box">
+	                        <input style='display:none'/>
 				            <input type='text' name='textfield' style='color:darkgrey;visible:hidden' id='textfield' class='txtdocument' placeholder='请选择文档...'/>
-				            <input type='button' class='docpreview' value='浏览' />
+				            <#--<input type='button' class='docpreview' value='浏览' />-->
+				            <span class="tocapture active docpreview"></span>
 				            <input type="file" name="fileField" class="file" id="docfileField"  multiple="multiple"/>
                                <p class="error"><i class="tips_icon"></i>包含不支持的文件类型,具体文件类型参考温馨提示</p>
 				           	<div class="bar after">
-						        <input type="botton" class="btn-disblue" value="确定" id='btnsure'  disabled="disabled">
-						        <a href='/51jobplusCore/sharein/searchuploadFile' class='btn-cancleupload'>取消</a>
+						        <a class="btn-disblue btnsure"  id='btndocsure' href='javascript:void(0)'>确定</a>
+						        <a href='/sharein/searchuploadFile' class='btn-cancleupload'>取消</a>
 						        <div class="btn-loading push-loading"></div>
 		                    </div>
 	                     </div>
@@ -57,43 +60,43 @@
 	                    </div>
                   </div>
                   <div class="upload-intro-query clearfix">
-                    <h4>
-                      文档推荐
-                     
-                    </h4>
-                     <span class='pj-encourage'>
-                        每成功上传一篇文档即可获得一定的财富奖励哦!
-                      </span>
+                    <h4>推荐分享</h4>
                     <ul>
                       <li class="">
-                        考试资料
+                       创新创业
                       </li>
                       <li class="query-box">
-                        教学课件
+                      工业4.0
                       </li>
                       <li class="">
-                       学术论文
+                       新型材料
                       </li>
                       <li class="query-box">
-                        金融财经
+                      互联网+
                       </li>
                       <li class="">
-                        研究报告
+                      企业管理 
                       </li>
                       <li class="query-box">
-                        教材教辅
+                         互联网运营
                       </li>
                       <li class="">
-                       法律文献
+                       供应链金融
                       </li>
                       <li class="query-box">
-                        管理文献
+                       新媒体
                       </li>
                       <li class="">
-                        社会科学
+                      融资股权
                       </li>
                       <li class="query-box">
-                       生活休闲
+                       生物医药
+                      </li>
+                       <li class="">
+                    财务管理
+                      </li>
+                      <li class="query-box">
+                       大数据
                       </li>
                     </ul>
                   </div>
@@ -103,52 +106,19 @@
                     </h4>
                     <ol>
                       <li>
-                        1.您可以上传日常积累和撰写的课程资料，如模板、总结，每次可上传≤20份，每份≤200MB，支持多种文档类型：
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
                       </li>
                       <li class="doc-type">
-                        <b class="ic ic-doc mr5">
-                        </b>
-                        doc,docx
-                        <b class="ic ic-ppt ml10 mr5">
-                        </b>
-                        ppt,pptx
-                        <b class="ic ic-xls ml10 mr5">
-                        </b>
-                        xls,xlsx
-                        <b class="ic ic-vsd ml10 mr5">
-                        </b>
-                        vsd
-                        <b class="ic ic-pot ml10 mr5">
-                        </b>
-                        pot
-                        <b class="ic ic-pps ml10 mr5">
-                        </b>
-                        pps
-						<b class="ic ic-pdf ml10 mr5">
-                        </b>
-                        pdf
-                        <b class="ic ic-txt ml10 mr5">
-                        </b>
-                        txt
-                        <b class="ic ic-wps ml10 mr5">
-                        </b>
-                        wps
-						 <b class="ic ic-et ml10 mr5">
-                        </b>
-                        et
-						
+                        2.您可以分享日常积累和撰写的文档资料，支持多种文档类型：doc，docx，ppt，pptx，xls，xlsx，vsd，pot，pps，pdf，txt，wps，etc;
                       </li>
                       <li>
-                        2.从我的电脑上选择要上传的文档,按CTRL可以上传多份文档;
+                        3.从我的电脑选择要分享的文档：按住CTRL可以分享多份文档, 分享的文件大小限制在20M以内;
                       </li>
                       <li>
-                        3.上传涉及侵权内容的文档将会被移除,严禁上传含有淫秽色情及低俗信息等文档;
+                        4.分享涉及侵权内容的文档将会被移除，严禁分享含有淫秽色情及低俗信息等文档; 
                       </li>
                       <li>
-                        4.上传的文件大小限制在20M以内;
-                      </li>
-					  <li>
-                        5.上传有问题需要帮助？查看<a>知识库帮助</a>
+                        5.分享有问题需要帮助？详情请查看知识库<a href="#" target="_self">服务条款</a>和<a href="#" target="_self">帮助中心</a>
                       </li>
                     </ol>
                   </div>
@@ -174,11 +144,7 @@
                       </a>
                       </span>
                     <h3 id="item-message-all" class="item-message-all item-message-all-ok">
-                      <span>请补充文档信息，完成上传
-                        <br>
-                        <span class="item-message-all-subtitle">审核通过后，您将获得
-                          <span class="item-reward-wealth">1财富值</span>的奖励
-                        </span>
+                                                          请补充文档信息，完成上传
                     </h3>
                     <p class="error" style='margin:0'><i class="tips_icon"></i>上传的文档包含不支持的类型</p>
                   </div>
@@ -191,126 +157,25 @@
                     <ol>
                       <li class="doc-type"></li>
                       <li>1.上传涉及侵权内容的文档将会被移除。如何判断文档是否侵权？查看
-                        <a href="#" target="_blank">文库协议</a>和
-                        <a href="#" target="_blank">用户规则</a></li>
+                        <a href="#" target="_self">文库协议</a>和
+                        <a href="#" target="_self">用户规则</a></li>
                       <li>2.上传有问题需要帮助？查看
-                        <a href="#" target="_blank">文库帮助</a>和
-                        <a href="#" target="_blank">意见反馈</a></li>
+                        <a href="#" target="_self">文库帮助</a>和
+                        <a href="#" target="_self">意见反馈</a></li>
                       <li>3.为营造绿色网络环境，严禁上传含有淫秽色情及低俗信息等文档，让我们一起携手共同打造健康文库</li></ol>
                    
                 </div>
               </div>
                </form>
-                <div id="upload-success-container" class="upload-success-container" style="">
-                  <div class="upload-steps clearfix">
-                    <ul>
-                      <li class="step-num active">
-                        1
-                        <span class="tips">
-                          选择文档
-                        </span>
-                      </li>
-                      <li class="step-bar active">
-                      </li>
-                      <li class="step-num active">
-                        2
-                        <span class="tips">
-                          补充信息
-                        </span>
-                      </li>
-                      <li class="step-bar active">
-                      </li>
-                      <li class="step-num active">
-                        3
-                        <span class="tips">
-                          完成上传
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="hd">
-                    <div class="hd-wrap">
-                      <h1>
-                        <span class="ic ic-success">
-                        </span>
-                        恭喜！文档上传成功
-                      </h1>
-                      <p>
-                        <span class="success-upload-tips">
-                          文档通过审核后，即可收到财富值奖励
-                        </span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#">
-                          查看已上传文档
-                        </a>
-                        &gt;
-                      </p>
-                      <a class="goon-upload log-xsend"
-                      href="javascript:void function(){location.reload();}()">
-                        继续上传
-                      </a>
-                    </div>
-                  </div>
-                  <div class="bd">
-                    <div class="bd-wrap clearfix">
-                      <h2>
-                        <span class="title-emphasize">
-                          高赏金
-                        </span>
-                        悬赏任务
-                        <span class="title-tips">
-                          上传悬赏话题，获取下载券奖励
-                        </span>
-                        <a class="title-more" target="_blank" href="#">
-                          更多&gt;
-                        </a>
-                      </h2>
-                      <div class="award-cards clearfix">
-                        <ul class="award-ul-wrap clearfix">
-                        </ul>
-                        <div class="award-nav">
-                          <span class="active">
-                          </span>
-                          <span>
-                          </span>
-                          <span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="task-upload-success-container" class="task-upload-success-container">
-                  <h1>
-                    <i class="iconfont">
-                      
-                    </i>
-                    上传成功，话题被采纳后即可获得赏金
-                  </h1>
-                  <p>
-                    话题被审核公开后，悬赏者将选择是否采纳，您在
-                    <a href="#" target="_blank">
-                      悬赏任务
-                    </a>
-                    中可以看到文档状态
-                  </p>
-                  <p class="nav">
-                    <a href="#">
-                      返回当前悬赏任务
-                    </a>
-                    <a href="#" target="_blank">
-                      查看已上传的文档
-                    </a>
-                  </p>
-                </div>
+                
               </div>
             </div>
           </div>
         </div>
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_docsharein.js"></script>
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_docClassInit.js"></script>
+     <script type="text/javascript" src="/scripts/pj_docsharein.js"></script>
+     <script type="text/javascript" src="/scripts/pj_docClassInit.js"></script>
   </body>
 
 </html>

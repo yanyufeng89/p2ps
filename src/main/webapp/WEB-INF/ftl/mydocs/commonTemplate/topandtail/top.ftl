@@ -2,7 +2,7 @@
       <div class="header-row">
           <div class="header-alignleft">
              <div class="header-contact-info">
-                <img src="/51jobplusCore/image/website-banners.png" class="img-responsive">
+                <img src="/image/website-banners.png" class="img-responsive">
              </div>
           </div>
           <div class="header-alignright">
@@ -38,7 +38,7 @@
                  <#if (Session.user)??>
                  <input type="hidden" value="${Session.user.userid}" id="currentUserId"/>
                  <li id="menu-item-1" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1">
-                    <a href='/51jobplusCore/myCenter/getMyHeadTop' target='_blank'>您好!
+                    <a href='/myCenter/getMyHeadTop' target='_self'>您好!
                      <font>
                        <#if (Session.user.username?length gt 7)>
 	                     ${Session.user.username?substring(0,7)}...
@@ -50,15 +50,15 @@
                  </li> 
                  <li style='line-height:44px;font-size: 14px;'>|</li>
                  <li id="menu-item-3" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3">
-                     <a href="javascript:toLogout();">退出</a>
+                     <a href="javascript:void(0);" onclick="toLogout();">退出</a>
                  </li>
                 <#else>
                  <li id="menu-item-1" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1">
-                    <a href="javascript:toLogin();">请登录</a>
+                    <a href="javascript:void(0);" onclick="toLogin();">请登录</a>
                  </li>
                  <li style='line-height:44px;font-size: 14px;'>|</li>
                  <li id="menu-item-3" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3">
-                     <a href="/51jobplusCore/registration.html">注册</a>
+                     <a href="/registration.html">注册</a>
                  </li>
                 </#if>
                </ul>
@@ -69,27 +69,27 @@
     <div id="hd">
         <div class="box top-search-box">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/51jobplusCore/index">
-               <img src="/51jobplusCore/image/pluslogo.png" class="img-responsive">
+            <a class="navbar-brand" href="/index">
+               <img src="/image/pluslogo.png" class="img-responsive">
             </a>
           </div>
           <ul class='pj_tnav_wrap'>
             <li>
-					<a href="/51jobplusCore/index" <#if indexPage==0>class='current'</#if> target='_self'>首页</a>
+					<a href="/index" <#if indexPage==0>class='current'</#if> target='_self'>首页</a>
 		    </li>
             <li>
-					<a href="/51jobplusCore/knowledgeBaseIndex"  target='_self' <#if indexPage==1>class='current'</#if>>知识库</a>
+					<a href="/knowledgeBaseIndex"  target='_self' <#if indexPage==1>class='current'</#if>>知识库</a>
 		    </li>
 		    <li>
-					<a href="/51jobplusCore/about/newbie_guide" target='_blank'>使用攻略</a>
+					<a href="/about/newbie_guide" target='_self' <#if indexPage==2>class='current'</#if>>使用攻略</a>
 		    </li>
 		    <li>
-					<a href="/51jobplusCore/about/feedback" target='_blank'>建议反馈</a>
+					<a href="/about/feedback" target='_self' <#if indexPage==3>class='current'</#if>>建议反馈</a>
 		    </li>
           </ul>
         </div>
     </div>
-    <script src="/51jobplusCore/scripts/sockjs-0.3.min.js"></script>
+    <script src="/scripts/sockjs-0.3.min.js"></script>
 	<script type="text/javascript">
 		//用户登录成功后需要初始化websocket以便服务器进行消息通知
 		var socket;

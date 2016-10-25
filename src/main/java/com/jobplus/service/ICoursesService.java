@@ -3,6 +3,10 @@ package com.jobplus.service;
 import com.jobplus.pojo.Courses;
 import com.jobplus.pojo.MyCollect;
 import com.jobplus.pojo.Page;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface ICoursesService {
 
@@ -15,6 +19,10 @@ public interface ICoursesService {
 	Courses selectByPrimaryKey(Integer id);
 
 	int updateByPrimaryKeySelective(Courses record);
+
+	int updateByAdmin(MultipartFile files, HttpServletRequest request, HttpServletResponse response, Courses record);
+
+	int updateByAdmin(Courses record);
 
 	int updateByPrimaryKeyWithBLOBs(Courses record);
 

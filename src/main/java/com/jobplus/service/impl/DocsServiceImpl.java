@@ -16,10 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jobplus.dao.DocsMapper;
 import com.jobplus.dao.TypeConfigMapper;
 import com.jobplus.pojo.Account;
+import com.jobplus.pojo.AccountDetail;
 import com.jobplus.pojo.DocComment;
 import com.jobplus.pojo.Docs;
 import com.jobplus.pojo.MyCollect;
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.Sms;
 import com.jobplus.pojo.User;
 import com.jobplus.service.IAccountService;
 import com.jobplus.service.IDocCommentService;
@@ -27,6 +29,7 @@ import com.jobplus.service.IDocsService;
 import com.jobplus.service.IMyCollectService;
 import com.jobplus.service.IOperationSumService;
 import com.jobplus.service.ISequenceService;
+import com.jobplus.service.ISmsService;
 import com.jobplus.service.ITagsService;
 import com.jobplus.service.IUpdTableColumnService;
 import com.jobplus.service.IUserService;
@@ -70,6 +73,8 @@ public class DocsServiceImpl implements IDocsService {
 	private ThreadFTPUtils threadFTPUtils;
 	@Resource
 	private SolrJUtils solrJUtils;
+	@Resource
+	private ISmsService smsService;
 	
 	
 
@@ -82,9 +87,8 @@ public class DocsServiceImpl implements IDocsService {
 	@Override
 	public int insertDocs(List<Docs> list) {
 		int rest = 0;
-		
-		// 获取当前时间
-//		java.util.Date time = null;
+		//文档分享积分值
+		int changevalue = 0;
 		// 获取ID数组
 		int docsId[] = seqService.getSeqByTableName("tbl_docs", list.size());
 		//给每个doc赋ID值
@@ -92,15 +96,20 @@ public class DocsServiceImpl implements IDocsService {
 //			time = new java.sql.Timestamp(new java.util.Date().getTime());
 			Docs docs = list.get(i);
 			docs.setId(docsId[i]);
-//			docs.setCreatetime(time);
+			//如果是公开的 增加财富值 
+			if(docs.getIspublic()==1)
+				changevalue += new Account().getSCORES()[1];
+			
 		}
 
 		rest = docsDao.insertDocs(list);
 
-		if(rest>0){
+		if(rest>0 && changevalue>0){
 			//增加财富值
-			accountService.modAccountAndDetail(list.get(0).getUserid(), 0, list.size()*(new Account().getSCORES()[0]), 
-					1, 0, list.size()*(new Account().getSCORES()[0]),0);
+			accountService.modAccountAndDetail(list.get(0).getUserid(), 0, changevalue, 
+					1, 0, changevalue,0);
+//			accountService.modAccountAndDetail(list.get(0).getUserid(), 0, list.size()*(new Account().getSCORES()[1]), 
+//					1, 0, list.size()*(new Account().getSCORES()[1]),0);
 		}
 		
 		return rest;
@@ -112,9 +121,11 @@ public class DocsServiceImpl implements IDocsService {
 	 */
 	@Transactional
 	@Override
-	public int upload(MultipartFile[] files, HttpServletRequest request, HttpServletResponse response)
+	public String upload(MultipartFile[] files, HttpServletRequest request, HttpServletResponse response)
 			throws IllegalStateException, IOException {
 
+			//跳转页面  分享文档获取的财富值显示
+			int num = 0;
 			// 文档list
 			List<Docs> docsList = new ArrayList<>();
 			//标题
@@ -186,6 +197,9 @@ public class DocsServiceImpl implements IDocsService {
 						
 						//拼接文档标签 
 //						tagsArray = tagsArray + doc.getDocclass();
+						
+						if(doc.getIspublic() == 1)
+							num += new AccountDetail().getCHANGEVALUES()[1];
 					}
 				}
 			}
@@ -209,7 +223,7 @@ public class DocsServiceImpl implements IDocsService {
 				}
 			}
 			
-		return rest;
+		return ""+num;
 	}
 
 	/**
@@ -228,7 +242,7 @@ public class DocsServiceImpl implements IDocsService {
 			return page;
 		
 		List<Docs> list = docsDao.getMyDocsUploaded(record);
-		if(null!=list && list.size()>0){
+		if(list.size()>0){
 			
 			page.initialize((long)count,record.getPageNo());
 			page.setList(list);
@@ -400,14 +414,20 @@ public class DocsServiceImpl implements IDocsService {
 	 */
 	@Transactional
 	@Override
-	public MyCollect downloadDoc(MyCollect record,Docs doc) {
-		//扣除财富值
-		accountService.modAccountAndDetail(record.getUserid(), 0, - doc.getDownvalue(), 
-				1, 1, doc.getDownvalue(),6);		
-		//文档所有者增加财富值
-		accountService.modAccountAndDetail(doc.getUserid(), 0,  doc.getDownvalue(), 
-				1, 0, doc.getDownvalue(),8);
-		
+	public MyCollect downloadDoc(MyCollect record,Docs doc,HttpServletRequest request) {
+		if(doc.getDownvalue() > 0){
+			//扣除财富值
+			accountService.modAccountAndDetail(record.getUserid(), 0, - doc.getDownvalue(), 
+					1, 1, doc.getDownvalue(),6);		
+			//文档所有者增加财富值
+			accountService.modAccountAndDetail(doc.getUserid(), 0,  doc.getDownvalue(), 
+					1, 0, doc.getDownvalue(),8);
+			//消息通知 对方 财富值增加
+			//添加消息通知
+			smsService.addNotice((User)request.getSession().getAttribute("user"), request.getContextPath(), new Sms().getTABLENAMES()[0],doc.getId(),
+					doc.getUserid(),new Sms().getSMSTYPES()[24],doc.getId(),doc.getTitle(),"系统为您增加了"+doc.getDownvalue()+"财富值");
+			
+		}			
 		
 		// 下载文档插入记录
 		int id = seqService.getSeqByTableName("tbl_collect");

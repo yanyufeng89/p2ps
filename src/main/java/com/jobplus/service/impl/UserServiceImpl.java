@@ -18,6 +18,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,14 +167,16 @@ public class UserServiceImpl implements IUserService {
 			record.setPoints(0);
 			record.setCreatetime(time);
 			accountDao.insert(record);
-			
-			
+
 			// 初始化用户操作统计表
 			OperationSum opSum = new OperationSum();
 			opSum.setUserid(userid);
 			opSum.setOperatortime(time);
 			operationSumMapperDao.insert(opSum);
 		}
+
+		//发送短信
+		smsService.sendSysNotice(userid,ConstantManager.FIRST_LOGIN_SMS);
 
 		// 自动登录
 		if (user.getIsvalid() == 1) {
@@ -529,5 +533,23 @@ public class UserServiceImpl implements IUserService {
 			list = userDao.getList(record);
 		}
 		return GridDataUtil.getGridMap(gridQuery.getRows(), gridQuery.getPage(), count, list);
+	}
+
+	@Override
+	public List<User> getRewardUsers(Integer articleId) {
+		List<User> list = new ArrayList<User>();
+		list = userDao.getRewardUsers(articleId);
+		return list;
+	}
+	/**
+     * 统计个人用户完整度
+     *
+     * @param userId
+     * @return
+     */
+	@Override
+	public int userInfoCompletion(int userId) {
+		int complete = userDao.userInfoCompletion(userId);
+		return complete;
 	}
 }

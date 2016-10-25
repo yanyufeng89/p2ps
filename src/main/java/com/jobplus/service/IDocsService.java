@@ -43,7 +43,7 @@ public interface IDocsService {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	public int upload(MultipartFile[] files,HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException ;
+	public String upload(MultipartFile[] files,HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException ;
 	
 	
 	/**
@@ -86,7 +86,7 @@ public interface IDocsService {
 	/**
 	 * 下载文档
 	 */
-	public MyCollect downloadDoc(MyCollect record,Docs doc);
+	public MyCollect downloadDoc(MyCollect record,Docs doc,HttpServletRequest request);
 	
 	
 }

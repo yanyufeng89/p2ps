@@ -85,6 +85,8 @@ public class Topics extends PageParent implements Serializable{
 	 * 用于前端页面显示
 	 */
 	private String showcreatetime;
+
+    private String condition;
 	
 	
 	public User getObjCreator() {
@@ -281,5 +283,13 @@ public class Topics extends PageParent implements Serializable{
 
     public String getIntro() {
         return intro;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 }

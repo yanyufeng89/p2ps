@@ -25,8 +25,22 @@ public class EducationBgrd implements Serializable {
     private java.sql.Timestamp endtime;
 
     private java.sql.Timestamp createtime;
+    
+	/**
+	 * 时间间隔     几年几个月
+	 */
+	private String period;
+	
 
-    public Integer getId() {
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
+	public Integer getId() {
         return id;
     }
 

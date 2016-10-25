@@ -6,19 +6,19 @@
        {#foreach $T.topicscommentList as commlist}
       <div class="_CommentItem_root_PQNS" tabindex="-1" aria-label="" data-id="{$T.commlist.typeid}">
 
-         <a href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" tabindex="-1" data-userid='{$T.commlist.userid}' data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
+         <a href='/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" tabindex="-1" data-userid='{$T.commlist.userid}' data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
     
          {#if $T.commlist.tmpHeadIcon}
             <img tabindex="-1" class="Avatar" data-userid='{$T.commlist.userid}' src="{$T.commlist.tmpHeadIcon}" data-moduletype="0">
          {#else}
-            <img tabindex="-1" class="Avatar" data-userid='{$T.commlist.userid}' src="/51jobplusCore/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+            <img tabindex="-1" class="Avatar" data-userid='{$T.commlist.userid}' src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
          {#/if}
         </a>
         <div class="_CommentItem_body_3qwB" data-reactid="">
           <div class="_CommentItem_header_2JGh" data-reactid="">
            {#if $T.commlist.commentby}
 
-               <a href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" class="zg-link" data-userid='{$T.commlist.userid}' data-moduletype="0">
+               <a href='/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" class="zg-link" data-userid='{$T.commlist.userid}' data-moduletype="0">
            
               {#if $T.commlist.tmpUserName}
                    {$T.commlist.tmpUserName}
@@ -28,11 +28,11 @@
             </a>
            <span class="desc">回复 </span>
 
-            <a href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.commentby}' target='_blank' class="zg-link"  data-userid='{$T.commlist.commentby}' data-moduletype="0" data-original_title="{$T.commlist.commentbyUserName}">{$T.commlist.commentbyUserName}</a>
+            <a href='/myHome/getHomePage?userid={$T.commlist.commentby}' target='_blank' class="zg-link"  data-userid='{$T.commlist.commentby}' data-moduletype="0" data-original_title="{$T.commlist.commentbyUserName}">{$T.commlist.commentbyUserName}</a>
        
            {#else}
 
-             <a  href='/51jobplusCore/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" class="zg-link"  data-userid="{$T.commlist.userid}" data-moduletype="0">
+             <a  href='/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" class="zg-link"  data-userid="{$T.commlist.userid}" data-moduletype="0">
          
 		       {#if $T.commlist.tmpUserName}
 	                   {$T.commlist.tmpUserName}
@@ -55,7 +55,7 @@
                <i class="zg-icon zg-icon-comment-reply" data-reactid=""></i>
                <span>回复</span>
             </button>
-            {#if $T.commlist.likedUsers==1}
+            {#if $T.commlist.likedIds==1}
             <button class="_CommentItem_action_Hk0w _CommentBox_textButton_3t9_  CommentItem_like" data-topiccommentid='{$T.commlist.id}' data-like='0' data-createperson='{$T.commlist.userid}'>
               <i class="zg-icon zg-icon-comment-like"></i>
                                          取消赞

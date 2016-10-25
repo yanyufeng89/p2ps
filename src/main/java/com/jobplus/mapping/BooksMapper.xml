@@ -13,17 +13,18 @@
     <result column="collectSum" property="collectsum" jdbcType="INTEGER" />
     <result column="recommendSum" property="recommendsum" jdbcType="INTEGER" />
     <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
-    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />    
+    <result column="supplierUrl" property="supplierUrl" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Books" extends="BaseResultMap" >
     <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, bookname, author, press, bookImg, bookClass, bookType, isValid, collectSum, recommendSum, 
-    updateTime, createTime
+    updateTime, createTime ,supplierUrl
   </sql>
   <sql id="Base_Column_List2" >
-     t.ID, t.bookname, t.author, t.press, t.bookImg, t.bookClass, t.bookType, t.isValid, t.collectSum, t.recommendSum
+     t.ID, t.bookname, t.author, t.press, t.bookImg, t.bookClass, t.bookType, t.isValid, t.collectSum, t.recommendSum,t.supplierUrl
   </sql>
   <sql id="Blob_Column_List" >
     intro

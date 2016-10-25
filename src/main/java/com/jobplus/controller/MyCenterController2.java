@@ -329,6 +329,10 @@ public class MyCenterController2 {
 					descStr = Ekey.get(0).attr("content");
 				}
 			}
+			if (descStr.indexOf("\u00A0") > 0) {//包含空格 转义
+				descStr = descStr.replaceAll("\u00A0", "");
+			}
+			
 			
 			Element image = doc.select("img").first();
 			String igmUrl = image.absUrl("src");
@@ -346,6 +350,9 @@ public class MyCenterController2 {
 		} catch (Exception e) {
 			WwwInfo wInfo = new WwwInfo();
 			wInfo.setTitle(url);
+			wInfo.setIntro("");
+			wInfo.setImgUrl("");
+			wInfo.setUrl(url);
 			baseResponse.setObj(wInfo);
 			baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
 			logger.info("**get3WInfo*获取url 简介      失败   ****" + e.getMessage());
@@ -459,7 +466,8 @@ public class MyCenterController2 {
 		// 设置推荐人
 		record.setUserid(userid);
 		// 1.新增文章
-		int ret = articleService.insertArticleAndArticlehare(record);
+//		int ret = articleService.insertArticleAndArticlehare(record);
+		int ret = articleService.insert(record);
 		if(ret > 0){
 			//个人操作数之类的信息放入session
 			userService.getMyHeadTopAndOper(request);

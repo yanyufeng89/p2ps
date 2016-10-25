@@ -4,14 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             知识库首页
+            JobPlus-知识库
     </title>
     <meta name="viewport" content="width=1230,initial-scale=0.9"/>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta property="wb:webmaster" content="a07e8efa7bc99422" />
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_index.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_base.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_index.css" charset="UTF-8">
   </head>
 
   <body id="top">
@@ -34,7 +34,7 @@
                 	<b class="t-tag cc"> </b>
                 </#if>
                  <#--
-                  <a href="${request.getContextPath()}/search/${cMap['rootID']}" target="_blank">
+                  <a href="${request.getContextPath()}/search/${cMap['rootID']}" target="_self">
                    -->
                    <span>
                     ${cMap['rootName']}
@@ -45,34 +45,34 @@
                   </span>
                 </dt>
                 <dd>
-                  <a href="${request.getContextPath()}/search/${cMap['firstViewID1']}" target="_blank" class="log-xsend">
+                  <a href="${request.getContextPath()}/search/${cMap['firstViewID1']}" target="_self" class="log-xsend">
                     ${cMap['firstViewName1']}
                   </a>
-                  <a href="${request.getContextPath()}/search/${cMap['firstViewID2']}" target="_blank" class="log-xsend">
+                  <a href="${request.getContextPath()}/search/${cMap['firstViewID2']}" target="_self" class="log-xsend">
                    ${cMap['firstViewName2']}
                   </a>
                 </dd>
                 <dd>
-                  <a href="${request.getContextPath()}/search/${cMap['firstViewID3']}" target="_blank" class="log-xsend">
+                  <a href="${request.getContextPath()}/search/${cMap['firstViewID3']}" target="_self" class="log-xsend">
                     ${cMap['firstViewName3']}
                   </a>
-                  <a href="${request.getContextPath()}/search/${cMap['firstViewID4']}" target="_blank" class="log-xsend">
+                  <a href="${request.getContextPath()}/search/${cMap['firstViewID4']}" target="_self" class="log-xsend">
                     ${cMap['firstViewName4']}
                   </a>
                 </dd>
               </dl>
 			  <div class='menu_sub dn'> 
 			    <dl>
-				  <dt><a href="${request.getContextPath()}/search/${cMap['childID1']}" target="_blank">${cMap['childName1']}</a></dt>
+				  <dt><a href="${request.getContextPath()}/search/${cMap['childID1']}" target="_self">${cMap['childName1']}</a></dt>
 				  <dd>
 				  	<#list cMap['childListData1']?split(',') as ctName>
-				  			<a href="${request.getContextPath()}/search/${ctName?split(':')[0]}"  target='_blank'>${ctName?split(':')[1]}</a>
+				  			<a href="${request.getContextPath()}/search/${ctName?split(':')[0]}"  target='_self'>${ctName?split(':')[1]}</a>
 				  	</#list>
 				  </dd>
-				   <dt><a href="${request.getContextPath()}/search/${cMap['childID2']}" target="_blank">${cMap['childName2']}</a></dt>
+				   <dt><a href="${request.getContextPath()}/search/${cMap['childID2']}" target="_self">${cMap['childName2']}</a></dt>
 				  <dd>
 				    <#list cMap['childListData2']?split(',') as ctName>
-				  			<a href="${request.getContextPath()}/search/${ctName?split(':')[0]}"  target='_blank'>${ctName?split(':')[1]}</a>
+				  			<a href="${request.getContextPath()}/search/${ctName?split(':')[0]}"  target='_self'>${ctName?split(':')[1]}</a>
 				  	</#list>
 				  </dd>
 				</dl>
@@ -84,7 +84,7 @@
               
             </div>
             <div id="search_box" class="search_box">
-              <form id="searchForm" class="searchForm" name="searchForm" action="/51jobplusCore/search/0"
+              <form id="searchForm" class="searchForm" name="searchForm" action="/search/0"
               method="get">
                 <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">
                 </span>
@@ -131,33 +131,33 @@
               <div id="slide-bner" class="slide-bner clearfix">
                 <ul class="img-list">
                   <li class="bg-loading cur" style="opacity: 1; z-index: 9;">
-                    <a href="javascript:void(0)"  target="_blank" class="log-xsend">
-                      <img alt=""  src="/51jobplusCore/image/1.jpg" />
+                    <a href="javascript:void(0)"  target="_self" class="log-xsend">
+                      <img alt=""  src="/image/1.jpg" />
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
-                    <a href="javascript:void(0)" target="_blank" class="log-xsend">
-                      <img alt="" src="/51jobplusCore/image/2.jpg" />
+                    <a href="javascript:void(0)" target="_self" class="log-xsend">
+                      <img alt="" src="/image/2.jpg" />
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
-                    <a href="javascript:void(0)"  target="_blank" class="log-xsend">
-                      <img alt=""  src="/51jobplusCore/image/3.jpg" />
+                    <a href="javascript:void(0)"  target="_self" class="log-xsend">
+                      <img alt=""  src="/image/3.jpg" />
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
-                    <a href="javascript:void(0)" target="_blank" class="log-xsend">
-                      <img alt=""  src="/51jobplusCore/image/4.jpg" />
+                    <a href="javascript:void(0)" target="_self" class="log-xsend">
+                      <img alt=""  src="/image/4.jpg" />
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
-                    <a href="javascript:void(0)" target="_blank" class="log-xsend">
-                      <img alt="" src="/51jobplusCore/image/5.jpg" />
+                    <a href="javascript:void(0)" target="_self" class="log-xsend">
+                      <img alt="" src="/image/5.jpg" />
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
-                    <a href="javascript:void(0)" target="_blank" class="log-xsend">
-                      <img alt=""  src="/51jobplusCore/image/6.jpg" />
+                    <a href="javascript:void(0)" target="_self" class="log-xsend">
+                      <img alt=""  src="/image/6.jpg" />
                     </a>
                   </li>
                 </ul>
@@ -206,12 +206,36 @@
                   </li>
                 </ul>
               </div>
-			  
-               <a class="topic-division" href='/51jobplusCore/topics/fore/search/1' target='_blank'>
-    
-				
-              </a>
-			  
+			  <div class='knowledge-division'>
+			      <ul class='clearfix'>
+			         <li class='clearfix first'>
+			           <a class='topic-division' href='/topics/fore/search/0' target='_self'>
+			             <div class='tpc-img'>
+			              <img src='/image/topic-division.png' alt='' height='72' width='136'>
+			             </div>
+			             <div class='tpc-brief'>
+			              <span class='topic-brief'>
+			                  <h5>话题专区</h5>
+			                  <span>查看详情</span>
+			              </span>
+			             </div>
+			           </a>
+			         </li>
+			         <li class='clearfix second'>
+			            <a class='book-division'  href='/books/fore/area/0' target='_self'>
+			              <div class='tpc-img'>
+			                <img src='/image/book-division.png' alt='' height='72' width='136'>
+			              </div>
+			              <div class='tpc-brief'>
+			                <span class='book-brief'>
+			                  <h5>书籍专区</h5>
+			                  <span>查看详情</span>
+			                </span>
+			               </div>
+			             </a>
+			         </li>
+			      </ul>
+			  </div>
             </div>
           </div>
           <div class="user-info">
@@ -242,11 +266,11 @@
 				<div class="user-brief bg-index clearfix">
 				<div class="avatar">
 				   <div>
-				      <a href="/51jobplusCore/myCenter/getMyHeadTop" target="_blank" class="bg-avatar bg-index">
-				         <#if (Session.user.headicon)??>
+				      <a href="/myCenter/getMyHeadTop" target="_self" class="bg-avatar bg-index">
+				         <#if (Session.user.headicon)??&& Session.user.headicon?length gt 0>
 		                   <img src="${Session.user.headicon}" width='60' height='60'>
 		                 <#else>
-		                 <img src="/51jobplusCore/image/myphoto.jpg" width='60' height='60'>
+		                   <img src="/image/myphoto.jpg" width='60' height='60'>
 		              </#if>
 		               </a>
 				   </div>
@@ -255,15 +279,15 @@
 				<div class="name-task">
 				<p class="name">
 			   <#if (Session.user)??>
-				<a href='/51jobplusCore/myCenter/getMyHeadTop' class="name-link" title="<#if (Session.user)??> ${Session.user.username} </#if>" target="_blank">
+				<a href='/myCenter/getMyHeadTop' class="name-link" title="<#if (Session.user)??> ${Session.user.username} </#if>" target="_self">
 	                   <#if (Session.user.username?length gt 7)>
 	                     ${Session.user.username?substring(0,7)}...
 	                   <#else>
 	                     ${Session.user.username}
 	                   </#if>
 				</a>
-				 </#if>
-				<a href="#" target="_blank"><span class="iconfont ic-eduVip hide"></span></a>
+				</#if>
+				<a href="#" target="_self"><span class="iconfont ic-eduVip hide"></span></a>
 				</p>
 				<p class="task">
 				    <a href="javascript:void(0)" target="_self" class="daily-task">分享知识，领财富值</a>
@@ -281,7 +305,7 @@
 					    0
 					 </#if>
 					</div>
-                    <a href="/51jobplusCore/myCenter/getMyDocsUploaded" target="_blank" class="nav-item mr25 mingjia">
+                    <a href="/myCenter/getMyDocsUploaded" target="_self" class="nav-item mr25 mingjia">
                       <div class="img"></div> 文档
                     </a>
 				</li>
@@ -293,7 +317,7 @@
 					    0
 					 </#if>
 					</div>
-                    <a href="/51jobplusCore/myCenter/getMyTopicsUploaded" target="_blank" class="nav-item mr25 economy">
+                    <a href="/myCenter/getMyTopicsUploaded" target="_self" class="nav-item mr25 economy">
                       <div class="img"></div> 话题
                     </a>
 				</li>
@@ -305,7 +329,7 @@
 					    0
 					 </#if>
 					</div>
-                    <a href="/51jobplusCore/myCenter/getSharedBookList" target="_blank" class="nav-item mr25 internet">
+                    <a href="/myCenter/getSharedBookList" target="_self" class="nav-item mr25 internet">
                       <div class="img"></div> 书籍
                     </a>
 				</li>
@@ -317,7 +341,7 @@
 					    0
 					 </#if>
 					</div>
-                    <a href="/51jobplusCore/myCenter/getSharedCourseList" target="_blank" class="nav-item mr25 tech">
+                    <a href="/myCenter/getSharedCourseList" target="_self" class="nav-item mr25 tech">
                       <div class="img"></div> 课程
                     </a>
 				</li>
@@ -329,7 +353,7 @@
 					   0
 					 </#if>
 					</div>
-                    <a href="/51jobplusCore/myCenter/getSharedArticleList" target="_blank" class="nav-item mr25 fashion">
+                    <a href="/myCenter/getSharedArticleList" target="_self" class="nav-item mr25 fashion">
                       <div class="img"></div> 文章
                     </a>
 				</li>
@@ -341,7 +365,7 @@
 					    0
 					 </#if>
 					</div>
-                    <a href="/51jobplusCore/myCenter/getSharedSiteList" target="_blank" class="nav-item mr25 authors">
+                    <a href="/myCenter/getSharedSiteList" target="_self" class="nav-item mr25 authors">
                       <div class="img"></div>  站点
                     </a>
 				</li>
@@ -350,7 +374,7 @@
 				<div class="my-wk">
 				
 				<p class="upload-wrap">
-				<a class="upload-btn bg-index" style='left:0;top:0' target='_blank' href="/51jobplusCore/sharein/searchuploadFile"></a>
+				<a class="upload-btn bg-index" style='left:0;top:0' target='_self'  href="/sharein/searchuploadFile"></a>
 				<span class="upload-btn-wealth-tip" style="display: inline;">
 				<i class="ic icon-upload-wealth bg-index"></i>
 				送下载券<i class="arrow">
@@ -376,7 +400,7 @@
                        <li>
                        ${data_index+1}.[${data.extendinfo5}]
                            <a href='javascript:void(0);' onclick="toHref('${data.datatype}',${data.dataid})" title="${data.title}">
-                           ${data.title}
+                           <span class='title-label'>${data.title}</span>
                            </a>
                        </li>
                    </#if>
@@ -390,7 +414,7 @@
                        <li>
                        ${data_index+1}.[${data.extendinfo5}]
                            <a href='javascript:void(0);' onclick="toHref('${data.datatype}',${data.dataid})" title="${data.title}">
-                           ${data.title}
+                           <span class='title-label'>${data.title}</span>
                            </a>
                        </li>
                    </#if>
@@ -405,9 +429,7 @@
     <div id="index-main-body" class='index-main-body'>
 
     <div id="wonderful-share" class="clearfix wonderful-share">
-      <span>
-                 精彩分享
-      </span>
+      <span>精彩分享</span>
     </div>
     <div  class="row-2 zone clearfix wonderful-sharecontent">
       <div class="row-main">
@@ -427,7 +449,7 @@
                                    <img src="${items[0].imgurl}"
                                         alt="${items[0].title}" title="${items[0].title}">
                                <#else>
-                                   <img src="/51jobplusCore/image/default/106.jpg"
+                                   <img src="/image/default/106.jpg"
                                         alt="${items[0].title}" title="${items[0].title}">
                                </#if>
                              </a>
@@ -448,7 +470,7 @@
                           <li>
                               [${item.extendinfo5}]
                               <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                              ${item.title}
+                              <span class='title-label'>${item.title}</span>
                               </a>
                           </li>
                       </#if>
@@ -474,7 +496,7 @@
                                   <img src="${items[0].imgurl}"
                                        alt="${items[0].title}" title="${items[0].title}">
                               <#else>
-                                  <img src="/51jobplusCore/image/default/106.jpg"
+                                  <img src="/image/default/106.jpg"
                                        alt="${items[0].title}" title="${items[0].title}">
                               </#if>
                             </a>
@@ -495,7 +517,7 @@
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                    ${item.title}
+                                    <span class='title-label'>${item.title}</span>
                                     </a>
                                 </li>
                             </#if>
@@ -521,7 +543,7 @@
                                   <img src="${items[0].imgurl}"
                                        alt="${items[0].title}" title="${items[0].title}">
                               <#else>
-                                  <img src="/51jobplusCore/image/default/106.jpg"
+                                  <img src="/image/default/106.jpg"
                                        alt="${items[0].title}" title="${items[0].title}">
                               </#if>
                             </a>
@@ -542,7 +564,7 @@
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                    ${item.title}
+                                    <span class='title-label'>${item.title}</span>
                                     </a>
                                 </li>
                             </#if>
@@ -568,7 +590,7 @@
                                   <img src="${items[0].imgurl}"
                                        alt="${items[0].title}" title="${items[0].title}">
                               <#else>
-                                  <img src="/51jobplusCore/image/default/106.jpg"
+                                  <img src="/image/default/106.jpg"
                                        alt="${items[0].title}" title="${items[0].title}">
                               </#if>
                             </a>
@@ -577,7 +599,7 @@
                             <p>
                                 <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
                                    title="${items[0].title}">
-                                ${items[0].title}
+                               ${items[0].title}
                                 </a>
                             </p>
                         </div>
@@ -589,7 +611,7 @@
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                    ${item.title}
+                                    <span class='title-label'>${item.title}</span>
                                     </a>
                                 </li>
                             </#if>
@@ -615,7 +637,7 @@
                                   <img src="${items[0].imgurl}"
                                        alt="${items[0].title}" title="${items[0].title}">
                               <#else>
-                                  <img src="/51jobplusCore/image/default/106.jpg"
+                                  <img src="/image/default/106.jpg"
                                        alt="${items[0].title}" title="${items[0].title}">
                               </#if>
                             </a>
@@ -624,7 +646,7 @@
                             <p>
                                 <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
                                    title="${items[0].title}">
-                                ${items[0].title}
+                                  ${items[0].title}
                                 </a>
                             </p>
                         </div>
@@ -636,7 +658,7 @@
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                    ${item.title}
+                                    <span class='title-label'>${item.title}</span>
                                     </a>
                                 </li>
                             </#if>
@@ -662,7 +684,7 @@
                                 <img src="${items[0].imgurl}"
                                      alt="${items[0].title}" title="${items[0].title}">
                             <#else>
-                                <img src="/51jobplusCore/image/default/106.jpg"
+                                <img src="/image/default/106.jpg"
                                      alt="${items[0].title}" title="${items[0].title}">
                             </#if>
                           </a>
@@ -671,7 +693,7 @@
                           <p>
                               <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
                                  title="${items[0].title}">
-                              ${items[0].title}
+                                 ${items[0].title}
                               </a>
                           </p>
                       </div>
@@ -683,7 +705,7 @@
                               <li>
                                   [${item.extendinfo5}]
                                   <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                  ${item.title}
+                                  <span class='title-label'>${item.title}</span>
                                   </a>
                               </li>
                           </#if>
@@ -709,7 +731,7 @@
                                 <img src="${items[0].imgurl}"
                                      alt="${items[0].title}" title="${items[0].title}">
                             <#else>
-                                <img src="/51jobplusCore/image/default/106.jpg"
+                                <img src="/image/default/106.jpg"
                                      alt="${items[0].title}" title="${items[0].title}">
                             </#if>
                           </a>
@@ -718,7 +740,7 @@
                           <p>
                               <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
                                  title="${items[0].title}">
-                              ${items[0].title}
+                                 ${items[0].title}
                               </a>
                           </p>
                       </div>
@@ -730,7 +752,7 @@
                               <li>
                                   [${item.extendinfo5}]
                                   <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                  ${item.title}
+                                  <span class='title-label'>${item.title}</span>
                                   </a>
                               </li>
                           </#if>
@@ -756,7 +778,7 @@
                                   <img src="${items[0].imgurl}"
                                        alt="${items[0].title}" title="${items[0].title}">
                               <#else>
-                                  <img src="/51jobplusCore/image/default/106.jpg"
+                                  <img src="/image/default/106.jpg"
                                        alt="${items[0].title}" title="${items[0].title}">
                               </#if>
                             </a>
@@ -777,7 +799,7 @@
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                    ${item.title}
+                                    <span class='title-label'>${item.title}</span>
                                     </a>
                                 </li>
                             </#if>
@@ -803,7 +825,7 @@
                                   <img src="${items[0].imgurl}"
                                        alt="${items[0].title}" title="${items[0].title}">
                               <#else>
-                                  <img src="/51jobplusCore/image/default/106.jpg"
+                                  <img src="/image/default/106.jpg"
                                        alt="${items[0].title}" title="${items[0].title}">
                               </#if>
                             </a>
@@ -824,7 +846,7 @@
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
-                                    ${item.title}
+                                    <span class='title-label'>${item.title}</span>
                                     </a>
                                 </li>
                             </#if>
@@ -852,13 +874,13 @@
                                 <img  src="${data.imgurl}"
                                      title="${data.title}" alt="${data.title}">
                               <#else>
-                                  <img  src="/51jobplusCore/image/default/166.jpg"
+                                  <img  src="/image/default/166.jpg"
                                        title="${data.title}" alt="${data.title}">
                             </#if>
                           </a>
                       </div>
                       <div class="book-info">
-                          <h6>
+                          <h6 class='textoverflow'>
                               <a href='javascript:void(0)' onclick="toHref('${data.datatype}',${data.dataid})"
                                  title="${data.title}">
                                 ${data.title}
@@ -885,20 +907,19 @@
       </div>
     </div>
     <div id="advertisingb" class="clearfix">
-      <a href="#" target="_blank" class="log-xsend">
-        <img class="lazybg" src="/51jobplusCore/image/knowledgebase-1.jpg" alt=''>
+      <a href="javascript:void(0)" target="_self" class="log-xsend">
+        <img class="lazybg" src="/image/knowledgebase-1.jpg" alt=''>
       </a>
     </div>
-    <a id="backtop" title="回到顶部" href="#top" style="display: none; bottom:300px;"></a>
+    <a id="backtop" title="回到顶部" href="#top" class='back-to-top' style="display: none; bottom:300px;"></a>
     </div>
-    
     <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
     <div class='pagetemplate'></div>
     <#include "/mydocs/commonTemplate/pmorsmgjs/pmorsmg.ftl"/> 
-    <script type="text/javascript" src="/51jobplusCore/scripts/jquery.pause.min.js"></script>
-    <script type="text/javascript" src="/51jobplusCore/scripts/jcarousellite_1.0.1.pack.js"></script>
-    <script type="text/javascript" src="/51jobplusCore/scripts/jcarousellite_1.0.1c4.js"></script>
-    <script type="text/javascript" src="/51jobplusCore/scripts/pj_content.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.pause.min.js"></script>
+    <script type="text/javascript" src="/scripts/jcarousellite_1.0.1.pack.js"></script>
+    <script type="text/javascript" src="/scripts/jcarousellite_1.0.1c4.js"></script>
+    <script type="text/javascript" src="/scripts/pj_content.js"></script>
 
     
 </html>

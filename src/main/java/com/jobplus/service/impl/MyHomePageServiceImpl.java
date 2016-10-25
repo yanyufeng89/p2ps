@@ -102,13 +102,20 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		
 		List<MyHomePage> list = null;
 		int count = 0;
-		if("tbl_books".equals(record.getTableName())){
+		//最近分享   所有分类
+		if(StringUtils.isBlank(record.getTableName())){
+			count = myHomePageDao.getRecentShareCount(record);
+			if(count < 1)
+				list = new ArrayList<MyHomePage>();
+			else
+				list = myHomePageDao.getRecentShare(record);
+		}else if("tbl_books".equals(record.getTableName())){ //最近分享的书籍 特殊处理
 			count = myHomePageDao.getOneSharesJustToBooksCount(record);
 			if(count < 1)
 				list = new ArrayList<MyHomePage>();
 			else
 			 list = myHomePageDao.getOneSharesJustToBooks(record);
-		}else{
+		}else{//其他的某一类分享
 			count = myHomePageDao.getOneSharesCount(record);
 			if(count < 1)
 				list = new ArrayList<MyHomePage>();
@@ -161,12 +168,16 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		PersonalSkill personalSkill = new  PersonalSkill();
 		personalSkill.setUserid(Integer.parseInt(userid));
 		personalSkill = personalSkillService.selectByRecord(personalSkill);
+		//简历完成度
+		int completion = userService.userInfoCompletion(Integer.parseInt(userid));
+		
 		
 		// 获取当前url
 		StringBuffer url = request.getRequestURL();
 		if (request.getQueryString() != null) {
 			url.append("?");
-			url.append(request.getQueryString());
+			url.append("userid="+userid);
+//			url.append(request.getQueryString());
 		}
 
 		mv.addObject("visitors", visitors);
@@ -175,6 +186,7 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		mv.addObject("eduList", eduList);
 		mv.addObject("homePageUrl", url);
 		mv.addObject("personalSkill", personalSkill);
+		mv.addObject("completion", completion);
 		// 教育背景和工作经历放入session中 '最近访问的人'页面需要
 		request.getSession().setAttribute("workExList", workExList);
 		request.getSession().setAttribute("eduList", eduList);

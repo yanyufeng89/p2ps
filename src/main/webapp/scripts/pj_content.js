@@ -1,12 +1,14 @@
 $(function () {
     /*右侧书籍推荐 滚动*/
-    $("#hot-recommend").jCarouselLite({
-		vertical: true,
-		hoverPause:true,
-		visible:7,
-		auto:955,
-		speed:1500
-	});
+    if($("#hot-recommend ul li").length!=0){
+    	$("#hot-recommend").jCarouselLite({
+    		vertical: true,
+    		hoverPause:true,
+    		visible:7,
+    		auto:955,
+    		speed:1500
+    	});
+    }
     //左侧导航栏最后一个去掉底线
     $('.wk-all-cate >dl:last').css('border-bottom','0');
     /*首页中间图片滚动start*/  
@@ -72,13 +74,6 @@ $(function () {
     	$("#SI_Order_S .uni-blk-b > div").eq(index).show().siblings().hide();
     });
     /*首页热门话题下面的每一个框框 鼠标移动到每个tab  显示不同的内容 end*/
-   
-    //回到顶部
-    $("#backtop").mousemove(function(){
-    	$("#backtop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#backtop").css("background-position-x", "0");
-    })
    
     //首页界面左侧鼠标移上去加载详情
     $('#wk-all-cate > dl').each(function(a){
@@ -190,7 +185,7 @@ $(function () {
     $("#userlogin").live('click',function(){
 		$.ajax({
 			type:'POST',
-    		url:"/51jobplusCore/userinfo.txt",
+    		url:"/userinfo.txt",
     		contentType: "text/html;charset=UTF-8", 
     		dataType: 'text',	
     		error: function(xhr) { alert("error: " + xhr.responseText); },

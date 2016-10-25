@@ -77,20 +77,51 @@ public class DocsController {
 	 */
 	@RequestMapping("/upload")  
 	  public String upload(@RequestParam(value="fileField",required=false) MultipartFile[] files,HttpServletRequest request,HttpServletResponse response,Docs record) throws IllegalStateException, IOException {
-		
+		String rest = "redirect:success";
+		String num = "?num=";
 		// 用于编辑功能
 		String docId = request.getParameter("docId");
 		if(!StringUtils.isBlank(docId)){//编辑
 			record.setId(Integer.parseInt(docId));
 			docsService.updateByPrimaryKeySelective(record);
+			num += "0";
 		}else{// 多文件上传
-			 docsService.upload(files, request, response);
+			num += docsService.upload(files, request, response);
 		}
-		//防止重复提交   转发到静态页面
-		int num = files.length == 0 ?files.length:(files.length - 1);
-	     return "redirect:success?num="+num;  
+		//防止重复提交   转发到静态页面   定义财富值是2
+//		int num = files.length == 0 ?files.length*new AccountDetail().getCHANGEVALUES()[1]:(files.length - 1)*new AccountDetail().getCHANGEVALUES()[1];
+	     return rest+num;  
 	  }  
-	
+	/**
+	 * 判断文档是否转换成功
+	 * @param request
+	 * @param response
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/isConverted", method = RequestMethod.POST)
+	@ResponseBody
+	public String isConverted(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = true) Integer id) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			Docs record = docsService.selectByPrimaryKey(id);
+			if (record.getIsconverter() != 1) {// 文档转换不成功 或者转换失败
+				baseResponse.setReturnMsg("当前文档正在转换中,请稍后重试！");
+				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				logger.info("*isConverted** --文档转换不成功  或者转换失败    失败 *********");
+				return JSON.toJSONString(baseResponse);
+			}
+			baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+			baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+			return JSON.toJSONString(baseResponse);
+
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("*isConverted** --文档转换不成功  或者转换失败    失败  999 *********" + e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
 
 	/**
 	 * 文档详情
@@ -108,7 +139,6 @@ public class DocsController {
 			mv.setViewName("404");
 			return mv;
 		}
-		logger.info("*****getDocsDetail 文档详情*******record=="+JSON.toJSONString(record));
 		mv.addObject("record", record);
 		if("7".equals(isAdmin)){
 			//后台管理员查看
@@ -359,7 +389,7 @@ public class DocsController {
 				record.setCollecttype(record.getCOLLECTTYPES()[0]);
 				record.setObjectid(doc.getId());
 				
-				record = docsService.downloadDoc(record,doc);
+				record = docsService.downloadDoc(record,doc,request);
 				if(record!=null){
 					// 更新用户操作统计数 存入session
 					userService.getMyHeadTopAndOper(request);

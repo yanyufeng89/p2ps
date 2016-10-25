@@ -30,7 +30,7 @@ $(function(){
 		showtime(60,type);
 		$.ajax({
 			type:"POST",
-	      	url:"/51jobplusCore/mobilesms/sendSms",
+	      	url:"/mobilesms/sendSms",
 	      	data:{mobileNo:email},
 	    	dataType:"json",
 	    	success:function(data){
@@ -41,7 +41,13 @@ $(function(){
 	    				$('input[name=mobile_verification_code]').val(data.returnData);
 	    			
 	    		}else{
-	    			
+	    			if(type=='email'){
+	    				$('.email-form').find('.error').html('发送异常,请稍后再试！').show();
+	    				return false;
+	    			}else{
+	    				$('.phone-form').find('.error').html('发送异常,请稍后再试！').show();
+	    				return false;
+	    			}
 	    		}
 	    	}
 		})
@@ -78,7 +84,7 @@ $(function(){
 	     }
 		 $.ajax({
 				type:"POST",
-		      	url:"/51jobplusCore/mobilesms/checkSms",
+		      	url:"/mobilesms/checkSms",
 		      	data:datacol,
 		    	dataType:"json",
 		    	async:false,
@@ -169,7 +175,7 @@ function updatePasswd(mobile,email,password){
 	}
 	$.ajax({
 		type:"POST",
-      	url:"/51jobplusCore/user/changePassword",
+      	url:"/user/changePassword",
       	data:col,
     	dataType:"json",
     	async:false,
@@ -197,7 +203,7 @@ function updatePasswd(mobile,email,password){
 function updateUserInfo(column,val){
 	$.ajax({
 		type:"POST",
-      	url:"/51jobplusCore/user/update",
+      	url:"/user/update",
       	data:column+val,
     	dataType:"json",
     	async:false,
@@ -240,15 +246,15 @@ function checkAjax(id,obj){
 					showtime(60,'email');
 					$.ajax({
 						type:"POST",
-				      	url:"/51jobplusCore/mobilesms/sendSms",
+				      	url:"/mobilesms/sendSms",
 				      	data:{mobileNo:email},
 				    	dataType:"json",
 				    	success:function(data){
 				    		if(data.returnStatus=='000'){
 				    			$('input[name=email_verification_code]').val(data.returnData);
-				    			
 				    		}else{
-				    			
+				    		    $('.email-form').find('.error').html('发送异常,请稍后再试！').show();
+				    			flag=false;
 				    		}
 				    	}
 					})
@@ -271,15 +277,15 @@ function checkAjax(id,obj){
 					showtime(60,'mobile');
 					$.ajax({
 						type:"POST",
-				      	url:"/51jobplusCore/mobilesms/sendSms",
+				      	url:"/mobilesms/sendSms",
 				      	data:{mobileNo:mobile},
 				    	dataType:"json",
 				    	success:function(data){
 				    		if(data.returnStatus=='000'){
 				    			$('input[name=mobile_verification_code]').val(data.returnData);
-				    			
 				    		}else{
-				    			
+				    			$('.phone-form').find('.error').html('发送异常,请稍后再试！').show();
+				            	flag=false;
 				    		}
 				    	}
 					})
@@ -294,7 +300,7 @@ function Isexist(email,type){
 	var isflag=true;
 	//1 是用户名  2是手机号  3是邮箱
 	$.ajax({
-			url:"/51jobplusCore/user/check/"+email+"/"+type,
+			url:"/user/check/"+email+"/"+type,
 			type : "POST", 
 			data :{id:email},
 			dataType:"json",

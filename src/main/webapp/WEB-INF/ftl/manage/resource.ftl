@@ -37,7 +37,7 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-info btn-sm" type="button" onclick="search()"><i
+                    <button class="btn btn-info btn-sm" type="button" onclick="search()" id="searchBtn"><i
                             class="icon-ok bigger-110"></i>查找
                     </button>
                     <button class="btn btn-sm" type="reset"><i class="icon-undo bigger-110"></i>重置</button>
@@ -87,6 +87,20 @@
         });
     }
 
+    function editCourse(id) {
+        parent.layer.open({
+            type: 2,
+            title: '课程编辑',
+            shadeClose: true,
+            shade: 0.5,
+            area: ['800px', '450px'],
+            content: $path_base + "/manage/backstage/course/" + id,
+            end : function(){
+                search();
+            }
+        });
+    }
+
     function search() {
         var search_id = $.trim($("#search_id").val());
         var search_type = $.trim($("#search_type").val());
@@ -103,8 +117,15 @@
                 $("tbody").empty();
                 if (data.returnStatus == '000') {
                     var obj = data.obj;
-                    var html = '<td><a href="' + obj.objUrl + '" target="_blank">' + obj.objId + '</a></td><td><a href="' + obj.objUrl + '" target="_blank">' + obj.objName + '</a></td><td>&emsp;<button class="btn btn-xs btn-danger" onclick="deleteResource(' + obj.objId + ',\'' + obj.objTblName + '\')"><i class="icon-trash bigger-120"></i></button></td>';
+
+                    var html;
+                    if (search_type == 3) {
+                        html = '<td><a href="' + obj.objUrl + '" target="_blank">' + obj.objId + '</a></td><td><a href="' + obj.objUrl + '" target="_blank">' + obj.objName + '</a></td><td>&emsp;<button class="btn btn-xs btn-danger" onclick="deleteResource(' + obj.objId + ',\'' + obj.objTblName + '\')"><i class="icon-trash bigger-120"></i></button>&emsp;<button class="btn btn-xs btn-warning" onclick="editCourse(' + obj.objId + ')"><i class="icon-edit bigger-100"></i></button></td>';
+                    } else
+                        html = '<td><a href="' + obj.objUrl + '" target="_blank">' + obj.objId + '</a></td><td><a href="' + obj.objUrl + '" target="_blank">' + obj.objName + '</a></td><td>&emsp;<button class="btn btn-xs btn-danger" onclick="deleteResource(' + obj.objId + ',\'' + obj.objTblName + '\')"><i class="icon-trash bigger-120"></i></button></td>';
                     $("tbody").append(html);
+                } else {
+                    $("tbody").append('<td colspan="3">暂无数据</td>');
                 }
             }
         });

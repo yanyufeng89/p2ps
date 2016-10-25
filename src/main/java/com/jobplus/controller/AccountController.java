@@ -22,6 +22,7 @@ import com.jobplus.pojo.AccountDetail;
 import com.jobplus.pojo.Page;
 import com.jobplus.service.IAccountDetailService;
 import com.jobplus.service.IAccountService;
+import com.jobplus.service.IUserService;
 
 @Controller
 @RequestMapping("/account")
@@ -32,6 +33,8 @@ public class AccountController {
 	private IAccountService accountService;
 	@Resource
 	private IAccountDetailService accountDetailService;
+	@Resource
+	private IUserService userService;
 	
 	
 	/**
@@ -53,6 +56,8 @@ public class AccountController {
 		Account act = new Account();
 		act.setUserid(Integer.parseInt(userid));
 		act = accountService.getAccountByUserId(Integer.parseInt(userid));
+		//个人操作数之类的信息放入session
+		userService.getMyHeadTopAndOper(request);
 		if (act.getId() != null) {
 			// accountId 不为空
 			record.setAccountid(act.getId());

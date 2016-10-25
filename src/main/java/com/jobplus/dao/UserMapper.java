@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface UserMapper {
-	
+
     int deleteByPrimaryKey(Integer userid);
 
     int insert(User record);
@@ -19,33 +19,33 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    
+
     int checkAccount(@Param("fieldName")String fieldName,@Param("fieldValue")String fieldValue);
 
     User getAccount(@Param("fieldName")String fieldName,@Param("fieldValue")String fieldValue);
 
-    
+
     /**
-     * 通过用户Id获取用户简单信息    包括用户统计   
+     * 通过用户Id获取用户简单信息    包括用户统计
      * @param userid
      * @return
      */
     User getUserSimpleInformation(@Param("userID")Integer userID);
-    
+
     /**
-     * 查找粉丝列表信息  
+     * 查找粉丝列表信息
      * @param userid
      * @return
      */
     List<User> getFansListInformation(@Param("collType")String collType,@Param("objectId")Integer objectId);
-    
+
     /**
      * 个人中心：我的粉丝列表
      * @param User record
      * @return
      */
-    List<User> getMyFansList(User record);    
-    int getMyFansListCount(User record);    
+    List<User> getMyFansList(User record);
+    int getMyFansListCount(User record);
     /**
      * 个人中心：我关注的人列表
      * @param User record
@@ -67,5 +67,27 @@ public interface UserMapper {
      * @return
      */
     int countList(User record);
+
+    /**
+     * 统计重名
+     *
+     * @param userName
+     * @return
+     */
+    int countUserName(String userName);
+
+    /**
+     * 统计个人用户完整度
+     *
+     * @param userId
+     * @return
+     */
+    int userInfoCompletion(int userId);
+
+
+    /**
+     * 文章打赏的人 
+     */
+    List<User> getRewardUsers(@Param("articleId")Integer articleId);
 
 }

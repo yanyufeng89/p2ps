@@ -140,7 +140,7 @@ public class BookShareServiceImpl implements IBookShareService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[7],record.getBookid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[8],record.getId(),record.getObjectNamePg());
+					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[8],record.getId(),record.getObjectNamePg(),"");
 			
 		} else if (record.getUserid() != null && record.getBookid() != null) {
 			// 新增书籍推荐语：1.个人书籍分享数+1; 2.书籍评论数+1

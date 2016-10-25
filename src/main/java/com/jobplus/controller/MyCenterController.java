@@ -802,7 +802,7 @@ public class MyCenterController {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
 			User user = (User) request.getSession().getAttribute("user");
-			logger.info("*getCurrentUser**获取当前登录用户信息****user=="+JSON.toJSONString(user));
+//			logger.info("*getCurrentUser**获取当前登录用户信息****user=="+JSON.toJSONString(user));
 			baseResponse.setUser(user);
 			baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
 			baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);

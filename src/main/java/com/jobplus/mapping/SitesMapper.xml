@@ -107,7 +107,8 @@
   <update id="updateReadSum" parameterType="java.lang.Integer">
     update tbl_sites
     set 
-      readSum = readSum + 1      
+      readSum = readSum + 1
+      ,updateTime = now()      
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
@@ -124,7 +125,7 @@
     where t.ID = #{id,jdbcType=INTEGER}
     <!-- 必须是有效资源 -->
     and t.isValid = 1
-    and u.isValid = 1
+   <!--  and u.isValid = 1 -->
   </select>
   
   

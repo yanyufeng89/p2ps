@@ -7,7 +7,7 @@ import com.jobplus.service.ISysLoginLogService;
 import com.jobplus.service.IUserService;
 import com.jobplus.thirdparty.weibo4j.Users;
 import com.jobplus.thirdparty.weibo4j.model.User;
-import com.jobplus.thirdparty.weibo4j.model.WeiboException;
+import com.jobplus.utils.Common;
 import com.jobplus.utils.HttpClientUtils;
 import com.jobplus.utils.ParsProperFile;
 import com.qq.connect.QQConnectException;
@@ -79,7 +79,7 @@ public class ThirdPartyLoginController {
             String openID = null;
             if (accessTokenObj.getAccessToken().equals("")) {
                 ModelAndView mv = new ModelAndView();
-                mv.setViewName("500");
+                mv.setViewName("authorize");
                 return mv;
             } else {
                 accessToken = accessTokenObj.getAccessToken();
@@ -95,15 +95,16 @@ public class ThirdPartyLoginController {
                 OauthLoginInfo loginInfo = oauthLoginInfoService.selectByNameAndOpenId(oauthLoginInfo);
                 if (loginInfo == null) {
                     HttpClient htc = new HttpClient();
-                    Response rsp = htc.get("https://graph.qq.com/user/get_user_info?oauth_consumer_key=101341795&access_token=" + accessToken + "&openid=" + openID + "&format=json");
+                    Response rsp = htc.get("https://graph.qq.com/user/get_user_info?oauth_consumer_key=" + ParsProperFile.getQQConfigString("app_ID") + "&access_token=" + accessToken + "&openid=" + openID + "&format=json");
                     JSONObject userObj = new JSONObject(rsp.asString());
-                    oauthLoginInfo.setNickname(userObj.getString("nickname"));
+                    oauthLoginInfo.setNickname(Common.filterEmoji(userObj.getString("nickname")));
                     oauthLoginInfo.setHeadicon(userObj.getString("figureurl_qq_1"));
                 }
                 return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            logger.info(e.getMessage());
         }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("500");
@@ -147,7 +148,7 @@ public class ThirdPartyLoginController {
             com.jobplus.thirdparty.weibo4j.http.AccessToken accessToken = oauth.getAccessTokenByCode(code);
             if (accessToken == null) {
                 ModelAndView mv = new ModelAndView();
-                mv.setViewName("500");
+                mv.setViewName("authorize");
                 return mv;
             } else {
                 Users um = new Users(accessToken.getAccessToken());
@@ -164,8 +165,9 @@ public class ThirdPartyLoginController {
                 }
                 return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
             }
-        } catch (WeiboException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            logger.info(e.getMessage());
         }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("500");
@@ -185,6 +187,7 @@ public class ThirdPartyLoginController {
             response.sendRedirect(url);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 
@@ -203,7 +206,7 @@ public class ThirdPartyLoginController {
             String tokenStr = HttpClientUtils.doGet("https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + ParsProperFile.getString("wechat.AppID") + "&secret=" + ParsProperFile.getString("wechat.AppSecret") + "&code=" + code + "&grant_type=authorization_code");
             if (StringUtils.isBlank(tokenStr) || tokenStr.indexOf("errcode") > -1) {
                 ModelAndView mv = new ModelAndView();
-                mv.setViewName("500");
+                mv.setViewName("authorize");
                 return mv;
             }
             JSONObject tokenObj = new JSONObject(tokenStr);
@@ -220,12 +223,19 @@ public class ThirdPartyLoginController {
             if (loginInfo == null) {
                 String userStr = HttpClientUtils.doGet("https://api.weixin.qq.com/sns/userinfo?access_token=" + access_token + "&openid=" + openid);
                 JSONObject userObj = new JSONObject(userStr);
-                oauthLoginInfo.setNickname(transStringCoding(userObj.getString("nickname")));
+                oauthLoginInfo.setNickname(Common.filterEmoji(transStringCoding(userObj.getString("nickname"))));
                 oauthLoginInfo.setHeadicon(userObj.getString("headimgurl"));
+                if (StringUtils.isBlank(oauthLoginInfo.getNickname())) {
+                    logger.info("******获取用户信息失败******access_token=" + access_token + "&openid=" + openid + ">>>>>>>>result:" + userStr);
+                    ModelAndView mv = new ModelAndView();
+                    mv.setViewName("authorize");
+                    return mv;
+                }
             }
             return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.info(e.getMessage());
         }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("500");
@@ -244,7 +254,7 @@ public class ThirdPartyLoginController {
         ModelAndView mv = new ModelAndView();
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {
-            mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:" + backurl : "redirect:/");
+            mv.setViewName(StringUtils.isNotBlank(backurl) ? "redirect:" + backurl : "redirect:/index/loginSuccess");
             return mv;
         }
         try {
@@ -286,7 +296,7 @@ public class ThirdPartyLoginController {
                 mv.addObject("message", "登录成功");
                 mv.addObject("user", user);
                 // 返回视图名设置
-                mv.setViewName("redirect:/");
+                mv.setViewName("redirect:/index/loginSuccess");
             }
             return mv;
         } catch (AuthenticationException e) {

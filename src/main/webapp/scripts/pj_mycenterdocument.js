@@ -76,9 +76,8 @@ $(function(){
     })
     //判断当前点击的文档格式是否转换 未转换的不能打开
     $('.doctitle').live('click',function(){
-    	var isconverter=$(this).attr('data-isconverter');
-    	if(isconverter!=1){//未转换或者未转换成功
-    		/*if($('p.error').length==0)*/
+    	var docid=$(this).attr('data-docid');
+    	if(!isConverter(docid)){//未转换或者未转换成功
     		$(this).after('<p class="error" style="display:block"><i class="tips_icon"></i>当前文档转换中...,请稍后再试!</p>');
     		//一段时间之后自动隐藏提示信息
     		setInterval("startrequest()",3000); 
@@ -132,8 +131,35 @@ $(function(){
 	$('.detail-list .goBtn').live('click',function(){
 		detailContentPage($(this));
 	});
-	
+	//简介展开与收起
+	$('#docbrief').toggle(function(){
+		$('#docDescWrap-3').show();
+		$(this).addClass('ic-arrow-up').removeClass('ic-arrow-down');
+	},function(){
+		$('#docDescWrap-3').hide();
+		$(this).removeClass('ic-arrow-up').addClass('ic-arrow-down');
+	})
+
 })
+//当前文档是否转换
+function isConverter(docid){
+	var isconvert=true;
+	$.ajax({
+		type:"POST",
+      	url:"/docs/isConverted",
+      	data:{id:docid},
+    	dataType:"json",
+    	async:false,
+    	success:function(data){
+    		if(data.returnStatus!='000'){
+    			isconvert=false;
+    		}else{
+    			isconvert=true;
+    		}
+    	}
+	})
+	return isconvert;
+}
  //定时刷新界面上边框的颜色
 function startrequest() { 
 	  $('p.error').hide();
@@ -189,13 +215,13 @@ function docDownLoad(obj){
      $('.modal-wrapper').remove();
 	 $.ajax({
 	    	type:"POST",
-	      	url:projectName+"docs/downloadDocs",
+	      	url:"/docs/downloadDocs",
 	      	data:{downvalue:downvalue,id:docid,userid:docCreatePerson,filePath:filePath},
 	    	dataType:"json",
 	    	 async:false, 
 	    	success:function(data){
 	    		if(data.returnStatus=='000'){//返回成功
-	    			window.location.href=docurl+'?filename='+title+'.'+docsuffix;
+	    			window.location.href=encodeURI(docurl+'?filename='+title+'.'+docsuffix);
 	    			$('#docfollow').attr('data-downvalue','0');
 	    		}else if(data.returnStatus=='-999'){
 	    			//文档资源不存在 或者url不合法
@@ -238,7 +264,7 @@ function docLoadMore(obj){
     var docid=$('input[name=docid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"docs/loadComments",
+      	url:"/docs/loadComments",
       	data:{pageNo:Number(pageNo)+1,docid:docid},
     	dataType:"json",
     	success:function(data){
@@ -255,8 +281,9 @@ function docLoadMore(obj){
           	   $(".headiconintotem").empty();
           	   $('.loadmore').attr('data-pageno',Number(pageNo)+1);
           	   obj.removeClass('loading').empty().append('更多');
-          	   if(Number(sumpage)==Number(pageNo)+1)
-          		 $('.loadmore').hide();
+          	   if(Number(sumpage)==Number(pageNo)+1){
+          		  $('.loadmore').hide().prev().css('border-bottom','none'); 
+          	   }
           	   intoUserInfo();
     		}else{
     			
@@ -264,18 +291,20 @@ function docLoadMore(obj){
     	}
     })
 };
-//话题详情  删除评论
+//文档详情  删除评论
 function cancelComment(obj){
 	var docid=$('input[name=docid]').val();
 	var id=obj.attr('data-recommend');
 	$.ajax({
 			type:"POST",
-	     	url:projectName+"docs/delComment",
+	     	url:"/docs/delComment",
 	     	data:{id:id,docid:docid},
 			dataType:"json",
 		    success:function(data){
 		    	if(data.returnStatus=='000'){//返回成功
 		    		obj.parents('.item').remove();
+		    		$('#doc-commcount').html('用户评价('+(Number($('#doc-commcount').attr('data-num'))-1)+')');
+		            $('#doc-commcount').attr('data-num',Number($('#doc-commcount').attr('data-num'))-1);
 		    	}else{
 		    		
 		    	}
@@ -301,6 +330,10 @@ function commentDocs(obj,type){//type 1代表用户直接发布评价语  0代�
 	else{
 	     relationid=docid;
 	}
+	//内容为空
+	if($.trim(comments).length==0){
+		return false;
+	}
 	//字数不能超过一千字
 	var len=comments.length+(comments.match(/[^\x00-\xff]/g) ||"").length;
 	if(len>1000){
@@ -312,7 +345,7 @@ function commentDocs(obj,type){//type 1代表用户直接发布评价语  0代�
 	$this=obj;
 	$.ajax({
 		type:"POST",
-     	url:projectName+"docs/addComment",
+     	url:"/docs/addComment",
      	data:{docid:docid,commentby:commentby,comments:comments,objCreatepersonPg:docCreatePerson,relationidPg:docid,objectNamePg:objectNamePg},
 	    dataType:"json",
 	    success:function(data){
@@ -333,6 +366,7 @@ function commentDocs(obj,type){//type 1代表用户直接发布评价语  0代�
          	   if($('.loadmore').length>0){
          		   $('.loadmore').before($('.headiconintotem').html());
          	   }else{
+         		   $('.uncomment').remove();
              	   $('.detailcomment-list').append($('.headiconintotem').html());
          	   }
          	   $(".headiconintotem").empty();
@@ -341,7 +375,8 @@ function commentDocs(obj,type){//type 1代表用户直接发布评价语  0代�
          	   $('.commentcontent').val('');
          	   //发布成功之后去掉提示信息
        	       obj.parent().find('.errortip').remove();
-
+               $('#doc-commcount').html('用户评价('+(Number($('#doc-commcount').attr('data-num'))+1)+')');
+               $('#doc-commcount').attr('data-num',Number($('#doc-commcount').attr('data-num'))+1);
 	    	}else{
 	    		
 	    	}
@@ -363,7 +398,7 @@ function docCollect(obj){
 	var collectcount=obj.attr('data-collectcount');
 	$.ajax({
 		type:"POST",
-     	url:projectName+"docs/collectDocs",
+     	url:"/docs/collectDocs",
      	data:{judgeTodo:iscollect,objectid:docid},
 	    dataType:"json",
 	    success:function(data){
@@ -393,7 +428,7 @@ function docLike(obj){
 	var likecount=obj.attr('data-likecount');
 	$.ajax({
 		type:"POST",
-     	url:projectName+"docs/clickLikeOnDoc",
+     	url:"/docs/clickLikeOnDoc",
      	data:{likeOperate:islike,id:relationidPg,objCreatepersonPg:docCreatePerson,relationidPg:relationidPg,objectNamePg:objectNamePg},
      	dataType:"json",
      	success:function(data){
@@ -419,7 +454,7 @@ function docLike(obj){
 function deleteDocs(conditions,obj){
   	   $.ajax({
          	type:"POST",
-         	url:projectName+"myCenter/deleteDocs",
+         	url:"/myCenter/deleteDocs",
          	data:{condition:conditions},
          	dataType:"json",
          	success:function(data){
@@ -457,7 +492,7 @@ function deleteMyCollects(conditions,obj,actiontype){
 	  //actionType 下载0 收藏1
 	   $.ajax({
       	type:"POST",
-      	url:"/51jobplusCore/myCenter/deleteMyCollects",
+      	url:"/myCenter/deleteMyCollects",
       	data:{condition:conditions,actionType:actiontype,collecttype:"tbl_docs"},
       	dataType:"json",
       	success:function(data){

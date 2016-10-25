@@ -422,6 +422,20 @@
 			<columnRenamingRule searchString="^D_" replaceString=""/>
 		</table>
 		
+		<table tableName="tbl_article_supportlist" domainObjectName="SupportList"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_schoolInfo" domainObjectName="SchoolInfo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
 
 	</context>
 </generatorConfiguration>

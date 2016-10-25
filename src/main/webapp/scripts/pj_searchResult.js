@@ -4,7 +4,12 @@ $(function () {
     if ($currentType.length == 1) {
         $currentType.show();
         $currentType.parent().show();
-        $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - 111 - $pos.width()}).show();
+        var offset = 111;
+        if ($currentType.attr("data-pid") == '300')
+            offset = 135;
+        if ($currentType.attr("data-pid") == '400')
+            offset = 90;
+        $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - Number(offset) - $pos.width()}).show();
     }
     //导航栏
     var $posbox = $('#searchCollapse .select-1 span');
@@ -22,13 +27,23 @@ $(function () {
                 if ((Number($pos.data("index")) < 12 && Number(index) > 11) || (Number($pos.data("index")) > 11 && Number(index) < 12)) {
                     $currentType.show();
                     $currentType.parent().show();
-                    $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - 111 - $pos.width()}).show();
+                    var offset = 111;
+                    if ($currentType.attr("data-pid") == '300')
+                        offset = 135;
+                    if ($currentType.attr("data-pid") == '400')
+                        offset = 90;
+                    $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - Number(offset) - $pos.width()}).show();
                 }
             }
             $('.select-2 .2-list').each(function () {
                 if ($(this).data('pid') == id && $(this).data('index') == index) {
                     $(this).parent().show();
-                    $(this).parent().find('.select-2-arrow').css({left: positonleft - 165 + $("span[data-id='" + $(this).attr("data-pid") + "']").width()}).show();
+                    var offset = 165;
+                    if ($(this).data('pid') == '300')
+                        offset = 158;
+                    if ($(this).data('pid') == '400')
+                        offset = 172;
+                    $(this).parent().find('.select-2-arrow').css({left: positonleft - Number(offset) + $("span[data-id='" + $(this).attr("data-pid") + "']").width()}).show();
                     $(this).show();
                 }
             })
@@ -47,7 +62,12 @@ $(function () {
                 var $pos = $("span[data-id='" + $currentType.attr("data-pid") + "']");
                 $currentType.show().siblings().hide();
                 $currentType.parent().show();
-                $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - 111 - $pos.width()}).show();
+                var offset = 111;
+                if ($currentType.attr("data-pid") == '300')
+                    offset = 135;
+                if ($currentType.attr("data-pid") == '400')
+                    offset = 90;
+                $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - Number(offset) - $pos.width()}).show();
             }
         }
     });
@@ -59,7 +79,12 @@ $(function () {
             var $pos = $("span[data-id='" + $currentType.attr("data-pid") + "']");
             $currentType.show().siblings().hide();
             $currentType.parent().show();
-            $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - 111 - $pos.width()}).show();
+            var offset = 111;
+            if ($currentType.attr("data-pid") == '300')
+                offset = 135;
+            if ($currentType.attr("data-pid") == '400')
+                offset = 90;
+            $currentType.parent().find(".select-2-arrow").css({left: $pos.position().left - Number(offset) - $pos.width()}).show();
         }
     });
 
@@ -74,7 +99,7 @@ $(function () {
         $(this).addClass("active");
         reloadPage();
     });
-
+    
 
 })
 

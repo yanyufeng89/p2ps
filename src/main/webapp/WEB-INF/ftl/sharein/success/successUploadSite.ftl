@@ -28,7 +28,7 @@
 							  <span class="tips">补充信息</span></li>
 							<li class="step-bar active"></li>
 							<li class="step-num active">3
-							  <span class="tips">分享成功</span></li>
+							  <span class="tips">推荐成功</span></li>
 						  </ul>
 						</div>
 						<div class="hd">
@@ -38,9 +38,9 @@
 							</div>
 							<div class='addtreasure'>
 								系统自动给您加上<span class="success-upload-tips">1财富值</span>的奖励
+								<a href="/myCenter/getSharedSiteList" class='checkshare'>&nbsp;&nbsp;查看已分享的站点>></a>
 							</div>
-							 <a href="/51jobplusCore/myCenter/getSharedSiteList" class='checkshare'>查看已分享的站点>></a>
-							 <a class="goon-upload log-xsend"  href="/51jobplusCore/sharein/searchuploadFile?type=5">继续分享</a>
+							  <a class="goon-upload log-xsend"  href="/sharein/searchuploadFile?type=5">继续分享</a>
 						  </div>
 						</div>
 						

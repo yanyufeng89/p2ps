@@ -1,8 +1,11 @@
 package com.jobplus.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.jobplus.pojo.Article;
 import com.jobplus.pojo.MyCollect;
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.SupportList;
 
 public interface IArticleService {
 
@@ -65,5 +68,13 @@ public interface IArticleService {
 	int updateByPrimaryKeyWithBLOBs(Article record);
 
 	int updateByPrimaryKey(Article record);
+	
+	/**
+	 * 打赏 
+	 * @param article
+	 * @param supt
+	 * @return
+	 */
+	int reward(HttpServletRequest request,Article article,SupportList supt);
 
 }

@@ -16,7 +16,7 @@ var userInfo;
 				items: 1,
 				itemsOnPage: 1,
 				pages: 0,
-				displayedPages: 5,
+				displayedPages:10,
 				edges: 2,
 				currentPage: 1,
 				hrefTextPrefix: '#page-',
@@ -121,7 +121,7 @@ var userInfo;
 			}
 
 			// Generate start edges
-			if (interval.start > 0 && o.edges > 0) {
+			/*if (interval.start > 0 && o.edges > 0) {
 				var end = Math.min(o.edges, interval.start);
 				for (i = 0; i < end; i++) {
 					methods._appendItem.call(this, i);
@@ -131,26 +131,30 @@ var userInfo;
 				} else if (interval.start - o.edges == 1) {
 					methods._appendItem.call(this, o.edges);
 				}
-			}
-
-			// Generate interval links
-			for (i = interval.start; i < interval.end; i++) {
-				methods._appendItem.call(this, i);
-			}
-
-			// Generate end edges
-			if (interval.end < o.pages && o.edges > 0) {
-				if (o.pages - o.edges > interval.end && (o.pages - o.edges - interval.end != 1)) {
-					$panel.append('<li class="disabled"><span class="ellipse">' + o.ellipseText + '</span></li>');
-				} else if (o.pages - o.edges - interval.end == 1) {
-					methods._appendItem.call(this, interval.end++);
-				}
-				var begin = Math.max(o.pages - o.edges, interval.end);
-				for (i = begin; i < o.pages; i++) {
+			}*/
+			/* if(o.pages>10){
+				 for (i = interval.start; i < 10; i++) {
+						methods._appendItem.call(this, i);
+				}	
+	        }else{*/
+	        	// Generate interval links
+				for (i = interval.start; i < interval.end; i++) {
 					methods._appendItem.call(this, i);
 				}
-			}
-
+				// Generate end edges
+				/*if (interval.end < o.pages && o.edges > 0) {
+					if (o.pages - o.edges > interval.end && (o.pages - o.edges - interval.end != 1)) {
+						$panel.append('<li class="disabled"><span class="ellipse">' + o.ellipseText + '</span></li>');
+					} else if (o.pages - o.edges - interval.end == 1) {
+						methods._appendItem.call(this, interval.end++);
+					}
+					var begin = Math.max(o.pages - o.edges, interval.end);
+					for (i = begin; i < o.pages; i++) {
+						methods._appendItem.call(this, i);
+					}
+				}*/
+	       /* }*/
+				
 			// Generate Next link
 			if (o.nextText) {
 				methods._appendItem.call(this, o.currentPage + 1, {text: o.nextText, classes: 'next'});
@@ -304,6 +308,9 @@ function initPageData(page,moduleType){
 	  case 'topicsearch' :
 		  initTopicPageData(page);
 		  break;
+	  case 'booksearch' :
+		  initBookPageData(page);
+		  break;
 	  case 'search' :
 		  initSearch(page);
 		  break;
@@ -313,7 +320,7 @@ function initPageData(page,moduleType){
 function initMyFansPageData(page){
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyFans",
+		url:"/myCenter/getMyFans",
 		data:{userid:userInfo.userid,pageNo:page},
 		dataType:"json",
 		success:function(data){
@@ -349,12 +356,13 @@ function initMyFansPageData(page){
 			 intoUserInfo();
 		  }
 		})
+		window.scrollTo(0,0);
 }
 //我的关注
 function initMyAttenPageData(page){
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/getMyAttenMan",
+		url:"/myCenter/getMyAttenMan",
 		data:{userid:userInfo.userid,pageNo:page},
 		dataType:"json",
 		success:function(data){
@@ -372,12 +380,13 @@ function initMyAttenPageData(page){
 			 intoUserInfo();
 		}
 	})
+	window.scrollTo(0,0);
 }
 //加载文档已分享(ispublic 1代表已分享  0是私有  2是草稿)
 function initDocSharePageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyDocsUploaded",
+     	url:"/myCenter/getMyDocsUploaded",
      	data:{pageNo:page,ispublic:1},
      	dataType:"json",
      	ansync:false,
@@ -397,12 +406,13 @@ function initDocSharePageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载文档私有
 function initDocPrivatePageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyDocsUploaded",
+     	url:"/myCenter/getMyDocsUploaded",
      	data:{pageNo:page,ispublic:0},
      	dataType:"json",
      	ansync:false,
@@ -422,12 +432,13 @@ function initDocPrivatePageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载文档草稿
 function initDocDrafPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyDocsUploaded",
+     	url:"/myCenter/getMyDocsUploaded",
      	data:{pageNo:page,ispublic:2},
      	dataType:"json",
      	ansync:false,
@@ -447,12 +458,13 @@ function initDocDrafPageData(page){
       	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载文档下载
 function initDocDownPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyDocsDowned",
+     	url:"/myCenter/getMyDocsDowned",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -472,12 +484,13 @@ function initDocDownPageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载文档收藏
 function initDocColPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyDocsCollected",
+     	url:"/myCenter/getMyDocsCollected",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -498,13 +511,14 @@ function initDocColPageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 
 //加载书籍收藏
 function initBookColPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getCollectedBookList",
+     	url:"/myCenter/getCollectedBookList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -519,13 +533,14 @@ function initBookColPageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 
 //加载书籍分享
 function initBookSharePageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getSharedBookList",
+     	url:"/myCenter/getSharedBookList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -541,12 +556,13 @@ function initBookSharePageData(page){
 
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载课程收藏
 function initCourseColPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getCollectedCourseList",
+     	url:"/myCenter/getCollectedCourseList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -562,12 +578,13 @@ function initCourseColPageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载课程分享
 function initCourseSharePageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getSharedCourseList",
+     	url:"/myCenter/getSharedCourseList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -584,12 +601,13 @@ function initCourseSharePageData(page){
 
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载话题分享
 function initTopicSharePageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyTopicsUploaded",
+     	url:"/myCenter/getMyTopicsUploaded",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -605,12 +623,13 @@ function initTopicSharePageData(page){
 
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载话题关注
 function initTopicAttentionPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyTopicsAttention",
+     	url:"/myCenter/getMyTopicsAttention",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -629,12 +648,13 @@ function initTopicAttentionPageData(page){
 
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载话题回复
 function initTopicCommentPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getMyTopicsComment",
+     	url:"/myCenter/getMyTopicsComment",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -654,12 +674,13 @@ function initTopicCommentPageData(page){
 
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载文章分享
 function initArticleSharePageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getSharedArticleList",
+     	url:"/myCenter/getSharedArticleList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -673,19 +694,20 @@ function initArticleSharePageData(page){
      			}
      			
      			//加载模板
-     		   $('.pagetemplate').setTemplateURL(projectName+'courseShareTemplate.html');
+     		   $('.pagetemplate').setTemplateURL(projectName+'articleShareTemplate.html');
           	   $('.pagetemplate').processTemplate(datamodel);
           	   $('.successshare .docs-list ul').empty().append($('.pagetemplate').html());
           	   $('.pagetemplate').empty();
 
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载文章收藏
 function initArticleColPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getCollectedArticleList",
+     	url:"/myCenter/getCollectedArticleList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -704,12 +726,13 @@ function initArticleColPageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载站点分享
 function initSiteSharePageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getSharedSiteList",
+     	url:"/myCenter/getSharedSiteList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -730,12 +753,13 @@ function initSiteSharePageData(page){
 
      	}
 	})
+	window.scrollTo(0,0);
 }
 //加载站点收藏
 function initSiteColPageData(page){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getCollectedSiteList",
+     	url:"/myCenter/getCollectedSiteList",
      	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -754,13 +778,14 @@ function initSiteColPageData(page){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //话题评论分页
 function initCommListPageData(page){
 	var topicid=$('#content input[name=titleid]').val();
 	$.ajax({
 		type:"POST",
-     	url:projectName+"topics/getPartTopicsComment",
+     	url:"/topics/getPartTopicsComment",
      	data:{topicsid:topicid,type:'3',pageNo:page},
      	dataType:"json",
      	ansync:false,
@@ -813,7 +838,7 @@ function initCommListPageData(page){
 function initAllUnReadNewsPageData(page,type){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/getAllSms",
+     	url:"/myCenter/getAllSms",
      	data:{pageNo:page,islook:type},
      	dataType:"json",
      	ansync:false,
@@ -845,12 +870,13 @@ function initAllUnReadNewsPageData(page,type){
           	   $('.pagetemplate').empty();
      	}
 	})
+	window.scrollTo(0,0);
 }
 //财富收益或者支出
 function initFortuneComeOrExpendPageData(page,type){
 	$.ajax({
 		type:"POST",
-     	url:projectName+"account/getDetailListByRecord",
+     	url:"/account/getDetailListByRecord",
      	data:{pageNo:page,changetype:type},
      	dataType:"json",
      	ansync:false,
@@ -865,10 +891,39 @@ function initFortuneComeOrExpendPageData(page,type){
           	   $('.pagetemplate').empty();
      	 }
      	})
+    //跳到顶部
+	window.scrollTo(0,0);
 }
 //话题专区--加载话题列表
 function initTopicPageData(page){
-	var theme = $("#filterCollapse li.last span.active").attr("data-index");
+
+	var Condition = $("#topics_input").val();
+	var sortType = $("#filterCollapse li.last span.active").attr("data-index");
+	var sharedType = $("#filterCollapse li.first span.active").attr("data-index");
+	var tags = "";
+	$.ajax({
+		type:"POST",
+		url:projectName + "topics/fore/search/" + sharedType,
+		data:{Condition:Condition,sortType:sortType,tags:tags,pages:page-1},
+		dataType:"json",
+		ansync:false,
+		success:function(data){
+			var array = eval(data.result);
+			var datamodel={
+				result:array,
+				reCount:data.reCount
+			}
+			//跳到顶部
+			window.scrollTo(0,0);
+			//加载模板
+			$('.pagetemplate').setTemplateURL(projectName+'topicSearchTemplate.html');
+			$('.pagetemplate').processTemplate(datamodel);
+			$('.items_area').empty().append($('.pagetemplate').html());
+			$('.pagetemplate').empty();
+		}
+	})
+
+/*	var theme = $("#filterCollapse li.last span.active").attr("data-index");
 	var topicstype = $("#filterCollapse li.first span.active").attr("data-index");
 	$.ajax({
 		type:"POST",
@@ -881,17 +936,45 @@ function initTopicPageData(page){
 				topicsPage:data.topicsPage.list,
 				topiclen:data.topicsPage.count
 			}
+			//跳到顶部
+			window.scrollTo(0,0);
 			//加载模板
 			$('.pagetemplate').setTemplateURL(projectName+'topicSearchTemplate.html');
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').empty().append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
+		}
+	})*/
+}
+//书籍专区专区--加载书籍列表
+function initBookPageData(page){
+	var Condition = $("#books_input").val();
+	var sortType = $("#filterCollapse li.last span.active").attr("data-index");
+	var sharedType = $("#filterCollapse li.first span.active").attr("data-index");
+	var tags = "";
+	$.ajax({
+		type:"POST",
+		url:projectName + "books/fore/area/" + sharedType,
+		data:{Condition:Condition,sortType:sortType,tags:tags,pages:page-1},
+		dataType:"json",
+		ansync:false,
+		success:function(data){
+			var array = eval(data.result);
+			var datamodel={
+				result:array,
+				reCount:data.reCount
+			}
 			//跳到顶部
 			window.scrollTo(0,0);
+			//加载模板
+			$('.pagetemplate').setTemplateURL(projectName+'bookSearchTemplate.html');
+			$('.pagetemplate').processTemplate(datamodel);
+			$('.items_area').empty().append($('.pagetemplate').html());
+			$('.pagetemplate').empty();
 		}
 	})
 }
-//search
+//search 搜索
 function initSearch(page){
 	var Condition = $("#searchres_input").val();
 	var protoType = $("#searchCollapse li:last-child span.active").attr("data-objtype");
@@ -915,14 +998,15 @@ function initSearch(page){
 			var datamodel={
 				result:array,
 			}
+			//跳到顶部
+			window.scrollTo(0,0);
 			
 			//加载模板
 			$('.pagetemplate').setTemplateURL(projectName+'searchTemplate.html');
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').empty().append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
-			//跳到顶部
-			window.scrollTo(0,0);
+			
 		}
 	})
 }

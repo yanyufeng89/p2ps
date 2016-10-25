@@ -88,7 +88,7 @@
 	</welcome-file-list>
 	<!-- 配置SESSION超时，单位是分钟 -->
 	<session-config>
-		<session-timeout>10</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
@@ -142,6 +142,11 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.ico</url-pattern>
+	</servlet-mapping>
 <!-- 	
 	<error-page>
 		<error-code>500</error-code>
@@ -151,6 +156,6 @@
 		<error-code>404</error-code>
 		<location>/error/404</location>
 	</error-page>
-	
+
 
 </web-app>

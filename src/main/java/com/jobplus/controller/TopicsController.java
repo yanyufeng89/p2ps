@@ -1,6 +1,7 @@
 package com.jobplus.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -97,7 +98,7 @@ public class TopicsController {
 		mv.addObject("record", record);
 		// 返回视图名设置
 		mv.setViewName("redirect:success");
-		logger.info("**addTop*话题、提问 发布 （新增话题）***record==" + JSON.toJSONString(record));
+		logger.info("**addTop*话题、提问 发布 （新增话题）***record==" );//+ JSON.toJSONString(record));
 		return mv;
 	}
 	
@@ -139,7 +140,7 @@ public class TopicsController {
 			mv.setViewName("404");
 			return mv;
 		}
-		logger.info("getTopicsDetail话题详情   包括话题的回答    粉丝列表   相关话题列表   sortType排序方式      1是时间排序      2是评论数排序    默认按照时间排序   TopicsComment record=== "+JSON.toJSONString(record)+"*****");
+//		logger.info("getTopicsDetail话题详情   包括话题的回答    粉丝列表   相关话题列表   sortType排序方式      1是时间排序      2是评论数排序    默认按照时间排序   TopicsComment record=== "+JSON.toJSONString(record)+"*****");
 //		logger.info("****getTopicsDetail*******topicsDetail**"+JSON.toJSONString(topicsDetail));
 		
 		mv.addObject("topicsDetail", topicsDetail);
@@ -156,7 +157,7 @@ public class TopicsController {
 	
 	/**
 	 * 按排序要求获取话题下面的回答 列表
-	 * 
+	 * 加载更多评论
 	 * @param request
 	 * @param response
 	 * @param userId
@@ -174,8 +175,8 @@ public class TopicsController {
 			Page<TopicsComment> topicsCommentList = topicsCommentService.getSortTopicsCommentsByTopicId(record);
 			logger.info("***/getSortTopicsCommentsByTopicId****按排序要求获取话题下面的回答 列表**   TopicsComment record=== "
 					+ JSON.toJSONString(record) + "*****");
-			logger.info("***/getSortTopicsCommentsByTopicId****按排序要求获取话题下面的回答 列表**topicsCommentList**"
-					+ JSON.toJSONString(topicsCommentList));
+			logger.info("***/getSortTopicsCommentsByTopicId****按排序要求获取话题下面的回答 列表**topicsCommentList**");
+//					+ JSON.toJSONString(topicsCommentList));
 			basesResponse.setObj(topicsCommentList);
 			basesResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
 			basesResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
@@ -204,8 +205,8 @@ public class TopicsController {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
 			Page<TopicsComment> topicsCommentPage = topicsCommentService.getPartTopicsComments(topicsComment);
-			logger.info("**getPartTopicsComment 获取话题的评论 或者 话题下回答的评论 **topicsCommentList=="
-					+ JSON.toJSONString(topicsCommentPage));
+			logger.info("**getPartTopicsComment 获取话题的评论 或者 话题下回答的评论 **topicsCommentList==");
+//					+ JSON.toJSONString(topicsCommentPage));
 			baseResponse.setObj(topicsCommentPage);
 			baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
 			baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
@@ -246,7 +247,7 @@ public class TopicsController {
 					topicsCommentResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
 				}
 				
-				logger.info("**insertTopicsComment **话题 新增回答**topicsComment=="+JSON.toJSONString(comment));
+				logger.info("**insertTopicsComment **话题 新增回答**topicsComment ");//+JSON.toJSONString(comment));
 				return JSON.toJSONString(topicsCommentResponse);
 			} else {
 				topicsCommentResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
@@ -309,26 +310,66 @@ public class TopicsController {
 	}
 
 	/**
-	 * @param theme  1热门话题 2最新话题 3等待回答 4精彩问答
-	 * @param record 参数
+	 * 话题专区
+	 * @param Condition
+	 *            查询关键字
+	 * @param sharedType
+	 *            行业分类
+	 * @param tags
+	 *            标签
+	 * @param pages
+	 *            第几页，默认第0页(页标从0开始)
+	 * @param rows
+	 *            每页几条数据，默认10条
+	 * @param sortType
+	 *            话题专区   话题分类参数         1：热门话题   2：最新话题    3:等待回答      4:精彩回答              默认为1      
 	 * @return
 	 */
-	@RequestMapping(value = "/fore/search/{theme}")
-	public ModelAndView search(@RequestHeader("Accept") String encoding, @PathVariable int theme, Topics record) {
-		String topicstype = record.getTopicstype();
-		Page<Topics> topicsPage = topicsService.searchTopics(theme, record);
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/fore/search/{sharedType}")
+	public ModelAndView search(@RequestHeader("Accept") String encoding, HttpServletRequest request,@PathVariable String sharedType,
+			@RequestParam(required = false) String Condition, 
+			@RequestParam(required = false) String tags, @RequestParam(required = false)String pages, @RequestParam(required = false)String sortType) {
+		ModelAndView mv = new ModelAndView();
+		//如果sharedType==0  表示查询所有分类
+		sharedType = "0".equals(sharedType)?"":sharedType;
+		sortType = StringUtils.isBlank(sortType)?"1":sortType;
+		
+		//这里设置  默认每页显示条数
+		String rows = "10";
+		//搜索结果 List
+		@SuppressWarnings("static-access")
+		List<?> topicList = solrJUtils.searchTopics(Condition, sharedType, tags, pages, rows, sortType);
+		
+		//搜索结果总条数
+		Long reCount = topicList.size()>0?(Long)topicList.get(0):0L;
+		//搜索结果集
+		String result =  topicList.size()>0?topicList.get(1).toString():"";
+		
+		logger.info("********Condition=="+Condition+"********sharedType=="+sharedType+"********页数    pages=="+pages+"********分页大小 默认10 rows=="+rows+"********总条数reCount=="+reCount);
+		
 		if (encoding.indexOf("application/json") != -1) {
-			//分页post请求
-			Map<String, Page<Topics>> map = new HashMap<String, Page<Topics>>();
-			map.put("topicsPage", topicsPage);
+			// post请求
+			@SuppressWarnings("rawtypes")
+			Map map = new HashMap<String, String>();
+			map.put("result", result);
+			map.put("reCount", reCount);
+			map.put("rows", rows);
+			map.put("sortType", sortType);
 			return new ModelAndView(new MappingJackson2JsonView(), map);
 		} else {
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("theme", theme);
-			mv.addObject("topicstype", topicstype == null ? "" : topicstype);
-			mv.addObject("topicsPage", topicsPage);
-			mv.addObject("typeConfigs", typeConfigService.getAllParentTypeConfigs());
+
 			mv.setViewName("topicDivision");
+			mv.addObject("result", result);
+			mv.addObject("reCount", reCount);
+			mv.addObject("rows", rows);
+			mv.addObject("sortType", sortType);
+			mv.addObject("typeConfigs", typeConfigService.getAllParentTypeConfigs());	
+			
+			mv.addObject("preSharedType", sharedType);
+			mv.addObject("preCondition", Condition);
+			mv.addObject("prePages", pages);
+			
 			return mv;
 		}
 	}
@@ -346,7 +387,7 @@ public class TopicsController {
 				//邀请回答消息通知  
 				int ret = smsService.addNotice(user,request.getContextPath(),new Sms().getTABLENAMES()[2],record.getId(),
 						record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[23],record.getId(),
-						record.getTitle());
+						record.getTitle(),"");
 				logger.info("**askPeople 邀请别人回答    **");
 				if(ret > 0){
 //					baseResponse.setObj(topicsCommentPage);

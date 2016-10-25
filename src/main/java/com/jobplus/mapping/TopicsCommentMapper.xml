@@ -60,7 +60,7 @@
 	where 1 = 1
 	AND t.userId = #{userid,jdbcType=INTEGER}
 	<!-- 资源必须未被删除 -->
-	and t.isdelete = 0
+	and t.isdelete = 0 and p.isValid = 1
 	ORDER BY t.updateTime DESC
 	<choose>
 		<when test="pageNo !=null">
@@ -115,7 +115,7 @@
 	JOIN tbl_user u ON t.userId = u.userId
 	WHERE	<!-- 资源必须未被删除 -->
 		 t.isdelete = 0
-		 and u.isValid = 1
+		 <!-- and u.isValid = 1 -->
 	AND
 	topicsId = #{topicsid,jdbcType=INTEGER} 	
 	AND
@@ -218,7 +218,8 @@
       <if test="likeOperate != null" >
         likeSum = likeSum + #{likeOperate,jdbcType=INTEGER},
       </if>
-     
+      
+     updateTime = now()
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -101,7 +101,7 @@ public class DocCommentServiceImpl implements IDocCommentService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[6],record.getDocid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[20],record.getId(),record.getObjectNamePg());
+					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[20],record.getId(),record.getObjectNamePg(),"");
 			
 			return record;
 		} else {

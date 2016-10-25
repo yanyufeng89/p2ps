@@ -7,19 +7,9 @@
 }
 .clearfix {
 }
-
 .zm-editable-editor-outer {
     position: relative;
     background: #FFF;
-}
-
-.zg-btn-white.zu-button-more {
-    display: block;
-    font-size: 12px;
-    margin: 20px 16px;
-    line-height: 28px;
-    width:96%;
-    position: relative;
 }
 #zh-question-title .zm-editable-editor-input {
     font-size: 18px;
@@ -30,6 +20,10 @@
     width:100%;
     resize: none;
 }
+#zh-question-detail{
+	clear:both;
+	padding:0 14px 10px 14px;
+}
 .zm-command {
     padding: 10px 0;
     text-align: right;
@@ -39,6 +33,10 @@
     line-height: 33px;
     color:#999;
     padding-bottom: 0;
+    background: #f9f9f9;
+}
+.zm-item-rich-text,.js-contentActions{
+	margin-left: 40px;
 }
 .zm-comment-form .zm-command {
     display: none;
@@ -71,6 +69,7 @@
 
 .submit-button{
 	margin-right:18px;
+	width:60px;
 }
 
 .loading{
@@ -80,18 +79,16 @@
 	float:right;
 	margin-right:20px;
 }
-.report{
-	color:#adacac;
-}
+
 .zm-editable-content .title{
 	font-weight:bold;
 	font-size:16px;
 	color:#0867c5;
 }
+
 .zm-tag-editor-labels .zm-item-tag{
 	font-size:14px;
 	color:#0867c5;
-	text-decoration:none;
 	line-height:25px;
 	height:25px;
 }
@@ -106,7 +103,6 @@ img{
 .zm-editable-content{
 	font-size:14px;
 	color:#090909;
-	padding-top:10px;
 	line-height:26px;
 }
 .zm-tag-editor-edit-item>a, .zm-tag-editor-edit-item>span {
@@ -117,20 +113,8 @@ img{
     margin: 3px 0 0 5px;
     visibility: visible;
 }
-.zm-tag-editor-remove-button {
-    margin: 3px 6px 0 0;
-    float: left;
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-    visibility: hidden;
-    overflow: hidden;
-    text-indent: -9000px;
-    background: url(../image/sprites.png) no-repeat -264px -141px;
-    border-radius: 8px;
-}
+
 .zm-tag-editor-command-buttons-wrap {
-    position: relative;
     font-size:14px;
     color:#0867c5;
 }
@@ -148,53 +132,20 @@ input[type=text], input[type=password]:focus {
     border: 1px solid #e5e5e5;
 }
 
-.zm-tag-editor-maxcount {
+.zm-tag-editor-maxcount,.pj-warmprompt{
     color: #999;
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 4px;
 }
 
 .zm-tag-editor-maxcount span {
     margin-right: 15px;
 }
-.zm-tag-editor-command-buttons-wrap .ac-renderer {
-    width: 160px;
-    top:33px;
-    left: 4px;
-    position: absolute;
-    float: left;
-    z-index: 10;
-    background: #fff;
-    border: 1px solid #999;
-    border: 0 none rgba(0,0,0,0);
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.5);
-    font-size: 12px;
-    color:gray;
-}
-.ac-active {
-    background-color: #0867c5;
-}
-.ac-row,.ac-create{
-    cursor: pointer;
-    padding: 8px;
-    zoom: 1;
-    clear: both;
-}
 
-.zg-left span {
-    padding-left: 5px;
-    vertical-align: 0;
+.topictagedit{
+	zoom:1;
+	overflow:hidden;
 }
-.zu-autocomplete-row-name {
-    display: block;
-    height: 1.2em;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 
 .Sorter a.lbl:hover {
 	background-color:#eee
@@ -209,7 +160,6 @@ input[type=text], input[type=password]:focus {
 	border-radius:2px;
 	box-shadow:0 1px 1px rgba(0,0,0,.05);
 	text-decoration:none;
-	padding-left:10px;
 }
 .searchres {
 	clear:both;
@@ -221,7 +171,6 @@ input[type=text], input[type=password]:focus {
     margin-top: 35px;
 }
 .searchres .searchresleft{
-	/* border: 1px solid #e5e5e5; */
     float: left;
     width: 838px;
  }
@@ -234,11 +183,6 @@ input[type=text], input[type=password]:focus {
     padding: 0;
     position: absolute;
     width: 1px;
-}
-.zm-relate-answer{
-   border: 1px solid #e5e5e5;
-   margin-top:10px;
-   background:#fff;
 }
 .bdcs-search-form-submit {
     border: 2px solid #0867c5;
@@ -390,10 +334,7 @@ ul.filter-wrapper li span lable {
     padding-left: 42px;
 }
 
-/* .bg-index {
-    background: transparent url(../image/selected.png) no-repeat scroll;
-}
- */
+
 ._CommentItem_avatarLink_3V51 {
     float: left;
     margin: 4px 1em 0 0;
@@ -416,6 +357,7 @@ ul.filter-wrapper li span lable {
     overflow: hidden;
     font-size: 13px;
     line-height: 18px;
+    text-align: justify;
 }
 ._CommentItem_footer_46v8, ._CommentItem_header_2JGh {
     color: #999;
@@ -426,13 +368,6 @@ ul.filter-wrapper li span lable {
     word-wrap: break-word;
     color: #444;
     margin-top: 10px;
-}
-._CommentItem_footer_46v8, ._CommentItem_footer_46v8 button {
-    font-size: .95em;
-}
-._CommentItem_likes_2hey {
-    float: right;
-    padding-right: 2px;
 }
 ._CommentBox_list_10_K,.zm-comment-list{
     padding-left: 1em;
@@ -456,6 +391,7 @@ ul.filter-wrapper li span lable {
     background: none;
     cursor: pointer;
     color: #999;
+    font-size:12px;
 }
 #zh-question-detail .zm-editable-content{
 	padding-top:0;
@@ -477,7 +413,7 @@ ul.filter-wrapper li span lable {
 }
 .icon-spike {
     position: absolute;
-    top: -6px;
+    top: -8px;
     left: 23px;
     width: 13px;
     height: 8px;
@@ -534,7 +470,7 @@ ul.filter-wrapper li span lable {
     margin: 0;
     padding: 1em;
     border-radius: 0 0 2px 2px;
-    background: #fff;
+    background: #f9f9f9;
 }
 
 ._CommentForm_root_1-ko {
@@ -544,8 +480,9 @@ ul.filter-wrapper li span lable {
     content: attr(placeholder);
     color: #999;
 }
-.topic-comment{
+.topic-comment,._CommentForm_submitButton_1N49 {
 	float:right;
+	width:60px;
 }
 ._CommentForm_actions_ooEq {
     margin-top: 1em;
@@ -555,9 +492,6 @@ ul.filter-wrapper li span lable {
     display: none;
 }
 
-._CommentForm_submitButton_1N49 {
-    float: right;
-}
 ._CommentForm_cancelButton_cy3u {
     margin-right: 1em;
 }
@@ -597,25 +531,12 @@ ul.filter-wrapper li span lable {
     color:#999;
     border-radius: 0 0 2px 2px;
     position: relative;
+    background: #f9f9f9;
 }
 .zm-comment-box.empty.cannot-comment .zm-comment-form, .zm-comment-box .zm-comment-form {
     padding: 15px;
 }
 
-/* .zm-comment-form .zm-comment-textarea, .zm-comment-form .zm-comment-editable {
-    padding: 7px 8px;
-    font-size: 13px;
-    line-height: 22px;
-    min-height: 22px;
-    color: #222;
-    cursor: text;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.1) inset;
-    background-color: #fff;
-    outline:none;
-}
- */
 .zm-item-comment .zm-comment-ft {
     font-size: 12px;
     color:#999;
@@ -643,6 +564,7 @@ ul.filter-wrapper li span lable {
 	color:#444;
 	outline:none;
 	line-height: 18px;
+	text-align: justify;
 	margin:12px 0 0 10px;
 }
 .zm-item-comment{
@@ -725,23 +647,21 @@ ul.filter-wrapper li span lable {
 .sendmessage-right{
 	float:right;
 }
-.zh-question-related-questions ul li{
+.related-topic-right{
 	font-size:12px;
 }
 
-.zh-question-related-questions span{
-	    vertical-align: top;
-}
 .zm-meta-panel a,.zm-meta-panel span{
 	font-size:12px!important;
+}
+.zm-meta-panel{
+	padding-top:0!important
 }
 .zm-relate-answer .zm-side-section:last-child{
 	margin:0!important;
 	padding-top:0!important;
 }
-.zm-side-section-inner h3 {
-    margin-bottom:20px!important;
-}
+
 .page-inner{
 	padding:10px 0 7px 0;
 	border-bottom: 1px solid #e5e5e5;
@@ -814,7 +734,7 @@ ul.filter-wrapper li span lable {
 .suggest-persons .person .invite-button {
     outline: 0;
     float: right;
-    padding: 4px 10px;
+    margin-left:6px;
 }
 .suggest-persons .person .describe .zg-link {
     float: left;
@@ -837,11 +757,7 @@ ul.filter-wrapper li span lable {
     padding-top: 6px;
 }
 .suggest-persons .person {
-    margin: 0 12px;
-    padding-top: 18px;
-    padding-bottom: 18px;
-    height: 36px;
-    overflow: hidden;
+    margin:18px 12px 18px 12px;
 }
 .suggest-persons .noresult{
 	color: #999;

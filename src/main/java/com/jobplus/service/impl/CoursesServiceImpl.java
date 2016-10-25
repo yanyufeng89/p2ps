@@ -3,18 +3,18 @@ package com.jobplus.service.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
+import com.jobplus.pojo.*;
+import com.jobplus.utils.FTPUtils;
+import com.jobplus.utils.UUIDGenerator;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import com.jobplus.dao.CoursesMapper;
-import com.jobplus.pojo.Account;
-import com.jobplus.pojo.Courses;
-import com.jobplus.pojo.CoursesShare;
-import com.jobplus.pojo.MyCollect;
-import com.jobplus.pojo.Page;
-import com.jobplus.pojo.User;
 import com.jobplus.service.IAccountService;
 import com.jobplus.service.ICoursesService;
 import com.jobplus.service.ICoursesShareService;
@@ -25,6 +25,7 @@ import com.jobplus.service.IUpdTableColumnService;
 import com.jobplus.service.IUserService;
 import com.jobplus.utils.DateUtils;
 import com.jobplus.utils.SolrJUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("coursesService")
 public class CoursesServiceImpl implements ICoursesService{
@@ -47,7 +48,9 @@ public class CoursesServiceImpl implements ICoursesService{
 	private IUpdTableColumnService updTableColumnService;
 	@Resource
 	private IAccountService accountService;
-	
+	@Resource
+	private FTPUtils fTPUtils;
+
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
 		
@@ -119,6 +122,52 @@ public class CoursesServiceImpl implements ICoursesService{
 	}
 
 	@Override
+	public int updateByAdmin(MultipartFile files, HttpServletRequest request, HttpServletResponse response, Courses record) {
+		// 定义上传路径
+		String path = "";
+		String headicon = "";
+		if (StringUtils.isNotBlank(files.getOriginalFilename())) {
+			// 重命名上传后的文件名
+			String myFileName = files.getOriginalFilename();
+			// 文件类型
+			String usersuffix = myFileName.substring(myFileName.lastIndexOf(".") + 1);
+			// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
+			if (myFileName.trim() != "") {
+				// 重命名上传后的文件名   id_ 时间戳+文件类型
+				String fileName = record.getId() + "_" + UUIDGenerator.getUUID() + "." + usersuffix;
+				// 定义上传路径
+				path = fTPUtils.ftpImgDir + "/" + fTPUtils.ftpHeadIconDir + "/" + DateUtils.getDateTime2() + "/" + fileName;
+				headicon = fTPUtils.headIconServer + fTPUtils.ftpHeadIconDir + "/" + DateUtils.getDateTime2() + "/" + fileName;
+				// 设置头像路径
+				record.setCoursesimg(headicon);
+			}
+		}
+		int ret = 0;
+		try {
+			if (fTPUtils.connect()) {
+				// 连接成功
+				FTPStatus fst = fTPUtils.upload(files.getInputStream(), path);
+				if (fst.getStatus() == 7) {
+					ret = 1;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// 文档文件上传到服务器成功    插入数据库
+		if (ret > 0) {
+			return coursesDao.updateByAdmin(record);
+		}
+		return 0;
+	}
+
+	@Override
+	public int updateByAdmin(Courses record) {
+		return coursesDao.updateByAdmin(record);
+	}
+
+	@Override
 	public int updateByPrimaryKeyWithBLOBs(Courses record) {
 		
 		return coursesDao.updateByPrimaryKeyWithBLOBs(record);
@@ -141,7 +190,7 @@ public class CoursesServiceImpl implements ICoursesService{
 		if(count < 1)
 			return page;
 		List<Courses> list = coursesDao.getSharedCourseList(record);
-		if(null!=list && list.size()>0){
+		if(list.size()>0){
 			for (Courses course : list) {
 				//用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getCreatetime(), "yyyy-MM-dd"));
@@ -172,7 +221,7 @@ public class CoursesServiceImpl implements ICoursesService{
 		if(count < 1)
 			return page;
 		List<Courses> list = coursesDao.getCollectedCourseList(record);
-		if(null!=list && list.size()>0){
+		if(list.size()>0){
 			for (Courses course : list) {
 				//用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getMyCollect().getColltime(), "yyyy-MM-dd"));

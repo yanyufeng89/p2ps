@@ -73,7 +73,7 @@
   </select>
 
     <select id="getFansListInformation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select distinct
    	u.userId,u.userName,u.headIcon 
     from tbl_attention at,tbl_user u where at.collType='${collType}' and at.objectId = ${objectId} and u.userId = at.userId LIMIT 20 ;
   </select>
@@ -117,10 +117,10 @@
 		<include refid="Base_Column_List_copy" />
 		,
 		<include refid="tbl_operationSum_Column_List" />
-		,(select group_concat(userid)  from tbl_attention where objectId = t.userid and colltype='tbl_user') as fansIds
-		,(select COUNT(at.objectId) from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
+		 ,(select group_concat(userid)  from tbl_attention where objectId = t.userid and colltype='tbl_user') as fansIds
+		<!--,(select COUNT(at.objectId) from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
 		where at.collType='tbl_user'
-		and at.userid = #{userid,jdbcType=INTEGER} ) as pageCount
+		and at.userid = #{userid,jdbcType=INTEGER} ) as pageCount -->
 
 		from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
 		where at.collType='tbl_user'
@@ -134,12 +134,17 @@
 			</otherwise>
 		</choose>
 	</select>
-	<!-- 统计总数		个人中心：我关注的人列表  getAttenManList   -->
+	<!-- 统计总数		个人中心：我关注的人列表  getAttenManListCount   -->
 	<select id="getAttenManListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.User" >
 		select COUNT(at.objectId) from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
 		where at.collType='tbl_user'
 		and at.userid = #{userid,jdbcType=INTEGER} 
 	</select>
+	<!-- 文章打赏的人 -->
+	<select id="getRewardUsers" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.User" >
+	SELECT DISTINCT 	u.userId,u.userName,u.headIcon  FROM tbl_user u LEFT JOIN tbl_article_supportlist a on u.userId = a.userId WHERE a.articleId = ${articleId} LIMIT 20 ;
+	</select>
+
 
 
 
@@ -572,5 +577,21 @@
         limit #{defaultPageSize,jdbcType=INTEGER}
       </otherwise>
     </choose>
+  </select>
+
+  <select id="countUserName" resultType="java.lang.Integer" parameterType="String">
+    select count(1) from tbl_user where  1=1 and userName like concat(#{userName},'%')
+  </select>
+
+  <select id="userInfoCompletion" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select FORMAT((a1+a2+a3+a4)/4*100,0)
+     from(
+      select if(t.birthdayOne is null or t.birthdayOne='',0,1) as a1,if(e.id is null,0,1) as a2,if(w.id is null,0,1) as a3,if(s.id is null,0,1) as a4
+      from tbl_user t
+      LEFT JOIN tbl_educationBgrd e on t.userId=e.userid
+      LEFT JOIN tbl_workExper w on t.userId=w.userid
+      LEFT JOIN tbl_personalskill s on t.userId=s.userid
+      where t.userid=#{userid} limit 1
+      ) tt
   </select>
 </mapper>

@@ -88,8 +88,14 @@ public class IndexController {
 	 * @param encoding
 	 * @param request
 	 * @param Condition 查询关键字
-	 * @param sharedType 分类    如果是0,赋值为"",查询所有
-	 * @param protoType 那种分类 doc/book/article/courses/sites/topics
+	 * @param sharedType 行业分类     如果是0,赋值为"",查询所有
+	 * @param protoType 知识载体类型    文档:1 文章:2 课程:3 站点:4 话题:5 书籍:6
+	 * 
+	 * 	doc 1
+		article 2
+		courses 3
+		site 4
+		topics 5  doc/book/article/courses/sites/topics
 	 * @param tags 标签
 	 * @param pages 第几页，默认第0页
 	 * @return
@@ -110,13 +116,15 @@ public class IndexController {
 		//搜索结果 List
 		List<?> resultList = homePageService.search(Condition, sharedType, protoType, tags, pages, pageSize);	
 		//搜索结构总条数
-		Long reCount = (Long)resultList.get(0);
+		Long reCount = resultList.size()>0?(Long)resultList.get(0):0L;
 		//搜索结果集
-		String result =  resultList.get(1).toString();
+		String result = resultList.size()>0?resultList.get(1).toString():"";
+				//"[{'protoType':3,'tags':'','replySum':1,'sharetype':'100:创新,105:产品（服务）创新','updateTime':'2016-10-17 12:01:38','readSum':68,'url':'http://blog.sina.com.cn/u/2987830473','likeSum':0,'collectSum':0,'data_id':'101','createTime':'2016-10-12 14:39:54','title':'猪猪的小可爱_新浪博客','description':'猪猪的小可爱_新浪博客,猪猪的小可爱,关于elasticsearch搜索引擎在ubuntu下配置的全过程,Ubuntu服务器配置LAMP（linux+apache+mysql+php）的全过程记录,Spring+Mybatis文件的上传下载,Spring+Mybatis在Mapper.xml文件里如何拼接SQl语句,刚开始工作的日子,web开发时在浏览器上下载文件中文名猪猪的小可爱_新浪博客,猪猪的小可爱,关于elasticsearch搜索引擎在ubuntu下配置的全过程,Ubuntu服务器配置LAMP（linux+apache+mysql+php）的全过程记录,Spring+Mybatis文件的上传下载,Spring+Mybatis在Mapper.xml文件里如何拼接SQl语句,刚开始工作的日子,web开发时在浏览器上下载文件中文名字乱码问题,关于Java String类IndexOf（）方法的讨论,来不及爱你了,左手右手,我们分手了字乱码问题,关于Java String类IndexOf（）方法的讨论,来不及爱你了,左手右手,我们分手了','id':'2016-10-12 14:39:54_courses_101','_version_':1548426893550682112}]" ; 
+				//resultList.size()>0?resultList.get(1).toString():"";
 		
 		//搜索页导航
 		List<Map<String, Object>> searchTypeList = homePageService.getSearchTypes();
-		logger.info("********result=="+result);
+//		logger.info("********result=="+result);
 		logger.info("********Condition=="+Condition);
 		logger.info("********sharedType=="+sharedType);
 		logger.info("********protoType=="+protoType);
@@ -230,13 +238,28 @@ public class IndexController {
 	public ModelAndView syscHotData(@PathVariable String page) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("currentPage", page);
+		
+		if("newbie_guide".equals(page)){//使用攻略
+			mv.addObject("indexPage",2);
+		}else if("feedback".equals(page)){//建议反馈
+			mv.addObject("indexPage",3);
+		}
+		
 		mv.setViewName("about/" + page);
 		return mv;
 	}
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView knowledgeBaseIndex(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/");
+		return mv;
+	}
+
+	@RequestMapping(value = "/index/loginSuccess", method = RequestMethod.GET)
+	public ModelAndView loginSuccess(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("loginSuccess");
 		return mv;
 	}
 }

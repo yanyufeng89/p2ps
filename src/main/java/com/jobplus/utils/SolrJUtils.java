@@ -10,8 +10,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.params.ModifiableSolrParams;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,16 +42,12 @@ public class SolrJUtils {
 
 	private static String solrPort;
 
-	private static String basePath;
-
 	@Value("${slor.basepath}")
 	public void setBasePath(String basePath) {
 		
-		SolrJUtils.basePath = basePath;
-
 		SolrJUtils.tagClient = new HttpSolrClient(basePath + "tagsCore");
 
-		SolrJUtils.topClient = new HttpSolrClient(basePath + "topicsCore");
+		SolrJUtils.topicsClient = new HttpSolrClient(basePath + "topicsCore");
 
 		SolrJUtils.userClient = new HttpSolrClient(basePath + "userCore");
 
@@ -66,6 +62,8 @@ public class SolrJUtils {
 		SolrJUtils.sitesClient = new HttpSolrClient(basePath + "sitesCore");
 
 		SolrJUtils.skillClient = new HttpSolrClient(basePath + "skillCore");
+		
+		SolrJUtils.schoolClient = new HttpSolrClient(basePath + "schoolCore");
 	}
 
 	@Value("${slor.ip}")
@@ -80,7 +78,7 @@ public class SolrJUtils {
 
 	private static HttpSolrClient tagClient;
 
-	private static HttpSolrClient topClient;
+	private static HttpSolrClient topicsClient;
 
 	private static HttpSolrClient userClient;
 
@@ -95,27 +93,9 @@ public class SolrJUtils {
 	private static HttpSolrClient sitesClient;
 
 	private static HttpSolrClient skillClient;
+	
+	private static HttpSolrClient schoolClient;
 
-	/**
-	 * 根据关键字和类型获取对应的标签
-	 * 
-	 * @return
-	 */
-	public static String findTags(String Condition, String type) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "tagname:" + Condition);
-		solrParams.set("fq", "tagtype:" + type);
-		QueryResponse rsp = new QueryResponse();
-		try {
-			rsp = tagClient.query(solrParams);
-			// logger.info(JSON.toJSONString(rsp.getResults()));
-		} catch (SolrServerException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return JSON.toJSONString(rsp.getResults());
-	}
 
 	/**
 	 * 添加技能到索引库
@@ -149,6 +129,30 @@ public class SolrJUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	/**
+	 * 根据关键字获取对应的学校
+	 * 
+	 * @return
+	 */
+	public static String findSchool(String Condition) {
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		QueryResponse rsp = new QueryResponse();
+		try {
+			rsp = schoolClient.query(solrParams);
+			// logger.info(JSON.toJSONString(rsp.getResults()));
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String str = "{\"schoolList\":" + JSON.toJSONString(rsp.getResults())
+				+ ",\"returnMsg\":\"SUCCESS\",\"returnStatus\":\"000\"}";
+		return str;
+	}
 
 	/**
 	 * 根据关键字获取对应的技能
@@ -156,8 +160,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static String findSkill(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "skillname:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "skillname:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = skillClient.query(solrParams);
@@ -212,8 +216,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static String findTags(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "tagname:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "tagname:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = tagClient.query(solrParams);
@@ -234,11 +238,11 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static String findTops(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		QueryResponse rsp = new QueryResponse();
 		try {
-			rsp = topClient.query(solrParams);
+			rsp = topicsClient.query(solrParams);
 			// logger.info(JSON.toJSONString(rsp.getResults()));
 		} catch (SolrServerException e) {
 			e.printStackTrace();
@@ -250,49 +254,6 @@ public class SolrJUtils {
 		return str;
 	}
 
-	/**
-	 * 相关话题列表
-	 * 
-	 * @return
-	 */
-	public static List findTopsFromList(String Condition, String id) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
-		solrParams.set("fq", "!data_id:" + id);
-		solrParams.set("sort", "replySum desc");
-		solrParams.set("start", "0");
-		solrParams.set("rows", "10");
-		QueryResponse rsp = new QueryResponse();
-		try {
-			rsp = topClient.query(solrParams);
-			// logger.info(JSON.toJSONString(rsp.getResults()));
-		} catch (SolrServerException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return rsp.getResults();
-	}
-
-	/**
-	 * 根据关键字查找文档(标题或者简介中出现过此关键字的文档)
-	 * 
-	 * @return
-	 */
-	public static String findDoc(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
-		QueryResponse rsp = new QueryResponse();
-		try {
-			rsp = docClient.query(solrParams);
-			// logger.info(JSON.toJSONString(rsp.getResults()));
-		} catch (SolrServerException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return JSON.toJSONString(rsp.getResults());
-	}
 
 	/**
 	 * 根据关键字查找书
@@ -300,8 +261,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static String findBook(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = bookClient.query(solrParams);
@@ -315,6 +276,36 @@ public class SolrJUtils {
 				+ ",\"returnMsg\":\"SUCCESS\",\"returnStatus\":\"000\"}";
 		return str;
 	}
+	
+	
+	
+	
+	
+	/**
+	 * 相关话题列表
+	 * 
+	 * @return
+	 */
+	public static List findTopsFromList(String Condition, String id) {
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
+		solrParams.set("fq", "!data_id:" + id);
+		solrParams.set("sort", "replySum desc");
+		solrParams.set("start", "0");
+		solrParams.set("rows", "10");
+		QueryResponse rsp = new QueryResponse();
+		try {
+			rsp = topicsClient.query(solrParams);
+			// logger.info(JSON.toJSONString(rsp.getResults()));
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rsp.getResults();
+	}
+
+	
 
 	/**
 	 * 相关文档列表
@@ -322,8 +313,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static List findDocFromList(String Condition, String id) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
 		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
@@ -346,8 +337,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static List findBookFromList(String Condition, String id) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
 		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
@@ -370,8 +361,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static List findCoursesFromList(String Condition, String id) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
 		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
@@ -394,8 +385,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static List findArticleFromList(String Condition, String id) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
 		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
@@ -418,8 +409,8 @@ public class SolrJUtils {
 	 * @return
 	 */
 	public static List findSitesFromList(String Condition, String id) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
 		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
@@ -437,13 +428,13 @@ public class SolrJUtils {
 	}
 
 	/**
-	 * 根据关键字查找用户
+	 * 根据关键字邀请用户回答
 	 * 
 	 * @return
 	 */
 	public static String findUser(String Condition, String userId) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		if (null != userId && userId.length() > 0) {
 			solrParams.set("fq", "!id:" + userId);
 		}
@@ -459,48 +450,156 @@ public class SolrJUtils {
 		return JSON.toJSONString(rsp.getResults());
 	}
 
+	
 	/**
 	 * 
 	 * @param Condition
 	 *            查询关键字
 	 * @param sharedType
-	 *            分类
+	 *            行业分类
 	 * @param protoType
-	 *            那种分类 doc/book/article/courses/site/topics
+	 *            知识载体类型 文档:1 文章:2 课程:3 站点:4 话题:5 书籍:6
 	 * @param tags
 	 *            标签
 	 * @param pages
 	 *            第几页，默认第0页(页标从0开始)
 	 * @param rows
-	 *            每页几条数据，默认30条
+	 *            每页几条数据，默认10条
 	 * @return
 	 */
 
-	public static List findAll(String Condition, String sharedType, String protoType, String tags, String pages,
+	public static List<Object> findAll(String Condition, String sharedType, String protoType, String tags, String pages,
 			String rows) {
-		StringBuffer solrBase = new StringBuffer(SolrJUtils.solrIp).append(":").append(SolrJUtils.solrPort)
-				.append("/solr/");
+		List<Object> dataList = new ArrayList<Object>();
+		if(null!=protoType && protoType.length() > 0){	
+			//知识载体类型  文档:1 /文章:2 /课程:3  /站点:4  /  话题:5  /  书籍:6
+			if("1".equals(protoType)){
+				dataList = searchDoc( Condition,  sharedType,  tags,  pages, rows);
+			}
+			if("2".equals(protoType)){
+				dataList = searchArticle( Condition,  sharedType,  tags,  pages, rows);
+			}
+			if("3".equals(protoType)){
+				dataList = searchCourses( Condition,  sharedType,  tags,  pages, rows);
+			}
+			if("4".equals(protoType)){
+				dataList = searchSites( Condition,  sharedType,  tags,  pages, rows);
+			}
+			if("5".equals(protoType)){
+				dataList = searchTopics( Condition,  sharedType,  tags,  pages, rows,null);
+			}
+			if("6".equals(protoType)){
+				dataList = searchBook( Condition,  sharedType,  tags,  pages, rows,null);
+			}
+		}else{
+			StringBuffer solrBase = new StringBuffer(SolrJUtils.solrIp).append(":").append(SolrJUtils.solrPort).append("/solr/");
+			StringBuffer solrShards = new StringBuffer();
+			solrShards.append(solrBase).append("topicsCore,").append(solrBase).append("docCore,").append(solrBase)
+					.append("coursesCore,").append(solrBase).append("bookCore,").append(solrBase).append("articleCore,").append(solrBase).append("sitesCore");
+			String shards = solrShards.toString();
+			SolrQuery solrParams = new SolrQuery();
+			if (null != sharedType && sharedType.length() > 0) {
+	
+				solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+			}
+			if (null != tags && tags.length() > 0) {
+	
+				solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+			}
+	
+			if (null != pages && pages.length() > 0) {
+				if (null != rows && rows.length() > 0) {
+	
+					solrParams.set("start", multipliedString(pages, rows));
+	
+				} else {
+	
+					solrParams.set("start", multipliedString(pages, "10"));
+				}
+			}
+	
+			if (null != rows && rows.length() > 0) {
+				solrParams.set("rows", rows);
+	
+			}
+	
+			if (null != Condition && Condition.length() > 0) {
+	
+				solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+			} else {
+	
+				solrParams.set("q", "*:*");
+			}
+	
+			solrParams.set("shards", shards);// 设置shard
+			solrParams.set("sort", "replySum desc");
+	
+			QueryResponse rsp = new QueryResponse();
+			try {
+				rsp = topicsClient.query(solrParams);
+			} catch (SolrServerException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			if (null != rsp.getResults()) {
+	
+				dataList.add(rsp.getResults().getNumFound());
+				dataList.add(JSON.toJSONString(rsp.getResults()));
+			}else{
+				dataList.add(0L);
+				dataList.add(JSON.toJSONString(rsp.getResults()));
+			}
+	
+		}
+		return dataList;
+	}
+	
 
-		StringBuffer solrShards = new StringBuffer();
-		solrShards.append(solrBase).append("topicsCore,").append(solrBase).append("docCore,").append(solrBase)
-				.append("coursesCore,").append(solrBase).append("bookCore,").append(solrBase).append("articleCore,")
-				.append(solrBase).append("sitesCore");
-		// String shards =
-		// "192.168.0.39:18080/solr/topicsCore,192.168.0.39:18080/solr/docCore,192.168.0.39:18080/solr/coursesCore,192.168.0.39:18080/solr/bookCore,192.168.0.39:18080/solr/articleCore,192.168.0.39:18080/solr/sitesCore";
-		String shards = solrShards.toString();
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		SolrQuery filterQuery = new SolrQuery();
+	/**
+	 * 两个字符类型的数相乘 a*b=c；
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static String multipliedString(String a, String b) {
+		double a1 = Double.parseDouble(a);
+		double b1 = Double.parseDouble(b);
+		BigDecimal a2 = BigDecimal.valueOf(a1);
+		BigDecimal b2 = BigDecimal.valueOf(b1);
+		BigDecimal c2 = a2.multiply(b2);
+		return c2.setScale(0).toString();
+	}
+	
+	
+	
+	/**
+	 * 搜索话题
+	 * @param Condition
+	 *            查询关键字
+	 * @param sharedType
+	 *            行业分类
+	 * @param tags
+	 *            标签
+	 * @param pages
+	 *            第几页，默认第0页(页标从0开始)
+	 * @param rows
+	 *            每页几条数据，默认10条
+	 * @param sortType
+	 *            话题专区   话题分类参数         1：热门话题   2：最新话题    3:等待回答      4:精彩回答              默认为1           
+	 * @return
+	 */
+	public static List<Object> searchTopics(String Condition, String sharedType, String tags, String pages,String rows,String sortType) {
+		SolrQuery solrParams = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
 
-			filterQuery.addFilterQuery("sharetype:" + sharedType);
-		}
-		if (null != protoType && protoType.length() > 0) {
-
-			filterQuery.addFilterQuery("protoType:" + protoType);
+			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
 		}
 		if (null != tags && tags.length() > 0) {
 
-			filterQuery.addFilterQuery("tags:" + tags);
+			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
 		}
 
 		if (null != pages && pages.length() > 0) {
@@ -519,22 +618,35 @@ public class SolrJUtils {
 
 		}
 
-		solrParams.add(filterQuery);
-
 		if (null != Condition && Condition.length() > 0) {
 
-			solrParams.set("q", "allcontent:" + Condition);
+			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		} else {
 
 			solrParams.set("q", "*:*");
 		}
-
-		solrParams.set("shards", shards);// 设置shard
-		solrParams.set("sort", "replySum desc");
-
+		
+		if("2".equals(sortType)){
+			
+			solrParams.set("sort", "createTime desc");
+			
+		}else if("3".equals(sortType)){
+			
+			solrParams.addFilterQuery("replySum:0");
+			//等待回答的话题按照关注人数，创建时间排序
+			solrParams.set("sort", "collectSum desc,createTime desc");
+			
+		}else if("4".equals(sortType)){
+			
+			solrParams.set("sort", "likeSum desc");
+			
+		}else
+		{
+			solrParams.set("sort", "replySum desc");
+		}
 		QueryResponse rsp = new QueryResponse();
 		try {
-			rsp = topClient.query(solrParams);
+			rsp = topicsClient.query(solrParams);
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -546,87 +658,389 @@ public class SolrJUtils {
 			dataList.add(rsp.getResults().getNumFound());
 			dataList.add(JSON.toJSONString(rsp.getResults()));
 		}else{
-			dataList.add(0);
+			dataList.add(0L);
 			dataList.add(JSON.toJSONString(rsp.getResults()));
 		}
 
 		return dataList;
 	}
-
+	
+	
+	
+	
 	/**
-	 * 根据关键字查找文档
-	 * 
+	 * 搜索文档
+	 * @param Condition
+	 *            查询关键字
+	 * @param sharedType
+	 *            行业分类
+	 * @param tags
+	 *            标签
+	 * @param pages
+	 *            第几页，默认第0页(页标从0开始)
+	 * @param rows
+	 *            每页几条数据，默认10条
 	 * @return
 	 */
-	public static String findArticle(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+	public static List<Object> searchDoc(String Condition, String sharedType, String tags, String pages,String rows) {
+		SolrQuery solrParams = new SolrQuery();
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+		}
+
+		if (null != pages && pages.length() > 0) {
+			if (null != rows && rows.length() > 0) {
+
+				solrParams.set("start", multipliedString(pages, rows));
+
+			} else {
+
+				solrParams.set("start", multipliedString(pages, "10"));
+			}
+		}
+
+		if (null != rows && rows.length() > 0) {
+			solrParams.set("rows", rows);
+
+		}
+
+		if (null != Condition && Condition.length() > 0) {
+
+			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		} else {
+
+			solrParams.set("q", "*:*");
+		}
+
+		solrParams.set("sort", "replySum desc");
+
 		QueryResponse rsp = new QueryResponse();
 		try {
-			rsp = articleClient.query(solrParams);
-			logger.info(JSON.toJSONString(rsp.getResults()));
+			rsp = docClient.query(solrParams);
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return JSON.toJSONString(rsp.getResults());
-	}
+		List<Object> dataList = new ArrayList<Object>();
+		if (null != rsp.getResults()) {
 
+			dataList.add(rsp.getResults().getNumFound());
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}else{
+			dataList.add(0L);
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}
+
+		return dataList;
+	}
+	
+	
 	/**
-	 * 根据关键字查找课程
-	 * 
+	 * 搜索书籍
+	 * @param Condition
+	 *            查询关键字
+	 * @param sharedType
+	 *            行业分类
+	 * @param tags
+	 *            标签
+	 * @param pages
+	 *            第几页，默认第0页(页标从0开始)
+	 * @param rows
+	 *            每页几条数据，默认10条
+	 * @param sortType
+	 *         书籍专区   话题分类参数     1：热门书籍    2：最新书籍        默认为1
 	 * @return
 	 */
-	public static String findCourses(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "allcontent:" + Condition);
+	public static List<Object> searchBook(String Condition, String sharedType, String tags, String pages,String rows,String sortType) {
+		SolrQuery solrParams = new SolrQuery();
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+		}
+
+		if (null != pages && pages.length() > 0) {
+			if (null != rows && rows.length() > 0) {
+
+				solrParams.set("start", multipliedString(pages, rows));
+
+			} else {
+
+				solrParams.set("start", multipliedString(pages, "10"));
+			}
+		}
+
+		if (null != rows && rows.length() > 0) {
+			solrParams.set("rows", rows);
+
+		}
+
+		if (null != Condition && Condition.length() > 0) {
+
+			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		} else {
+
+			solrParams.set("q", "*:*");
+		}
+		
+		if("2".equals(sortType)){
+			solrParams.set("sort", "createTime desc");
+		}else{
+			solrParams.set("sort", "replySum desc");
+		}
+		QueryResponse rsp = new QueryResponse();
+		try {
+			rsp = bookClient.query(solrParams);
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		List<Object> dataList = new ArrayList<Object>();
+		if (null != rsp.getResults()) {
+
+			dataList.add(rsp.getResults().getNumFound());
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}else{
+			dataList.add(0L);
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}
+
+		return dataList;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 搜索课程
+	 * @param Condition
+	 *            查询关键字
+	 * @param sharedType
+	 *            行业分类
+	 * @param tags
+	 *            标签
+	 * @param pages
+	 *            第几页，默认第0页(页标从0开始)
+	 * @param rows
+	 *            每页几条数据，默认10条
+	 * @return
+	 */
+	public static List<Object> searchCourses(String Condition, String sharedType, String tags, String pages,String rows) {
+		SolrQuery solrParams = new SolrQuery();
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+		}
+
+		if (null != pages && pages.length() > 0) {
+			if (null != rows && rows.length() > 0) {
+
+				solrParams.set("start", multipliedString(pages, rows));
+
+			} else {
+
+				solrParams.set("start", multipliedString(pages, "10"));
+			}
+		}
+
+		if (null != rows && rows.length() > 0) {
+			solrParams.set("rows", rows);
+
+		}
+
+		if (null != Condition && Condition.length() > 0) {
+
+			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		} else {
+
+			solrParams.set("q", "*:*");
+		}
+
+		solrParams.set("sort", "replySum desc");
+
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = coursesClient.query(solrParams);
-			logger.info(JSON.toJSONString(rsp.getResults()));
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return JSON.toJSONString(rsp.getResults());
-	}
+		List<Object> dataList = new ArrayList<Object>();
+		if (null != rsp.getResults()) {
 
+			dataList.add(rsp.getResults().getNumFound());
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}else{
+			dataList.add(0L);
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}
+
+		return dataList;
+	}
+	
+	
 	/**
-	 * 根据关键字查找站点
-	 * 
+	 * 搜索文章
+	 * @param Condition
+	 *            查询关键字
+	 * @param sharedType
+	 *            行业分类
+	 * @param tags
+	 *            标签
+	 * @param pages
+	 *            第几页，默认第0页(页标从0开始)
+	 * @param rows
+	 *            每页几条数据，默认10条
 	 * @return
 	 */
-	public static String findSites(String Condition) {
-		ModifiableSolrParams solrParams = new ModifiableSolrParams();
-		solrParams.set("q", "tagname:" + Condition);
+	public static List<Object> searchArticle(String Condition, String sharedType, String tags, String pages,String rows) {
+		SolrQuery solrParams = new SolrQuery();
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+		}
+
+		if (null != pages && pages.length() > 0) {
+			if (null != rows && rows.length() > 0) {
+
+				solrParams.set("start", multipliedString(pages, rows));
+
+			} else {
+
+				solrParams.set("start", multipliedString(pages, "10"));
+			}
+		}
+
+		if (null != rows && rows.length() > 0) {
+			solrParams.set("rows", rows);
+
+		}
+
+		if (null != Condition && Condition.length() > 0) {
+
+			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		} else {
+
+			solrParams.set("q", "*:*");
+		}
+
+		solrParams.set("sort", "replySum desc");
+
+		QueryResponse rsp = new QueryResponse();
+		try {
+			rsp = articleClient.query(solrParams);
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		List<Object> dataList = new ArrayList<Object>();
+		if (null != rsp.getResults()) {
+
+			dataList.add(rsp.getResults().getNumFound());
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}else{
+			dataList.add(0L);
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}
+
+		return dataList;
+	}
+	
+	
+	/**
+	 * 搜索   站点
+	 * @param Condition
+	 *            查询关键字
+	 * @param sharedType
+	 *            行业分类
+	 * @param tags
+	 *            标签
+	 * @param pages
+	 *            第几页，默认第0页(页标从0开始)
+	 * @param rows
+	 *            每页几条数据，默认10条
+	 * @return
+	 */
+	public static List<Object> searchSites(String Condition, String sharedType, String tags, String pages,String rows) {
+		SolrQuery solrParams = new SolrQuery();
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+		}
+
+		if (null != pages && pages.length() > 0) {
+			if (null != rows && rows.length() > 0) {
+
+				solrParams.set("start", multipliedString(pages, rows));
+
+			} else {
+
+				solrParams.set("start", multipliedString(pages, "10"));
+			}
+		}
+
+		if (null != rows && rows.length() > 0) {
+			solrParams.set("rows", rows);
+
+		}
+
+		if (null != Condition && Condition.length() > 0) {
+
+			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		} else {
+
+			solrParams.set("q", "*:*");
+		}
+
+		solrParams.set("sort", "replySum desc");
+
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = sitesClient.query(solrParams);
-			logger.info(JSON.toJSONString(rsp.getResults()));
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return JSON.toJSONString(rsp.getResults());
-	}
+		List<Object> dataList = new ArrayList<Object>();
+		if (null != rsp.getResults()) {
 
-	/**
-	 * 两个字符类型的数相乘 a*b=c；
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public static String multipliedString(String a, String b) {
-		double a1 = Double.parseDouble(a);
-		double b1 = Double.parseDouble(b);
-		BigDecimal a2 = BigDecimal.valueOf(a1);
-		BigDecimal b2 = BigDecimal.valueOf(b1);
-		BigDecimal c2 = a2.multiply(b2);
-		return c2.setScale(0).toString();
-	}
+			dataList.add(rsp.getResults().getNumFound());
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}else{
+			dataList.add(0L);
+			dataList.add(JSON.toJSONString(rsp.getResults()));
+		}
 
+		return dataList;
+	}
+	
 }

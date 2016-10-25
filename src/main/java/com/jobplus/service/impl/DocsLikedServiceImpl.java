@@ -43,7 +43,7 @@ public class DocsLikedServiceImpl implements IDocsLikedService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[16],record.getDocid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[18],record.getRelationidPg(),record.getObjectNamePg());
+					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[18],record.getRelationidPg(),record.getObjectNamePg(),"");
 			
 		}
 		return ret;

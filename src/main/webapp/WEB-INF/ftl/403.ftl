@@ -9,14 +9,14 @@
     </title>
     <meta name="viewport" content="width=1230"/> 
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/error.css">
+    <link rel="stylesheet" type="text/css" href="/css/error.css">
   </head>
   <body>
     <div class='i_error'>
      <div class='n-errorbg'>
        <p class="tip_exist">对不起,你没有访问的权限...</p>
        <p class="tip_continue">没关系,你还可以进行以下操作</p>
-       <p class="btn"><a class="green" href="javascript:history.go(-1);">返回上页</a><a href="/51jobplusCore/index">返回首页</a></p>
+       <p class="btn"><a class="green" href="javascript:history.go(-1);">返回上页</a><a href="/index">返回首页</a></p>
      </div>
     </div>
     

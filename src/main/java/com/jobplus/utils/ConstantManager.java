@@ -98,4 +98,6 @@ public class ConstantManager {
 
 
 	public static final String REDIS_KEY_SENSITIVE_WORDS = "SENSITIVE_WORDS";//敏感词
+
+	public static final String FIRST_LOGIN_SMS = "JobPlus一站式企业知识服务平台欢迎您！";
 }

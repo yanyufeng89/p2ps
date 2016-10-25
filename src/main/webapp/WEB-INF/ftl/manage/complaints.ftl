@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <title>用户举报</title>
 <#include "/manage/header.ftl"/>
-    <script src="/51jobplusCore/scripts/pj_constant.js"></script>
+    <script src="/scripts/pj_constant.js"></script>
 </head>
 <body>
 <div class="page-content">
@@ -55,6 +55,7 @@
             height: 350,
             colModel: [
                 {name: 'id', key: 'true', hidedlg: true, hidden: true},
+                {name: 'isdeal', hidden: true},
                 {label: '举报人id', name: 'reportuserid', width: '30', sortable: false},
                 {label: '举报人电话', name: 'reporttel', width: '40', sortable: false},
                 {
@@ -71,12 +72,12 @@
                 {label: '举报理由', name: 'reportcause', sortable: false},
                 {
                     label: '是否处理',
-                    name: 'isdeal',
+                    name: 'isdealcopy',
                     width: '20',
                     sortable: false,
                     align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
-                        if (cellvalue == 1)
+                        if (rowObject.isdeal == 1)
                             return '<i class="icon-ok" style="color: #34c951;" title="已处理"></i>';
                         return '<i class="icon-remove" style="color: #dc4256;" title="待处理"></i>';
                     }
@@ -103,8 +104,11 @@
                 updatePagerIcons(this);
                 var rowIds = $("#jqGrid").jqGrid('getDataIDs');
                 for (var i = 0; i < rowIds.length; i++) {
-                    var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deal(' + rowIds[i] + ');">确认处理</button>';
-                    $("#jqGrid").jqGrid("setRowData", rowIds[i], {operates: operate});
+                    var rowData = $("#jqGrid").jqGrid('getRowData', rowIds[i]);
+                    if (rowData.isdeal != 1) {
+                        var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deal(' + rowIds[i] + ');">确认处理</button>';
+                        $("#jqGrid").jqGrid("setRowData", rowIds[i], {operates: operate});
+                    }
                 }
             }
         });

@@ -43,10 +43,12 @@
     order by t.createTime desc
     <choose>
 		<when test="pageNo !=null">
-			limit #{limitSt},#{pageSize}
+			limit #{limitSt},12
+			<!-- limit #{limitSt},#{pageSize} -->
 		</when>
 		<otherwise>
-			limit #{defaultPageSize,jdbcType=INTEGER}
+			limit 12
+			<!-- limit #{defaultPageSize,jdbcType=INTEGER} -->
 		</otherwise>
 	</choose>
   </select>

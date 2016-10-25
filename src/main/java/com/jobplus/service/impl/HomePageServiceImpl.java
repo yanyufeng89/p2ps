@@ -87,8 +87,8 @@ public class HomePageServiceImpl implements IHomePageService {
 	/**
 	 * 主页    搜索
 	 * @param Condition 查询关键字
-	 * @param sharedType 分类
-	 * @param protoType 那种分类   doc/book/article/courses/sites/topics
+	 * @param sharedType 行业分类 
+	 * @param protoType  知识载体类型 文档:1 文章:2 课程:3 站点:4 话题:5 书籍:6
 	 * @param tags 标签
 	 * @param pages 第几页，默认第0页
 	 * @return

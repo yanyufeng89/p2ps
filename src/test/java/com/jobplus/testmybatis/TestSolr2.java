@@ -148,6 +148,7 @@ public class TestSolr2 {
 	@Test
 	public void findSkill()throws Exception{
        //查询a和b下面的数据，
+		
 		System.out.println("++++++++++++++++++++++"+solrJUtils.findSkill("软件"));
 		System.out.println("++++++++++++++++++++++"+solrJUtils.findUser("anan.wang","29"));
         HttpSolrClient sc = new HttpSolrClient("http://192.168.0.39:18080/solr/skillCore");
@@ -162,5 +163,22 @@ public class TestSolr2 {
         }
         sc.close();
     }
+	
+	@Test
+	public void searchBook()throws Exception{
+		List list = solrJUtils.searchBook("", "", "","","","2");
+		logger.info(">>>>>>>>>>>>>>>>>searchLastBook" + JSON.toJSONString(list));
+    }
+	@Test
+	public void searchTopics()throws Exception{
+		List list = solrJUtils.searchTopics("", "", "","","","3");
+		logger.info(">>>>>>>>>>>>>>>>>searchLastopics" + JSON.toJSONString(list));
+	}
+	
+	@Test
+	public void findSchool()throws Exception{
+		String str = SolrJUtils.findSchool("清华");
+		logger.info(">>>>>>>>>>>>>>>>>findschool" + JSON.toJSONString(str));
+	}
 
 }

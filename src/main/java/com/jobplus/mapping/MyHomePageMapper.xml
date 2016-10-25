@@ -12,17 +12,17 @@
   <!-- Integer objectId; String tableName; String tableColumn; String addOrDecrease; Integer AdOrDeNum; -->
  <select id="getRecentShare" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyHomePage" >
   	select * from (
-	SELECT 	bk.ID AS id,	bk.bookname AS title,	bks.createTime AS createtime,	'tbl_books' AS type FROM	(select bks.bookid as bookID,max(bks.createtime) as  createTime from tbl_books_share bks where TO_DAYS(NOW()) - TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10 AND bks.userID = #{userid , jdbcType=INTEGER} group by bks.bookid) bks,tbl_books bk WHERE	bks.bookID = bk.ID
+	SELECT 	bk.ID AS id,	bk.bookname AS title,	bks.createTime AS createtime,	'tbl_books' AS type FROM	(select bks.bookid as bookID,max(bks.createtime) as  createTime from tbl_books_share bks where <!-- TO_DAYS(NOW()) - TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10 AND --> bks.userID = #{userid , jdbcType=INTEGER} group by bks.bookid) bks,tbl_books bk WHERE	bks.bookID = bk.ID
 	UNION all
-	select ds.ID as id ,ds.title as title, ds.createTime as createtime,'tbl_docs' as type   from tbl_docs ds where  TO_DAYS(NOW())-TO_DAYS(ds.createTime) <![CDATA[ < ]]> 10 and ds.isValid='1' and ds.isPublic='1' and ds.userId = #{userid , jdbcType=INTEGER}
+	select ds.ID as id ,ds.title as title, ds.createTime as createtime,'tbl_docs' as type   from tbl_docs ds where  <!-- TO_DAYS(NOW())-TO_DAYS(ds.createTime) <![CDATA[ < ]]> 10 and --> ds.isValid='1' and ds.isPublic='1' and ds.userId = #{userid , jdbcType=INTEGER}
 	UNION all
-	select tps.ID as id ,tps.title as title, tps.createTime as createtime,'tbl_topics' as type   from tbl_topics tps where  TO_DAYS(NOW())-TO_DAYS(tps.createTime) <![CDATA[ < ]]> 10 and tps.isValid='1' and tps.isPublic='1' and tps.createPerson=#{userid , jdbcType=INTEGER}
+	select tps.ID as id ,tps.title as title, tps.createTime as createtime,'tbl_topics' as type   from tbl_topics tps where  <!-- TO_DAYS(NOW())-TO_DAYS(tps.createTime) <![CDATA[ < ]]> 10 and --> tps.isValid='1' and tps.isPublic='1' and tps.createPerson=#{userid , jdbcType=INTEGER}
 	UNION all
-	select cs.ID as id ,cs.coursesName as title, cs.createTime as createtime,'tbl_courses' as type   from tbl_courses cs where  TO_DAYS(NOW())-TO_DAYS(cs.createTime) <![CDATA[ < ]]> 10 and cs.isValid='1'  and cs.userId = #{userid , jdbcType=INTEGER}
+	select cs.ID as id ,cs.coursesName as title, cs.createTime as createtime,'tbl_courses' as type   from tbl_courses cs where <!--  TO_DAYS(NOW())-TO_DAYS(cs.createTime) <![CDATA[ < ]]> 10 and --> cs.isValid='1'  and cs.userId = #{userid , jdbcType=INTEGER}
 	UNION all
-	select art.ID as id ,art.title as title, art.createTime as createtime,'tbl_article' as type   from tbl_article art where  TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER}
+	select art.ID as id ,art.title as title, art.createTime as createtime,'tbl_article' as type   from tbl_article art where <!--  TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and --> art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER}
 	UNION all
-	select sit.ID as id ,sit.title as title, sit.createTime as createtime,'tbl_sites' as type   from tbl_sites sit where  TO_DAYS(NOW())-TO_DAYS(sit.createTime) <![CDATA[ < ]]> 10 and sit.isValid='1'  and sit.userId = #{userid , jdbcType=INTEGER}  
+	select sit.ID as id ,sit.title as title, sit.createTime as createtime,'tbl_sites' as type   from tbl_sites sit where <!--  TO_DAYS(NOW())-TO_DAYS(sit.createTime) <![CDATA[ < ]]> 10 and  -->sit.isValid='1'  and sit.userId = #{userid , jdbcType=INTEGER}  
 	ORDER BY createTime desc
 	) as ta
 
@@ -39,23 +39,23 @@
   <!-- 统计总数    Integer objectId; String tableName; String tableColumn; String addOrDecrease; Integer AdOrDeNum; -->
  <select id="getRecentShareCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.MyHomePage" >
   	select * from (select sum(countRs) as pageCount from (
-		select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk where bks.bookID = bk.ID and TO_DAYS(NOW())-TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10  and bks.userID = #{userid , jdbcType=INTEGER}
+		select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk where bks.bookID = bk.ID <!-- and TO_DAYS(NOW())-TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10 -->  and bks.userID = #{userid , jdbcType=INTEGER}
 		UNION all
-		select count(*)  as countRs  from tbl_docs ds where  TO_DAYS(NOW())-TO_DAYS(ds.createTime) <![CDATA[ < ]]> 10 and ds.isValid='1' and ds.isPublic='1' and ds.userId = #{userid , jdbcType=INTEGER}
+		select count(*)  as countRs  from tbl_docs ds where  <!-- TO_DAYS(NOW())-TO_DAYS(ds.createTime) <![CDATA[ < ]]> 10 and --> ds.isValid='1' and ds.isConverter = '1' and ds.isPublic='1' and ds.userId = #{userid , jdbcType=INTEGER}
 		UNION all
-		select count(*)  as countRs from tbl_topics tps where  TO_DAYS(NOW())-TO_DAYS(tps.createTime) <![CDATA[ < ]]> 10 and tps.isValid='1' and tps.isPublic='1' and tps.createPerson=#{userid , jdbcType=INTEGER}
+		select count(*)  as countRs from tbl_topics tps where <!--  TO_DAYS(NOW())-TO_DAYS(tps.createTime) <![CDATA[ < ]]> 10 and --> tps.isValid='1' and tps.isPublic='1' and tps.createPerson=#{userid , jdbcType=INTEGER}
 		UNION all
-		select count(*)  as countRs from tbl_courses cs where  TO_DAYS(NOW())-TO_DAYS(cs.createTime) <![CDATA[ < ]]> 10 and cs.isValid='1'  and cs.userId = #{userid , jdbcType=INTEGER}
+		select count(*)  as countRs from tbl_courses cs where  <!-- TO_DAYS(NOW())-TO_DAYS(cs.createTime) <![CDATA[ < ]]> 10 and --> cs.isValid='1'  and cs.userId = #{userid , jdbcType=INTEGER}
 		UNION all
-		select count(*)  as countRs from tbl_article art where  TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER}
+		select count(*)  as countRs from tbl_article art where  <!-- TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and  -->art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER}
 		UNION all
-		select count(*)  as countRs from tbl_sites sit where  TO_DAYS(NOW())-TO_DAYS(sit.createTime) <![CDATA[ < ]]> 10 and sit.isValid='1'  and sit.userId = #{userid , jdbcType=INTEGER}  ) as tb) aa
+		select count(*)  as countRs from tbl_sites sit where  <!-- TO_DAYS(NOW())-TO_DAYS(sit.createTime) <![CDATA[ < ]]> 10 and --> sit.isValid='1'  and sit.userId = #{userid , jdbcType=INTEGER}  ) as tb) aa
   </select>
   <!-- getOneShares -->
   <select id="getOneShares" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyHomePage" >
     select 
-    id,  ${tableColumn} as objName ,createTime
-    ,(select count(*) from ${tableName} where ${tableColumn2} = #{userid,jdbcType=INTEGER} and isValid=1
+    id,  ${tableColumn} as title ,createtime
+   <!--  ,(select count(*) from ${tableName} where ${tableColumn2} = #{userid,jdbcType=INTEGER} and isValid=1
 	    <choose>
 			<when test="tableName =='tbl_topics' or tableName =='tbl_docs'">
 			and	isPublic = 1
@@ -65,7 +65,7 @@
 		<when test="tableName =='tbl_docs'">
 		and	isConverter = 1
 		</when>
-	</choose>  ) as pageCount
+	</choose>  ) as pageCount -->
     from ${tableName}
     where ${tableColumn2} = #{userid,jdbcType=INTEGER} and isValid=1
     <choose>
@@ -108,7 +108,7 @@
   
   <!-- 只返回数据的分享    因为书籍信息需要关联查询 -->
   <select id="getOneSharesJustToBooks" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyHomePage" >
-    SELECT t.bookname as objName,t.ID as id ,bs.createTime  as createTime
+    SELECT t.bookname as title,t.ID as id ,bs.createTime  as createTime
     ,(select count(*)  FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID 
 		WHERE bs.userID = #{userid,jdbcType=INTEGER} AND bs.commentby IS NULL) as pageCount
     FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID 

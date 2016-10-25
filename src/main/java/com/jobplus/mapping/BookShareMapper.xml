@@ -46,7 +46,7 @@
 		where 1 = 1
 		<!-- 资源必须未被删除 -->
 		and t.isdelete = 0
-		and u.isValid = 1
+		<!-- and u.isValid = 1 -->
 		<if test="bookid != null"> AND
 			bookID = #{bookid,jdbcType=INTEGER}
 		</if>
@@ -67,7 +67,7 @@
 		where 1 = 1
 		<!-- 资源必须未被删除 -->
 		and t.isdelete = 0
-		and u.isValid = 1
+		<!-- and u.isValid = 1 -->
 		<if test="bookid != null"> AND
 			bookID = #{bookid,jdbcType=INTEGER}
 		</if>

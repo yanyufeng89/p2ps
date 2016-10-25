@@ -8,8 +8,8 @@
              分享书籍
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/jquery.pinwheel-0.1.0.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_book.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.pinwheel-0.1.0.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_book.css">
   </head>
   <body>
     
@@ -24,71 +24,78 @@
                 <div id="upload-initbook-container" style="display: block;">
                 <div class="upload-steps clearfix">
 					<ul>
-						<li class="step-num active">1<span class="tips">输入书名</span>
-						</li>
+						<li class="step-num active">1<span class="tips">输入书名</span></li>
 						<li class="step-bar"></li>
-						<li class="step-num">2<span class="tips">补充信息</span>
-						</li>
+						<li class="step-num">2<span class="tips">补充信息</span></li>
 						<li class="step-bar"></li>
-						<li class="step-num">3<span class="tips">分享成功</span>
-						</li>
+						<li class="step-num">3<span class="tips">推荐成功</span></li>
 					</ul>
 				 </div>
                  <div class="mod mod-upload">
                    <div class="bdbook" style="">
-	                     <a class="titleinfo">【书籍】</a>
-	                     <span class="titlename">请输入分享的书籍名称</span>
+				         <div class='titleinfo'>
+	                       <span>【书籍】</span>
+	                       <span style='font-weight:500'>请输入分享的书籍名称</span>
+						 </div>
 	                     <div class="link after">
-				            <input type="text" id="searchbook" class='bookdocument' placeholder="请选择书名...">
-				            <input type="button" class="bookpreview" value="确定">
-				            <span class="capture-loading" style="display: none;"></span>
+	                        <input type='hidden' name='isverify' value='0'>
+	                        <input type='hidden' name='bookid' value=''>
+				            <input type="text" id="searchbook" class='bookdocument' placeholder="请输入书名...">
+				            <#--<input type="button" class="bookpreview" value="确定">-->
+				            <span class="tocapture  active bookpreview"></span>
 				            <p class="error" style="display:none;">
                               <i class="tips_icon"></i>请输入书名
                             </p>
 				            <div class='ask-renderer' id='book-renderer'  role='listbox'>
 				              
 				            </div>
+				            <div class="bar after">
+						       <a  class="btn-disblue btnsure"  id='btnbooksure' href='javascript:void(0)'>确定</a>
+						       <a href='/sharein/searchuploadFile' class='btn-cancleupload'>取消</a>
+						       <div class="btn-loading push-loading"></div>
+		                    </div>
 	                     </div>
 	                    
 	                    </div>
                   </div>
                   <div class="upload-intro-query clearfix">
-                    <h4>
-                            书籍推荐
-                    </h4>
-                    <span class='pj-encourage'>
-                      每成功分享一本书籍即可获得一定的财富奖励哦!
-                     </span>
+                   <h4>推荐分享</h4>
                     <ul>
                       <li class="">
-                        名人传记
+                       创新创业
                       </li>
                       <li class="query-box">
-                     政治历史
+                      工业4.0
                       </li>
                       <li class="">
-                       科技创新
+                       新型材料
                       </li>
                       <li class="query-box">
-                       教材教辅
+                      互联网+
                       </li>
                       <li class="">
-                     经济管理
+                      企业管理 
                       </li>
                       <li class="query-box">
-                        社会科学
+                         互联网运营
                       </li>
                       <li class="">
-                    家庭教育
+                       供应链金融
                       </li>
                       <li class="query-box">
-                      旅游地图
+                       新媒体
                       </li>
                       <li class="">
-                       杂志新阅
+                      融资股权
                       </li>
                       <li class="query-box">
-                        烹饪美食
+                       生物医药
+                      </li>
+                       <li class="">
+                    财务管理
+                      </li>
+                      <li class="query-box">
+                       大数据
                       </li>
                     </ul>
                   </div>
@@ -98,48 +105,48 @@
                     </h4>
                     <ol>
                       <li>
-                        1.书籍分享可直接搜索书籍名称;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
                       </li>
                       <li>
-                        2.分享和已分享的书籍重复将会被移除,为避免重复,分享前可先进行搜索;
+                        2.如果您发现一本好书，可以分享给更多的人并给出你的见解，让他们可以找这本书;
                       </li>
                       <li>
-                        3.书籍分享有问题需要帮助？查看
-                        <a href="#" target="_blank">
-                      知识库帮助
+                       3.禁止分享低俗、含有淫秽色情及低俗信息等书籍;
+                      </li>
+                      <li>
+                        4.书籍分享有问题需要帮助？详情请查看知识库
+                        <a href="#" target="_self">
+                     服务条款
+                        </a>
+                        和
+                        <a href="#" target="_self">
+                     帮助中心
                         </a>
                       </li>
                     </ol>
                   </div>
                 </div>
-                  <form method="post" action="/51jobplusCore/books/shareBook" enctype="multipart/form-data" onkeydown="if(event.keyCode==13)return false;" >
+                  <form method="post" action="/books/shareBook" enctype="multipart/form-data">
                   <div id="upload-book-container" style="display:none">
                     <div class="upload-steps clearfix">
                       <ul>
-                        <li class="step-num active">1
-                          <span class="tips">输入书名</span></li>
+                        <li class="step-num active">1<span class="tips">输入书名</span></li>
                         <li class="step-bar active"></li>
-                        <li class="step-num active">2
-                          <span class="tips">补充信息</span></li>
+                        <li class="step-num active">2<span class="tips">补充信息</span></li>
                         <li class="step-bar"></li>
-                        <li class="step-num">3
-                          <span class="tips">分享成功</span></li>
+                        <li class="step-num">3<span class="tips">推荐成功</span></li>
                       </ul>
                     </div>
                     
                     <div class="nhd nedit-all-head">
                       <span class="act btn-submit-all-wrap logSend">
+                        <a href="javascript:location.reload();"  class="add-all ml20  add-all-able" style="width:60px;">取消</a>
                         <a id="sharebook" class="submit-all ml20  submit-all-able">
-                          <i class="iconfont"></i>&nbsp;确认分享
+                          <i class="iconfont"></i>&nbsp;确认推荐
                         </a>
                        </span>
                        <h3  class="item-message-all item-message-all-ok">
-                        <span>请补充书籍信息，完成分享
-                        <br>
-                        <span class="item-message-all-subtitle">审核通过后，您将获得
-                          <span class="item-reward-wealth">1财富值</span>的奖励
-                        </span>
-                        </span>
+                                                                      请补充书籍信息，完成推荐
                        </h3>
                     </div>
                     
@@ -156,7 +163,7 @@
                                                                                                         详情：
                                     </td>
                                     <td>
-                                      <div class="zg-form-text-input add-question-title-form">
+                                      <div class="zg-form-booktext-input">
                                         
                                       </div>
                                     </td>
@@ -204,11 +211,15 @@
                                       <div class="zm-tag-editor-editor zg-clear">
                                         <div class="zg-inline" id="bookinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
+                                          <input style='display:none'/>
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchBook" oninput="getTagsByCondition(this,'book')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
+                                      <span class="pj-warmprompt">
+                                           <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+                                      </span>
                                      </td>
                                   </tr>
                                 </tbody>
@@ -245,7 +256,7 @@
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <div class='headiconintotem' style='display:none'></div>
      <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_booksharein.js"></script>
+     <script type="text/javascript" src="/scripts/pj_booksharein.js"></script>
   </body>
 
 </html>

@@ -39,6 +39,7 @@
 	where t.objectId = p.ID
 	AND
 	t.userId = #{userid,jdbcType=INTEGER}
+	AND t.collType = #{colltype,jdbcType=VARCHAR}
 	AND p.isValid = 1
 	ORDER BY t.attentionTime DESC
 	<choose>
@@ -52,7 +53,7 @@
 </select> 
   <select id="getMyAttentionListCount" resultType="java.lang.Integer" parameterType="java.lang.String">
 	select count(*) from tbl_attention t JOIN ${colltype} p 
-		where t.objectId = p.ID AND t.userId = #{userid,jdbcType=INTEGER} AND p.isValid = 1
+		where t.objectId = p.ID AND t.userId = #{userid,jdbcType=INTEGER} AND t.collType = #{colltype,jdbcType=VARCHAR} AND p.isValid = 1
 </select> 
   
   <!-- 批量删除我的关注 deleteAttentions-->

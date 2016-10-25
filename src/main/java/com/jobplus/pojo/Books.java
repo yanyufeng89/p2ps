@@ -66,9 +66,25 @@ public class Books extends PageParent implements Serializable{
     /**
      * 收藏此书 ids
      */
-    private String collectIds;    
+    private String collectIds;
     
-    public User getObjCreator() {
+    
+    /**
+     * 提供商Url 
+     */
+    private String supplierUrl;
+    
+    
+    
+    public String getSupplierUrl() {
+		return supplierUrl;
+	}
+
+	public void setSupplierUrl(String supplierUrl) {
+		this.supplierUrl = supplierUrl;
+	}
+
+	public User getObjCreator() {
 		return objCreator;
 	}
 

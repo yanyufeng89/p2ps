@@ -1,5 +1,7 @@
 package com.jobplus.pojo;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -80,9 +82,10 @@ public class Courses extends PageParent implements Serializable{
 	 * 收藏的人  ids 
 	 */
 	private String collectIds;
-	
-	
-	
+
+
+	private CommonsMultipartFile coursesimgFile;
+
 	public User getObjCreator() {
 		return objCreator;
 	}
@@ -283,5 +286,13 @@ public class Courses extends PageParent implements Serializable{
 
 	public void setIntro(String intro) {
 		this.intro = intro == null ? null : intro.trim();
+	}
+
+	public CommonsMultipartFile getCoursesimgFile() {
+		return coursesimgFile;
+	}
+
+	public void setCoursesimgFile(CommonsMultipartFile coursesimgFile) {
+		this.coursesimgFile = coursesimgFile;
 	}
 }

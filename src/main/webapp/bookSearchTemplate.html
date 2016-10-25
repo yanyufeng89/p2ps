@@ -1,0 +1,68 @@
+<!-- 书籍专区 -->
+{#if $T.reCount==0}
+    <div class='resultList'>
+		 <div class='emptyList'>
+		   <div class='empty-tip'>
+			   <div class="empty-img">
+				  <img src="/image/angry.png" alt="">
+			   </div>
+			   <div class="empty-info">
+					对不起，没有找到满足搜索条件的信息<br>
+					你可以修改你的搜索条件
+				</div>
+		   </div>
+		   <div class="cline"></div>
+		 </div>
+	</div>
+{#else}
+  {#foreach $T.result as item}
+    <div class="item">
+        <div class='bookdivision-content'>
+            <div class='bookdivision-left'>
+                <div class="title">
+                    <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_books',{$T.item.data_id})" title="{$T.item.title}">{$T.item.title}</a>
+                </div>
+                {#if $T.item.description}
+                    <div class="newsinfo" title="{$T.item.description}">
+                        <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_books',{$T.item.data_id})">{$T.item.description}</a>
+                    </div>
+                {#else}
+                    <div class="newsinfo">
+                        <p></p>
+                    </div>
+                {#/if}
+                <div class="tool">
+                    <div class="pj-meta-panel">
+                        <a  class="answer-date-link pj-meta-item" target="_self" href="javascript:void(0);">
+                                                                    发布于&nbsp;{#if $T.item.updateTime}{$T.item.updateTime}{#/if}
+                         </a>
+                        <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-recommend">
+							<i class="z-icon-comment"></i>{#if $T.item.replySum}{$T.item.replySum}{#else}0{#/if}人推荐
+						</a>
+						<a href="javascript:void(0);" class="pj-meta-item zu-autohide js-collect">
+							<i class="z-icon-collect"></i>{#if $T.item.collectSum}{$T.item.collectSum}{#else}0{#/if}人收藏
+						</a>
+                    </div>
+                </div>
+            </div>
+            <div class='bookdivision-right'>
+                <div class="picno">
+                    <div class="pic">
+                        <div class="picx">
+                            {#if $T.item.imgUrl}
+                                <div class="pict">
+                                    <img src='{$T.item.imgUrl}' alt=''>
+                                </div>
+                            {#else}
+                                    <div class="pict">
+                                        <img src='/image/default/65.jpg' alt=''>
+                                    </div>
+                            {#/if}
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+  {#/for}
+{#/if}

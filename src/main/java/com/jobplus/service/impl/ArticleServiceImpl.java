@@ -3,8 +3,10 @@ package com.jobplus.service.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import com.jobplus.pojo.Article;
 import com.jobplus.pojo.ArticleShare;
 import com.jobplus.pojo.MyCollect;
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.Sms;
+import com.jobplus.pojo.SupportList;
 import com.jobplus.pojo.User;
 import com.jobplus.service.IAccountService;
 import com.jobplus.service.IArticleService;
@@ -21,6 +25,8 @@ import com.jobplus.service.IArticleShareService;
 import com.jobplus.service.IMyCollectService;
 import com.jobplus.service.IOperationSumService;
 import com.jobplus.service.ISequenceService;
+import com.jobplus.service.ISmsService;
+import com.jobplus.service.ISupportListService;
 import com.jobplus.service.IUpdTableColumnService;
 import com.jobplus.service.IUserService;
 import com.jobplus.utils.DateUtils;
@@ -46,6 +52,10 @@ public class ArticleServiceImpl implements IArticleService{
 	private IUpdTableColumnService updTableColumnService;
 	@Resource
 	private IAccountService accountService;
+	@Resource
+	private ISupportListService supportListService;
+	@Resource
+	private ISmsService smsService;
 
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
@@ -173,11 +183,15 @@ public class ArticleServiceImpl implements IArticleService{
 		share.setArticleid(record.getId());
 
 		Page<ArticleShare> shareList = articleShareService.getList(share);
+		
+		//5.打赏的人
+		List<User> rewardUsers = userService.getRewardUsers(record.getId());
 
 //		record.setCurrentUser(currentUser);
 		record.setCollectUsers(userList);
 		record.setRelatedList(theSameArticle);
 		record.setCommentList(shareList);
+		record.setRewardUsers(rewardUsers);
 		return record;
 	}
 
@@ -272,4 +286,61 @@ public class ArticleServiceImpl implements IArticleService{
 		return articleDao.updateByPrimaryKey(record);
 	}
 
+	/**
+	 * 打赏 
+	 */
+	@Transactional
+	@Override
+	public int reward(HttpServletRequest request,Article article, SupportList supt) {
+		int ret = 0;
+		//1.插入打赏记录表
+		int suptId = seqService.getSeqByTableName("tbl_article_supportlist");
+		supt.setId(suptId);
+		ret = supportListService.insert(supt);
+		if(ret>0){
+			//文章打赏次数增加
+			articleDao.updateSupportCount(article.getId());
+			
+			//2.打赏者与被打赏者 积分增减
+			// 增加财富值
+			accountService.modAccountAndDetail(article.getUserid(), 0, article.getSupportValue(), 1, 0,
+					article.getSupportValue(), 10);
+			// 扣减财富值
+			accountService.modAccountAndDetail(supt.getUserid(), 0, -supt.getSupportvalue(), 1, 1,
+					supt.getSupportvalue(), 9);
+			// 发送系统通知 
+			//消息通知 对方 财富值增加
+		      //添加消息通知
+		      smsService.addNotice((User)request.getSession().getAttribute("user"), request.getContextPath(), new Sms().getTABLENAMES()[4],article.getId(),
+		    		  article.getUserid(),new Sms().getSMSTYPES()[25],article.getId(),article.getTitle(),"系统为您增加了"+article.getSupportValue()+"财富值");
+		    //打赏留言不为空  则发送私信   data:{receivedid:receivedid,smstype:1,smscontent:smscontent},
+		      if(!StringUtils.isBlank(article.getSmsContent())){
+		    	  String userid = (String) request.getSession().getAttribute("userid");
+		    	  Sms sms = new Sms();
+		    	  sms.setSenderid(Integer.parseInt(userid));
+		    	  sms.setReceivedid(article.getUserid());
+		    	  sms.setSmstype(1);//私信默认为1
+		    	  sms.setSmscontent(article.getSmsContent());
+		    	  smsService.insertPrvivatSms(sms);	    	  
+		      }
+			
+		}
+			
+		return ret;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

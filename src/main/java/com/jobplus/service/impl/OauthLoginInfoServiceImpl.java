@@ -10,6 +10,8 @@ import com.jobplus.pojo.OperationSum;
 import com.jobplus.pojo.User;
 import com.jobplus.service.IOauthLoginInfoService;
 import com.jobplus.service.ISequenceService;
+import com.jobplus.service.ISmsService;
+import com.jobplus.utils.ConstantManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,8 @@ public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
     private AccountMapper accountDao;
     @Resource
     private OperationSumMapper operationSumMapperDao;
+    @Resource
+    private ISmsService smsService;
 
     @Transactional
     @Override
@@ -63,15 +67,20 @@ public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
 
     @Transactional
     @Override
-    public User getUserFromOauth(OauthLoginInfo loginInfo, OauthLoginInfo record) {
+    public User getUserFromOauth(OauthLoginInfo loginInfo, OauthLoginInfo record) throws Exception {
         User loginParam = new User();
         User user = new User();
+        java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis());
         if (loginInfo == null) {
-            java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis());
             int userId = seqService.getSeqByTableName("tbl_user");
             record.setUserid(userId);
             user.setUserid(userId);
-            user.setUsername(record.getNickname());
+            //用户名去重
+            int index = userMapper.countUserName(record.getNickname());
+            if (index == 0)
+                user.setUsername(record.getNickname());
+            else
+                user.setUsername(record.getNickname() + "_" + (index + 1));
             user.setHeadicon(record.getHeadicon());
             user.setIsvalid(1);
             user.setCreatetime(time);
@@ -95,14 +104,21 @@ public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
             opSum.setUserid(userId);
             opSum.setOperatortime(time);
             operationSumMapperDao.insert(opSum);
+
+            //发送短信
+            smsService.sendSysNotice(userId,ConstantManager.FIRST_LOGIN_SMS);
         } else {
             user = userMapper.selectByPrimaryKey(loginInfo.getUserid());
         }
-        if (user != null && StringUtils.isNotBlank(user.getPasswd())) {
-            return user;
-        } else {
-            loginParam.setUsername(String.valueOf(user.getUserid()));
-            return loginParam;
+        if (user == null || user.getUserid() == null)
+            throw new Exception("*****获取本地账号失败****" + loginInfo.getUserid() + "用户不存在");
+        else {
+            if (StringUtils.isNotBlank(user.getPasswd())) {
+                return user;
+            } else {
+                loginParam.setUsername(String.valueOf(user.getUserid()));
+                return loginParam;
+            }
         }
     }
 }
