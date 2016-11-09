@@ -55,6 +55,7 @@ $(function(){
 	});
 	//确定
 	$('#btnbooksure').live('click',function(){
+		
 		$(this).addClass('capture-loading').html('');
 		var bookid=$('input[name=bookid]').val();
 		if($.trim($('#searchbook').val()).length==0||bookid==''){
@@ -85,6 +86,7 @@ $(function(){
 
    //确认分享
    $('#sharebook').live('click',function(){
+	  
 	   //推荐理由必填
 	   if($.trim($('textarea[name=recommend]').val()).length==0){
 			$('textarea[name=recommend]').nextAll().css('display','inline-block');
@@ -102,7 +104,8 @@ $(function(){
 			tagid+=$(this).attr('id')+":"+$(this).data('name')+",";
 		});
 		$("input[name=shareclass]").val(tagid.substring(0,tagid.length-1));
-		
+		 //添加遮罩层 防止在上传的同时做其他操作
+		 addMaskLayer();
 	    $('form').submit();
    })
 })

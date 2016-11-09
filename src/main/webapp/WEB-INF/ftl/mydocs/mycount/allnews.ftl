@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+        全部消息-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -19,9 +19,9 @@
 		<div class="img-center">
 		 <a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		    <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}"  alt="个人头像"  width='100' height='100' class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" alt="个人头像" width='100' height='100' class='lazy'>
 		  </#if>
 		  </a>
 		</div>
@@ -32,7 +32,7 @@
 		        </#if>
 		    </a>
 		</p>
-        <p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+        <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
 		<div class="mydoc-list">
 		<ul>
 		    <ul id="accordion">
@@ -97,34 +97,40 @@
 					<span><a class="icon-myallnews"></a></span>
 					<div style="float:left">
 						<p>全部消息</p>
+						<p class="dll">
+						    <a href='/myCenter/getAllSms?islook=0' <#if pageFlag==0>class="current"</#if> id='unread'>
+						          未读消息&nbsp;<#list Session.myHeadTop?keys as itemKey>
+								     <#if itemKey="privateSmsSum">
+								        <#assign privateSmsSum=Session.myHeadTop[itemKey] />
+								     </#if>
+								     <#if itemKey="newSmsSum">
+								        <#assign newSmsSum=Session.myHeadTop[itemKey] />
+								     </#if>
+						 		   </#list> 
+						 		   <#assign sum=privateSmsSum?number+newSmsSum?number />
+						 		     <label>${sum}</label>    
+						    </a>
+						    <a href='/myCenter/getAllSms?islook=1' <#if pageFlag==1>class="current"</#if> id='markread'>
+						     <#assign sum=privateSmsSum?number+newSmsSum?number />
+						     <#list Session.myHeadTop?keys as itemKey>
+							     <#if itemKey="smsSum">
+							        <#assign smsSum=Session.myHeadTop[itemKey] />
+							     </#if>
+							     <#if itemKey="newSmsSum">
+							        <#assign newSmsSum=Session.myHeadTop[itemKey] />
+							     </#if>
+						 	  </#list> 
+						 		 <#assign sums=smsSum?number-newSmsSum?number />
+						           已读消息 &nbsp;<label>${sums}</label>
+						    </a>
+					    </p>
 					</div>
 		       </div>
 	           <div class="notice-count">
-	               <a style='padding-left:12px;' class='notice-sms <#if (pageFlag)??> <#if pageFlag==0>current</#if></#if>' href='/myCenter/getAllSms?islook=0'>未读通知：
-	                  <b class="unread_count">
-	                   <#list Session.myHeadTop?keys as itemKey>
-					     <#if itemKey="privateSmsSum">
-					        <#assign privateSmsSum=Session.myHeadTop[itemKey] />
-					     </#if>
-					     <#if itemKey="newSmsSum">
-					        <#assign newSmsSum=Session.myHeadTop[itemKey] />
-					     </#if>
-			 		   </#list> 
-			 		   <#assign sum=privateSmsSum?number+newSmsSum?number />
-			 		     ${sum}
-	                  </b>
-	               </a>
-	               <a class='notice-sms <#if (pageFlag)??><#if pageFlag==1>current</#if></#if>' href='/myCenter/getAllSms'>全部消息：
-	                 <b class="read_count"> 
-	                    <#list Session.myHeadTop?keys as itemKey>
-					     <#if itemKey="smsSum">
-					        ${Session.myHeadTop[itemKey]}
-					     </#if>
-			 		   </#list> 
-                     </b>
-                   </a>
-                   <a class="mark_read">全部标记为已读</a>
-				   <a class="empty-allnews">清空所有通知</a>
+	            <#if pageFlag==0>
+                     <a class="mark_read" style='margin-left:10px'>全部标记为已读</a>
+                </#if> 
+				     <a class="empty-allnews" style='margin-left:10px'>清空所有通知</a> 
 	           </div>
 	           <div class='myAllMessage'>
 	             <#if (pageFlag)??>
@@ -148,7 +154,7 @@
 	                       <#else>
 	                         <span class='sms-icon-2'></span>
 	                       </#if>
-	                        <a href='/myHome/getHomePage?userid=${list.senderid}' target='_blank'>${list.sendUserName}:</a>
+	                        <a href='/myHome/getHomePage/${list.senderid}' target='_blank'>${list.sendUserName}:</a>
 	                        <#if list.islook==1>
 	                          <span class='allnewscontent' style='color:#999'>${list.smscontent}</span>
 	                        <#else>

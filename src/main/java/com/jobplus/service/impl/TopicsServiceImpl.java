@@ -53,6 +53,8 @@ public class TopicsServiceImpl implements ITopicsService {
     private ITypeConfigService typeConfigService;
     @Resource
     private ITagsService tagsService;
+    @Resource
+	private ISmsService smsService;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -85,6 +87,13 @@ public class TopicsServiceImpl implements ITopicsService {
             String tagsArray = record.getTopicsclass();
             // 所选标签总数 +1
             tagsService.addOrDecreaseTagUsenumer(tagsArray);
+            
+            if(ret > 0 && record.getRewardValue()>0){
+            	//话题发布 如果有悬赏值 积分扣减
+            	accountService.modAccountAndDetail(userid, 0, -record.getRewardValue(), 1, 1,
+            			record.getRewardValue(), 11);
+            	
+            }
             return record;
         } else {
             return null;
@@ -200,7 +209,7 @@ public class TopicsServiceImpl implements ITopicsService {
             //查询粉丝
             fansList = userService.getFansListInformation("tbl_topics", record.getTopicsid());
             //根据标题查询相关话题列表
-            relatedTopicsList = solrJUtils.findTopsFromList(topic.getTitle(), String.valueOf(topic.getId()));
+            relatedTopicsList = solrJUtils.findTopsFromList(topic.getTitle(), String.valueOf(topic.getId()),topic.getTopicstype(),topic.getTopicsclass());
             topic.setCommentList(commentList);
             topic.setFansList(fansList);
             topic.setRelatedList(relatedTopicsList);
@@ -228,7 +237,8 @@ public class TopicsServiceImpl implements ITopicsService {
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public Page<Topics> searchTopics(int theme, Topics record) {
-        List<Object> objectList = solrJUtils.searchTopics(record.getCondition(), record.getTopicstype(), null, String.valueOf(record.getPageNo() == null ? 1 : record.getPageNo()), String.valueOf(record.getPageSize() == null ? record.getDefaultPageSize() : record.getPageSize()), String.valueOf(theme));
+        @SuppressWarnings({ "unused", "static-access" })
+		List<Object> objectList = solrJUtils.searchTopics(record.getCondition(), record.getTopicstype(), null, String.valueOf(record.getPageNo() == null ? 1 : record.getPageNo()), String.valueOf(record.getPageSize() == null ? record.getDefaultPageSize() : record.getPageSize()), String.valueOf(theme));
       
         List<Topics> list = null;
         String topicKey = ConstantManager.REDIS_KEY_TOPICS_SEARCH + theme + "-" + record.getTopicstype();
@@ -285,6 +295,74 @@ public class TopicsServiceImpl implements ITopicsService {
         }
         return page;
     }
+    /**
+	 * 采纳 答案 
+	 * @param record
+	 * @return
+	 */
+    @Transactional
+	@Override
+	public int acptAnswer(Topics topic, TopicsComment comment,Sms sms) {
+    	int ret = 0;
+    	//更改为已采纳   回答采纳状态  1:已采纳   0:不悬赏  -1：取消悬赏 2:等待悬赏
+    	topic.setAcceptStatus(1);
+		ret = topicsDao.updateByPrimaryKeySelective(topic);
+		if(ret > 0){
+			// 修改评论状态位最佳答案
+			comment.setIsAccept(1);
+			topicsCommentDao.updateByPrimaryKeySelective(comment);
+			if(!StringUtils.isBlank(sms.getSmscontent())){
+				// 私信答谢
+				smsService.insertPrvivatSms(sms);
+			}			
+			
+			//财富值增加
+			//话题评论者增加财富值
+			accountService.modAccountAndDetail(sms.getReceivedid(), 0,  topic.getRewardValue(), 
+					1, 0, topic.getRewardValue(),12);
+			//财富值减少
+//			//话题发布者减少财富值
+//			accountService.modAccountAndDetail(topic.getCreateperson(), 0,  -topic.getRewardValue(), 
+//					1, 0, topic.getRewardValue(),11);
+			
+		}	
+		return ret;
+	}
+    /**
+	 * 取消悬赏
+	 */
+    @Transactional
+	@Override
+	public int cancelRewd(Topics topic) {
+		int ret = 0;
+    	//更改为取消悬赏 	回答采纳状态  1:已采纳   0:不悬赏  -1：取消悬赏 2:等待悬赏
+    	topic.setAcceptStatus(-1);
+		ret = topicsDao.updateByPrimaryKeySelective(topic);
+		if(ret > 0){
+			//悬赏值返回到个人账户
+			accountService.modAccountAndDetail(topic.getCreateperson(), 0,  topic.getRewardValue(), 
+					1, 0, topic.getRewardValue(),11);
+		}
+		return ret;
+	}
+/**
+ * 提高悬赏
+ */
+    @Transactional
+	@Override
+	public int upRewd(Topics record,Integer dValue) {
+		int ret = 0;
+//      回答采纳状态  1:已采纳   0:不悬赏  -1：取消悬赏 2:等待悬赏
+				record.setAcceptStatus(2);
+		ret = topicsDao.updateByPrimaryKeySelective(record);
+		if(ret > 0 && dValue>0){
+        	//有悬赏值变化  积分扣减
+        	accountService.modAccountAndDetail(record.getCreateperson(), 0, -dValue, 1, 1,
+        			dValue, 14);
+        	
+        }
+		return ret;
+	}
 
 
 }

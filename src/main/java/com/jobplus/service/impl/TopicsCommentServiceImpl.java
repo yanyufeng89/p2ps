@@ -149,30 +149,37 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 
 					// 添加消息通知
 					smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[9], record.getTopicsid(),
-							record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[3], record.getId(),
+							record.getObjCreatepersonPg(), 11, record.getId(),
 							record.getObjectNamePg(),"");
 
 				} else if (record.getType() == ConstantManager.TBL_TOPICSCOMMENT_TYPE_REPLYCOMMENT) {// 回答的评论+1
 					if (record.getTopicsid() != null) {
+						// 1 对应用户话题回答数 增加       add 10.24
+						operationSumService.updOperationSum(4, 0, 1,null);
+						
 						// tableColumn : TOPICSCOMMENTCOLUMNS = new String[]{
 						// "replySum","likeSum","collectSum"};
 						updTableColumnService.updNums(8, 0, 0, 1, record.getParentcommid());
 
 						// 添加消息通知
 						smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[9], record.getTopicsid(),
-								record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[6], record.getId(),
+								record.getObjCreatepersonPg(), 14, record.getId(),
 								record.getObjectNamePg(),"");
 
 					}
 				} else if (record.getType() == ConstantManager.TBL_TOPICSCOMMENT_TYPE_TOPICCOMMENT) {// 话题的评论+1
 					if (record.getTopicsid() != null) {
+						
+						// 1 对应用户话题回答数 增加       add 10.24
+						operationSumService.updOperationSum(4, 0, 1,null);
+						
 						// tableColumn : TOPICSCOLUMNS = new
 						// String[]{"followsSum","readSum","replySum","likeSum","futilitySum","collectSum","commentSum"};
 						updTableColumnService.updNums(2, 6, 0, 1, record.getTopicsid());
 
 						// 添加消息通知
 						smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[9], record.getTopicsid(),
-								record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[5], record.getId(),
+								record.getObjCreatepersonPg(), 13, record.getId(),
 								record.getObjectNamePg(),"");
 
 					}

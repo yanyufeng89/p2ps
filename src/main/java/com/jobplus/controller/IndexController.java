@@ -6,7 +6,9 @@ import com.jobplus.pojo.response.BaseResponse;
 import com.jobplus.service.IHomePageService;
 import com.jobplus.service.IIndexService;
 import com.jobplus.service.ISensitiveWordsService;
+import com.jobplus.service.ITypeConfigService;
 import com.jobplus.utils.ConstantManager;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,8 @@ public class IndexController {
 	private IndexDataJob indexDataJob;
 	@Resource
 	private ISensitiveWordsService sensitiveWordsService;
+	@Resource
+	private ITypeConfigService typeConfigService;
 
 	/**
 	 * 刷新首页缓存
@@ -142,7 +146,6 @@ public class IndexController {
 			map.put("pageSize", pageSize);
 			return new ModelAndView(new MappingJackson2JsonView(), map);
 		} else {
-
 			mv.setViewName("searchNavigation");
 			mv.addObject("result", result);
 			mv.addObject("reCount", reCount);
@@ -153,6 +156,8 @@ public class IndexController {
 			mv.addObject("preCondition", Condition);
 			mv.addObject("preProtoType", protoType);
 			mv.addObject("prePages", pages);
+			String title = StringUtils.isNotBlank(Condition) ? Condition + "-" : "";
+			mv.addObject("title", title + ("".equals(sharedType) || "0".equals(sharedType) ? "" : typeConfigService.getSiteTitleByTypeConfig(Integer.parseInt(sharedType)) + "-"));
 //			logger.info("********parmMap=="+parmMap);
 			
 			return mv;

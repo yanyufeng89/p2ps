@@ -1,32 +1,41 @@
 <div class="_CommentItem_root_PQNS" tabindex="-1" aria-label="" data-id="">
-
-  <a  href='/myHome/getHomePage?userid={$T.userinfo.userid}' target="_blank" tabindex="-1"  data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
-    {#if $T.userinfo.headicon}
-    <img tabindex="-1" class="Avatar Avatar-s" src="{$T.userinfo.headicon}" data-userid="{$T.userinfo.userid}">
+   {#if $T.userinfo.headicon}
+     {#if $T.userinfo.username}
+      <a  href='/myHome/getHomePage/{$T.userinfo.userid}' target="_blank" tabindex="-1"  data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
+        <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="{$T.userinfo.headicon}" data-userid="{$T.userinfo.userid}">
+      </a>
+     {#else}
+        <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="{$T.userinfo.headicon}">
+     {#/if}
     {#else}
-    <img tabindex="-1" class="Avatar Avatar-s" src="/image/1b48b5a75c71597_100x100.jpg" data-userid="{$T.userinfo.userid}">
-    {#/if}
- </a>
+     {#if $T.userinfo.username}
+      <a  href='/myHome/getHomePage/{$T.userinfo.userid}' target="_blank" tabindex="-1"  data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
+       <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg" data-userid="{$T.userinfo.userid}">
+      </a>
+     {#else}
+       <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg">
+     {#/if}
+   {#/if}
   <div class="_CommentItem_body_3qwB">
     <div class="_CommentItem_header_2JGh">
      {#if $T.commentby}
      {#if $T.userinfo.username}
-      <a  href='/myHome/getHomePage?userid={$T.userinfo.userid}' target="_blank" class='zg-link' data-userid="{$T.userinfo.userid}" data-moduletype="0">
+      <a  href='/myHome/getHomePage/{$T.userinfo.userid}' target="_blank" class='zg-link' data-userid="{$T.userinfo.userid}" data-moduletype="0">
              {$T.userinfo.username}
       </a>
       {#else}
-                                 匿名用户
+           匿名用户
       {#/if}
      <span class="desc">回复 </span>
 
-	 <a  href='/myHome/getHomePage?userid={$T.commentby}' class="zg-link"  target='_blank' data-userid="{$T.commentby}" data-original_title="{$T.commentname}">{$T.commentname}</a>
+	 <a  href='/myHome/getHomePage/{$T.commentby}' class="zg-link"  target='_blank' data-userid="{$T.commentby}" data-original_title="{$T.commentname}">{$T.commentname}</a>
      {#else}
        {#if $T.userinfo.username}
-	     <a  href='/myHome/getHomePage?userid={$T.userinfo.userid}' class='zg-link' target="_blank"  data-userid="{$T.userinfo.userid}" data-moduletype="0">
+	     <a  href='/myHome/getHomePage/{$T.userinfo.userid}' class='zg-link' target="_blank"  data-userid="{$T.userinfo.userid}" data-moduletype="0">
 	             {$T.userinfo.username}
 	     </a>
        {#else}
-                                 匿名用户
+             匿名用户
        {#/if}
      {#/if}
    </div>

@@ -1,6 +1,9 @@
 package com.jobplus.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class WorkExper implements Serializable {
 	/**
@@ -25,8 +28,10 @@ public class WorkExper implements Serializable {
 	private java.sql.Timestamp starttime;
 
 	private java.sql.Timestamp endtime;
+	
+	private java.sql.Timestamp strEndtime;
 
-	private java.sql.Timestamp createtime;
+	private Date createtime;
 	
 	/**
 	 * 时间间隔     几年几个月
@@ -114,12 +119,30 @@ public class WorkExper implements Serializable {
 		this.endtime = endtime;
 	}
 
-	public java.sql.Timestamp getCreatetime() {
+	public Date getCreatetime() {
 		return createtime;
 	}
 
-	public void setCreatetime(java.sql.Timestamp createtime) {
+	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
+	}
+
+	/**
+	 * this method get the strEndtime of value
+	 * 
+	 * @return Returns the strEndtime.
+	 */
+	public java.sql.Timestamp getStrEndtime() {
+		return strEndtime;
+	}
+
+	/**
+	 * this method set the strEndtime of value
+	 * 
+	 * @param enName The strEndtime to set.
+	 */
+	public void setStrEndtime(java.sql.Timestamp strEndtime) {
+		this.strEndtime = strEndtime;
 	}
 
 }

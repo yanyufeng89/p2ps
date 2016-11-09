@@ -252,12 +252,12 @@ var userInfo;
 			        	    		}else{
 			        	    			data.user.fansIds=1;
 			        	    		}
-			        	    		if(data.user.description!=undefined){
+			        	    	/*	if(data.user.description!=undefined){
 			        	    			if(data.user.description.length>22){
 				        	    			data.user.description=data.user.description.substring(0,22)+'...'
 				        	    		}
 			        	    		}
-			        	    		
+			        	    		*/
 			        	    		var datamodel={
 			        	    		    userSimpleInformation:data.user,
 			        	    		    userid:userid,

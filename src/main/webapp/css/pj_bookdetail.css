@@ -1,12 +1,9 @@
-.book-basic .tip{
-	margin-right:5px;
-}
-.doc-basic,.book-basic{
+.doc-basic,.book-basic,.topic-basic{
 	margin-left: 16px;
     width: 860px;
 }
 .book-basic .infor { 
-	margin:2px 14px 0 0;
+	margin:2px 10px 0 0;
     min-height:160px;
 }
 .article-basic{
@@ -29,21 +26,35 @@
    margin-top:6px;
    word-wrap: break-word;
    font-size: 14px;
-   color: #090909;
-   
+   color: #555;
 }
+.purchaseurl{
+    border: 1px solid #cce1ef;
+    background: #eff6fA;
+    text-shadow: none;
+}
+.showall{
+	cursor: pointer;
+	color: #1b85d5;
+	font-size:12px;
+	margin-left:10px;
+} 
 .articlename{
     font-weight: bold;
     font-size: 18px!important;
-    color: #0867c5!important;
     margin-bottom:20px!important;
 }
+.book-main{
+	padding-bottom:10px!important;
+}
 .meta-top{
-	margin-left:30px
+	margin-left:30px;
+	font-size:12px;
+	color:#555;
 }
 .infor .infor-right .courseinfo{
-    font-size: 14px;
-    color: #090909;
+    font-size:16px;
+    color: #333;
     font-weight: bold;
     height: 25px;
     line-height: 25px;
@@ -74,11 +85,10 @@
  .slidedown {
 	position: absolute;
     right: 0;
-    bottom: -3px;
-    width: 5em;
+    bottom: -5px;
     text-align: left;
     background: #fff;
-    width: 286px;
+    width: 280px;
 }
  .showbrief .slideup {
 	text-align: right;
@@ -91,7 +101,7 @@
 	font-size:12px;
 }
  .showbrief label{
-   color:#666;
+   color:#555;
  }
  .showbrief .slide:hover{
     color:#0867c5;
@@ -112,44 +122,67 @@
 .bookname .noborder,.bookname .tip{
 	font-weight:bold;
 }
-.shareto{
+.shareto,.topic-shareto{
     float: right;
     margin:0 0 16px 20px;
-    color: #666;
+    color: #555;
     font-size: 12px;
     line-height: 1em;
     margin-right: 14px;
 }
-
+.doc-shareto{
+	float: right;
+    margin:20px 0 16px 20px;
+    color: #555;
+    font-size: 12px;
+    line-height: 1em;
+    margin-right: 14px;
+}
 .additional .purchase-book{
 	clear: both;
     float: left;
-    margin:3px 0 0 32px;
+    margin:16px 0 0 32px;
 }
-.shareto .shareto-share{
+.shareto .shareto-share,.doc-shareto .shareto-share{
 	 float: left;
 	 padding-top:14px;
 }
-.shareto .shareto-menu{
+.topic-shareto .shareto-share{
+	float: left;
+	padding-top:30px;
+}
+.shareto .shareto-menu,.doc-shareto .shareto-menu{
 	 float: left;
 	 margin-left:6px;
 	 padding-top:12px;
+}
+.topic-shareto .shareto-menu{
+	 float: left;
+	 margin-left:6px;
+	 padding-top:28px;
 }
 
 .detail,.detailcomment{
     border-bottom: 1px dotted #ccc;
 }
+.document-list{
+    margin:15px 15px 0 15px;
+    position: relative;
+}
 .detail-list,.detailcomment-list{
-    /* padding:0 24px 30px 28px; */
     background:#fff;
     min-height: 10px;
 }
 .detail .item {
-    padding: 15px 15px 5px 16px;
+    padding: 15px 15px 14px 16px;
     border-bottom: 1px solid #e5e5e5;
 }
 .detail .item:last-child{
 	border-bottom:0;
+}
+.doc-title{
+	border-bottom:none!important;
+	background:#f9f9f9;
 }
 .detail .item .media-left {
     height: 32px;
@@ -176,10 +209,11 @@
 .detail .item .media-right .reason {
     margin: 4px 0;
     font-size:14px;
-    color:#666;
+    color:#555;
     word-wrap: break-word;
     word-break: normal;
     text-align: justify;
+    line-height:1.7
 }
 .detail .item .media-right .operate {
     margin-top:8px;
@@ -194,9 +228,7 @@
 .detail .item .media-right {
     margin-left: 40px;
 }
-/* .desc{
-	color:#666;
-} */
+
 .mycomment{
 	height:32px;
 	line-height:32px;
@@ -211,7 +243,7 @@
 .mycommentinfo{
 	font-size: 14px;
     font-weight: bold;
-    color:#090909;
+    color:#333;
 }
 .publishanswer {
     margin-left: 14px;
@@ -234,7 +266,7 @@
 .zh-books-followers-sidebar .zm-item-img-avatar {
     width: 32px;
     height: 32px;
-    border-radius: 2px;
+    border-radius:4px;
 }
 .zh-books-followers-sidebar .zu-small-avatar-list{
 	padding-top:14px!important;
@@ -248,7 +280,6 @@
 }
 .related-book-right,.related-doc-right{
 	font-size:12px;
-	color:#090909;
     padding-top: 0px!important; 
     padding-bottom: 4px;
 }
@@ -272,7 +303,7 @@ input[type=text], input[type=password]:focus {
 }
 ._CommentBox_root_G_1m._CommentBox_bordered_3Fo- {
     border: 1px solid #ddd;
-    border-radius: 2px;
+    border-radius:4px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 ._CommentBox_root_G_1m {
@@ -306,7 +337,7 @@ input[type=text], input[type=password]:focus {
 ._CommentForm_bordered_2isg {
     margin: 0;
     padding: 1em;
-    border-radius: 0 0 2px 2px;
+    border-radius: 0 0 4px 4px;
     background: #f9f9f9;
 }
 
@@ -325,22 +356,22 @@ input[type=text], input[type=password]:focus {
     width: 60px;
 }
 ._CommentForm_cancelButton_cy3u {
-    margin-right: 1em;
+    margin-right:10px;
 }
 ._CommentBox_textButton_3t9_ {
     padding: 0;
     border: 0;
     outline: 0;
     background: none;
-    cursor: pointer;
+    cursor: pointer; 
     color: #999;
+    height:30px;
+    line-height:30px;
+    width: 60px;
+    text-align: center;
+    border: 1px solid #e5e5e5;
+    vertical-align: super;
 }
-._CommentBox_textButton_3t9_:hover{
-	color: #1A7BDD;
-    cursor: pointer;
-    text-decoration: none;
-}
-
 
 .ReportMenu span {
     display: block;
@@ -370,11 +401,10 @@ input[type=text], input[type=password]:focus {
 .meta-item:hover .zg-icon-comment-del {
     background-position: -236px -79px;
 }
-.edui-body-container {
-    display: block!important;
+/* .edui-body-container {
     width: 780px!important;
     min-height: 150px!important;
-}
+} */
 .commentcontent {
     height: 166px;
     width: 840px;
@@ -385,28 +415,26 @@ input[type=text], input[type=password]:focus {
     resize: none;
     font-size: 14px;
     line-height: 20px;
-    color: #090909;
+    color: #333;
     outline: none;
-    border-radius:2px;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    border-radius:4px;
+    font-family:  Arial,'微软雅黑';
+    _font-family:  Arial,'微软雅黑';
 }
 .zm-command {
     padding: 10px 0;
     text-align: right;
-    /* background:#f9f9f9; */
 }
 
 .publishbook{
 	padding-left:14px;
-	/* background:#f9f9f9; */
 }
 
 .authorinfo span{
-	margin-right:30px;
+	margin:7px 30px 0 0
 }
 .authorinfo{
-	color:#666;
+	color:#555;
 	font-size:14px;
 	margin-left:14px;
 	margin-bottom:14px;
@@ -430,7 +458,7 @@ input[type=text], input[type=password]:focus {
 	float:left;
 }
 
-.banner-more-btn {
+.banner-more-btn,.ui-toolbar-middle{
 	width: 247px;
 	padding-top: 12px;
 	font-size: 14px;
@@ -439,6 +467,14 @@ input[type=text], input[type=password]:focus {
 	margin-top: 18px;
 	color: #b6b6b6;
 	border-top: 1px dotted #d1d1d1;
+}
+.ui-toolbar-middle{
+	text-align: center;
+	-moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
 }
 .banner-more-btn .goBtn {
    cursor: pointer;
@@ -466,7 +502,12 @@ input[type=text], input[type=password]:focus {
     width: 15px;
     height: 14px;
     vertical-align: -3px;
-    margin-left: 3px;
+    margin-left:6px!important;
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
 }
 .ic-arrow-down{
 	background-position:0 0;
@@ -486,13 +527,13 @@ input[type=text], input[type=password]:focus {
 /* .doc-wrap{
 	font-size:14px;
 	font-weight:bold;
-	color:#090909;
+	color:#333;
 	padding:22px 0 22px 14px;
 } */
 .userrecommend,.doc-wrap{
 	font-size:14px;
 	font-weight:bold;
-	color:#090909;
+	color:#333;
 	background:#f9f9f9;
 	padding:20px 0 20px 14px;
 	border-bottom: 1px dotted #ccc;
@@ -531,7 +572,7 @@ input[type=text], input[type=password]:focus {
 }
 .support-author p{
 	font-size:16px;
-	color:#666;
+	color:#333;
 	padding-bottom: 20px;
 	font-weight: 600;
 }
@@ -588,15 +629,14 @@ input[type=text], input[type=password]:focus {
     -moz-box-shadow: none;
     box-shadow: none;
     position: relative;
-    top: -4px;
-    color: #666;
+    top: -5px;
+    color: #555;
     height: auto;
     margin-bottom: 0;
     font-size: 16px;
-    line-height: 38px;
     outline:none;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family:  Arial,'微软雅黑';
+    _font-family:  Arial,'微软雅黑';
 }
 .reward_amount{
 	vertical-align: super;
@@ -623,6 +663,77 @@ input[type=text], input[type=password]:focus {
     -moz-box-shadow: none;
     box-shadow: none;
     outline:none;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family:  Arial,'微软雅黑';
+    _font-family:  Arial,'微软雅黑';
+}
+
+.ui-toolbar-middle .arrow-btn {
+	cursor: pointer;
+}
+.ui-toolbar-middle .enable-btn {
+	color: #aab1bb;
+}
+.ui-toolbar-middle .disable-btn {
+    color: #ddd;
+    pointer-events: none;
+}
+.ui-toolbar-middle .enable-btn:hover{
+	color: #1b85d5;
+/* 	background:#1b85d5;
+	padding:10px; */
+}
+.ui-toolbar-middle .left-btn {
+	font-size:18px;
+	display: inline-block;
+	margin-right: 10px;
+	text-decoration: none;
+}
+.ui-toolbar-middle .ipt-box {
+	display: inline-block;
+	vertical-align: bottom;
+}
+.ui-toolbar-middle .right-btn {
+	font-size:18px;
+	display: inline-block;
+	margin-left: 10px;
+	text-decoration: none;
+}
+
+ .ui-toolbar-middle .ipt-box input {
+	width: 41px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 10px;
+	border: 1px solid #d1ded9;
+	outline: 0;
+	text-align: center;
+	margin-right: 1px;
+}
+.ui-toolbar-middle .ipt-box .total-page {
+	font-size: 10px;
+	color: #555;
+	font-family:  Arial,'微软雅黑';
+    _font-family:  Arial,'微软雅黑';
+}
+
+ .pj-kong{
+	position:absolute; 
+	left: -14px;
+    top: -1px;
+    width: 880px; 
+	height:800px;
+	z-index:1;
+	cursor: url('/image/icon-left.ico'),auto;
+}
+.doc-ppt{
+	position: relative;
+	width:830px;
+	height:800px; 
+}
+
+.shareto-share .createtime {
+    color:#999
+}
+.shareto-share .createtime:hover{
+    color:#999
 }

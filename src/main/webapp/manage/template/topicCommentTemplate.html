@@ -9,39 +9,45 @@
       <div class="zm-item-comment" data-id="{$T.commlist.typeid}" tabindex="-1" aria-label="评论">
         <a class="zg-anchor-hidden" name="comment-{$T.commlist.typeid}"></a>
 
-          <a  class="zm-item-link-avatar" href='/myHome/getHomePage?userid={$T.commlist.userid}' target='_self'  data-moduletype="0">
-        
          {#if $T.commlist.tmpHeadIcon}
+          {#if $T.commlist.tmpUserName}
+           <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_self'  data-moduletype="0">
              <img src="{$T.commlist.tmpHeadIcon}" class="zm-item-img-avatar" data-userid='{$T.commlist.userid}'>
+           </a>
+          {#else}
+            <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+          {#/if}
          {#else}
-             <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-userid='{$T.commlist.userid}'>
+           {#if $T.commlist.tmpUserName}
+	           <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_self'  data-moduletype="0">
+	             <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" data-userid='{$T.commlist.userid}'>
+	           </a>
+	       {#else}
+	            <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+           {#/if}
          {#/if}
-        </a>
+        
         <div class="zm-comment-content-wrap">
           <div class="zm-comment-hd">
             {#if $T.commlist.commentby}
 			     {#if $T.commlist.tmpUserName}
-
-			       <a href='/myHome/getHomePage?userid={$T.commlist.userid}' target='_self' class="zg-link" data-userid='{$T.commlist.userid}' data-moduletype="0" data-original_title="{#if $T.commlist.tmpUserName}{$T.commlist.tmpUserName}{#else} 匿名用户{#/if}">
+			      <a href='/myHome/getHomePage/{$T.commlist.userid}' target='_self' class="zg-link" data-userid='{$T.commlist.userid}' data-moduletype="0" data-original_title="{#if $T.commlist.tmpUserName}{$T.commlist.tmpUserName}{#else} 匿名用户{#/if}">
 			        {$T.commlist.tmpUserName}
 			      </a>
-			    
 			     {#else}
-			                    匿名用户
+			              匿名用户
 			     {#/if}
 				<span class="desc">回复</span>
 
-				  <a  href='/myHome/getHomePage?userid={$T.commlist.commentby}' target='_self' class="zg-link" data-userid='{$T.commlist.commentby}' data-moduletype="0"  data-original_title="{$T.commlist.commentbyUserName}">{$T.commlist.commentbyUserName}</a>
+				<a  href='/myHome/getHomePage/{$T.commlist.commentby}' target='_self' class="zg-link" data-userid='{$T.commlist.commentby}' data-moduletype="0"  data-original_title="{$T.commlist.commentbyUserName}">{$T.commlist.commentbyUserName}</a>
 				
             {#else} 
 	            {#if $T.commlist.tmpUserName}
-
-		            <a  href='/myHome/getHomePage?userid={$T.commlist.userid}' target='_self' class="zg-link" data-userid='{$T.commlist.userid}' data-userid='{$T.commlist.userid}' data-moduletype="0"  data-original_title="{#if $T.commlist.tmpUserName}{$T.commlist.tmpUserName}{#else} 匿名用户{#/if}">
-		               {$T.commlist.tmpUserName}
-		            </a>
-		         
+	             <a  href='/myHome/getHomePage/{$T.commlist.userid}' target='_self' class="zg-link" data-userid='{$T.commlist.userid}' data-userid='{$T.commlist.userid}' data-moduletype="0"  data-original_title="{#if $T.commlist.tmpUserName}{$T.commlist.tmpUserName}{#else} 匿名用户{#/if}">
+	               {$T.commlist.tmpUserName}
+	             </a>
 		         {#else}
-	                                                  匿名用户
+	                      匿名用户
 		         {#/if}
             {#/if}
           </div>

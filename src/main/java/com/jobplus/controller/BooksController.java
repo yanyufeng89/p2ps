@@ -75,9 +75,9 @@ public class BooksController {
 	 * @param record
 	 * @return
 	 */
-	@RequestMapping(value = "/getBookDetail")
+	@RequestMapping(value = "/getBookDetail/{id}")
 	@ResponseBody
-	public ModelAndView getBookDetail(HttpServletRequest request, HttpServletResponse response, Books record,@RequestParam(required=false) String isAdmin) {
+	public ModelAndView getBookDetail(HttpServletRequest request, HttpServletResponse response, Books record,@RequestParam(required=false) String isAdmin,@PathVariable String id) {
 		ModelAndView mv = new ModelAndView();
 		if (record.getId() != null) {
 			record = booksService.getBookDetail(record);
@@ -91,7 +91,7 @@ public class BooksController {
 				//后台管理员查看
 				mv.setViewName("manage/bookDetail");
 			}else{
-				mv.setViewName("mydocs/docs/bookDetail");
+				mv.setViewName("/mydocs/docs/bookDetail");
 			}
 		} else {
 			logger.info("**getBookDetail*获取书籍详情  失败   record.getId() == null  999****");

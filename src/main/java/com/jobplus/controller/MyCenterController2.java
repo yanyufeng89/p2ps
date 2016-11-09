@@ -10,8 +10,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jobplus.utils.HTTPCommonUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -314,10 +314,8 @@ public class MyCenterController2 {
 					throw new Exception();					
 				}
 			}
-			
-			Document doc = Jsoup.connect(url)
-					.header("User-Agent", "Mozilla/31.0 (compatible; MSIE 10.0; Windows NT; DigExt)").timeout(3000)
-					.get();
+
+			Document doc = HTTPCommonUtil.getHtmlByUrl(url);
 			String title = doc.title();
 			String descStr = "";
 			Elements Edesc = doc.select("[name=description]");
@@ -789,7 +787,7 @@ public class MyCenterController2 {
 			List<Sms> list = smsService.getNewSms(record);
 			Sms sms = new Sms();
 			// 只获取私信
-			sms.setSmstype(sms.getSMSTYPES()[1]);
+			sms.setSmstype(1);
 			// 私信列表
 			List<Sms> privateList = smsService.getNewSms(sms);
 

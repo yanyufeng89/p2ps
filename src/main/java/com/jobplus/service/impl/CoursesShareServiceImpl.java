@@ -130,7 +130,7 @@ public class CoursesShareServiceImpl implements ICoursesShareService{
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[11],record.getCoursesid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[11],record.getId(),record.getObjectNamePg(),"");
+					record.getObjCreatepersonPg(),32,record.getId(),record.getObjectNamePg(),"");
 			
 			return record;
 		} else {

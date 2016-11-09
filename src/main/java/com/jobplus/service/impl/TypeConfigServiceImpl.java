@@ -103,4 +103,15 @@ public class TypeConfigServiceImpl implements ITypeConfigService{
 		}
 		return typeConfig;
 	}
+
+	@Override
+	public String getSiteTitleByTypeConfig(Integer id) {
+		String result = null;
+		TypeConfig type = getTypeConfigById(id);
+		result = type.getTypename();
+		if (type.getParentid() != null && type.getParentid().intValue() > 0) {
+			result = getTypeConfigById(type.getParentid()).getTypename() + "-" + result;
+		}
+		return result;
+	}
 }

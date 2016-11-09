@@ -45,7 +45,7 @@ public class ArticleLikedServiceImpl implements IArticleLikedService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[14],record.getArticleid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[15],record.getRelationidPg(),record.getObjectNamePg(),"");
+					record.getObjCreatepersonPg(),43,record.getRelationidPg(),record.getObjectNamePg(),"");
 			
 		}
 		return ret;

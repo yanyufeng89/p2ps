@@ -124,7 +124,7 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		}
 		if (list.size() > 0) {
 			for (MyHomePage hp : list) {			
-				hp.setObjurl(request.getContextPath() + hp.getUrlMap().get(record.getTableName())+ hp.getId());
+				hp.setObjurl(request.getContextPath() + hp.getUrlMap().get(StringUtils.isBlank(record.getTableName())?hp.getType():record.getTableName())+ hp.getId());
 				hp.setTableName(record.getTableName());
 			}
 			page.initialize((long)count, record.getPageNo());

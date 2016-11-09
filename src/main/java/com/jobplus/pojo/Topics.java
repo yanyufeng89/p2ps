@@ -46,6 +46,11 @@ public class Topics extends PageParent implements Serializable{
     
     private Integer isvalid;
     
+    //悬赏新增俩字段
+    private Integer acceptStatus;//回答采纳状态  1:已采纳   0:不悬赏  -1：取消悬赏 2:等待悬赏
+    private Integer rewardValue;//悬赏值
+    
+    
     /**
      * 图片
      */
@@ -91,6 +96,22 @@ public class Topics extends PageParent implements Serializable{
 	
 	public User getObjCreator() {
 		return objCreator;
+	}
+
+	public Integer getAcceptStatus() {
+		return acceptStatus;
+	}
+
+	public void setAcceptStatus(Integer acceptStatus) {
+		this.acceptStatus = acceptStatus;
+	}
+
+	public Integer getRewardValue() {
+		return rewardValue;
+	}
+
+	public void setRewardValue(Integer rewardValue) {
+		this.rewardValue = rewardValue;
 	}
 
 	public void setObjCreator(User objCreator) {

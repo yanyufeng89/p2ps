@@ -181,7 +181,7 @@ public class SitesServiceImpl implements ISitesService {
 
 		// 3.相关站点列表 
 		@SuppressWarnings({ "static-access", "unchecked" })
-		List<Sites> theSameSites = solrJUtils.findSitesFromList(record.getTitle(), record.getId().toString());
+		List<Sites> theSameSites = solrJUtils.findSitesFromList(record.getTitle(), record.getId().toString(),record.getSitetype(),record.getSiteclass());
 		
 		
 		// 4.评论列表

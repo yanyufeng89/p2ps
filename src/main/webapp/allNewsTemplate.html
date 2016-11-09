@@ -15,7 +15,7 @@
          {#else}
            <span class='sms-icon-2'></span>
          {#/if}
-          <a href="/myHome/getHomePage?userid={$T.list.senderid}" target='_blank'>{$T.list.sendUserName}:</a>
+          <a href="/myHome/getHomePage/{$T.list.senderid}" target='_blank'>{$T.list.sendUserName}:</a>
           {#if $T.list.islook=='1'}
              <span class='allnewscontent' style='color:#999'>{$T.list.smscontent}</span>
           {#else}

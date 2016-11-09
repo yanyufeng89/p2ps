@@ -20,17 +20,19 @@
     <!-- 打赏值	supportValue	int(8)	8  打赏次数	supportCount	int(8)	8 -->
     <result column="supportValue" property="supportValue" jdbcType="INTEGER" />
     <result column="supportCount" property="supportCount" jdbcType="INTEGER" />
+    <!-- 是否公开 匿名 -->
+    <result column="ispublic" property="ispublic" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Article" extends="BaseResultMap" >
     <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, title, articleurl, articleImg, userId, articleClass, articleType, isValid, updateTime, 
-    createTime, collectSum, recommendSum, likeSum, readSum, recommend, supportValue ,supportCount
+    createTime, collectSum, recommendSum, likeSum, readSum, recommend, supportValue ,supportCount,ispublic
   </sql>
   <sql id="Base_Column_List2" >
     t.ID, t.title, t.articleurl, t.articleImg, t.userId, t.articleClass, t.articleType, t.isValid, t.updateTime, 
-    t.createTime, t.collectSum, t.recommendSum, t.likeSum, t.readSum, t.recommend, t.supportValue ,t.supportCount
+    t.createTime, t.collectSum, t.recommendSum, t.likeSum, t.readSum, t.recommend, t.supportValue ,t.supportCount,t.ispublic
   </sql>
   <!-- collect表字段 -->
   <sql id="collect_List" >
@@ -169,7 +171,7 @@
       articleType, isValid, updateTime, 
       createTime, collectSum, recommendSum, 
       likeSum, readSum, recommend, 
-      intro, supportValue ,supportCount)
+      intro, supportValue ,supportCount,ispublic)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{articleurl,jdbcType=VARCHAR}, 
       #{articleimg,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{articleclass,jdbcType=VARCHAR}, 
       #{articletype,jdbcType=VARCHAR}, 1, Now(), 
@@ -177,7 +179,7 @@
       0, 0, #{recommend,jdbcType=VARCHAR}, 
       #{intro,jdbcType=LONGVARCHAR}
       , #{supportValue,jdbcType=INTEGER}
-      , 0
+      , 0, #{ispublic,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.Article" >
@@ -237,6 +239,9 @@
       <if test="supportCount != null" >
         supportCount,
       </if>
+      <if test="ispublic != null" >
+        ispublic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -293,6 +298,9 @@
       <if test="supportCount != null" >
         #{supportCount,jdbcType=INTEGER},
       </if>
+      <if test="ispublic != null" >
+        #{ispublic,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Article" >
@@ -319,9 +327,9 @@
       <if test="isvalid != null" >
         isValid = #{isvalid,jdbcType=INTEGER},
       </if>
-      <if test="updatetime != null" >
+     <!--  <if test="updatetime != null" >
         updateTime = now(),
-      </if>
+      </if> -->
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -349,6 +357,10 @@
       <if test="supportCount != null" >
         supportCount = #{supportCount,jdbcType=INTEGER},
       </if>
+      <if test="ispublic != null" >
+        ispublic = #{ispublic,jdbcType=INTEGER},
+      </if>
+      updateTime = now(),
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -370,7 +382,8 @@
       recommend = #{recommend,jdbcType=VARCHAR},
       intro = #{intro,jdbcType=LONGVARCHAR},
       supportValue = #{supportValue,jdbcType=INTEGER},
-      supportCount = #{supportCount,jdbcType=INTEGER}
+      supportCount = #{supportCount,jdbcType=INTEGER},
+      ispublic = #{ispublic,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Article" >
@@ -390,7 +403,8 @@
       readSum = #{readsum,jdbcType=INTEGER},
       recommend = #{recommend,jdbcType=VARCHAR},
       supportValue = #{supportValue,jdbcType=INTEGER},
-      supportCount = #{supportCount,jdbcType=INTEGER}
+      supportCount = #{supportCount,jdbcType=INTEGER},
+      ispublic = #{ispublic,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

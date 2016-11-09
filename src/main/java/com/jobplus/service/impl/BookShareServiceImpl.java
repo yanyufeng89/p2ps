@@ -9,10 +9,12 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import com.jobplus.dao.BookShareMapper;
+import com.jobplus.pojo.Account;
 import com.jobplus.pojo.BookShare;
 import com.jobplus.pojo.Page;
 import com.jobplus.pojo.Sms;
 import com.jobplus.pojo.User;
+import com.jobplus.service.IAccountService;
 import com.jobplus.service.IBookShareService;
 import com.jobplus.service.IBooksService;
 import com.jobplus.service.IOperationSumService;
@@ -36,6 +38,8 @@ public class BookShareServiceImpl implements IBookShareService {
 	private IUpdTableColumnService updTableColumnService;
 	@Resource
 	private ISmsService smsService;
+	@Resource
+	private IAccountService accountService;
 
 	@Transactional
 	@Override
@@ -87,6 +91,10 @@ public class BookShareServiceImpl implements IBookShareService {
 			// 新增书籍推荐语：1.个人书籍分享数+1; 2.书籍评论数+1
 			updTableColumnService.updNums(1, 1, 0, 1, record.getBookid());
 			operationSumService.updOperationSum(6, 0, 1,null);
+			
+			//增加财富值
+			accountService.modAccountAndDetail(record.getUserid(), 0, new Account().getSCORES()[0], 
+					1, 0, new Account().getSCORES()[0],2);
 		}
 		return bookShareDao.insert(record);
 	}
@@ -140,7 +148,7 @@ public class BookShareServiceImpl implements IBookShareService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[7],record.getBookid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[8],record.getId(),record.getObjectNamePg(),"");
+					record.getObjCreatepersonPg(),21,record.getId(),record.getObjectNamePg(),"");
 			
 		} else if (record.getUserid() != null && record.getBookid() != null) {
 			// 新增书籍推荐语：1.个人书籍分享数+1; 2.书籍评论数+1

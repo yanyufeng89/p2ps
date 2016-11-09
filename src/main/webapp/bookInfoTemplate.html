@@ -1,16 +1,16 @@
 <div id="pj-booktooltip" class="goog-hovercard popover top"  data-bookid='{$T.bookSimpleInformation.id}' data-bookname='{$T.bookSimpleInformation.bookname}'>
   <div class="popover-content no-hovercard">
-    <div class="zh-profile-card member">
-      <div class="upper">
+    <div class="pj-profile-card member">
+      <div class="upper" style='padding:15px 20px 14px 20px;'>
        <div class='bookinfo'>
         {#if $T.bookSimpleInformation.bookimg}
-          <img class="Bvatar Bvatar-xs" src="{$T.bookSimpleInformation.bookimg}">
+          <img class="Bvatar Bvatar-xs" src="{$T.bookSimpleInformation.bookimg}" alt="书籍图标">
           {#else}
-          <img class="Bvatar Bvatar-xs" src="/image/1b48b5a75c71597_100x100.jpg">
+          <img class="Bvatar Bvatar-xs" src="/image/1b48b5a75c71597_100x100.jpg" alt="书籍图标">
         {#/if}
         </div>
         <div class='authorinfo'>
-          <p class="bookauthoinfo"><span class='bookdescription textoverflow'>书籍:{$T.bookSimpleInformation.bookname}</span></p>
+          <p class="bookauthoinfo"><span class='bookdescription'>书籍:{$T.bookSimpleInformation.bookname}</span></p>
           <p class="bookauthoinfo"><span class='bookdescription'>作者:{$T.bookSimpleInformation.author}</span></p>
          </div>
       </div>

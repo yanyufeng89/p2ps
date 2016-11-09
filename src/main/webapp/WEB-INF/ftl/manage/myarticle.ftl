@@ -27,13 +27,13 @@
 		</div>
 		</div>
 		<p class="user-name">
-			<a class="name-link" href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank"> 
+			<a class="name-link" href="/myHome/getHomePage/${Session.user.userid}" target="_blank"> 
 	           <#if (Session.user)??>
 		           ${Session.user.username}
 		        </#if>
 		    </a>
 		</p>
-		<p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+		<p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
 
 		<div class="mydoc-list">
 		    <ul id="accordion">
@@ -136,7 +136,7 @@
 					            <li>
 					               <div class='w356 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-courseid="${list.id}" data-name="${list.title}"></div>
-                                      <a href="/article/getArticleDetail?id=${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
+                                      <a href="/article/getArticleDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
                                    </div>
                                    <div class='w165 ib replayhidden'>
                                        <#if (list.recommend)??>
@@ -213,7 +213,7 @@
 				          <li>
 				            <div class='w446 fs14 fc3 ib titlehidden'>
                                	  <div class="checkbox chk" data-courseid="${collist.myCollect.id}" data-name="${collist.title}"></div>
-                                  <a href="/article/getArticleDetail?id=${collist.myCollect.objectid}" target="_blank" title="${collist.title}">${collist.title}</a>  
+                                  <a href="/article/getArticleDetail/${collist.myCollect.objectid}" target="_blank" title="${collist.title}">${collist.title}</a>  
                             </div>
                             <div class='w165 ib ilbookc'>
                                <#if (collist.collectsum)??>

@@ -1,6 +1,6 @@
 <div class="uc-head-top">
        <div class='infotiptemplate'>
-         <img src='/image/sharetop.jpg' alt=''>
+         <img src='/image/sharetop.jpg' alt='分享' class="lazy">
        </div>
 	   <div style="float:left">
 		   <#--<a href="javascript:void(0)"  id='myselfattenman' data-userid='${Session.user.userid}'>我关注的人

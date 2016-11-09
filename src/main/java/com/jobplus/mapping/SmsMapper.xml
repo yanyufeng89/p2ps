@@ -84,13 +84,16 @@
        and id = #{id,jdbcType=INTEGER}
       </if>
  </update>
- <!-- 批量删除消息   只有单个和全部两种 传递ID即为单个,否则全部  -->
+ <!-- 批量删除消息   只有单个和全部两种 传递ID即为单个,否则全部  isLook  -->
  <delete id="delSms" parameterType="com.jobplus.pojo.Sms" >
     delete from tbl_sms
   	where 1 = 1
 	and  receivedId = #{receivedid,jdbcType=INTEGER}
 	 <if test="id != null" >
         and id = #{id,jdbcType=INTEGER}
+      </if>
+	 <if test="islook != null" >
+        and islook = #{islook,jdbcType=INTEGER}
       </if>
   </delete>
   <!-- 获取所有消息     -->

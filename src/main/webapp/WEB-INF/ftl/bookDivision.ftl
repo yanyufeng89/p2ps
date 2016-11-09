@@ -5,9 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-            书籍专区
+            书籍专区-JobPlus
     </title>
-    <meta name="viewport" content="width=1230"/> 
+    <meta name="description" content="JobPlus网是国内领先的企业知识库公共平台,书籍推荐,分享阅读,书籍分类包括热门书籍,最新书籍,JobPlus为7亿职场人员提供优质书籍交流分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
+    <meta name="keywords" content="JobPlus,知识分享,创新书籍,创业书籍,IT书籍,互联网书籍,咨询书籍,财务书籍,工业技术书籍,工程书籍,市场管理书籍,销售管理书籍,供应链书籍,生产管理书籍,设计书籍,创意书籍,翻译书籍,文案策划,新媒体书籍,影视书籍,图书,热门书籍,最新书籍">
+    
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" type="text/css" href="/css/pj_searchres.css">
     <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css">
@@ -94,10 +96,10 @@
 									 <div class='bookdivision-content'>
 										 <div class='bookdivision-left'>
 											 <div class="title">
-												 <a target="_blank" href="javascript:void(0);" onclick="toHref('tbl_books',${data.data_id})" title="${data.title}">${data.title}</a>
+												 <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_books',${data.data_id})">${data.title}</a>
 											 </div>
-											 <div class="newsinfo" <#if data.description??>title="${data.description}"</#if>>
-												 <a target="_blank" href="javascript:void(0);"  onclick="toHref('tbl_books',${data.data_id})"><#if data.description??>${data.description}</#if></a>
+											 <div class="newsinfo">
+												 <a target="_self" href="javascript:void(0);"  onclick="toHref('tbl_books',${data.data_id})"><#if data.description??>${data.description}</#if></a>
 											 </div>
 											 <div class="tool">
 												 <div class="pj-meta-panel">
@@ -114,21 +116,22 @@
 											 </div>
 										 </div>
 										 <div class='bookdivision-right'>
-											 <div class="picno">
-												 <div class="pic">
-													 <div class="picx">
-														 <#if data.imgUrl?length gt 5>
-															 <div class="pict">
-															   <img src='${data.imgUrl}' alt=''>
-															 </div>
-														 <#else>
-															 <div class="pict">
-																<img src='/image/default/65.jpg' alt=''>
-															 </div>
-														 </#if>
+											 <a target="_self" href="javascript:void(0);"  onclick="toHref('tbl_books',${data.data_id})">
+												<#if data.imgUrl?length gt 5>
+												 <div class="picno">
+													 <div class="pic">
+														 <div class="picx">			
+																 <div class="pict">
+																   <img src='${data.imgUrl}' alt="书籍图标" class="lazy" >
+																 </div>
+														 </div>
 													 </div>
 												 </div>
-											 </div>
+												<span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>									
+												<#else>
+												<img src='/image/default/default_book.png' alt="书籍图标" class="lazy" >
+												</#if>	
+	                                       	</a>	
 										 </div>
 									 </div>
 								 </div>
@@ -140,7 +143,7 @@
 						 <div class='emptyList'>
 						   <div class='empty-tip'>
 							   <div class="empty-img">
-								  <img src="/image/angry.png" alt="">
+								  <img src="/image/angry.png" alt="提示" class="lazy">
 							   </div>
 							   <div class="empty-info">
 									对不起，没有找到满足搜索条件的信息<br>
@@ -177,10 +180,12 @@
 				</a>
 	      </div>
 	      <div class='pj_jsonp ad_exposure'>
-	        <img src='/image/ad_exposure_11.jpg' alt='' width='310' height='278'>
+	        <img src='/image/ad_exposure_11.jpg'  width='308' height='246' alt="广告" class="lazy">
+	        <div class='advertising-direction'>广告</div>
 	      </div>
 	     <div class='pj_jsonp ad_exposure'>
-	        <img src='/image/ad_exposure_12.jpg' alt='' width='310' height='278'>
+	        <img src='/image/ad_exposure_12.jpg'  width='308' height='246' alt="广告" class="lazy">
+	        <div class='advertising-direction'>广告</div>
 	     </div>
 		</div>
     </div>

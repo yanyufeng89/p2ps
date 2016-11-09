@@ -78,7 +78,9 @@
 				and isPublic = #{ispublic,jdbcType=INTEGER}
 			</when>
 			<otherwise>
-				and isPublic = 1
+			<!-- 是否公开  0 私有 ;1 公开 ;2 匿名 -->
+			<!-- 因公开1 和 匿名2 在同一个方法里 -->
+				and isPublic != 0
 			</otherwise>
 		</choose>		
 		 ORDER BY t.createTime DESC 
@@ -99,7 +101,9 @@
 					and isPublic = #{ispublic,jdbcType=INTEGER}
 				</when>
 				<otherwise>
-					and isPublic = 1
+			<!-- 是否公开  0 私有 ;1 公开 ;2 匿名 -->
+			<!-- 因公开1 和 匿名2 在同一个方法里 -->
+				and isPublic != 0
 				</otherwise>
 			</choose>
 	</select>

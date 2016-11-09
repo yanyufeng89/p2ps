@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import com.jobplus.pojo.FTPStatus;
 import com.jobplus.utils.ThreadFTPUtils.FTPType;
 
-@Service("fTPUtils")
 public class FTPUtils {
 	@Value("${ftp.ip}")
 	public String ftpIp;

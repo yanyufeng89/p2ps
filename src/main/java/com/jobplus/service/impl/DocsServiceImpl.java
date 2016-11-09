@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ import com.jobplus.pojo.Account;
 import com.jobplus.pojo.AccountDetail;
 import com.jobplus.pojo.DocComment;
 import com.jobplus.pojo.Docs;
+import com.jobplus.pojo.FTPStatus;
 import com.jobplus.pojo.MyCollect;
 import com.jobplus.pojo.Page;
 import com.jobplus.pojo.Sms;
@@ -35,9 +37,8 @@ import com.jobplus.service.IUpdTableColumnService;
 import com.jobplus.service.IUserService;
 import com.jobplus.utils.ConstantManager;
 import com.jobplus.utils.DateUtils;
+import com.jobplus.utils.FTPClientTemplate;
 import com.jobplus.utils.SolrJUtils;
-import com.jobplus.utils.ThreadFTPUtils;
-import com.jobplus.utils.ThreadFTPUtils.FTPType;
 import com.jobplus.utils.UUIDGenerator;
 
 /**
@@ -49,6 +50,7 @@ import com.jobplus.utils.UUIDGenerator;
 @Service("docsService")
 public class DocsServiceImpl implements IDocsService {
 
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(DocsServiceImpl.class);
 	@Resource
 	private DocsMapper docsDao;
 	@Resource
@@ -70,7 +72,7 @@ public class DocsServiceImpl implements IDocsService {
 	@Resource
 	private IAccountService accountService;
 	@Resource
-	private ThreadFTPUtils threadFTPUtils;
+	private FTPClientTemplate ftpClientTemplate;
 	@Resource
 	private SolrJUtils solrJUtils;
 	@Resource
@@ -103,6 +105,7 @@ public class DocsServiceImpl implements IDocsService {
 		}
 
 		rest = docsDao.insertDocs(list);
+		logger.info("***批量插入文档*****rest=== "+ rest+"   *****  changevalue =="+changevalue);
 
 		if(rest>0 && changevalue>0){
 			//增加财富值
@@ -126,6 +129,8 @@ public class DocsServiceImpl implements IDocsService {
 
 			//跳转页面  分享文档获取的财富值显示
 			int num = 0;
+			//文档分享数   如果是私有不统计
+			int shareNum = 0;
 			// 文档list
 			List<Docs> docsList = new ArrayList<>();
 			//标题
@@ -162,7 +167,7 @@ public class DocsServiceImpl implements IDocsService {
 						doc.setFile(files[i]);
 						//dir.server=http://192.168.0.39:8199/
 						// 定义上传路径//路径格式  "/docsDir/2016/06/22/UUID测试文件 - 副本s.txt"   +doc.getDoctype()
-						String path ="/"+threadFTPUtils.ftpFileDir+"/"+DateUtils.getDateTime2()+"/"+UUIDGenerator.getUUID()+fileName;
+						String path ="/"+ftpClientTemplate.ftpFileDir+"/"+DateUtils.getDateTime2()+"/"+UUIDGenerator.getUUID()+fileName;
 						//设置路径
 						doc.setFilepath(path);
 						//设置标题
@@ -198,8 +203,10 @@ public class DocsServiceImpl implements IDocsService {
 						//拼接文档标签 
 //						tagsArray = tagsArray + doc.getDocclass();
 						
-						if(doc.getIspublic() == 1)
+						if(doc.getIspublic() != 0)
 							num += new AccountDetail().getCHANGEVALUES()[1];
+						if("0".equals(ispublic[i]))
+							shareNum++;
 					}
 				}
 			}
@@ -210,16 +217,20 @@ public class DocsServiceImpl implements IDocsService {
 //			tagsService.addOrDecreaseTagUsenumer(tagsArray);
 			
 			//对应用户分享文档数  增加  files.length   st*******  上传一个文件files.length==2;上传两个文件files.length==3
-			operationSumService.updOperationSum(0, 0, (files.length-1)>0?files.length-1:0,null);
+//			operationSumService.updOperationSum(0, 0, (files.length-1)>0?files.length-1:0,null);
+			operationSumService.updOperationSum(0, 0, shareNum>=0?shareNum:0,null);
 			//个人操作数之类的信息放入session
 			userService.getMyHeadTopAndOper(request);
 			//文档入库成功  文件上传到服务器
 			if(rest > 0){
 				for (int i = 0; i < files.length-1 && i<docsList.size(); i++) {
 					//文件上传到服务器
-					threadFTPUtils.uploadInit(docsList.get(i).getFilepath(),files[i].getInputStream(),FTPType.UPLOAD);
-			        Thread thread3=new Thread(threadFTPUtils);  
-			        thread3.start();
+					try {
+						FTPStatus result = ftpClientTemplate.upload(files[i].getInputStream(),docsList.get(i).getFilepath(),true);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -345,7 +356,7 @@ public class DocsServiceImpl implements IDocsService {
 						new MyCollect().getACTIONTYPES()[0], record.getId());
 		//3.相管文档列表  
 		@SuppressWarnings("static-access")
-		List<Docs> theSameDocs = solrJUtils.findDocFromList(record.getTitle(), record.getId().toString());
+		List<Docs> theSameDocs = solrJUtils.findDocFromList(record.getTitle(), record.getId().toString(),record.getDoctype(),record.getDocclass());
 		
 		//4.评论列表
 		DocComment com = new DocComment();
@@ -415,17 +426,22 @@ public class DocsServiceImpl implements IDocsService {
 	@Transactional
 	@Override
 	public MyCollect downloadDoc(MyCollect record,Docs doc,HttpServletRequest request) {
+		int ret  = 0;
 		if(doc.getDownvalue() > 0){
 			//扣除财富值
-			accountService.modAccountAndDetail(record.getUserid(), 0, - doc.getDownvalue(), 
-					1, 1, doc.getDownvalue(),6);		
+			ret = accountService.modAccountAndDetail(record.getUserid(), 0, - doc.getDownvalue(), 
+					1, 1, doc.getDownvalue(),6);
+			//积分扣减失败（积分不够）
+			if(ret == 0)
+				return null;
+			
 			//文档所有者增加财富值
 			accountService.modAccountAndDetail(doc.getUserid(), 0,  doc.getDownvalue(), 
 					1, 0, doc.getDownvalue(),8);
 			//消息通知 对方 财富值增加
 			//添加消息通知
 			smsService.addNotice((User)request.getSession().getAttribute("user"), request.getContextPath(), new Sms().getTABLENAMES()[0],doc.getId(),
-					doc.getUserid(),new Sms().getSMSTYPES()[24],doc.getId(),doc.getTitle(),"系统为您增加了"+doc.getDownvalue()+"财富值");
+					doc.getUserid(),90,doc.getId(),doc.getTitle(),"系统为您增加了"+doc.getDownvalue()+"财富值");
 			
 		}			
 		
@@ -436,7 +452,7 @@ public class DocsServiceImpl implements IDocsService {
 		record.setCollecttype(record.getCOLLECTTYPES()[0]);// 类型 暂时用表名存储
 															// "tbl_docs","tbl_topics","tbl_books","tbl_sites","tbl_Articles","tbl_sites"
 		// 插入记录
-		int ret = myCollectService.insert(record);
+		ret = myCollectService.insert(record);
 
 		// 对应用户文档下载数 增加
 		operationSumService.updOperationSum(1, 0, 1,null);

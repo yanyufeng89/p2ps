@@ -6,9 +6,10 @@ $(function () {
     		hoverPause:true,
     		visible:7,
     		auto:955,
-    		speed:1500
+    		speed:2000
     	});
     }
+	
     //左侧导航栏最后一个去掉底线
     $('.wk-all-cate >dl:last').css('border-bottom','0');
     /*首页中间图片滚动start*/  
@@ -169,7 +170,7 @@ $(function () {
        })
     /*首页当界面下拉到一定位置出现向上的箭头 start*/
     $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
+        if ($(window).scrollTop()>200){  
             $("#backtop").fadeIn("fast");  
         }  
         else  

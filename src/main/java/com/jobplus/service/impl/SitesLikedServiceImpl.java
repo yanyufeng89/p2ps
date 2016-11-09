@@ -46,7 +46,7 @@ public class SitesLikedServiceImpl implements ISitesLikedService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[16],record.getCommid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[18],record.getRelationidPg(),record.getObjectNamePg(),"");
+					record.getObjCreatepersonPg(),53,record.getRelationidPg(),record.getObjectNamePg(),"");
 			
 		}
 		return ret;

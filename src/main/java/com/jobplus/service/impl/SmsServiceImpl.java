@@ -72,26 +72,27 @@ public class SmsServiceImpl implements ISmsService{
 		map.put("80","邀请您回答");
 		map.put("90","下载了您的文档");
 		map.put("100","打赏了您的文章");
+		map.put("110","采纳您的回答");
 
 		urlMap.put("tbl_user","");
-		urlMap.put("tbl_topics","/topics/getTopicsDetail?topicId=");
-		urlMap.put("tbl_topics_comment","/topics/getTopicsDetail?topicId=");		
-		urlMap.put("tbl_topics_isLiked","/topics/getTopicsDetail?topicId=");		
-		urlMap.put("tbl_courses","/courses/getCourseDetail?id=");
-		urlMap.put("tbl_courses_share","/courses/getCourseDetail?id=");		
-		urlMap.put("tbl_courses_sLiked","/courses/getCourseDetail?id=");		
-		urlMap.put("tbl_sites","/sites/getSiteDetail?id=");
-		urlMap.put("tbl_sites_share","/sites/getSiteDetail?id=");		
-		urlMap.put("tbl_sites_isliked","/sites/getSiteDetail?id=");		
-		urlMap.put("tbl_article","/article/getArticleDetail?id=");
-		urlMap.put("tbl_article_share","/article/getArticleDetail?id=");		
-		urlMap.put("tbl_article_isLiked","/article/getArticleDetail?id=");		
-		urlMap.put("tbl_docs","/docs/getDocsDetail?id=");
-		urlMap.put("tbl_docs_comment","/docs/getDocsDetail?id=");
-		urlMap.put("tbl_books","/books/getBookDetail?id=");		
-		urlMap.put("tbl_books_share","/books/getBookDetail?id=");
-		urlMap.put("tbl_books_isLiked","/books/getBookDetail?id=");
-		urlMap.put("tbl_docs_isLiked","/docs/getDocsDetail?id=");
+		urlMap.put("tbl_topics","/topics/getTopicsDetail/");
+		urlMap.put("tbl_topics_comment","/topics/getTopicsDetail/");		
+		urlMap.put("tbl_topics_isLiked","/topics/getTopicsDetail/");		
+		urlMap.put("tbl_courses","/courses/getCourseDetail/");
+		urlMap.put("tbl_courses_share","/courses/getCourseDetail/");		
+		urlMap.put("tbl_courses_sLiked","/courses/getCourseDetail/");		
+		urlMap.put("tbl_sites","/sites/getSiteDetail/");
+		urlMap.put("tbl_sites_share","/sites/getSiteDetail/");		
+		urlMap.put("tbl_sites_isliked","/sites/getSiteDetail/");		
+		urlMap.put("tbl_article","/article/getArticleDetail/");
+		urlMap.put("tbl_article_share","/article/getArticleDetail/");		
+		urlMap.put("tbl_article_isLiked","/article/getArticleDetail/");		
+		urlMap.put("tbl_docs","/docs/getDocsDetail/");
+		urlMap.put("tbl_docs_comment","/docs/getDocsDetail/");
+		urlMap.put("tbl_books","/books/getBookDetail/");		
+		urlMap.put("tbl_books_share","/books/getBookDetail/");
+		urlMap.put("tbl_books_isLiked","/books/getBookDetail/");
+		urlMap.put("tbl_docs_isLiked","/docs/getDocsDetail/");
 		
 		
 	}	
@@ -237,7 +238,7 @@ public class SmsServiceImpl implements ISmsService{
 		//
 		sf.setUserid(record.getReceivedid());
 		// 过滤的消息类型 1私信
-		sf.setFilteritem(record.getSMSTYPES()[1]);
+		sf.setFilteritem(1);
 		sf = smsFilterService.getFilterLvAndFansIds(sf);
 		if (sf == null) {
 			logger.info("允许所有人发私信         SmsFilter==" + JSON.toJSONString(sf));
@@ -416,6 +417,9 @@ public class SmsServiceImpl implements ISmsService{
 		WebSocketUtil.send(record.getReceivedid().toString(), record.getSmstype().toString());
 		return ret;
 	}
+	/**
+     * 发送系统通知
+     */
 	@Override
 	public int sendSysNotice(Integer userid, String content) {
 		int ret = this.sendSms(null, "", "", null, userid, 0, null, "", content);
@@ -426,7 +430,7 @@ public class SmsServiceImpl implements ISmsService{
 	public int addNotices(User user, String userUrl, String content, String objUrl, String content2) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-*/
+	}*/
+
 
 }

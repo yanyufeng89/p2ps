@@ -21,9 +21,11 @@
   <!-- 获取教育背景list -->
   <select id="getList" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.EducationBgrd">
     select 
-    <include refid="Base_Column_List2" />
-	,ttx.period as period
-    from tbl_educationBgrd t , 
+    <include refid="Base_Column_List2" />,
+	s.schoolLogo,
+	s.schoolUrl,
+	ttx.period as period
+    from tbl_educationBgrd t left join tbl_schoolInfo  s on t.school = s.schoolName,
  (
    select    
       ttx.id as ttxid,
@@ -47,10 +49,10 @@
 		end as period
 		from (
 		SELECT 
-		tbl.startTime,tbl.endTime,tbl.id as id,
-		TIMESTAMPDIFF(YEAR,tbl.startTime,tbl.endTime) as diffYear,
-		TIMESTAMPDIFF(MONTH,DATE_ADD(tbl.startTime,INTERVAL TIMESTAMPDIFF(YEAR,tbl.startTime,tbl.endTime) YEAR),tbl.endTime) as diffMonth,
-		TIMESTAMPDIFF(DAY,  DATE_ADD(tbl.startTime,INTERVAL TIMESTAMPDIFF(MONTH,tbl.startTime,tbl.endTime) MONTH),tbl.endTime) as diffDay
+		tbl.startTime,ifnull(tbl.endTime ,now()),tbl.id as id,
+		TIMESTAMPDIFF(YEAR,tbl.startTime,ifnull(tbl.endTime ,now())) as diffYear,
+		TIMESTAMPDIFF(MONTH,DATE_ADD(tbl.startTime,INTERVAL TIMESTAMPDIFF(YEAR,tbl.startTime,ifnull(tbl.endTime ,now())) YEAR),ifnull(tbl.endTime ,now())) as diffMonth,
+		TIMESTAMPDIFF(DAY,  DATE_ADD(tbl.startTime,INTERVAL TIMESTAMPDIFF(MONTH,tbl.startTime,ifnull(tbl.endTime ,now())) MONTH),ifnull(tbl.endTime ,now())) as diffDay
 		FROM tbl_educationBgrd  tbl  where tbl.userid = #{userid,jdbcType=INTEGER})ttx )ttx
 		
 		
@@ -163,9 +165,10 @@
       <if test="starttime != null" >
         startTime = #{starttime,jdbcType=DATE},
       </if>
-      <if test="endtime != null" >
         endTime = #{endtime,jdbcType=DATE},
-      </if>
+<!--       <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=DATE},
+      </if> -->
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>

@@ -177,7 +177,7 @@ public class ArticleServiceImpl implements IArticleService{
 
 		// 3.相关文章列表
 		@SuppressWarnings({ "unchecked", "static-access" })
-		List<Article> theSameArticle = solrJUtils.findArticleFromList(record.getTitle(), record.getId().toString());
+		List<Article> theSameArticle = solrJUtils.findArticleFromList(record.getTitle(), record.getId().toString(),record.getArticletype(),record.getArticleclass());
 		// 4.评论列表
 		ArticleShare share = new ArticleShare();
 		share.setArticleid(record.getId());
@@ -302,17 +302,21 @@ public class ArticleServiceImpl implements IArticleService{
 			articleDao.updateSupportCount(article.getId());
 			
 			//2.打赏者与被打赏者 积分增减
+			// 扣减财富值
+			ret = accountService.modAccountAndDetail(supt.getUserid(), 0, -supt.getSupportvalue(), 1, 1,
+					supt.getSupportvalue(), 9);
+			//积分扣减失败（积分不足等）
+			if(ret==0)
+				return 0;
 			// 增加财富值
 			accountService.modAccountAndDetail(article.getUserid(), 0, article.getSupportValue(), 1, 0,
 					article.getSupportValue(), 10);
-			// 扣减财富值
-			accountService.modAccountAndDetail(supt.getUserid(), 0, -supt.getSupportvalue(), 1, 1,
-					supt.getSupportvalue(), 9);
+			
 			// 发送系统通知 
 			//消息通知 对方 财富值增加
 		      //添加消息通知
 		      smsService.addNotice((User)request.getSession().getAttribute("user"), request.getContextPath(), new Sms().getTABLENAMES()[4],article.getId(),
-		    		  article.getUserid(),new Sms().getSMSTYPES()[25],article.getId(),article.getTitle(),"系统为您增加了"+article.getSupportValue()+"财富值");
+		    		  article.getUserid(),100,article.getId(),article.getTitle(),"系统为您增加了"+article.getSupportValue()+"财富值");
 		    //打赏留言不为空  则发送私信   data:{receivedid:receivedid,smstype:1,smscontent:smscontent},
 		      if(!StringUtils.isBlank(article.getSmsContent())){
 		    	  String userid = (String) request.getSession().getAttribute("userid");

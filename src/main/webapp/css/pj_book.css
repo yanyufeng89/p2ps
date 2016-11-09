@@ -26,8 +26,15 @@
 	font-weight:700;
 }
 .bookdescription{
-	color:#090909;
+	color:#333;
 	font-weight:500;
+	margin-left: 2px;
+    max-width: 260px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
 }
 #pj-booktooltip{
 	cursor:pointer;
@@ -49,7 +56,7 @@
  .book-border{
 	border:1px solid #ccc;
 	border-top:0;
-	border-radius:0 0 2px 2px;
+	border-radius:0 0 4px 4px;
 }
 
 .upper span.name {
@@ -64,15 +71,15 @@
     color: #222;
     padding-top: 4px;
 }
-.Avatar--xs {
+/* .Avatar--xs {
     width: 50px;
     height: 50px;
-}
+} */
 .mod-upload .link .bookable{
 	background: url(../image/searchbook-icon.png) no-repeat center center;
     width: 80px;
     height: 32px;
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 4px 4px 0;
     border-left: 0;
 }
 #upload-initbook-container,#upload-book-container{
@@ -85,7 +92,7 @@
 }
 
 .zg-r5px, .goog-tooltip {
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .zm-modal-dialog-guide-title, .zm-modal-dialog-guide-warn-message {
     padding-left: 10px;
@@ -177,15 +184,7 @@ textarea.zg-form-text-input, .zg-form-text-input>textarea,.pj-form-text-input>te
     color: #222;
     width: 500px;
 }
-textarea {
-    border: 0;
-    border: 0;
-    -moz-outline: 0;
-    outline: 0;
-    overflow: auto;
-    resize: none;
-    -webkit-appearance: none;
-}
+
 .book-error{
 	display:none;
 }
@@ -195,7 +194,7 @@ textarea {
 	height:116px;
 }
 .zg-form-booktext-input .booksinfo p{
-	color:#090909;
+	color:#333;
 	margin-top:16px;
     font-size: 12px;
 }
@@ -203,7 +202,7 @@ textarea {
     padding: 8px 10px;
     line-height: 15px;
     box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
-    border-radius: 2px;
+    border-radius: 4px;
     background: #f9f9f9;
     border: 1px solid #ccc;
     width: 92%;
@@ -222,10 +221,7 @@ textarea {
 .zg-form-booktext-input label{
 	margin-right:10px;
 }
-.zg-form-booktext-input .booksimg .Avatar-book {
-    width: 88px;
-    height: 116px;
-}
+
 #book-renderer .turnpage {
 	text-align: center;
 	margin-top: 10px;

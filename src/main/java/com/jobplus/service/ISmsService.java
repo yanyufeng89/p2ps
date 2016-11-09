@@ -56,28 +56,28 @@ public interface ISmsService {
      * //TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",5
 		// "tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
      * 	urlMap.put("tbl_user","");
-		urlMap.put("tbl_topics","/topics/getTopicsDetail?topicId=");
-		urlMap.put("tbl_topics_comment","/topics/getTopicsDetail?topicId=");		
-		urlMap.put("tbl_topics_isLiked","/topics/getTopicsDetail?topicId=");		
-		urlMap.put("tbl_courses","/courses/getCourseDetail?id=");
-		urlMap.put("tbl_courses_share","/courses/getCourseDetail?id=");		
-		urlMap.put("tbl_courses_sLiked","/courses/getCourseDetail?id=");		
-		urlMap.put("tbl_sites","/sites/getSiteDetail?id=");
-		urlMap.put("tbl_sites_share","/sites/getSiteDetail?id=");		
-		urlMap.put("tbl_sites_isliked","/sites/getSiteDetail?id=");		
-		urlMap.put("tbl_article","/article/getArticleDetail?id=");
-		urlMap.put("tbl_article_share","/article/getArticleDetail?id=");		
-		urlMap.put("tbl_article_isLiked","/article/getArticleDetail?id=");		
-		urlMap.put("tbl_docs","/docs/getDocsDetail?id=");
-		urlMap.put("tbl_docs_comment","/docs/getDocsDetail?id=");
-		urlMap.put("tbl_books","/books/getBookDetail?id=");		
-		urlMap.put("tbl_books_share","/books/getBookDetail?id=");
-		urlMap.put("tbl_books_isLiked","/books/getBookDetail?id=");
-		urlMap.put("tbl_docs_isLiked","/docs/getDocsDetail?id=");
+		urlMap.put("tbl_topics","/topics/getTopicsDetail/");
+		urlMap.put("tbl_topics_comment","/topics/getTopicsDetail/");		
+		urlMap.put("tbl_topics_isLiked","/topics/getTopicsDetail/");		
+		urlMap.put("tbl_courses","/courses/getCourseDetail/");
+		urlMap.put("tbl_courses_share","/courses/getCourseDetail/");		
+		urlMap.put("tbl_courses_sLiked","/courses/getCourseDetail/");		
+		urlMap.put("tbl_sites","/sites/getSiteDetail/");
+		urlMap.put("tbl_sites_share","/sites/getSiteDetail/");		
+		urlMap.put("tbl_sites_isliked","/sites/getSiteDetail/");		
+		urlMap.put("tbl_article","/article/getArticleDetail/");
+		urlMap.put("tbl_article_share","/article/getArticleDetail/");		
+		urlMap.put("tbl_article_isLiked","/article/getArticleDetail/");		
+		urlMap.put("tbl_docs","/docs/getDocsDetail/");
+		urlMap.put("tbl_docs_comment","/docs/getDocsDetail/");
+		urlMap.put("tbl_books","/books/getBookDetail/");		
+		urlMap.put("tbl_books_share","/books/getBookDetail/");
+		urlMap.put("tbl_books_isLiked","/books/getBookDetail/");
+		urlMap.put("tbl_docs_isLiked","/docs/getDocsDetail/");
      * @param topObjId  文档、书籍、课程等 id
      * @param objCreateperson 文档、书籍、课程等创作人 id
      * @param smsType 消息类型   0系统消息    1私信  2关注通知(成为你的粉丝) 
-     * @param relationid 文档、书籍、课程等 id，存入tbl_sms 表
+     * @param relationid 关联主体：文档、文档评论,书籍、话题评论、课程等 id，存入tbl_sms 表
      * @param ObjectName 文档、书籍、课程等名字
      * @param content  系统消息内容或者是 消息内容尾部拼接内容
      * @return
@@ -88,15 +88,15 @@ public interface ISmsService {
     /**
      * 新增消息提醒,先过滤
      *  消息格式 ：user.name + userUrl + content + objUrl + content2
-     *  赞了你分享的文章  <a target='_blank' href='/article/getArticleDetail?id=58'>头条新闻_东方头条</a>
+     *  赞了你分享的文章  <a target='_blank' href='/article/getArticleDetail/58'>头条新闻_东方头条</a>
      * @param user 触发消息的人(id,name)
      * @param userUrl
      * @param content eg:赞了你分享的文章 
-     * @param objUrl <a target='_blank' href='/article/getArticleDetail?id=58'>头条新闻_东方头条</a>
+     * @param objUrl <a target='_blank' href='/article/getArticleDetail/58'>头条新闻_东方头条</a>
      * @param content2 ..
      * @return
      */ // FIXME  待完善
-    /*int addNotices(User user,String userUrl,String content,String objUrl,String content2);*/
+//    int addNotices(User user,String userUrl,String content,String objUrl,String content2);
     
     
     /**

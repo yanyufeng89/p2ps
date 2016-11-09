@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -112,9 +113,9 @@ public class ArticleController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/getArticleDetail")
+	@RequestMapping(value = "/getArticleDetail/{id}")
 	@ResponseBody
-	public ModelAndView getArticleDetail(HttpServletRequest request, HttpServletResponse response,Article record,@RequestParam(required=false) String isAdmin) {
+	public ModelAndView getArticleDetail(HttpServletRequest request, HttpServletResponse response,Article record,@RequestParam(required=false) String isAdmin,@PathVariable String id) {
 		ModelAndView mv = new ModelAndView();
 		if (record.getId() != null) {
 			record = articleService.getArticleDetail(record);
@@ -128,7 +129,7 @@ public class ArticleController {
 				//后台管理员查看
 				mv.setViewName("manage/articleDetail");
 			}else{
-				mv.setViewName("mydocs/docs/articleDetail");
+				mv.setViewName("/mydocs/docs/articleDetail");
 			}
 		} else {
 			logger.info("**getArticleDetail*获取文章详情  失败   record.getId() == null  999****");
@@ -382,7 +383,43 @@ public class ArticleController {
 		}
 	}
 	
-	
+	/**
+	 * 文章编辑
+	 * @param request
+	 * @param response
+	 * @param record
+	 * @return
+	 */
+	@RequestMapping(value = "/updateArticle", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateArticle(HttpServletRequest request, HttpServletResponse response, Article record) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			String userid = (String) request.getSession().getAttribute("userid");
+			if (!StringUtils.isBlank(userid)) {
+				int ret = 0;
+				ret = articleService.updateByPrimaryKeySelective(record);
+				logger.info("**updateArticle* 文章编辑 **topic==" + JSON.toJSONString(record));
+				if (ret > 0) {
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				} else {
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					logger.info("**updateArticle* 文章编辑  失败 999  ret=0**");
+				}
+				return JSON.toJSONString(baseResponse);
+			} else {
+				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				logger.info("**updateArticle* 文章编辑  失败 999 登录失败**");
+				return JSON.toJSONString(baseResponse);
+			}
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**updateArticle* 文章编辑  失败 999**" + e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
 	
 	
 }

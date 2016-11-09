@@ -38,7 +38,7 @@ public class TypeConfigUtil {
 		paMap.put("firstViewName2","技术创新");
 		paMap.put("firstViewID2","104");
 		paMap.put("firstViewName3","融资股权");
-		paMap.put("firstViewID3","203");
+		paMap.put("firstViewID3","204");
 		paMap.put("firstViewName4","成功之道");
 		paMap.put("firstViewID4","206");	
 
@@ -66,10 +66,10 @@ public class TypeConfigUtil {
 
 		paMap2.put("childID1","300");	
 		paMap2.put("childName1","IT");	
-		paMap2.put("childListData1","301:工业智能4.0,302:管理系统,303:软件开发,304:大数据分析,305:DBA,306:基础架构,307:网络硬件 ,308:IT 管理,309:服务支持,310:其它");	
+		paMap2.put("childListData1","301:工业智能4.0,302:管理系统,303:软件开发,304:大数据,305:DBA,306:基础架构,307:网络硬件 ,308:IT 管理,309:服务支持,310:其它");	
 		paMap2.put("childID2","400");	
 		paMap2.put("childName2","互联网");	
-		paMap2.put("childListData2","401:互联网+,402:互联网运营,403:市场销售,404:平台开发,405:产品设计,406:大数据分析,407:DBA,408:系统架构,409:网络安全,410:其它");	
+		paMap2.put("childListData2","401:互联网+,402:互联网运营,403:市场销售,404:平台开发,405:产品设计,406:大数据,407:DBA,408:系统架构,409:网络安全,410:其它");	
 		
 		
 		
@@ -89,7 +89,7 @@ public class TypeConfigUtil {
 		paMap3.put("childListData1","501:企业管理,502:企业培训,503:法律法规,504:企业认证,505:人事猎头,506:金融投资,507:心理健康,508:工商税务,509:商标专利,510:其它");	
 		paMap3.put("childID2","600");	
 		paMap3.put("childName2","财务");	
-		paMap3.put("childListData2","601:财务咨询,602:内外审计,603:资产评估,604:财务会计,605:管理会计,606:成本会计,607:税务会计,608:金融精算,609:其它");	
+		paMap3.put("childListData2","601:财务咨询,602:内外审计,603:资产评估,604:财务会计,605:管理会计,606:成本会计,607:税务会计,608:统计精算,609:其它");	
 		
 
 		

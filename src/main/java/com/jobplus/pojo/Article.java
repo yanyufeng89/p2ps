@@ -45,6 +45,9 @@ public class Article extends PageParent implements Serializable{
     
     private Integer  supportCount;//打赏次数	supportCount	int(8)	8
     
+	
+	private Integer ispublic;//是否匿名  1：匿名  其他非匿名	
+    
     private MyCollect myCollect;
 	/**
 	 * 用户分享时间 用于前端页面显示
@@ -105,9 +108,18 @@ public class Article extends PageParent implements Serializable{
 		this.smsContent = smsContent;
 	}
 
+	public Integer getIspublic() {
+		return ispublic;
+	}
+
+	public void setIspublic(Integer ispublic) {
+		this.ispublic = ispublic;
+	}
+
 	public List<User> getRewardUsers() {
 		return rewardUsers;
 	}
+
 
 	public void setRewardUsers(List<User> rewardUsers) {
 		this.rewardUsers = rewardUsers;

@@ -4,9 +4,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-            话题专区
+            话题专区-JobPlus
     </title>
-    <meta name="viewport" content="width=1230"/> 
+    <meta name="description" content="JobPlus网是国内领先的企业知识库公共平台,分享知识、经验和见解,话题分类包括热门话题,最新话题,等待回答,精彩回答,JobPlus为7亿职场人员提供优质知识交流分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
+    <meta name="keywords" content="Jobplus,知识分享,创新问答,创业问答,IT问答,互联网问答,咨询问答,财务问答,工业技术问答,工程问答,市场管理问答,销售管理问答,供应链问答,生产管理问答,设计问答,创意问答,翻译问答,商标专利问答,新媒体问答,影视问答,知识问答,热门话题,最新话题,等待回答,精彩回答">
+    
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"> 
     <link rel="stylesheet" type="text/css" href="/css/pj_searchres.css">
@@ -76,7 +78,7 @@
 								<span <#if sortType!=2 && sortType!=3 && sortType!=4>class="active"</#if> data-index="1">热门话题</span>
 								<span <#if sortType==2>class="active"</#if> data-index="2">最新话题</span>
 								<span <#if sortType==3>class="active"</#if> data-index="3">等待回答</span>
-								<span <#if sortType==4>class="active"</#if> data-index="4">精彩问答</span>
+								<span <#if sortType==4>class="active"</#if> data-index="4">精彩话题</span>
 							 </dl>
 							</li>
 							
@@ -96,7 +98,7 @@
 						 <div class='emptyList'>
 						   <div class='empty-tip'>
 							   <div class="empty-img">
-								  <img src="/image/angry.png" alt="">
+								  <img src="/image/angry.png" alt="提示"class="lazy">
 							   </div>
 							   <div class="empty-info">
 									对不起，没有找到满足搜索条件的信息<br>
@@ -133,10 +135,12 @@
 				</a>
 	      </div>
 	      <div class='pj_jsonp ad_exposure'>
-	        <img src='/image/ad_exposure_3.jpg' alt='' width='310' height='278'>
+	        <img src='/image/ad_exposure_3.jpg' alt='广告' width='308' height='246' class="lazy">
+	        <div class='advertising-direction'>广告</div>
 	      </div>
 	     <div class='pj_jsonp ad_exposure'>
-	      <img src='/image/ad_exposure_4.jpg' alt='' width='310' height='278'>
+	        <img src='/image/ad_exposure_4.jpg' alt='广告' width='308' height='246' class="lazy">
+	        <div class='advertising-direction'>广告</div>
 	     </div>
 		</div>
     </div>
@@ -157,6 +161,9 @@
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
+			$('.newsinfo a').each(function(){
+			    $(this).text(autoAddEllipsis($(this).text(),200));
+			})
     </script>
     <script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
 	<script type="text/javascript" src="/scripts/pj_topicdivision.js"></script>

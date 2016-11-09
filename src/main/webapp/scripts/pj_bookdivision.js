@@ -6,6 +6,10 @@ $(function () {
         $(this).addClass("active");
         reloadPage();
     });
+    //搜索的内容控制在两行显示  其他的时候加省略号
+    $('.newsinfo a').each(function(){
+	      $(this).text(autoAddEllipsis($(this).text(),200));
+	})
 })
 
 function reloadPage() {
@@ -14,8 +18,10 @@ function reloadPage() {
 	var sortType = $("#filterCollapse li.last span.active").attr("data-index");
 	var sharedType = $("#filterCollapse li.first span.active").attr("data-index");
 	var tags = "";
-
-	window.location.href = projectName + "books/fore/area/" + sharedType
-			+ "?Condition=" + Condition + "&sortType=" + sortType;
+	
+	var uurl = encodeURI(projectName + "books/fore/area/" + sharedType
+			+ "?Condition=" + Condition + "&sortType=" + sortType);
+	
+	window.location.href = uurl;
 
 }

@@ -7,14 +7,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
-import com.jobplus.pojo.*;
-import com.jobplus.utils.FTPUtils;
-import com.jobplus.utils.UUIDGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jobplus.dao.CoursesMapper;
+import com.jobplus.pojo.Account;
+import com.jobplus.pojo.Courses;
+import com.jobplus.pojo.CoursesShare;
+import com.jobplus.pojo.FTPStatus;
+import com.jobplus.pojo.MyCollect;
+import com.jobplus.pojo.Page;
+import com.jobplus.pojo.User;
 import com.jobplus.service.IAccountService;
 import com.jobplus.service.ICoursesService;
 import com.jobplus.service.ICoursesShareService;
@@ -24,11 +29,12 @@ import com.jobplus.service.ISequenceService;
 import com.jobplus.service.IUpdTableColumnService;
 import com.jobplus.service.IUserService;
 import com.jobplus.utils.DateUtils;
+import com.jobplus.utils.FTPClientTemplate;
 import com.jobplus.utils.SolrJUtils;
-import org.springframework.web.multipart.MultipartFile;
+import com.jobplus.utils.UUIDGenerator;
 
 @Service("coursesService")
-public class CoursesServiceImpl implements ICoursesService{
+public class CoursesServiceImpl implements ICoursesService {
 
 	@Resource
 	private CoursesMapper coursesDao;
@@ -49,11 +55,11 @@ public class CoursesServiceImpl implements ICoursesService{
 	@Resource
 	private IAccountService accountService;
 	@Resource
-	private FTPUtils fTPUtils;
+	private FTPClientTemplate ftpClientTemplate;
 
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
-		
+
 		return 0;
 	}
 
@@ -64,65 +70,67 @@ public class CoursesServiceImpl implements ICoursesService{
 		int id = seqService.getSeqByTableName("tbl_courses");
 		record.setId(id);
 		ret = coursesDao.insert(record);
-		if(ret > 0){
-			//operationSum表  课程分享数增加
-			ret = operationSumService.updOperationSum(10, 0, 1,null);
-			//增加财富值
-			accountService.modAccountAndDetail(record.getUserid(), 0, new Account().getSCORES()[0], 
-					1, 0, new Account().getSCORES()[0],3);
+		if (ret > 0) {
+			// operationSum表 课程分享数增加
+			ret = operationSumService.updOperationSum(10, 0, 1, null);
+			// 增加财富值
+			accountService.modAccountAndDetail(record.getUserid(), 0, new Account().getSCORES()[0], 1, 0,
+					new Account().getSCORES()[0], 3);
 		}
 		return ret;
 	}
-	//同时 插入一条书籍分享记录
+
+	// 同时 插入一条书籍分享记录
 	@Transactional
 	@Override
 	public int insertCouseAndCourseShare(Courses record) {
 		CoursesShare share = new CoursesShare();
 		int ret = 0;
 		int id = seqService.getSeqByTableName("tbl_courses");
-		int shareId = seqService.getSeqByTableName("tbl_courses_share");		
+		int shareId = seqService.getSeqByTableName("tbl_courses_share");
 		record.setId(id);
 		share.setId(shareId);
 		share.setUserid(record.getUserid());
 		share.setCoursesid(id);
-		share.setRecommend(record.getRecommend());		
-		
+		share.setRecommend(record.getRecommend());
+
 		ret = coursesDao.insert(record);
-		if(ret > 0){
-			//operationSum表  课程分享数增加
-			ret = operationSumService.updOperationSum(10, 0, 1,null);
-			//同时 插入一条书籍分享记录
+		if (ret > 0) {
+			// operationSum表 课程分享数增加
+			ret = operationSumService.updOperationSum(10, 0, 1, null);
+			// 同时 插入一条书籍分享记录
 			ret = coursesShareService.insert(share);
-			// 初始默认值+1     对应课程的评论数 + 1
+			// 初始默认值+1 对应课程的评论数 + 1
 			updTableColumnService.updNums(3, 1, 0, 1, id);
-			
-			//增加财富值
-			accountService.modAccountAndDetail(record.getUserid(), 0, new Account().getSCORES()[0], 
-					1, 0, new Account().getSCORES()[0],3);
+
+			// 增加财富值
+			accountService.modAccountAndDetail(record.getUserid(), 0, new Account().getSCORES()[0], 1, 0,
+					new Account().getSCORES()[0], 3);
 		}
 		return ret;
 	}
 
 	@Override
 	public int insertSelective(Courses record) {
-		
+
 		return coursesDao.insertSelective(record);
 	}
 
 	@Override
 	public Courses selectByPrimaryKey(Integer id) {
-		
+
 		return coursesDao.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(Courses record) {
-		
+
 		return coursesDao.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
-	public int updateByAdmin(MultipartFile files, HttpServletRequest request, HttpServletResponse response, Courses record) {
+	public int updateByAdmin(MultipartFile files, HttpServletRequest request, HttpServletResponse response,
+			Courses record) {
 		// 定义上传路径
 		String path = "";
 		String headicon = "";
@@ -133,29 +141,26 @@ public class CoursesServiceImpl implements ICoursesService{
 			String usersuffix = myFileName.substring(myFileName.lastIndexOf(".") + 1);
 			// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
 			if (myFileName.trim() != "") {
-				// 重命名上传后的文件名   id_ 时间戳+文件类型
+				// 重命名上传后的文件名 id_ 时间戳+文件类型
 				String fileName = record.getId() + "_" + UUIDGenerator.getUUID() + "." + usersuffix;
 				// 定义上传路径
-				path = fTPUtils.ftpImgDir + "/" + fTPUtils.ftpHeadIconDir + "/" + DateUtils.getDateTime2() + "/" + fileName;
-				headicon = fTPUtils.headIconServer + fTPUtils.ftpHeadIconDir + "/" + DateUtils.getDateTime2() + "/" + fileName;
+				path = ftpClientTemplate.ftpImgDir + "/" + DateUtils.getDateTime2() + "/" + fileName;
 				// 设置头像路径
-				record.setCoursesimg(headicon);
+				record.setCoursesimg(path);
 			}
 		}
 		int ret = 0;
 		try {
-			if (fTPUtils.connect()) {
-				// 连接成功
-				FTPStatus fst = fTPUtils.upload(files.getInputStream(), path);
-				if (fst.getStatus() == 7) {
-					ret = 1;
-				}
+			// 连接成功
+			FTPStatus fst = ftpClientTemplate.upload(files.getInputStream(), path, true);
+			if (fst.getStatus() == 7) {
+				ret = 1;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// 文档文件上传到服务器成功    插入数据库
+		// 文档文件上传到服务器成功 插入数据库
 		if (ret > 0) {
 			return coursesDao.updateByAdmin(record);
 		}
@@ -169,88 +174,91 @@ public class CoursesServiceImpl implements ICoursesService{
 
 	@Override
 	public int updateByPrimaryKeyWithBLOBs(Courses record) {
-		
+
 		return coursesDao.updateByPrimaryKeyWithBLOBs(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(Courses record) {
-		
+
 		return coursesDao.updateByPrimaryKey(record);
 	}
 
-	//我分享的课程列表
+	// 我分享的课程列表
 	@Override
 	public Page<Courses> getSharedCourseList(Courses record) {
 		Page<Courses> page = new Page<Courses>();
-		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
-		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
-		record.setPageSize(page.getPageSize());	
+		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
+		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		record.setPageSize(page.getPageSize());
 		int count = coursesDao.getSharedCourseListCount(record);
-		if(count < 1)
+		if (count < 1)
 			return page;
 		List<Courses> list = coursesDao.getSharedCourseList(record);
-		if(list.size()>0){
+		if (list.size() > 0) {
 			for (Courses course : list) {
-				//用于前端页面显示
+				// 用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getCreatetime(), "yyyy-MM-dd"));
 			}
-			page.initialize((long)count,record.getPageNo());
+			page.initialize((long) count, record.getPageNo());
 			page.setList(list);
 		}
 		return page;
-		
+
 	}
-	//我收藏的课程列表
+
+	// 我收藏的课程列表
 	@Override
 	public Page<Courses> getCollectedCourseList(Courses record) {
 		Integer userid = Integer.parseInt((String) SecurityUtils.getSubject().getSession().getAttribute("userid"));
 		MyCollect collect = new MyCollect();
 		collect.setUserid(userid);
-		//动作类型枚举   0下载 1收藏   ACTIONTYPE ={0,1}
+		// 动作类型枚举 0下载 1收藏 ACTIONTYPE ={0,1}
 		collect.setActionType(collect.getACTIONTYPES()[1]);
-		//类型     暂时用表名存储  tbl_docs  tbl_topics  tbl_books COLLECTTYPE={"tbl_docs","tbl_topics","tbl_books","tbl_courses","tbl_Articles","tbl_sites"};
+		// 类型 暂时用表名存储 tbl_docs tbl_topics tbl_books
+		// COLLECTTYPE={"tbl_docs","tbl_topics","tbl_books","tbl_courses","tbl_Articles","tbl_sites"};
 		collect.setCollecttype(collect.getCOLLECTTYPES()[3]);
 		record.setMyCollect(collect);
-		
+
 		Page<Courses> page = new Page<Courses>();
-		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
-		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
-		record.setPageSize(page.getPageSize());	
+		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
+		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		record.setPageSize(page.getPageSize());
 		int count = coursesDao.getCollectedCourseListCount(record);
-		if(count < 1)
+		if (count < 1)
 			return page;
 		List<Courses> list = coursesDao.getCollectedCourseList(record);
-		if(list.size()>0){
+		if (list.size() > 0) {
 			for (Courses course : list) {
-				//用于前端页面显示
+				// 用于前端页面显示
 				course.setUserShareTime(DateUtils.formatDate(course.getMyCollect().getColltime(), "yyyy-MM-dd"));
 			}
-			page.initialize((long)count,record.getPageNo());
+			page.initialize((long) count, record.getPageNo());
 			page.setList(list);
 		}
-		
+
 		return page;
 	}
-	//批量删除个人中心-我分享的课程
+
+	// 批量删除个人中心-我分享的课程
 	@Transactional
 	@Override
 	public int delSharedCourses(String condition[]) {
 		int ret = 0;
 		ret = coursesDao.delSharedCourses(condition);
-		if(ret > 0){
-			operationSumService.updOperationSum(10, 1, condition.length,null);
+		if (ret > 0) {
+			operationSumService.updOperationSum(10, 1, condition.length, null);
 		}
 		return ret;
-	}	
-	
-	//获取课程详情    浏览数++
+	}
+
+	// 获取课程详情 浏览数++
 	@Transactional
 	@Override
 	public Courses getCourseDetail(Courses record) {
 		// 1.课程主体
 		record = coursesDao.selectByRecord(record);
-		if(null == record){
+		if (null == record) {
 			return null;
 		}
 		// 浏览次数+1
@@ -259,11 +267,13 @@ public class CoursesServiceImpl implements ICoursesService{
 		// 2.收藏此课程人的列表
 		// 设置 收藏还是下载 MyCollect（ 动作类型枚举 0下载 1收藏）ACTIONTYPE ={0,1}
 		// 设置表名 MyCollect COLLECTTYPE={"tbl_docs","tbl_topics","tbl_books"};
-		List<User> userList = userService.getCollectUsers(new MyCollect().getCOLLECTTYPES()[3],new MyCollect().getACTIONTYPES()[1], record.getId());
+		List<User> userList = userService.getCollectUsers(new MyCollect().getCOLLECTTYPES()[3],
+				new MyCollect().getACTIONTYPES()[1], record.getId());
 
 		// 3.相关课程列表
 		@SuppressWarnings({ "unchecked", "static-access" })
-		List<Courses> theSameCourses = solrJUtils.findCoursesFromList(record.getCoursesname(),record.getId().toString());
+		List<Courses> theSameCourses = solrJUtils.findCoursesFromList(record.getCoursesname(),
+				record.getId().toString(), record.getCoursestype(), record.getCoursesclass());
 		// 4.评论列表
 		CoursesShare share = new CoursesShare();
 		share.setCoursesid(record.getId());
@@ -285,37 +295,40 @@ public class CoursesServiceImpl implements ICoursesService{
 			int id = seqService.getSeqByTableName("tbl_collect");
 			record.setId(id);
 			record.setActionType(record.getACTIONTYPES()[1]);// 动作类型枚举 0下载 1收藏
-			record.setCollecttype(record.getCOLLECTTYPES()[3]);// 类型 暂时用表名存储   "tbl_docs","tbl_topics","tbl_books","tbl_courses","tbl_Articles","tbl_sites"
+			record.setCollecttype(record.getCOLLECTTYPES()[3]);// 类型 暂时用表名存储
+																// "tbl_docs","tbl_topics","tbl_books","tbl_courses","tbl_Articles","tbl_sites"
 			// 插入记录
 			ret = myCollectService.insert(record);
 
-			// 对应用户课程收藏数 增加 
-			operationSumService.updOperationSum(11, 0, 1,null);
-			
-			//课程的收藏数增加
-			updTableColumnService.updNums(3,0,0,1,record.getObjectid());
-			
+			// 对应用户课程收藏数 增加
+			operationSumService.updOperationSum(11, 0, 1, null);
+
+			// 课程的收藏数增加
+			updTableColumnService.updNums(3, 0, 0, 1, record.getObjectid());
+
 		} else if (record.getJudgeTodo() == 1) {
 			// 取消收藏课程
 			// 删除记录
-			
-			if(record.getCollecttype()!=null && record.getObjectid()!=null && record.getActionType()!=null && record.getUserid()!=null){
+
+			if (record.getCollecttype() != null && record.getObjectid() != null && record.getActionType() != null
+					&& record.getUserid() != null) {
 				ret = myCollectService.delMycollects(record);
-			}	
-			
-			//对应用户课程收藏数 减少
-			operationSumService.updOperationSum(11, 1, 1,null);
-			
-			//课程的收藏数减少
-			updTableColumnService.updNums(3,0,1,1,record.getObjectid());
+			}
+
+			// 对应用户课程收藏数 减少
+			operationSumService.updOperationSum(11, 1, 1, null);
+
+			// 课程的收藏数减少
+			updTableColumnService.updNums(3, 0, 1, 1, record.getObjectid());
 		}
-		if(ret < 1){
+		if (ret < 1) {
 			record = null;
 		}
 		return record;
 	}
+
 	public static void main(String[] args) {
-		System.out.println("ssas".indexOf("4")!=-1);
+		System.out.println("ssas".indexOf("4") != -1);
 	}
-	
+
 }

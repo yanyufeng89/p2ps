@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <title>话题分享</title>
+    <title>话题分享-JobPlus</title>
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/css/pj_topic.css" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/css/jquery.autocomplete.css" charset="UTF-8">
@@ -100,22 +100,18 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的话题;
                       </li>
                       <li>
                         2.话题分享应遵循客观、真实、简洁、明确、规范的原则，提问尽可能简洁明了，尽量避免太宽泛的问题;
                       </li>
                       <li>
-                        3.禁止提问辱骂他人、含有淫秽色情及低俗信息等话题;
+                        3.输入你的话题名称,  话题名称尾部要加"?" 禁止提问辱骂他人、含有淫秽色情及低俗信息等话题;
                       </li>
                       <li>
                         4.提问有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                                                                 服务条款
-                        </a>和
-                        <a href="#" target="_self">
-                                                                帮助中心
-                        </a>
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
@@ -192,7 +188,7 @@
                                   <tr>
                                     <td class="name">悬赏：</td>
                                     <td>
-                                      <input type="hidden" name="downvalue" value="0">
+                                      <input type="hidden" name="rewardValue" value="0">
                                       <select>
                                         <option value="0">免财富值</option>
                                         <option value="1">1财富值</option>
@@ -204,7 +200,7 @@
                                        </select>
                                        <span class='ispublic'>
                                          <input type="checkbox" value="1" class="zg-addq-isanon" name="ispublic" id="public0">
-                                         <label for="public0">匿名</label>
+                                         <label for="public0" style="vertical-align: middle;">匿名</label>
                                        </span>
                                     </td>
                                   </tr>
@@ -264,13 +260,16 @@
                     <div class="uploadinfobook">
                       <ol>
                         <li class="doc-type"></li>
-                        <li>1.上传涉及侵权内容的话题将会被移除。如何判断话题是否侵权？查看
-                          <a href="#" target="_self">文库协议</a>和
-                          <a href="#" target="_self">用户规则</a></li>
-                        <li>2.上传有问题需要帮助？查看
-                          <a href="#" target="_self">文库帮助</a>和
-                          <a href="#" target="_self">意见反馈</a></li>
-                        <li>3.为营造绿色网络环境，严禁上传含有淫秽色情及低俗信息等话题，让我们一起携手共同打造健康文库</li></ol>
+                        <li>1.提问时必须对该话题进行说明，可以让别人更加清晰的了解该话题的相关内容,根据内容说明可以随时更改话题名称，话题名称尾部要加"?";</li>
+                        <li>2.您可以免财富值提问话题，也可以悬赏选择1到20点财富值提问；同时可以对话题进行设置是否"匿名"提问;</li>
+                        <li>3.话题提问时必须添加分类，详细的分类，方便更好的查找话题内容;</li>
+                        <li>4.添加话题标签，更精准的搜索目标话题,多个标签之间要用逗号隔开，便于区分;</li>
+                        <li>
+                        5.提问有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
+                      </li>
+                        </ol>
                     </div>
                   </div>
                 </form>

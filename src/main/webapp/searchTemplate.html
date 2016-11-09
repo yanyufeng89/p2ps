@@ -6,10 +6,11 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/docs/getDocsDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;' >【文档】{$T.item.title}</a>
+							 <a target="_blank" href="/docs/getDocsDetail/{$T.item.data_id}"   style='margin-left: -6px;' >【文档】{$T.item.title}</a>
 						 </div>
-						 <div class="newsinfo" title="{$T.item.description}">
-							 <a target="_blank" href="/docs/getDocsDetail?id={$T.item.data_id}"> {$T.item.description}</a>
+						 <div class="newsinfo">
+							 <a target="_blank" href="/docs/getDocsDetail/{$T.item.data_id}"> {$T.item.description}</a>
+							 
 						 </div>
 						 <div class="tool">
 							 <div class="pj-meta-panel">
@@ -31,13 +32,20 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
+						 <a target="_blank" href="/docs/getDocsDetail/{$T.item.data_id}">
+							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
+									 <div class="picx">			 		
+											 <div class="pict"><img src='{$T.item.imgUrl}' class="lazy" alt='文档图标'></div>
 									 </div>
 								 </div>
-							 </div>
+							 </div> 
+							 <span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>
+						    {#else}
+							 <img src='/image/default/default_doc.png' class="lazy" alt='文档图标'>
+					        {#/if}
+					    </a>    
 						 </div>
 					 </div>
                 </div>
@@ -46,10 +54,11 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/books/getBookDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
+							 <a target="_blank" href="/books/getBookDetail/{$T.item.data_id}"   style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
 						 </div>
-						 <div class="newsinfo" title="{$T.item.description}">
-							 <a target="_blank" href="/books/getBookDetail?id={$T.item.data_id}">{$T.item.description}</a>
+						 <div class="newsinfo">
+							 <a target="_blank" href="/books/getBookDetail/{$T.item.data_id}">{$T.item.description}</a>
+							
 						 </div>
 						 <div class="tool">
 							 <div class="pj-meta-panel">
@@ -70,13 +79,20 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
+						  <a target="_blank" href="/books/getBookDetail/{$T.item.data_id}">{
+							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
+									 <div class="picx">			 		
+											 <div class="pict"><img src='{$T.item.imgUrl}' class="lazy" alt='书籍图标'></div>
 									 </div>
 								 </div>
-							 </div>
+							 </div> 
+							 <span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>
+						    {#else}
+							 <img src='/image/default/default_book.png' class="lazy" alt='书籍图标'>
+					        {#/if}
+					       </a>
 						 </div>
 					 </div>
                 </div>
@@ -85,11 +101,12 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/article/getArticleDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
+							 <a target="_blank" href="/article/getArticleDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
 						 </div>
-						 <!-- <div class="newsinfo" title="{$T.item.description}">
-							 <a target="_blank" href="/article/getArticleDetail?id={$T.item.data_id}">{$T.item.description}</a>
-						 </div> -->
+						 <div class="newsinfo" title="{$T.item.description}">
+							 <a target="_blank" href="/article/getArticleDetail/{$T.item.data_id}">{$T.item.description}</a>
+							 
+						 </div>
 						 <div class="tool">
 							 <div class="pj-meta-panel">
                                  <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;{$T.item.createTime}</a>
@@ -111,13 +128,20 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
+						 <a target="_blank" href="/article/getArticleDetail/{$T.item.data_id}">
+							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
+									 <div class="picx">			 		
+											 <div class="pict"><img src='{$T.item.imgUrl}' class="lazy" alt='文章图标'></div>
 									 </div>
 								 </div>
-							 </div>
+							 </div> 
+							 <span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>
+						    {#else}
+							 <img src='/image/default/default_article.png' class="lazy" alt='文章图标'>
+					        {#/if}
+					      </a>  
 						 </div>
 					 </div>
                 </div>
@@ -126,10 +150,11 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/courses/getCourseDetail?id={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
+							 <a target="_blank" href="/courses/getCourseDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
 						 </div>
-						 <div class="newsinfo" title="{$T.item.description}">
-							 <a target="_blank" href="/courses/getCourseDetail?id={$T.item.data_id}">{$T.item.description} </a>
+						 <div class="newsinfo">
+							 <a target="_blank" href="/courses/getCourseDetail/{$T.item.data_id}">{$T.item.description} </a>
+							 
 						 </div>
 						 <div class="tool">
 							 <div class="pj-meta-panel">
@@ -150,13 +175,20 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
+						  <a target="_blank" href="/courses/getCourseDetail/{$T.item.data_id}">
+						   {#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
 									 <div class="picx">			 		
-											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
+											 <div class="pict"><img src='{$T.item.imgUrl}' class="lazy" alt='课程图标'></div>
 									 </div>
 								 </div>
 							 </div>
+							 <span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span> 
+						    {#else}
+							 <img src='/image/default/default_course.png' class="lazy" alt='课程图标'>
+					        {#/if}
+					       </a> 
 						 </div>
 					 </div>
                 </div>
@@ -165,10 +197,11 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/sites/getSiteDetail?id={$T.item.data_id}" title="{$T.item.title}"  style='margin-left: -6px;'>【站点】{$T.item.title}</a>
+							 <a target="_blank" href="/sites/getSiteDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【站点】{$T.item.title}</a>
 						 </div>
-						 <div class="newsinfo" title="{$T.item.description}">
-							 <a target="_blank" href="/sites/getSiteDetail?id={$T.item.data_id}">{$T.item.description}</a>
+						 <div class="newsinfo">
+							 <a target="_blank" href="/sites/getSiteDetail/{$T.item.data_id}">{$T.item.description}</a>
+							
 						 </div>
 						 <div class="tool">
 							 <div class="pj-meta-panel">
@@ -188,13 +221,20 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
+						  <a target="_blank" href="/sites/getSiteDetail/{$T.item.data_id}">
+							 {#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
-									 <div class="picx">
-										<div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
+									 <div class="picx">			 		
+											 <div class="pict"><img src='{$T.item.imgUrl}' class="lazy" alt='站点图标'></div>
 									 </div>
 								 </div>
-							 </div>
+							 </div> 
+							 <span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>
+						    {#else}
+							 <img src='/image/default/default_site.png' class="lazy" alt='站点图标'>
+					        {#/if}
+					       </a> 
 						 </div>
 					 </div>
                 </div>
@@ -205,11 +245,12 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/topics/getTopicsDetail?topicId={$T.item.data_id}"  title="{$T.item.title}"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
+							 <a target="_blank" href="/topics/getTopicsDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
 						 </div>
-						<!--  <div class="newsinfo" title="{$T.item.title}">
-							 <p>{$T.item.title}</p>
-						 </div> -->
+						<div class="newsinfo">
+							 <a target="_blank" href="/topics/getTopicsDetail/{$T.item.data_id}">{$T.item.description}</a>
+							 
+						 </div>
 						 <div class="tool">
 							 <div class="pj-meta-panel">
 								 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">编辑于&nbsp;{$T.item.createTime}</a>
@@ -219,23 +260,39 @@
 								 </a>
 
 								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>{$T.item.likeSum}人关注
+									 <i class="z-icon-concern"></i>{$T.item.collectSum}人关注
 								 </a>
 
 								 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-share  goog-menu-button">
 									 <i class="z-icon-comment"></i>{$T.item.replySum}人回答
 								 </a>
+								 {#if $T.item.acceptStatus == 2}
+								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-reward">
+                            	        悬赏:&nbsp;&nbsp;<i class="z-icon-reward-o"></i>{#if $T.item.rewardValue}{$T.item.rewardValue}{#else}0{#/if}
+                                 </a>
+                                  {#else}
+								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-reward">
+                            	        悬赏:&nbsp;&nbsp;<i class="z-icon-accept-reward-o"></i>{#if $T.item.rewardValue}{$T.item.rewardValue}{#else}0{#/if}
+                                 </a>
+                                 {#/if}
 							 </div>
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
+						  <a target="_blank" href="/topics/getTopicsDetail/{$T.item.data_id}">
+							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='{#if $T.item.imgUrl}{#if $T.item.imgUrl.length > 5}{$T.item.imgUrl}{#else}/image/search_default.jpg{#/if}{#else}/image/search_default.jpg{#/if}' alt=''></div>
+									 <div class="picx">			 		
+											 <div class="pict"><img src='{$T.item.imgUrl}' class="lazy" alt='话题图标'></div>
 									 </div>
 								 </div>
-							 </div>
+							 </div> 
+							 <span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>
+						    {#else}
+							 <img src='/image/default/default_topic.png' class="lazy" alt='话题图标'>
+					        {#/if}
+					      </a> 
 						 </div>
 					 </div>
                 </div>

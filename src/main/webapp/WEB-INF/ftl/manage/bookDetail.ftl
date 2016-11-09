@@ -66,9 +66,13 @@
 						   分享到
 						</div>
 				        <div class="shareto-menu bdsharebuttonbox bdshare-button-style1-16">
-						    <a href="javascript:void(0);" onclick="toShare(1,'${record.bookname}');" class="log_sina png" title="分享到新浪微博"></a>
-						    <a href="javascript:void(0);" onclick="toShare(2,'${record.bookname}');" class="log_qq png"  title="分享到QQ空间"></a>
-						    <a href="javascript:void(0);" onclick="toShare(3,'${record.bookname}');" class="log_wx png" title="分享到微信"></a>
+                            <a href="javascript:void(0);" class="jiathis_button_tsina log_sina png" title="分享到新浪微博"></a>
+                            <a href="javascript:void(0);" class="jiathis_button_qzone log_qq png"  title="分享到QQ空间"></a>
+                            <a href="javascript:void(0);" class="jiathis_button_weixin log_wx png" title="分享到微信"></a>
+                            <script type="text/javascript">
+                                var jiathis_config = {data_track_clickback:'true'};
+                            </script>
+                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1345538646577576" charset="utf-8"></script>
 					    </div>
 				    </div>
                    </div>
@@ -85,7 +89,7 @@
 		     <#list  record.commentList.list as booklist>
 		       <div class='item'>
 		         <div class='media-left'>
-		           <a class='uhead' href='/myHome/getHomePage?userid=${booklist.userid}' data-userid='${booklist.userid}' target='_blank'>
+		           <a class='uhead' href='/myHome/getHomePage/${booklist.userid}' data-userid='${booklist.userid}' target='_blank'>
 		             <#if (booklist.userHeadIcon)??>
 		               <img class='uname' src="${booklist.userHeadIcon}" alt=""  data-userid='${booklist.userid}' data-moduletype='1'>
 		             <#else>
@@ -93,13 +97,13 @@
 		             </#if>
 		            </a>
 		             <#if (booklist.commentbyName)??>
-		                <a href='/myHome/getHomePage?userid=${booklist.userid}' class="uname" data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
+		                <a href='/myHome/getHomePage/${booklist.userid}' class="uname" data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
 		                  <span class="desc">回复</span>
 		                <span class="uname"  data-userid='${booklist.commentby}' data-moduletype='1'>
-		                <a href='/myHome/getHomePage?userid=${booklist.commentby}' target='_blank'>${booklist.commentbyName}</a>
+		                <a href='/myHome/getHomePage/${booklist.commentby}' target='_blank'>${booklist.commentbyName}</a>
 		                </span>
 		             <#else>
-		             <a class='uname' href='/myHome/getHomePage?userid=${booklist.userid}' data-userid='${booklist.userid}' target='_blank'>
+		             <a class='uname' href='/myHome/getHomePage/${booklist.userid}' data-userid='${booklist.userid}' target='_blank'>
 			             ${booklist.userName}
 			         </a>
 		             </#if>
@@ -168,7 +172,7 @@
 		<#--判断是否登录-->
 		<#if (Session.user)??>
 		    <div class='mycomment'>
-			  <a href='/myHome/getHomePage?userid=${Session.user.userid}' data-userid='${Session.user.userid}' target='_blank'>
+			  <a href='/myHome/getHomePage/${Session.user.userid}' data-userid='${Session.user.userid}' target='_blank'>
 				 <#if (Session.user.headicon)??>
 				   <img src="${Session.user.headicon}" alt="" class='zm-list-avatar' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 <#else>
@@ -240,7 +244,7 @@
 
 					<div class="list zu-small-avatar-list zg-clear">
 					<#list record.collectUsers as colllist>
-						<a title="${colllist.username}"  class="zm-item-link-avatar" target='_blank' href='/myHome/getHomePage?userid=${colllist.userid}' data-userid="${colllist.userid}" data-moduletype='1'>
+						<a title="${colllist.username}"  class="zm-item-link-avatar" target='_blank' href='/myHome/getHomePage/${colllist.userid}' data-userid="${colllist.userid}" data-moduletype='1'>
 						   <#if (colllist.headicon)??>
 							 <img src="${colllist.headicon}" class="zm-item-img-avatar">
 						   <#else>
@@ -266,9 +270,9 @@
 						  <li>
 						     <div class='related-book-left'>
 							   <#if (samelist.url)??>
-							      <a href='/books/getBookDetail?id=${samelist.data_id}' target="_blank"><img src="${samelist.url}" class="zm-item-img-avatar"></a>
+							      <a href='/books/getBookDetail/${samelist.data_id}' target="_blank"><img src="${samelist.url}" class="zm-item-img-avatar"></a>
 							   <#else>
-							      <a href='/books/getBookDetail?id=${samelist.data_id}' target="_blank"><img src="/image/thief.jpg" class="zm-item-img-avatar"></a>
+							      <a href='/books/getBookDetail/${samelist.data_id}' target="_blank"><img src="/image/thief.jpg" class="zm-item-img-avatar"></a>
 							   </#if>
 							 </div>
 							 <div class='related-book-right'>

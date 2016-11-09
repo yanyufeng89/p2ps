@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+          我的文档-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -19,9 +19,9 @@
 		<div class="img-center">
 		 <a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像"  class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		 </a>
 		</div>
@@ -32,7 +32,7 @@
 		      </#if>
 		    </a>
 		</p>
-        <p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>    
+        <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>    
 		<div class="mydoc-list">
              <ul id="accordion">
 		      <li class="open">
@@ -91,7 +91,7 @@
 		
 		   <div class='maincontent'>
 		    <div class="uc-head-bottom">
-				  <div style="float:left" id="mytopiccontent">
+				 
 				    <span><a class='icon-mydocument'></a></span>
 				    <div style="float:left">
 					    <p>我的文档</p>
@@ -101,7 +101,8 @@
 	                       <a href='/myCenter/getMyDocsCollected' <#if (myCollectPage)??>class="current"</#if> id='doccollect'>收藏&nbsp;<#if (Session.operationSum.doccollsum)??>${Session.operationSum.doccollsum}</#if></a>
 	                    </p>
                     </div>
-				   </div>
+                     <a href='javascript:void(0);' onclick="share('doc');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
+				  
 			</div>
 		    <#if (docsPage)??>
 			<div class="uc-mydocshare">
@@ -109,9 +110,9 @@
 			<div class="uc-mydocshare" style='display:none'>
 			</#if>
 			   <div class="console-box">
-					<a <#if (ispublic)??><#if (ispublic==1)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded?ispublic=1'>已分享</a>
+					<a <#if (ispublic)??><#if (ispublic==1)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded'>已分享</a>
 					<a <#if (ispublic)??><#if (ispublic==0)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded?ispublic=0'>私有</a>
-					<a <#if (ispublic)??><#if (ispublic==2)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded?ispublic=2'>草稿</a>
+					<#-- <a <#if (ispublic)??><#if (ispublic==2)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded?ispublic=2'>匿名分享</a> -->	
 	           </div>
 	           <!-- 首先判断是否有上传的内容 没有的话 就显示为隐藏 -->
 	           <div id="sharecontent">
@@ -130,9 +131,10 @@
 		               </div>
 		               <div class="status-box">
 		                   <div class="w342 ib"><div class="checkbox select-all"></div>文档名称</div>						   
-						   <div class="w140 ib">下载次数</div>
-						   <div class="w140 ib">收藏次数</div>
-						   <div class="w140 ib">上传时间</div>
+						   <div class="w105 ib">是否匿名</div>
+						   <div class="w105 ib">下载次数</div>
+						   <div class="w105 ib">收藏次数</div>
+						   <div class="w105 ib">上传时间</div>
 						   <div class="w119 ib">操作</div>
 					   </div>
 					   <div class="docs-list">
@@ -143,24 +145,34 @@
 								          <div class='w342 fs14 fc3 ib dochidden'>
 								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}" ></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
-								             <#if list.title?index_of(list.docsuffix)!=-1>
+								             <#--<#if list.title?index_of(list.docsuffix)!=-1>
 								               <#assign dtitle=list.title?substring(0,list.title?index_of(list.docsuffix)?number-1) />
-								                 <a href="/docs/getDocsDetail?id=${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${dtitle}">${dtitle}</a>
+								                 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${dtitle}">${dtitle}</a>
 								             <#else>
-								                 <a href="/docs/getDocsDetail?id=${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
-								             </#if>
+								                 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
+								             </#if>-->
+								             <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
 								          </div>
-								          <div class='w140 ib il'>
+								          <div class='w105 ib doc-ispublic'>
+								           <#if list.ispublic==1>
+								             	公开
+								            <#elseif list.ispublic==2>
+								            	匿名
+								            <#else>
+								            	公开
+								           </#if>
+								          </div>
+								          <div class='w105 ib il'>
 								           <#if (list.downsum)??>
 								             ${list.downsum}
 								           </#if>
 								          </div>
-								          <div class='w140 ib il'>
+								          <div class='w105 ib il'>
 								           <#if (list.collectsum)??>
 								            ${list.collectsum}
 								           </#if>
 								          </div>
-								          <div class="w140 ib">
+								          <div class="w105 ib">
 								             ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
 								          <div class='w119 ib operate'>
@@ -222,12 +234,13 @@
 								          <div class='w560 fs14 fc3 ib dochidden'>
 								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}"></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
-								             <#if list.title?index_of(list.docsuffix)!=-1>
+								             <#--<#if list.title?index_of(list.docsuffix)!=-1>
 								               <#assign ctitle=list.title?substring(0,list.title?index_of(list.docsuffix)?number-1) />
-								               <a href="/docs/getDocsDetail?id=${list.id}" data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${ctitle}">${ctitle}</a>
+								               <a href="/docs/getDocsDetail/${list.id}"  data-docid='${list.id}'  data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${ctitle}">${ctitle}</a>
 								             <#else>
-								               <a href="/docs/getDocsDetail?id=${list.id}" data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
-								             </#if>
+								               <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
+								             </#if>-->
+								             <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
 								          </div>
 								          <div class="w204 ib">
 								              ${list.createtime?string("yyyy-MM-dd")}
@@ -293,12 +306,13 @@
 								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}"></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
 								             
-                                            <#if list.title?index_of(list.docsuffix)!=-1>
+                                            <#--<#if list.title?index_of(list.docsuffix)!=-1>
 								               <#assign ltitle=list.title?substring(0,list.title?index_of(list.docsuffix)?number-1) />
-								               <a href="/docs/getDocsDetail?id=${list.id}" target="_blank" title="${ltitle}">${ltitle}</a>
+								               <a href="/docs/getDocsDetail/${list.id}" target="_blank" title="${ltitle}">${ltitle}</a>
 								            <#else>
-								                <a href="/docs/getDocsDetail?id=${list.id}" target="_blank" title="${list.title}">${list.title}</a>
-								            </#if> 
+								                <a href="/docs/getDocsDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>
+								            </#if>-->
+								            <a href="/docs/getDocsDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>
 								          </div>
 								          <div class="w204 ib">
 								             ${list.createtime?string("yyyy-MM-dd")}
@@ -365,12 +379,12 @@
 				                <div class='w525 fs14 fc3 ib dochidden'>
 					                  <div class="checkbox chk" data-docid="${list.id}" data-name="${list.docs.title}"></div>
 									  <b class="ic ic-${list.docs.docsuffix?lower_case} mr14"></b>
-									<#if list.docs.title?index_of(list.docs.docsuffix)!=-1> 
+									<#--<#if list.docs.title?index_of(list.docs.docsuffix)!=-1> 
 									    <#assign atitle=list.docs.title?substring(0,list.docs.title?index_of(list.docs.docsuffix)?number-1) />
-									    <a href="/docs/getDocsDetail?id=${list.objectid}" target="_blank" title="${atitle}">${atitle}</a>
-				                    <#else>
-				                        <a href="/docs/getDocsDetail?id=${list.objectid}" target="_blank" title="${list.docs.title}">${list.docs.title}</a>
-				                    </#if>
+									    <a href="/docs/getDocsDetail/${list.objectid}" target="_blank" title="${atitle}">${atitle}</a>
+				                    <#else>				                       
+				                    </#if>-->
+				                     <a href="/docs/getDocsDetail/${list.objectid}" target="_blank" title="${list.docs.title}">${list.docs.title}</a>
 				                </div>
 				                <div class='w140 ib il'>
 				                  ${list.docs.downsum}
@@ -439,12 +453,13 @@
 				                <div class='w525 fs14 fc3 ib dochidden'>
 				                  <div class="checkbox chk" data-docid="${list.id}" data-name="${list.docs.title}"></div>
 								  <b class="ic ic-${list.docs.docsuffix?lower_case} mr14"></b>
-								  <#if list.docs.title?index_of(list.docs.docsuffix)!=-1>
+								  <#--<#if list.docs.title?index_of(list.docs.docsuffix)!=-1>
 								    <#assign btitle=list.docs.title?substring(0,list.docs.title?index_of(list.docs.docsuffix)?number-1) />
-								    <a href="/docs/getDocsDetail?id=${list.objectid}" target="_blank" title="${btitle}">${btitle}</a>
+								    <a href="/docs/getDocsDetail/${list.objectid}" target="_blank" title="${btitle}">${btitle}</a>
 								  <#else>
-								     <a href="/docs/getDocsDetail?id=${list.objectid}" target="_blank" title="${list.docs.title}">${list.docs.title}</a>
-				                  </#if>
+								   
+				                  </#if>-->
+				                    <a href="/docs/getDocsDetail/${list.objectid}" target="_blank" title="${list.docs.title}">${list.docs.title}</a>
 				                </div>
 				                <div class='w140 ib il'>
 				                  ${list.docs.collectsum}

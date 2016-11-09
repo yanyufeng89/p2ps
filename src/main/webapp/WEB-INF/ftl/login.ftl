@@ -3,9 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-               登录
+        JobPlus-登录
     </title>
-    <meta name="viewport" content="width=1230"/> 
+   
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" href="/css/css.css" type="text/css">
@@ -30,14 +30,14 @@
        <div class='header-row'>
          <div class="header-alignleft">
              <div class="header-contact-info">
-               <img src="/image/website-banners.png" class="img-responsive">
+               <img src="/image/website-banners.png" class="img-responsive lazy" alt="网站横幅">
              </div>
           </div>
        </div>
     </div>
     <div class="login-head">
       <a class="navbar-brand" href="/index">
-        <img src="image/pluslogo.png" class="img-responsive">
+        <img src="image/pluslogo.png" class="img-responsive lazy" alt="公司logo">
       </a>
     </div>
       <div class="logoin_cont_box">
@@ -124,5 +124,14 @@
       </div>
 
     <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
+     <script type="text/javascript" src="/scripts/jquery.lazyload.min.js"></script>
+     <script>
+       jQuery(document).ready(function ($) {
+           $("img.lazy").lazyload({
+               placeholder: "image/loading_1.gif",
+               effect: "fadeIn"
+           });
+       });
+     </script>
   </body>
 </html>

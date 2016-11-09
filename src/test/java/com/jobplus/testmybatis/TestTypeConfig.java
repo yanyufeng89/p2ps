@@ -88,10 +88,10 @@ bb  where bb.parentid = aa.typeid
 
 		paMap.put("childID1","500");	
 		paMap.put("childName1","IT");	
-		paMap.put("childListData1","501:工业智能4.0,502:管理系统,503:软件开发,504:大数据分析,505:DBA,506:基础架构,507:网络硬件 ,508:IT 咨询,509:服务支持,510:其他");	
+		paMap.put("childListData1","501:工业智能4.0,502:管理系统,503:软件开发,504:大数据,505:DBA,506:基础架构,507:网络硬件 ,508:IT 咨询,509:服务支持,510:其他");	
 		paMap.put("childID2","600");	
 		paMap.put("childName2","互联网");	
-		paMap.put("childListData2","601:互联网Plus,602:互联网运营,603:市场销售,604:平台开发,605:产品设计,606:大数据分析,607:DBA,608:系统架构,609:网络安全,610:其他");	
+		paMap.put("childListData2","601:互联网Plus,602:互联网运营,603:市场销售,604:平台开发,605:产品设计,606:大数据,607:DBA,608:系统架构,609:网络安全,610:其他");	
 		
 		
 		

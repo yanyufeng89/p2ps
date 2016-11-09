@@ -2,7 +2,19 @@ var userInfo,edit;
 $(function(){
 	//头像信息
 	intoUserInfo();
-	
+	//书籍详情简介 
+	if($('input[name=bookcontent]').length>0){
+		var content=$('input[name=bookcontent]').val();
+		if(content.replace(/[^x00-xFF]/g,'**').length>460){
+			$('#bookbrief .brief-content').text(autoAddEllipsis($('#bookbrief .brief-content').text(),420)).after("<span class='showall'>展示全部</span>");
+		}
+	}
+	//详情简介收起
+	$('.slideup').live('click',function(){
+		$(this).hide().prev().show();
+		$('.brief-content').text(autoAddEllipsis($('.brief-content').text(),420));
+		$(this).parents('.brief').addClass('book-height');
+	})
     //我的书籍批量删除(已分享)   批量删除 书籍已收藏
     $('.remove').live('click',function(){
     	//0代表已分享  1代表收藏 
@@ -123,7 +135,10 @@ $(function(){
 		})
 	});
 	
-
+	//发布文本框获取焦点
+    $('.commentcontent').live('focus',function(){
+    	$('.item-msg-content,.ic-msg').hide();
+    });
 	
 	//书籍详情 点击评论
 	$('._CommentForm_actions_ooEq [name=answeraddnew]').live('click',function(){
@@ -230,12 +245,16 @@ function collectBook(obj){
       				$this.empty().html('取消收藏');
       				$this.attr('data-actiontype','1');
       				$this.next().find('strong').html(Number($this.next().find('strong').html())+1);
+      				//添加对应的头像信息
+      				showHeadIcon();
          		}
          		else{
          			$this.removeClass('zg-btn-white').addClass('zg-btn-green');
          			$this.attr('data-actiontype','0');
          			$this.empty().html('收藏书籍');
          			$this.next().find('strong').html(Number($this.next().find('strong').html())-1);
+         			//移除对应的头像信息
+         			deleteHeadIcon();
          		} 
       		}
       		else{
@@ -269,7 +288,7 @@ function cancelCommtent(obj){
 }
 //加载用户信息
 function intoUserInfo(){
-    $('.uname,.zm-item-link-avatar,.zm-list-avatar,.author-link').pinwheel();
+    $('.uname,.zm-item-img-avatar,.zm-list-avatar,.author-link').pinwheel();
 }
 
 //删除已收藏书籍
@@ -296,7 +315,7 @@ function deleteMyCollects(conditions,obj){
  					obj.parents('li').remove();
  				}
     		}
-    		$('#bookcollect').html("收藏("+data.operationSum.bookcollsum+")");
+    		$('#bookcollect').html("收藏&nbsp;"+data.operationSum.bookcollsum);
 
   		}else{//返回失败
   		}
@@ -327,7 +346,7 @@ function delComment(conditions,obj){
 	     					obj.parents('li').remove();
 	     				}
 	        		}
-	        		$('#bookshare').html("分享("+data.operationSum.booksharesum+")");
+	        		$('#bookshare').html("分享&nbsp;"+data.operationSum.booksharesum);
 	   		}else{//返回失败
 	   		}
 
@@ -361,13 +380,17 @@ function insertComment(obj,type){
 	 if($.trim(commendcontent).length==0){
 		 return false;
 	 }
-	 var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
+	/* var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
 	 if(len>1000){
 	 		if(obj.parent().find('span').length==0)
 	 			obj.before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
 	     		return false;
-	 }
-	 if(commendcontent.length==0)return false;
+	 }*/
+	 if($.trim(commendcontent).replace(/[^x00-xFF]/g,'**').length>65535){
+		obj.prevAll().show();
+		return false;
+      }
+	 /*if(commendcontent.length==0)return false;*/
 	 
 	 var $this=obj;
 	 $.ajax({

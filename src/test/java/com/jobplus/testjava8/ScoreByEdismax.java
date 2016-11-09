@@ -66,6 +66,7 @@ public class ScoreByEdismax {
 		query.set(CommonParams.Q, "title:人类群星闪耀时");
 		query.set(CommonParams.FL, "id", "data_id", "title", "author", "press", "description","score");
 		query.set("defType", "edismax");
+		query.set("mm", "60%");
 
 		query.set("qf", scoreMethod);
 

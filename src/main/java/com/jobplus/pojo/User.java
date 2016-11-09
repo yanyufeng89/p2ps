@@ -78,8 +78,33 @@ public class User extends PageParent implements Serializable {
 
     private String birthdaytwo;
     
+    /**
+     * 联系邮箱
+     */
+    private String contactEmail ;
+    /**
+     * 联系号码
+     */
+    private String contactTel;
+    
     private CommonsMultipartFile headIconFile;  
 
+
+	public String getContactEmail() {
+		return contactEmail;
+	}
+
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
+
+	public String getContactTel() {
+		return contactTel;
+	}
+
+	public void setContactTel(String contactTel) {
+		this.contactTel = contactTel;
+	}
 
 	public CommonsMultipartFile getHeadIconFile() {
 		return headIconFile;

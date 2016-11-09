@@ -1,5 +1,6 @@
 package com.jobplus.utils;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -196,6 +197,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	
 	
+	
 	/**
 	 * @param args
 	 * @throws ParseException
@@ -210,5 +212,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		
 		
 		System.out.println(convertFromUnixTime(1467081407000L));
+		
+		
+
+		
+		Date date1 = new Date();//获取当前时间
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String str = sdf.format(date1);//时间存储为字符串
+		System.out.println(str);
+		Timestamp.valueOf(str);//转换时间字符串为Timestamp
+		System.out.println(Timestamp.valueOf(str));//输出结果
 	}
 }

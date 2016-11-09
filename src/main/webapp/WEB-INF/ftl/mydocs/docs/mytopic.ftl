@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+          我的话题-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -18,9 +18,9 @@
 		<div class="img-center">
 		 <a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		 </a>
 		</div>
@@ -31,7 +31,7 @@
 		        </#if>
 		     </a>
 		</p>
-	    <p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+	    <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
 		<div class="mydoc-list">
 		    <ul id="accordion">
 		      <li class="open">
@@ -93,7 +93,7 @@
 		
 		   <div class='maincontent'>
 		    <div class="uc-head-bottom">
-				  <div style="float:left" id="mytopiccontent">
+				  
 				    <span><a class='icon-mytopic'></a></span>
 				    <div style="float:left">
 					    <p>我的话题</p>
@@ -103,7 +103,7 @@
 	                       <a href='/myCenter/getMyTopicsComment' <#if (topicsCommentPage)??>class="current"</#if> id='topicreplay'>回复&nbsp;<#if (Session.operationSum.topicscomsum)??>${Session.operationSum.topicscomsum}</#if></a>
 					    </p>
 				    </div>
-				   </div>
+				     <a href='javascript:void(0);' onclick="share('topic');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
 			</div>
 		    <#if (topicsPage)??>
 			 <div class="uc-mydocshare">
@@ -120,12 +120,13 @@
 		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		               </div>
 		               <div class="status-box">
-						  <div class="w340 ib"><div class="checkbox select-all"></div>话题名称</div>
+						  <div class="w332 ib"><div class="checkbox select-all"></div>话题名称</div>
+						  <div class="w92 ib">是否匿名</div>
 						  <div class="w92 ib">关注</div>
 						  <div class="w92 ib">回复</div>
 						  <div class="w92 ib">点赞</div>
-						  <div class="w140 ib">创建时间</div>
-						  <div class="w119 ib">操作</div>
+						  <div class="w92 ib">创建时间</div>
+						  <div class="w92 ib">操作</div>
 					   </div>
 					   <div class="docs-list">
 					     <ul>
@@ -133,9 +134,18 @@
                               <#list topicsPage.list as list>
                                 <#--<#if (list.ispublic==1)>-->
                                   <li>
-                                    <div class='w340 fs14 fc3 ib titlehidden'>
+                                    <div class='w332 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-topicid="${list.id}" data-name="${list.title}"></div>
-                                      <a href="/topics/getTopicsDetail?topicId=${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
+                                      <a href="/topics/getTopicsDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
+                                    </div>
+                                    <div class='w92 ib topic-ispublic'>
+                                       <#if list.ispublic==1>
+                                         	公开
+                                        <#elseif list.ispublic==0>
+                                        	匿名
+                                        <#else>
+                                        	公开
+                                       </#if>
                                     </div>
                                     <div class='w92 ib iltopic'>
                                        <#if (list.followssum)??>
@@ -152,18 +162,18 @@
                                          ${list.likesum}
                                        </#if>
                                     </div>
-                                    <div class='w140 ib'>
+                                    <div class='w92 ib'>
                                         <#if (list.createtime?string("yyyy-MM-dd"))??>
                                          ${list.createtime?string("yyyy-MM-dd")}
                                        </#if>
                                     </div>
-                                    <div class='w119 ib operate'>
-                                       <a href="/topics/getTopicsDetail?topicId=${list.id}"  class='pr10 modify-doc __HIDE__' target='_self'>
+                                    <div class='w92 ib operate edittopic'>
+                                       <a href="/topics/getTopicsDetail/${list.id}"  class='pr10 modify-doc __HIDE__' target='_self'>
 								         <b class="iconfont pr2"></b>修改
 								       </a>
-								       <span data-id='${list.id}' data-name='${list.title}' data-type='1'>
+								       <#--<span data-id='${list.id}' data-name='${list.title}' data-type='1'>
 						                  <b class="iconfont pr2"></b> 删除
-								       </span>
+								       </span>-->
                                     </div>
                                   </li>  
                                 <#--</#if>-->
@@ -219,7 +229,7 @@
 				           <li>
 				             <div class='w340 fs14 fc3 ib titlehidden'>
 				                <div class="checkbox chk" data-topicid="${alist.id}" data-name="${alist.topics.title}"></div>
-                                <a href="/topics/getTopicsDetail?topicId=${alist.objectid}" target="_blank" title="${alist.topics.title}">${alist.topics.title}</a>  
+                                <a href="/topics/getTopicsDetail/${alist.objectid}" target="_blank" title="${alist.topics.title}">${alist.topics.title}</a>  
 				             </div>
 				             <div class='w92 ib iltopic'>
 				                <#if (alist.topics.likesum)??>
@@ -296,7 +306,7 @@
 				          <li>
 				            <div class='w430 fs14 fc3 ib titlehidden'>
 				              <div class="checkbox chk" data-topicid="${clist.id}" data-name="${clist.topics.title}"></div>
-                              <a href="/topics/getTopicsDetail?topicId=${clist.topicsid}" target="_blank" title="${clist.topics.title}">${clist.topics.title}</a>  
+                              <a href="/topics/getTopicsDetail/${clist.topicsid}" target="_blank" title="${clist.topics.title}">${clist.topics.title}</a>  
 				            </div>
 				            <div class='w214 ib replayhidden' >
 				              <#if (clist.commcontent)??>

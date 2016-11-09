@@ -1,17 +1,17 @@
 var projectName = '/';
 var url_rules = {
-    "tbl_topics": "topics/getTopicsDetail?topicId=",
-    "TOPICS": "topics/getTopicsDetail?topicId=",
-    "tbl_books": "books/getBookDetail?id=",
-    "BOOK": "books/getBookDetail?id=",
-    "tbl_courses": "courses/getCourseDetail?id=",
-    "COURSES": "courses/getCourseDetail?id=",
-    "tbl_sites": "sites/getSiteDetail?id=",
-    "SITES": "sites/getSiteDetail?id=",
-    "tbl_article": "article/getArticleDetail?id=",
-    "ARTICLE": "article/getArticleDetail?id=",
-    "tbl_docs": "docs/getDocsDetail?id=",
-    "DOC": "docs/getDocsDetail?id="
+    "tbl_topics": "topics/getTopicsDetail/",
+    "TOPICS": "topics/getTopicsDetail/",
+    "tbl_books": "books/getBookDetail/",
+    "BOOK": "books/getBookDetail/",
+    "tbl_courses": "courses/getCourseDetail/",
+    "COURSES": "courses/getCourseDetail/",
+    "tbl_sites": "sites/getSiteDetail/",
+    "SITES": "sites/getSiteDetail/",
+    "tbl_article": "article/getArticleDetail/",
+    "ARTICLE": "article/getArticleDetail/",
+    "tbl_docs": "docs/getDocsDetail/",
+    "DOC": "docs/getDocsDetail/"
 };
 
 
@@ -86,6 +86,16 @@ $.ajaxSetup({
     }
 });
 
+String.prototype.startWith = function (str) {
+    if (str == null || str == "" || this.length == 0 || str.length > this.length)
+        return false;
+    if (this.substr(0, str.length) == str)
+        return true;
+    else
+        return false;
+    return true;
+}
+
 function getBackUrl() {
     var currentUrl = window.location.href.replace("http://", "");
     var backurl = encodeURI(currentUrl.substring(currentUrl.indexOf(projectName) + projectName.length, currentUrl.length));
@@ -107,24 +117,6 @@ function toLogin() {
 
 function toLogout() {
     window.location.href = projectName + "logout?backurl=" + getBackUrl();
-}
-
-/**
- * 分享
- * @param site
- * @param title
- */
-function toShare(site, title) {
-    var webid = null;
-    if (site == 1)
-        webid = "tsina";
-    else if (site == 2)
-        webid = "qzone";
-    else if (site == 3)
-        webid = "weixin";
-    else
-        alert("分享失败！");
-    window.open("http://www.jiathis.com/send/?webid=" + webid + "&url=" + encodeURI(window.location.href) + "&title=" + title + "&uid=1693856");
 }
 
 var addEvent = (function () {
@@ -165,16 +157,6 @@ addEvent(window, 'storage', function (event) {
     }
 });
 
-String.prototype.startWith = function (str) {
-    if (str == null || str == "" || this.length == 0 || str.length > this.length)
-        return false;
-    if (this.substr(0, str.length) == str)
-        return true;
-    else
-        return false;
-    return true;
-}
-
 function setBackUrlCookie() {
     var paramName = "backurl=";
     var currentUrl = window.location.href.replace("http://", "");
@@ -190,4 +172,16 @@ function deleteBackUrlCookie() {
 
 function getBackUrlCookie() {
     return $.cookie("backurl");
+}
+
+function isEmail(str) {
+    if (/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(str))
+        return true;
+    return false;
+}
+
+function isTel(str) {
+    if (/^1[34578]\d{9}$/.test(str))
+        return true;
+    return false;
 }

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+          我的书籍-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -19,9 +19,9 @@
 		<div class="img-center">
 		 <a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'> 
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		 </a>
 		</div>
@@ -32,7 +32,7 @@
 		       </#if>
 		     </a>
 		</p>
-		<p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+		<p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
 		
 		<div class="mydoc-list">
 		<ul>
@@ -92,7 +92,7 @@
 			</div>		
 		   <div class='maincontent'>
 		    <div class="uc-head-bottom">
-				  <div style="float:left" id="mytopiccontent">
+				 
 				   <span><a class='icon-mybook'></a></span>
 				   <div style="float:left">
 				    <p>我的书籍</p>
@@ -105,7 +105,7 @@
 					    </a>
 				    </p>
 				    </div>
-				   </div>
+				    <a href='javascript:void(0);' onclick="share('book');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
 		    </div>
 		   <#if (sharedBookPage)??>
 			<div class="uc-mydocshare">
@@ -123,7 +123,7 @@
 		                 <span class="remove" data-type='0'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		               </div>
 		               <div class="status-box">
-		                   <div class="w356 ib"><div class="checkbox select-all"></div>书籍名称</div>
+		                   <div class="w354 ib"><div class="checkbox select-all"></div>书籍名称</div>
 		                   <div class="w140 ib">推荐语</div>
 						   <div class="w92 ib">作者</div>
 						   <div class="w92 ib">收藏次数</div>
@@ -138,7 +138,7 @@
 					            <li>
 					              <div class='w336 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-commentid="${list.bookShare.id}" data-bookid='${list.id}' data-name="${list.bookname}"></div>
-                                      <a href="/books/getBookDetail?id=${list.id}" target="_blank" title="${list.bookname}">${list.bookname}</a>  
+                                      <a href="/books/getBookDetail/${list.id}" target="_blank" title="${list.bookname}">${list.bookname}</a>  
                                    </div>
                                    <div class='w121 ib recommendhidden'>
                                        <#if (list.bookShare.recommend)??>
@@ -225,7 +225,7 @@
 			                   <li>
 					              <div class='w346 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-bookid="${sharelist.id}" data-commentid='${sharelist.myCollect.id}' data-name="${sharelist.bookname}"></div>
-                                      <a href="/books/getBookDetail?id=${sharelist.id}" target="_blank" title="${sharelist.bookname}">${sharelist.bookname}</a>  
+                                      <a href="/books/getBookDetail/${sharelist.id}" target="_blank" title="${sharelist.bookname}">${sharelist.bookname}</a>  
                                    </div>
                                    <div class='w73 ib ilbook recommendhidden'>
                                        <p title='${sharelist.author}'><#if (sharelist.author)??>${sharelist.author}</#if></p>

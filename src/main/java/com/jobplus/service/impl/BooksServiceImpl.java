@@ -110,7 +110,7 @@ public class BooksServiceImpl implements IBooksService {
 
 		// 3.相关书籍列表
 		@SuppressWarnings({ "unchecked", "static-access" })
-		List<Books> theSameBooks = solrJUtils.findBookFromList(record.getBookname(), record.getId().toString());
+		List<Books> theSameBooks = solrJUtils.findBookFromList(record.getBookname(), record.getId().toString(),record.getBooktype(),record.getBookclass());
 		// 4.评论列表 page
 		BookShare share = new BookShare();
 		share.setBookid(record.getId());

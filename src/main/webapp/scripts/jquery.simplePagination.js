@@ -116,7 +116,7 @@ var userInfo;
 			var $panel = this.prop("tagName") === "UL" ? this : $('<ul></ul>').appendTo(this);
 
 			// Generate Prev link
-			if (o.prevText) {
+			if (o.prevText&&o.currentPage!=0) {
 				methods._appendItem.call(this, o.currentPage - 1, {text: o.prevText, classes: 'prev'});
 			}
 
@@ -156,7 +156,7 @@ var userInfo;
 	       /* }*/
 				
 			// Generate Next link
-			if (o.nextText) {
+			if (o.nextText&&o.currentPage+1!=o.pages) {
 				methods._appendItem.call(this, o.currentPage + 1, {text: o.nextText, classes: 'next'});
 			}
 		},
@@ -321,19 +321,19 @@ function initMyFansPageData(page){
 	$.ajax({
 		type:"POST",
 		url:"/myCenter/getMyFans",
-		data:{userid:userInfo.userid,pageNo:page},
+		data:{userid:userInfo==undefined?'':userInfo.userid,pageNo:page},
 		dataType:"json",
 		success:function(data){
 			$.each(data.myFansPage.list,function(index,item){
     			if(item.fansIds!=undefined){
     				if(item.fansIds.indexOf(',')!=-1){
-    					if($.inArray(String(userInfo.userid), item.fansIds.split(','))!=-1){
+    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
     						item.fansIds=1;
     					}else{
     						item.fansIds=0;
     					}
     				}else{
-    					if(item.fansIds==userInfo.userid){
+    					if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
     						item.fansIds=1;
     					}else{
     						item.fansIds=0;
@@ -363,7 +363,7 @@ function initMyAttenPageData(page){
 	$.ajax({
 		type:"POST",
 		url:"/myCenter/getMyAttenMan",
-		data:{userid:userInfo.userid,pageNo:page},
+		data:{userid:userInfo==undefined?'':userInfo.userid,pageNo:page},
 		dataType:"json",
 		success:function(data){
 			$.each(data.attenManPage.list,function(index,item){
@@ -382,18 +382,19 @@ function initMyAttenPageData(page){
 	})
 	window.scrollTo(0,0);
 }
-//加载文档已分享(ispublic 1代表已分享  0是私有  2是草稿)
+//加载文档已分享 (包括公开和匿名)(ispublic 1代表已分享  0是私有  2是匿名)
 function initDocSharePageData(page){
 	$.ajax({
 		type:"POST",
      	url:"/myCenter/getMyDocsUploaded",
-     	data:{pageNo:page,ispublic:1},
+//     	data:{pageNo:page,ispublic:1},
+     	data:{pageNo:page},
      	dataType:"json",
      	ansync:false,
      	success:function(data){
 				$.each(data.docsPage.list,function(index,item){
-	     			if(item.title.indexOf(item.docsuffix)!=-1)
-					item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)
+	     			/*if(item.title.indexOf(item.docsuffix)!=-1)*/
+					/*item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)*/
 					item.docsuffix=item.docsuffix.toLowerCase()
 				})
      			var datamodel={
@@ -418,8 +419,8 @@ function initDocPrivatePageData(page){
      	ansync:false,
      	success:function(data){
 	     		$.each(data.docsPage.list,function(index,item){
-	     			if(item.title.indexOf(item.docsuffix)!=-1)
-					item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)	
+	     			/*if(item.title.indexOf(item.docsuffix)!=-1)
+					item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)*/	
 					item.docsuffix=item.docsuffix.toLowerCase()
 				})
      			var datamodel={
@@ -444,8 +445,8 @@ function initDocDrafPageData(page){
      	ansync:false,
      	success:function(data){
      		$.each(data.docsPage.list,function(index,item){
-     			if(item.title.indexOf(item.docsuffix)!=-1)
-				item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)	
+     			/*if(item.title.indexOf(item.docsuffix)!=-1)
+				item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)	*/
 				item.docsuffix=item.docsuffix.toLowerCase()
 			})
  			var datamodel={
@@ -470,8 +471,8 @@ function initDocDownPageData(page){
      	ansync:false,
      	success:function(data){
 	     		$.each(data.myDownloadPage.list,function(index,item){
-	     			if(item.docs.title.indexOf(item.docs.docsuffix)!=-1)
-					item.docs.title=item.docs.title.substring(0,item.docs.title.indexOf(item.docs.docsuffix)-1)	
+	     			/*if(item.docs.title.indexOf(item.docs.docsuffix)!=-1)
+					item.docs.title=item.docs.title.substring(0,item.docs.title.indexOf(item.docs.docsuffix)-1)*/	
 					item.docs.docsuffix=item.docs.docsuffix.toLowerCase()
 				})
      			var datamodel={
@@ -497,8 +498,8 @@ function initDocColPageData(page){
      	success:function(data){
      		    $.each(data.myCollectPage.list,function(index,item){
      		    	item.downsum=item.collectsum;
-     		    	if(item.docs.title.indexOf(item.docs.docsuffix)!=-1)
-     		    	item.docs.title=item.docs.title.substring(0,item.docs.title.indexOf(item.docs.docsuffix)-1)
+     		    	/*if(item.docs.title.indexOf(item.docs.docsuffix)!=-1)
+     		    	item.docs.title=item.docs.title.substring(0,item.docs.title.indexOf(item.docs.docsuffix)-1)*/
      		    	item.docs.docsuffix=item.docs.docsuffix.toLowerCase()
      		    })
      			var datamodel={
@@ -793,14 +794,14 @@ function initCommListPageData(page){
      		$.each(data.obj.list,function(index,item){
 	    		if(item.likedIds!=undefined){
 	    			if(item.likedIds.indexOf(',')!=-1){
-	    				if($.inArray(String(userInfo.userid), item.likedIds.split(','))!=-1){
+	    				if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.likedIds.split(','))!=-1){
     						item.likedIds=1;
     					}else{
     						item.likedIds=0;
     					}
 	    			}
 	    			else{
-	    				if(item.likedIds==userInfo.userid){
+	    				if(item.likedIds==(userInfo==undefined?'':userInfo.userid)){
 	    					item.likedIds=1;
 	    				}
 	    				else{
@@ -815,7 +816,7 @@ function initCommListPageData(page){
 	         	})
      			var datamodel={
      					topicscommentList:data.obj.list,
-     					userid:userInfo.userid,
+     					userid:userInfo==undefined?'':userInfo.userid,
      			}
      			//加载模板
      			$('.pagetemplate').setTemplateURL(projectName+'topicCommentAppendTemplate.html');
@@ -916,10 +917,13 @@ function initTopicPageData(page){
 			//跳到顶部
 			window.scrollTo(0,0);
 			//加载模板
-			$('.pagetemplate').setTemplateURL(projectName+'topicSearchTemplate.html');
+			$('.pagetemplate').setTemplateURL(projectName+'topicSearchTemplate.html',null,{filter_data: false});
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').empty().append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
+			$('.newsinfo a').each(function(){
+			      $(this).text(autoAddEllipsis($(this).text(),200));
+			})
 		}
 	})
 
@@ -971,6 +975,9 @@ function initBookPageData(page){
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').empty().append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
+			$('.newsinfo a').each(function(){
+			      $(this).text(autoAddEllipsis($(this).text(),200));
+			})
 		}
 	})
 }
@@ -1006,7 +1013,9 @@ function initSearch(page){
 			$('.pagetemplate').processTemplate(datamodel);
 			$('.items_area').empty().append($('.pagetemplate').html());
 			$('.pagetemplate').empty();
-			
+			$('.newsinfo a').each(function(){
+			      $(this).text(autoAddEllipsis($(this).text(),200));
+			})
 		}
 	})
 }

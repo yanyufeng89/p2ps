@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-               我的分享
+              我的分享-个人中心-JobPlus知识库
     </title> 
    <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
    <link rel="stylesheet" type="text/css" href="/css/pj_mycenter.css">

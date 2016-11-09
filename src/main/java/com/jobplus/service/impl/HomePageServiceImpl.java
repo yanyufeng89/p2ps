@@ -97,7 +97,7 @@ public class HomePageServiceImpl implements IHomePageService {
 	@Override
 	public List search(String Condition, String sharedType, String protoType, String tags, String pages, String rows) {
 		@SuppressWarnings("static-access")
-		List list = solrJUtils.findAll(Condition, sharedType, protoType, tags, pages,rows);
+		List list = solrJUtils.findAll(Condition, sharedType, protoType, tags, pages,rows,null);
 		return list;
 	}
 	/**

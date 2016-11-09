@@ -77,9 +77,13 @@
 							  <i class="z-icon-report-o"></i>举报
 					        </a>
 					        <span  class='meta-item'>分享到</span>
-                          <a href="javascript:void(0);" onclick="toShare(1,'${topicsDetail.title}');" class="log_sina png" title="分享到新浪微博"></a>
-                          <a href="javascript:void(0);" onclick="toShare(2,'${topicsDetail.title}');" class="log_qq png"  title="分享到QQ空间"></a>
-                          <a href="javascript:void(0);" onclick="toShare(3,'${topicsDetail.title}');" class="log_wx png" title="分享到微信"></a>
+                          <a href="javascript:void(0);" class="jiathis_button_tsina log_sina png" title="分享到新浪微博"></a>
+                          <a href="javascript:void(0);" class="jiathis_button_qzone log_qq png"  title="分享到QQ空间"></a>
+                          <a href="javascript:void(0);" class="jiathis_button_weixin log_wx png" title="分享到微信"></a>
+                          <script type="text/javascript">
+                              var jiathis_config = {data_track_clickback:'true'};
+                          </script>
+                          <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1345538646577576" charset="utf-8"></script>
                       </div>
                       <div class='topiccommtemplate'></div>
                   </div>
@@ -89,11 +93,11 @@
                         <#if (sortType=='1')>
                           <input type='hidden' name='sorttype' value='2'>
 						  <span class="lbl">按时间排序</span>
-						  <a class="lbl" href="/topics/getTopicsDetail?topicId=${topicsDetail.id}&sortType=2">按点赞排序</a>
+						  <a class="lbl" href="/topics/getTopicsDetail/${topicsDetail.id}?sortType=2">按点赞排序</a>
                         <#else>
                          <input type='hidden' name='sorttype' value='1'>
                           <span class="lbl">按点赞排序</span>
-						  <a class="lbl" href="/topics/getTopicsDetail?topicId=${topicsDetail.id}&sortType=1">按时间排序</a>
+						  <a class="lbl" href="/topics/getTopicsDetail/${topicsDetail.id}?sortType=1">按时间排序</a>
                         </#if>  
 						<i class="zg-icon zg-icon-double-arrow"></i>
 						</div>
@@ -108,7 +112,7 @@
 							<div class="answer-head">
 							<div class="zm-item-answer-author-info">
 
-							   <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage?userid=${list.userid}' target="_blank">
+							   <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/${list.userid}' target="_blank">
 
 							   <#if (list.tmpHeadIcon)??&&list.tmpHeadIcon?length gt 0>
 							     <#if (list.isPublic==1)>
@@ -196,9 +200,13 @@
 								 
 								<a href="javascript:;" class="meta-item zu-autohide js-report" data-commentbyid='${list.userid}' data-topiccommentid='${list.id}' data-reporttype='5'><i class="z-icon-report-o"></i>举报</a>
                                     <span  class='meta-item'>分享到</span>
-                                    <a href="javascript:void(0);" onclick="toShare(1,'${topicsDetail.title}');" class="log_sina png" title="分享到新浪微博"></a>
-                                    <a href="javascript:void(0);" onclick="toShare(2,'${topicsDetail.title}');" class="log_qq png"  title="分享到QQ空间"></a>
-                                    <a href="javascript:void(0);" onclick="toShare(3,'${topicsDetail.title}');" class="log_wx png" title="分享到微信"></a>
+                                    <a href="javascript:void(0);" class="jiathis_button_tsina log_sina png" title="分享到新浪微博"></a>
+                                    <a href="javascript:void(0);" class="jiathis_button_qzone log_qq png"  title="分享到QQ空间"></a>
+                                    <a href="javascript:void(0);" class="jiathis_button_weixin log_wx png" title="分享到微信"></a>
+                                    <script type="text/javascript">
+                                        var jiathis_config = {data_track_clickback:'true'};
+                                    </script>
+                                    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1345538646577576" charset="utf-8"></script>
 								</div>
 							    
 							</div>
@@ -208,7 +216,7 @@
 			            <a data-pageno='1' data-sumpage='${topicsDetail.commentList.last}' class="zg-btn-white zu-button-more loadmore">更多</a>
 		        	 </#if>
                	   </#if>
-               	   <div class='anscommtemplate'></div>
+               	   
                	  </div>
                  
 					<#--判断是否登录-->
@@ -218,7 +226,7 @@
 						<div class="zm-editable-content" style="display: none;"><a href="javascript:;" class="zu-edit-button" name="edit"><i class="zu-edit-button-icon"></i>修改</a></div>
 						<div class="pj-editable-editor-wrap" style="">
 							<div class="zh-answer-form clearfix">
-							   <a href='/myHome/getHomePage?userid=${Session.user.userid}' class="zm-item-link-avatar" target='_blank'>
+							   <a href='/myHome/getHomePage/${Session.user.userid}' class="zm-item-link-avatar" target='_blank'>
 								 <#if (Session.user.headicon)??&&Session.user.headicon?length gt 0>
 								   <img src="${Session.user.headicon}" class="zm-list-avatar" data-userid='${Session.user.userid}' data-moduletype='0'>
 								  <#else>
@@ -226,7 +234,7 @@
 								 </#if>
 							   </a>
 							    <div class="zu-answer-form-title">
-									<a href='/myHome/getHomePage?userid=${Session.user.userid}' target='_blank' title="<#if (Session.user)??>${Session.user.username}</#if>" data-userid='${Session.user.userid}' class='author-link' data-moduletype='0'>
+									<a href='/myHome/getHomePage/${Session.user.userid}' target='_blank' title="<#if (Session.user)??>${Session.user.username}</#if>" data-userid='${Session.user.userid}' class='author-link' data-moduletype='0'>
 									  <#if (Session.user)??>
 									   ${Session.user.username}
 									  </#if>
@@ -310,7 +318,7 @@
 				  <#if (topicsDetail.fansList)??>
 				   <#list topicsDetail.fansList as fanlist>
 
-				     <a title="${fanlist.username}"  class="zm-item-link-avatar" target='_blank' href='/myHome/getHomePage?userid=${fanlist.userid}'  data-userid='${fanlist.userid}' data-moduletype='0'>
+				     <a title="${fanlist.username}"  class="zm-item-link-avatar" target='_blank' href='/myHome/getHomePage/${fanlist.userid}'  data-userid='${fanlist.userid}' data-moduletype='0'>
 				 
 					   <#if (fanlist.headicon)?? && fanlist.headicon?length gt 0>
 					     <img src="${fanlist.headicon}" class="zm-item-img-avatar" data-moduletype='0'>
@@ -334,7 +342,7 @@
 					<#if (topicsDetail.relatedList)??>
 					   <#list topicsDetail.relatedList as relatelist>
 						<li>
-							 <a class="question_link" href="/topics/getTopicsDetail?topicId=${relatelist.data_id}"  target='_blank' data-id="${relatelist.id}">${relatelist.title}</a> 
+							 <a class="question_link" href="/topics/getTopicsDetail/${relatelist.data_id}"  target='_blank' data-id="${relatelist.id}">${relatelist.title}</a> 
 							 <span class="num">${relatelist.replySum}个回答</span>
 						</li>
 					  </#list>

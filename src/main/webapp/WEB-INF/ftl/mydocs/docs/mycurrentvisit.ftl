@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-        <title>最近访问</title>
+        <title>最近访问-个人中心-JobPlus知识库</title>
         <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
     </head>
     <body id='currentvisittop'>
@@ -16,9 +16,9 @@
                         <div class="profile-card vcard entity">
                             <div class="profile-picture" id="preview">
                                <#if (cutUser.headicon)?? && cutUser.headicon?length gt 0>
-                                 <img src="${cutUser.headicon}" width="120" height="120" id="imghead">
+                                 <img src="${cutUser.headicon}" width="120" height="120" id="imghead" class='lazy' alt="个人头像">
                                <#else>
-                                 <img src="/image/myphoto.jpg" width="120" height="120" id="imghead">
+                                 <img src="/image/myphoto.jpg" width="120" height="120" id="imghead" class='lazy' alt="个人头像">
                                </#if>
                                
                               </div>
@@ -113,9 +113,9 @@
 								<div class="profile-aux">
                                       <div class="profile-actions">
                                         <#if cutUser.userid==Session.userid>
-                                           <a href="/myHome/getHomePage?userid=${cutUser.userid}&isReview=1" class="preview-profile button-primary" >个人资料预览</a>
+                                           <a href="/myHome/getAnotherHomePage/${cutUser.userid}" class="preview-profile button-primary" >个人资料预览</a>
                                         <#else>
-                                            <a href="/myHome/getHomePage?userid=${cutUser.userid}&isReview=1" class="preview-profile button-primary" >返回他的个人主页</a>
+                                            <a href="/myHome/getAnotherHomePage/${cutUser.userid}" class="preview-profile button-primary" >返回他的个人主页</a>
 									    </#if>
 									  </div>
                                </div>
@@ -151,16 +151,16 @@
 									  <button  data-userid="${list.visitorid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>+&nbsp;关注</button>
 								  </#if>
 							   </div>
-								 <a title="${list.userName}"  target="_blank" class="zm-item-link-avatar"  data-userid='${list.visitorid}' href='/myHome/getHomePage?userid=${list.visitorid}'>
+								 <a title="${list.userName}"  target="_blank" class="zm-item-link-avatar"  data-userid='${list.visitorid}' href='/myHome/getHomePage/${list.visitorid}'>
 								 <#if (list.headIcon)??>
-								   <img src="${list.headIcon}" class="zm-item-img-avatar">
+								   <img src="${list.headIcon}" class="zm-item-img-avatar lazy" alt="个人头像">
 								 <#else>
-								   <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+								   <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像">
 								 </#if>
 							   </a>
 							   <div class="zm-list-content-medium">
 									<h2 class="zm-list-content-title">
-										<a  href='/myHome/getHomePage?userid=${list.visitorid}' target="_blank" data-userid='${list.visitorid}' class="zg-link author-link" title="${list.userName}">${list.userName}</a> 
+										<a  href='/myHome/getHomePage/${list.visitorid}' target="_blank" data-userid='${list.visitorid}' class="zg-link author-link" title="${list.userName}">${list.userName}</a> 
 									</h2>
 									<div class="ellipsis">
 										<span class="bio">

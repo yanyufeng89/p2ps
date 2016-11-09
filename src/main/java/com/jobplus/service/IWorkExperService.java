@@ -6,7 +6,7 @@ import com.jobplus.pojo.WorkExper;
 
 public interface IWorkExperService {
 
-//	int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 //
 //    int insert(WorkExper record);
 //

@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-           选择分享
-    </title> 
+           选择分享-JobPlus
+    </title>
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
   </head>
   <body>
@@ -136,19 +136,19 @@
                      <ol style='display:none'>
                     </#if>
                       <li>
-                         1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要上传与之无关的文档;
                       </li>
                       <li>
-                        2.您可以分享日常积累和撰写的文档资料，支持多种文档类型：doc，docx，ppt，pptx，xls，xlsx，vsd，pot，pps，pdf，txt，wps，etc;
+                        2.您可以分享日常积累或撰写的文档资料，支持多种文档类型：doc，docx，ppt，pptx，xls，xlsx，vsd，pot，pps，pdf，txt，wps，etc;
                       </li>
                       <li>
-                        3.从我的电脑选择要分享的文档：按住CTRL可以分享多份文档, 分享的文件大小限制在20M以内;
+                        3.从我的电脑选择要分享的文档：按住CTRL可以点击多份文档分享, 分享的文件大小限制在20M以内;
                       </li>
                       <li>
                         4.分享涉及侵权内容的文档将会被移除，严禁分享含有淫秽色情及低俗信息等文档;
                       </li>
                       <li>
-                        5.分享有问题需要帮助？详情请查看知识库<a href="#" target="_self">服务条款</a>和<a href="#" target="_self">帮助中心</a>
+                        5.文档分享有问题需要帮助？详情请查看知识库<a href="/about/terms_service" target="_blank">服务条款</a>和<a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                      <#if type==1>
@@ -157,7 +157,7 @@
                      <ol style='display:none'>
                      </#if>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的内容;
                       </li>
                       <li>
                         2.话题分享应遵循客观、真实、简洁、明确、规范的原则，提问尽可能简洁明了，尽量避免太宽泛的问题;
@@ -167,12 +167,8 @@
                       </li>
                       <li>
                         4.提问有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                                                                 服务条款
-                        </a>和
-                        <a href="#" target="_self">
-                                                                帮助中心
-                        </a>
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                      <#if type==2>
@@ -181,23 +177,18 @@
                         <ol style='display:none'>
                      </#if>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要推荐与之无关的书籍;
                       </li>
                       <li>
-                        2.如果您发现一本好书，可以分享给更多的人并给出你的见解，让他们可以找这本书;
+                        2.如果您发现一本好书，可以推荐给更多的人并给出你的见解，让他们可以找这本书;
                       </li>
                       <li>
                        3.禁止分享低俗、含有淫秽色情及低俗信息等书籍;
                       </li>
                       <li>
                         4.书籍分享有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                     服务条款
-                        </a>
-                        和
-                        <a href="#" target="_self">
-                     帮助中心
-                        </a>
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                      <#if type==3>
@@ -206,7 +197,7 @@
                         <ol style='display:none'>
                      </#if>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的课件;
                       </li>
                       <li>
                         2.如果您发现一节好的在线语音或视频课程，可以分享出来，让更多的人一起学习;
@@ -216,12 +207,8 @@
                       </li>
                       <li>
                         4.课程分享有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                                                              服务条款
-                        </a>和
-                        <a href="#" target="_self">
-                                                              帮助中心
-                        </a>
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                      <#if type==4>
@@ -230,22 +217,18 @@
                         <ol style='display:none'>
                      </#if>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的文章;
                       </li>
                       <li>
-                        2.如果您发现一篇好的文章，可以分享出来，让大家一起学习成长;
+                        2.如果您有编辑好的优秀文章，可以直接分享出来，让大家一起学习成长，也可以在线编辑文章，进入极简、无干扰的全屏写作模式;
                       </li>
                       <li>
-                        3.禁止分享辱骂他人，含有淫秽色情及低俗信息的文章链接;
+                        3.分享涉及侵权内容的文章将会被移除，严禁分享含有淫秽色情及低俗信息的文章;
                       </li>
                       <li>
                         4.文章分享有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                                                                服务条款
-                        </a>和
-                        <a href="#" target="_self">
-                                                              帮助中心
-                        </a>
+                       <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                      <#if type==5>
@@ -254,7 +237,7 @@
                         <ol style='display:none'>
                      </#if>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的站点;
                       </li>
                       <li>
                         2.如果您发现一个好的站点，可以分享给更多的人，直接分享网站链接即可;
@@ -264,12 +247,8 @@
                       </li>
                       <li>
                         4.站点分享有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                                                                 服务条款
-                        </a>和
-                        <a href="#" target="_self">
-                                                                帮助中心
-                        </a>
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>

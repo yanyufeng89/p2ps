@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -130,9 +131,11 @@ public class DocsController {
 	 * @param record
 	 * @return
 	 */
-	@RequestMapping(value = "/getDocsDetail")
-	public ModelAndView getDocsDetail(HttpServletRequest request, HttpServletResponse response,Docs record,@RequestParam(required=false) String isAdmin) {
+	@RequestMapping(value = "/getDocsDetail/{id}")
+	public ModelAndView getDocsDetail(HttpServletRequest request, HttpServletResponse response,Docs record,@RequestParam(required=false) String isAdmin,@PathVariable String id) {
 		ModelAndView mv = new ModelAndView();
+//		Docs record = new Docs();
+//		record.setId(id);
 		record = docsService.getDocsDetail(record);
 		if(record == null || 1!=record.getIsconverter() ){
 			//转换不成功 或者没转换
@@ -401,6 +404,7 @@ public class DocsController {
 					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
 				}else{
 					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					baseResponse.setReturnMsg("积分不足，扣减失败");
 				}
 				return JSON.toJSONString(baseResponse);
 			} else {

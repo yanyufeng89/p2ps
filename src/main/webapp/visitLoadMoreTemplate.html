@@ -8,16 +8,16 @@
 		     <button data-userid="{$T.list.visitorid}" data-a='1' class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow" data-actiontype="0">取消关注</button>
 		  {#/if}
 	   </div>
-	   <a title="{$T.list.username}" class="zm-item-link-avatar" target="_blank" href="/myHome/getHomePage?userid={$T.list.visitorid}" data-userid='{$T.list.visitorid}'>
+	   <a title="{$T.list.username}" class="zm-item-link-avatar" target="_blank" href="/myHome/getHomePage/{$T.list.visitorid}" data-userid='{$T.list.visitorid}'>
 	      {#if $T.list.headIcon}
-		    <img src="{$T.list.headIcon}" class="zm-item-img-avatar">
+		    <img  src="{$T.list.headIcon}" class="zm-item-img-avatar lazy" alt="个人头像">
 		  {#else}
-		    <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+		    <img  src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像">
 		  {#/if}
 	   </a>
 	   <div class="zm-list-content-medium">
 			<h2 class="zm-list-content-title">
-			  <a  href="/myHome/getHomePage?userid={$T.list.visitorid}" data-userid='{$T.list.visitorid}' target="_blank" class="zg-link author-link" title="{$T.list.userName}">{$T.list.userName}</a>
+			  <a  href="/myHome/getHomePage/{$T.list.visitorid}" data-userid='{$T.list.visitorid}' target="_blank" class="zg-link author-link" title="{$T.list.userName}">{$T.list.userName}</a>
 			</h2>
 			<div class="ellipsis">
 			    <span class="bio">

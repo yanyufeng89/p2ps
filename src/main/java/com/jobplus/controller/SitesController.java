@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,9 +110,9 @@ public class SitesController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/getSiteDetail")
+	@RequestMapping(value = "/getSiteDetail/{id}")
 	@ResponseBody
-	public ModelAndView getSiteDetail(HttpServletRequest request, HttpServletResponse response, Sites record,@RequestParam(required=false) String isAdmin) {
+	public ModelAndView getSiteDetail(HttpServletRequest request, HttpServletResponse response, Sites record,@RequestParam(required=false) String isAdmin,@PathVariable String id) {
 		ModelAndView mv = new ModelAndView();
 		if (record.getId() != null) {
 			record = sitesService.getSiteDetail(record);
@@ -125,7 +126,7 @@ public class SitesController {
 				//后台管理员查看
 				mv.setViewName("manage/siteDetail");
 			}else{
-				mv.setViewName("mydocs/docs/siteDetail");
+				mv.setViewName("/mydocs/docs/siteDetail");
 			}
 		} else {
 			logger.info("**getSiteDetail*获取站点详情  失败   record.getId() == null  999****");

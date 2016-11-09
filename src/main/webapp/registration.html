@@ -4,9 +4,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>
-               注册
+       JobPlus-注册
     </title>
-    <meta name="viewport" content="width=1230"/>
+    
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" href="/css/css.css" type="text/css" charset="UTF-8">
@@ -18,6 +18,15 @@
     <script type="text/javascript" src="/scripts/pj_reg_ajax.js"></script>
     <script type='text/javascript' src='/scripts/js.KinerCode.js'></script>
     <script type='text/javascript' src='/scripts/pj_authcode.js'></script>
+     <script type="text/javascript" src="/scripts/jquery.lazyload.min.js"></script>
+     <script>
+       jQuery(document).ready(function ($) {
+           $("img.lazy").lazyload({
+               placeholder: "image/loading_1.gif",
+               effect: "fadeIn"
+           });
+       });
+     </script>
   </head>
   
   <body class="login" style="background:#fff;">
@@ -25,14 +34,14 @@
        <div class='header-row'>
          <div class="header-alignleft">
              <div class="header-contact-info">
-               <img src="/image/website-banners.png" class="img-responsive">
+               <img src="/image/website-banners.png" class="img-responsive lazy" alt="网站横幅">
              </div>
           </div>
        </div>
     </div>
     <div class="login-head">
       <a class="navbar-brand" href="/index">
-        <img src="image/pluslogo.png" class="img-responsive">
+        <img src="image/pluslogo.png" class="img-responsive lazy" alt="公司logo">
       </a>
     </div>
 	    <div class="reg_content">
@@ -162,36 +171,41 @@
 				<div class="row links-section">
 				   <div class="col-md-3">
 					 <h2>关于我们</h2>
-					 <p><a href="/about/company_profile" target='_self'>公司介绍</a></p>
-					 <p><a href="/about/talent_recruitment" target='_self'>人才招聘</a></p>
-					 <p><a href="/about/contact_way" target='_self'>联系方式</a></p>
-					 <p><a href="/about/news" target='_self'>资讯动态</a></p>
+					 <p><a href="/about/company_profile" target='_blank'>公司介绍</a></p>
+					 <p><a href="/about/talent_recruitment" target='_blank'>人才招聘</a></p>
+					 <p><a href="/about/contact_way" target='_blank' rel='nofollow'>联系方式</a></p>
+					 <p><a href="/about/news" target='_blank' rel='nofollow'>资讯动态</a></p>
 				   </div>
 				   <div class="col-md-3">
 					 <h2>商务合作</h2>
-					 <p><a href="/about/channel_cooperation" target='_self'>渠道合作</a></p>
-					 <p><a href="/about/network_union" target='_self'>网络联盟</a></p>
-					 <p><a href="/about/expert_cooperating" target='_self'>专家合作</a></p>
+					 <p><a href="/about/channel_cooperation" target='_blank' rel='nofollow'>渠道合作</a></p>
+					 <p><a href="/about/network_union" target='_blank' rel='nofollow'>网络联盟</a></p>
+					 <p><a href="/about/expert_cooperating" target='_blank' rel='nofollow'>专家合作</a></p>
 				   </div>
 				   <div class="col-md-3">
 					  <h2>法律声明</h2>
-					  <p><a href="/about/terms_service" target='_self'>服务条款</a></p>
-					  <p><a href="/about/copyright_statement" target='_self'>权利声明</a></p>
-					  <p><a href="/about/privacy_statement" target='_self'>隐私声明</a></p>
+					  <p><a href="/about/terms_service" target='_blank' rel='nofollow'>服务条款</a></p>
+					  <p><a href="/about/copyright_statement" target='_blank' rel='nofollow'>权利声明</a></p>
+					  <p><a href="/about/privacy_statement" target='_blank' rel='nofollow'>隐私声明</a></p>
 				   </div>
 				   <div class="col-md-4">
 					  <h2>帮助中心</h2>
-					 <p><a href="/about/newbie_guide" target='_self'>使用攻略</a></p>
-					  <p><a href="/about/feedback" target='_self'>建议反馈</a></p>
-					  <p><a href="/about/contactus" target='_self'>联系客服</a></p>
+					 <p><a href="/about/newbie_guide" target='_blank'>使用攻略</a></p>
+					  <p><a href="/about/feedback" target='_blank' rel='nofollow'>建议反馈</a></p>
+					  <p><a href="/about/contactus" target='_blank' rel='nofollow'>联系客服</a></p>
 				   </div>
 				   <div class="col-md-5">
 					  <span class="pj-two-dimensional">
-					     <img src='/image/twodimen.jpg' alt=''>
+					     <img src='/image/twodimen.jpg' alt='二维码' class='lazy'>
 					  </span>
 					  <div class="tc_richscan gray9">微信扫一扫</div>
 				   </div>
-				  
+				    <div class='col-md-5'>
+					  <span class='pj-weibo'>
+					    <img src='/image/weibo.jpg' alt='微博' class='lazy'>
+					  </span>
+					  <div class="tc_richscan gray9">微博扫一扫</div>
+				   </div>
 				</div>
 			  </div>
 			</div>

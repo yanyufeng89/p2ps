@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import org.apache.commons.dbcp.BasicDataSource;
 
 /**
+ * 
+ * 使用此方法还是会存在，已更改使用com.jobplus.utils.ContextFinalizer方式
  * 修復BasicDataSource类close()的一个Bug。 关闭BasicDataSource时不能注销JDBC驱动程序，导致tomat内存泄漏。
  * 
  * 

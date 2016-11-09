@@ -1,5 +1,7 @@
 package com.jobplus.controller;
 
+import java.beans.PropertyEditorSupport;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +47,7 @@ import com.jobplus.service.IVisitHistoryService;
 import com.jobplus.service.IWorkExperService;
 import com.jobplus.utils.ConstantManager;
 import com.jobplus.utils.SolrJUtils;
+
 
 /**
  * 我的主页相关
@@ -98,13 +103,13 @@ public class MyHomeController {
 			Map map = new HashMap();
 			map.put("allSmsPage", allSmsPage);
 			//如果获取未读消息(传进来的islook为0)   返回0  跳到未读消息页,否则返回1 跳到全部消息页
-			map.put("pageFlag", record.getIslook()== null?1:0);
+			map.put("pageFlag", record.getIslook());
 			return new ModelAndView(new MappingJackson2JsonView(), map);
 		} else {
 			mv.setViewName("mydocs/mycount/allnews");
 			mv.addObject("allSmsPage", allSmsPage);
 			//如果获取未读消息(传进来的islook为0)   返回0  跳到未读消息页,否则返回1 跳到全部消息页
-			mv.addObject("pageFlag", record.getIslook()== null?1:0);			
+			mv.addObject("pageFlag", record.getIslook());			
 			return mv;
 		}
 	}
@@ -234,9 +239,9 @@ public class MyHomeController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/getHomePage")
+	@RequestMapping(value = "/getHomePage/{userid}")
 	@ResponseBody
-	public ModelAndView getHomePage(HttpServletRequest request,@RequestParam(required=true) String userid,@RequestParam(required=false) String isReview) throws Exception  {
+	public ModelAndView getHomePage(HttpServletRequest request,@PathVariable String userid,@RequestParam(required=false) String isReview) throws Exception  {
 
 		ModelAndView mv = new ModelAndView();
 		
@@ -245,6 +250,31 @@ public class MyHomeController {
 			return mv;
 		}
 		
+		//当前登录人id
+		String cutUserid = (String) request.getSession().getAttribute("userid");
+		
+		mv = myHomePageService.getHomePage(request,mv,userid, cutUserid, isReview);
+		
+		return mv;
+	}	
+	/**
+	 * 个人主页  && 浏览他人主页
+	 * 传入的userid为被访问人的id
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getAnotherHomePage/{userid}")
+	@ResponseBody
+	public ModelAndView getAnotherHomePage(HttpServletRequest request,@PathVariable String userid) throws Exception  {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		if(StringUtils.isBlank(userid)){
+			mv.setViewName("404");
+			return mv;
+		}
+		String isReview = "1";
 		//当前登录人id
 		String cutUserid = (String) request.getSession().getAttribute("userid");
 		
@@ -448,6 +478,13 @@ public class MyHomeController {
 			int ret = 0;
 			String userid = (String) request.getSession().getAttribute("userid");
 			if (!StringUtils.isBlank(userid)) {
+				String school = record.getSchool();
+				if(!StringUtils.isBlank(school)){
+					// 特殊符号处理
+					school = StringUtils.replace(school, "&#40;", "(");
+					school = StringUtils.replace(school, "&#41;", ")");
+				}
+				record.setSchool(school);
 				record.setUserid(Integer.parseInt(userid));
 				ret = educationBgrdService.insertOrUpdate(record);
 				if (ret > 0) {
@@ -471,19 +508,63 @@ public class MyHomeController {
 		}
 	}
 	/**
-	 * 个人主页 修改工作经历
+	 * 个人主页 删除教育背景
 	 */
-	@RequestMapping(value = "/updWorkExpInfo")
+	@RequestMapping(value = "/delEduInfo")
 	@ResponseBody
-	public String updWorkExpInfo(HttpServletRequest request, HttpServletResponse response, WorkExper record) {
+	public String delEduInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = true)int id) {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
 			int ret = 0;
 			String userid = (String) request.getSession().getAttribute("userid");
 			if (!StringUtils.isBlank(userid)) {
+//				record.setUserid(Integer.parseInt(userid));
+				ret = educationBgrdService.deleteByPrimaryKey(id);
+				if (ret > 0) {
+					//传递的id值
+					baseResponse.setObj(ret);
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				} else {
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					baseResponse.setReturnMsg("网络错误");
+				}
+			}
+			logger.info("**delEduInfo*个人主页 删除教育背景**ret="+ret+"**id==" + id);
+			// baseResponse.setObj(list);
+			return JSON.toJSONString(baseResponse);
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**delEduInfo*个人主页 删除教育背景*      失败   999****" + e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
+	/**
+	 * 个人主页 修改工作经历
+	 */
+	@RequestMapping(value = "/updWorkExpInfo")
+	@ResponseBody
+	public String updWorkExpInfo(HttpServletRequest request, HttpServletResponse response, WorkExper record){
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			int ret = 0;
+			String userid = (String) request.getSession().getAttribute("userid");
+			if (!StringUtils.isBlank(userid)) {
+//				if(StringUtils.isBlank(strEndtime)){
+//					record.setEndtime(null);
+//				}else{
+//					java.sql.Timestamp engTime = Timestamp.valueOf(strEndtime);//转换时间字符串为Timestamp
+//					System.out.println(Timestamp.valueOf(strEndtime));//输出结果
+//					record.setEndtime(engTime);
+//				}
+				
 				record.setUserid(Integer.parseInt(userid));
+				record.setEndtime(record.getStrEndtime());
 				ret = workExperService.insertOrUpdate(record);
 				if (ret > 0) {
+					//传递的id值
+					baseResponse.setObj(ret);
 					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
 					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
 				} else {
@@ -498,6 +579,36 @@ public class MyHomeController {
 			baseResponse.setReturnMsg(e.getMessage());
 			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
 			logger.info("**updWorkExpInfo*个人主页 修改工作经历*      失败   999****" + e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}	
+	/**
+	 * 个人主页 删除工作经历
+	 */
+	@RequestMapping(value = "/delWorkExpInfo")
+	@ResponseBody
+	public String delWorkExpInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam(required = true)int id) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			int ret = 0;
+			String userid = (String) request.getSession().getAttribute("userid");
+			if (!StringUtils.isBlank(userid)) {
+				ret = workExperService.deleteByPrimaryKey(id);
+				if (ret > 0) {
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				} else {
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					baseResponse.setReturnMsg("网络错误");
+				}
+			}
+			logger.info("**delWorkExpInfo*个人主页 删除工作经历**ret="+ret+"**id==" + id);
+			// baseResponse.setObj(list);
+			return JSON.toJSONString(baseResponse);
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**delWorkExpInfo*个人主页 删除工作经历*      失败   999****" + e.getMessage());
 			return JSON.toJSONString(baseResponse);
 		}
 	}	
@@ -544,8 +655,50 @@ public class MyHomeController {
 		return solrJUtils.findSchool(condition);
 
 	}
-	
-	
-	
+	/*@org.springframework.web.bind.annotation.InitBinder  
+	public void InitBinder(WebDataBinder dataBinder)  
+	{  
+	    dataBinder.registerCustomEditor(Date.class, new PropertyEditorSupport() {  
+	        public void setAsText(String value) {  
+	            try {  
+	                setValue(new SimpleDateFormat("yyyy-MM-dd").parse(value));  
+	            } catch (java.text.ParseException e) {
+	            	 setValue(null);  
+				}  
+	        }  	  
+	        public String getAsText() {  
+	        	if(null == getValue()){
+	        		return null;
+	        	}
+	        	return new SimpleDateFormat("yyyy-MM-dd").format((Date) getValue());  
+
+	        }          
+	  
+	    });  
+	} */
+
+	//timestamp 数据类型绑定
+	@InitBinder  
+	public void InitBinder(WebDataBinder dataBinder)  
+	{  
+	    dataBinder.registerCustomEditor(Timestamp.class, new PropertyEditorSupport() {  
+	        public void setAsText(String value) {  
+	            try {  
+	                setValue(Timestamp.valueOf(value));  
+	            } catch (Exception e) {
+	            	setValue(null);
+	            	logger.info("数据绑定******    时间为 null");
+//					e.printStackTrace();
+				}  
+	        }  	  
+	    });  
+	} 
+//	
+//	 @InitBinder
+//	 public void initBinder(WebDataBinder binder) {
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		dateFormat.setLenient(false);
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));   //true:允许输入空值，false:不能为空值
+//	}
 	
 }

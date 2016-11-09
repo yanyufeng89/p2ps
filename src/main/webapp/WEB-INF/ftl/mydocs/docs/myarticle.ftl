@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+          我的文章-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -20,9 +20,9 @@
 		<div class="img-center">
 		<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		   <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		 </a>
 		</div>
@@ -33,7 +33,7 @@
 		        </#if>
 		    </a>
 		</p>
-		<p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+		<p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
 
 		<div class="mydoc-list">
 		    <ul id="accordion">
@@ -92,7 +92,7 @@
 		
 		   <div class='maincontent'>
 		     <div class="uc-head-bottom">
-				  <div style="float:left" id="mytopiccontent">
+				  
 				     <span><a class='icon-myarticle'></a></span>
 				     <div style="float:left">
 					    <p>我的文章</p>
@@ -105,7 +105,7 @@
 						    </a>
 					    </p>
 				    </div>
-				   </div>
+				    <a href='javascript:void(0);' onclick="share('article');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
 				</div>
 		    <#if (shaArticlePage)??>
 			    <div class="uc-mydocshare">
@@ -124,9 +124,10 @@
 		                </div>
 		              <div class="status-box">
 		                   <div class="w423 ib"><div class="checkbox select-all"></div>文章名称</div>
-						   <div class="w125 ib">回复次数</div>
-						   <div class="w125 ib">收藏次数</div>
-						   <div class="w119 ib">分享时间</div>
+						   <div class="w94 ib">是否匿名</div>
+						   <div class="w94 ib">回复次数</div>
+						   <div class="w94 ib">收藏次数</div>
+						   <div class="w94 ib">分享时间</div>
 						   <div class="w92 ib">操作</div>
 					   </div>
 					   <div class="docs-list">
@@ -136,19 +137,28 @@
 					            <li>
 					               <div class='w403 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-courseid="${list.id}" data-name="${list.title}"></div>
-                                      <a href="/article/getArticleDetail?id=${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
+                                      <a href="/article/getArticleDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
                                    </div>
-                                   <div class='w125 ib ilbookc'>
+                                   <div class='w94 ib ilbookc'>
+                                       <#if list.ispublic==1>
+                                         	公开
+                                        <#elseif list.ispublic==0>
+                                        	匿名
+                                        <#else>
+                                        	公开
+                                       </#if>
+                                   </div>
+                                   <div class='w94 ib ilarticle'>
                                        <#if (list.recommendsum)??>
                                             ${list.recommendsum}
                                        </#if>
                                    </div>
-                                   <div class='w125 ib ilbookc'>
+                                   <div class='w94 ib ilarticle'>
                                        <#if (list.collectsum)??>
                                          ${list.collectsum}
                                        </#if>
 	                                </div>
-	                                <div class='w119 ib ilbook'>
+	                                <div class='w94 ib'>
 	                                       <#if (list.createtime?string("yyyy-MM-dd"))??>
 	                                         ${list.createtime?string("yyyy-MM-dd")}
 	                                       </#if>
@@ -211,7 +221,7 @@
 				          <li>
 				            <div class='w525 fs14 fc3 ib titlehidden'>
                                	  <div class="checkbox chk" data-courseid="${collist.myCollect.id}" data-name="${collist.title}"></div>
-                                  <a href="/article/getArticleDetail?id=${collist.myCollect.objectid}" target="_blank" title="${collist.title}">${collist.title}</a>  
+                                  <a href="/article/getArticleDetail/${collist.myCollect.objectid}" target="_blank" title="${collist.title}">${collist.title}</a>  
                             </div>
                             <div class='w140 ib ilbookc'>
                                <#if (collist.collectsum)??>

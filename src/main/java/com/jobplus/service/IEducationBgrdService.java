@@ -19,4 +19,7 @@ public interface IEducationBgrdService {
      * @return
      */
     List<EducationBgrd> getExperList(EducationBgrd record);
+    
+
+    int deleteByPrimaryKey(Integer id);
 }

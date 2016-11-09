@@ -1,9 +1,19 @@
 <!-- 个人主页 话题--话题分享 -->
 {#foreach $T.topicsPage as sharelist}
  <li>
-      <div class='w340 fs14 fc3 ib titlehidden'>
+      <div class='w332 fs14 fc3 ib titlehidden'>
      	  <div class="checkbox chk" data-topicid="{$T.sharelist.id}" data-name="{$T.sharelist.title}"></div>
-        <a href="/topics/getTopicsDetail?topicId={$T.sharelist.id}" target="_blank" title="{$T.sharelist.title}">{$T.sharelist.title}</a>  
+        <a href="/topics/getTopicsDetail/{$T.sharelist.id}" target="_blank" title="{$T.sharelist.title}">{$T.sharelist.title}</a>  
+      </div>
+      <div class='w92 ib topic-ispublic'>
+           {#if $T.sharelist.ispublic==1}
+            	公开
+            {#elseif $T.sharelist.ispublic==0}
+            	匿名
+           {#else}
+           		公开
+          {#/if} 
+
       </div>
       <div class='w92 ib iltopic'>
             {$T.sharelist.followssum} 
@@ -19,18 +29,18 @@
             {$T.sharelist.likesum} 
 
       </div>
-      <div class='w140 ib'>
+      <div class='w92 ib'>
           {#if $T.sharelist.showcreatetime}
             {$T.sharelist.showcreatetime} 
           {#/if}
       </div>
-      <div class='w119 ib operate'>
-         <a href="/topics/getTopicsDetail?topicId={$T.sharelist.id}"  class='pr10 modify-doc __HIDE__' target='_self'>
+      <div class='w92 ib operate edittopic'>
+         <a href="/topics/getTopicsDetail/{$T.sharelist.id}"  class='pr10 modify-doc __HIDE__' target='_self'>
 		   <b class="iconfont pr2"></b>修改
 		 </a>
-		<span data-id='{$T.sharelist.id}' data-name='{$T.sharelist.title}' data-type='1'>
+		<!-- <span data-id='{$T.sharelist.id}' data-name='{$T.sharelist.title}' data-type='1'>
 		         <b class="iconfont pr2"></b> 删除
-		</span>
+		</span> -->
       </div>
    </li>  
 {#/for}

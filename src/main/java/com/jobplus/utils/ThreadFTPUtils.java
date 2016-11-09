@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import com.jobplus.pojo.FTPStatus;
 
-@Service("threadFTPUtils")
 public class ThreadFTPUtils implements Runnable {
 	
 	@Value("${ftp.ip}")

@@ -119,8 +119,8 @@ public class TestSolr2 {
 	public void queryMultiCore2() throws Exception {
 		// doc 48 /book 8/article 12/courses 44/site topics 42
 
-		List list = solrJUtils.findAll("", "", "", "", "1", "50");
-		logger.info(">>>>>>>>>>>>>>>>>" + JSON.toJSONString(list));
+		List list = solrJUtils.findAll("", "", "", "", "1", "50",null);
+		logger.info(">>>>>>>>>>>>>>>>>solrJUtils.findAll(" + JSON.toJSONString(list));
 		/**
 		 * JSONArray ob = JSON.parseArray((String)list.get(1)); ob.forEach(o ->
 		 * { JSONObject s = (JSONObject)o; System.out.println(" ******  id: "

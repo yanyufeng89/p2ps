@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,9 +110,9 @@ public class CoursesController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/getCourseDetail")
+	@RequestMapping(value = "/getCourseDetail/{id}")
 	@ResponseBody
-	public ModelAndView getCourseDetail(HttpServletRequest request, HttpServletResponse response, Courses record,@RequestParam(required=false) String isAdmin) {
+	public ModelAndView getCourseDetail(HttpServletRequest request, HttpServletResponse response, Courses record,@RequestParam(required=false) String isAdmin,@PathVariable String id) {
 		ModelAndView mv = new ModelAndView();
 		if (record.getId() != null) {
 			record = coursesService.getCourseDetail(record);
@@ -125,7 +126,7 @@ public class CoursesController {
 				//后台管理员查看
 				mv.setViewName("manage/courseDetail");
 			}else{
-				mv.setViewName("mydocs/docs/courseDetail");
+				mv.setViewName("/mydocs/docs/courseDetail");
 			}
 		} else {
 			logger.info("**getCourseDetail*获取课程详情  失败   record.getId() == null  999****");

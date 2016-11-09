@@ -3,7 +3,9 @@
  <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-        <title>${userInfo.username}_个人主页</title>
+        <meta name="description" content="JobPlus网是国内首创的企业知识库公共平台,结构化的知识体系,包含文档,书籍,文章,网站,问答,在线课程的分享学习社区。一站式知识库平台,为7亿职场人员提供优质学习分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
+        <meta name="keywords" content="JobPlus,知识分享,知识库,文档,书籍,问答,课程,文章,网站,在线培训,企业课堂,员工培训,在线教育,职业技能,视频课程,培训网站,职场培训,网络课堂,人才培训,内容管理">
+        <title>${userInfo.username}-个人主页-JobPlus</title>
         <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
         <link rel="stylesheet" type="text/css" href="/css/pj_mycenter.css">
         <link rel="stylesheet" type="text/css" href="/css/jquery.pinwheel-0.1.0.css">
@@ -17,9 +19,9 @@
                         <div class="profile-card vcard entity">
                             <div class="profile-picture" style='height:160px;line-height:160px'>
                                <#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
-                                 <img src="${userInfo.headicon}" width="120" height="120">
+                                 <img src="${userInfo.headicon}" alt="个人头像" width="150" height="160" class='lazy'>
                                <#else>
-                                 <img src="/image/myphoto.jpg" width="120" height="120">
+                                 <img src="/image/myphoto.jpg" alt="个人头像" width="150" height="160" class='lazy'>
                                </#if>
                             </div>
                             
@@ -43,7 +45,7 @@
 													    职位
 													  </#if>
 												   </span>
-												   --
+												   <label class='position-split'>|</label>
 												   <span class='compname'> 
 												    <#if (userInfo.compname)?? && userInfo.compname?length gt 0>
 													  ${userInfo.compname?html}
@@ -67,7 +69,7 @@
 												<#else>
 												    <span class='city'>所在城市</span>
 											    </#if>
-												&nbsp;&nbsp;|&nbsp;&nbsp;
+												<label class='area-split'>|</label>
 												<#if (userInfo.industry)?? && userInfo.industry?length gt 0>
 												   <span class='industry'>${userInfo.industry?html}</span>
 												<#else>
@@ -109,7 +111,7 @@
                         </div>
 					    <div class='profile-func'>
                                  <#if (userInfo.userid?string==(Session.user.userid?string)!)>
-                                       <a href="/myHome/getHomePage?userid=${Session.user.userid}" class="preview-profile button-primary">返回编辑界面</a>
+                                       <a href="/myHome/getHomePage/${Session.user.userid}" class="preview-profile button-primary">返回编辑界面</a>
 								 <#else>
 								  <#if (userInfo.fansIds)??>
 										   <#if (userInfo.fansIds)?? && userInfo.fansIds?length gt 0>										     
@@ -135,7 +137,9 @@
 								</#if>	    
 							     
 						<span class='personal-data current' id='personal-data'>个人资料</span>	
-						<span class='personal-share' id='personal-share'>个人分享</span>		
+						<span class="split">|</span>
+						<span class='personal-share' id='personal-share'>个人分享</span>	
+						<span class="split">|</span>	
 						<span class='personal-attention' id='personal-attention' data-userid='${userInfo.userid}'>个人关注</span>	
 						<#if (userInfo.userid?string!=(Session.user.userid?string)!)>
 					       <div class="site-mail pm-img img" id='site-mail' data-issitemail='1' data-receivedid='${userInfo.userid}' data-name='${userInfo.username}'></div>	
@@ -148,21 +152,20 @@
                              <div class="email">
                                <span>邮箱:&nbsp;&nbsp;</span>
                               
-							   <#if (userInfo.email)?? && userInfo.email?length gt 0>
-							     <#assign email=userInfo.email />
-							     <#--邮箱不同  区显示3分之2的位数，向上取整-->
-							     <#assign email_index1=((userInfo.email?substring(0,userInfo.email?last_index_of('@'))?length)*2/3)?ceiling />
-							     <#assign email_index2=userInfo.email?last_index_of('@') />
-                                 <span>${userInfo.email?substring(0,email_index1?number-1)+'****'+userInfo.email?substring(email_index2?number-1,userInfo.email?length)}</span>
+							   <#if (userInfo.contactEmail)?? && userInfo.contactEmail?length gt 0>
+                                 <span>${userInfo.contactEmail}</span>
+                               <#else>
+                                                                                      未知
                                </#if>
                               
                              </div>
                               <div class="phone">
                                 <span>电话:&nbsp;&nbsp;</span>
                                 
-								<#if (userInfo.mobile)?? && userInfo.mobile?length gt 0>
-								  <#assign phone=userInfo.mobile />
-                                  <span>${userInfo.mobile?substring(0,3)+'****'+userInfo.mobile?substring(7,userInfo.mobile?length)}</span>
+								<#if (userInfo.contactTel)?? && userInfo.contactTel?length gt 0>
+                                  <span>${userInfo.contactTel}</span>
+								<#else>
+                                                                                      未知
 								</#if>
 								
                              </div>
@@ -243,20 +246,26 @@
 							  <div class="education e-bold">
 								<label>学校名称:</label>
 							    <#if (edulist.school)?? && edulist.school?length gt 0>
-								  <span class='schoolname'>
-                                     ${edulist.school?html}
-								  </span>
+								  <span class='schoolname'>${edulist.school?html}</span>
 							    </#if>
+							  </div>
+							   <div class='degree'>
+								<span class='topDegree'>
+								  <label>最高学历:</label>
+								  <#if (edulist.degree)?? && edulist.degree?length gt 0>
+									 <span class='profession'>${edulist.degree?html}</span>
+							      </#if>
+								</span>
+								
 							  </div>
 							   <div class='major'>
 								<span class='professioninfo'>
 								  <label>所学专业:</label>
 								  <#if (edulist.major)?? && edulist.major?length gt 0>
-									 <span class='profession'>
-									   ${edulist.major?html}
-									 </span>
+									 <span class='profession'>${edulist.major?html}</span>
 							      </#if>
 								</span>
+								
 							  </div>
 							  <div class='graduate'>
 								<span class='schoolinfo'>
@@ -265,11 +274,16 @@
 									<#if (edulist.starttime)??>
 									  <#-- ${edulist.starttime?date}--${edulist.endtime?date} -->
 									  ${edulist.starttime?string("yyyy年MM月dd日")}&nbsp; – &nbsp;${edulist.endtime?string("yyyy年MM月dd日")}&nbsp;&nbsp;(${edulist.period})
-									 
 									</#if>
 								  </span>
-								 
 								</span>
+								<h5 class="section-logo">
+							       <strong>
+							        <#if (edulist.schoolLogo)??>
+							         <img src="${edulist.schoolLogo}" alt="${edulist.school?html}" width="50" height="50" class='lazy'>
+							        </#if>
+							       </strong>
+							    </h5>
 							  </div>
 							 
 							</div>
@@ -297,18 +311,14 @@
 								  <div class="company e-bold">
 									  <label> 公司名称:</label>
 									 <#if (worklist.company)?? && worklist.company?length gt 0>
-									   <span class='companyname'>
-									      ${worklist.company?html}
-									   </span>
+									   <span class='companyname'>${worklist.company?html}</span>
 									 </#if>
 								  </div>
 								  <div class='workposition'>
 										<span class='positioninfo'>
 											<label>工作职位:</label>
 										  <#if (worklist.jobtitle)?? && worklist.jobtitle?length gt 0>
-											 <span class='position'>
-											    ${worklist.jobtitle?html}
-											 </span>											
+											 <span class='position'>${worklist.jobtitle?html}</span>											
 										   </#if>
 										</span>
 								  </div>
@@ -318,7 +328,7 @@
 										<label> 在职时间:</label>
 											<#if (worklist.starttime)?? && worklist.starttime?length gt 0>
 												  <#-- ${worklist.starttime?date}--${worklist.endtime?date} --> 
-												  ${worklist.starttime?string("yyyy年MM月dd日")}&nbsp; – &nbsp;${worklist.endtime?string("yyyy年MM月dd日")}&nbsp;&nbsp;(${worklist.period})									 
+												  ${worklist.starttime?string("yyyy年MM月dd日")}&nbsp; – &nbsp;<#if (worklist.endtime)??>${worklist.endtime?string("yyyy年MM月dd日")}<#else>至今</#if>&nbsp;&nbsp;(${worklist.period})									 
 										    </#if>
 									  </span>
 									</span>
@@ -328,9 +338,7 @@
 									<span class='description'>
 											<label>工作内容:</label>
 									 <#if (worklist.description)?? && worklist.description?length gt 0>
-										 <span class='workcontent'>
-										   ${worklist.description?html}
-										 </span>										
+										 <span class='workcontent'>${worklist.description?html}</span>										
 									 </#if>
 									</span>
 								  </div>
@@ -454,11 +462,10 @@
 									</span>
 					     </a>
 					  </div>
-                      <div class='zm-profile-section-wrap' style='display:none'>
-					   
+                      <div class='zm-profile-section-wrap' style='display:none'>					   
 						<div class='zm-profile-section-list' id='zh-profile-answers-inner-list'>
 						   <ul>
-						    <#if (recentShare)?? &&recentShare?size gt 0>
+						    <#if (recentShare)?? &&recentShare.list?size gt 0>
 							   <#list recentShare.list as slist>
 								 <li>
 								   <div class="allnewscontent">	
@@ -483,7 +490,7 @@
 					  </div>					  
                 </div>
                 <div id="bd-2">
-				 <div class="news">
+				 <div class="news" style='border-color:#cce1ef'>
                        <div class="top-border">
                           <p>
 						   <#if userInfo.userid==(Session.user.userid)!>
@@ -551,11 +558,11 @@
                        <div class='detail-list zg-clear'>
 						  <#if (visitors)??>
 							<#list visitors.list as list>
-								<a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage?userid=${list.visitorid}' data-userid="${list.visitorid}" data-moduletype='1'>
+								<a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}' data-userid="${list.visitorid}" data-moduletype='1'>
 									   <#if (list.headIcon)??>
-										 <img src="${list.headIcon}" class="zm-item-img-avatar">
+										 <img src="${list.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy">
 									   <#else>
-										  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
 									   </#if>
 							    </a>
 							</#list>

@@ -18,36 +18,36 @@
 .popover .popover-content {
     background: #fff;
     border: solid 1px #ccc;
-    border-radius:2px;
+    border-radius:4px;
     overflow: hidden;
 }
-.zh-profile-card {
+.pj-profile-card {
     width: 380px;
 }
-.zh-profile-card .upper {
+.pj-profile-card .upper {
     background: #fff;
-    min-height: 50px;
 }
-.zh-profile-card .upper{
-    border: 1px solid transparent;
-    padding: 20px 20px 14px 20px;
+.pj-profile-card .upper{
+    zoom: 1;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e5e5;
 }
-.zh-profile-card .lower {
-    background: #fff;
+.pj-profile-card .lower {
+    background: #f9f9f9;
     border: 1px solid transparent;
-    padding: 0 20px 20px 20px;
+    padding: 13px 20px 13px 20px;
 }
 
-.zh-profile-card .lower .meta .item:last-child {
+.pj-profile-card .lower .meta .item:last-child {
     border-right: 0 none;
 }
-.zh-profile-card .lower .meta .item:hover {
+.pj-profile-card .lower .meta .item:hover {
 	color:#698ebf
 }
-.zh-profile-card .lower .meta .item:hover .key {
+.pj-profile-card .lower .meta .item:hover .key {
 	color:inherit
 }
-.zh-profile-card .upper a.avatar-link {
+.pj-profile-card .upper a.avatar-link {
     position: relative;
 }
 .popover.top .arrow2 {
@@ -60,55 +60,50 @@
 }
 
 
-.zh-profile-card .upper .icon {
+.pj-profile-card .upper .icon {
     margin-left: 3px;
 }
 
 .icon-profile-male {
     background-position: -144px -110px;
 }
-.zh-profile-card .upper div.tagline {
-    font-size: 13px;
-    color: #222;
-    padding:4px 0 0 38px;
-}
 
-.zh-profile-card .lower .meta .item:first-child {
+.pj-profile-card .lower .meta .item:first-child {
     padding-left: 0;
 }
-.zh-profile-card .lower .meta .item {
+.pj-profile-card .lower .meta .item {
     float: left;
     padding: 0 12px;
-    color: inherit;
+    color: #333;
     text-decoration: none;
     border-left: 1px dotted #ccc;
 }
-.zh-profile-card .lower .meta .item:first-child{
+.pj-profile-card .lower .meta .item:first-child{
 	 border-left:0!important
 }
-.zh-profile-card .lower .meta .item .value {
+.pj-profile-card .lower .meta .item .value {
     font-size: 15px;
     font-weight: 700;
 }
-.zh-profile-card .lower .meta .item .value, .zh-profile-card .lower .meta .item .key {
+.pj-profile-card .lower .meta .item .value, .pj-profile-card .lower .meta .item .key {
     display: block;
     text-align: center;
 }
 
-.zh-profile-card .lower .meta .item .key {
+.pj-profile-card .lower .meta .item .key {
     font-size: 12px;
     color: #999;
     padding-top: 6px;
 }
 
-.zh-profile-card .lower .operation .zg-btn, .zh-profile-card .lower .operation .zg-btn-white, .zh-profile-card .lower .operation button {
+.pj-profile-card .lower .operation .zg-btn, .pj-profile-card .lower .operation .zg-btn-white, .pj-profile-card .lower .operation button {
     float: left;
     height: 32px;
     margin:8px 0 0 10px;
     vertical-align: middle;
     width:78px!important;
-    font-family:"Microsoft YaHei";
-	_font-family:"Microsoft YaHei";
+    font-family: Arial,'微软雅黑';
+	_font-family: Arial,'微软雅黑';
 }
 .zg-btn {
     text-align: center;
@@ -118,7 +113,7 @@
     padding: 1px;
     font-weight: 400;
     line-height: 18px;
-    border-radius: 2px;
+    border-radius:4px;
     cursor: pointer;
     box-sizing: border-box;
 }
@@ -139,10 +134,10 @@
 .pinwheel_wrap {
 	position: absolute;
 	z-index: 9999;
-	border-radius:2px;
-	-moz-border-radius: 2px;
+	border-radius:4px;
+	-moz-border-radius: 4px;
 }
-.zh-profile-card .lower .operation .zg-icon.pm {
+.pj-profile-card .lower .operation .zg-icon.pm {
     background-position: 0 -148px;
     width: 17px;
     height: 14px;
@@ -155,7 +150,6 @@
     border-left: 13px solid transparent;
     border-right: 13px solid transparent;
     border-bottom: 13px solid #ccc;
-   /*  border-bottom: 13px solid #fff; */
 }
 .popover.bottom .arrow2 {
     top: 1px;
@@ -164,4 +158,35 @@
     border-left: 13px solid transparent;
     border-right: 13px solid transparent;
     border-bottom: 13px solid #fff;
+}
+.pj-profile-card p.photo{
+	float:left;
+} 
+.pj-profile-card p.name,.pj-profile-card div.title,.pj-profile-card div.tagline{
+	position:relative;
+    max-width:270px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    margin:7px 0 0 90px;
+    font-size: 12px;
+    color: #333;
+} 
+/* .pj-profile-card p.name{
+	
+	
+} */
+.name-container{
+	font-weight:bold;
+	color:#1b85d5
+}
+.badge-container{
+	float:right;
+	padding:2px 4px 0 4px;
+	background-color:#e6e6e6;
+}
+.badge-container label{
+	padding-left: 1px;
 }

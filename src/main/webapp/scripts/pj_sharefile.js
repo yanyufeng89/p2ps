@@ -12,9 +12,10 @@ $(function(){
     })
    /*文件上传页（searchuploadFile.html）根据选中的不同知识库类型调到对应的页面end*/
    $("#upload-init-container .block-cnt a").click(function(){
-    	if($(this).hasClass("tb-selected"))
+    	/*if($(this).hasClass("tb-selected"))
             $(this).removeClass("tb-selected").children('i').remove();
-    	else if($(this).children('i').length==0)
+    	else*/
+	   /*if($(this).children('i').length==0)*/
     		$(this).append("<i></i>").addClass("tb-selected").siblings().removeClass("tb-selected").children('i').remove();
     	var sharename=$(this).attr('data-sharename');
     	var sharetext=$(this).attr('data-text');

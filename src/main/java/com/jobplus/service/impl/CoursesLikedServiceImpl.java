@@ -46,7 +46,7 @@ public class CoursesLikedServiceImpl implements ICoursesLikedService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[12],record.getCoursesid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[12],record.getRelationidPg(),record.getObjectNamePg(),"");
+					record.getObjCreatepersonPg(),33,record.getRelationidPg(),record.getObjectNamePg(),"");
 			
 		}
 		return ret;

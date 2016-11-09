@@ -1,22 +1,22 @@
 <div class="item">
   <div class="media-left">
-     <a class='uhead' href='/myHome/getHomePage?userid={$T.user.userid}' target='_blank' data-userid='{$T.user.userid}'>
+     <a class='uhead' href='/myHome/getHomePage/{$T.user.userid}' target='_blank' data-userid='{$T.user.userid}'>
             {#if $T.user.headicon}
-              <img class='uname' src="{$T.user.headicon}" alt=""  data-userid='{$T.user.userid}' data-moduletype='1'>
+              <img class='uname lazy'  src="{$T.user.headicon}" alt="个人头像" data-userid='{$T.user.userid}' data-moduletype='1'>
             {#else}
-              <img class='uname' src='/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid='{$T.user.userid}' data-moduletype='1'>
+              <img class='uname lazy' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='{$T.user.userid}' data-moduletype='1'>
             {#/if}
             
             {#if $T.commentby}  
-               <a href='/myHome/getHomePage?userid={$T.user.userid}' target='_blank' class='uname' data-userid='{$T.user.userid}'> 
+               <a href='/myHome/getHomePage/{$T.user.userid}' target='_blank' class='uname' data-userid='{$T.user.userid}'> 
 			    {$T.user.username}
 			   </a>
                 <span class="desc">&nbsp;回复&nbsp;</span>
                 <span class="uname"  data-userid='{$T.commentby}' data-moduletype='1'>
-                   <a href='/myHome/getHomePage?userid={$T.commentby}' target='_blank'>{$T.recommendname}</a>
+                   <a href='/myHome/getHomePage/{$T.commentby}' target='_blank'>{$T.recommendname}</a>
                 </span>
             {#else}
-                <a href='/myHome/getHomePage?userid={$T.user.userid}' class='uname' data-userid='{$T.user.userid}' target='_blank'>{$T.user.username}</a>
+                <a href='/myHome/getHomePage/{$T.user.userid}' class='uname' data-userid='{$T.user.userid}' target='_blank'>{$T.user.username}</a>
             {#/if}
 	 </a>
 		                      

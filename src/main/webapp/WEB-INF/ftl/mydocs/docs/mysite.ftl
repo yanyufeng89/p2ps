@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+          我的站点-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -19,9 +19,9 @@
 		<div class="img-center">
 		<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		  </a>
 		</div>
@@ -32,7 +32,7 @@
 		        </#if>
 		    </a>
 		</p>
-        <p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p> 
+        <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p> 
 		<div class="mydoc-list">
 		<ul>
 		    <ul id="accordion">
@@ -92,7 +92,7 @@
 		
 		   <div class='maincontent'>
 		    <div class="uc-head-bottom">
-				  <div style="float:left" id="mytopiccontent">
+				  
 				    <span><a class='icon-mysite'></a></span>
 				    <div style="float:left">
 					    <p>我的站点</p>
@@ -105,7 +105,7 @@
 					       </a>
 					    </p>
 				    </div>
-				   </div>
+				     <a href='javascript:void(0);' onclick="share('site');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
 		   </div>
 		   <#if (shaSitePage)??>
 			<div class="uc-mydocshare">
@@ -123,7 +123,7 @@
 		                 <span class="remove" data-type='0'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		                </div>
 		               <div class="status-box">
-		                   <div class="w356 ib"><div class="checkbox select-all"></div>站点名称</div>
+		                   <div class="w354 ib"><div class="checkbox select-all"></div>站点名称</div>
 						   <div class="w204 ib">推荐语</div>
 						   <div class="w125 ib">收藏次数</div>
 						   <div class="w119 ib">分享时间</div>
@@ -136,7 +136,7 @@
 					         <li>
 					            <div class='w336 fs14 fc3 ib titlehidden'>
                                    	  <div class="checkbox chk" data-courseid="${list.id}" data-name="${list.title}"></div>
-                                      <a href="/sites/getSiteDetail?id=${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
+                                      <a href="/sites/getSiteDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
                                 </div>
                                 <div class='w204 ib replayhidden'>
                                        <#if (list.recommend)??>
@@ -212,7 +212,7 @@
 				          <li>
 				            <div class='w525 fs14 fc3 ib titlehidden'>
                                	  <div class="checkbox chk" data-courseid="${collist.myCollect.id}" data-name="${collist.title}"></div>
-                                  <a href="/sites/getSiteDetail?id=${collist.myCollect.objectid}" target="_blank" title="${collist.title}">${collist.title}</a>  
+                                  <a href="/sites/getSiteDetail/${collist.myCollect.objectid}" target="_blank" title="${collist.title}">${collist.title}</a>  
                             </div>
                             <div class='w140 ib ilbookc'>
                                <#if (collist.collectsum)??>

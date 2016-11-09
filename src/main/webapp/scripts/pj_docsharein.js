@@ -12,6 +12,7 @@ $(function(){
 		var isnext = true;
 	   for(var i=0;i<files.length;i++){
 		    var fileend = files[i].name.substring(files[i].name.lastIndexOf("."));
+		    files[i].name=files[i].name.substring(0,files[i].name.lastIndexOf("."));
 		    if(filetypes.indexOf(fileend.toLowerCase())<0){
 		    	isnext=false;
 		    }
@@ -116,7 +117,7 @@ $(function(){
 				}
 			}
 			//当上传的文档全部被删完  调到重新上传文档界面
-			if(arrFiles.length==0){
+			if($('.editlayoutbook').length==0){
 				arrFiles=[];
 				$("#upload-init-container").show();
 				$("#upload-files-container").hide();
@@ -131,12 +132,25 @@ $(function(){
 	})
 	//确认上传
 	$('#btn-submit-all').live('click',function(){
+	
 		 var flag=true;
          //标题必填
 		$('input[name=title]').each(function(){
 			if($(this).val().length==0){
 				$(this).parents('.edit-table').find('.item-msg-content').html('').html('标题不能为空');
 				$(this).parents('.edit-table').find('.ic-msg').css('background-position','-47px -144px');
+				flag=false;
+			}
+			if($(this).val().replace(/[^x00-xFF]/g,'**').length>256){
+				$(this).parents('.edit-table').find('.item-msg-content').html('').html('标题超出最大限制');
+				$(this).parents('.edit-table').find('.ic-msg').css('background-position','-47px -144px');
+				flag=false;
+			}
+		})
+	    //简介限制
+		$('.bookcontent').each(function(){
+			if($(this).val().replace(/[^x00-xFF]/g,'**').length>512){
+				$(this).nextAll().show();
 				flag=false;
 			}
 		})
@@ -162,8 +176,12 @@ $(function(){
 			})
 			$(this).parents('td').find('input[name=docclass]').val(tagid.substring(0,tagid.length-1));
 		})
-		if(flag)
-		$('#test11form').submit();
+		if(flag){
+			 //添加遮罩层 防止在上传的同时做其他操作
+			 addMaskLayer();
+			 $('#test11form').submit();
+		}
+		
 	})
 
    //获取财富值
@@ -196,6 +214,7 @@ var funDisposePreviewHtml=function(files,flag){
 	    		num:num,
 	    		size:v.size,
 	    		name:v.name.substring(0,v.name.lastIndexOf('.')),
+	    		namesuffix:v.name,
 	    		pid:'public'+num,
 	    		doctype:parentConfigList[0].typeid+":"+parentConfigList[0].typename+","+childConfigList[0].typeid+":"+childConfigList[0].typename,
 	    		parentConfigList:parentConfigList,
@@ -206,8 +225,11 @@ var funDisposePreviewHtml=function(files,flag){
 	  if(exist){
 		  if(v.size!=0){
 			  for(var i=0;i<arrFiles.length;i++){
-				if(arrFiles[i].name!=v.name&&arrFiles[i].size!=v.size)
+				/*if(arrFiles[i].name!=v.name&&arrFiles[i].size!=v.size)
 				{
+					arrFiles.push(v); 
+				}*/
+				if($.inArray(v, arrFiles)==-1){
 					arrFiles.push(v); 
 				}
 			  }

@@ -239,7 +239,7 @@ public class SolrJUtils {
 	 */
 	public static String findTops(String Condition) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		solrParams.set("q", "title:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = topicsClient.query(solrParams);
@@ -262,7 +262,7 @@ public class SolrJUtils {
 	 */
 	public static String findBook(String Condition) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		solrParams.set("q", "title:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = bookClient.query(solrParams);
@@ -286,13 +286,23 @@ public class SolrJUtils {
 	 * 
 	 * @return
 	 */
-	public static List findTopsFromList(String Condition, String id) {
+	public static List findTopsFromList(String Condition, String id,String sharedType,String tags) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
+		}
+		solrParams.set("q", "title:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
-		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
 		solrParams.set("rows", "10");
+		solrParams.set("sort", "score desc");
+		solrParams.set("defType", "edismax");
+		solrParams.set("mm", "30%");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = topicsClient.query(solrParams);
@@ -312,13 +322,23 @@ public class SolrJUtils {
 	 * 
 	 * @return
 	 */
-	public static List findDocFromList(String Condition, String id) {
+	public static List findDocFromList(String Condition, String id,String sharedType,String tags) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
+		}
+		solrParams.set("q", "title:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
-		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
 		solrParams.set("rows", "10");
+		solrParams.set("sort", "score desc");
+		solrParams.set("defType", "edismax");
+		solrParams.set("mm", "30%");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = docClient.query(solrParams);
@@ -336,13 +356,43 @@ public class SolrJUtils {
 	 * 
 	 * @return
 	 */
-	public static List findBookFromList(String Condition, String id) {
+	public static List findBookFromList(String Condition, String id,String sharedType,String tags) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
+		}
+		if(Condition.indexOf("（")!=-1){
+			
+			Condition = Condition.substring(0,Condition.indexOf("（"));
+		}
+		
+		if(Condition.indexOf("(")!=-1){
+			
+			Condition = Condition.substring(0,Condition.indexOf("("));
+		}
+		
+		if(Condition.indexOf("【")!=-1){
+			
+			Condition = Condition.substring(0,Condition.indexOf("【"));
+		}
+		
+		if(Condition.indexOf("[")!=-1){
+			
+			Condition = Condition.substring(0,Condition.indexOf("["));
+		}
+		
+		solrParams.set("q", "title:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
-		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
 		solrParams.set("rows", "10");
+		solrParams.set("sort", "score desc");
+		solrParams.set("defType", "edismax");
+		solrParams.set("mm", "20%");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = bookClient.query(solrParams);
@@ -360,13 +410,23 @@ public class SolrJUtils {
 	 * 
 	 * @return
 	 */
-	public static List findCoursesFromList(String Condition, String id) {
+	public static List findCoursesFromList(String Condition, String id,String sharedType,String tags) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
+		}
+		solrParams.set("q", "title:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
-		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
 		solrParams.set("rows", "10");
+		solrParams.set("sort", "score desc");
+		solrParams.set("defType", "edismax");
+		solrParams.set("mm", "30%");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = coursesClient.query(solrParams);
@@ -384,13 +444,23 @@ public class SolrJUtils {
 	 * 
 	 * @return
 	 */
-	public static List findArticleFromList(String Condition, String id) {
+	public static List findArticleFromList(String Condition, String id,String sharedType,String tags) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
+		}
+		solrParams.set("q", "title:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
-		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
 		solrParams.set("rows", "10");
+		solrParams.set("sort", "score desc");
+		solrParams.set("defType", "edismax");
+		solrParams.set("mm", "30%");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = articleClient.query(solrParams);
@@ -408,13 +478,23 @@ public class SolrJUtils {
 	 * 
 	 * @return
 	 */
-	public static List findSitesFromList(String Condition, String id) {
+	public static List findSitesFromList(String Condition, String id,String sharedType,String tags) {
 		SolrQuery solrParams = new SolrQuery();
-		solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
+		if (null != sharedType && sharedType.length() > 0) {
+
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
+		}
+		if (null != tags && tags.length() > 0) {
+
+			solrParams.addFilterQuery("tags:"+ ClientUtils.escapeQueryChars(tags));
+		}
+		solrParams.set("q", "title:" + ClientUtils.escapeQueryChars(Condition));
 		solrParams.set("fq", "!data_id:" + id);
-		solrParams.set("sort", "replySum desc");
 		solrParams.set("start", "0");
 		solrParams.set("rows", "10");
+		solrParams.set("sort", "score desc");
+		solrParams.set("defType", "edismax");
+		solrParams.set("mm", "30%");
 		QueryResponse rsp = new QueryResponse();
 		try {
 			rsp = sitesClient.query(solrParams);
@@ -465,11 +545,13 @@ public class SolrJUtils {
 	 *            第几页，默认第0页(页标从0开始)
 	 * @param rows
 	 *            每页几条数据，默认10条
+	 * @param sortType
+	 *            排序，默认按热度排序，传1，按时间排序
 	 * @return
 	 */
 
 	public static List<Object> findAll(String Condition, String sharedType, String protoType, String tags, String pages,
-			String rows) {
+			String rows,String sortType) {
 		List<Object> dataList = new ArrayList<Object>();
 		if(null!=protoType && protoType.length() > 0){	
 			//知识载体类型  文档:1 /文章:2 /课程:3  /站点:4  /  话题:5  /  书籍:6
@@ -494,17 +576,17 @@ public class SolrJUtils {
 		}else{
 			StringBuffer solrBase = new StringBuffer(SolrJUtils.solrIp).append(":").append(SolrJUtils.solrPort).append("/solr/");
 			StringBuffer solrShards = new StringBuffer();
-			solrShards.append(solrBase).append("topicsCore,").append(solrBase).append("docCore,").append(solrBase)
-					.append("coursesCore,").append(solrBase).append("bookCore,").append(solrBase).append("articleCore,").append(solrBase).append("sitesCore");
+			solrShards.append(solrBase).append("sitesCore,").append(solrBase).append("docCore,").append(solrBase)
+					.append("articleCore,").append(solrBase).append("coursesCore,").append(solrBase).append("bookCore,").append(solrBase).append("topicsCore");
 			String shards = solrShards.toString();
 			SolrQuery solrParams = new SolrQuery();
 			if (null != sharedType && sharedType.length() > 0) {
 	
-				solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+				solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
 			}
 			if (null != tags && tags.length() > 0) {
 	
-				solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+				solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
 			}
 	
 			if (null != pages && pages.length() > 0) {
@@ -525,15 +607,18 @@ public class SolrJUtils {
 	
 			if (null != Condition && Condition.length() > 0) {
 	
-				solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+				solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 			} else {
 	
 				solrParams.set("q", "*:*");
 			}
-	
+			
 			solrParams.set("shards", shards);// 设置shard
-			solrParams.set("sort", "replySum desc");
-	
+			if (null != sortType && sortType.length() > 0) {
+				solrParams.set("sort", "score desc,updateTime desc");
+			}else{
+				solrParams.set("sort", "score desc,replySum desc");
+			}
 			QueryResponse rsp = new QueryResponse();
 			try {
 				rsp = topicsClient.query(solrParams);
@@ -595,11 +680,11 @@ public class SolrJUtils {
 		SolrQuery solrParams = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
 
-			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
 		}
 		if (null != tags && tags.length() > 0) {
 
-			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
 		}
 
 		if (null != pages && pages.length() > 0) {
@@ -620,7 +705,7 @@ public class SolrJUtils {
 
 		if (null != Condition && Condition.length() > 0) {
 
-			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+			solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		} else {
 
 			solrParams.set("q", "*:*");
@@ -628,21 +713,21 @@ public class SolrJUtils {
 		
 		if("2".equals(sortType)){
 			
-			solrParams.set("sort", "createTime desc");
+			solrParams.set("sort", "score desc,id desc,sum(readSum,replySum,collectSum) desc");
 			
 		}else if("3".equals(sortType)){
 			
 			solrParams.addFilterQuery("replySum:0");
 			//等待回答的话题按照关注人数，创建时间排序
-			solrParams.set("sort", "collectSum desc,createTime desc");
+			solrParams.set("sort", "score desc,id desc,sum(readSum,collectSum) desc");
 			
 		}else if("4".equals(sortType)){
 			
-			solrParams.set("sort", "likeSum desc");
+			solrParams.set("sort", "score desc,replySum desc,id desc");
 			
 		}else
 		{
-			solrParams.set("sort", "replySum desc");
+			solrParams.set("sort", "score desc,sum(readSum,replySum,collectSum) desc");
 		}
 		QueryResponse rsp = new QueryResponse();
 		try {
@@ -686,11 +771,11 @@ public class SolrJUtils {
 		SolrQuery solrParams = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
 
-			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
 		}
 		if (null != tags && tags.length() > 0) {
 
-			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
 		}
 
 		if (null != pages && pages.length() > 0) {
@@ -711,13 +796,13 @@ public class SolrJUtils {
 
 		if (null != Condition && Condition.length() > 0) {
 
-			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+			solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		} else {
 
 			solrParams.set("q", "*:*");
 		}
 
-		solrParams.set("sort", "replySum desc");
+		solrParams.set("sort", "score desc,readSum desc,downSum desc,collectSum desc,likeSum desc,replySum desc");
 
 		QueryResponse rsp = new QueryResponse();
 		try {
@@ -761,11 +846,11 @@ public class SolrJUtils {
 		SolrQuery solrParams = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
 
-			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
 		}
 		if (null != tags && tags.length() > 0) {
 
-			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
 		}
 
 		if (null != pages && pages.length() > 0) {
@@ -786,16 +871,16 @@ public class SolrJUtils {
 
 		if (null != Condition && Condition.length() > 0) {
 
-			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+			solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		} else {
 
 			solrParams.set("q", "*:*");
 		}
 		
 		if("2".equals(sortType)){
-			solrParams.set("sort", "createTime desc");
+			solrParams.set("sort", "score desc, id desc,sum(replySum,collectSum) desc");
 		}else{
-			solrParams.set("sort", "replySum desc");
+			solrParams.set("sort", "score desc, sum(replySum,collectSum) desc,id desc");
 		}
 		QueryResponse rsp = new QueryResponse();
 		try {
@@ -843,11 +928,11 @@ public class SolrJUtils {
 		SolrQuery solrParams = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
 
-			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
 		}
 		if (null != tags && tags.length() > 0) {
 
-			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
 		}
 
 		if (null != pages && pages.length() > 0) {
@@ -868,13 +953,13 @@ public class SolrJUtils {
 
 		if (null != Condition && Condition.length() > 0) {
 
-			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+			solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		} else {
 
 			solrParams.set("q", "*:*");
 		}
 
-		solrParams.set("sort", "replySum desc");
+		solrParams.set("sort", "score desc,sum(replySum,readSum,likeSum,collectSum) desc,id desc");
 
 		QueryResponse rsp = new QueryResponse();
 		try {
@@ -916,11 +1001,11 @@ public class SolrJUtils {
 		SolrQuery solrParams = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
 
-			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
 		}
 		if (null != tags && tags.length() > 0) {
 
-			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
 		}
 
 		if (null != pages && pages.length() > 0) {
@@ -941,13 +1026,13 @@ public class SolrJUtils {
 
 		if (null != Condition && Condition.length() > 0) {
 
-			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+			solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		} else {
 
 			solrParams.set("q", "*:*");
 		}
 
-		solrParams.set("sort", "replySum desc");
+		solrParams.set("sort", "score desc,sum(replySum,readSum,likeSum,collectSum,downSum) desc,id desc");
 
 		QueryResponse rsp = new QueryResponse();
 		try {
@@ -989,11 +1074,11 @@ public class SolrJUtils {
 		SolrQuery solrParams = new SolrQuery();
 		if (null != sharedType && sharedType.length() > 0) {
 
-			solrParams.addFilterQuery("sharetype:\"" + ClientUtils.escapeQueryChars(sharedType)+"\"");
+			solrParams.addFilterQuery("sharetype:" + ClientUtils.escapeQueryChars(sharedType));
 		}
 		if (null != tags && tags.length() > 0) {
 
-			solrParams.addFilterQuery("tags:\"" + ClientUtils.escapeQueryChars(tags)+"\"");
+			solrParams.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tags));
 		}
 
 		if (null != pages && pages.length() > 0) {
@@ -1014,13 +1099,13 @@ public class SolrJUtils {
 
 		if (null != Condition && Condition.length() > 0) {
 
-			solrParams.set("q", "allcontent:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+			solrParams.set("q", "allcontent:" + ClientUtils.escapeQueryChars(Condition));
 		} else {
 
 			solrParams.set("q", "*:*");
 		}
 
-		solrParams.set("sort", "replySum desc");
+		solrParams.set("sort", "score desc,sum(replySum,readSum,likeSum,collectSum) desc,id desc");
 
 		QueryResponse rsp = new QueryResponse();
 		try {

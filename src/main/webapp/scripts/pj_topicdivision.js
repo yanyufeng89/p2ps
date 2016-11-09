@@ -15,8 +15,9 @@ function reloadPage() {
 	var sharedType = $("#filterCollapse li.first span.active").attr(
 			"data-index");
 	var tags = "";
-
-	window.location.href = projectName + "topics/fore/search/" + sharedType
-			+ "?Condition=" + Condition + "&sortType=" + sortType;
+	var uurl = encodeURI(projectName + "topics/fore/search/" + sharedType
+			+ "?Condition=" + Condition + "&sortType=" + sortType);
+	
+	window.location.href = uurl;
 
 }

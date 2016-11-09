@@ -88,6 +88,9 @@ public class TopicsController {
 		int userID = Integer.parseInt((String) request.getSession().getAttribute("userid"));
 		// 设置创建人
 		record.setCreateperson(userID);
+		// 如果悬赏值为0,话题状态为不悬赏(0),否则为等待悬赏                                 
+		//       回答采纳状态  1:已采纳   0:不悬赏  -1：取消悬赏 2:等待悬赏
+		record.setAcceptStatus(record.getRewardValue()==0||record.getRewardValue().equals(null)?0:2);
 		// 1.插入话题
 		record = topicsService.insert(record);
 		if(record!=null){
@@ -124,9 +127,9 @@ public class TopicsController {
 	 * @param sortType
 	 * @return
 	 */
-	@RequestMapping(value = "/getTopicsDetail")
+	@RequestMapping(value = "/getTopicsDetail/{topicId}")
 	@ResponseBody
-	public ModelAndView getTopicsDetail(HttpServletRequest request, HttpServletResponse response,@RequestParam(required=true) String topicId,
+	public ModelAndView getTopicsDetail(HttpServletRequest request, HttpServletResponse response,@PathVariable String topicId,
 			@RequestParam(required=false) String sortType,@RequestParam(required=false) String isAdmin) {
 		ModelAndView mv = new ModelAndView();
 		if(StringUtils.isBlank(sortType)){//默认为1  按照时间排序
@@ -140,7 +143,7 @@ public class TopicsController {
 			mv.setViewName("404");
 			return mv;
 		}
-//		logger.info("getTopicsDetail话题详情   包括话题的回答    粉丝列表   相关话题列表   sortType排序方式      1是时间排序      2是评论数排序    默认按照时间排序   TopicsComment record=== "+JSON.toJSONString(record)+"*****");
+//		logger.info("getTopicsDetail话题详情   包括话题的回答    粉丝列表   相关话题列表   sortType排序方式      1是时间排序      2是点赞数排序    默认按照时间排序   TopicsComment record=== "+JSON.toJSONString(record)+"*****");
 //		logger.info("****getTopicsDetail*******topicsDetail**"+JSON.toJSONString(topicsDetail));
 		
 		mv.addObject("topicsDetail", topicsDetail);
@@ -386,7 +389,7 @@ public class TopicsController {
 			if(user != null){
 				//邀请回答消息通知  
 				int ret = smsService.addNotice(user,request.getContextPath(),new Sms().getTABLENAMES()[2],record.getId(),
-						record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[23],record.getId(),
+						record.getObjCreatepersonPg(),80,record.getId(),
 						record.getTitle(),"");
 				logger.info("**askPeople 邀请别人回答    **");
 				if(ret > 0){
@@ -407,6 +410,158 @@ public class TopicsController {
 			baseResponse.setReturnMsg(e.getMessage());
 			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
 			logger.info("**askPeople 邀请别人回答    **请求失败 999 ********************"+e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
+	
+	/**
+	 * 采纳回答
+	 * id 话题id 
+	 * rewardValue 悬赏值
+	 * comId 所采纳的回复id
+	 * title 话题标题
+	 * priMsg 答复语
+	 */
+	@RequestMapping(value = "/acptAnswer")
+	@ResponseBody
+	public String acptAnswer(HttpServletRequest request, Topics topic, @RequestParam(required = true) Integer comId, @RequestParam(required = true)String priMsg, @RequestParam(required = true)String receiveUid) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			if (user != null) {
+				topic.setCreateperson(user.getUserid());
+				TopicsComment comment = new TopicsComment();
+				comment.setId(comId);
+				int ret = 0;
+				
+				//答复回答者
+				Sms sms = new Sms();
+				//接受者
+				sms.setReceivedid(Integer.parseInt(receiveUid));
+				//发送者
+				sms.setSenderid(user.getUserid());
+				//私信类型
+				sms.setSmstype(1);
+				sms.setSmscontent(priMsg);
+				if(StringUtils.isBlank(priMsg)){
+					 ret = topicsService.acptAnswer(topic, comment,sms);
+				}else{
+					
+					
+					ret = topicsService.acptAnswer(topic, comment,sms);
+				}
+				
+
+				if (ret > 0) {
+				
+					// 消息通知 被采纳人
+//					smsService.addNotice(user, request.getContextPath(), new Sms().getTABLENAMES()[2], topic.getId(),
+//							topic.getCreateperson(), 80, topic.getId(), topic.getTitle(), "");
+
+					// 消息通知 回答者
+					smsService.addNotice(user, request.getContextPath(), new Sms().getTABLENAMES()[2], topic.getId(),
+							Integer.parseInt(receiveUid), 110, topic.getId(), topic.getTitle(), "系统给您增加了"+topic.getRewardValue()+"财富值");
+
+					logger.info("**acptAnswer 采纳回答    **");
+
+				}
+
+				if (ret > 0) {
+					// baseResponse.setObj(topicsCommentPage);
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				} else {
+					baseResponse.setReturnMsg("发送通知失败");
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				}
+			} else {
+				baseResponse.setReturnMsg("用户未登录");
+				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			}
+			return JSON.toJSONString(baseResponse);
+
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**acptAnswer 采纳回答    **请求失败 999 ********************" + e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
+	/**
+	 * 取消悬赏、
+	 * id 话题id 
+	 * rewardValue 悬赏值
+	 * 
+	 */
+	@RequestMapping(value = "/cancelRewd")
+	@ResponseBody
+	public String cancelRewd(HttpServletRequest request, Topics record) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			User user = (User)request.getSession().getAttribute("user");
+			if(user != null){
+				record.setCreateperson(user.getUserid());
+				
+				//取消悬赏、
+				int ret = topicsService.cancelRewd(record);
+				logger.info("**cancelRewd 取消悬赏    **");
+				if(ret > 0){
+//					baseResponse.setObj(topicsCommentPage);
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				}else{
+					baseResponse.setReturnMsg("发送通知失败");
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				}
+			}else{
+				baseResponse.setReturnMsg("用户未登录");
+				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			}
+			return JSON.toJSONString(baseResponse);
+
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**cancelRewd 取消悬赏    **请求失败 999 ********************"+e.getMessage());
+			return JSON.toJSONString(baseResponse);
+		}
+	}
+	/**
+	 * 提高悬赏、
+	 * id 话题id 
+	 * rewardValue 悬赏值
+	 * 
+	 */
+	@RequestMapping(value = "/upRewd")
+	@ResponseBody
+	public String upRewd(HttpServletRequest request, Topics record,@RequestParam(required=true)int dValue) {
+		BaseResponse baseResponse = new BaseResponse();
+		try {
+			User user = (User)request.getSession().getAttribute("user");
+			if(user != null){
+				record.setCreateperson(user.getUserid());
+				
+				//提高悬赏、
+				int ret = topicsService.upRewd(record,dValue);
+				logger.info("**upRewd 提高悬赏    **");
+				if(ret > 0){
+//					baseResponse.setObj(topicsCommentPage);
+					baseResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				}else{
+					baseResponse.setReturnMsg("发送通知失败");
+					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				}
+			}else{
+				baseResponse.setReturnMsg("用户未登录");
+				baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			}
+			return JSON.toJSONString(baseResponse);
+
+		} catch (Exception e) {
+			baseResponse.setReturnMsg(e.getMessage());
+			baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("**upRewd 提高悬赏    **请求失败 999 ********************"+e.getMessage());
 			return JSON.toJSONString(baseResponse);
 		}
 	}

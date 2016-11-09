@@ -1,26 +1,31 @@
 <div tabindex="-1" class="zm-item-answer  zm-item-expanded">
   <div class="answer-head">
     <div class="zm-item-answer-author-info">
-       <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage?userid={$T.userid}' target="_blank">
        {#if $T.headicon}
           {#if $T.ispublic==1}
-          <img src="{$T.headicon}" class="zm-list-avatar avatar" data-userid="{$T.userid}" data-moduletype="0">
+          <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.userid}' target="_blank">
+            <img src="{$T.headicon}" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid="{$T.userid}" data-moduletype="0">
+          </a>
           {#else}
-          <img src="{$T.headicon}" class="zm-list-anonymous-avatar avatar" data-userid="{$T.userid}" data-moduletype="0">
+          <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-anonymous-avatar avatar lazy"  data-moduletype="0">
           {#/if}
        {#else}
          {#if $T.ispublic==1}
-          <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid="{$T.userid}" data-moduletype="0">
+         <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.userid}' target="_blank">
+          <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid="{$T.userid}" data-moduletype="0">
+         </a>
          {#else}
-          <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid="{$T.userid}" data-moduletype="0">
+          <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-anonymous-avatar avatar lazy"  data-moduletype="0">
          {#/if}
        {#/if}
        {#if $T.ispublic==1}
-	     <span class="author-link" data-tip="" target="_self"  data-userid='{$T.userid}' data-moduletype='0'>{$T.username}</span>
+         <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.userid}' target="_blank">
+	       <span class="author-link" data-tip="" target="_self"  data-userid='{$T.userid}' data-moduletype='0'>{$T.username}</span>
+	     </a>
 	   {#else}
-	     <span class="anonymous-user" data-tip="" target="_self"  data-userid='{$T.userid}' data-moduletype='0'>匿名用户</span>
+	     <span class="anonymous-user" data-tip="" target="_self"  data-moduletype='0'>匿名用户</span>
 	   {#/if}
-     </a>
+     
    </div>
   </div>
   <div class="zm-item-rich-text expandable js-collapse-body">
@@ -35,10 +40,10 @@
         <i class="z-icon-comment"></i>0条评论
      </a>
      <span class="meta-item">分享到</span>
-     <a href="javascript:void(0);" onclick="toShare(1,'{$T.topicname}');" class="log_sina png" title="分享到新浪微博"></a>
-     <a href="javascript:void(0);" onclick="toShare(2,'{$T.topicname}');" class="log_qq png" title="分享到QQ空间"></a>
-     <a href="javascript:void(0);" onclick="toShare(3,'{$T.topicname}');" class="log_wx png" title="分享到微信"></a>
+        <a href="javascript:void(0);" class="log_sina png" title="分享到新浪微博"></a>
+        <a href="javascript:void(0);" class="log_qq png"  title="分享到QQ空间"></a>
+        <a href="javascript:void(0);" class="log_wx png" title="分享到微信"></a>
      </div>
-    <div class="anscommtemplate"></div>
+    
   </div>
 </div>

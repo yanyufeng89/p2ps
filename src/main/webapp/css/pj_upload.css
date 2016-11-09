@@ -15,10 +15,7 @@
 	width: 980px;
 	background: url(../image/uploaddoc.png) no-repeat;	
 }
-.item-msg-content{
-	font-size:12px;
-	color:#666;
-}
+
 .upload-doc, .upload-course, .upload-topic,.upload-book,
 .upload-article, .upload-site ,.upload-share{
 	height:23px;
@@ -78,7 +75,7 @@
 }
 .bookdetail,.topicdetail,.docdetail{
 	font-size:12px;
-	color:#666;
+	color:#555;
 	margin-bottom:16px;
 	width: 1200px;
     margin: 0 auto;
@@ -109,7 +106,7 @@ a.upload-btn:hover{
 		scroll;
 }
 .upload-success-container .hd-wrap p a {
-	color: #666;
+	color: #555;
 }
 
 .upload-success-container .hd-wrap .goon-upload {
@@ -123,7 +120,7 @@ a.upload-btn:hover{
 	color: #fff;
 	font-size: 14px;
 	text-align: center;
-	border-radius: 2px;
+	border-radius: 4px;
 	text-decoration: none;
 	cursor: pointer;
 	margin-top: 16px;
@@ -266,7 +263,7 @@ a.upload-btn:hover{
 }
 
 #upload-init-container .drag-tips {
-	color: #666;
+	color: #555;
 	font-size: 16px;
 	width: 400px;
 	margin: 0 auto;
@@ -292,7 +289,7 @@ a.upload-btn:hover{
 
 .upload-intro-query h4 {
 	font-size:15px;
-	color:#090909;
+	color:#333;
 	display: inline-block;
 }
 .upload-intro-query .pj-encourage{
@@ -304,7 +301,7 @@ a.upload-btn:hover{
     width: 900px;
 }
 .upload-intro-query h4 span {
-	color: #666;
+	color: #555;
 	font-size: 13px;
 	margin-left: 3px
 }
@@ -316,7 +313,7 @@ a.upload-btn:hover{
     text-align: left;
     float: left;
     font-size: 12px;
-    color: #666;
+    color: #555;
 }
 
 
@@ -328,16 +325,16 @@ a.upload-btn:hover{
 .successupload-notice {
 	padding: 32px 0 60px 115px;
 	font-size: 12px;
-	color:#666;
+	color:#555;
 }
 .upload-notice h4,.successupload-notice h4{
 	font-size: 15px;
-	color:#090909;
+	color:#333;
 }
 
 .upload-notice ol,.successupload-notice ol{
 	line-height:3;
-	color:#666;
+	color:#555;
 }
 
 .uploadinfo {
@@ -412,7 +409,7 @@ a.upload-btn:hover{
 
 .mod-upload .titleinfo,.sharedetail .titleinfo{
 	position:relative;
-	color: #666;
+	color: #555;
 	cursor: pointer;
 	text-decoration: none;
 	font-size: 14px;
@@ -422,7 +419,7 @@ a.upload-btn:hover{
 
 .mod-upload .titlename,.sharedetail .titlename {
 	font-size: 12px;
-	color:#666;
+	color:#555;
 }
 
 .mod-upload .link,.sharedetail .link{
@@ -437,8 +434,8 @@ a.upload-btn:hover{
 	height: 32px;
 	line-height:32px;
 	border: 1px solid #cdcdcd; 
-	border-radius: 2px 0 0 2px;
-	color: #090909;
+	border-radius: 4px 0 0 4px;
+	color: #333;
     font-size: 12px;
     width: 640px;
 	float:left;	
@@ -453,7 +450,7 @@ a.upload-btn:hover{
     line-height: 30px;
     width: 80px;
     cursor: pointer;
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 4px 4px 0;
     border-left: 0;
     float: left;
 }
@@ -479,8 +476,8 @@ a.upload-btn:hover{
 	box-sizing: border-box;
 	float: none;
 	outline:none;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
 }
 
 .mod-upload .bddoc .link .file{
@@ -508,11 +505,11 @@ a.upload-btn:hover{
     height: 30px;
     text-align: center;
     float: right;
-    border-radius:2px;
+    border-radius:4px;
     font-size:14px;
     border: 1px solid #e5e5e5;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
 }
 
 .mod-upload .bar>div {
@@ -554,14 +551,14 @@ a.upload-btn:hover{
 }
 .btn-blue, .btn-disblue {
 	color: #fff;
-	margin:10px 0 0 20px;
+	margin:10px 0 0 10px;
 }
 
 .btn {
 	border: 1px solid #EAE5E5;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 	min-width: 80px;
 	display: inline-block;
 	padding: 0 6px;
@@ -587,8 +584,8 @@ a.upload-btn:hover{
     line-height:30px;
     cursor: pointer;
     opacity: 0;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
 }
 .mod-upload .bar .btn-loading {
 	right: 0;
@@ -690,7 +687,7 @@ a.upload-btn:hover{
 	line-height: 35px;
 	text-align: center;
 	font-size: 16px;
-	border-radius: 2px;
+	border-radius: 4px;
 	display: inline-block;
 	*display: inline;
 	*zoom: 1;
@@ -713,7 +710,7 @@ a.upload-btn:hover{
 	line-height: 35px;
 	text-align: center;
 	font-size: 16px;
-	border-radius:2px;
+	border-radius:4px;
 	display: inline-block;
 	*display: inline;
 	*zoom: 1;
@@ -897,7 +894,7 @@ a.upload-btn:hover{
 	border-top-color: #bebebe;
 	border-left-color: #bebebe;
 	font-size: 14px;
-	color: #666;
+	color: #555;
 }
 
 .mod-upload .upload-item .item-pay-price .input-wrap, .mod-upload .upload-item .item-pay-free-page .input-wrap{
@@ -977,7 +974,7 @@ a.upload-btn:hover{
 
 .mod-upload .upload-item .item-privacy p, .mod-upload .upload-item .item-pay-download p
 	{
-	_padding: 2px 0
+	_padding: 4px 0
 }
 
 .mod-upload .upload-item .item-privacy p label, .mod-upload .upload-item .item-pay-download p label
@@ -1010,7 +1007,7 @@ a.upload-btn:hover{
 	float: none;
 	width: auto;
 	font-weight: 700;
-	color: #666;
+	color: #555;
 	font-size: 12px;
 	line-height: 1.5
 }
@@ -1108,7 +1105,7 @@ a.upload-btn:hover{
 .mod-upload .upload-item .category-text, .mod-upload .upload-item .price-text,
 	.mod-upload .upload-item .favorites-text {
 	_position: relative;
-	_top: 2px
+	_top: 4px
 }
 
 .mod-upload .upload-item .ic-btn {
@@ -1354,22 +1351,22 @@ a.upload-btn:hover{
 
 .mod-upload .item-op .item-ctrl .gbma-u {
 	border-bottom-color: gray;
-	top: -2px
+	top: -4px
 }
 
 .mod-upload .item-op .item-ctrl .gbma-d {
 	border-top-color: gray;
-	top: -2px
+	top: -4px
 }
 
 .mod-upload .item-op .item-ctrl:hover .gbma-u {
 	border-bottom-color: #52bf9b;
-	top: -2px
+	top: -4px
 }
 
 .mod-upload .item-op .item-ctrl:hover .gbma-d {
 	border-top-color: #52bf9b;
-	top: -2px
+	top: -4px
 }
 
 .mod-upload .item-disabled .item-title-input, .mod-upload .item-disabled .item-keyword-input,
@@ -1567,14 +1564,14 @@ a.upload-btn:hover{
 	color:red;
 }
 .upload-success-container .hd-wrap p a ,.checkshare{
-	color: #666;
+	color: #555;
 }
 .checkshare:hover{
 	text-decoration: underline;
 }
 .addtreasure{
 	font-size:12px;
-	color:#666;
+	color:#555;
 }
  .upload-success-container .hd-wrap .goon-upload:hover {
 	background-color: #0867c5;
@@ -1582,7 +1579,7 @@ a.upload-btn:hover{
 
 .upload-success-container h1 {
 	line-height: 40px;
-	color: #090909;
+	color: #333;
 	width: 234px;
 	text-align: right;
 	margin: 0 auto;
@@ -1590,7 +1587,7 @@ a.upload-btn:hover{
 }
 .upload-success-container .congrats{
 	line-height:50px;
-	color: #090909;
+	color: #333;
 	margin-top:50px;
     font-size: 20px;
 }
@@ -1598,7 +1595,7 @@ a.upload-btn:hover{
 	font-size: 14px;
 	color: #19a97b;
 	margin-left: 11px;
-	vertical-align: 2px
+	vertical-align: 4px
 }
 
 .upload-success-container .ic-success {
@@ -1635,7 +1632,7 @@ a.upload-btn:hover{
 	float: right;
 	cursor: pointer;
 	font-size: 12px;
-	color: #666;
+	color: #555;
 	margin-top: 8px
 }
 
@@ -2117,7 +2114,7 @@ a.upload-btn:hover{
 .booksedit table td.name,.articlesedit table td.name{
 	width: 60px;
 	text-align: right; 
-	color: #090909;
+	color: #333;
     font-size: 14px;
     display:inline-block;
 }
@@ -2141,7 +2138,7 @@ a.upload-btn:hover{
     font-size: 14px;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-width: 0.4px;
     -moz-osx-font-smoothing: grayscale;
 }
 .articleicon{
@@ -2162,7 +2159,6 @@ a.upload-btn:hover{
 }
 .editupload dd:nth-child(2){
 	width:38%;
-	z-index: 9999;
 	position: relative;
 }
 
@@ -2171,7 +2167,6 @@ a.upload-btn:hover{
 }
 .editlayoutarticle dd:nth-child(2){
 	width:32%;
-	z-index:9999;
     position: relative;
 }
 #upload-list div:not(:first-child) .editupload{
@@ -2182,18 +2177,18 @@ a.upload-btn:hover{
 	border-right: dashed 1px #ccc;
 }
 
-.booksedit .titles, .booksedit .number, .booksedit .content, .booksedit .warning,.booksedit .bookcontent{
+.booksedit .titles, .booksedit .number, .booksedit .content, .booksedit .warning,.booksedit .bookcontent,.add-brief-form{
     padding: 5px;
     line-height: 20px;
     width: 93.8%;
     border: solid 1px #ccc;
     background:#f9f9f9;
-    color: #999;
+    color: #555;
     font-size: 12px;
     height: 25px;
     display: block;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
 }
  .booksedit .content {
 	height: 120px!important;
@@ -2207,8 +2202,12 @@ a.upload-btn:hover{
 }
 .btn-cancleupload{
 	float:right;
-	margin: 14px 0 0 20px;
-    text-decoration: none;
+	margin:11px 0 0 20px;
+    height:28px;
+    line-height:28px;
+    width: 60px;
+    text-align: center;
+    border: 1px solid #e5e5e5;
 }
 .price-select-wrap .btn-price {
 	background: url(../image/bar_bg_3d56035.png) repeat-x;
@@ -2219,7 +2218,7 @@ a.upload-btn:hover{
 	border: 1px solid #c1c1c1;
 	cursor: pointer;
 	outline: 0;
-	color: #666;
+	color: #555;
 	font-size: 14px;
 }
 
@@ -2243,7 +2242,7 @@ a.upload-btn:hover{
 .edit-table ul {
 	width: 100%;
 	overflow: hidden;
-    color:#666;
+    color:#555;
    	font-size:12px;
 }
 
@@ -2338,7 +2337,7 @@ a.upload-btn:hover{
 #upload-init-container .nhd .btn-edit-all {
 	font-weight: 400;
 	text-decoration: underline;
-	color: #666;
+	color: #555;
 	font-size: 14px;
 	background: 0 0;
 }
@@ -2355,7 +2354,7 @@ a.upload-btn:hover{
 	line-height: 30px;
 	text-align: center;
 	font-size: 14px;
-	border-radius: 2px;
+	border-radius: 4px;
 	display: inline-block;
 	text-decoration: none;
 	cursor:pointer;
@@ -2370,7 +2369,7 @@ a.upload-btn:hover{
 }
 .nhd .item-message-all {
 	font-size: 20px;
-	color: #666;
+	color: #555;
 }
 #upload-files-container .nhd .errors{
 	display:none;
@@ -2407,9 +2406,8 @@ a.upload-btn:hover{
 	background-color:#fff;
 	text-align: center;
 	font-size: 14px;
-	border-radius: 2px;
+	border-radius: 4px;
 	display: inline-block;
-	text-decoration: none;
 	border: 1px solid #e5e5e5;
 	float:left;
 	
@@ -2439,9 +2437,15 @@ a.upload-btn:hover{
 }
 .edit-table .ispublic{
 	font-size:14px;
-	color: #090909;
+	color: #333;
 	float:right;
 	margin-right:22px;
+}
+.article-ispublic{
+	font-size:14px;
+	color: #333;
+	margin-left:14px;
+	
 }
 .uploadinfobook {
 	border-top: 1px solid #cacaca;
@@ -2479,7 +2483,7 @@ a.upload-btn:hover{
 .editlayoutbook .zm-tag-editor-editor,.editlayoutarticle .zm-tag-editor-editor{
     box-shadow: 0 1px 3px rgba(0,0,0,.1) inset;
     border: 1px solid #ccc!important;
-    padding:3px 8px 2px;
+    padding:3px 8px 4px;
     position: relative;
     width: 300px;
     background: #f9f9f9;
@@ -2503,14 +2507,14 @@ a.upload-btn:hover{
 
 #js-before-ask,.mod-upload .link .articledocument{
 	cursor:auto;
-	border-radius: 2px 0 0 2px;
+	border-radius: 4px 0 0 4px;
 	width: 720px;
     float: left;
     padding-left: 10px;
     height: 32px;
     line-height:32px;
     border: 1px solid #cdcdcd;
-    color: #090909;
+    color: #333;
     font-size: 12px;
     box-sizing: border-box;
     outline: none;
@@ -2521,8 +2525,8 @@ a.upload-btn:hover{
     border: 0 none;
     font-size: 12px;
     outline:none;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
     background: #f9f9f9;
 }
 .editlayoutbook  .label-input-label,.editlayoutarticle  .label-input-label{
@@ -2564,7 +2568,7 @@ a.upload-btn:hover{
     font-size: 12px;
 }
 #uploadtopic-list .zg-editor-input,#pj-article-suggest-title-content{
-    color: #666;
+    color: #555;
     font-size: 12px;
     line-height: 25px;
     min-height: 30px;
@@ -2573,15 +2577,15 @@ a.upload-btn:hover{
     resize: none;
     border: solid 1px #ccc;
     outline: none;
-    font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+    font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
     background: #f9f9f9;
 }
 #pj-article-suggest-title-content{
 	border-bottom:0!important;
 	width:96.7%!important;
 	font-size: 20px;
-    color: #090909;
+    color: #333;
     font-weight: bold;
     height: 38px;
     line-height:38px;
@@ -2616,7 +2620,7 @@ a.upload-btn:hover{
 	 margin-top:-18px!important;
 }
 .add-course-title-form .courseinfo span {
-    color: #666;
+    color: #555;
     margin-right: 10px;
     font-weight: 500;
 }
@@ -2624,4 +2628,19 @@ a.upload-btn:hover{
 	display:none;
 	font-size: 12px;
     font-weight: 400;
+}
+.add-title-form{
+	height:14px;
+	line-height: 14px;
+    width: 535px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.add-brief-form{
+	height: 100px;
+    margin-top: -22px;
+    border-top: 0;
+    width: 545px!important;
 }

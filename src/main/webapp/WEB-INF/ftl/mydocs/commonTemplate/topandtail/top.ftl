@@ -2,7 +2,7 @@
       <div class="header-row">
           <div class="header-alignleft">
              <div class="header-contact-info">
-                <img src="/image/website-banners.png" class="img-responsive">
+                <img src="/image/website-banners.png" alt='网站横幅 ' class="img-responsive lazy">
              </div>
           </div>
           <div class="header-alignright">
@@ -70,7 +70,7 @@
         <div class="box top-search-box">
           <div class="navbar-header">
             <a class="navbar-brand" href="/index">
-               <img src="/image/pluslogo.png" class="img-responsive">
+               <img src="/image/pluslogo.png" alt='JobPlus' class="img-responsive lazy">
             </a>
           </div>
           <ul class='pj_tnav_wrap'>

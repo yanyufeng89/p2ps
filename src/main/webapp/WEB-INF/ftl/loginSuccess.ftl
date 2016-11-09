@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-        登录成功
+        登录成功-JobPlus
     </title>
-    <meta name="viewport" content="width=1230"/>
+    
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>

@@ -97,7 +97,7 @@ public class ArticleShareServiceImpl implements IArticleShareService {
 			
 			//添加消息通知
 			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[13],record.getArticleid(),
-					record.getObjCreatepersonPg(),new Sms().getSMSTYPES()[14],record.getId(),record.getObjectNamePg(),"");
+					record.getObjCreatepersonPg(),42,record.getId(),record.getObjectNamePg(),"");
 			
 			return record;
 		} else {

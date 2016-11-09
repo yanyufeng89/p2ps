@@ -20,7 +20,7 @@
 	UNION all
 	select cs.ID as id ,cs.coursesName as title, cs.createTime as createtime,'tbl_courses' as type   from tbl_courses cs where <!--  TO_DAYS(NOW())-TO_DAYS(cs.createTime) <![CDATA[ < ]]> 10 and --> cs.isValid='1'  and cs.userId = #{userid , jdbcType=INTEGER}
 	UNION all
-	select art.ID as id ,art.title as title, art.createTime as createtime,'tbl_article' as type   from tbl_article art where <!--  TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and --> art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER}
+	select art.ID as id ,art.title as title, art.createTime as createtime,'tbl_article' as type   from tbl_article art where <!--  TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and --> art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER} and art.ispublic='1'
 	UNION all
 	select sit.ID as id ,sit.title as title, sit.createTime as createtime,'tbl_sites' as type   from tbl_sites sit where <!--  TO_DAYS(NOW())-TO_DAYS(sit.createTime) <![CDATA[ < ]]> 10 and  -->sit.isValid='1'  and sit.userId = #{userid , jdbcType=INTEGER}  
 	ORDER BY createTime desc
@@ -47,7 +47,7 @@
 		UNION all
 		select count(*)  as countRs from tbl_courses cs where  <!-- TO_DAYS(NOW())-TO_DAYS(cs.createTime) <![CDATA[ < ]]> 10 and --> cs.isValid='1'  and cs.userId = #{userid , jdbcType=INTEGER}
 		UNION all
-		select count(*)  as countRs from tbl_article art where  <!-- TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and  -->art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER}
+		select count(*)  as countRs from tbl_article art where  <!-- TO_DAYS(NOW())-TO_DAYS(art.createTime) <![CDATA[ < ]]> 10 and  -->art.isValid='1'  and art.userId = #{userid , jdbcType=INTEGER} and art.ispublic='1'
 		UNION all
 		select count(*)  as countRs from tbl_sites sit where  <!-- TO_DAYS(NOW())-TO_DAYS(sit.createTime) <![CDATA[ < ]]> 10 and --> sit.isValid='1'  and sit.userId = #{userid , jdbcType=INTEGER}  ) as tb) aa
   </select>
@@ -69,8 +69,8 @@
     from ${tableName}
     where ${tableColumn2} = #{userid,jdbcType=INTEGER} and isValid=1
     <choose>
-		<when test="tableName =='tbl_topics' or tableName =='tbl_docs'">
-		<!-- 转换成功  -->
+		<when test="tableName =='tbl_topics' or tableName =='tbl_docs' or tableName =='tbl_article'">
+		<!-- 转换成功   必须是 公开的   -->
 		and	isPublic = 1
 		</when>
 	</choose> 
@@ -94,8 +94,9 @@
 	select count(*) from ${tableName} where ${tableColumn2} =
 	#{userid,jdbcType=INTEGER} and isValid=1
 	<choose>
-		<when test="tableName =='tbl_topics' or tableName =='tbl_docs'">
-			and isPublic = 1
+		<when test="tableName =='tbl_topics' or tableName =='tbl_docs' or tableName =='tbl_article'">
+		<!-- 转换成功   必须是 公开的   -->
+		and	isPublic = 1
 		</when>
 	</choose>
 	<choose>

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             分享书籍
+             分享书籍-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/css/jquery.pinwheel-0.1.0.css">
@@ -35,7 +35,7 @@
                    <div class="bdbook" style="">
 				         <div class='titleinfo'>
 	                       <span>【书籍】</span>
-	                       <span style='font-weight:500'>请输入分享的书籍名称</span>
+	                       <span style='font-weight:500'>请输入推荐的书籍名称</span>
 						 </div>
 	                     <div class="link after">
 	                        <input type='hidden' name='isverify' value='0'>
@@ -105,23 +105,18 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要推荐与之无关的书籍;
                       </li>
                       <li>
-                        2.如果您发现一本好书，可以分享给更多的人并给出你的见解，让他们可以找这本书;
+                        2.输入推荐的书籍名称, 按回车键或点击"√"， 选择你要推荐的书籍。 如果发现没有您要推荐的书籍,请把书籍的相关信息发到我们的邮箱service@jobplus.com.cn, 我们会尽快为你添加;
                       </li>
                       <li>
                        3.禁止分享低俗、含有淫秽色情及低俗信息等书籍;
                       </li>
                       <li>
-                        4.书籍分享有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                     服务条款
-                        </a>
-                        和
-                        <a href="#" target="_self">
-                     帮助中心
-                        </a>
+                        4.书籍推荐有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
@@ -236,13 +231,18 @@
                     </h4>
                     <ol>
                       <li>
-                        1.书籍分享一定要选择分类及标签,方便记录、查询以及搜索;
+                        1.推荐书籍时必须对该书籍填写推荐理由，可以让别人更加清晰的了解该书籍的相关内容;
                       </li>
                       <li>
-                        2.多个标签之间要用逗号隔开,便于区分;
+                        2.书籍推荐一定要选择分类及标签,方便记录、查询以及搜索;
                       </li>
                       <li>
-                        3.匿名分享的书籍将不能查找分享者是谁,系统自动添加前缀为匿名用户;
+                        3.多个标签之间要用逗号隔开,便于区分;
+                      </li>
+                     <li>
+                        4.书籍推荐有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>

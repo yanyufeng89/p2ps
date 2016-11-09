@@ -1,0 +1,299 @@
+.wrap {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.bc {
+    margin: 0 auto;
+}
+.wrap .title {
+    height: 9rem;
+    line-height: 9rem;
+    background: #0867c5;
+}
+.wrap .top span.back-btn {
+    width:5.2rem;
+    background: url(../image/wap_logo.png) no-repeat center center;
+    left:3.4rem;
+}
+
+.wrap .top div.nav-btn {
+    width:5.2rem;
+    background: url(../image/nav_btn.png) no-repeat center center;
+    right:3.4rem;
+}
+.wrap .top span.back-btn, .wrap .title div.nav-btn {
+    display: block;
+    height: 9rem;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+}
+.main,.relatedcontent{
+	background:#fff;
+}
+.main{
+	margin-bottom:2rem;
+    box-shadow: 0 2px 1px #e7e7e7;
+}
+.plus-main-content-inner,.book-introduction{
+    padding: 3rem 3.4rem 0 3.4rem;
+    zoom:1;
+    overflow:hidden;
+} 
+.detail{
+	padding: 0 3.4rem 0 3.4rem;
+	
+}
+.titlename{
+	color:#333;
+	font-size:3.2rem;
+}
+.authorinfo .uname, .authorInfo .uname {
+    width:6rem;
+    height:6rem;
+    border-radius: 50%;
+    margin:3rem 2rem 3rem 0;
+    vertical-align: middle;
+}
+.authorInfo{
+	font-size:2.2rem;
+}
+.meta-top{
+	padding-left:20px;
+	color:#999;
+}
+.mainContent{
+	font-size: 2.8rem;
+    color: #2c2c2c;
+    text-align: justify;
+    line-height: 4rem;
+}
+.statistical-data{
+	padding:5rem 0 3rem 0;
+	color:#999;
+	font-size:2.2rem;	
+}
+.related-data{
+	padding:3.4rem 0 3rem 3.4rem;
+	color:#999;
+	font-size:1.6rem;	
+}
+.statistical-data span,.related-data span{
+	margin-right:2rem;
+}
+.search-box{
+	zoom:1;
+	overflow:hidden;
+	position: relative;
+	margin: 0 20%;
+	font-size: 2.8rem;
+	font-weight: 400;
+	text-align: center;
+	display: block;
+	word-wrap: normal;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #fff;
+	padding-top: 1.3rem;
+}
+i[class^=z-icon-], i[class*=" z-icon-"] {
+    display: inline-block;
+    line-height: 10px;
+    vertical-align: middle;
+    background-image: url(../image/wap-icon.png);
+    background-repeat: no-repeat;
+    margin-right: 5px;
+}
+.z-icon-thank {
+    width:20px;
+    height:20px;
+    background-position:0 0;
+}
+.z-icon-preview {
+    width: 25px;
+    height: 16px;
+    background-position: -32px -4px;
+}
+.z-icon-playtour {
+    width: 16px;
+    height: 22px;
+    background-position: -72px 0;
+}
+.userrecommend{
+	padding:2rem 3.4rem 1.6rem 3.4rem;
+	font-size:2.6rem;
+	color: #2c2c2c;
+}
+.detail-list:before, .detail-list:after{
+    content: '';
+    display: table;
+}
+.detail .item {
+    padding-top: 1.6rem;
+    font-size:2.4rem;
+    border-top: 1px solid #e5e5e5;
+}
+.detail .item .media-left {
+    height:6rem;
+    line-height:6rem;
+    color: #999;
+}
+.detail .item .media-left a{
+    /* font-size: 1.375em; */
+    cursor: pointer;
+}
+.detail .item .media-left .uhead img{
+    float: left;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.detail .item .media-right .reason {
+    margin-top:2rem;
+    font-size:2.4rem; 
+    color: #2c2c2c;
+    word-wrap: break-word;
+    word-break: normal;
+    text-align: justify;
+}
+.detail .item .media-right .operate {
+    padding: 3rem 0 2rem 0;
+    color: #999;
+}
+.zg-btn-white.zu-button-more {
+    display: block;
+    font-size: 1.2rem;
+    margin-top:20px;
+    height: 4.1rem;
+    line-height: 4.1rem;
+    width: 100%;
+    position: relative;
+    background: #f9f9f9!important;
+}
+.zg-btn-white {
+    border: 1px solid #bbb;
+    text-shadow: none!important;
+    box-shadow: 0 1px 0 #fff inset,0 1px 0 rgba(0,0,0,.1);
+    text-decoration: none!important;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    border-radius:4px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    font-family:  Arial,'微软雅黑';
+    _font-family:  Arial,'微软雅黑';
+}
+.bookmain-left{
+	position:relative;
+    float: left;
+    margin-right:2rem;
+}
+.bookmain-right{
+	/* float: left;
+	width:67%; */
+	text-align: justify;
+}
+.book-content,.course-content{
+	padding-bottom:4rem;
+}
+.course-content{
+	border-bottom:1px dotted #e5e5e5;
+}
+.headline{
+	font-size:2.8rem;
+	font-weight:bold;
+	color:#2c2c2c;
+	margin-bottom:1.2rem;
+	
+}
+.author,.press,.coursedes{
+	font-size:2.2rem;
+	color:#999;
+	margin-bottom:1.2rem;
+}
+.link{
+	font-size:2.8rem;
+	color:#2c2c2c;
+	margin:1.6rem 0 1.6rem 0;
+}
+.purchaseurl{
+	width: 17.8rem;
+    height:5rem;
+    font-size:2.4rem;
+    line-height: 5rem;
+     display: inline-block;
+    _display: inline!important;
+    border:1px solid #0867c5;
+    margin-top: 0.8rem;
+    color:#0867c5;
+}
+.book-introduction{
+	border-top: 1px solid #e5e5e5;
+	padding-top:4rem;
+	padding-bottom:4rem;
+}
+.description,.description label{
+	position: relative;
+	font-size:2.6rem;
+	color:#2c2c2c;
+	text-align: justify;
+    line-height: 4rem;
+}
+.tool-height{
+	height:19.4rem;
+    overflow: hidden;
+}
+.course-height{
+	height:12.8rem;
+    overflow: hidden;
+}
+.slidedown {
+    position: absolute;
+    right: 0;
+    bottom: -6px;
+    text-align: left;
+    background: #fff;
+    width:28rem;
+}
+.showall{
+	cursor: pointer;
+	color: #1b85d5;
+	font-size:2.2rem;
+	margin-left:2rem;
+} 
+.slide {
+    cursor: pointer;
+    display: none;
+    color: #1b85d5;
+    font-size:2.6rem;
+}
+.slideup {
+    text-align: right;
+    line-height: 3rem;
+}
+.slide:hover{
+	color:#0867c5;
+}
+.slideup span {
+    background: url(../image/stup.png) left center no-repeat;
+    padding-left: 14px;
+}
+.tip{
+	    margin-right:1rem;
+}
+.uncomment {
+    color: #D0D6D9;
+    font-size: 2.4rem;
+    text-align: center;
+    padding-bottom:1rem;
+}
+.control-display{
+    display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp:1;
+	word-break: break-all;
+	overflow: hidden;
+}

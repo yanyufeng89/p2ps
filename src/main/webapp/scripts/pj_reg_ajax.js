@@ -77,8 +77,8 @@ function reg_checkAjax(id){
 		 update_html(id,"0",msg);
 		 return false;
     	}
-       else if(obj.length<6 || obj.length>18 ){
-    	 msg='合法长度为6-18个字符';
+       else if(obj.replace(/[^x00-xFF]/g,'**').length<4 || obj.replace(/[^x00-xFF]/g,'**').length>18 ){
+    	 msg='合法长度为4-18个字符';
 		 update_html(id,"0",msg);
 		 return false;
     	}
@@ -345,27 +345,29 @@ function sendmsg(obj,mtype){
 	var messagetype=$(obj).attr('data-messagetype');
 	var moblie=$("#email").val();
 	var authcode=$("#CheckCode").val();
-	reg_checkAjax("email")
-	if(!istrue){
-		return false;
-	};
-	if(!reg.test(moblie)&&!myreg.test(moblie)){
-		layer.msg('请输入正确的手机号码！', {offset:'36%',shade:0.3,shadeClose:true});
-		return false;
+	if(mtype!='forgetpw'){
+		reg_checkAjax("email");
+		if(!istrue){
+			return false;
+		};
+		if(!reg.test(moblie)&&!myreg.test(moblie)){
+			layer.msg('请输入正确的手机号码！', {offset:'36%',shade:0.3,shadeClose:true});
+			return false;
+		}
+		if(authcode==""){
+			layer.msg('请输入验证码！', {offset:'36%',shade:0.3,shadeClose:true});
+			return false;
+		}
+		var checkCode="";
+		$("#vcode_imgs1 div span").each(function(){
+			checkCode+=$(this).text();
+		});
+		if($.trim($("#CheckCode").val().toLowerCase())!= $.trim(checkCode.toLowerCase())){
+		  layer.msg('请输入正确的验证码！', {offset:'36%',shade:0.3,shadeClose:true});
+		  return false;  
+		}
 	}
-	if(authcode==""){
-		layer.msg('请输入验证码！', {offset:'36%',shade:0.3,shadeClose:true});
-		return false;
-	}
-	var checkCode="";
-	$("#vcode_imgs1 div span").each(function(){
-		checkCode+=$(this).text();
-	});
-	if($.trim($("#CheckCode").val().toLowerCase())!= $.trim(checkCode.toLowerCase())){
-	  layer.msg('请输入正确的验证码！', {offset:'36%',shade:0.3,shadeClose:true});
-	  return false;  
-	}
-	
+
 	//mtype 不同表示两个界面 一个是找回密码界面获取验证码  一个是注册界面获取验证码
 	if(mtype=='forgetpw'){
 		if(messagetype=='1'){

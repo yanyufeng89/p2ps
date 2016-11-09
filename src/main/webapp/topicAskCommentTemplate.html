@@ -1,45 +1,54 @@
 <!-- 回答里面的评论 -->
 <div class="comment-app-holder">
   <div class="_CommentBox_root_G_1m _CommentBox_bordered_3Fo-" data-count='{$T.topiccount}'>
-    <i class="icon icon-spike" data-reactid=".0.0" style="left: 120px;"></i>
+    <i class="icon icon-spike" data-reactid=".0.0" style="left: 110px;"></i>
     <div class="_CommentBox_list_10_K" data-reactid=".0.2">
        {#foreach $T.topicscommentList as commlist}
       <div class="_CommentItem_root_PQNS" tabindex="-1" aria-label="" data-id="{$T.commlist.typeid}">
-
-         <a href='/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" tabindex="-1" data-userid='{$T.commlist.userid}' data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
-    
          {#if $T.commlist.tmpHeadIcon}
-            <img tabindex="-1" class="Avatar" data-userid='{$T.commlist.userid}' src="{$T.commlist.tmpHeadIcon}" data-moduletype="0">
+           {#if $T.commlist.tmpUserName}
+           <a href='/myHome/getHomePage/{$T.commlist.userid}' target="_blank" tabindex="-1" data-userid='{$T.commlist.userid}' data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
+              <img tabindex="-1" class="Avatar lazy" alt="个人头像" data-userid='{$T.commlist.userid}' src="{$T.commlist.tmpHeadIcon}" data-moduletype="0">
+           </a>
+           {#else}
+              <img tabindex="-1" class="Avatar lazy" alt="个人头像"  src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+           {#/if}
          {#else}
-            <img tabindex="-1" class="Avatar" data-userid='{$T.commlist.userid}' src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+           {#if $T.commlist.tmpUserName}
+           <a href='/myHome/getHomePage/{$T.commlist.userid}' target="_blank" tabindex="-1" data-userid='{$T.commlist.userid}' data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
+              <img tabindex="-1" class="Avatar lazy" alt="个人头像" data-userid='{$T.commlist.userid}' src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+           </a>
+           {#else}
+              <img tabindex="-1" class="Avatar lazy" alt="个人头像"  src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+           {#/if}
          {#/if}
-        </a>
+
         <div class="_CommentItem_body_3qwB" data-reactid="">
           <div class="_CommentItem_header_2JGh" data-reactid="">
            {#if $T.commlist.commentby}
-
-               <a href='/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" class="zg-link" data-userid='{$T.commlist.userid}' data-moduletype="0">
-           
               {#if $T.commlist.tmpUserName}
+                <a href='/myHome/getHomePage/{$T.commlist.userid}' target="_blank" class="zg-link" data-userid='{$T.commlist.userid}' data-moduletype="0">
                    {$T.commlist.tmpUserName}
-               {#else}
+                </a>
+              {#else}
                                           匿名用户
               {#/if}
-            </a>
+           
            <span class="desc">回复 </span>
 
-            <a href='/myHome/getHomePage?userid={$T.commlist.commentby}' target='_blank' class="zg-link"  data-userid='{$T.commlist.commentby}' data-moduletype="0" data-original_title="{$T.commlist.commentbyUserName}">{$T.commlist.commentbyUserName}</a>
+            <a href='/myHome/getHomePage/{$T.commlist.commentby}' target='_blank' class="zg-link"  data-userid='{$T.commlist.commentby}' data-moduletype="0" data-original_title="{$T.commlist.commentbyUserName}">{$T.commlist.commentbyUserName}</a>
        
            {#else}
 
-             <a  href='/myHome/getHomePage?userid={$T.commlist.userid}' target="_blank" class="zg-link"  data-userid="{$T.commlist.userid}" data-moduletype="0">
-         
+             
 		       {#if $T.commlist.tmpUserName}
+		         <a  href='/myHome/getHomePage/{$T.commlist.userid}' target="_blank" class="zg-link"  data-userid="{$T.commlist.userid}" data-moduletype="0">
 	                   {$T.commlist.tmpUserName}
-	              {#else}
-	                                                  匿名用户
-	            {#/if}
-		    </a>
+	              </a>
+	           {#else}
+	                                     匿名用户
+	           {#/if}
+		   
            {#/if}
           </div>
            <div class="_CommentItem_content_CYqW">{$T.commlist.commcontent}</div>
@@ -90,6 +99,8 @@
     <div class="_CommentForm_root_1-ko _CommentForm_bordered_2isg" data-reactid=".0.4">
        <textarea  placeholder="写下你的评论…"  class='_InputBox_root_1Xwi _InputBox_empty_3_ur _InputBox_blur_3JWV'></textarea>
        <div class="_CommentForm_actions_ooEq" data-reactid=".0.4.2">
+          <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+	      <span class="item-msg-content" style='display:none'>文字超出最大限制</span>
           <button class="_CommentForm_submitButton_1N49 zg-btn-blue" name='answeraddnew' data-parentcommid="{$T.answerid}"  data-createperson='{$T.createperson}'>评论</button>
           <button class="_CommentForm_cancelButton_cy3u _CommentBox_textButton_3t9_" data-key="cancel" data-reactid="{$T.answerid}">取消</button>
         </div>

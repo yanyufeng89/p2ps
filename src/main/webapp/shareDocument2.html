@@ -148,7 +148,7 @@
    	function getTopicsDetail(){
   	   $.ajax({
          	type:"GET",
-         	url:"topics/getTopicsDetail?topicId="+7+"&sortType=2",
+         	url:"topics/getTopicsDetail/"+7+"?sortType=2",
          	//data:{condition:s},
          	dataType:"json",
          	success:function(data){
@@ -534,6 +534,27 @@
  }
   
   
+//保存工作经验
+  function updWorkExpInfo(){
+  	$.ajax({
+  		type:'POST',
+  	    url:"/myHome/updWorkExpInfo",
+  	    data:{company:'companyname',jobtitle:'position',starttime:null,endtime:null,description:'description'},
+  	    dataType:"json",
+  	    success:function(data){
+  	    	
+  	    	
+  	    	/* if(data.returnStatus=='000'){//返回成功
+  	    		
+  	    	}
+  	    	else{
+  	    		
+  	    	} */
+  	    }
+  })
+  }
+  
+  
   
     
     </script>
@@ -577,6 +598,7 @@
 	<input type="button" value="isConverted" onclick="isConverted()" /><br><br>
 	<input type="button" value="reward" onclick="reward()" /><br><br>
 	<input type="button" value="searchSchool" onclick="searchSchool()" /><br><br>
+	<input type="button" value="updWorkExpInfo" onclick="updWorkExpInfo()" /><br><br>
 	
 
 	<input type="text" oninput="getTagsByCondition(this.value)"><br><br>

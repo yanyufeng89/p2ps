@@ -32,6 +32,32 @@ public class EducationBgrd implements Serializable {
 	private String period;
 	
 
+	/**
+	 * 关联学校信息表的学校logo
+	 */
+	private String schoolLogo;
+	/**
+	 * 关联学校信息表的学校url
+	 */
+	private String schoolUrl;
+	
+	
+	public String getSchoolLogo() {
+		return schoolLogo;
+	}
+
+	public void setSchoolLogo(String schoolLogo) {
+		this.schoolLogo = schoolLogo;
+	}
+
+	public String getSchoolUrl() {
+		return schoolUrl;
+	}
+
+	public void setSchoolUrl(String schoolUrl) {
+		this.schoolUrl = schoolUrl;
+	}
+
 	public String getPeriod() {
 		return period;
 	}

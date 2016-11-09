@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+          我的下载-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -20,9 +20,9 @@
 		<div class="img-center">
 		<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		   <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		  </a>
 		</div>
@@ -33,7 +33,7 @@
 		      </#if>
 		     </a>
 		</p>
-        <p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+        <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
 		<div class="mydoc-list">
 		<ul>
 		    <ul id="accordion">
@@ -92,12 +92,11 @@
 			</div>
 		   <div class='maincontent'>
 		     <div class="uc-head-bottom">
-				  <div style="float:left" id="mytopiccontent">
-				    <img  src="/image/document.png" width="80" height="80">
+				 
+				    <img  src="/image/document.png" width="80" height="80" alt="文档图标" class='lazy'>
 				    <p>我的文档</p>
 				    <p class="dll"><a>上传()</a><a class="current">下载()</a><a>收藏()</a></p>
-				   </div>
-				   
+				  
 			</div>
 		     <div class="uc-mydocfocus" style="display:none">
 			   <div class="console-box">

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             上传文档
+             上传文档-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
   </head>
@@ -106,19 +106,21 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要上传与之无关文档， 请勿上传已设置加密或只读的文档，不支持此类文档;
                       </li>
                       <li class="doc-type">
                         2.您可以分享日常积累和撰写的文档资料，支持多种文档类型：doc，docx，ppt，pptx，xls，xlsx，vsd，pot，pps，pdf，txt，wps，etc;
                       </li>
                       <li>
-                        3.从我的电脑选择要分享的文档：按住CTRL可以分享多份文档, 分享的文件大小限制在20M以内;
+                        3.从我的电脑选择要分享的文档：按住CTRL可以点击多份文档分享, 分享的文件大小限制在20M以内;
                       </li>
                       <li>
                         4.分享涉及侵权内容的文档将会被移除，严禁分享含有淫秽色情及低俗信息等文档; 
                       </li>
                       <li>
-                        5.分享有问题需要帮助？详情请查看知识库<a href="#" target="_self">服务条款</a>和<a href="#" target="_self">帮助中心</a>
+                        5.分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
@@ -156,13 +158,16 @@
                   <div class="uploadinfobook">
                     <ol>
                       <li class="doc-type"></li>
-                      <li>1.上传涉及侵权内容的文档将会被移除。如何判断文档是否侵权？查看
-                        <a href="#" target="_self">文库协议</a>和
-                        <a href="#" target="_self">用户规则</a></li>
-                      <li>2.上传有问题需要帮助？查看
-                        <a href="#" target="_self">文库帮助</a>和
-                        <a href="#" target="_self">意见反馈</a></li>
-                      <li>3.为营造绿色网络环境，严禁上传含有淫秽色情及低俗信息等文档，让我们一起携手共同打造健康文库</li></ol>
+                      <li>1.完善上传的文档简介，可以让别人更加清晰的了解分享文档的相关内容;</li>
+                      <li>2.将您上传的文档可以免财富值免费分享，也可以1到20点财富值进行售价赚取财富值；同时可以对文档进行设置"公开"和"私有"属性;</li>
+                      <li>3.文档上传时必须添加分类，详细的分类，方便更准确找到你的文档;</li>
+                      <li>4.添加文档标签，更精准的搜索目标文档，多个标签之间要用逗号隔开，便于区分;</li>
+                      <li>
+                        5.文档分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
+                      </li>
+                    </ol>
                    
                 </div>
               </div>

@@ -11,7 +11,13 @@ $(function(){
     	}
     	$('.background-education-container').last().addClass('section-border');
     })
-    
+    //查看他人主页 --当工作经历只有一个时  加底边
+    if($('.background-workexperience-container').length==1){
+    	$('.preview-workexperience').css('border-bottom','1px solid #d6d6d6');
+    }
+    if($('.background-education-container ').length==1){
+    	$('.preview-education').css('border-bottom','1px solid #d6d6d6');
+    };
     //查看他人主页  点击个人资料
     $('#personal-data').live('click',function(){
     	addClassFun($(this));
@@ -23,6 +29,10 @@ $(function(){
     	addClassFun($(this));
     	$('.section-container,#fans-navbar,#zh-profile-follows-list').hide();
     	$('#profile-navbar,.zm-profile-section-wrap').show();
+    	/*//当最新分享的数量是0是 列表不显示
+    	if($('#zh-profile-answers-inner-list ul li').length==0){
+    		$('.zm-profile-section-wrap').hide();
+    	}*/
     })
     //查看他人主页  点击个人关注
     $('#personal-attention').live('click',function(){
@@ -94,8 +104,9 @@ $(function(){
     });
     //公司名字修改
     $('a[name=editcompname]').live('click',function(){
-    	var compname=$(this).prev().text();
-    	
+		var compname = $(this).prev().text();
+		if ('填写公司名称' == $.trim(compname))
+			compname = '';
     	var data={
 				title:$.trim(compname),
 				canclename:'canclecompname',
@@ -105,11 +116,13 @@ $(function(){
     	$('.homepageTemplate').processTemplate(data);
   	    $(this).after($('.homepageTemplate').html());
   	    $(this).hide().prev().hide();
+  	    $('.position-split').hide();
   	    $('.homepageTemplate').empty();
   	    $('.pj-editable-editor-outer').css('margin-bottom','6px');
     });
     //修改公司名点击取消
     $('a[name=canclecompname]').live('click',function(){
+    	$('.position-split').show();
     	hiddenEditArea('compname');
     });
     //修改公司名点击保存
@@ -119,6 +132,7 @@ $(function(){
     	if($.trim(compname).length==0){
     		$('.editcompname').hide();
     	}
+    	$('.position-split').show();
     	//同时更改数据库中的字段值
     	updateColumn(compname,'compname=');
     	hiddenEditArea('compname');
@@ -133,6 +147,8 @@ $(function(){
     	if($.trim(position).length==0){
     		$('.editposition').hide();
     	}
+		if ('填写职位' == $.trim(position))
+			position = '';
     	var data={
 				title:$.trim(position),
 				canclename:'cancleposition',
@@ -141,12 +157,14 @@ $(function(){
     	$('.homepageTemplate').setTemplateURL(projectName+'myHomePageTemplate.html');
     	$('.homepageTemplate').processTemplate(data);
   	    $(this).after($('.homepageTemplate').html());
+  	    $('.position-split').hide();
   	    $(this).hide().prev().hide();
   	    $('.homepageTemplate').empty();
   	    $('.pj-editable-editor-outer').css('margin-bottom','6px');
     });
     //修改职位点击取消
     $('a[name=cancleposition]').live('click',function(){
+    	$('.position-split').show();
     	hiddenEditArea('position');
     });
     //修改职位点击保存
@@ -155,6 +173,7 @@ $(function(){
     	if($.trim(position).length==0){
     		$('.editposition').hide();
     	}
+    	$('.position-split').show();
     	$('.position').text(position);
     	//同时更改数据库中的字段值
     	updateColumn(position,'position=');
@@ -163,6 +182,8 @@ $(function(){
     //修改行业
     $('a[name=editindustry]').live('click',function(){
     	var industry=$(this).prev().text();
+		if ('填写行业' == $.trim(industry))
+			industry = '';
     	var data={
 				title:$.trim(industry),
 				canclename:'cancleindustry',
@@ -172,11 +193,13 @@ $(function(){
     	$('.homepageTemplate').processTemplate(data);
   	    $(this).after($('.homepageTemplate').html());
   	    $(this).hide().prev().hide();
+  	    $('.area-split').hide();
   	    $('.homepageTemplate').empty();
   	    $('.pj-editable-editor-outer').css('margin-bottom','6px');
     })
     //修改行业点击取消
     $('a[name=cancleindustry]').live('click',function(){
+    	$('.area-split').show();
     	hiddenEditArea('industry');
     });
     //修改行业点击保存
@@ -185,6 +208,7 @@ $(function(){
     	if($.trim(industry).length==0){
     		$('.editindustry').hide();
     	}
+    	$('.area-split').show();
     	$('.industry').text(industry);
     	//同时更改数据库中的字段值
     	updateColumn(industry,'industry=');
@@ -210,6 +234,7 @@ $(function(){
     	$('.homepageTemplate').setTemplateURL(projectName+'initAreaTemplate.html');
     	$('.homepageTemplate').processTemplate(data);
   	    $(this).after($('.homepageTemplate').html());
+  	    /*$('.area-split').hide();*/
   	    $(this).hide()
   	    $('.province,.city').hide();
   	    $('.homepageTemplate').empty();
@@ -219,6 +244,7 @@ $(function(){
     })
     //取消编辑城市文本框
     $('a[name=canclecity]').live('click',function(){
+    	/*$('.area-split').show();*/
     	hiddenCiteArea();
     })
     //修改城市保存
@@ -232,6 +258,7 @@ $(function(){
     		province='';
     	}
     	hiddenCiteArea();
+    	/*$('.area-split').show();*/
     	$('.province').html(province);
     	$('.city').html(city);
     	updateCityOrProvince(city,province);
@@ -295,6 +322,7 @@ $(function(){
         	$('#recommended-sections').append($('.homepageTemplate').html());
         	$('.homepageTemplate').empty();
     	}else{
+            $('a[name=editbirthday]').trigger('click');
     		$('.background-selfinfo-container').css('border-color','#0867c5');
     	}
     	window.location.href='#self-info-detail';
@@ -315,6 +343,7 @@ $(function(){
 	       	$('#recommended-sections').append($('.homepageTemplate').html());
 	       	$('.homepageTemplate').empty();
 	   	}else{
+	   		$('a[name=editskill]').trigger('click');
 	   		$('#skill0').css('border-color','#0867c5');
 	   	}
 	    window.location.href='#skill0';
@@ -365,10 +394,10 @@ $(function(){
     	//如果存在教育背景新增框    就提示先编辑未保存的 内容
     	if(addtype==0){
     		if($('.background-education-container').last().find('input[name=school]').val().length==0){
-        		var cutid=$('.background-education-container').last().attr('id');
-        		window.location.href='#'+cutid;
+        		var cutid=$('.background-education-container').last().attr('data-num');
+        		window.location.href='#education'+(Number(cutid)-1);
         		//获取焦点
-        		$('#'+cutid+' textarea[name=school]').focus();
+        		$('#education'+cutid+' textarea[name=school]').focus();
         		return false;
         	}
     	}
@@ -387,7 +416,8 @@ $(function(){
             			isContinueAdd:isContinueAdd,
             			isEdit:0,
             			randomid:randomid,
-            			anchor:anchorlen
+            			anchor:anchorlen,
+            			topDegree:''
             	}
             	$('.homepageTemplate').processTemplate(data);
             	if($lastDiv.last().length==0){
@@ -396,13 +426,14 @@ $(function(){
             		$lastDiv.last().after($('.homepageTemplate').html());
             	}
             	$('.homepageTemplate').empty();
-            	window.location.href='#education'+anchorlen;
+            	window.location.href='#education'+(anchorlen-1);
             	$('#education'+anchorlen).css('background','#f9f9f9');
             	$('#schoolstartTime'+randomid).dateSelect();
             	$('#schoolendTime'+randomid).dateSelect();
         	}else{
-        			window.location.href='#education1';
-        			$('#education1').css('border-color','#0867c5');
+        		    $('#addcontinuous').trigger('click');
+        			/*window.location.href='#education1';
+        			$('#education1').css('border-color','#0867c5');*/
         	}
    
     });
@@ -412,10 +443,10 @@ $(function(){
     	if(addtype==0){
     		//如果存在工作经历新增框    就提示先编辑未保存的 内容
     		if($('.background-workexperience-container').last().find('input[name=jobtitle]').val().length==0){
-        		var cutid=$('.background-workexperience-container').last().attr('id');
-        		window.location.href='#'+cutid;
+        		var cutid=$('.background-workexperience-container').last().attr('data-num');
+        		window.location.href='#work'+(Number(cutid)-1);
         		//获取焦点
-        		$('#'+cutid+' textarea[name=position]').focus();
+        		$('#work'+cutid+' textarea[name=position]').focus();
         		return false;
         	}
     	}
@@ -444,13 +475,14 @@ $(function(){
             		$lastDiv.last().after($('.homepageTemplate').html());
             	}
             	$('.homepageTemplate').empty();
-            	window.location.href='#work'+anchorlen;
+            	window.location.href='#work'+(anchorlen-1);
             	$('#work'+anchorlen).css('background','#f9f9f9');
             	$('#jobstartTime'+randomid).dateSelect();
             	$('#jobendTime'+randomid).dateSelect();
         	}else{
-        			window.location.href='#work1';
-        			$('#work1').css('border-color','#0867c5');
+        		    $('#addcontinuouswork').trigger('click');
+        			/*window.location.href='#work1';
+        			$('#work1').css('border-color','#0867c5');*/
         	}
     })
     
@@ -459,11 +491,21 @@ $(function(){
     	//公司名字
     	var companyname=$.trim($(this).parents('.background-workexperience-container').find('.companyname .content').val());
     	var onjobstartTime1=$.trim($(this).parents('.background-workexperience-container').find('.onjobstartTime').val());
-    	var onjobendTime1=$.trim($(this).parents('.background-workexperience-container').find('.onjobendTime').val());
+    	var onjobendTime1='';
+    	var onjobendTime='';
+    	var end='';
+    	if(!$(this).parents('.background-workexperience-container').find('.onjobendTime').is(":visible")){
+    		onjobendTime1='至今';
+    		onjobendTime='至今';
+    	}else{
+    	    onjobendTime1=$.trim($(this).parents('.background-workexperience-container').find('.onjobendTime').val());
+    	    onjobendTime=$.trim($(this).parents('.background-workexperience-container').find('.onjobendTime').val()+' 00:00:00');
+    	}
+    	
     	//在校开始时间
     	var onjobstartTime=$.trim($(this).parents('.background-workexperience-container').find('.onjobstartTime').val()+' 00:00:00');
-    	//在校结束时间
-    	var onjobendTime=$.trim($(this).parents('.background-workexperience-container').find('.onjobendTime').val()+' 00:00:00');
+
+    	
     	//工作描述
     	var description=$(this).parents('.background-workexperience-container').find('.workcontent .content').val();
     	
@@ -472,13 +514,18 @@ $(function(){
     		$(this).parents('.background-workexperience-container').find('.onjobtime .item-msg-content').show();
     		return false;
     	}
-	    var start=new Date(onjobstartTime1.replace("-", "/").replace("-", "/"));  
-	    var end=new Date(onjobstartTime1.replace("-", "/").replace("-", "/"));  
-	    if(end<start){
-	    	$(this).parents('.background-workexperience-container').find('.onjobtime b').show();
-	    	$(this).parents('.background-workexperience-container').find('.onjobtime .item-msg-content').html('开始时间应小于结束时间').show();
-	        return false;  
-	    }  
+	    var start=new Date(onjobstartTime1.replace("-", "/").replace("-", "/"));
+	    if(onjobendTime1!='至今'){
+	    	end=new Date(onjobstartTime1.replace("-", "/").replace("-", "/")); 
+	    }else{
+	    	end=new Date();
+	    }
+ 	    if(end<start){
+ 	    	$(this).parents('.background-workexperience-container').find('.onjobtime b').show();
+ 	    	$(this).parents('.background-workexperience-container').find('.onjobtime .item-msg-content').html('开始时间应小于结束时间').show();
+ 	        return false;  
+ 	    }  
+	    
     	//工作职位
     	var position=$.trim($(this).parents('.background-workexperience-container').find('.position .content').val());
     	if(companyname!=''){
@@ -487,7 +534,13 @@ $(function(){
         		$(this).parents('.background-workexperience-container').find('.onjobtime .item-msg-content').show();
         		return false;
     		}
+    		if(onjobstartTime=='00:00:00'||onjobendTime=='00:00:00'){
+    			$(this).parents('.background-workexperience-container').find('.onjobtime b').show();
+        		$(this).parents('.background-workexperience-container').find('.onjobtime .item-msg-content').html('请选择在职时间').show();
+        		return false;
+    		}
     	}
+    	
     	if(companyname==''){
     		$(this).parents('.background-workexperience-container').find('.companyname b').show();
     		$(this).parents('.background-workexperience-container').find('.companyname .item-msg-content').show();
@@ -501,6 +554,7 @@ $(function(){
     $('a[name=myeducationsave]').live('click',function(){
     	//学校名字
     	var schoolname=$.trim($(this).parents('.background-education-container').find('.schoolname .content').val());
+    	var schoollogo=$.trim($(this).parents('.background-education-container').find('input[name=schoollogo]').val());
     	var schoolstartTime1=$.trim($(this).parents('.background-education-container').find('.schoolstartTime').val());
     	var schoolendTime1=$.trim($(this).parents('.background-education-container').find('.schoolendTime').val());
     	//在校开始时间
@@ -519,13 +573,20 @@ $(function(){
 	    	$(this).parents('.background-education-container').find('.schooltime .item-msg-content').html('开始时间应小于结束时间').show();
 	        return false;  
 	    }  
+    	//学历
+    	var topDegree=$.trim($(this).parents('.background-education-container').find('.topDegree .degree-select').val());
     	//所学专业
     	var profession=$.trim($(this).parents('.background-education-container').find('.profession .content').val());
     	if(schoolname!=''){
     		if(schoolendTime1==''){
     			$(this).parents('.background-education-container').find('.schooltime b').show();
-        		$(this).parents('.background-education-container').find('.schooltime .item-msg-content').show();
-        		return false;
+    			$(this).parents('.background-education-container').find('.schooltime .item-msg-content').show();
+    			return false;
+    		}
+    		if(schoolstartTime=='00:00:00'||schoolendTime=='00:00:00'){
+    			$(this).parents('.background-education-container').find('.schooltime b').show();
+    	    	$(this).parents('.background-education-container').find('.schooltime .item-msg-content').html('请选择在校时间').show();
+    	        return false;  
     		}
     	}
     	//学校名称必填
@@ -534,7 +595,7 @@ $(function(){
     		$(this).parents('.background-education-container').find('.schoolname .item-msg-content').show();
     		return false;
     	}else{
-        	saveEducationBg(schoolname,schoolstartTime,schoolendTime,profession,$(this))
+        	saveEducationBg(topDegree=="--请选择--"?'':topDegree,schoolname,schoolstartTime,schoolendTime,profession,schoollogo,$(this))
     	}
     })
     //教育背景点击取消
@@ -546,8 +607,9 @@ $(function(){
     	hiddenWorkExperience($(this));
     })
     //修改教育背景
-    $('a[name=editschooltime],a[name=editschoolname],a[name=editsmajor]').live('click',function(){
+    $('a[name=editschooltime],a[name=editschoolname],a[name=editsmajor],a[name=editsdegree]').live('click',function(){
     	var schoolname=$.trim($(this).parents('.background-education-container').find('input[name=school]').val());
+    	var schoolLogo=$.trim($(this).parents('.background-education-container').find('input[name=schoollogo]').val());
     	var schoolstartTime=$.trim($(this).parents('.background-education-container').find('input[name=starttime]').val());
     	if(schoolstartTime.indexOf(' ')!=-1){
     		schoolstartTime=schoolstartTime.substring(0,schoolstartTime.indexOf(' '));
@@ -558,8 +620,9 @@ $(function(){
     	}
     	
     	var profession=$.trim($(this).parents('.background-education-container').find('input[name=major]').val());
+    	var topDegree=$.trim($(this).parents('.background-education-container').find('input[name=degree]').val());
     	var currentid=$(this).attr('data-currentid');
-    	editEducationData(schoolname,schoolstartTime,schoolendTime,profession,currentid,$(this));
+    	editEducationData(schoolname,schoolstartTime,schoolendTime,topDegree,profession,currentid,schoolLogo,$(this));
     })
     //修改工作经历
     $('a[name=editscompanyname],a[name=editsonjobtime],a[name=editsposition],a[name=editsdescription]').live('click',function(){
@@ -590,8 +653,24 @@ $(function(){
    });
    //保存我的联系方式
     $('a[name=mycontanctsave]').live('click',function(){
+		$('.email b').hide();
+		$('.email .item-msg-content').hide();
+		$('.phone b').hide();
+		$('.phone .item-msg-content').hide();
+
        var email=$('.emailinfo textarea[name=email]').val();
   	   var phone=$('.phoneinfo textarea[name=phone]').val();
+		if (email != null && email != '' && !isEmail(email)) {
+			$('.email b').show();
+			$('.email .item-msg-content').show();
+			return false;
+		}
+
+		if (phone != null && phone != '' && !isTel(phone)) {
+			$('.phone b').show();
+			$('.phone .item-msg-content').show();
+			return false;
+		}
   	   saveMyContanct(email,phone);
     })
     //取消我的联系方式
@@ -679,20 +758,181 @@ $(function(){
     	addClassFun($(this));
     	moreVisitor($(this));
     });
+    //输入学校 搜索
+    $('textarea[name=school]').live('input propertychange',function(){
+    	$(this).parents('.background-education-container').find('input[name=schoollogo]').val('');
+    	var oldval=$(this).prev().val();
+    	var newval=$(this).val();
+    	if(newval !== null &&newval !== undefined&&$.trim(newval).length!=0&&$.trim(oldval).length!=$.trim(newval).length){
+			findMoreSchool($(this));
+		}else if($.trim(newval).length==0){
+			$(this).parents('.schoolname').next().hide();
+		}
+    	$(this).parents('.schoolname').find('input[name=pj-autocomplete]').val(newval);
+    })
+    //点击搜索出来的学校名称
+    $('.typeahead-results-container li').live('click',function(){
+    	var schoolname=$(this).attr('data-schoolname');
+    	var schoollogo=$(this).attr('data-schoollogo');
+    	$(this).parents('.typeahead-results-container').prev().find('textarea[name=school]').val(schoolname);
+    	$(this).parents('.background-education-container').find('input[name=schoollogo]').val(schoollogo);
+    	$(this).parents('.typeahead-results-container').hide();
+    });
+    // 在页面任意位置点击而触发此事件(隐藏学校搜索下拉框)
+    $(document).click(function(e) {
+    	if($('.typeahead-results-container').length>0)
+    		$('.typeahead-results-container').hide();
+    })
     //获取请求的url参数
 	var strHref = this.location.href;
-	//0表示点击用户图像上面的关注   1代表粉丝   2代表分享
+	//0表示点击用户图像上面的关注   1代表粉丝   2代表分享  3代表最近访问更多
     var requesType = strHref.getQuery("requesType");
     if(requesType!=null){
     	if(requesType==0){
     		$('#otheratten').trigger('click');
     	}else if(requesType==1){
     		$('#otherfans').trigger('click');
-    	}else{
+    	}else if(requesType==2){
             $('#personal-share').trigger('click');
+    	}else{
+    		$('#moreVisitor').trigger('click');
     	}
     }
+    //删除学校信息
+    $('a[name=deleteschool]').live('click',function(){
+    	var schoolid=$(this).attr('data-id');
+    	var $this=$(this);
+    	$.confirm({
+			'title': '删除学校',
+			'message': "确定要删除学校吗？",
+			'buttons': {
+				'确认': {
+					'class': 'blue',
+					'action': function () {
+						deleteSchool($this,schoolid);
+					}
+				},
+				'取消': {
+					'class': 'gray',
+					'action': function () {
+					}
+				}
+			}
+		});
+    });
+    //删除工作职位
+    $('a[name=deletework]').live('click',function(){
+    	var workid=$(this).attr('data-id');
+    	var $this=$(this);
+    	$.confirm({
+			'title': '删除职位',
+			'message': "确定要删除此职位吗？",
+			'buttons': {
+				'确认': {
+					'class': 'blue',
+					'action': function () {
+						deleteWork($this,workid);
+					}
+				},
+				'取消': {
+					'class': 'gray',
+					'action': function () {
+					}
+				}
+			}
+		});
+    })
+    
+    //工作经历  选择至今
+    $('.still-here').live('click',function(){
+    	if($(this).hasClass('select-icon')){
+    		$(this).removeClass('select-icon');
+    		$(this).prev().find('.onjobendTime').show();
+    		$(this).prev().find('.current-position').hide();
+    	}else{
+    		$(this).addClass('select-icon');
+    		$(this).prev().find('.onjobendTime').hide();
+    		$(this).prev().find('.current-position').show();
+    	}
+    })
+    //仍然在职
+    $('.isCurrent').live('click',function(){
+    	$(this).prev().trigger('click');
+    })
+    
 })
+//删除职位
+function deleteWork(obj,workid){
+	$.ajax({
+		type:"POST",
+     	url:"/myHome/delWorkExpInfo",
+     	data:{id:workid},
+     	dataType:"json",
+     	async:false,
+     	success:function(data){
+     		if(data.returnStatus=='000'){
+     			obj.parents('.background-workexperience-container').remove();
+     		}else{
+     			
+     		}
+     	}
+	})
+}
+//删除学校信息
+function deleteSchool(obj,schoolid){
+	$.ajax({
+		type:"POST",
+     	url:"/myHome/delEduInfo",
+     	data:{id:schoolid},
+     	dataType:"json",
+     	async:false,
+     	success:function(data){
+     		if(data.returnStatus=='000'){
+     			obj.parents('.background-education-container').remove();
+     		}else{
+     			
+     		}
+     	}
+	})
+}
+//搜索学校
+function findMoreSchool(obj){
+	var conds=$(obj).val();
+  	//过滤掉空格 "" null 等
+    if($.trim(conds).length>0){
+		 $.ajax({
+         	type:"POST",
+         	url:"/myHome/searchSchool/"+conds,
+         	dataType:"json",
+         	async:false,
+         	success:function(data){
+         		if(data.returnStatus=='000'&&data.schoolList.length>0){//返回成功
+         		   initTitleContentBySearchSchool(data.schoolList,obj);
+         		   
+        		}else{//返回失败
+        			obj.parents('.background-education-container').find('input[name=schoollogo]').val('');
+        		}
+        	}
+          });
+     }else{
+
+	 }
+}
+//追加学校信息
+function initTitleContentBySearchSchool(data,obj){
+	obj.parents('.schoolname').next().empty();
+	var container_div="";
+        container_div+="<ul class='hasImage'>";
+	$.each(data,function(index,item){
+		container_div+="<li data-id='"+item.id+"' data-schoollogo='"+(item.schoollogo==undefined?'/image/default/default_schoollogo.jpg':item.schoollogo)+"' data-schoolname='"+item.schoolname+"'>";
+		container_div+="<a href='javascript:void(0)' target='_blank'><img src="+(item.schoollogo==undefined?'/image/default/default_schoollogo.jpg':item.schoollogo)+"  alt=''/></a>"
+		container_div+="  <h4>"+item.schoolname+"</h4>";
+		container_div+="  <div>"+(item.schoolcity==undefined?'':item.schoolcity)+"</div>"
+		container_div+="</li>";
+	})
+	container_div+="</ul>";
+	obj.parents('.schoolname').next().append(container_div).show();
+}
 function addClassFun(obj){
 	obj.addClass('current').siblings().removeClass('current');
 }
@@ -711,14 +951,14 @@ function currVisitor(obj){
 				$.each(data.visitors.list,function(index,item){
 	    			if(item.fansIds!=undefined){
 		    			if(item.fansIds.indexOf(',')!=-1){
-		    				if($.inArray(String(userInfo.userid), item.fansIds.split(','))!=-1){
+		    				if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
 							item.fansIds=1;
 						}else{
 							item.fansIds=0;
 						}
 		    			}
 		    			else{
-		    				if(item.fansIds==userInfo.userid){
+		    				if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
 		    					item.fansIds=1;
 		    				}
 		    				else{
@@ -770,6 +1010,7 @@ function otherAtten(obj){
 		success:function(data){
 			if(data.attenManPage.list.length==0){
 				 $('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无信息</span>");
+				 
 			}else{
 				$.each(data.attenManPage.list,function(index,item){
 	    			if(item.fansIds!=undefined){
@@ -808,16 +1049,14 @@ function otherAtten(obj){
 				 $('#zh-profile-follows-list').append(mhtml);
 				 
 				 $('#zh-profile-follows-list').show();
-				/* //加载更多去掉
-				 $('#pjfans-load-more').remove();*/
-				 //显示当前层 隐藏其他层
-				 //隐藏个人信息
-				 $('.section-container,#contact-info-section,.zm-profile-section-wrap').hide();
-				 $('#fans-navbar').show();
-				 $('#personal-attention').addClass('current').siblings().removeClass('current');
-				 $('#fans-navbar .pjitem:eq(0)').addClass('current').siblings().removeClass('current');
 				 intoUserInfo();
 			}
+			  //显示当前层 隐藏其他层
+			 //隐藏个人信息
+			 $('.section-container,#contact-info-section,.zm-profile-section-wrap,#profile-navbar').hide();
+			 $('#fans-navbar').show();
+			 $('#personal-attention').addClass('current').siblings().removeClass('current');
+			 $('#fans-navbar .pjitem:eq(0)').addClass('current').siblings().removeClass('current');
 		}
 	})
 }
@@ -873,15 +1112,14 @@ function otherFans(obj){
 				 $('#zh-profile-follows-list').append(mhtml);
 				 /*//加载更多去掉
 				 $('#pjatten-load-more').remove();*/
-				 //显示当前层 隐藏其他层
-				 //隐藏个人信息
-				 $('.section-container,#contact-info-section,.zm-profile-section-wrap').hide();
-				 $('#fans-navbar').show();
-				 $('#personal-attention').addClass('current').siblings().removeClass('current');
-				 $('#fans-navbar .pjitem:eq(1)').addClass('current').siblings().removeClass('current');
 				 intoUserInfo();
-				 
 			}
+			 //显示当前层 隐藏其他层
+			 //隐藏个人信息
+			 $('.section-container,#contact-info-section,.zm-profile-section-wrap,#profile-navbar').hide();
+			 $('#fans-navbar').show();
+			 $('#personal-attention').addClass('current').siblings().removeClass('current');
+			 $('#fans-navbar .pjitem:eq(1)').addClass('current').siblings().removeClass('current');
 		}
 	})
 }
@@ -1034,14 +1272,14 @@ function moreVisitor(obj){
     		$.each(data.visitors.list,function(index,item){
     			if(item.fansIds!=undefined){
 	    			if(item.fansIds.indexOf(',')!=-1){
-	    				if($.inArray(String(userInfo.userid), item.fansIds.split(','))!=-1){
+	    				if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
 						item.fansIds=1;
 					}else{
 						item.fansIds=0;
 					}
 	    			}
 	    			else{
-	    				if(item.fansIds==userInfo.userid){
+	    				if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
 	    					item.fansIds=1;
 	    				}
 	    				else{
@@ -1154,7 +1392,7 @@ function saveMyContanct(email,phone){
 	$.ajax({
 		type:'POST',
 	    url:"/myHome/updUserInfo",
-	    data:{email:email,mobile:phone},
+	    data:{contactEmail:email,contactTel:phone},
 	    dataType:"json",
 	    success:function(data){
 	    	if(data.returnStatus=='000'){//返回成功
@@ -1197,19 +1435,19 @@ function getWorkData($layer,currentid,obj){
 	editWorkData(companyname,schoolstartTime,schoolendTime,jobtitle,description,currentid,obj);
 }
 //保存教育背景
-function saveEducationBg(schoolname,schoolstartTime,schoolendTime,profession,obj){
+function saveEducationBg(topDegree,schoolname,schoolstartTime,schoolendTime,profession,schoollogo,obj){
 	    var currentid=obj.parents('.background-education-container').find('input[name=currentid]').val();
 		$.ajax({
 			type:'POST',
 		    url:"/myHome/updEduInfo",
-		    data:{school:schoolname,major:profession,starttime:schoolstartTime,endtime:schoolendTime,id:currentid},
+		    data:{degree:topDegree,school:schoolname,major:profession,starttime:schoolstartTime,endtime:schoolendTime,id:currentid},
 		    dataType:"json",
 		    success:function(data){
 		    	if(data.returnStatus=='000'){//返回成功
-		    		updateMyEducationData(schoolname,schoolstartTime,schoolendTime,profession,obj,data.obj)
+		    		updateMyEducationData(topDegree,schoolname,schoolstartTime,schoolendTime,profession,obj,data.obj,schoollogo)
 		    	}
 		    	else{
-		    		
+		    		console.log("updEdu  failed");
 		    	}
 		    }
 	})
@@ -1220,7 +1458,7 @@ function saveWorkExperience(companyname,onjobstartTime,onjobendTime,position,des
 	$.ajax({
 		type:'POST',
 	    url:"/myHome/updWorkExpInfo",
-	    data:{company:companyname,jobtitle:position,starttime:onjobstartTime,endtime:onjobendTime,id:currentid,description:description},
+	    data:{company:companyname,jobtitle:position,starttime:onjobstartTime,strEndtime:onjobendTime=="至今"?'':onjobendTime,id:currentid,description:description},
 	    dataType:"json",
 	    success:function(data){
 	    	if(data.returnStatus=='000'){//返回成功
@@ -1268,10 +1506,12 @@ function hiddenEducationBg(obj){
 	else{
 		var schoolname=obj.attr('data-school');
 		var major=obj.attr('data-major');
+		var degree=obj.attr('data-degree');
 		var starttime=obj.attr('data-starttime');
 		var endtime=obj.attr('data-endtime');
 		var currentid=obj.attr('data-currentid');
-		updateMyEducationData(schoolname,starttime,endtime,major,obj,currentid);
+		var schoollogo=obj.attr('data-schoollogo');
+		updateMyEducationData(degree,schoolname,starttime,endtime,major,obj,currentid,schoollogo);
 
 	}
 }
@@ -1291,13 +1531,15 @@ function hiddenWorkExperience(obj){
 	}
 }
 //修改教育背景 加载模板
-function editEducationData(schoolname,schoolstartTime,schoolendTime,profession,currentid,obj){
+function editEducationData(schoolname,schoolstartTime,schoolendTime,topDegree,profession,currentid,schoollogo,obj){
 	randomid++;
 	var data={
 			schoolname:schoolname,
 			schoolstartTime:schoolstartTime,
 			schoolendTime:schoolendTime,
 			profession:profession,
+			topDegree:topDegree,
+			schoollogo:schoollogo,
 			isEdit:1,
 			currentid:currentid,
 			isContinueAdd:0,
@@ -1309,6 +1551,8 @@ function editEducationData(schoolname,schoolstartTime,schoolendTime,profession,c
 	$('.homepageTemplate').empty();
 	if(schoolname!='')
 		obj.parents('.background-education-container').next().find('.schoolname textarea[name=school]').val(schoolname);
+	if(topDegree!='')
+		obj.parents('.background-education-container').next().find('.topDegree textarea[name=degree]').val(topDegree);
 	if(profession!='')
 		obj.parents('.background-education-container').next().find('.profession textarea[name=major]').val(profession);
 	$('#schoolstartTime'+randomid).dateSelect();
@@ -1322,7 +1566,7 @@ function editWorkData(companyname,onjobstartTime,onjobendTime,jobtitle,descripti
 	var data={
 			companyname:companyname,
 			onjobstartTime:onjobstartTime,
-			onjobendTime:onjobendTime,
+			onjobendTime:onjobendTime=='至今'?'':onjobendTime,
 			description:description,
 			jobtitle:jobtitle,
 			isEdit:1,
@@ -1424,7 +1668,7 @@ function updateMyIntroData(birthdayday,birthdaymonth,marriage,description){
 	$('#birthdaymonth,#birthdayday,#marriage,textarea[name=recommend],.background-selfinfo-container .zm-command').hide();
 }
 //教育背景界面赋值
-function updateMyEducationData(schoolname,schoolstartTime,schoolendTime,profession,obj,id){
+function updateMyEducationData(topDegree,schoolname,schoolstartTime,schoolendTime,profession,obj,id,schoollogo){
 	if(schoolname==''&&schoolstartTime==''&&schoolendTime==''&&profession==''){
 		hiddenEducationBg();
 	}
@@ -1447,22 +1691,31 @@ function updateMyEducationData(schoolname,schoolstartTime,schoolendTime,professi
 		obj.parents('.background-education-container').find('.graduate .schooltime').html("在校时间:&nbsp;&nbsp;"+starttime+'&nbsp; – &nbsp;'+endtime+"&nbsp;&nbsp;"+"("+eduyears+")");
 		obj.parents('.background-education-container').find('a[name=editschooltime]').show();
 	}
+	if(topDegree!=''){
+		obj.parents('.background-education-container').find('.degree .topDegree').text(topDegree);
+		obj.parents('.background-education-container').find('input[name=degree]').val(topDegree);
+		obj.parents('.background-education-container').find('a[name=editsdegree]').show();
+	}
 	if(profession!=''){
 		obj.parents('.background-education-container').find('.major .profession').text(profession);
 		obj.parents('.background-education-container').find('input[name=major]').val(profession);
 		obj.parents('.background-education-container').find('a[name=editsmajor]').show();
 	}
 	var edittype=obj.parents('.background-education-container').find('input[name=edittype]').val();
-
+	obj.parents('.background-education-container').find('.section-logo img').remove();
+	if(schoollogo!=''){
+	    obj.parents('.background-education-container').find('.section-logo').append("<img class='lazy' src='"+schoollogo+"' alt='"+schoolname+"' width='50' height='50'>");
+	}
 	//获取背景教育的第一个div层
 	var $firstDiv=$('#recommended-sections').find('.background-education-container').first();
 	if($firstDiv.find('.header').length==0){
 		$firstDiv.find('.education').before(createEducationBgHtml('教育背景'));
 		$firstDiv.removeClass('education-container')
 	};
+	
 	//赋值当前的id 为了之后修改
-	obj.parents('.background-education-container').find('a[name=editschoolname],a[name=editschooltime],a[name=editsmajor]').attr('data-currentid',id)
-	obj.parents('.background-education-container').find('.schoolname textarea[name=recommend],.schoolstartTime,.schoolendTime,.profession textarea[name=major],.zm-command').hide();
+	obj.parents('.background-education-container').find('a[name=editschoolname],a[name=editschooltime],a[name=editsmajor],a[name=editsdegree]').attr('data-currentid',id)
+	obj.parents('.background-education-container').find('.schoolname textarea[name=recommend],.schoolstartTime,.schoolendTime,.topDegree select[name=degree],.profession textarea[name=major],.zm-command').hide();
 }
 //工作经验界面赋值
 function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,description,obj,id){
@@ -1478,12 +1731,19 @@ function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,descr
 		var onjobstartTime=obj.parents('.background-workexperience-container').find('.onjobstartTime').val();
 		obj.parents('.background-workexperience-container').find('input[name=onjobstartTime]').val(onjobstartTime);
 		onjobstartTime=new Date(Date.parse(onjobstartTime.replace(/-/g, '/')));
-		var onjobendTime=obj.parents('.background-workexperience-container').find('.onjobendTime').val();
+		var onjobendTime='';
+		if(!obj.parents('.background-workexperience-container').find('.onjobendTime').is(':visible')){
+			onjobendTime='至今';
+		}else{
+			onjobendTime=obj.parents('.background-workexperience-container').find('.onjobendTime').val();
+		}
 		obj.parents('.background-workexperience-container').find('input[name=onjobendTime]').val(onjobendTime);
+		if(onjobendTime!='至今')
 		onjobendTime=new Date(Date.parse(onjobendTime.replace(/-/g, '/')));
 		//计算两个日期之间相差多少
 		var workyears=better_time(onjobstartTime,onjobendTime);
 		onjobstartTime=onjobstartTime.getFullYear()+'年'+fixZero(onjobstartTime.getMonth()+1,2)+'月'+onjobstartTime.getDate()+'日';
+		if(onjobendTime!='至今')
 		onjobendTime=onjobendTime.getFullYear()+'年'+fixZero(onjobendTime.getMonth()+1,2)+'月'+onjobendTime.getDate()+'日';
 		
 		obj.parents('.background-workexperience-container').find('.onjob .onjobtime').html("在职时间:&nbsp;&nbsp;"+onjobstartTime+'&nbsp; – &nbsp;'+onjobendTime+"&nbsp;&nbsp;"+"("+workyears+")");
@@ -1510,7 +1770,7 @@ function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,descr
 	};
 	//赋值当前的id 为了之后修改
 	obj.parents('.background-workexperience-container').find('a[name=editscompanyname],a[name=editsonjobtime],a[name=editsposition]').attr('data-currentid',id)
-	obj.parents('.background-workexperience-container').find('.companyname textarea[name=recommend],.onjobstartTime,.onjobendTime,.position textarea[name=position],.workcontent textarea[name=description],.zm-command').hide();
+	obj.parents('.background-workexperience-container').find('.companyname textarea[name=recommend],.topDegree select[name=degree],.onjobstartTime,.onjobendTime,.position textarea[name=position],.workcontent textarea[name=description],.zm-command,.still-here,.isCurrent').hide();
 }
 //取消编辑城市文本框
 function hiddenCiteArea(){
@@ -1558,6 +1818,7 @@ function hiddenUserNameEdit(){
 //隐藏对应的编辑文本框
 function hiddenEditArea(column){
 	$('.'+column).show().next().show();
+	
 	$('a[name=cancle'+column+']').parents('.zm-editable-editor-wrap').remove();
 }
 
@@ -1738,6 +1999,8 @@ function cancelSkills(skills,id,obj){
 }
 //判断两个日期相差多少年月
 function better_time(starttime,endtime){
+	if(endtime=='至今')
+		endtime=new Date();
 	var month='';
 	var day=endtime.getDate()-starttime.getDate();
 	if(endtime.getFullYear()==starttime.getFullYear()){

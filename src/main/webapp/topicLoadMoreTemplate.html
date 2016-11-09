@@ -4,28 +4,32 @@
 	<div class="answer-head">
 	<div class="zm-item-answer-author-info">
 
-	   <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage?userid={$T.list.userid}' target="_blank">
-
 	   {#if $T.list.tmpHeadIcon}
 	     {#if $T.list.isPublic==1}
-	        <img src="{$T.list.tmpHeadIcon}" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype="0">
+	      <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.list.userid}' target="_blank">
+	        <img src="{$T.list.tmpHeadIcon}" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid='{$T.list.userid}' data-moduletype="0">
+	      </a>
 	     {#else}
-	        <img src="{$T.list.tmpHeadIcon}" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype="0">
+	        <img src="{$T.list.tmpHeadIcon}" alt="个人头像" class="zm-list-anonymous-avatar avatar lazy"  data-moduletype="0">
 	     {#/if}
 	   {#else}
 	      {#if $T.list.isPublic==1}
-	         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	       <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.list.userid}' target="_blank">
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid='{$T.list.userid}' data-moduletype='0'>
+	       </a>
 	      {#else}
-	         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar" data-userid='{$T.list.userid}' data-moduletype='0'>
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-list-anonymous-avatar avatar lazy"  data-moduletype='0'>
 	      {#/if}
 	   {#/if}
 	  
 	   {#if $T.list.isPublic==1}
-	    <span class="author-link"  data-userid='{$T.list.userid}' data-moduletype='0'>{$T.list.tmpUserName}</span>
+	    <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.list.userid}' target="_blank">
+	      <span class="author-link"  data-userid='{$T.list.userid}' data-moduletype='0'>{$T.list.tmpUserName}</span>
+	    </a>
 	   {#else}
-	     <span class="anonymous-user"   data-userid='{$T.list.userid}' data-moduletype='0'>匿名用户</span>
+	     <span class="anonymous-user"   data-moduletype='0'>匿名用户</span>
 	   {#/if}
-     </a>
+    
 	
 	
 	</div>
@@ -44,7 +48,7 @@
 	
 	<div class="answer-actions clearfix js-contentActions">
 		<div class="zm-meta-panel">
-		<a itemprop="url" class="answer-date-link meta-item"  target="_self" href="javascript:;">编辑&nbsp;{$T.list.showcreatetime}</a>
+		<a itemprop="url" class="answer-date-link meta-item"  target="_self" href="javascript:;">{$T.list.showcreatetime}</a>
 		
 		<a href="javascript:;" name="addcomment" class="meta-item toggle-comment js-comment" data-answer='{$T.list.id}'  data-commentcount='{$T.list.replysum}' data-createperson='{$T.list.userid}'> <i class="z-icon-comment"></i>{$T.list.replysum}条评论</a>
 		 {#if ($T.list.likedIds=='0')}
@@ -58,10 +62,14 @@
 					取消赞({$T.list.likesum})
 				</a>
 		   {#/if}
-		<a href="javascript:;" class="meta-item zu-autohide js-share goog-inline-block goog-menu-button"><i class="z-icon-share"></i>分享</a>
-		
 		<a href="javascript:;" class="meta-item zu-autohide js-report" data-commentbyid='{$T.list.userid}' data-topiccommentid='{$T.list.id}' data-reporttype='5'><i class="z-icon-report-o"></i>举报</a>
-
+		<span  class='meta-item'>分享到</span>
+			<a href="javascript:void(0);" class="log_sina png" title="分享到新浪微博"></a>
+			<a href="javascript:void(0);" class="log_qq png"  title="分享到QQ空间"></a>
+			<a href="javascript:void(0);" class="log_wx png" title="分享到微信"></a>
+        {#if $T.isreward=='2' && $T.iscreateperson==1 && $T.createperson!=$T.list.userid}
+          <a href="javascript:;" class='adopt-answer' data-adopt="{$T.list.id}" data-receiveuid="{$T.list.userid}"><i class="z-icon-adopt-o"></i>采纳答案</a>
+        {#/if}
 		</div>
 	    
 	</div>

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             文章分享
+             文章分享-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/uedit/themes/default/css/umeditor.css" charset="UTF-8">
@@ -97,22 +97,19 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的文章;
                       </li>
                       <li>
-                        2.如果您发现一篇好的文章，可以分享出来，让大家一起学习成长;
+                        2.您可以先拟好文章标题，点击确定进入文章编辑内容;
                       </li>
                       <li>
-                        3.禁止分享辱骂他人，含有淫秽色情及低俗信息的文章链接;
+                        3.分享涉及侵权内容的文章将会被移除，严禁分享含有淫秽色情及低俗信息的文章;
                       </li>
                       <li>
                         4.文章分享有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                                                                服务条款
+                        <a href="/about/terms_service" target="_blank">服务条款
                         </a>和
-                        <a href="#" target="_self">
-                                                              帮助中心
-                        </a>
+                        <a href="/about/newbie_guide" target="_blank"> 帮助中心。</a>
                       </li>
                     </ol>
                   </div>
@@ -191,6 +188,17 @@
                                       </div>
                                     </td>
                                   </tr>
+                                  <tr>
+                                  <td>
+                                    <span class="article-ispublic">      
+							           <input type='hidden' value='1' name='ispublic'>
+							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='1' checked id='artIspublic' />
+							           <label  for='artIspublic' style="margin-right:20px;">公开</label> 
+							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='0' id='artIsprivate'/>
+							           <label for='artIsprivate'>匿名</label>
+							         </span>
+								  </td>
+								  </tr>
                                   <tr><td class="name articleicon">标签:</td></tr>
                                   <tr>
                                     <td>
@@ -225,13 +233,18 @@
                     </h4>
                     <ol>
                       <li>
-                        1.分享文章一定要选择分类,方便查找;
+                        1.文章编辑内容时，您可以随时更改文章标题，点击“电脑”标志按钮时可以全屏编辑，营造沉浸式的写作氛围;
                       </li>
                       <li>
-                        2.点击继续添加按钮,您还可以继续添加多个链接同时上传,操作快速、便捷、满足您的需求;
+                        2.文章分享一定要选择分类,方便记录、查询以及搜索;
                       </li>
                       <li>
-                        3.您还可以添加推荐以及多个标签,便于更多的好友发现查看;
+                        3.多个标签之间要用逗号隔开,便于更多的好友发现查看;
+                      </li>
+                      <li>
+                        4.文章分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>

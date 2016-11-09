@@ -37,17 +37,20 @@
     <result column="ismarry" property="ismarry" jdbcType="INTEGER" />
     <result column="birthdayOne" property="birthdayone" jdbcType="VARCHAR" />
     <result column="birthdayTwo" property="birthdaytwo" jdbcType="VARCHAR" />
+    
+    <result column="contactEmail" property="contactEmail" jdbcType="VARCHAR" />
+    <result column="contactTel" property="contactTel" jdbcType="CHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     userId, userName, email, mobile, tel, passwd, gender, age, addres, identityName, 
     identityNo, serviceYear, industry, position, education, school, specialty, description, 
     headIcon, compName, city, userType, userLevel, authenticate, isValid, isSearch, createTime, 
-    updateTime, nation, province, ismarry, birthdayOne, birthdayTwo
+    updateTime, nation, province, ismarry, birthdayOne, birthdayTwo,contactEmail,contactTel
   </sql>
   <sql id="Base_Column_List_copy" >
     t.userId,t.userName,t.email,t.mobile,t.tel,t.passwd,t.gender,t.age,t.addres,t.identityName,t.identityNo,t.serviceYear,t.industry,t.position,t.education,
     t.school,t.specialty,t.description,t.headIcon,t.compName,t.city,t.userType,t.userLevel,t.authenticate,t.isValid,t.isSearch,t.createTime,t.updateTime
-     ,t.nation, t.province, t.ismarry, t.birthdayOne, t.birthdayTwo
+     ,t.nation, t.province, t.ismarry, t.birthdayOne, t.birthdayTwo,t.contactEmail,t.contactTel
   </sql>
 
 
@@ -181,7 +184,7 @@
       userLevel, authenticate, isValid, 
       isSearch, createTime, updateTime, 
       nation, province, ismarry, 
-      birthdayOne, birthdayTwo)
+      birthdayOne, birthdayTwo,contactEmail,contactTel)
     values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=CHAR}, #{tel,jdbcType=CHAR}, #{passwd,jdbcType=CHAR}, #{gender,jdbcType=INTEGER}, 
       #{age,jdbcType=INTEGER}, #{addres,jdbcType=VARCHAR}, #{identityname,jdbcType=VARCHAR}, 
@@ -192,7 +195,8 @@
       #{userlevel,jdbcType=INTEGER}, #{authenticate,jdbcType=INTEGER}, #{isvalid,jdbcType=INTEGER}, 
       #{issearch,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
       #{nation,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{ismarry,jdbcType=INTEGER}, 
-      #{birthdayone,jdbcType=VARCHAR}, #{birthdaytwo,jdbcType=VARCHAR})
+      #{birthdayone,jdbcType=VARCHAR}, #{birthdaytwo,jdbcType=VARCHAR},
+      #{contactEmail,jdbcType=VARCHAR}, #{contactTel,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.User" >
     insert into tbl_user
@@ -296,6 +300,12 @@
       <if test="birthdaytwo != null" >
         birthdayTwo,
       </if>
+      <if test="contactEmail != null" >
+        contactEmail,
+      </if>
+      <if test="contactTel != null" >
+        contactTel,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -396,6 +406,12 @@
       </if>
       <if test="birthdaytwo != null" >
         #{birthdaytwo,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null" >
+        #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        #{contactTel,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -498,6 +514,12 @@
       <if test="birthdaytwo != null" >
         birthdayTwo = #{birthdaytwo,jdbcType=VARCHAR},
       </if>
+      <if test="contactEmail != null" >
+        contactEmail = #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        contactTel = #{contactTel,jdbcType=CHAR},
+      </if>
     </set>
     where userId = #{userid,jdbcType=INTEGER}
   </update>
@@ -534,7 +556,9 @@
       province = #{province,jdbcType=VARCHAR},
       ismarry = #{ismarry,jdbcType=INTEGER},
       birthdayOne = #{birthdayone,jdbcType=VARCHAR},
-      birthdayTwo = #{birthdaytwo,jdbcType=VARCHAR}
+      birthdayTwo = #{birthdaytwo,jdbcType=VARCHAR},
+      contactEmail = #{contactEmail,jdbcType=VARCHAR},
+      contactTel = #{contactTel,jdbcType=CHAR}
     where userId = #{userid,jdbcType=INTEGER}
   </update>
 

@@ -9,6 +9,11 @@ $(function(){
 		initialFrameHeight:150,//设置编辑器高度
 		scaleEnabled:true
 	});
+	
+	if(window.location.href.indexOf('sortType')!=-1){
+		var t = $('#zh-answers-count').offset().top;
+        $(window).scrollTop(t);
+	}
 	//我的话题 ---已分享单个删除
 	 $('.operate span').live('click',function(){
 	    	var elem = $(this).closest('.item');    	
@@ -126,21 +131,21 @@ $(function(){
 	 $('.edui-body-container').live('click',function(){
 		 topicFocus($(this));
 	 })
-
+     
      //话题的标题点击修改(模板)
     $('#zh-question-title a[name=edit]').live('click',function(){
-		var titletext=$(this).prev().text();
-		var tid=$(this).data('id');
+		var titletext=$('input[name=titlename]').val();
+		var tid=$('input[name=titleid]').val();
 		var data={
 				id:tid,
 				title:titletext,
 		}
-	  $('#titletemplate').setTemplateURL(projectName+'topicTitleEditTemplate.html',null, {filter_data: false});
-	  $('#titletemplate').processTemplate(data);
-	  $('#zh-question-title h2').append($('#titletemplate').html());
-	  $("#titletemplate").empty();
-      $('#zh-question-title h2 .zm-editable-content').css('display','none');
-      $('#zh-question-title h2 .pj-editable-editor-wrap').css('display','block');
+	  $('.pagetemplate').setTemplateURL(projectName+'topicTitleEditTemplate.html',null, {filter_data: false});
+	  $('.pagetemplate').processTemplate(data);
+	  $('#zh-question-title').append($('.pagetemplate').html());
+	  $(".pagetemplate").empty();
+      $('#zh-question-title .zm-editable-content').hide();
+      $('#zh-question-title .pj-editable-editor-wrap').show();
     });
     //话题标签点击修改
     $('.zm-tag-editor a[name=edit]').live('click',function(){
@@ -172,7 +177,7 @@ $(function(){
     //话题的标题点击修改--确定
     $('#zh-question-title a[name=save]').live('click',function(){
     	var titleid=$('input[name=titleid]').val();
-    	var titlename=$('#titleedit').val();
+    	var titlename=$('.titleedit').val();
     	//是否加问号
     	if(titlename.substring(titlename.length-1,titlename.length)!="?"&&titlename.substring(titlename.length-1,titlename.length)!="？")
     		{
@@ -198,7 +203,8 @@ $(function(){
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
     	    		titledisplayorhide();
-    	    		$('#zh-question-title .title').text(titlename);
+    	    		$('#zh-question-title .topic-title').text(titlename);
+    	    		$('input[name=titlename]').val(titlename);
     	    	}
     	    	else{
     	    		
@@ -293,13 +299,13 @@ $(function(){
            	    		$.each(data.obj.list,function(index,item){
             	    			if(item.likedIds!=undefined){
             	    				if(item.likedIds.indexOf(',')!=-1){
-            	    					if($.inArray(String(userInfo.userid), item.likedIds.split(','))!=-1){
+            	    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.likedIds.split(','))!=-1){
             	    						item.likedIds=1;
             	    					}else{
             	    						item.likedIds=0;
             	    					}
             	    				}else{
-            	    					if(item.likedIds==String(userInfo.userid)){
+            	    					if(item.likedIds==String(userInfo==undefined?'':userInfo.userid)){
             	    						item.likedIds=1;
             	    					}else{
             	    						item.likedIds=0;
@@ -314,17 +320,17 @@ $(function(){
            	    				answerid:answerid,
            	    				topicscommentList:data.obj.list,
            	    				topiccount:data.obj.list.length,
-           	    				userid:String(userInfo.userid),
+           	    				userid:String(userInfo==undefined?'':userInfo.userid),
            	    				createperson:createperson,
            	    				objectName:objectName,
            	    		}
            	    		//加载模板
-           	    	 	$('.anscommtemplate').setTemplateURL(projectName+'topicAskCommentTemplate.html');
-           	        	$('.anscommtemplate').processTemplate(datamodel);
-           	        	$this.parents('.js-contentActions').append($('.anscommtemplate').html());
+           	    	 	$('.pagetemplate').setTemplateURL(projectName+'topicAskCommentTemplate.html');
+           	        	$('.pagetemplate').processTemplate(datamodel);
+           	        	$this.parents('.js-contentActions').append($('.pagetemplate').html());
            	        	//textarea高度自适应
            	        	autosize(document.querySelectorAll('._InputBox_blur_3JWV'));
-           	        	$('.anscommtemplate').empty();
+           	        	$('.pagetemplate').empty();
            	        	$('.zg-link').pinwheel();
            	        	$('.Avatar').pinwheel();
            	    	}
@@ -377,13 +383,17 @@ $(function(){
     	var createperson=$('input[name=createperson]').val();
     	var name=$('input[name=titlename]').val();
     	var content=$(this).parent().prev().val();
-    	//字数不能大于1000
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能大于1000
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     			$(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         		return false;
-    	}
+    	}*/
     	var topicid=$('#content input[name=titleid]').val();
     	if($.trim(content)==''){
     		return false;
@@ -392,7 +402,7 @@ $(function(){
     	$.ajax({
     		type:'POST',
     		url:"/topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,objCreatepersonPg:createperson,objectNamePg:name,relationidPg:topicid},
+    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,objCreatepersonPg:createperson,objectNamePg:name,relationidPg:topicid},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -425,13 +435,17 @@ $(function(){
     //话题详情---回答里面评论  再添加评论
     $('button[name=answeraddnew]').live('click',function(){
     	var content=$(this).parent().prev().val();
-    	//字数不能大于1000
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能大于1000
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     			$(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         		return false;
-    	}
+    	}*/
     	var topicid=$('#content input[name=titleid]').val();
     	var parentcommid=$(this).attr('data-parentcommid');
     	var createperson=$(this).attr('data-createperson');
@@ -441,7 +455,7 @@ $(function(){
     	$.ajax({
     		type:'POST',
     		url:"/topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,parentcommid:parentcommid,relationidPg:parentcommid,objCreatepersonPg:createperson,objectNamePg:objectName},
+    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,parentcommid:parentcommid,relationidPg:parentcommid,objCreatepersonPg:createperson,objectNamePg:objectName},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -470,13 +484,17 @@ $(function(){
     //话题详情--评论里面针对每条评论回复
     $('.zm-comment-submit-comment').live('click',function(){	
     	var content=$(this).parent().prev().find('.pj-replaycontent').val();
-    	//字数不能超过一千字
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能超过一千字
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     		   $(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         	   return false;
-    	}
+    	}*/
     	var topicid=$('#content input[name=titleid]').val();
     	//被评论人的id 和名字
     	var commentby=$(this).attr('data-commentid');
@@ -491,7 +509,7 @@ $(function(){
     	$.ajax({
     		type:'POST',
     		url:"/topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,commentby:commentby,objCreatepersonPg:commentby,relationidPg:relationid,objectNamePg:objectname},
+    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,commentby:commentby,objCreatepersonPg:commentby,relationidPg:relationid,objectNamePg:objectname},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -527,13 +545,17 @@ $(function(){
     //话题详细---回答里面针对每条评论进行回复
      $('.zm-comment-submit-answer').live('click',function(){
     	var content=$(this).parent().prev().find('.pj-replaycontent').val();
-    	//字数不能超过一千字
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能超过一千字
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     		   $(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         	   return false;
-    	}
+    	}*/
      	var topicid=$('#content input[name=titleid]').val();
      	var commentby=$(this).attr('data-commentid');
      	var commentname=$(this).attr('data-name');
@@ -547,7 +569,7 @@ $(function(){
      	$.ajax({
     		type:'POST',
     		url:"/topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,commentby:commentby,parentcommid:parentcommid,objectNamePg:objectName,relationidPg:relationid,objCreatepersonPg:commentby},
+    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,commentby:commentby,parentcommid:parentcommid,objectNamePg:objectName,relationidPg:relationid,objCreatepersonPg:commentby},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -639,7 +661,7 @@ $(function(){
         	    			topicid:topicid,
        	    				topicscommentList:data.obj.list,
        	    				topiccount:data.obj.count,
-       	    				userid:userInfo==undefined?userInfo.userid:'',
+       	    				userid:userInfo==undefined?'':userInfo.userid,
        	    				last:data.obj.last,
        	    				createperson:createperson
        	    		}
@@ -751,18 +773,24 @@ $(function(){
     //发布回答
     $('.submit-button').live('click',function(){
     	var topicsid=$(this).attr('data-id');
+    	var objCreateperson=$('input[name=createperson]').val();
+    	var isreward=$('input[name=isreward]').val();
     	//关联的主体名称(话题名称)
     	var topicname=$('input[name=titlename]').val();
-    	var objCreateperson=$('input[name=createperson]').val();
+    	
         /*var commcontent=$('.publishanswer .edui-body-container').html();*/
     	var commcontent=editor.getContent();
-    	//判断输入的字节大小
+		if($.trim(commcontent).replace(/[^x00-xFF]/g,'**').length>65535){
+			$(this).prevAll().show();
+			return false;
+		}
+    	/*//判断输入的字节大小
     	var len=commcontent.length+(commcontent.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>10000){
     		if($(this).parent().find('.errortip').length==0)
     		$(this).before('<span class="errortip">请控制在 10000 字以下</span>&nbsp;&nbsp;');
     		return false;
-    	}
+    	}*/
     	var $this=$(this);
     	var isPublic=$('input[type=checkbox]').is(':checked')?0:1;
     	//判断不为空 或者是在IE浏览器下umeditor插件 会把placeholder属性转换为P标签里面的内容
@@ -777,29 +805,30 @@ $(function(){
             		data.topicsComment.showcreatetime=data.topicsComment.showcreatetime.substring(11);
             		//界面加载数据
             		var datamodel={
-            			userid:userInfo.userid,
-            			username:userInfo.username,
-            			headicon:userInfo.headicon,
+            			userid:userInfo==undefined?'':userInfo.userid,
+            			username:userInfo==undefined?'':userInfo.username,
+            			headicon:userInfo==undefined?'':userInfo.headicon,
             			topicsComment:data.topicsComment,
             			commcontent:commcontent,
             			ispublic:isPublic,
-            			topicname:topicname
+            			topicname:topicname,
             		}
-            		$('.anscommtemplate').setTemplateURL(projectName+'answerTemplate.html',null, {filter_data: false});
-            		$('.anscommtemplate').processTemplate(datamodel);
+            		$('.pagetemplate').setTemplateURL(projectName+'answerTemplate.html',null, {filter_data: false});
+            		$('.pagetemplate').processTemplate(datamodel);
             		if($('.loadmore').length>0){
-            			$('.loadmore').before($('.anscommtemplate').html());
+            			$('.loadmore').before($('.pagetemplate').html());
             		}else{
-            			$('#zh-question-answer-wrap').append($('.anscommtemplate').html());
+            			$('#zh-question-answer-wrap').append($('.pagetemplate').html());
             		}
             		
-            		$('.anscommtemplate').empty();
+            		$('.pagetemplate').empty();
             		$('.publishanswer .edui-body-container').empty();
             		 intoUserInfo();
             		//发布成功之后去掉提示信息
             		$this.parent().find('.errortip').remove();
             		$('#zh-question-answer-num').html(Number($('#zh-question-answer-num').attr('data-num'))+1+'个回答');
             		$('#zh-question-answer-num').attr('data-num',Number($('#zh-question-answer-num').attr('data-num'))+1);
+					bindShare();
                 }
             	else{
             		
@@ -839,9 +868,196 @@ $(function(){
     setInterval("cancelHeight()",1000); 
     /*--end--*/
     
+    //提高悬赏
+    $('#advancereward').live('click',function(){
+    	advanceReward();
+    })
+     //话题提高悬赏值 确定btn
+    $('#reward-btn').live('click',function(){
+    	upReward($(this));
+    });
     
-   
+    //取消悬赏
+    $('#cancelreward').live('click',function(){
+    	cancelReward();
+    })
+    //取消悬赏 确定 btn
+    $('#cancel-reward-btn').live('click',function(){
+    	cancelRewd($(this));
+    })
+    //选择悬赏的财富值
+//    $(".reward-select").live('change',function(){
+//        $('#reward-val').val($(this).val());
+//    });
+    //采纳答案
+    $('.adopt-answer').live('click',function(){
+    	adoptAnswer($(this));
+    });
+    //确定采纳答案
+    $('#adoptAnswer-btn').live('click',function(){
+    	acptAnswer($(this));
+    });
+    
+    
 })
+//采纳最佳答案  确定btn
+function acptAnswer(obj){
+	var topicId = $('input[name=titleid]').val();
+	var rewardValue = $('input[name=rewardValue]').val();
+	var comId = obj.data('adopt-answer');
+	var title = $('input[name=titlename]').val();
+	var priMsg = $('.adopt-reasons').val();
+	var receiveUid = obj.data('receiveuid');
+	$.ajax({
+		type:"POST",
+    	url:"/topics/acptAnswer",
+    	data:{id:topicId,rewardValue:rewardValue,comId:comId,title:title,priMsg:priMsg,receiveUid:receiveUid},
+    	dataType:"json",
+        success:function(data){
+        	if(data.returnStatus=='000'){//返回成功 
+        		$('.adopt-answer').each(function(){
+        			if($(this).attr('data-adopt')==comId){
+        				$('#zh-question-answer-wrap').prepend($(this).parents('.zm-item-expanded').css('background','#f3f9ff'));
+        			}
+        		})
+        		$('#zh-question-answer-wrap').prepend("<i class='z-icon-answer-adopt'></i><span class='answer-title h2 grid'>已采纳</span>");
+        		disIcon();
+        		closeReport(obj);
+        	}
+        	else{
+        	}
+        }
+	})
+}
+//取消悬赏 确定btn
+function cancelRewd(obj){
+	var topicId = $('input[name=titleid]').val();
+	var rewardValue = $('input[name=rewardValue]').val();
+	$.ajax({
+		type:"POST",
+    	url:"/topics/cancelRewd",
+    	data:{id:topicId,rewardValue:rewardValue},
+    	dataType:"json",
+        success:function(data){
+        	if(data.returnStatus=='000'){//返回成功 
+        		disIcon();
+        		closeReport(obj);
+        	}
+        	else{
+        	}
+        }
+	})
+}
+//禁用悬赏图标
+function disIcon(){
+	$('.reward .z-icon-reward-o').addClass('z-icon-accept-reward-o').removeClass('z-icon-reward-o');
+	$('#advancereward i').addClass('z-icon-accept-advancereward-o').removeClass('z-icon-advancereward-o');
+	$('#cancelreward i').addClass('z-icon-accept-cancelreward-o').removeClass('z-icon-cancelreward-o');
+	$('#advancereward,#cancelreward,#rewardval').addClass('disabled');
+	$('input[name=isreward]').val('-1');
+	//移除采纳答案
+	$('.adopt-answer').remove();
+}
+//提高悬赏确定 btn
+function upReward(obj){	
+	//原悬赏值
+	var oldRewValue = parseInt($('input[name=rewardValue]').val());
+//	//新
+//	var newRewValue = $("#reward-val").val();
+//	//差值
+//	var Dvalue = newRewValue - oldRewValue;
+	
+	//差值
+	var Dvalue =$("#reward-val").val(); 
+	var reg=/^(\+|-)?\d+$/;
+	if(!reg.test(Dvalue)){
+		 $('.zh-pm-warnmsg').html('请输入整数!').show();
+		 return false;
+	}
+	if(isNaN(Dvalue)){
+	   $('.zh-pm-warnmsg').html('请正确输入财富值!').show();
+	   return false;
+	}
+	//新
+	var newRewValue = parseInt(Dvalue) + parseInt(oldRewValue);
+	
+	var topicId = $('input[name=titleid]').val();
+	var points = parseInt($('input[name=points]').val());
+	var len=newRewValue.length;
+	for(var i=0;i<len;i++){
+		c=newRewValue.charAt(i).charCodeAt(0);
+		if(c<48 || c>57){
+			$('.zh-pm-warnmsg').html('悬赏值不能小于1个财富值!').show();
+			return false;
+		}
+	}
+	if(Dvalue <=0 || oldRewValue==null || newRewValue==null){
+		//悬赏值减少或者没变
+		$('.zh-pm-warnmsg').html('请增加悬赏值!').show();
+		return false;
+	}	
+	if(Dvalue >  points){
+		//积分不够
+		$('.zh-pm-warnmsg').html('积分不够!').show();
+		return false;
+	}
+	
+	$.ajax({
+		type:"POST",
+    	url:"/topics/upRewd",
+    	data:{id:topicId,rewardValue:newRewValue,dValue:Dvalue},
+    	dataType:"json",
+        success:function(data){
+        	if(data.returnStatus=='000'){//返回成功 
+        		$('.lable-rewardValue').html(newRewValue).attr('data-rewardvalue',newRewValue);
+        		$('input[name=rewardValue]').val(newRewValue);
+        		$('input[name=points]').val(Number(points)-Number(Dvalue));
+        		closeReport(obj);
+        	}
+        	else{
+        	}
+        }
+	})
+}
+//采纳答案
+function adoptAnswer(obj){
+	var comId = obj.data("adopt");
+	var receiveUid = obj.data("receiveuid");
+	//加载模板
+	var data = {
+			comId:comId,
+			receiveUid:receiveUid
+			};
+	$('.pagetemplate').setTemplateURL(projectName+'adoptAnswer.html');
+	$('.pagetemplate').processTemplate(data);
+	$('body').append($('.pagetemplate').html());
+	$('.pagetemplate').empty();
+	$('.edui-container').css('z-index','0');
+}
+//提高悬赏
+function advanceReward(){
+	var points=$('input[name=points]').val();
+	var rewardValue=$('input[name=rewardValue]').val();
+	//加载模板
+	var data={
+			points:points,
+			rewardValue:rewardValue
+	}
+	$('.pagetemplate').setTemplateURL(projectName+'advanceReward.html');
+	$('.pagetemplate').processTemplate(data);
+	$('body').append($('.pagetemplate').html());
+	$('.pagetemplate').empty();
+	$('.edui-container').css('z-index','0');
+}
+//取消悬赏
+function cancelReward(){
+	//加载模板
+	$('.pagetemplate').setTemplateURL(projectName+'cancelReward.html');
+	$('.pagetemplate').processTemplate();
+	$('body').append($('.pagetemplate').html());
+	$('.pagetemplate').empty();
+	$('.edui-container').css('z-index','0');
+}
 //邀请回答按钮点击
 function askPeople(obj){
 	var userid=obj.attr('data-userid');
@@ -855,7 +1071,8 @@ function askPeople(obj){
      	async:false,
      	success:function(data){
      		if(data.returnStatus=='000'){
-     			ZENG.msgbox.show('邀请成功!',4, 3000);
+     			/*ZENG.msgbox.show('邀请成功!',4, 3000);*/
+     			obj.addClass('zg-btn-white').removeClass('zg-btn-green').addClass('disabled');
      		}else{
      			
      		}
@@ -915,6 +1132,8 @@ function topicLoadMore(obj){
     var sumpage=obj.data('sumpage');
     var sorttype=$('input[name=sorttype]').val();
     var topicid=$('#content input[name=titleid]').val();
+    var isreward=$('input[name=isreward]').val();
+    var createperson=$('input[name=createperson]').val();
     $.ajax({
     	type:"POST",
       	url:"/topics/getSortTopicsCommentsByTopicId",
@@ -944,6 +1163,9 @@ function topicLoadMore(obj){
   	    	    })
     			var datamodel={
     			   topiclist:data.obj.list,
+    			   isreward:isreward,
+    			   iscreateperson:(createperson==(userInfo==undefined?'':userInfo.userid))?1:0,
+    			   createperson:createperson
     		    }
     		   $('.headiconintotem').setTemplateURL(projectName+'topicLoadMoreTemplate.html',null, {filter_data: false});
           	   $('.headiconintotem').processTemplate(datamodel);
@@ -955,6 +1177,7 @@ function topicLoadMore(obj){
           		 $('.loadmore').hide();
           	   }
           	   intoUserInfo();
+				bindShare();
     		}else{
     			
     		}
@@ -969,13 +1192,12 @@ function closereply(obj){
 
 //显示隐藏
 function titledisplayorhide(){
-	$('#zh-question-title h2 .zm-editable-content').css('display','block');
-    $('#zh-question-title h2 .pj-editable-editor-wrap').remove();
+	$('#zh-question-title .zm-editable-content').show();
+    $('#zh-question-title .pj-editable-editor-wrap').remove();
 }
 function titlecondisplayorhide(){
 	$('#zh-question-detail .zm-editable-content').show();
-	$('#zh-question-detail .edui-container').hide();
-	$('#zh-question-detail .zm-command').hide();
+	$('#zh-question-detail .edui-container,#zh-question-detail .zm-command').hide();
 }
  //批量删除话题 --分享  
 function deleteTopics(conditions,obj){
@@ -1005,7 +1227,7 @@ function deleteTopics(conditions,obj){
             			}
             			
             		}
-            		$('#topicshare').html("分享("+data.operationSum.topicssharesum+")");
+            		$('#topicshare').html("分享&nbsp;"+data.operationSum.topicssharesum);
 
         		}else{//返回失败
 
@@ -1040,7 +1262,7 @@ function deleteAttentions(conditions,obj){
         			}
           		}
 
-             $('#topicattention').html("关注("+data.operationSum.topicsattesum+")");
+             $('#topicattention').html("关注&nbsp;"+data.operationSum.topicsattesum);
       		}else{//返回失败
 
       		}
@@ -1074,7 +1296,7 @@ function deleteTopicsComments(conditions,obj){
         				obj.parents('li').remove();
         			}
           		}
-          		$('#topicreplay').html("回复("+data.operationSum.topicscomsum+")");
+          		$('#topicreplay').html("回复&nbsp;"+data.operationSum.topicscomsum);
           		
       		}else{//返回失败
       			

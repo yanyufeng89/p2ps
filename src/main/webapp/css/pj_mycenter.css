@@ -36,7 +36,7 @@
 }
 .public-profile dd .public-profile-url {
     direction: ltr;
-    color:#666;
+    color:#555;
 }
 
 .profile-card-extras .profile-actions .show-more-info {
@@ -62,7 +62,7 @@
     border-left: 1px solid #ccc;
     border: 0;
     padding:1px;
-    color: #666;
+    color: #555;
     white-space: nowrap;
     outline:none
 }
@@ -84,7 +84,7 @@
     font-size: 14px;
     font-weight: normal;
     line-height: 16px;
-    color: #090909;
+    color: #333;
     text-shadow: 1px 1px 1px #fff;
     padding-top: 18px;
     padding-bottom: 0px;
@@ -163,11 +163,11 @@
    width:298px;
    position: relative;
    padding: 10px 0 10px 10px; 
-   border: 1px solid #d6d6d6;
+   border: 1px solid #cce1ef;
    margin-bottom: 14px;
-   background: #fff;
+   background: #eff6fA;
    font-size: 14px; 
-   color: #090909; 
+   color: #333; 
 }
 
 .strength .strength-meter.v2 .strength-data ,.strength .strength-meter.v2{
@@ -204,9 +204,6 @@
 	position: absolute;
 	display: block;
 	height: 1px;
-	width: 278px;
-	bottom: 0;
-	left: 86px;
 	background: #000;
 	visibility: hidden;
 	z-index: 2;
@@ -376,3 +373,9 @@
     font-weight: 700;
     color: #000;
 } 
+.section-logo {
+	float: right;
+	width: 100px;
+	text-align: center;
+	margin:-50px 0 0 10px;
+}

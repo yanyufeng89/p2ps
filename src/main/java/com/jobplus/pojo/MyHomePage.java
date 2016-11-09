@@ -64,12 +64,12 @@ public class MyHomePage extends PageParent {
 	}
 	private static Map<String, String> urlMap = new HashMap<String,String>();
 	static{
-		urlMap.put("tbl_topics","/myCenter/getTopicsDetail?topicId=");
-		urlMap.put("tbl_books","/books/getBookDetail?id=");		
-		urlMap.put("tbl_courses","/courses/getCourseDetail?id=");
-		urlMap.put("tbl_sites","/sites/getSiteDetail?id=");	
-		urlMap.put("tbl_article","/article/getArticleDetail?id=");	
-		urlMap.put("tbl_docs","/docs/getDocsDetail?id=");
+		urlMap.put("tbl_topics","/topics/getTopicsDetail/");
+		urlMap.put("tbl_books","/books/getBookDetail/");		
+		urlMap.put("tbl_courses","/courses/getCourseDetail/");
+		urlMap.put("tbl_sites","/sites/getSiteDetail/");	
+		urlMap.put("tbl_article","/article/getArticleDetail/");	
+		urlMap.put("tbl_docs","/docs/getDocsDetail/");
 	}
 	
 	
@@ -79,12 +79,12 @@ public class MyHomePage extends PageParent {
 	}
 	/**
 	 * 拼接Url
-	 * urlMap.put("tbl_topics","/myCenter/getTopicsDetail?topicId=");
-		urlMap.put("tbl_books","/books/getBookDetail?id=");		
-		urlMap.put("tbl_courses","/courses/getCourseDetail?id=");
-		urlMap.put("tbl_sites","/sites/getSiteDetail?id=");	
-		urlMap.put("tbl_article","/article/getArticleDetail?id=");	
-		urlMap.put("tbl_docs","/docs/getDocsDetail?id=");
+	 * urlMap.put("tbl_topics","/myCenter/getTopicsDetail/");
+		urlMap.put("tbl_books","/books/getBookDetail/");		
+		urlMap.put("tbl_courses","/courses/getCourseDetail/");
+		urlMap.put("tbl_sites","/sites/getSiteDetail/");	
+		urlMap.put("tbl_article","/article/getArticleDetail/");	
+		urlMap.put("tbl_docs","/docs/getDocsDetail/");
 	 */
 	public static Map<String, String> getUrlMap() {
 		return urlMap;

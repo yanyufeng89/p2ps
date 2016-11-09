@@ -296,7 +296,7 @@
                         return;
                     }
                     node.setAttr();
-                    node.setAttr('href', '#')
+                    node.setAttr('href', 'javascript:void(0);')
                 },
                 strong: {$: {}},
                 b:function(node){

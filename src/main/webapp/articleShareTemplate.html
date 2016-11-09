@@ -3,15 +3,24 @@
  <li>
     <div class='w403 fs14 fc3 ib titlehidden'>
           <div class="checkbox chk" data-courseid="{$T.sharelist.id}" data-name="{$T.sharelist.coursesname}"></div>
-                <a href="/{$T.detail}?id={$T.sharelist.id}" target="_blank" title="{$T.sharelist.coursesname}">{$T.sharelist.coursesname}</a>  
+                <a href="/{$T.detail}/{$T.sharelist.id}" target="_blank" title="{$T.sharelist.coursesname}">{$T.sharelist.coursesname}</a>  
           </div>
-          <div class='w125 ib ilbookc'>
+          <div class='w94 ib ilbookc'>
+                {#if $T.sharelist.ispublic==1}
+	            	公开
+	            {#elseif $T.sharelist.ispublic==0}
+	            	匿名
+	           {#else}
+	           		公开
+	          {#/if} 
+          </div>
+          <div class='w94 ib ilarticle'>
                 {$T.sharelist.recommendsum}
           </div>
-          <div class='w125 ib ilbookc'>
+          <div class='w94 ib ilarticle'>
 	             {$T.sharelist.collectsum}
           </div>
-          <div class='w119 ib ilbook'>
+          <div class='w94 ib'>
                  {#if $T.sharelist.userShareTime}
 			         {$T.sharelist.userShareTime}
 			     {#/if}

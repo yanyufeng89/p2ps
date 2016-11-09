@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-            站点分享
+            站点分享-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
   </head>
@@ -96,22 +96,18 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关内容;
+                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的站点;
                       </li>
                       <li>
-                        2.如果您发现一个好的站点，可以分享给更多的人，直接分享网站链接即可;
+                        2.输入框里粘贴你要分享的网站链接, 点击"√"进行校对无误之后确定分享;
                       </li>
                       <li>
                         3.禁止分享非法，含有淫秽色情及低俗信息的站点链接;
                       </li>
                       <li>
                         4.站点分享有问题需要帮助？详情请查看知识库
-                        <a href="#" target="_self">
-                                                                 服务条款
-                        </a>和
-                        <a href="#" target="_self">
-                                                                帮助中心
-                        </a>
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
@@ -142,6 +138,7 @@
 				   
                   <div id="uploadsite-list" class="uploadcourse-list">
                       <input type='hidden' name='siteurl' value=''>
+                      <input type='hidden' name='title' value=''>
                       <div class="editlayoutbook" id="upload-item-0">
                         <dl class="editupload">
                           <dd>
@@ -149,20 +146,26 @@
                             
                               <table class="edit-table">
                                 <tbody>
-                                  <tr>
-                                    <td class="name">
-                                        详情：
-                                    </td>
-                                    <td>
-                                      <div class="zg-form-text-input add-course-title-form">
-                                        
+                                 <tr>
+                                    <td class="name"><i>*</i>站点：</td> 
+                                    <td> 
+                                      <div class="add-title-form">
+                                          
                                       </div>
+                                    </td>
+                                   </tr>
+                                   <tr>
+                                    <td class="name"><i>*</i>简介：</td> 
+                                    <td> 
+	                                    <textarea name="intro" class="add-brief-form"></textarea>
+	                                    <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+                                        <span class="item-msg-content" style='display:none'>简介必填</span>
                                     </td>
                                   </tr>
                                   <tr>
                                     <td class="name"><i>*</i>推荐：</td>
                                     <td>
-                                        <textarea name="recommend" class="content" style="resize: none" placeholder='填写推荐理由'></textarea>
+                                        <textarea name="recommend" class="content"  placeholder='填写推荐理由'></textarea>
                                          <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
                                          <span class="item-msg-content" style='display:none'>推荐理由必填</span>
                                     </td>
@@ -229,13 +232,18 @@
                     </h4>
                     <ol>
                       <li>
-                        1.分享站点一定要选择分类;
+                        1.站点分享时必须对该站点填写推荐理由，可以让别人更加清晰的了解该站点的亮点以及相关内容;
                       </li>
                       <li>
-                        2.点击继续添加按钮,您还可以继续添加多个链接同时上传,操作快速、便捷、满足您的需求;
+                        2.分享站点一定要选择分类,方便记录、查询以及搜索;
                       </li>
                       <li>
-                        3.您还可以添加推荐以及多个标签,便于更多的好友发现查看;
+                        3.多个标签之间要用逗号隔开，便于更多的好友发现查看;
+                      </li>
+                       <li>
+                        4.站点分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>

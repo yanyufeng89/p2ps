@@ -1,13 +1,13 @@
 <!-- 查询出来的邀请人信息 -->
 {#foreach $T.personData as list}
 	<li  class="person">
-	   <a class="zm-item-link-avatar" target="_blank"  href="/myHome/getHomePage?userid={$T.list.id}">
-	      <img src="{$T.list.headIcon}" class="zm-list-avatar avatar" data-userid="{$T.list.id}">
+	   <a class="zm-item-link-avatar" target="_blank"  href="/myHome/getHomePage/{$T.list.id}">
+	      <img src="{$T.list.headIcon}"  alt="个人头像" class="zm-list-avatar avatar lazy" data-userid="{$T.list.id}">
 	   </a>
 	   <div class='content'>
 	       <button class="invite-button zg-btn zg-btn-green"  data-userid="{$T.list.id}" data-type="recommended">邀请回答</button>
 	       <div class="describe">
-			   <a href="/myHome/getHomePage?userid={$T.list.id}" target="_blank" class="author-link"  data-userid="{$T.list.id}">{$T.list.username}</a>
+			   <a href="/myHome/getHomePage/{$T.list.id}" target="_blank" class="author-link"  data-userid="{$T.list.id}">{$T.list.username}</a>
 			   <span class="bio description" title="">
 			    {#if $T.list.description}
 			     ,&nbsp;{$T.list.description}

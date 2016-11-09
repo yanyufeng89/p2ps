@@ -47,7 +47,7 @@ public class UserServiceImpl implements IUserService {
 	@Resource
 	private ISequenceService seqService;
 	@Resource
-	private FTPUtils fTPUtils;
+	private FTPClientTemplate ftpClientTemplate;
 	
 	@Resource
 	private IAttentionService attentionService;
@@ -356,8 +356,8 @@ public class UserServiceImpl implements IUserService {
 				String fileName = user.getUserid()+"_"+UUIDGenerator.getUUID()+ "."+usersuffix;
 				// dir.server=http://192.168.0.39:8199/
 				// 定义上传路径
-				path =  fTPUtils.ftpImgDir + "/" + fTPUtils.ftpHeadIconDir  +"/"+DateUtils.getDateTime2()+"/"+  fileName;
-				headicon = fTPUtils.headIconServer +fTPUtils.ftpHeadIconDir +"/"+DateUtils.getDateTime2()+"/"+ fileName;
+				path =  ftpClientTemplate.ftpImgDir + "/" + ftpClientTemplate.ftpHeadIconDir  +"/"+DateUtils.getDateTime2()+"/"+  fileName;
+				headicon = ftpClientTemplate.headIconServer +ftpClientTemplate.ftpHeadIconDir +"/"+DateUtils.getDateTime2()+"/"+ fileName;
 				// 设置头像路径
 				user.setHeadicon(headicon);
 				// 保存到本地
@@ -372,14 +372,12 @@ public class UserServiceImpl implements IUserService {
 				//Download_From_Break_Success(5), Download_From_Break_Faild(6), Upload_New_File_Success(7), Upload_New_File_Failed(8), 
 				//Delete_Remote_Success(9),Delete_Remote_Faild(10),Remote_Bigger_Local(11),Remote_smaller_local(12),Not_Exist_File(13),
 				//Remote_Rename_Success(14),Remote_Rename_Faild(15),File_Not_Unique(16);
-			if (fTPUtils.connect()) {
 				// 连接成功
-				FTPStatus fst = fTPUtils.upload(files.getInputStream(), path);
+				FTPStatus fst = ftpClientTemplate.upload(files.getInputStream(), path,true);
 				//Upload_New_File_Success(7)
 				if (fst.getStatus() == 7) {
 					ret = 1;
 				}
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

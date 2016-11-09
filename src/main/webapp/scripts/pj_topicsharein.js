@@ -35,7 +35,8 @@ $(function(){
 	})
 	//实例化编辑器
 	 var editor=UM.getEditor('summernote',{
-			initialFrameHeight:170,//设置编辑器高度  initialFrameWidth :563,//设置编辑器宽度563
+			initialFrameHeight:170,//设置编辑器高度  
+			initialFrameWidth :563,//设置编辑器宽度563
 			scaleEnabled:true
 		});
 	//默认隐藏工具栏
@@ -60,17 +61,21 @@ $(function(){
    $('.edui-btn-fullscreen').live('click',function(){
    	if($('.edui-body-container').height()=='170'){
    		 $('.edui-body-container').css('height','950px');
-   		 /*$('.zg-noti-number,#ft,#footnote').hide();*/
+   		 $('.zg-noti-number,#ft,#footnote').hide();
    		$('.editlayoutbook dd').eq(1).hide();
    	}else{
    		 $('.edui-body-container').css('height','170px');
-   		/* $('.zg-noti-number,#ft,#footnote').show();*/
+   		$('.zg-noti-number,#ft,#footnote').show();
    		$('.editlayoutbook dd').eq(1).show();
    	}
  });
-
+    //窗体缩放
+  	$(window).resize(function(){
+		$('.edui-container').css('z-index','0');
+	})
 	//发布
 	$("#btn-public-all").on('click',function(){
+		
 		var ispublic=true;
 		//点击发布的时候  首先判断输入的内容是否符合要求  (标题不少于两个字  且 要带有问号)
 		var title=$("#pj-question-suggest-title-content").val();
@@ -83,6 +88,10 @@ $(function(){
 		}
 		if(title.substring(title.length-1,title.length)!="?"&&title.substring(title.length-1,title.length)!="？"){
 			$("#pj-modal-dialog-warnmsg-wrapper").find('.item-msg-content').html('您还没有给问题添加问号');
+			ispublic=false;
+		}
+		if(title.replace(/[^x00-xFF]/g,'**').length>256){
+			$("#pj-modal-dialog-warnmsg-wrapper").find('.item-msg-content').html('标题字数超出最大限制');
 			ispublic=false;
 		}
 		if(!ispublic){
@@ -130,6 +139,8 @@ $(function(){
 			return false;
 		}
 		$("#topicaddForm input[name=topicsclass]").val(tagid.substring(0,tagid.length-1));
+		//添加遮罩层 防止在上传的同时做其他操作
+		addMaskLayer();
 		$("#topicaddForm").submit();
 	});
 
@@ -211,7 +222,7 @@ function initTitleBySearchTopic(data,conds){
 		if(b.replysum==undefined)
 			b.replysum=0;
 		html+="<div class='ask-row' data-askid='"+b.data_id+"' data-answer-count"+b.replysum+"> ";
-		html+="   <a style='color:rgb(34,34,34)' target='_blank' href='/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
+		html+="   <a style='color:rgb(34,34,34)' target='_blank' href='/topics/getTopicsDetail/"+b.data_id+"'>"+b.title+"</a>"
 	    html+="   <span class='ask-gray'>"+b.replySum+"个人回答问题</span>"
 		html+="</div>";
 	})
@@ -231,7 +242,7 @@ function initTitleContentBySearchTopic(data,conds){
 		if(b.replysum==undefined)
 			b.replysum=0;
 		html+="<div class='ask-row goog-zippy-header goog-zippy-collapsed' data-answer_id="+b.data_id+" data-answer_count='"+b.replysum+"'>";
-	    html+="<a style='color: rgb(34, 34, 34);' target='_blank' href='/topics/getTopicsDetail?topicId="+b.data_id+"'>"+b.title+"</a>"
+	    html+="<a style='color: rgb(34, 34, 34);' target='_blank' href='/topics/getTopicsDetail/"+b.data_id+"'>"+b.title+"</a>"
 	    html+="   <span class='zm-ac-gray'>"+b.replySum+"个人回答问题</span>"
 		html+="</div>";
 	 })

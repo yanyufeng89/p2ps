@@ -77,6 +77,9 @@ public class LoginController {
 				mv.addObject("backurl", backurl);
 				// 返回视图名设置
 				mv.setViewName("login");
+				
+				mv.addObject("message","账号或密码错误");
+				
 				return mv;
 			}
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -110,6 +113,7 @@ public class LoginController {
 			// 返回前端数据设置
 			mv.addObject("backurl", backurl);
 			// 返回视图名设置
+			mv.addObject("message","登录异常请稍后再试");
 			mv.setViewName("login");
 			return mv;
 		}

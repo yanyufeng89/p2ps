@@ -32,4 +32,11 @@ public interface ITypeConfigService {
 	public List<TypeConfig> getAllTypeConfigs(); 
 	
 	public TypeConfig getTypeConfigById(Integer id);
+
+	/**
+	 * 获取title
+	 * @param id
+	 * @return
+	 */
+	public String getSiteTitleByTypeConfig(Integer id);
 }

@@ -33,7 +33,7 @@ import sun.misc.BASE64Decoder;
 public class Uploader {
 	
 	@Resource
-	private FTPUtils fTPUtils;
+	private FTPClientTemplate ftpClientTemplate;
 	// 输出文件地址
 	private String url = "";
 	// 上传文件名
@@ -132,31 +132,15 @@ public class Uploader {
 					}
 					this.fileName = this.getName(this.originalName);
 					this.type = this.getFileExt(this.fileName);
-					//this.url = savePath + "/" + this.fileName;
-					//BufferedInputStream in = new BufferedInputStream(fis.openStream());
-					//File file = new File(this.getPhysicalPath(this.url));
-					//FileOutputStream out = new FileOutputStream( file );
-					//BufferedOutputStream output = new BufferedOutputStream(out);
-					//Streams.copy(in, output, true);
-					
-					//imgDir FIXME   暂时注释 待后期完善
-		            // 定义上传路径//路径格式  "/docsDir/2016/06/22/123/UUID测试文件 - 副本s.txt" 
-					String path = "/imgDir/"+DateUtils.getDateTime2()+"/";//+UUIDGenerator.getUUID()+file.getOriginalFilename();
+					String path = "/imgDir/"+DateUtils.getDateTime2()+"/";
 					String fileName = this.getName(this.originalName);
-					//  http://192.168.0.39:8199/DateUtils.getDateTime2()+"/"+fileName;
-					/**图片上传到服务器 st*/
-					//					ThreadFTPUtils myFtp3 = new ThreadFTPUtils("192.168.0.39", 21, "jobftp", "3er4#ER$",path + fileName,fis.openStream(),FTPType.UPLOAD);
-					//					Thread thread3=new Thread(myFtp3);  
-					//					thread3.start();					
 					
 					this.url =DateUtils.getDateTime2()+"/"+fileName;
 			        
 			  
-					fTPUtils.connect();  
 			  
-					fTPUtils.upload(fis.openStream(),path + fileName);  
+					ftpClientTemplate.upload(fis.openStream(),path + fileName,true);  
 			  
-					fTPUtils.disconnect();  
 			        
 					/**图片上传到服务器 end*/
 					this.state=this.errorInfo.get("SUCCESS");

@@ -3,10 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <title>
-            JobPlus-知识库
-    </title>
-    <meta name="viewport" content="width=1230,initial-scale=0.9"/>
+    <title>JobPlus- 构建企业知识服务体系</title>
+    <meta name="description" content="JobPlus网是国内首创的企业知识库公共平台,结构化的知识体系,包含文档,书籍,文章,网站,问答,在线课程的分享学习社区。一站式知识库平台,为7亿职场人员提供优质学习分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
+    <meta name="keywords" content="JobPlus,知识分享,知识库,文档,书籍,问答,课程,文章,网站,在线培训,企业课堂,员工培训,在线教育,职业技能,视频课程,培训网站,职场培训,网络课堂,人才培训,内容管理">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta property="wb:webmaster" content="a07e8efa7bc99422" />
     <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css" charset="UTF-8">
@@ -132,32 +131,32 @@
                 <ul class="img-list">
                   <li class="bg-loading cur" style="opacity: 1; z-index: 9;">
                     <a href="javascript:void(0)"  target="_self" class="log-xsend">
-                      <img alt=""  src="/image/1.jpg" />
+                      <img alt="图片1"  src="/image/1.jpg" class="lazy" >
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
                     <a href="javascript:void(0)" target="_self" class="log-xsend">
-                      <img alt="" src="/image/2.jpg" />
+                      <img alt="图片2" src="/image/2.jpg" class="lazy" >
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
                     <a href="javascript:void(0)"  target="_self" class="log-xsend">
-                      <img alt=""  src="/image/3.jpg" />
+                      <img alt="图片3"  src="/image/3.jpg" class="lazy" >
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
                     <a href="javascript:void(0)" target="_self" class="log-xsend">
-                      <img alt=""  src="/image/4.jpg" />
+                      <img alt="图片4"  src="/image/4.jpg" class="lazy" >
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
                     <a href="javascript:void(0)" target="_self" class="log-xsend">
-                      <img alt="" src="/image/5.jpg" />
+                      <img alt="图片5" src="/image/5.jpg" class="lazy" >
                     </a>
                   </li>
                   <li class="bg-loading " style="opacity: 0; z-index: 1;">
                     <a href="javascript:void(0)" target="_self" class="log-xsend">
-                      <img alt=""  src="/image/6.jpg" />
+                      <img alt="图片6"  src="/image/6.jpg" class="lazy">
                     </a>
                   </li>
                 </ul>
@@ -211,7 +210,7 @@
 			         <li class='clearfix first'>
 			           <a class='topic-division' href='/topics/fore/search/0' target='_self'>
 			             <div class='tpc-img'>
-			              <img src='/image/topic-division.png' alt='' height='72' width='136'>
+			              <img src='/image/topic-division.png' class="lazy" alt='话题专区' height='72' width='136'>
 			             </div>
 			             <div class='tpc-brief'>
 			              <span class='topic-brief'>
@@ -224,7 +223,7 @@
 			         <li class='clearfix second'>
 			            <a class='book-division'  href='/books/fore/area/0' target='_self'>
 			              <div class='tpc-img'>
-			                <img src='/image/book-division.png' alt='' height='72' width='136'>
+			                <img src='/image/book-division.png' class="lazy" alt='书籍专区' height='72' width='136'>
 			              </div>
 			              <div class='tpc-brief'>
 			                <span class='book-brief'>
@@ -240,9 +239,10 @@
           </div>
           <div class="user-info">
              <div class="logined-wrap" id="logininfo">
-				<div class="logined-doc-num">
+				
+				<div class="logined-user-info">
 				<p class="num-tip">JobPlus海量知识体系</p>
-				  <p class="num" id="total-docnum" data-docnum="153,377,154">
+				<p class="num" id="total-docnum" data-docnum="153,377,154">
 				     <span class="num1" data-num="1"></span>
 				     <span class="num0" data-num="0"></span>
 				     <span class="num0" data-num="0"></span>
@@ -256,11 +256,9 @@
 				     <span class="num0" data-num="0"></span>
 				     <span class="num0" data-num="0"></span>
 				     <span class="num0" data-num="0"></span>
-				  </p>
-				</div>
-				<div class="logined-user-info">
+				 </p>
 				<div class="org-user-tip">
-				<p>点击头像，访问我的机构主页</p>
+				<p>点击头像,访问我的机构主页</p>
 				<span class="arrow-icon"></span><span class="close-icon close-pic"></span>
 				</div>
 				<div class="user-brief bg-index clearfix">
@@ -268,9 +266,9 @@
 				   <div>
 				      <a href="/myCenter/getMyHeadTop" target="_self" class="bg-avatar bg-index">
 				         <#if (Session.user.headicon)??&& Session.user.headicon?length gt 0>
-		                   <img src="${Session.user.headicon}" width='60' height='60'>
+		                   <img src="${Session.user.headicon}"  class="lazy" width='60' height='60' alt="个人头像">
 		                 <#else>
-		                   <img src="/image/myphoto.jpg" width='60' height='60'>
+		                   <img src="/image/myphoto.jpg"  class="lazy" width='60' height='60' alt="个人头像">
 		              </#if>
 		               </a>
 				   </div>
@@ -290,7 +288,7 @@
 				<a href="#" target="_self"><span class="iconfont ic-eduVip hide"></span></a>
 				</p>
 				<p class="task">
-				    <a href="javascript:void(0)" target="_self" class="daily-task">分享知识，领财富值</a>
+				    <a href="javascript:void(0)" target="_self" class="daily-task">分享知识,领财富值</a>
 			    </p>
 				</div>
 				</div>
@@ -371,20 +369,11 @@
 				</li>
 				</ul>
 				</div>
-				<div class="my-wk">
 				
-				<p class="upload-wrap">
-				<a class="upload-btn bg-index" style='left:0;top:0' target='_self'  href="/sharein/searchuploadFile"></a>
-				<span class="upload-btn-wealth-tip" style="display: inline;">
-				<i class="ic icon-upload-wealth bg-index"></i>
-				送下载券<i class="arrow">
-				<i class="arrow-out"></i>
-				<i class="arrow-inner"></i>
-				</i>
-				</span>
-				</p>
 				</div>
 				</div>
+				<div class="my-wk">
+					<a class="upload-btn bg-index" style='left:0;top:0' target='_self'  href="/sharein/searchuploadFile"></a>
 				</div>
            </div>
           </div>
@@ -445,28 +434,26 @@
                      <div class="zone-info clearfix">
                          <div class="zone-img">
                              <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                               <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                   <img src="${items[0].imgurl}"
-                                        alt="${items[0].title}" title="${items[0].title}">
-                               <#else>
-                                   <img src="/image/default/106.jpg"
-                                        alt="${items[0].title}" title="${items[0].title}">
-                               </#if>
+                                   <img src="/image/wonderful _share_1.jpg"
+                                        alt="创新/创业" title="创新/创业"  class="lazy">
                              </a>
                          </div>
                          <div class="zone-recom">
-                             <p>
-                                 <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                    title="${items[0].title}">
-                                     ${items[0].title}
-                                 </a>
-                             </p>
+                             <#list items as item>
+                                 <#if item_index gt -1 && item_index lt 2>
+                                     <p>
+                                         <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                         ${item.title}
+                                         </a>
+                                     </p>
+                                 </#if>
+                             </#list>
                          </div>
                      </div>
                  <div class="related-doc">
                  <ul>
                    <#list items as item>
-                      <#if item_index gt 0 && item_index lt 9>
+                      <#if item_index gt 1 && item_index lt 9>
                           <li>
                               [${item.extendinfo5}]
                               <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -492,28 +479,26 @@
                     <div class="zone-info clearfix">
                         <div class="zone-img">
                             <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                              <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                  <img src="${items[0].imgurl}"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              <#else>
-                                  <img src="/image/default/106.jpg"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              </#if>
+                                  <img src="/image/wonderful _share_2.jpg"
+                                       alt="${items[0].title}" title="${items[0].title}" class="lazy">
                             </a>
                         </div>
                         <div class="zone-recom">
-                            <p>
-                                <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                   title="${items[0].title}">
-                                ${items[0].title}
-                                </a>
-                            </p>
+                            <#list items as item>
+                                <#if item_index gt -1 && item_index lt 2>
+                                    <p>
+                                        <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                        ${item.title}
+                                        </a>
+                                    </p>
+                                </#if>
+                            </#list>
                         </div>
                     </div>
                     <div class="related-doc">
                         <ul>
                           <#list items as item>
-                            <#if item_index gt 0 && item_index lt 9>
+                            <#if item_index gt 1 && item_index lt 9>
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -539,28 +524,26 @@
                     <div class="zone-info clearfix">
                         <div class="zone-img">
                             <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                              <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                  <img src="${items[0].imgurl}"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              <#else>
-                                  <img src="/image/default/106.jpg"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              </#if>
+                                  <img src="/image/wonderful _share_3.jpg"
+                                       alt="${items[0].title}" title="${items[0].title}" class="lazy">
                             </a>
                         </div>
                         <div class="zone-recom">
-                            <p>
-                                <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                   title="${items[0].title}">
-                                ${items[0].title}
-                                </a>
-                            </p>
+                            <#list items as item>
+                                <#if item_index gt -1 && item_index lt 2>
+                                    <p>
+                                        <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                        ${item.title}
+                                        </a>
+                                    </p>
+                                </#if>
+                            </#list>
                         </div>
                     </div>
                     <div class="related-doc">
                         <ul>
                           <#list items as item>
-                            <#if item_index gt 0 && item_index lt 9>
+                            <#if item_index gt 1 && item_index lt 9>
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -586,28 +569,26 @@
                     <div class="zone-info clearfix">
                         <div class="zone-img">
                             <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                              <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                  <img src="${items[0].imgurl}"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              <#else>
-                                  <img src="/image/default/106.jpg"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              </#if>
+                                  <img src="/image/wonderful _share_4.jpg"
+                                       alt="${items[0].title}" title="${items[0].title}" class="lazy">
                             </a>
                         </div>
                         <div class="zone-recom">
-                            <p>
-                                <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                   title="${items[0].title}">
-                               ${items[0].title}
-                                </a>
-                            </p>
+                            <#list items as item>
+                                <#if item_index gt -1 && item_index lt 2>
+                                    <p>
+                                        <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                        ${item.title}
+                                        </a>
+                                    </p>
+                                </#if>
+                            </#list>
                         </div>
                     </div>
                     <div class="related-doc">
                         <ul>
                           <#list items as item>
-                            <#if item_index gt 0 && item_index lt 9>
+                            <#if item_index gt 1 && item_index lt 9>
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -633,28 +614,26 @@
                     <div class="zone-info clearfix">
                         <div class="zone-img">
                             <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                              <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                  <img src="${items[0].imgurl}"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              <#else>
-                                  <img src="/image/default/106.jpg"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              </#if>
+                                  <img src="/image/wonderful _share_5.jpg"
+                                       alt="${items[0].title}" title="${items[0].title}" class="lazy">
                             </a>
                         </div>
                         <div class="zone-recom">
-                            <p>
-                                <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                   title="${items[0].title}">
-                                  ${items[0].title}
-                                </a>
-                            </p>
+                            <#list items as item>
+                                <#if item_index gt -1 && item_index lt 2>
+                                    <p>
+                                        <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                        ${item.title}
+                                        </a>
+                                    </p>
+                                </#if>
+                            </#list>
                         </div>
                     </div>
                     <div class="related-doc">
                         <ul>
                           <#list items as item>
-                            <#if item_index gt 0 && item_index lt 9>
+                            <#if item_index gt 1 && item_index lt 9>
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -680,28 +659,26 @@
                   <div class="zone-info clearfix">
                       <div class="zone-img">
                           <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                            <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                <img src="${items[0].imgurl}"
-                                     alt="${items[0].title}" title="${items[0].title}">
-                            <#else>
-                                <img src="/image/default/106.jpg"
-                                     alt="${items[0].title}" title="${items[0].title}">
-                            </#if>
+                                <img src="/image/wonderful _share_6.jpg"
+                                     alt="${items[0].title}" title="${items[0].title}" class="lazy">
                           </a>
                       </div>
                       <div class="zone-recom">
-                          <p>
-                              <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                 title="${items[0].title}">
-                                 ${items[0].title}
-                              </a>
-                          </p>
+                          <#list items as item>
+                              <#if item_index gt -1 && item_index lt 2>
+                                  <p>
+                                      <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                      ${item.title}
+                                      </a>
+                                  </p>
+                              </#if>
+                          </#list>
                       </div>
                   </div>
                   <div class="related-doc">
                       <ul>
                         <#list items as item>
-                          <#if item_index gt 0 && item_index lt 9>
+                          <#if item_index gt 1 && item_index lt 9>
                               <li>
                                   [${item.extendinfo5}]
                                   <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -727,28 +704,26 @@
                   <div class="zone-info clearfix">
                       <div class="zone-img">
                           <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                            <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                <img src="${items[0].imgurl}"
-                                     alt="${items[0].title}" title="${items[0].title}">
-                            <#else>
-                                <img src="/image/default/106.jpg"
-                                     alt="${items[0].title}" title="${items[0].title}">
-                            </#if>
+                                <img src="/image/wonderful _share_7.jpg"
+                                     alt="${items[0].title}" title="${items[0].title}" class="lazy">
                           </a>
                       </div>
                       <div class="zone-recom">
-                          <p>
-                              <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                 title="${items[0].title}">
-                                 ${items[0].title}
-                              </a>
-                          </p>
+                          <#list items as item>
+                              <#if item_index gt -1 && item_index lt 2>
+                                  <p>
+                                      <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                      ${item.title}
+                                      </a>
+                                  </p>
+                              </#if>
+                          </#list>
                       </div>
                   </div>
                   <div class="related-doc">
                       <ul>
                         <#list items as item>
-                          <#if item_index gt 0 && item_index lt 9>
+                          <#if item_index gt 1 && item_index lt 9>
                               <li>
                                   [${item.extendinfo5}]
                                   <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -774,28 +749,26 @@
                     <div class="zone-info clearfix">
                         <div class="zone-img">
                             <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                              <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                  <img src="${items[0].imgurl}"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              <#else>
-                                  <img src="/image/default/106.jpg"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              </#if>
+                                  <img src="/image/wonderful _share_8.jpg"
+                                       alt="${items[0].title}" title="${items[0].title}" class="lazy">
                             </a>
                         </div>
                         <div class="zone-recom">
-                            <p>
-                                <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                   title="${items[0].title}">
-                                ${items[0].title}
-                                </a>
-                            </p>
+                            <#list items as item>
+                                <#if item_index gt -1 && item_index lt 2>
+                                    <p>
+                                        <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                        ${item.title}
+                                        </a>
+                                    </p>
+                                </#if>
+                            </#list>
                         </div>
                     </div>
                     <div class="related-doc">
                         <ul>
                           <#list items as item>
-                            <#if item_index gt 0 && item_index lt 9>
+                            <#if item_index gt 1 && item_index lt 9>
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -821,28 +794,26 @@
                     <div class="zone-info clearfix">
                         <div class="zone-img">
                             <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})">
-                              <#if (items[0].imgurl)?? && (items[0].imgurl)!=''>
-                                  <img src="${items[0].imgurl}"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              <#else>
-                                  <img src="/image/default/106.jpg"
-                                       alt="${items[0].title}" title="${items[0].title}">
-                              </#if>
+                                  <img src="/image/wonderful _share_10.jpg"
+                                       alt="${items[0].title}" title="${items[0].title}" class="lazy">
                             </a>
                         </div>
                         <div class="zone-recom">
-                            <p>
-                                <a href='javascript:void(0)' onclick="toHref('${items[0].datatype}',${items[0].dataid})"
-                                   title="${items[0].title}">
-                                ${items[0].title}
-                                </a>
-                            </p>
+                            <#list items as item>
+                                <#if item_index gt -1 && item_index lt 2>
+                                    <p>
+                                        <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
+                                        ${item.title}
+                                        </a>
+                                    </p>
+                                </#if>
+                            </#list>
                         </div>
                     </div>
                     <div class="related-doc">
                         <ul>
                           <#list items as item>
-                            <#if item_index gt 0 && item_index lt 9>
+                            <#if item_index gt 1 && item_index lt 9>
                                 <li>
                                     [${item.extendinfo5}]
                                     <a href='javascript:void(0)' onclick="toHref('${item.datatype}',${item.dataid})" title="${item.title}">
@@ -866,16 +837,16 @@
           </div>
          <div id='hot-recommend' class='hot-recommend-book'>
           <ul>
-              <#list recommDatas as data>
+              <#list recommDatas[0..6] as data>
                   <li class="clearfix">
                       <div class="book-img">
                           <a href='javascript:void(0)' onclick="toHref('${data.datatype}',${data.dataid})">
                             <#if (data.imgurl)?? && (data.imgurl)!=''>
                                 <img  src="${data.imgurl}"
-                                     title="${data.title}" alt="${data.title}">
+                                     title="${data.title}" alt="${data.title}" class="lazy">
                               <#else>
                                   <img  src="/image/default/166.jpg"
-                                       title="${data.title}" alt="${data.title}">
+                                       title="${data.title}" alt="${data.title}" class="lazy">
                             </#if>
                           </a>
                       </div>
@@ -908,7 +879,7 @@
     </div>
     <div id="advertisingb" class="clearfix">
       <a href="javascript:void(0)" target="_self" class="log-xsend">
-        <img class="lazybg" src="/image/knowledgebase-1.jpg" alt=''>
+        <img class="lazybg lazy" src="/image/knowledgebase-1.jpg" alt='广告'>
       </a>
     </div>
     <a id="backtop" title="回到顶部" href="#top" class='back-to-top' style="display: none; bottom:300px;"></a>

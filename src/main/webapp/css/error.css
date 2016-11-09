@@ -1,8 +1,8 @@
 body {
 	width: 100%; 
 	height:auto;
-	font-family:"Microsoft YaHei";
-	_font-family:"Microsoft YaHei";
+	font-family: Arial,'微软雅黑';
+	_font-family: Arial,'微软雅黑';
 }
 .i_error {
 	max-width: 1200px;
@@ -35,7 +35,7 @@ body {
 	font-size: 24px;
 	line-height: 24px;
 	text-align: center;
-	color: #090909;
+	color: #333;
 }
 .tip_exist{
 	padding-top:300px;

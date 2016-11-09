@@ -107,7 +107,7 @@ public class AttentionServiceImpl implements IAttentionService {
 
 					// 添加消息通知
 					smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[17], record.getObjectid(),
-							record.getObjectid(), new Sms().getSMSTYPES()[2], record.getRelationidPg(),
+							record.getObjectid(), 2, record.getRelationidPg(),
 							record.getObjectNamePg(),"");
 
 				}
@@ -120,7 +120,7 @@ public class AttentionServiceImpl implements IAttentionService {
 
 					// 添加消息通知
 					smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[2], record.getObjectid(),
-							record.getObjCreatepersonPg(), new Sms().getSMSTYPES()[2], record.getRelationidPg(),
+							record.getObjCreatepersonPg(), 2, record.getRelationidPg(),
 							record.getObjectNamePg(),"");
 				}
 			} else {

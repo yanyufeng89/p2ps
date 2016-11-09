@@ -17,7 +17,7 @@
     <result column="likeSum" property="likesum" jdbcType="INTEGER" />
     <result column="collectSum" property="collectsum" jdbcType="INTEGER" />
     <result column="isPublic" property="isPublic" jdbcType="INTEGER" />
- <!--    <result column="isLiked" property="isLiked" jdbcType="INTEGER" /> -->
+ 	<result column="isAccept" property="isAccept" jdbcType="INTEGER" />
     
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.TopicsComment" extends="BaseResultMap" >
@@ -25,11 +25,11 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, topicsId, rootCommID, parentCommId, tier, userId, commentBy, isdelete, updateTime, 
-    createTime,type, replySum, likeSum, collectSum,isPublic
+    createTime,type, replySum, likeSum, collectSum,isPublic,isAccept
   </sql>
   <sql id="Base_Column_List2" >
     t.id, t.topicsId, t.rootCommID, t.parentCommId, t.tier, t.userId, t.commentBy, t.isdelete, t.updateTime,t.createTime ,
-    t.type, t.replySum, t.likeSum, t.collectSum,t.isPublic
+    t.type, t.replySum, t.likeSum, t.collectSum,t.isPublic,t.isAccept
   </sql>
   <sql id="Blob_Column_List" >
     commContent
@@ -97,10 +97,31 @@
         </foreach>
     
   </update>
-  <!-- 获取某条话题的所有回答   关联用户表的用户名和用户头像     （用于话题详情页的展示）     （用于话题详情页的展示） getTopicsCommentsByTopicId type 回复类型    回答1 评论2-->
+  <!-- 获取某条话题的所有回答   关联用户表的用户名和用户头像     （用于话题详情页的展示）     （用于话题详情页的展示） getTopicsCommentsByTopicId type 回复类型    回答1 评论2
+   		最佳答案 UNION ALL 其他答案-->
   <!-- sortType排序方式      1是时间排序      2是评论数排序    默认按照时间排序 -->
   <select id="getTopicsCommentsByTopicId" resultMap="BaseResultMap"  parameterType="com.jobplus.pojo.TopicsComment" >
-	select
+	  select
+		<include refid="Base_Column_List2" />
+		,
+		<include refid="Blob_Column_List" />
+		,u.userName AS tmpUserName,
+		u.headIcon AS tmpHeadIcon,
+		(SELECT			
+				group_concat(userid)
+			FROM
+				tbl_topics_isliked where commid = t.id) AS likedIds
+		FROM
+			tbl_topics_comment t 
+		JOIN tbl_user u ON t.userId = u.userId
+		WHERE	<!-- 资源必须未被删除 -->
+			 t.isdelete = 0
+			 <!-- and u.isValid = 1 -->
+		AND topicsId = #{topicsid,jdbcType=INTEGER} 	
+		AND type = 1
+		AND isAccept = 1
+		UNION ALL 
+	(select
 	<include refid="Base_Column_List2" />
 	,
 	<include refid="Blob_Column_List" />
@@ -116,16 +137,15 @@
 	WHERE	<!-- 资源必须未被删除 -->
 		 t.isdelete = 0
 		 <!-- and u.isValid = 1 -->
-	AND
-	topicsId = #{topicsid,jdbcType=INTEGER} 	
-	AND
-	type = 1	
+	AND topicsId = #{topicsid,jdbcType=INTEGER} 	
+	AND type = 1
+	AND isAccept != 1	
 	ORDER BY
 	<if test="sortType != null and sortType != '' and sortType == 1" >
         t.createTime DESC
      </if>
 	<if test="sortType != null and sortType != '' and sortType == 2" >
-        t.replySum desc 
+        t.likeSum desc 
      </if>
      <if test="sortType == null or sortType == ''" >
         t.createTime
@@ -137,7 +157,7 @@
 		<otherwise>
 			limit #{defaultPageSize,jdbcType=INTEGER}
 		</otherwise>
-	</choose>
+	</choose>)
   </select>
   <!-- 统计总数   	获取某条话题的所有回答   关联用户表的用户名和用户头像     （用于话题详情页的展示）     （用于话题详情页的展示） getTopicsCommentsByTopicId type 回复类型    回答1 评论2-->
   <select id="getTopicsCommentsByTopicIdCount" resultType="java.lang.Integer"  parameterType="com.jobplus.pojo.TopicsComment" >
@@ -253,7 +273,7 @@
     insert into tbl_topics_comment (id, topicsId, rootCommID, 
       parentCommId, tier, userId, 
       commentBy, isdelete, updateTime, 
-      createTime, commContent,type, replySum, likeSum, collectSum,isPublic)
+      createTime, commContent,type, replySum, likeSum, collectSum,isPublic ,isAccept)
     values (#{id,jdbcType=INTEGER}, #{topicsid,jdbcType=INTEGER}, #{rootcommid,jdbcType=INTEGER}, 
       #{parentcommid,jdbcType=INTEGER}, #{tier,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
       #{commentby,jdbcType=INTEGER}, 0 
@@ -276,7 +296,14 @@
       </if>
       <if test="isPublic == null"  >
          ,1
-      </if>)
+      </if>
+      <if test="isAccept == null"  >
+         ,0
+      </if>
+      <if test="isAccept != null"  >
+        ,#{isAccept,jdbcType=INTEGER}
+      </if>
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.TopicsComment" >
     insert into tbl_topics_comment
@@ -329,6 +356,9 @@
       <if test="isPublic != null" >
         isPublic,
       </if>
+      <if test="isAccept != null" >
+        isAccept,
+      </if>
       
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -380,6 +410,9 @@
       <if test="isPublic != null" >
         #{isPublic,jdbcType=INTEGER},
       </if>
+      <if test="isAccept != null" >
+        #{isAccept,jdbcType=INTEGER},
+      </if>
      
     </trim>
   </insert>
@@ -428,6 +461,9 @@
       <if test="isPublic != null" >
         isPublic = #{isPublic,jdbcType=INTEGER},
       </if>
+      <if test="isAccept != null" >
+        isAccept = #{isAccept,jdbcType=INTEGER},
+      </if>
       updateTime = Now()
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -448,7 +484,8 @@
 		replySum = #{replysum,jdbcType=INTEGER},
 		likeSum = #{likesum,jdbcType=INTEGER},
 		collectSum = #{collectsum,jdbcType=INTEGER},
-		isPublic = #{isPublic,jdbcType=INTEGER}
+		isPublic = #{isPublic,jdbcType=INTEGER},
+		isAccept = #{isAccept,jdbcType=INTEGER}
 	where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.TopicsComment" >
@@ -467,7 +504,8 @@
 		replySum = #{replysum,jdbcType=INTEGER},
 		likeSum = #{likesum,jdbcType=INTEGER},
 		collectSum = #{collectsum,jdbcType=INTEGER},
-		isPublic = #{isPublic,jdbcType=INTEGER}
+		isPublic = #{isPublic,jdbcType=INTEGER},
+		isAccept = #{isAccept,jdbcType=INTEGER}
 	where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,6 +1,19 @@
 $(function(){
 	//头像信息
 	intoUserInfo();
+	//站点详情简介 
+	if($('input[name=sitescontent]').length>0){
+		var content=$('input[name=sitescontent]').val();
+		if(content.replace(/[^x00-xFF]/g,'**').length>600){
+			$('#sitebrief .brief-content').text(autoAddEllipsis($('#sitebrief .brief-content').text(),560)).after("<span class='showall'>展示全部</span>");
+		}
+	}
+	//详情简介收起
+	$('.slideup').live('click',function(){
+		$(this).hide().prev().show();
+		$('.brief-content').text(autoAddEllipsis($('.brief-content').text(),560));
+		$(this).parents('.brief').addClass('book-height');
+	})
 	//单个删除 课程已分享
     $('.operate .cancelshare').live('click',function(){
 	    	var siteid=$(this).data('courseid');
@@ -121,6 +134,10 @@ $(function(){
     	url=url.substr(0,7).toLowerCase()=="http://"?url:"http://"+url;
     	window.location.href=url;
     });*/
+    //发布文本框获取焦点
+    $('.commentcontent').live('focus',function(){
+    	$('.item-msg-content,.ic-msg').hide();
+    });
 })
 //站点加载更多
 function siteLoadMore(obj){
@@ -170,12 +187,14 @@ function collectSite(obj){
       				$this.empty().html('取消收藏');
       				$this.attr('data-actiontype','1');
       				$this.next().find('strong').html(Number($this.next().find('strong').html())+1);
+      				showHeadIcon();
          		}
          		else{
          			$this.removeClass('zg-btn-white').addClass('zg-btn-green');
          			$this.attr('data-actiontype','0');
          			$this.empty().html('收藏站点');
          			$this.next().find('strong').html(Number($this.next().find('strong').html())-1);
+         			deleteHeadIcon();
          		} 
       		}
       		else{
@@ -229,7 +248,7 @@ function delSharedSite(conditions,obj){
          					obj.parents('li').remove();
          				}
 		            }
-		        	$('#siteshare').html("分享("+data.operationSum.sitessharesum+")");
+		        	$('#siteshare').html("分享&nbsp;"+data.operationSum.sitessharesum);
 		   		}else{//返回失败
 		   		}
 
@@ -292,7 +311,7 @@ function deleteMyCollects(conditions,obj){
  					obj.parents('li').remove();
  				}
     		}
-    		$('#sitecollect').html("收藏("+data.operationSum.sitescollsum+")");
+    		$('#sitecollect').html("收藏&nbsp;"+data.operationSum.sitescollsum);
 
   		}else{//返回失败
   		}
@@ -302,7 +321,7 @@ function deleteMyCollects(conditions,obj){
 }
 //加载用户信息
 function intoUserInfo(){
-	$('.uname,.zm-item-link-avatar,.zm-list-avatar,.author-link').pinwheel();
+	$('.uname,.zm-item-link-avatar,.zm-list-avatar,.author-link,.zm-item-img-avatar').pinwheel();
 }
 //新增推荐语
 function insertComment(obj,type){
@@ -330,13 +349,17 @@ function insertComment(obj,type){
 	 if($.trim(commendcontent).length==0){
 		 return false;
 	 }
-	 var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
+	 if($.trim(commendcontent).replace(/[^x00-xFF]/g,'**').length>65535){
+		obj.prevAll().show();
+		return false;
+     }
+	/* var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
 	 if(len>1000){
 	 		if(obj.parent().find('span').length==0)
 	 			obj.before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
 	     		return false;
-	 }
-	 if(commendcontent.length==0)return false;
+	 }*/
+	 /*if(commendcontent.length==0)return false;*/
 	 var $this=obj;
 	 $.ajax({
 		type:"POST",

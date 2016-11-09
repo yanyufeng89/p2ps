@@ -15,35 +15,41 @@
 					 <h2>关于我们</h2>
 					 <p><a href="/about/company_profile" class='active' target='_self'>公司介绍</a></p>
 					 <p><a href="/about/talent_recruitment" target='_self'>人才招聘</a></p>
-					 <p><a href="/about/contact_way" target='_self'>联系方式</a></p>
-					 <p><a href="/about/news" target='_self'>资讯动态</a></p>
+					 <p><a href="/about/contact_way" target='_self' rel='nofollow'>联系方式</a></p>
+					 <p><a href="/about/news" target='_self' rel='nofollow'>资讯动态</a></p>
 				   </div>
 				   <div class='col-md-3'>
 					 <h2>商务合作</h2>
-					 <p><a href="/about/channel_cooperation" target='_self'>渠道合作</a></p>
-					 <p><a href="/about/network_union" target='_self'>网络联盟</a></p>
-					 <p><a href="/about/expert_cooperating" target='_self'>专家合作</a></p>
+					 <p><a href="/about/channel_cooperation" target='_self' rel='nofollow'>渠道合作</a></p>
+					 <p><a href="/about/network_union" target='_self' rel='nofollow'>网络联盟</a></p>
+					 <p><a href="/about/expert_cooperating" target='_self' rel='nofollow'>专家合作</a></p>
 				   </div>
 				   <div class='col-md-3'>
 					  <h2>法律声明</h2>
-					  <p><a href="/about/terms_service" target='_self'>服务条款</a></p>
-					  <p><a href="/about/copyright_statement" target='_self'>权利声明</a></p>
-					  <p><a href="/about/privacy_statement" target='_self'>隐私声明</a></p>
+					  <p><a href="/about/terms_service" target='_self' rel='nofollow'>服务条款</a></p>
+					  <p><a href="/about/copyright_statement" target='_self' rel='nofollow'>权利声明</a></p>
+					  <p><a href="/about/privacy_statement" target='_self' rel='nofollow'>隐私声明</a></p>
 				   </div>
 				   <div class='col-md-4'>
 					  <h2>帮助中心</h2>
 					  <p><a href="/about/newbie_guide" target='_self'>使用攻略</a></p>
-					  <p><a href="/about/feedback" target='_self'>建议反馈</a></p>
-					  <p><a href="/about/contactus" target='_self'>联系客服</a></p>
+					  <p><a href="/about/feedback" target='_self' rel='nofollow'>建议反馈</a></p>
+					  <p><a href="/about/contactus" target='_self' rel='nofollow'>联系客服</a></p>
+					  <p><a href="/sitemap.html" target='_blank'>网站地图</a></p>
 				   </div>
-				  
+				   
 				   <div class='col-md-5'>
 					  <span class='pj-two-dimensional'>
-					    <img src='/image/twodimen.jpg' alt=''>
+					    <img src='/image/twodimen.jpg' alt='二维码' class='lazy'>
 					  </span>
 					  <div class="tc_richscan gray9">微信扫一扫</div>
 				   </div>
-				   
+				   <div class='col-md-5'>
+					  <span class='pj-weibo'>
+					    <img src='/image/weibo.jpg' alt='微博' class='lazy'>
+					  </span>
+					  <div class="tc_richscan gray9">微博扫一扫</div>
+				   </div>
 				</div>
 			  </div>
 			</div>

@@ -32,7 +32,7 @@
 	text-align: center;
 	color:#fff;
 	background:#83c0ef;
-	border-top-right-radius:16px;
+	/* border-top-right-radius:16px; */
 }
 
 .pj-container .leftnav li{
@@ -43,7 +43,7 @@
 }
 .pj-container .leftnav a{
 	font-size:14px;
-	color:#090909;
+	color:#333;
 }
 .pj-container .leftnav a.active{
 	color:#1b85d5;
@@ -54,25 +54,26 @@
 .feedback .slogan{
 	font-size:18px;
 	font-weight:bold;
-	color:#090909;
+	color:#333;
 	margin-bottom:6px;
 }
 .feedback span{
-	color:#666;
+	color:#555;
 }
 .feedback input{
 	height:30px;
 	line-height:30px;
 	border: 1px solid #d6d6d6;
 	padding-left:6px;
-	font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+	font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
     outline:none;
     background: #f9f9f9;
+    border-radius: 2px;
 }
 .email,.mobile{
 	margin-top:16px;
-	color:#090909;
+	color:#333;
 	font-size:14px;
 }
 .email input,.mobile input{
@@ -80,11 +81,11 @@
 }
 
 .btn-send{
-	font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+	font-family: Arial,'微软雅黑';
+    _font-family: Arial,'微软雅黑';
 	font-size:16px;
 	background: #1b85d5;
-	border-radius:2px;
+	border-radius:4px;
 	float:right;
 	width:60px!important;
     text-align: center;
@@ -116,6 +117,7 @@
 	font-size:20px;
 	font-weight:700;
 	margin-top: 4px;
+	color: #333;
 }
 .terms_service dt{
 	margin-top: 24px!important;
@@ -136,7 +138,7 @@
 .wraptxt span,.wrapcontent dd,.legal-notice dd,.terms_service dd{
 	font-size:14px;
 	line-height:28px;
-	color:#090909;
+	color:#555;
     display: block;
     margin-top: 4px;
 }
@@ -164,11 +166,12 @@
     height:120px;
     font-size: 22px;
     background: #83c0ef;
-    line-height: 250px;
+    line-height: 252px;
     text-align: center;
     color: #fff;
     margin:20px 0 0 72px;
     float: left;
+    letter-spacing: 4px;
 }
 .comslogan li:before{
     content: "";
@@ -210,8 +213,103 @@
     text-align: center;
     margin-right: 10px;
     cursor: pointer;
+    color:#333;
 }
 .currents {
-    background: #83c0ef !important;
-    color: #fff;
+    background: #83c0ef!important;
+    color: #fff!important;
+}
+.header{
+	text-align:center;
+	font-size:24px;
+	color:#333;
+	margin-top:30px;
+}
+.newbie-main{
+	border-bottom:1px solid #ccc;
+}
+#common-problem,#use-process,.newbie-main{
+	margin:20px 70px 0 70px;
+	width:796px;
+}
+#common-problem,#use-process{
+	font-size:14px;
+	color:#555;
+}
+.newbie-first,.newbie-second{
+	width: 390px;
+    display: inline-block;
+    border-left: 1px solid #ccc;
+    font-size: 20px;
+    color: #555;
+    padding-bottom: 10px;
+}
+.newbie-second{
+	 border-left:0!important
+}
+#use-process dl dd:nth-child(even){
+	padding:0 0 20px 0;
+	border-bottom:1px dotted #ccc;
+	text-align: center;
+}
+#use-process dl dd{
+	margin-top:20px;
+}
+#common-problem dl dd:nth-child(odd){
+	font-size:14px;
+	color:#1890ed;
+	padding-bottom:20px;
+	padding-top:20px;
+}
+#common-problem dl dd:nth-child(even){
+	padding-bottom:20px;
+	border-bottom:1px dotted #ccc;
+}
+#common-problem dl dd:last-child,#use-process dl dd:last-child{
+	border-bottom:none;
+	padding-bottom:60px;
+}
+.use-branch a{
+	color: #333;
+}
+.common-problem,.use-process{	
+    padding-bottom: 12px;
+    margin-left: 130px;
+}
+
+.common-problem span,.use-process span{
+    background: url(../image/strategy-icon.png) transparent no-repeat;
+    display: inline-block;
+    text-indent: -9999px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.common-problem span{
+	width: 23px;
+    height: 26px;
+	background-position:0 0;
+}
+.use-process span{
+	width: 20px;
+    height: 26px;
+	background-position:-46px 0;
+}
+.curr{
+	 border-bottom: 3px solid #1b85d5;
+}
+.serial-number{
+	width:30px;
+    height:30px;
+	background-color:#1b85d5; 
+    border-radius:16px;
+    float:left;
+    margin-right:6px;
+}
+.serial-number .num{
+	height:30px; 
+	line-height:30px; 
+	display:block; 
+	color:#FFF; 
+	text-align:center
 }

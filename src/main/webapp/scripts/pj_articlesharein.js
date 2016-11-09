@@ -13,11 +13,11 @@ $(function(){
    $('.edui-btn-fullscreen').live('click',function(){
 	   	if($('.edui-body-container').height()=='603'){
 	   		 $('.edui-body-container').css('height','950px');
-	   		/* $('.zg-noti-number,#ft,#footnote').hide();*/
+	   		 $('.zg-noti-number,#ft,#footnote').hide();
 	   		$('.editlayoutarticle dd').eq(1).hide();
 	   	}else{
 	   		 $('.edui-body-container').css('height','603px');
-	   		 /*$('.zg-noti-number,#ft,#footnote').show();*/
+	   		 $('.zg-noti-number,#ft,#footnote').show();
 	   		$('.editlayoutarticle dd').eq(1).show();
 	   	}
    });
@@ -30,8 +30,19 @@ $(function(){
 			$('#pj-article-suggest-title-content').focus();
 			return false;
 		}
+		if($.trim($('#pj-article-suggest-title-content').val()).replace(/[^x00-xFF]/g,'**').length>256){
+			$('#pj-article-warnmsg .item-msg-content').html('标题字数超出最大限制').show();
+			$('#pj-article-warnmsg').show();
+			$('#pj-article-suggest-title-content').focus();
+			return false;
+		}
 		if(!editor.hasContents()){
 			$('#pj-article-warnmsg .item-msg-content').html('请输入文章内容');
+			$('#pj-article-warnmsg').show();
+			return false;
+		}
+		if(editor.hasContents().replace(/[^x00-xFF]/g,'**').length>16777215){
+			$('#pj-article-warnmsg .item-msg-content').html('文章内容字数超出最大限制');
 			$('#pj-article-warnmsg').show();
 			return false;
 		}
@@ -47,6 +58,8 @@ $(function(){
 			tagid+=$(this).attr('id')+":"+$(this).data('name')+",";
 		});
 		$("input[name=articleclass]").val(tagid.substring(0,tagid.length-1));
+		//添加遮罩层 防止在上传的同时做其他操作
+		addMaskLayer();
 		$('#articleaddForm').submit();
 	})
 	//推荐理由获得焦点
@@ -65,6 +78,14 @@ $(function(){
 	    	$('#pj-article-suggest-title-content').val($('#searcharticle').val());
 		}
 	})
+	//窗体缩放
+	$(window).resize(function(){
+		$('.edui-container').css('z-index','0');
+	})
+	//获取公开 或 匿名
+    $("input[type=radio]").live('change',function(){
+	    $('input[name=ispublic]').val($(this).val());
+    }) 
 })
 
 

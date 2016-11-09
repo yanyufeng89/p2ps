@@ -4,15 +4,24 @@
      <div class='w342 fs14 fc3 ib dochidden'>
         <div class="checkbox chk" data-docid="{$T.list.id}" data-name="{$T.list.title}" ></div>
         <b class="ic ic-{$T.list.docsuffix} mr14"></b>
-        <a href="/docs/getDocsDetail?id={$T.list.id}"   data-docid='{$T.list.id}' class='doctitle' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
+        <a href="/docs/getDocsDetail/{$T.list.id}"   data-docid='{$T.list.id}' class='doctitle' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
      </div>
-     <div class='w140 ib il'>
+     <div class='w105 ib doc-ispublic'>
+      {#if $T.list.ispublic==1}
+       	公开
+      {#elseif $T.list.ispublic==2}
+                          匿名  
+      {#else}
+      	公开
+      {#/if}
+     </div>
+     <div class='w105 ib il'>
        {$T.list.downsum}
      </div>
-     <div class='w140 ib il'>
+     <div class='w105 ib il'>
        {$T.list.collectsum}
      </div>
-     <div class="w140 ib">
+     <div class="w105 ib">
         {$T.list.showcreatetime}
      </div>
      <div class='w119 ib operate'>

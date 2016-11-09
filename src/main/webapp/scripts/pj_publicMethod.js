@@ -49,6 +49,7 @@ $(function(){
 	        success:function(data){
 	        	if(data.returnStatus=='000'){//返回成功
 	        		closeReport($this);
+	        		ZENG.msgbox.show('您的举报正在等待人工审核,我们会在24小时内审核完成!', 4, 3000);
 	            }
 	        	else{
 	        		
@@ -121,7 +122,7 @@ $(function(){
 	 }*/
 	
 	//关掉弹出层(举报)
-    $('.modal-dialog-title-close').live('click',function(){
+    $('.modal-dialog-title-close,.RewardMenu-actions .cancel-btn').live('click',function(){
     	closeReport($(this));
     });
 
@@ -185,15 +186,12 @@ $(function(){
 		 topicFocus($(this));
 	 });
     //详情简介展开
-	$('.slidedown').live('click',function(){
+	$('.showall').live('click',function(){
 		$(this).hide().next().show();
+		$(this).prev().html($(this).parent().attr('data-brief'));
 		$(this).parents('.brief').removeClass('book-height');
 	})
-	//书籍详情简介收起
-	$('.slideup').live('click',function(){
-		$(this).hide().prev().show();
-		$(this).parents('.brief').addClass('book-height');
-	})
+	
 	 //回到顶部
     $(".back-to-top").mousemove(function(){
     	$(".back-to-top").css("background-position-x", "-28px");
@@ -202,7 +200,7 @@ $(function(){
     })
     /*当界面下拉到一定位置出现向上的箭头 start*/
     $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
+        if ($(window).scrollTop()>200){  
             $(".back-to-top").fadeIn("fast");  
         }else{  
             $(".back-to-top").fadeOut("fast");  
@@ -351,12 +349,16 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
 	          			obj.empty().html('取消关注');
 	          			obj.attr('data-actiontype','0');
 	          			obj.next().find('strong').html(Number(obj.next().find('strong').html())+1);
+	          			//添加对应人的头像信息
+	          			showHeadIcon();
 	          		}
 	          		else{
 	          			obj.removeClass('zg-btn-white').addClass('zg-btn-green');
 	          			obj.attr('data-actiontype','1');
 	          			obj.empty().html('关注话题');
 	          			obj.next().find('strong').html(Number(obj.next().find('strong').html())-1);
+	          			//移除对应的头像信息
+	          			deleteHeadIcon();
 	          		} 
         	  }
         	  if(objecttype==0&&type==undefined){
@@ -376,6 +378,44 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
         		
         	}
         }
+	})
+}
+//添加对应人的头像信息
+function addHead(){
+	var isexist=false;
+   //判断列表里是否有当前头像
+   $('.zu-small-avatar-list img').each(function(){
+	   if($(this).attr('data-userid')==String(userInfo.userid)){
+		   isexist=true;
+	   }
+   })
+   if(!isexist){
+	   var headHtml='';
+	   headHtml+='<a title="'+userInfo.username+'" target="_blank" class="zm-item-link-avatar" href="/myHome/getHomePage/'+userInfo.userid+'" data-moduletype="0">';
+	   if(userInfo.headicon==''||userInfo.headicon==undefined){
+		   headHtml+='<img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
+	   }else{
+		   headHtml+='<img src="'+userInfo.headicon+'" class="zm-item-img-avatar lazy" data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
+	   }
+	   headHtml+='</a>'
+	   return headHtml;
+   }
+}
+//列表添加个人头像
+function showHeadIcon(){
+	if($('.fa-ellipsis-h').length==1){
+		$('.fa-ellipsis-h').before(addHead());
+	}else{
+		$('.zu-small-avatar-list').first().append(addHead());
+	}
+	intoUserInfo();
+}
+//删除头像
+function deleteHeadIcon(){
+	$('.zu-small-avatar-list img').each(function(){
+			if($(this).attr('data-userid')==userInfo.userid){
+				$(this).parent().remove();
+			}
 	})
 }
 //根据条件查询(标签) url:"tags/findClass/"+condition
@@ -419,6 +459,22 @@ function isURL (str_url) {// 验证url
     var re=new RegExp(strRegex); 
     return re.test(str_url); 
 } 
+function share(types) {
+   /* var currentUrl = window.location.href;*/
+    var type = 0;
+    if (types=='topic')
+        type = 1;
+    else if (types=='book')
+        type = 2;
+    else if (types=='course')
+        type = 3;
+    else if (types=='article')
+        type = 4;
+    else if (types=='sites')
+        type = 5;
+    //window.open("/sharein/searchuploadFile?type=" + type);
+    window.location.href = "/sharein/searchuploadFile?type=" + type;
+}
 /*window._bd_share_config = {
 	    "common": {
 	      "bdSnsKey": {},
@@ -441,3 +497,99 @@ function isURL (str_url) {// 验证url
 	  };
 with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~ ( - new Date() / 36e5)];
 */
+
+//内容超出截取字符串
+function autoAddEllipsis(pStr, pLen) {  
+	  
+    var _ret = cutString(pStr, pLen);  
+    var _cutFlag = _ret.cutflag;  
+    var _cutStringn = _ret.cutstring;  
+  
+    if ("1" == _cutFlag) {  
+        return _cutStringn + "...";  
+    } else {  
+        return _cutStringn;  
+    }  
+}  
+  
+/* 
+ * 注：半角长度为1，全角长度为2 
+ *  
+ * pStr:字符串 
+ * pLen:截取长度 
+ *  
+ * return: 截取后的字符串 
+ */  
+function cutString(pStr, pLen) {  
+  
+    // 原字符串长度  
+    var _strLen = pStr.length;  
+  
+    var _tmpCode;  
+  
+    var _cutString;  
+  
+    // 默认情况下，返回的字符串是原字符串的一部分  
+    var _cutFlag = "1";  
+  
+    var _lenCount = 0;  
+  
+    var _ret = false;  
+  
+    if (_strLen <= pLen/2) {  
+        _cutString = pStr;  
+        _ret = true;  
+    }  
+  
+    if (!_ret) {  
+        for (var i = 0; i < _strLen ; i++ ) {  
+            if (isFull(pStr.charAt(i))) {  
+                _lenCount += 2;  
+            } else {  
+                _lenCount += 1;  
+            }  
+  
+            if (_lenCount > pLen) {  
+                _cutString = pStr.substring(0, i);  
+                _ret = true;  
+                break;  
+            } else if (_lenCount == pLen) {  
+                _cutString = pStr.substring(0, i + 1);  
+                _ret = true;  
+                break;  
+            }  
+        }  
+    }  
+      
+    if (!_ret) {  
+        _cutString = pStr;  
+        _ret = true;  
+    }  
+  
+    if (_cutString.length == _strLen) {  
+        _cutFlag = "0";  
+    }  
+  
+    return {"cutstring":_cutString, "cutflag":_cutFlag};  
+}  
+  
+/* 
+ * 判断是否为全角 
+ *  
+ * pChar:长度为1的字符串 
+ * return: true:全角 
+ *          false:半角 
+ */  
+function isFull (pChar) {  
+    if ((pChar.charCodeAt(0) > 128)) {  
+        return true;  
+    } else {  
+        return false;  
+    }  
+} 
+//添加遮罩层 防止在上传的同时做其他操作
+function addMaskLayer(){
+	$('.edui-container').css('z-index','0');
+	$('body').append('<div class="modal-dialog-bg" style="opacity: 0.5; width: 1920px; height: 12986px;" aria-hidden="true"></div>');
+
+}

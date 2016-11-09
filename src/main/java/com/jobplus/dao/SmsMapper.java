@@ -56,7 +56,7 @@ public interface SmsMapper {
      */
     public int makeReadSms(Sms record);
     /**
-     * 批量删除   传递ID即为单个,否则全部
+     * 批量删除   传递ID即为单个,否则全部 isLook是否查看
      * @return
      */
     public int delSms(Sms record);

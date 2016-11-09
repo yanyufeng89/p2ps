@@ -12,5 +12,6 @@
     <script type="text/javascript" src="/uedit/umeditor.js"></script>
     <script type="text/javascript" src="/scripts/autosize.js"></script>
     <script type="text/javascript" src="/uedit/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" src="/scripts/pj_msgbox.js"></script>
     <script type="text/javascript" src="/scripts/pj_loadPmAndsmg.js"></script>
     

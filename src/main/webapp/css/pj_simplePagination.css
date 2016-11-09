@@ -68,12 +68,12 @@ ul.simple-pagination {
 }
 
 .compact-theme .prev {
-	border-radius: 2px 0 0 2px;
+	border-radius: 4px 0 0 4px;
 }
 
 .compact-theme .next {
 	border-right: 1px solid #AAA;
-	border-radius: 0 2px 2px 0;
+	border-radius: 0 4px 4px 0;
 }
 
 .compact-theme .current {
@@ -99,7 +99,7 @@ ul.simple-pagination {
 
 .light-theme a, .light-theme span {
 	float: left;
-	color: #666;
+	color: #555;
 	font-size:14px;
 	line-height:26px;
 	font-weight: normal;
@@ -108,7 +108,7 @@ ul.simple-pagination {
 	min-width: 23px;
 	padding: 0 7px;
 	margin: 0 5px 0 0;
-	border-radius: 2px;
+	border-radius: 4px;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 	background: #efefef; /* Old browsers */
 	background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%); /* FF3.6+ */
@@ -157,7 +157,7 @@ ul.simple-pagination {
 	min-width: 14px;
 	padding: 0 7px;
 	margin: 0 5px 0 0;
-	border-radius: 2px;
+	border-radius:4px;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 	background: #555; /* Old browsers */
 	background: -moz-linear-gradient(top, #555 0%, #333 100%); /* FF3.6+ */

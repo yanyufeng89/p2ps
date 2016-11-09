@@ -1,0 +1,5 @@
+User-agent: *
+
+Disallow: /manage/
+
+Sitemap: http://www.jobplus.com.cn/sitemap.html

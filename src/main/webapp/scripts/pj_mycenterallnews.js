@@ -16,7 +16,7 @@ $(function(){
 						$this.css('color','#999');
 						$this.attr('data-islook','1');
 						//同时条数减1
-						$('.unread_count').html(Number($('.unread_count').html())-1);
+						$('#unread label').html(Number($('#unread label').html())-1);
 					}else{
 						
 					}
@@ -24,7 +24,6 @@ $(function(){
 			})
 	    }
 	})
-	
 	
 	//删除消息(未读通知)
 	$('.zg-cancelnews').live('click',function(){
@@ -38,10 +37,10 @@ $(function(){
 			dataType:"json",
 			success:function(data){
 				if(data.returnStatus=='000'){
-					if(type=='0'){
-						$('.unread_count').html(Number($('.unread_count').html())-1);
+					if(type=='0'&&$this.parents('li').attr('data-islook')!='1'){
+						$('#unread label').html(Number($('#unread label').html())-1);
 					}else{
-						$('.read_count').html(Number($('.read_count').html())-1);
+						$('#markread label').html(Number($('#markread label').html())-1);
 					}
 					$this.parents('li').remove();
 				}else{
@@ -66,6 +65,7 @@ $(function(){
 	});
 	//全部标记为已读
 	$('.mark_read').live('click',function(){
+		$(this).addClass('current').siblings().removeClass('current');
 		var $this=$(this);
 		var type=$('input[name=currenttype]').val();
 		$.confirm({
@@ -76,7 +76,6 @@ $(function(){
 					'class'	: 'blue',
 					'action': function(){
 						makeSmsRead($this,type);
-						
 					}
 				},
 				'取消'	: {
@@ -90,6 +89,8 @@ $(function(){
 
 	//清空所有通知
 	$('.empty-allnews').live('click',function(){
+		$(this).addClass('current').siblings().removeClass('current');
+		var type=$('input[name=currenttype]').val();
 		var $this=$(this);
 		$.confirm({
 			'title'		: '确认清空所有通知',
@@ -98,8 +99,7 @@ $(function(){
 				'确认'	: {
 					'class'	: 'blue',
 					'action': function(){
-						delSms($this);
-						
+						delSms($this,type);
 					}
 				},
 				'取消'	: {
@@ -109,6 +109,7 @@ $(function(){
 			}
 		});
 	});
+
 })
 
 function makeSmsRead($this,type) {
@@ -123,7 +124,7 @@ function makeSmsRead($this,type) {
 					$('.myAllMessage ul').empty();
 					$('.page-inner').empty();
 					// 当全部标记为已读 未读消息的条数就是0
-					$('.unread_count').html('0');
+					$('#unread label').html('0');
 				}
 			} else {
 
@@ -131,10 +132,11 @@ function makeSmsRead($this,type) {
 		}
 	})
 }
-function delSms($this){
+function delSms($this,type){
 	$.ajax({
 		type:"POST",
 		url:"/myCenter/delSms",
+		data:{islook:type},
 		dataType:"json",
 		success:function(data){
 			if(data.returnStatus=='000'){
@@ -142,8 +144,12 @@ function delSms($this){
 				$('.myAllMessage ul').empty();
 				$('.page-inner').empty();
 				//当清空所有消息  未读消息的条数变成0  全部消息变成0
-				$('.unread_count').html('0');
-				$('.read_count').html('0');
+				if(type==0){
+					$('#unread label').html('0');
+				}else{
+					$('#markread label').html('0');
+				}
+				
 			}else{
 				
 			}

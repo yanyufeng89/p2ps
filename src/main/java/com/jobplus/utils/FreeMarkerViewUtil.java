@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -23,7 +25,7 @@ import freemarker.template.TemplateException;
  * Title: jobplus <br>
  * Description: <br>
  * Copyright: suzhoupingjia Copyright (C) 2016 <br>
- * 
+ *
  * @author <a href="mailto:anan.wang@jobplus.com.cn">WangFei(Anan.wang)</a><br>
  * @e-mail: anan.wang@jobplus.com.cn <br>
  * @version 1.0 <br>
@@ -45,6 +47,9 @@ public class FreeMarkerViewUtil extends FreeMarkerView {
         // Grab the locale-specific version of the template.
         Locale locale = RequestContextUtils.getLocale(request);
 
+        //如果是wap请求则调转到wap目录
+       /* if (isWapReq(request, getUrl()))
+            this.setUrl("wap/" + this.getUrl());*/
         /*
          * 默认不生成静态文件,除非在编写ModelAndView时指定CREATE_HTML = true, 这样对静态文件生成的粒度控制更细一点
          * 例如：ModelAndView mav = new ModelAndView("search");
@@ -85,14 +90,40 @@ public class FreeMarkerViewUtil extends FreeMarkerView {
     /**
      * 计算要生成的静态文件相对路径 因为大家在调试的时候一般在Tomcat的webapps下面新建站点目录的，
      * 但在实际应用时直接布署到ROOT目录里面,这里要保证路径的一致性。
-     * 
+     *
      * @param request
      *            HttpServletRequest
      * @return /目录/*.html
      */
     private String getRequestHTML(HttpServletRequest request) {
     	String servletPath =   	request.getServletPath() ;
-        String requestURI = servletPath+".html"; 
+        String requestURI = servletPath+".html";
         return requestURI;
+    }
+
+    //wap允许的请求路径
+    List<String> wapReqUrlList = new ArrayList();
+
+    {
+        wapReqUrlList.add("index.ftl");
+        wapReqUrlList.add("mydocs/docs/bookDetail.ftl");
+        wapReqUrlList.add("mydocs/docs/courseDetail.ftl");
+        wapReqUrlList.add("mydocs/docs/articleDetail.ftl");
+        wapReqUrlList.add("mydocs/docs/documentDetail.ftl");
+        wapReqUrlList.add("mydocs/docs/siteDetail.ftl");
+        wapReqUrlList.add("mydocs/docs/topicDetail.ftl");
+    }
+
+    /**
+     * 是否wap请求
+     *
+     * @param request
+     * @param url
+     * @return
+     */
+    private boolean isWapReq(HttpServletRequest request, String url) {
+        if (Common.judgeIsMoblie(request) && wapReqUrlList.contains(url))
+            return true;
+        return false;
     }
 }

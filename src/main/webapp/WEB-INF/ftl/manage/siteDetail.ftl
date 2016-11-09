@@ -89,9 +89,13 @@
                                                                    分享到
 						</div>
 				        <div class="shareto-menu bdsharebuttonbox bdshare-button-style1-16">
-                            <a href="javascript:void(0);" onclick="toShare(1,'${record.title}');" class="log_sina png" title="分享到新浪微博"></a>
-                            <a href="javascript:void(0);" onclick="toShare(2,'${record.title}');" class="log_qq png"  title="分享到QQ空间"></a>
-                            <a href="javascript:void(0);" onclick="toShare(3,'${record.title}');" class="log_wx png" title="分享到微信"></a>
+                            <a href="javascript:void(0);" class="jiathis_button_tsina log_sina png" title="分享到新浪微博"></a>
+                            <a href="javascript:void(0);" class="jiathis_button_qzone log_qq png"  title="分享到QQ空间"></a>
+                            <a href="javascript:void(0);" class="jiathis_button_weixin log_wx png" title="分享到微信"></a>
+                            <script type="text/javascript">
+                                var jiathis_config = {data_track_clickback:'true'};
+                            </script>
+                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1345538646577576" charset="utf-8"></script>
 					    </div>
 				    </div>
                    </div>
@@ -108,22 +112,22 @@
 		     <#list  record.commentList.list as booklist>
 		       <div class='item'>
 		         <div class='media-left'>
-		           <a class='uhead' href='/myHome/getHomePage?userid=${booklist.userid}' target='_blank' data-userid='${booklist.userid}'>
+		           <a class='uhead' href='/myHome/getHomePage/${booklist.userid}' target='_blank' data-userid='${booklist.userid}'>
 		             <#if (booklist.userHeadIcon)??>
 		               <img class='uname' src="${booklist.userHeadIcon}" alt=""  data-userid='${booklist.userid}' data-moduletype='1'>
 		             <#else>
 		               <img class='uname' src='/image/1b48b5a75c71597_100x100.jpg' alt="" data-userid='${booklist.userid}' data-moduletype='1'>
 		             </#if>
 		             <#if (booklist.commentbyName)??>
-			               <a href='/myHome/getHomePage?userid=${booklist.userid}' target='_blank' class='uname' data-userid='${booklist.userid}'> 
+			               <a href='/myHome/getHomePage/${booklist.userid}' target='_blank' class='uname' data-userid='${booklist.userid}'> 
 						     ${booklist.userName}
 						   </a>
 			                <span class="desc">&nbsp;回复&nbsp;</span>
 			                <span class="uname"  data-userid='${booklist.commentby}' data-moduletype='1'>
-			                   <a href='/myHome/getHomePage?userid=${booklist.commentby}' target='_blank'>${booklist.commentbyName}</a>
+			                   <a href='/myHome/getHomePage/${booklist.commentby}' target='_blank'>${booklist.commentbyName}</a>
 			                </span>
 		             <#else>
-			                <a href='/myHome/getHomePage?userid=${booklist.userid}' class='uname' data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
+			                <a href='/myHome/getHomePage/${booklist.userid}' class='uname' data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
 		             </#if>
 		           </a>
 		         </div>
@@ -158,7 +162,7 @@
 		<#--判断是否登录-->
 		<#if (Session.user)??>
 		    <div class='mycomment'>
-			  <a href='/myHome/getHomePage?userid=${Session.user.userid}' target='_blank' data-userid='${Session.user.userid}'>
+			  <a href='/myHome/getHomePage/${Session.user.userid}' target='_blank' data-userid='${Session.user.userid}'>
 				 <#if (Session.user.headicon)??>
 				   <img src="${Session.user.headicon}" alt="" class='zm-list-avatar' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 <#else>
@@ -229,7 +233,7 @@
 
 					<div class="list zu-small-avatar-list zg-clear">
 					<#list record.collectUsers as colllist>
-						<a title="${colllist.username}"  class="zm-item-link-avatar" href='/myHome/getHomePage?userid=${colllist.userid}' target='_blank' data-userid="${colllist.userid}" data-moduletype='1'>
+						<a title="${colllist.username}"  class="zm-item-link-avatar" href='/myHome/getHomePage/${colllist.userid}' target='_blank' data-userid="${colllist.userid}" data-moduletype='1'>
 						   <#if (colllist.headicon)??>
 							 <img src="${colllist.headicon}" class="zm-item-img-avatar">
 						   <#else>
@@ -254,7 +258,7 @@
 						  <li>
 							 <div class='related-book-right'>
 							   <span>
-							        <a href='/courses/getCourseDetail?id=${samelist.data_id}' target='_blank'>${samelist.title}</a>
+							        <a href='/courses/getCourseDetail/${samelist.data_id}' target='_blank'>${samelist.title}</a>
 							   </span>
 							    <span>
 									   <#if (samelist.replySum)??>

@@ -1,10 +1,12 @@
 {#if $T.isContinueAdd==1}
-<div class="background-education-container section-container zg-empty" id='education{$T.anchor}'>
+<div class="background-education-container section-container zg-empty" id='education{$T.anchor}' data-num='{$T.anchor}'>
 {#else}
-<div class="background-education-container section-container education-container zg-empty" id='education{$T.anchor}'>
+<div class="background-education-container section-container education-container zg-empty" id='education{$T.anchor}' data-num='{$T.anchor}'>
 {#/if}
   <input type='hidden' name='isedit' value='{$T.isEdit}'>
   <input type='hidden' name='school' value='{$T.schoolname}'>
+  <input type='hidden' name='schoollogo' value='{$T.schoollogo}'>
+  <input type='hidden' name='degree' value='{$T.topDegree}'>
   <input type='hidden' name='major' value='{$T.profession}'>
   <input type='hidden' name='starttime' value='{$T.schoolstartTime}'>
   <input type='hidden' name='endtime' value='{$T.schoolendTime}'>
@@ -20,11 +22,59 @@
   <div class="education">
      <label>学校名称:</label>
      <span class='schoolname'>
-       <textarea name="school" class="content" style="resize: none" placeholder="填写学校名称"></textarea>    
+       <input type='hidden' name='pj-autocomplete' value=''>
+      
+       <textarea name="school" class="content"  placeholder="填写学校名称"></textarea>    
         <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
         <span class="item-msg-content"  style="display:none">请填写学校名称</span>
     </span>
+    <div class='typeahead-results-container'  style='display:none'>
+    </div>
     <a href="javascript:;" class="zu-edit-button" name="editschoolname" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+  </div>
+  <div class='degree'>
+    <span class='topDegreeInfo'>
+	     <label> 最高学历:</label>
+	     <span class='topDegree'>
+	        <select name="degree" id='degree' class="degree-select">
+	         {#if $T.topDegree==''}
+	           <option value="--请选择--" selected="selected">--请选择--</option>
+	         {#/if}
+             {#if  $T.topDegree=='初中'}
+               <option value="初中" selected="selected">初中</option>
+             {#else}
+                <option value="初中" >初中</option>
+             {#/if}
+			 {#if  $T.topDegree=='高中、中专'}
+			  <option value="高中、中专" selected="selected">高中、中专</option>
+			 {#else}
+			   <option value="高中、中专">高中、中专</option>
+			 {#/if}
+			 {#if  $T.topDegree=='大专'}
+			  <option value="大专" selected="selected">大专</option>
+			 {#else}
+			  <option value="大专">大专</option>
+			 {#/if}
+			 {#if  $T.topDegree=='本科'}
+			  <option value="本科" selected="selected">本科</option>
+			 {#else}
+			  <option value="本科">本科</option>
+			 {#/if}
+			 {#if  $T.topDegree=='硕士'}
+			  <option value="硕士" selected="selected">硕士</option>
+			 {#else}
+			  <option value="硕士">硕士</option>
+			 {#/if}
+			 {#if  $T.topDegree=='博士'}
+			  <option value="博士" selected="selected">博士</option>
+			 {#else}
+			  <option value="博士">博士</option>
+			 {#/if}
+		  </select>
+	       
+	     </span>
+	    <a href="javascript:;" class="zu-edit-button" name="editsdegree" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+    </span>
   </div>
   <div class='major'>
     <span class='professioninfo'>
@@ -42,16 +92,26 @@
              <input type="text" class="schoolstartTime" readonly='readonly' value='{$T.schoolstartTime}' id='schoolstartTime{$T.randomid}'/>
 		   --
 		     <input type="text" class="schoolendTime" readonly='readonly' value='{$T.schoolendTime}' id='schoolendTime{$T.randomid}'/>
-		     
+		     <span class="note">或预计毕业年份</span>
 		     <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
              <span class="item-msg-content"  style="display:none">请选择在校时间</span>
       </span>
       <a href="javascript:;" class="zu-edit-button" name="editschooltime"  data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+      
+      <h5 class="section-logo">
+      {#if $T.schoollogo}		   
+		<img src="{$T.schoollogo}" alt="{$T.schoolname}" width="50" height="50" class="lazy">
+	   {#/if}				        
+	  </h5>
+	 
     </span>
   </div>
   
-  <div class="zm-command">
-    <a class="zm-command-cancel" data-school='{$T.schoolname}' data-major='{$T.profession}' data-currentid='{$T.currentid}' data-starttime='{$T.schoolstartTime}' data-endtime='{$T.schoolendTime}'   name="myeducationcancel" href="javascript:;" style='font-size:14px;font-weight:500;'>取消</a>
+  <div class="zm-command append-delete">
+    {#if $T.schoolname}
+    <a href="javascript:;"  name='deleteschool' data-id="{$T.currentid}">删除此学校</a>
+    {#/if}
+    <a class="zm-command-cancel" data-school='{$T.schoolname}' data-schoollogo='{$T.schoollogo}' data-degree='{$T.topDegree}' data-major='{$T.profession}' data-currentid='{$T.currentid}' data-starttime='{$T.schoolstartTime}' data-endtime='{$T.schoolendTime}'   name="myeducationcancel" href="javascript:;">取消</a>
     <a class="zg-r3px zg-btn-blue" name="myeducationsave" href="javascript:;">保存</a>
   </div>
 </div>

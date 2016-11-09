@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             上传文档
+             修改文档-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
     <link rel="stylesheet" type="text/css" href="/css/pj_doc.css">
@@ -85,6 +85,8 @@
 											<input type="hidden" name='ispublic' value='${record.ispublic}'>
 											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic0" value='1'  <#if (record.ispublic==1)>checked</#if>>
 											<label for="gpublic0" style="margin-right:20px;">公开</label>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic1" value='2'  <#if (record.ispublic==2)>checked</#if>>
+											<label for="gpublic0" style="margin-right:20px;">匿名</label>
 											<input type="radio" class="zg-addq-isanon" name="public0" id="spublic1" value='0' <#if (record.ispublic==0)>checked</#if>>
 											<label for="spublic1">私有</label>
 										  </span>

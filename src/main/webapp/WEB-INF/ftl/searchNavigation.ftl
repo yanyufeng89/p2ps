@@ -4,9 +4,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-           导航搜索
+           ${title}搜索结果-JobPlus
     </title>
-    <meta name="viewport" content="width=1230"/> 
+    <meta name="description" content="JobPlus网是国内首创的企业知识库公共平台,结构化的知识体系,包含文档,书籍,文章,网站,问答,在线课程的分享学习社区。一站式知识库平台,为7亿职场人员提供优质学习分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
+    <meta name="keywords" content="JobPlus,知识分享,知识库,文档,书籍,问答,课程,文章,网站,在线培训,企业课堂,员工培训,在线教育,职业技能,视频课程,培训网站,职场培训,网络课堂,人才培训,内容管理">
+    
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <link rel="stylesheet" type="text/css" href="/css/pj_searchres.css">
@@ -164,7 +166,7 @@
 			     <div class='emptyList'>
 				   <div class='empty-tip'>
 				       <div class="empty-img">
-					      <img src="/image/angry.png" alt="">
+					      <img src="/image/angry.png" alt="提示" class="lazy">
 					   </div>
 					   <div class="empty-info">
 							对不起，没有找到满足搜索条件的信息<br>
@@ -216,12 +218,19 @@
 				 文档---话题---书籍---课程---文章---站点
 				</a>
 	   </div>
-	   <div class='pj_jsonp ad_exposure'>
-	      <img src='/image/ad_exposure_1.jpg' alt='' width='310' height='278'>
+	    <div class='pj_jsonp ad_exposure'>
+	    <a href='http://www.hozenlab.com' target='_blank'>
+	      <img src='/image/ad_exposure_2.jpg' alt='广告' width='308' height='246' class="lazy">
+	    </a>
+	    <div class='advertising-direction'>广告</div>
 	   </div>
 	   <div class='pj_jsonp ad_exposure'>
-	      <img src='/image/ad_exposure_2.jpg' alt='' width='310' height='278'>
+	   <a href='http://www.zhiguoguo.com' target='_blank'>
+	      <img src='/image/ad_exposure_1.jpg' alt='广告' width='308' height='246' class="lazy">
+	   </a>
+	   <div class='advertising-direction'>广告</div>
 	   </div>
+	  
    </div>
   </div>
     <div class='pagetemplate'></div>
@@ -229,15 +238,18 @@
     <a id="searchbacktop" title="回到顶部" href="#searchtop" class='back-to-top' style="bottom: 300px; display: none;"></a>
 	<#include "/mydocs/commonTemplate/pmorsmgjs/pmorsmg.ftl"/> 
 	<script type='text/javascript'>
-		      var res=eval(${result});
-			  var datamodel={
-				result:res,
-			  }
+			    var res=eval(${result});
+				var datamodel={
+					result:res,
+				}
 				//加载模板
 				$('.pagetemplate').setTemplateURL(projectName+'searchTemplate.html');
 				$('.pagetemplate').processTemplate(datamodel);
 				$('#allsearch_all  .items_area').append($('.pagetemplate').html());
 				$('.pagetemplate').empty();
+				$('.newsinfo a').each(function(){
+			      $(this).text(autoAddEllipsis($(this).text(),200));
+			    })
     </script>
 	<script type="text/javascript" src="/scripts/jquery.media.js"></script>
 	<script type="text/javascript" src="/scripts/pj_searchResult.js"></script>

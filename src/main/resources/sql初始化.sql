@@ -34,7 +34,7 @@ INSERT INTO `tbl_tags` VALUES ('300', 'IT', '300', '300', '0', '2', '2016-08-16 
 INSERT INTO `tbl_tags` VALUES ('301', '工业智能4.0', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('302', '管理系统', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('303', '软件开发', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
-INSERT INTO `tbl_tags` VALUES ('304', '大数据分析', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '1');
+INSERT INTO `tbl_tags` VALUES ('304', '大数据', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '1');
 INSERT INTO `tbl_tags` VALUES ('305', 'DBA', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '1');
 INSERT INTO `tbl_tags` VALUES ('306', '基础架构', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('307', '网络硬件', '300', '300', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
@@ -46,7 +46,7 @@ INSERT INTO `tbl_tags` VALUES ('402', '互联网运营', '400', '400', '0', '2',
 INSERT INTO `tbl_tags` VALUES ('403', '市场销售', '400', '400', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '1');
 INSERT INTO `tbl_tags` VALUES ('404', '平台开发', '400', '400', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('405', '产品设计', '400', '400', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
-INSERT INTO `tbl_tags` VALUES ('406', '大数据分析', '400', '400', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
+INSERT INTO `tbl_tags` VALUES ('406', '大数据', '400', '400', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('407', 'DBA', '400', '400', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('408', '系统架构', '400', '400', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('409', '网络安全', '0', '0', '0', '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
@@ -68,7 +68,7 @@ INSERT INTO `tbl_tags` VALUES ('604', '财务会计', '600', '600', '0', '2', '2
 INSERT INTO `tbl_tags` VALUES ('605', '管理会计', '600', '600', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('606', '成本会计', '600', '600', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('607', '税务会计', '600', '600', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
-INSERT INTO `tbl_tags` VALUES ('608', '金融精算', '600', '600', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '1');
+INSERT INTO `tbl_tags` VALUES ('608', '统计精算', '600', '600', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '1');
 INSERT INTO `tbl_tags` VALUES ('700', '工程', '700', '700', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('701', '生物制药', '700', '700', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
 INSERT INTO `tbl_tags` VALUES ('702', '新材料|能源', '700', '700', '0', '2', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null, '1', '0');
@@ -303,7 +303,7 @@ INSERT INTO `tbl_typeConfig` VALUES ('300', '0', '0', 'IT', null, '1', '2016-08-
 INSERT INTO `tbl_typeConfig` VALUES ('301', '0', '300', '工业智能4.0', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('302', '0', '300', '管理系统', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('303', '0', '300', '软件开发', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
-INSERT INTO `tbl_typeConfig` VALUES ('304', '0', '300', '大数据分析', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
+INSERT INTO `tbl_typeConfig` VALUES ('304', '0', '300', '大数据', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('305', '0', '300', 'DBA', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('306', '0', '300', '基础架构', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('307', '0', '300', '网络硬件 ', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
@@ -316,7 +316,7 @@ INSERT INTO `tbl_typeConfig` VALUES ('402', '0', '400', '互联网运营', null,
 INSERT INTO `tbl_typeConfig` VALUES ('403', '0', '400', '市场销售', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('404', '0', '400', '平台开发', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('405', '0', '400', '产品设计', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
-INSERT INTO `tbl_typeConfig` VALUES ('406', '0', '400', '大数据分析', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
+INSERT INTO `tbl_typeConfig` VALUES ('406', '0', '400', '大数据', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('407', '0', '400', 'DBA', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('408', '0', '400', '系统架构', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('409', '0', '400', '网络安全', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
@@ -340,7 +340,7 @@ INSERT INTO `tbl_typeConfig` VALUES ('604', '0', '600', '财务会计', null, '1
 INSERT INTO `tbl_typeConfig` VALUES ('605', '0', '600', '管理会计', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('606', '0', '600', '成本会计', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('607', '0', '600', '税务会计', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
-INSERT INTO `tbl_typeConfig` VALUES ('608', '0', '600', '金融精算', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
+INSERT INTO `tbl_typeConfig` VALUES ('608', '0', '600', '统计精算', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('609', '0', '600', '其它', '', '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('700', '0', '0', '工程', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
 INSERT INTO `tbl_typeConfig` VALUES ('701', '0', '700', '生物医药', null, '1', '2016-08-16 09:45:35', '2016-08-16 09:45:35', null);
@@ -3340,3 +3340,15 @@ INSERT INTO `tbl_schoolInfo` VALUES ('2829', '内蒙古民族幼儿师范高等�
 INSERT INTO `tbl_schoolInfo` VALUES ('2830', '扎兰屯职业学院', 'http://gkcx.eol.cn/upload/schoollogo/3222.jpg', 'http://gkcx.eol.cn/schoolhtm/schoolTemple/school3222.htm', '内蒙古', '2016-10-18 11:24:12', '2016-10-18 11:24:12', null, null, null, null, null);
 INSERT INTO `tbl_schoolInfo` VALUES ('2831', '鄂尔多斯生态环境职业学院', 'http://gkcx.eol.cn/upload/schoollogo/3223.jpg', 'http://gkcx.eol.cn/schoolhtm/schoolTemple/school3223.htm', '内蒙古', '2016-10-18 11:24:12', '2016-10-18 11:24:12', null, null, null, null, null);
 INSERT INTO `tbl_schoolInfo` VALUES ('2832', '江苏财会职业学院', 'http://gkcx.eol.cn/upload/schoollogo/3224.jpg', 'http://gkcx.eol.cn/schoolhtm/schoolTemple/school3224.htm', '江苏', '2016-10-18 11:24:12', '2016-10-18 11:24:12', null, null, null, null, null);
+
+-- ----------------------------
+-- 超级管理员数据
+-- ----------------------------
+INSERT INTO tbl_user_role (`ID`, `userId`, `roleId`, `isvalid`, `createTime`, `remark`) VALUES ('1', '1', '1', '1', '2016-09-13 14:44:33', NULL);
+INSERT INTO tbl_role (`roleId`, `roleName`, `createTime`, `isValid`, `remark`) VALUES ('1', 'admin', '2016-09-13 14:42:34', '1', '超级管理员');
+INSERT INTO tbl_resource (`id`, `resourceName`, `parentResID`, `resId`, `isValid`, `createTime`, `varemark`) VALUES ('1', '全部', NULL, '1', '1', '2016-09-13 14:47:41', NULL);
+INSERT INTO tbl_role_resource (`id`, `resId`, `roleId`, `isvalid`, `createTime`, `authority`, `remark`) VALUES ('1', '1', '1', '1', '2016-09-13 14:47:07', '1', '超级管理员');
+INSERT INTO tbl_user (`userId`, `userName`, `email`, `mobile`, `tel`, `passwd`, `gender`, `age`, `addres`, `identityName`, `identityNo`, `serviceYear`, `industry`, `position`, `education`, `school`, `specialty`, `description`, `headIcon`, `compName`, `city`, `userType`, `userLevel`, `authenticate`, `isValid`, `isSearch`, `createTime`, `updateTime`, `nation`, `province`, `ismarry`, `birthdayOne`, `birthdayTwo`) VALUES ('1', 'admin', 'admin', '', NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '9', NULL, NULL, '1', NULL, '2016-09-08 10:37:55', '2016-10-20 15:40:05', NULL, NULL, '0', '1', '3');
+INSERT INTO tbl_account (`ID`, `userId`, `jiaMoney`, `createTime`, `points`, `freezeUp`) VALUES ('1', '1', '0', '2016-06-27 11:55:54', '0', '0');
+INSERT INTO tbl_operationSum (`userid`, `docShareSum`, `docDownSum`, `docCollSum`, `topicsShareSum`, `topicsComSum`, `topicsAtteSum`, `bookShareSum`, `bookCollSum`, `articleShareSum`, `articleCollSum`, `coursesShareSum`, `coursesCollSum`, `sitesShareSum`, `sitesCollSum`, `attentionSum`, `fansSum`, `operatorTime`) VALUES ('1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2016-10-26 09:28:49');
+

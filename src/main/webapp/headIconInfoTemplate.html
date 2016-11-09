@@ -1,19 +1,25 @@
 <div id="pj-tooltip" data-theme="" class="goog-hovercard popover top" data-za-module="HoverCard">
   <div class="popover-content no-hovercard">
-    <div class="zh-profile-card member">
+    <div class="pj-profile-card member">
       <div class="upper">
-        <a class="avatar-link" target="_blank" href='/myHome/getHomePage?userid={$T.userid}'>
-          {#if $T.userSimpleInformation.headicon}
-              <img class="Avatar Avatar--xs" src="{$T.userSimpleInformation.headicon}">
-          {#else}
-              <img class="Avatar Avatar--xs" src="/image/1b48b5a75c71597_100x100.jpg">
-          {#/if}
+       <p class='photo'>
+	        <a class="avatar-link" target="_blank" href='/myHome/getHomePage/{$T.userid}'>
+	          {#if $T.userSimpleInformation.headicon}
+	              <img class="Avatar-xs" alt="个人头像" src="{$T.userSimpleInformation.headicon}">
+	          {#else}
+	              <img class="Avatar-xs" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg">
+	          {#/if}
+	        </a>
+        </p>
+        <p class='name'>
           {#if $T.userSimpleInformation.username}
-             <span class="name">{$T.userSimpleInformation.username}</span>
+             <span class='name-container'>{$T.userSimpleInformation.username}</span>
           {#else}
-             <span class="name">匿名用户</span>
+             <span class='name-container'>匿名用户</span>
           {#/if}
-        </a>
+             <span class='badge-container'>LV<label>{$T.userSimpleInformation.userlevel}</label></span>
+        </p>
+        <div class='title'>{$T.userSimpleInformation.position}</div>
         <div class="tagline">
            {#if $T.userSimpleInformation.description}
               {$T.userSimpleInformation.description}
@@ -23,9 +29,9 @@
       <div class="lower clearfix">
         <div class="meta">
          {#if $T.cutuserid==$T.userid}
-            <a class="item" target="_blank"  href="/myHome/getHomePage?userid={$T.userid}&isReview=1&requesType=0">
+            <a class="item" target="_blank"  href="/myHome/getAnotherHomePage/{$T.userid}?requesType=0">
          {#else}
-            <a class="item" target="_blank"  href="/myHome/getHomePage?userid={$T.userid}&requesType=0">
+            <a class="item" target="_blank"  href="/myHome/getAnotherHomePage/{$T.userid}?requesType=0">
          {#/if}
             <span class="value">
               {#if $T.userSimpleInformation.operationSum.attentionsum}
@@ -37,9 +43,9 @@
             <span class="key">关注</span>
            </a>
            {#if $T.cutuserid==$T.userid}
-             <a class="item" target="_blank" href="/myHome/getHomePage?userid={$T.userid}&isReview=1&requesType=1">
+             <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=1">
            {#else}
-              <a class="item" target="_blank" href="/myHome/getHomePage?userid={$T.userid}&requesType=1">
+              <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=1">
            {#/if}
             <span class="value">
             {#if $T.userSimpleInformation.operationSum.fanssum}
@@ -51,7 +57,7 @@
             <span class="key">粉丝</span>
           </a>
             {#if $T.cutuserid==$T.userid}
-	          <a class="item" target="_blank" href="/myHome/getHomePage?userid={$T.userid}&isReview=1&requesType=2">
+	          <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=2">
 	            <span class="value">
 	            {#if $T.userSimpleInformation.operationSum.allshresum}
 		              {$T.userSimpleInformation.operationSum.allshresum}
@@ -62,7 +68,7 @@
 	              <span class="key">我的分享</span>
 	          </a>
 	      {#else}
-	          <a class="item" target="_blank" href="/myHome/getHomePage?userid={$T.userid}&requesType=2">
+	          <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=2">
 	            <span class="value">
 	            {#if $T.userSimpleInformation.operationSum.allshresum}
 		              {$T.userSimpleInformation.operationSum.allshresum}
@@ -75,6 +81,9 @@
           {#/if}
         </div>
         <div class="operation">
+          <a href="javascript:;" class="zg-btn-white member-profile-card-pm private-message" data-name="{$T.userSimpleInformation.username}"  data-receivedid="{$T.userid}">
+            <i class="zg-icon pm">私信</i>
+          </a>
           {#if $T.userSimpleInformation.fansIds==1}
 	          <button data-follow="m:button" data-userid="{$T.userid}" data-actiontype='1' class="zg-btn zg-btn-follow zm-rich-follow-btn" >
 	          		关注
@@ -84,8 +93,6 @@
 	          		取消关注
 	          </button>
           {#/if}
-          <a href="javascript:;" class="zg-btn-white member-profile-card-pm private-message" data-name="{$T.userSimpleInformation.username}"  data-receivedid="{$T.userid}">
-            <i class="zg-icon pm">私信</i></a>
         </div>
       </div>
     </div>

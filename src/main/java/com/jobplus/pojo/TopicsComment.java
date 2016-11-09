@@ -39,6 +39,8 @@ public class TopicsComment extends PageParent implements Serializable{
 	private Integer collectsum;
 	
 	private Integer isPublic;
+	//话题悬赏功能新增 
+	private Integer isAccept;//是否采纳  1 采纳  0 等待(未采纳) 
 
 	/**
      * 用于查出数据页面端显示
@@ -75,6 +77,14 @@ public class TopicsComment extends PageParent implements Serializable{
      */
     private Integer  sortType;    
     
+	public Integer getIsAccept() {
+		return isAccept;
+	}
+
+	public void setIsAccept(Integer isAccept) {
+		this.isAccept = isAccept;
+	}
+
 	public Integer getType() {
 		return type;
 	}

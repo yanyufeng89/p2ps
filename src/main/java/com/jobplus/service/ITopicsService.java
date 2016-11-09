@@ -1,6 +1,7 @@
 package com.jobplus.service;
 
 import com.jobplus.pojo.Page;
+import com.jobplus.pojo.Sms;
 import com.jobplus.pojo.Topics;
 import com.jobplus.pojo.TopicsComment;
 
@@ -71,6 +72,21 @@ public interface ITopicsService {
 	 */
 	public Page<Topics> searchTopics(int theme, Topics record);
 	
-//	public askPeople()
+	/**
+	 * 采纳 答案 
+	 * @param record
+	 * @return
+	 */
+	public int acptAnswer(Topics topic,TopicsComment comment,Sms priMsg);
+	/**
+	 * 取消悬赏
+	 * @param topic
+	 * @return
+	 */
+	public int cancelRewd(Topics topic);
+	/**
+	 * 提高悬赏
+	 */
+	public int upRewd(Topics topic,Integer dValue);
 
 }

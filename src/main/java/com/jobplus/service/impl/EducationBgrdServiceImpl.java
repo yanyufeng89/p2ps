@@ -51,5 +51,9 @@ public class EducationBgrdServiceImpl implements IEducationBgrdService{
 		
 		return educationBgrdDao.updateByPrimaryKey(record);
 	}
+	@Override
+	public int deleteByPrimaryKey(Integer id) {
+		return educationBgrdDao.deleteByPrimaryKey(id);
+	}
 
 }

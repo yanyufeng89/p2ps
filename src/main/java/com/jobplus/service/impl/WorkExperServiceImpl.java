@@ -50,5 +50,9 @@ public class WorkExperServiceImpl implements IWorkExperService{
 		
 		return workExperDao.getList(record);
 	}
+	@Override
+	public int deleteByPrimaryKey(Integer id) {
+		return workExperDao.deleteByPrimaryKey(id);
+	}
 
 }

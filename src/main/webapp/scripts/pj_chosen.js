@@ -257,7 +257,6 @@ var container_each='';
 		})()
 	    //话题  书籍 文章 站点 课程  技能
         $('#searchTopic,.zu-question-suggest-topic-input,#topictag,#searchSkill').live('keydown',function(event){ 
-        	
         	upOrDownConvert($(this));
         });
         //创建新的标签
@@ -319,9 +318,9 @@ function createtag(obj){
 			$this.obj.parents('td').find('.pj-warmprompt').empty().append($child).append('标签长度不能大于10个字').show();
 		}
 		return false;
-	 }else if(tagname.length>6&&$this.type=='skill'){
+	 }else if(tagname.length>20&&$this.type=='skill'){
 		var $child=$('.skill-error').children();
-		$('.skill-error').empty().append($child).append('技能长度不能大于6个字').show();
+		$('.skill-error').empty().append($child).append('技能长度不能大于20个字').show();
 		return false;
 	}
 	//技能

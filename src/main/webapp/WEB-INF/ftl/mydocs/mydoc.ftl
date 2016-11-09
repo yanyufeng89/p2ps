@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心
+          ${Session.user.username}-个人中心-JobPlus
     </title> 
    <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -19,9 +19,9 @@
 		<div class="img-center">
 		<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 		 <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		 </#if>
 		</a>
 		</div>
@@ -32,7 +32,7 @@
 		        </#if>
 			</a>
 		</p>
-		<p class="user-level"><a href="/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+		<p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
 		<div class="mydoc-list">
 		<ul>
 		    <ul id="accordion">
@@ -109,12 +109,16 @@
 				<#include "/mydocs/commonTemplate/confansinfo/confansinfoshare.ftl"/>
 			</div>
 			<div class="uc-mydoc  maincontent">
-			  <div class="mylibrary">我的知识库</div>
+			  <div class="mylibrary">
+			          我的知识库
+			    <a href='/sharein/searchuploadFile' class='head-sharein' style='float:right;margin-right:4px;'></a>
+			  </div>
+
 			  <div class='datacount'>
 			    <p>
-			       <a href='javascript:void(0)'>财富值&nbsp;${Session.account.points}</a>
+			       <a href='javascript:void(0)'>财富&nbsp;${Session.account.points}</a>
 			       <#assign sum=operationSum.docsharesum?number+operationSum.topicssharesum?number+operationSum.booksharesum?number+operationSum.coursessharesum?number+operationSum.articlesharesum?number+operationSum.sitessharesum?number>
-			       <a href='javascript:void(0)'>分享总数&nbsp;${sum}</a>
+			       <a href='javascript:void(0)'>分享&nbsp;${sum}</a>
 			    </p>
 			  </div>
 			  <div class="mydoccontent" style='margin-top:20px;'>

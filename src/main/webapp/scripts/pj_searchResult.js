@@ -99,8 +99,10 @@ $(function () {
         $(this).addClass("active");
         reloadPage();
     });
-    
-
+   /* //移到每个层上面 标题变色
+    $('.all-news-list .item').live('hover',function(){
+    	$(this).find('.title a').css('color','#0867c5');
+    })*/
 })
 
 /**
@@ -129,8 +131,10 @@ function reloadPage() {
 //    console.log("Condition=="+Condition);
 //    console.log("sharedType="+sharedType);
 //    console.log("protoType=="+protoType);
-
-    window.location.href = projectName + "search/" + sharedType + "?Condition=" + Condition + "&protoType=" + protoType;
+    
+    var uurl = encodeURI(projectName + "search/" + sharedType + "?Condition=" + Condition + "&protoType=" + protoType);
+    
+    window.location.href = uurl;
 
     /* post请求
      *    $.ajax({

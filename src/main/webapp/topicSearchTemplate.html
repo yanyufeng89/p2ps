@@ -4,7 +4,7 @@
 		 <div class='emptyList'>
 		   <div class='empty-tip'>
 			   <div class="empty-img">
-				  <img src="/image/angry.png" alt="">
+				  <img src="/image/angry.png" alt="提示" class='lazy'>
 			   </div>
 			   <div class="empty-info">
 					对不起，没有找到满足搜索条件的信息<br>
@@ -20,13 +20,15 @@
         <div class='topicdivision-content'>
             <div class='topicdivision-left'>
                 <div class="title">
-                    <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_topics',{$T.item.data_id})" title="{$T.item.title}">{$T.item.title}</a>
+                    <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_topics',{$T.item.data_id})">{$T.item.title}</a>
                 </div>
-                {#if $T.item.intro}
-                    <div class="newsinfo" title="{$T.item.intro}">
-                        <p>
-                           {$T.item.intro}
-                        </p>
+                {#if $T.item.description}
+                    <div class="newsinfo">
+                    	<a target="_blank" href="javascript:void(0);" style="cursor:default"> {$T.item.description}</a>
+                    	
+                       <!--  <p>
+                           {$T.item.description}
+                        </p> -->
                     </div>
                 {#else}
                     <div class="newsinfo">
@@ -39,36 +41,50 @@
                                                           编辑于&nbsp;{#if $T.item.updateTime}{$T.item.updateTime}{#/if}
                         </a>
 
+	 					<a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
+	                        <i class="z-icon-comment"></i>{#if $T.item.readSum}{$T.item.readSum}{#else}0{#/if}人评论
+	                    </a>
+	                    
                         <a href="javascript:void(0);" name="addcomment" class="pj-meta-item toggle-comment js-comment">
                             <i class="z-icon-concern"></i>{#if $T.item.collectSum}{$T.item.collectSum}{#else}0{#/if}人关注
-                        </a>
-
-                        <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-thank">
-                            <i class="z-icon-thank"></i>{#if $T.item.likeSum}{$T.item.likeSum}{#else}0{#/if}人赞
                         </a>
 
                         <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share">
                             <i class="z-icon-comment"></i>{#if $T.item.replySum}{$T.item.replySum}{#else}0{#/if}人回答
                         </a>
+                        <!-- acceptStatus;//回答采纳状态  1:已采纳   0:不悬赏  -1：取消悬赏 2:等待悬赏 -->
+                        {#if $T.item.acceptStatus == 2}
+                        <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-reward">
+                            	悬赏:&nbsp;&nbsp;<i class="z-icon-reward-o"></i>{#if $T.item.rewardValue}{$T.item.rewardValue}{#else}0{#/if}
+                        </a>
+                         {#else}
+                        <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-reward">
+                            	悬赏:&nbsp;&nbsp;<i class="z-icon-accept-reward-o"></i>{#if $T.item.rewardValue}{$T.item.rewardValue}{#else}0{#/if}
+                        </a>
+                        {#/if}
                     </div>
                 </div>
             </div>
             <div class='topicdivision-right'>
+              <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_topics',{$T.item.data_id})">
+             {#if $T.item.imgUrl}
                 <div class="picno">
                     <div class="pic">
                         <div class="picx">
-                            {#if $T.item.imgUrl}
+                           
                                 <div class="pict">
-                                    <img src='{$T.item.imgUrl}' alt=''>
+                                    <img src='{$T.item.imgUrl}' alt='话题图标' class='lazy'>
                                 </div>
-                            {#else}
-                                    <div class="pict">
-                                        <img src='/image/default/65.jpg' alt=''>
-                                    </div>
-                            {#/if}
+                          
+                           
                         </div>
                     </div>
                 </div>
+                <span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>									
+                  {#else}
+                    <img src='/image/default/default_topic.png' alt='默认图标' class='lazy'>
+                 {#/if}
+               </a>
             </div>
          </div>
     </div>

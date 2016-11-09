@@ -3,10 +3,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-        <title>${userInfo.username}_个人主页</title>
+        <title>${userInfo.username}-个人主页-JobPlus</title>
         <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
         <link rel="stylesheet" type="text/css" href="/css/pj_mycenter.css">
         <link rel="stylesheet" type="text/css" href="/css/dateSelect.css">
+        <link rel="stylesheet" type="text/css" href="/css/jquery.confirm.css">
         <link rel="stylesheet" type="text/css" href="/css/jquery.pinwheel-0.1.0.css">
     </head>
     <body id='centertop'>
@@ -18,9 +19,9 @@
                         <div class="profile-card vcard entity">
                             <div class="profile-picture" id="preview">
                                <#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
-                                 <img src="${userInfo.headicon}" width="120" height="120" id="imghead">
+                                 <img src="${userInfo.headicon}"  class='lazy' alt="个人头像" width="170" height="190" id="imghead">
                                <#else>
-                                 <img src="/image/myphoto.jpg" width="120" height="120" id="imghead">
+                                 <img src="/image/myphoto.jpg" class='lazy' alt="个人头像" width="170" height="190" id="imghead">
                                </#if>
                                 <span class="ProfileAvatarEditor-tip">更换头像</span>
                                 <form method="POST"  id="previewImage" enctype="multipart/form-data">
@@ -47,7 +48,7 @@
 												   <span class='position'> 填写职位</span>
 												  </#if>
 												  <a href="javascript:;" class="zu-edit-button" name="editposition"><i class="zu-edit-button-icon"></i>修改</a>												 
-												   --												  
+												  <label class='position-split'>|</label>											  
 												  <#if (userInfo.compname)?? && userInfo.compname?length gt 0>
 												     <span class='compname'>${userInfo.compname?html}</span>
 												  <#else>
@@ -72,7 +73,7 @@
 												      <span class='city'> 填写城市</span>
 												  </#if>
 												  <a href="javascript:;" class="zu-edit-button" name="editcity"><i class="zu-edit-button-icon"></i>修改</a>
-												  &nbsp;&nbsp;|&nbsp;&nbsp;
+												  <label class='area-split'>|</label>
 												  <#if (userInfo.industry)?? && userInfo.industry?length gt 0>
 												     <span class='industry'>${userInfo.industry?html}</span>
 												  <#else>
@@ -93,7 +94,7 @@
 										  </#if>
 										</#list>
 									    <span>目前就职&nbsp;&nbsp;<#if (company)??>${company}</#if></span>
-									    <a href="#work0" class="zu-edit-button" name="editoncompany" data-currentid='${cid}' ><i class="zu-edit-button-icon"></i>修改</a>
+									    <a href="#work1" class="zu-edit-button" name="editoncompany" data-currentid='${cid}' ><i class="zu-edit-button-icon"></i>修改</a>
 								     <#else>
 								     <#if (workExList)?? && workExList?size gt 0>
                                       <button type="button" class="cta" id="control_gen_3">添加工作经历</button>
@@ -113,14 +114,13 @@
 										  </#if>
 										</#list>
 									    <span>教育背景&nbsp;&nbsp;<#if (school)??>${school}</#if></span>
-									    <a href="#education0" class="zu-edit-button" name="editonschool" data-currentid='${sid}'><i class="zu-edit-button-icon"></i>修改</a>
+									    <a href="#education1" class="zu-edit-button" name="editonschool" data-currentid='${sid}'><i class="zu-edit-button-icon"></i>修改</a>
 								     <#else>
 								        <#if (eduList)?? && eduList?size gt 0>
 	                                    <button type="button" class="cta" id="control_gen_4">添加教育背景</button>
 									   <#else>
 									    <button type="button" class="cta" id="control_gen_4" data-addtype='1'>添加教育背景</button>
 									   </#if>
-									    
                                         <button type="button" class="desc-action prevent-edit-action" aria-describedby="-desc" data-tooltip-template-id="-desc" tabindex="0"></button>
 								     </#if>
                                     </div>
@@ -128,7 +128,7 @@
                                 </div>
 								<div class="profile-aux">
                                       <div class="profile-actions">
-                                           <a href="/myHome/getHomePage?userid=${Session.user.userid}&isReview=1" class="preview-profile button-primary">个人资料预览</a>
+                                           <a href="/myHome/getAnotherHomePage/${Session.user.userid}" class="preview-profile button-primary">个人资料预览</a>
 									  </div>
                                </div>
                             </div>
@@ -141,30 +141,32 @@
                              <div class="email">
                                <span>邮箱:&nbsp;&nbsp;</span>
                               
-							   <#if (userInfo.email)?? && userInfo.email?length gt 0>
-							     <#assign email=userInfo.email />
-                                 <span>${userInfo.email?html}</span>
+							   <#if (userInfo.contactEmail)?? && userInfo.contactEmail?length gt 0>
+							     <#assign email=userInfo.contactEmail />
+                                 <span>${userInfo.contactEmail?html}</span>
+                               <#else>
+                                   未知
                                </#if>
+                               <a href="javascript:;" class="zu-edit-button" name="editemail" ><i class="zu-edit-button-icon"></i>修改</a>
                                <input type='hidden' name='email' value='<#if (email) ??>${email}</#if>'>
-							  
                              </div>
                               <div class="phone">
                                 <span>电话:&nbsp;&nbsp;</span>
                                 
-								<#if (userInfo.mobile)?? && userInfo.mobile?length gt 0>
-								  <#assign phone=userInfo.mobile />
-                                  <span>${userInfo.mobile?html}</span>
+								<#if (userInfo.contactTel)?? && userInfo.contactTel?length gt 0>
+								  <#assign phone=userInfo.contactTel />
+                                  <span>${userInfo.contactTel?html}</span>
+                                <#else>
+                                   未知
 								</#if>
+                                <a href="javascript:;" class="zu-edit-button" name="editphone" ><i class="zu-edit-button-icon"></i>修改</a>
 								<input type='hidden' name='phone' value='<#if (phone)??>${phone}</#if>'>
-								
                              </div>
-                           
                          </div>
                         <div class="profile-actions entity">
                              <ul class="public-profile-section is-focusable" tabindex="0">
                                  <li>
                                       <dl class="public-profile">
-                                           
                                             <dd>
 											    <span class="public-profile-url">${homePageUrl}</span>
                                                 <a class="public-profile-settings-link" href="" title="更新公开资料徽章的设置"></a>
@@ -181,9 +183,7 @@
                          </div>
                     </div>
                     </div>
-                    
-                    
-					
+
                     <div id="recommended-sections" class='recommended-sections'>
                         <div class="recommended-sections-container">
                             <h3 class="recommended-sections-headline"><em>添加新版块到个人资料 </em>— 彰显个人优势，提升事业高度！</h3></div>
@@ -213,7 +213,7 @@
                                     <div class="recommended-section-content">
                                         <a class='workinfo recommendedimg'></a>
                                         <h5 class="recommended-section-title">工作经历</h5>
-                                        <p class="recommended-section-value-statement">添加工作经历,提高个人能力</p>
+                                        <p class="recommended-section-value-statement">添加工作经历,提升7倍访问量</p>
                                      </div>
 									<#if (workExList)?? && workExList?size gt 0>
                                       <button class="recommended-section-add">添加经历</button>
@@ -310,13 +310,15 @@
 					    <#list eduList as edulist>
 						 <#if edulist_index==0>
 						 <#assign edittype=1 />
-					     <div class="background-education-container section-container zg-empty" id='education${edulist_index+1}'>
+					     <div class="background-education-container section-container zg-empty" id='education${edulist_index+1}' data-num='${edulist_index+1}'>
 						<#else>
 						 <#assign edittype=0 />
-						 <div class="background-education-container section-container education-container zg-empty" id='education${edulist_index+1}'>
+						 <div class="background-education-container section-container education-container zg-empty" id='education${edulist_index+1}' data-num='${edulist_index+1}'>
 						</#if>
 							   <input type='hidden' name='school' value='${edulist.school?html}'>
+							   <input type='hidden' name='schoollogo' value='${edulist.schoolLogo}'>
 							   <input type='hidden' name='major' value='${edulist.major?html}'>
+							   <input type='hidden' name='degree' value='${edulist.degree?html}'>
 							   <input type='hidden' name='starttime' value='${edulist.starttime?html}'>
 							   <input type='hidden' name='endtime' value='${edulist.endtime?html}'>
 							   <input type='hidden' name='currentid' value='${edulist.id?html}'>
@@ -329,7 +331,7 @@
 							 </div>
 							 </#if>
 							  <div class="education">
-									   <label>学校名称:</label>
+								<label>学校名称:</label>
 								<#if (edulist.school)?? && edulist.school?length gt 0>
 								 <span class='schoolname'>
                                      ${edulist.school?html}
@@ -338,9 +340,20 @@
 							   </#if>
 								
 							  </div>
+							  <div class='degree'>
+								<span class='topDegree'>
+								  <label> 最高学历:</label>
+								  <#if (edulist.degree)?? && edulist.degree?length gt 0>
+									 <span class='topDegree'>
+									   ${edulist.degree?html}
+									 </span>
+									<a href="javascript:;" class="zu-edit-button" data-currentid='${edulist.id}' data-edittype='${edittype}' name="editsdegree"><i class="zu-edit-button-icon"></i>修改</a>
+							      </#if>
+								</span>
+							  </div>
 							  <div class='major'>
 								<span class='professioninfo'>
-										<label> 所学专业:</label>
+								  <label> 所学专业:</label>
 								  <#if (edulist.major)?? && edulist.major?length gt 0>
 									 <span class='profession'>
 									   ${edulist.major?html}
@@ -359,8 +372,12 @@
 									  <a href="javascript:;" class="zu-edit-button" data-currentid='${edulist.id}' data-edittype='${edittype}' name="editschooltime"><i class="zu-edit-button-icon"></i>修改</a>
 									</#if>
 								  </span>
-								 
 								</span>
+								<h5 class="section-logo">
+							        <#if (edulist.schoolLogo)??>
+							           <img src="${edulist.schoolLogo}" class='lazy' alt="${edulist.school?html}" width="50" height="50">
+							        </#if>
+							    </h5>
 							  </div>
 							  
 							</div>
@@ -372,16 +389,16 @@
 					    <#list workExList as worklist>
 						   <#if worklist_index==0>
 							 <#assign edittype=1 />
-							 <div class="background-workexperience-container section-container zg-empty" id='work${worklist_index+1}'>
+							 <div class="background-workexperience-container section-container zg-empty" id='work${worklist_index+1}' data-num='${worklist_index+1}'>
 							<#else>
 							 <#assign edittype=0 />
-							 <div class="background-workexperience-container section-container workexperience-container zg-empty" id='work${worklist_index+1}'>
+							 <div class="background-workexperience-container section-container workexperience-container zg-empty" id='work${worklist_index+1}' data-num='${worklist_index+1}'>
 						   </#if>
-						       <input type='hidden' name='companyname' value=' <#if (worklist.company)?? && worklist.company?length gt 0>${worklist.company?html}'</#if>>
-							   <input type='hidden' name='description' value=' <#if (worklist.description)?? && worklist.description?length gt 0>${worklist.description?html}'</#if>>
-							   <input type='hidden' name='jobtitle' value=' <#if (worklist.jobtitle)?? && worklist.jobtitle?length gt 0>${worklist.jobtitle?html}'</#if>>
-							   <input type='hidden' name='onjobstartTime' value=' <#if (worklist.starttime)?? && worklist.starttime?length gt 0>${worklist.starttime}'</#if>>
-							   <input type='hidden' name='onjobendTime' value=' <#if (worklist.endtime)?? && worklist.endtime?length gt 0>${worklist.endtime}'</#if>>
+						       <input type='hidden' name='companyname' value='<#if (worklist.company)?? && worklist.company?length gt 0>${worklist.company?html}</#if>'>
+							   <input type='hidden' name='description' value='<#if (worklist.description)?? && worklist.description?length gt 0>${worklist.description?html}</#if>'>
+							   <input type='hidden' name='jobtitle' value='<#if (worklist.jobtitle)?? && worklist.jobtitle?length gt 0>${worklist.jobtitle?html}</#if>'>
+							   <input type='hidden' name='onjobstartTime' value='<#if (worklist.starttime)?? && worklist.starttime?length gt 0>${worklist.starttime}</#if>'>
+							   <input type='hidden' name='onjobendTime' value='<#if (worklist.endtime)?? && worklist.endtime?length gt 0>${worklist.endtime}</#if>'>
 							   <input type='hidden' name='currentid' value='${worklist.id}'>
 							   <#if worklist_index==0>
 								  <div class="header">
@@ -417,7 +434,7 @@
 										 <label>在职时间:</label>
 											<#if (worklist.starttime)?? && worklist.starttime?length gt 0>
 												 <#-- ${worklist.starttime?date}--${worklist.endtime?date} --> 
-												  ${worklist.starttime?string("yyyy年MM月dd日")}&nbsp; – &nbsp;${worklist.endtime?string("yyyy年MM月dd日")}&nbsp;&nbsp;(${worklist.period})
+												  ${worklist.starttime?string("yyyy年MM月dd日")}&nbsp; – &nbsp;<#if (worklist.endtime)??>${worklist.endtime?string("yyyy年MM月dd日")}<#else>至今</#if>&nbsp;&nbsp;(${worklist.period})
 												 <a href="javascript:;" class="zu-edit-button" name="editsonjobtime"  data-currentid='${worklist.id}'><i class="zu-edit-button-icon"></i>修改</a>
 										    </#if>
 									  </span>
@@ -468,12 +485,9 @@
                       <span>个人资料完善度</span>
                       <div class='strength-meter v2'>
                          <div class="strength-data">
-                            <div class="level-indicator">
-                            </div>
-                            
-                              <em class="fill-marker" style="visibility: visible; width: 170px; bottom: <#if completion==100>86px;<#elseif completion==75>64px;<#elseif completion==50>44px;<#else>24px;</#if>"></em>
-                              <p class="current-level-description" style="visibility: visible; bottom: <#if completion==100>86px;<#elseif completion==75>64px;<#elseif completion==50>44px;<#else>24px;</#if>; opacity: 1;"><#if completion==100>高级<#elseif completion==75>中级<#elseif completion==50>初级<#else>初级</#if></p>
- 
+                            <div class="level-indicator"></div>
+                            <em class="fill-marker" style="visibility:visible; <#if completion==100>width:180px;bottom:84px;left:68px<#elseif completion==75>width:160px;bottom:64px;left:88px<#elseif completion==50>width:160px;bottom:44px;left:88px<#elseif completion==25>width:160px;bottom:24px;left:88px</#if>"></em>
+                            <p class="current-level-description" style="visibility: visible; bottom: <#if completion==100>86px;<#elseif completion==75>64px;<#elseif completion==50>44px;<#else>24px;</#if>; opacity: 1;"><#if completion==100>高级<#elseif completion==75>中级<#elseif completion==50>初级<#elseif completion==25>初级</#if></p>
                           </div>
                           <canvas id="waterbubble"  class='mask' width='100'></canvas>
                       </div>
@@ -483,17 +497,25 @@
 					  <div class='myattention'>
 					   <div class='top-border'>
 					    <p>
-						    <a href="/myHome/getHomePage?userid=2&isReview=1&requesType=0" target="_self"  data-userid="29">
+						    <a href="/myHome/getAnotherHomePage/${Session.user.userid}?requesType=0" target="_self"  data-userid="29">
                                <span class="count">
-								  2
+								 <#list Session.myHeadTop!?keys as itemKey>
+									 <#if itemKey="attenManSum">
+										${Session.myHeadTop[itemKey]}
+									 </#if>
+								 </#list>
 							   </span>
                                <span class="count-concern">我关注的人</span>
                              </a>
                           </p>
 						  <p>
-							  <a href="/myHome/getHomePage?userid=2&isReview=1&requesType=1" target="_self"  data-userid="29">
+							  <a href="/myHome/getAnotherHomePage/${Session.user.userid}?requesType=1" target="_self"  data-userid="29">
                                <span class="count">
-								    7
+								   <#list Session.myHeadTop!?keys as itemKey>
+										 <#if itemKey="fansSum">
+											${Session.myHeadTop[itemKey]}
+										 </#if>
+									  </#list>   
 							   </span>
                                <span class="count-concern">我的粉丝</span>
                               </a> 
@@ -504,17 +526,17 @@
                       <div class="recent-seeme" style='border-top:1px solid #e5e5e5; padding-top:10px;'>
                             <span>最近访问</span>
                             <#if visitors.last gt 1>
-                            <span class='more'><a href='/myHome/moreRecentVistors?userid=${Session.user.userid}' target="_self" style='color: #090909;'>更多>></a></span>
+                            <span class='more'><a href='/myHome/getAnotherHomePage/${Session.user.userid}?requesType=3' target="_self" style='color: #333;'>更多>></a></span>
                             </#if>
                        </div>
                        <div class='detail-list zg-clear'>
 						  <#if (visitors)??>
 							<#list visitors.list as list>
-								 <a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage?userid=${list.visitorid}' data-userid="${list.visitorid}" data-moduletype='1'>
+								 <a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}' data-userid="${list.visitorid}" data-moduletype='1'>
 									   <#if (list.headIcon)??>
-										 <img src="${list.headIcon}" class="zm-item-img-avatar">
+										 <img src="${list.headIcon}"  alt="个人头像" class="zm-item-img-avatar lazy">
 									   <#else>
-										  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar">
+										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
 									   </#if>
 							    </a>
 							</#list>
@@ -543,6 +565,7 @@
             <script type="text/javascript" src="/scripts/dateSelect.js"></script>
             <script type="text/javascript" src="/scripts/pj_msgbox.js"></script>
             <script type="text/javascript" src="/scripts/waterbubble.js"></script>
+            <script type="text/javascript" src="/scripts/jquery.confirm.js"></script>
             <script type="text/javascript">
                         $('#waterbubble').waterbubble({
 							    radius:40,

@@ -18,6 +18,9 @@
     <result column="topicsClass" property="topicsclass" jdbcType="VARCHAR" />
     <result column="isPublic" property="ispublic" jdbcType="INTEGER" />
     <result column="isValid" property="isvalid" jdbcType="INTEGER" />
+    
+    <result column="acceptStatus" property="acceptStatus" jdbcType="INTEGER" />
+    <result column="rewardValue" property="rewardValue" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.Topics" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -27,10 +30,12 @@
 		replySum,
 		likeSum, futilitySum, collectSum, commentSum, topicsType, topicsClass,
 		isPublic, isValid
+		,acceptStatus,rewardValue
 	</sql>
 	<sql id="Base_Column_List2">
 		t.ID,t.title,t.createTime,t.lastEditTime,t.createPerson,t.followsSum,t.readSum,t.replySum,
 		t.likeSum,t.futilitySum,t.collectSum,t.commentSum,t.topicsType,t.topicsClass,t.isPublic,t.isValid
+		,t.acceptStatus,t.rewardValue
 	</sql>
 	<sql id="Blob_Column_List">
 		content
@@ -126,13 +131,14 @@
       lastEditTime, createPerson, followsSum, 
       readSum, replySum, likeSum, 
       futilitySum, collectSum, commentSum, topicsType, 
-      topicsClass, isPublic, content, isValid
+      topicsClass, isPublic, content, isValid  ,acceptStatus,rewardValue
       )
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, NOW(), 
       NOW(), #{createperson,jdbcType=INTEGER}, 0, 
       0, 0, 0, 
       0, 0, 0, #{topicstype,jdbcType=VARCHAR}, 
       #{topicsclass,jdbcType=VARCHAR}, #{ispublic,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR},1
+      ,#{acceptStatus,jdbcType=INTEGER},#{rewardValue,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.Topics" >
@@ -189,6 +195,12 @@
       <if test="isvalid != null" >
         isvalid,
       </if>
+      <if test="acceptStatus != null" >
+        acceptStatus,
+      </if>
+      <if test="rewardValue != null" >
+        rewardValue,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -242,6 +254,12 @@
       <if test="isvalid != null" >
         #{isvalid,jdbcType=INTEGER},
       </if>
+      <if test="acceptStatus != null" >
+        #{acceptStatus,jdbcType=INTEGER},
+      </if>
+      <if test="rewardValue != null" >
+        #{rewardValue,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.Topics" >
@@ -292,6 +310,12 @@
       <if test="isvalid != null" >
         isValid = #{isvalid,jdbcType=INTEGER},
       </if>
+      <if test="acceptStatus != null" >
+        acceptStatus = #{acceptStatus,jdbcType=INTEGER},
+      </if>
+      <if test="rewardValue != null" >
+        rewardValue = #{rewardValue,jdbcType=INTEGER},
+      </if>
       lastEditTime = Now()
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -312,7 +336,9 @@
       topicsType = #{topicstype,jdbcType=VARCHAR},
       topicsClass = #{topicsclass,jdbcType=VARCHAR},
       isPublic = #{ispublic,jdbcType=INTEGER},
-      content = #{content,jdbcType=LONGVARCHAR}
+      content = #{content,jdbcType=LONGVARCHAR},
+      acceptStatus = #{acceptStatus,jdbcType=LONGVARCHAR},
+      rewardValue = #{rewardValue,jdbcType=LONGVARCHAR}
       <if test="isvalid != null" >
         ,isValid = #{isvalid,jdbcType=INTEGER}
       </if>
@@ -333,7 +359,9 @@
       commentSum = #{commentsum,jdbcType=INTEGER},
       topicsType = #{topicstype,jdbcType=VARCHAR},
       topicsClass = #{topicsclass,jdbcType=VARCHAR},
-      isPublic = #{ispublic,jdbcType=INTEGER}
+      isPublic = #{ispublic,jdbcType=INTEGER},
+      acceptStatus = #{acceptStatus,jdbcType=INTEGER},
+      rewardValue = #{rewardValue,jdbcType=INTEGER}
       <if test="isvalid != null" >
         ,isValid = #{isvalid,jdbcType=INTEGER}
       </if>

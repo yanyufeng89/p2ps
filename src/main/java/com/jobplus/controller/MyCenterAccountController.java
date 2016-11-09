@@ -68,13 +68,13 @@ public class MyCenterAccountController {
 			Map map = new HashMap();
 			map.put("allSmsPage", allSmsPage);
 			//如果获取未读消息(传进来的islook为0)   返回0  跳到未读消息页,否则返回1 跳到全部消息页
-			map.put("pageFlag", record.getIslook()== null?1:0);
+			map.put("pageFlag", record.getIslook());
 			return new ModelAndView(new MappingJackson2JsonView(), map);
 		} else {
 			mv.setViewName("mydocs/mycount/allnews");
 			mv.addObject("allSmsPage", allSmsPage);
 			//如果获取未读消息(传进来的islook为0)   返回0  跳到未读消息页,否则返回1 跳到全部消息页
-			mv.addObject("pageFlag", record.getIslook()== null?1:0);			
+			mv.addObject("pageFlag", record.getIslook());			
 			return mv;
 		}
 	}

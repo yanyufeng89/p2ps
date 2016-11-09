@@ -117,7 +117,7 @@
 	min-width:560px
 }
 .zm-add-question-form-topic-wrap .zm-tag-editor-editor {
-	border-radius: 2px;
+	border-radius: 4px;
 	box-shadow: 0 1px 3px rgba(0,0,0,.1) inset;
 	border: 1px solid #ccc!important;
 	padding: 8px 8px 3px;
@@ -197,7 +197,7 @@
 }
 
 .zm-question-form-hide-in-about-question-el {
-	color: #666;
+	color: #555;
 	margin:10px 0 0 20px;
 	
 }
@@ -212,7 +212,7 @@
     outline: 0;
 }
 .zg-r5px, .goog-tooltip {
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .zm-modal-dialog-guide-title-msg {
     background: transparent url(../image/sprites.png) scroll no-repeat -227px -174px;

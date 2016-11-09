@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-         分享书籍
+         分享书籍-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
   </head>
@@ -47,10 +47,16 @@
                     </h4>
                     <ol>
                       <li>
-                        1.如果你发现一节好的教程,可以推荐给更多的朋友,让更多的人一起学习;
+                        1.当您的书籍推荐成功后,系统会为你添加1财富的奖励,累计到一定的财富值即可兑换;
                       </li>
                       <li>
-                        2.分享和已分享的课程重复将会被移除,为避免重复,分享前可想进行搜索;
+                        2.内容优秀的书籍，将为您带来更多的关注与收益;
+                      </li>
+                      <li>
+                        3.书籍推荐有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_self">服务条款</a>
+                        和
+                        <a href="/about/newbie_guide" target="_self">帮助中心。</a>
                       </li>
                     </ol>
                   </div>

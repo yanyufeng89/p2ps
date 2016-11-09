@@ -319,12 +319,12 @@ $(function(){
            	    				objectName:objectName,
            	    		}
            	    		//加载模板
-           	    	 	$('.anscommtemplate').setTemplateURL(projectName+'topicAskCommentTemplate.html');
-           	        	$('.anscommtemplate').processTemplate(datamodel);
-           	        	$this.parents('.zm-item-meta').append($('.anscommtemplate').html());
+           	    	 	$('.pagetemplate').setTemplateURL(projectName+'topicAskCommentTemplate.html');
+           	        	$('.pagetemplate').processTemplate(datamodel);
+           	        	$this.parents('.zm-item-meta').append($('.pagetemplate').html());
            	        	//textarea高度自适应
            	        	autosize(document.querySelectorAll('._InputBox_blur_3JWV'));
-           	        	$('.anscommtemplate').empty();
+           	        	$('.pagetemplate').empty();
            	        	$('.zg-link').pinwheel();
            	        	$('.Avatar').pinwheel();
            	    	}
@@ -740,15 +740,15 @@ $(function(){
             			commcontent:commcontent,
             			ispublic:isPublic,
             		}
-            		$('.anscommtemplate').setTemplateURL(projectName+'answerTemplate.html',null, {filter_data: false});
-            		$('.anscommtemplate').processTemplate(datamodel);
+            		$('.pagetemplate').setTemplateURL(projectName+'answerTemplate.html',null, {filter_data: false});
+            		$('.pagetemplate').processTemplate(datamodel);
             		if($('.loadmore').length>0){
-            			$('.loadmore').before($('.anscommtemplate').html());
+            			$('.loadmore').before($('.pagetemplate').html());
             		}else{
-            			$('#zh-question-answer-wrap').append($('.anscommtemplate').html());
+            			$('#zh-question-answer-wrap').append($('.pagetemplate').html());
             		}
             		
-            		$('.anscommtemplate').empty();
+            		$('.pagetemplate').empty();
             		$('.publishanswer .edui-body-container').empty();
             		 intoUserInfo();
             		//发布成功之后去掉提示信息
@@ -781,7 +781,7 @@ $(function(){
     
     /*当界面下拉到一定位置出现向上的箭头 start*/
     $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
+        if ($(window).scrollTop()>200){  
             $("#topicbacktop").fadeIn("fast");  
         }  
         else  

@@ -1,9 +1,23 @@
-var userInfo;
+var userInfo,sumpage,readurl,docsuffix;
+//鼠标位置
+var screenX,screenY;
 $(function(){
 	//加载用户信息
 	intoUserInfo();
 	//加载文档阅读插件
-	$('a.media').media({width:800, height:1200});
+	if($('input[name=docsuffix]').length>0){
+		docsuffix=$('input[name=docsuffix]').val();
+		if(docsuffix.toLowerCase()=='ppt'){
+			$('a.media').media({width:830, height:800});
+		}else{
+			$('a.media').media({width:830, height:1200});
+		}
+	}
+	
+	//获取文档的总页数
+	sumpage=$('input[name=sumpage]').val();
+	//文档的链接
+    readurl=$('input[name=readurl]').val();
 	 //我的文档批量删除
     $('.remove').live('click',function(){
     	//1代表上传  0代表下载和收藏
@@ -139,9 +153,131 @@ $(function(){
 		$('#docDescWrap-3').hide();
 		$(this).removeClass('ic-arrow-up').addClass('ic-arrow-down');
 	})
+	
+	//PPT左右翻页 (向左)
+	$('#left-btn').live('click',function(){
+		turnLeft();
+	});
+	//PPT左右翻页 (向右)
+    $('#right-btn').live('click',function(){
+    	turnRight();
+	});
+    //翻页文本框回车事件
+    $('input[type=text]').live('keyup',function(event){
+    	 if (event.keyCode == "13") {
+    		 turnPage($(this)); 
+         }
+    });
+    
 
+    //实时获取鼠标位置
+    $('#pj-kong').live('mousemove',function(e){
+    	e=e? e:window.event;
+    	screenX = e.screenX;
+    	screenY = e.screenY;
+    	var pjDiv =  document.getElementById('pj-kong');
+    	var pjDiv_X = GetObjPos(pjDiv)['x'];
+    	var pptCen_x = pjDiv_X + $('#pj-kong').width()/2;
+    	
+    	if(screenX <= pptCen_x){
+    		//左边
+    		$('.pj-kong').css('cursor',"url('/image/icon-left.ico'),auto");
+    		
+    	}else{
+    		//右边
+    		$('.pj-kong').css('cursor',"url('/image/icon-right.ico'),auto");
+    	}
+    	
+    });
+    $('#pj-kong').live('click',function(event){
+    	var pjDiv =  document.getElementById('pj-kong');
+    	var pjDiv_X = GetObjPos(pjDiv)['x'];
+    	var pptCen_x = pjDiv_X + $('#pj-kong').width()/2;
+    	
+    	if(screenX <= pptCen_x){
+    		//左边
+    		if($('#left-btn').hasClass('disable-btn')){
+    			return false;
+    		}
+    		turnLeft();
+    	}else{
+    		if($('#right-btn').hasClass('disable-btn')){
+    			return false;
+    		}
+    		//向右
+    		turnRight();
+    	}    	
+    });
+    //发布文本框获取焦点
+    $('.commentcontent').live('focus',function(){
+    	$('.item-msg-content,.ic-msg').hide();
+    });
 })
-//当前文档是否转换
+/**
+ * 坐标
+ * 
+ * @param x
+ * @param y
+ * @return
+ */
+function CPos(x, y) {
+	this.x = x;
+	this.y = y;
+}
+/**
+ * 得到对象的相对浏览器的坐标
+ * 
+ * @param ATarget
+ * @return
+ */
+function GetObjPos(ATarget) {
+	var target = ATarget;
+	var pos = new CPos(target.offsetLeft, target.offsetTop);
+
+	var target = target.offsetParent;
+	while (target) {
+		pos.x += target.offsetLeft;
+		pos.y += target.offsetTop;
+
+		target = target.offsetParent
+	}
+	return pos;
+}
+//向左翻页
+function turnLeft(){
+	var pagenum=$('input[type=text]').val();
+	if($('#right-btn').hasClass('disable-btn')){
+		$('#right-btn').removeClass('disable-btn').addClass('enable-btn');
+	}
+	var lurl='';
+	lurl+='<a class="media" href="'+readurl+String(Number(pagenum)-1)+'.swf"></a>';
+	$('.detail-list .media').remove();
+	$('.doc-ppt').append(lurl);
+    $('a.media').empty().media({width:830, height:800});
+    $('input[type=text]').val(Number(pagenum)-1);
+    $('input[name=currvalue]').val(Number(pagenum)-1);
+    if(Number(pagenum)-1==1){
+    	$('#left-btn').removeClass('enable-btn').addClass('disable-btn');
+    }
+}
+//向右翻页
+function turnRight(){
+	var pagenum=$('input[type=text]').val();
+	if($('#left-btn').hasClass('disable-btn')){
+		$('#left-btn').removeClass('disable-btn').addClass('enable-btn');
+	}
+	var rurl='';
+	rurl+='<a class="media" href="'+readurl+String(Number(pagenum)+1)+'.swf"></a>';
+	$('.detail-list .media').remove();
+	$('.doc-ppt').empty().append(rurl);
+    $('a.media').media({width:830, height:800});
+    $('input[type=text]').val(Number(pagenum)+1);
+    $('input[name=currvalue]').val(Number(pagenum)+1);
+    if(Number(pagenum)+1==Number(sumpage)){
+    	$('#right-btn').removeClass('enable-btn').addClass('disable-btn');
+    }
+}
+// 当前文档是否转换
 function isConverter(docid){
 	var isconvert=true;
 	$.ajax({
@@ -160,15 +296,62 @@ function isConverter(docid){
 	})
 	return isconvert;
 }
- //定时刷新界面上边框的颜色
+//只能输入数字(翻页文本框)
+function onlyNum(){
+ if(!(event.keyCode==46)&&!(event.keyCode==8)&&!(event.keyCode==37)&&!(event.keyCode==39))
+  if(!((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=96&&event.keyCode<=105)))
+    event.returnValue=false;
+}
+//鼠标离开翻页文本框
+function onblus(){
+	$('input[type=text]').val($('input[name=currvalue]').val());
+}
+
+//定时刷新界面上边框的颜色
 function startrequest() { 
 	  $('p.error').hide();
 } 
+//翻页文本框回车事件
+function turnPage(){
+	var pagenum=$.trim($('input[type=text]').val());
+	if(pagenum.length==0){
+		return false;
+	}else if(Number(pagenum)>Number(sumpage)){
+		pagenum=sumpage;
+		$('input[type=text]').val(sumpage);
+		$('input[name=currvalue]').val(sumpage);
+		$('#right-btn').removeClass('enable-btn').addClass('disable-btn');
+		$('#left-btn').addClass('enable-btn').removeClass('disable-btn')
+	}else if(Number(pagenum)<1){
+		pagenum=1;
+		$('input[type=text]').val(1);
+		$('input[name=currvalue]').val(1);
+		$('#left-btn').removeClass('enable-btn').addClass('disable-btn');
+		$('#right-btn').removeClass('disable-btn').addClass('enable-btn');
+	}else{
+		var hurl='';
+		hurl+='<a class="media" href="'+readurl+String(Number(pagenum))+'.swf"></a>';
+		$('.detail-list .media').remove();
+		$('.doc-ppt').empty().append(hurl);
+	    $('a.media').media({width:830, height:800});
+	    $('input[type=text]').val(Number(pagenum));
+	    $('input[name=currvalue]').val(Number(pagenum));
+	    if(Number(pagenum)==Number(sumpage)){
+	    	$('#right-btn').removeClass('enable-btn').addClass('disable-btn');
+	    	$('#left-btn').addClass('enable-btn').removeClass('disable-btn')
+	    }else if(Number(pagenum)==1){
+	    	$('#left-btn').removeClass('enable-btn').addClass('disable-btn');
+	    	$('#right-btn').removeClass('disable-btn').addClass('enable-btn');
+	    }else{
+	    	$('#left-btn,#right-btn').removeClass('disable-btn').addClass('enable-btn');
+	    }
+	}
+	
+};
 //文档详情  内容分页
 function detailContentPage(obj){
 	var page=Number(obj.attr('data-currentpage'))+1;
 	var pagesize=Number(obj.attr('data-pagesize'))-3;
-	var readurl=$('input[name=readurl]').val();
 	var url='';
 	if(Number(obj.attr('data-pagesize'))<3){
 		for(var i=0;i<Number(obj.attr('data-pagesize'));i++){
@@ -181,7 +364,7 @@ function detailContentPage(obj){
 	}
 
     $('.detail-list .banner-more-btn').before(url);
-    $('a.media').media({width:800, height:1200});
+    $('a.media').media({width:830, height:1200});
     $('.moreBtn span:first-child').empty().append('还剩'+pagesize+'页未读，');
     if(Number(obj.attr('data-pagesize'))<=3){
     	$('.banner-more-btn').hide();
@@ -223,6 +406,9 @@ function docDownLoad(obj){
 	    		if(data.returnStatus=='000'){//返回成功
 	    			window.location.href=encodeURI(docurl+'?filename='+title+'.'+docsuffix);
 	    			$('#docfollow').attr('data-downvalue','0');
+	    			//下载人数加1
+	    			$('.zg-gray-normal strong').html(Number($('.zg-gray-normal strong').html())+1);
+	    			showHeadIcon();
 	    		}else if(data.returnStatus=='-999'){
 	    			//文档资源不存在 或者url不合法
 	    			/*console.log("文档资源不存在 或者url不合法");*/
@@ -234,7 +420,6 @@ function docDownLoad(obj){
 }
 //文档详情 文档下载
 function docDownLoadInit(obj){
-	
 	var downvalue=obj.attr('data-downvalue');
 	var docCreatePerson=$('input[name=docCreatePerson]').val();
 	var sumvalue=obj.attr('data-sumvalue');
@@ -334,13 +519,17 @@ function commentDocs(obj,type){//type 1代表用户直接发布评价语  0代�
 	if($.trim(comments).length==0){
 		return false;
 	}
+	if($.trim(comments).replace(/[^x00-xFF]/g,'**').length>65535){
+		obj.prevAll().show();
+		return false;
+	}
 	//字数不能超过一千字
-	var len=comments.length+(comments.match(/[^\x00-\xff]/g) ||"").length;
+	/*var len=comments.length+(comments.match(/[^\x00-\xff]/g) ||"").length;
 	if(len>1000){
 		if(obj.parent().find('.errortip').length==0)
 			obj.before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
     		return false;
-	}
+	}*/
 	
 	$this=obj;
 	$.ajax({
@@ -385,7 +574,7 @@ function commentDocs(obj,type){//type 1代表用户直接发布评价语  0代�
 }
 //加载用户信息
 function intoUserInfo(){
-	    $('.uname,.author-link,.zm-item-link-avatar,.zm-list-avatar').pinwheel();
+	    $('.uname,.author-link,.zm-list-avatar,.zm-item-img-avatar').pinwheel();
 }
 //文档详情 举报
 function docReport(obj){
@@ -476,7 +665,7 @@ function deleteDocs(conditions,obj){
          			}
           		   $('.remove ').removeClass('enabled');
           		   //上传
-          		   $('#docupload').html('').html('上传('+data.operationSum.docsharesum+")");
+          		   $('#docupload').html('').html('上传&nbsp;'+data.operationSum.docsharesum);
 
         		}else{//返回失败
 
@@ -513,8 +702,8 @@ function deleteMyCollects(conditions,obj,actiontype){
      			    }
      				
      			}
-      			$('#docdownload').html('').html('下载('+data.operationSum.docdownsum+")");
-      			$('#doccollect').html('').html('收藏('+data.operationSum.doccollsum+")");
+      			$('#docdownload').html('').html('下载&nbsp;'+data.operationSum.docdownsum);
+      			$('#doccollect').html('').html('收藏&nbsp;'+data.operationSum.doccollsum);
          		$('.remove ').removeClass('enabled');
 
      		}else{//返回失败
