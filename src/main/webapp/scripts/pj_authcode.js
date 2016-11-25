@@ -58,6 +58,12 @@
 						window.setTimeout("update_p(" + i + ","+t+")", i * 1000);
 					}
 				}
+			}else if(mtype=='wap-forgetpw'){
+				document.getElementById('pj-send-code').disabled=true;
+				for(i=1;i<=t;i++) {
+					window.setTimeout("update_w(" + i + ","+t+")", i * 1000);
+				}
+				
 			}else{
 				document.getElementById('phonecode').disabled=true;
 				for(i=1;i<=t;i++) {
@@ -67,8 +73,10 @@
 			
 		}
 		function update_e(num,t) {
+			document.getElementById('emailcode').style.backgroundColor="#ccc";
 			if(num == t) {
 					document.getElementById('emailcode').value='重新发送';
+					document.getElementById('emailcode').style.backgroundColor="#1b85d5";
 					document.getElementById('emailcode').disabled=false;
 			}
 			else {
@@ -78,8 +86,10 @@
 			}
 		}
 		function update_p(num,t){
+			document.getElementById('phonecode').style.backgroundColor="#ccc";
 			if(num == t) {
 					document.getElementById('phonecode').value='重新发送';
+					document.getElementById('phonecode').style.backgroundColor="#1b85d5";
 					document.getElementById('phonecode').disabled=false;
 			}
 			else {
@@ -87,5 +97,16 @@
 			        document.getElementById('phonecode').value=" (" + printnr +")秒后重新发送";		
 			}
 		}
-
+		function update_w(num,t){
+			document.getElementById('phonecode').style.backgroundColor="#ccc";
+			if(num == t) {
+					document.getElementById('pj-send-code').innerHTML='重新发送';
+					document.getElementById('pj-send-code').style.backgroundColor="#1b85d5";
+					document.getElementById('pj-send-code').disabled=false;
+			}
+			else {
+				    printnr = t-num;
+			        document.getElementById('pj-send-code').innerHTML=" (" + printnr +")秒后重新发送";		
+			}
+		}
 		

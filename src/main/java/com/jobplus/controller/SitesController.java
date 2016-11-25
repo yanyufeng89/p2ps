@@ -126,7 +126,8 @@ public class SitesController {
 				//后台管理员查看
 				mv.setViewName("manage/siteDetail");
 			}else{
-				mv.setViewName("/mydocs/docs/siteDetail");
+				
+				mv.setViewName("mydocs/docs/siteDetail");
 			}
 		} else {
 			logger.info("**getSiteDetail*获取站点详情  失败   record.getId() == null  999****");

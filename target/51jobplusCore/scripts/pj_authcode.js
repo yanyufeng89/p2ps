@@ -11,7 +11,7 @@
 			    //question:false,//若给定词典为算数题，则此项必须选择true,程序将自动计算出结果进行校验【若选择此项，则可不配置len属性】,若选择经典模式，必须选择false
 			    copy: false,//是否允许复制产生的验证码
 			    bgColor:"",//背景颜色[与背景图任选其一设置]
-			    bgImg:"/51jobplusCore/image/authcode.inc.jpg",//若选择背景图片，则背景颜色失效
+			    bgImg:"/image/authcode.inc.jpg",//若选择背景图片，则背景颜色失效
 			    randomBg : false,//若选true则采用随机背景颜色，此时设置的bgImg和bgColor将失效
 			   
 			    codeArea:code,//验证码放置的区域【HTMLDivElement 】
@@ -35,7 +35,7 @@
 	           // question:false,//若给定词典为算数题，则此项必须选择true,程序将自动计算出结果进行校验【若选择此项，则可不配置len属性】,若选择经典模式，必须选择false
 	            copy: false,//是否允许复制产生的验证码
 	            bgColor:"",//背景颜色[与背景图任选其一设置]
-	            bgImg:"/51jobplusCore/image/authcode.inc.jpg",//若选择背景图片，则背景颜色失效
+	            bgImg:"/image/authcode.inc.jpg",//若选择背景图片，则背景颜色失效
 	            randomBg : false,//若选true则采用随机背景颜色，此时设置的bgImg和bgColor将失效
 	           
 	            codeArea:code,//验证码放置的区域【HTMLDivElement 】
@@ -58,6 +58,12 @@
 						window.setTimeout("update_p(" + i + ","+t+")", i * 1000);
 					}
 				}
+			}else if(mtype=='wap-forgetpw'){
+				document.getElementById('pj-send-code').disabled=true;
+				for(i=1;i<=t;i++) {
+					window.setTimeout("update_w(" + i + ","+t+")", i * 1000);
+				}
+				
 			}else{
 				document.getElementById('phonecode').disabled=true;
 				for(i=1;i<=t;i++) {
@@ -67,8 +73,10 @@
 			
 		}
 		function update_e(num,t) {
+			document.getElementById('emailcode').style.backgroundColor="#ccc";
 			if(num == t) {
 					document.getElementById('emailcode').value='重新发送';
+					document.getElementById('emailcode').style.backgroundColor="#1b85d5";
 					document.getElementById('emailcode').disabled=false;
 			}
 			else {
@@ -78,8 +86,10 @@
 			}
 		}
 		function update_p(num,t){
+			document.getElementById('phonecode').style.backgroundColor="#ccc";
 			if(num == t) {
 					document.getElementById('phonecode').value='重新发送';
+					document.getElementById('phonecode').style.backgroundColor="#1b85d5";
 					document.getElementById('phonecode').disabled=false;
 			}
 			else {
@@ -87,17 +97,16 @@
 			        document.getElementById('phonecode').value=" (" + printnr +")秒后重新发送";		
 			}
 		}
-	
-		function hidetip(type)
-		{
-			
-		}
-		function showpw(type)
-		{
-			
-		}
-		function showtip (type)
-		{
-			
+		function update_w(num,t){
+			document.getElementById('phonecode').style.backgroundColor="#ccc";
+			if(num == t) {
+					document.getElementById('pj-send-code').innerHTML='重新发送';
+					document.getElementById('pj-send-code').style.backgroundColor="#1b85d5";
+					document.getElementById('pj-send-code').disabled=false;
+			}
+			else {
+				    printnr = t-num;
+			        document.getElementById('pj-send-code').innerHTML=" (" + printnr +")秒后重新发送";		
+			}
 		}
 		

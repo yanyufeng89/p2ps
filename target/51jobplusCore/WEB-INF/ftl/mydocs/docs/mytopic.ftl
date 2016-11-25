@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          个人中心_JobPlus知识库
+          我的话题-个人中心-JobPlus知识库
     </title> 
     <#include "/mydocs/commonTemplate/headstyle/headstyle.ftl"/>
   </head>
@@ -16,61 +16,64 @@
 		<div class="uc-aside">
 		<div class="uc-user-box">
 		<div class="img-center">
-		  <#if (Session.user.headicon)??>
-		    <img src="${Session.user.headicon}" width='80' height='80'>
+		 <a  href="/myCenter/getMyHeadTop" target="_self">
+		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
+		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/51jobplusCore/image/myphoto.jpg" width='80' height='80'>
+		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
+		 </a>
 		</div>
 		<p class="user-name">
-			<a class="name-link" href="/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}" target="_blank"> 
+			<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 	            <#if (Session.user)??>
 		           ${Session.user.username}
 		        </#if>
 		     </a>
+		     <span class="pj-level"><em>LV.${Session.user.userlevel}</em></span>
 		</p>
-	    <p class="user-level"><a href="/51jobplusCore/myHome/getHomePage?userid=${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+	    <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入个人主页</a></p>
 		<div class="mydoc-list">
 		    <ul id="accordion">
 		      <li class="open">
 		         <div class="my-doc link">
 		           <p>
-		            <a href='/51jobplusCore/myCenter/getMyHeadTop'>
+		            <a href='/myCenter/getMyHeadTop'>
 			         <span class="icon-ken"></span>我的知识库
 			        </a>
 			        <b class="iconfont up-arrow doc-arrow-btn"></b>
 			        </p>
 			     </div>
 		         <ul class="submenu" style="display:block">
-	                 <li id="mydocument"><a href="/51jobplusCore/myCenter/getMyDocsUploaded"><span class="icon-doc"></span>我的文档</a></li>
-	                 <li id="mytopic"><a href="/51jobplusCore/myCenter/getMyTopicsUploaded" class='current'><span class="icon-topic"></span>我的话题</a></li>
-	                 <li id="mybook"><a href="/51jobplusCore/myCenter/getSharedBookList"><span class="icon-book"></span>我的书籍</a></li>
-	                 <li id="mycourse"><a href="/51jobplusCore/myCenter/getSharedCourseList"><span class="icon-course"></span>我的课程</a></li>
-	                 <li id="myarticle"><a href="/51jobplusCore/myCenter/getSharedArticleList"><span class="icon-article"></span>我的文章</a></li>
-	                 <li id="mysite"><a href="/51jobplusCore/myCenter/getSharedSiteList"><span class="icon-site"></span>我的站点</a></li>
+	                 <li id="mydocument"><a href="/myCenter/getMyDocsUploaded"><span class="icon-doc"></span>我的文档</a></li>
+	                 <li id="mytopic"><a href="/myCenter/getMyTopicsUploaded" class='current'><span class="icon-topic"></span>我的话题</a></li>
+	                 <li id="mybook"><a href="/myCenter/getSharedBookList"><span class="icon-book"></span>我的书籍</a></li>
+	                 <li id="mycourse"><a href="/myCenter/getSharedCourseList"><span class="icon-course"></span>我的课程</a></li>
+	                 <li id="myarticle"><a href="/myCenter/getSharedArticleList"><span class="icon-article"></span>我的文章</a></li>
+	                 <li id="mysite"><a href="/myCenter/getSharedSiteList"><span class="icon-site"></span>我的站点</a></li>
 		         </ul>
 		      </li>
 		      <li>
 		         <div class="my-doc link"><p><span class="icon-account"></span>我的账户<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
 		         <ul class="submenu">
-	                 <li><a href="/51jobplusCore/myCenter/getAllSms?islook=0"><span class="icon-info"></span>全部消息</a></li>
-	                 <li><a href="/51jobplusCore/myCenter/getSmsFilterParm"><span class="icon-setinfo"></span>消息设置</a></li>
-	                 <li><a href="/51jobplusCore/myCenter/account/security"><span class="icon-accountsafety"></span>账户安全</a></li>
+	                 <li><a href="/myCenter/getAllSms?islook=0"><span class="icon-info"></span>全部消息</a></li>
+	                 <li><a href="/myCenter/getSmsFilterParm"><span class="icon-setinfo"></span>消息设置</a></li>
+	                 <li><a href="/myCenter/account/security"><span class="icon-accountsafety"></span>账户安全</a></li>
 		          </ul>
 		       </li>
 		       <li>
 		         <div class="my-order link"><p><span class="icon-order"></span>我的订单<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
 		         <ul class="submenu">
-	                 <li><a href="/51jobplusCore/user/allorder"><span class="icon-allorder"></span>全部订单</a></li>
-	                 <li><a href="/51jobplusCore/user/cash"><span class="icon-cash"></span>已经支出</a></li>
-	                 <li><a href="/51jobplusCore/user/nocash"><span class="icon-nocash"></span>尚未支付</a></li>
+	                 <li><a href="/user/allorder"><span class="icon-allorder"></span>全部订单</a></li>
+	                 <li><a href="/user/cash"><span class="icon-cash"></span>已经支出</a></li>
+	                 <li><a href="/user/nocash"><span class="icon-nocash"></span>尚未支付</a></li>
 		          </ul>
 		      </li>
 		       <li>
 		         <div class="my-order link"><p><span class="icon-wealth"></span>我的财富<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
 		         <ul class="submenu">
-	                <li><a href="/51jobplusCore/account/getDetailListByRecord?changetype=1"><span class="icon-incomewealth"></span>财富收益</a></li>
-	                  <li><a href="/51jobplusCore/account/getDetailListByRecord?changetype=2"><span class="icon-wealthspending"></span>财富支出</a></li>
+	                <li><a href="/account/getDetailListByRecord?changetype=1"><span class="icon-incomewealth"></span>财富收益</a></li>
+	                  <li><a href="/account/getDetailListByRecord?changetype=2"><span class="icon-wealthspending"></span>财富支出</a></li>
 		          </ul>
 		      </li>
 	     </ul>
@@ -79,7 +82,7 @@
 		</div>
 		<div class="side-nav-bar" id="side-nav-bar" style="display: none; left: 1461.5px; position: fixed; top: 650px;">
 		<ul>
-		<li><a href="#" target="_blank"><span class="s-ic guide"></span>反馈</a></li>
+		<li><a href="#"  target="_self"><span class="s-ic guide"></span>反馈</a></li>
 		<li class="gotop"><a href="javascript:void(0);"><span class="s-ic top"></span></a></li>
 		</ul>
 		</div>
@@ -91,17 +94,17 @@
 		
 		   <div class='maincontent'>
 		    <div class="uc-head-bottom">
-				  <div style="float:left" id="mytopiccontent">
+				  
 				    <span><a class='icon-mytopic'></a></span>
 				    <div style="float:left">
 					    <p>我的话题</p>
 					    <p class="dll">
-	                       <a href='/51jobplusCore/myCenter/getMyTopicsUploaded' <#if (topicsPage)??>class="current"</#if> id='topicshare'>分享(<#if (Session.operationSum.topicssharesum)??>${Session.operationSum.topicssharesum}</#if>)</a>
-	                       <a href='/51jobplusCore/myCenter/getMyTopicsAttention' <#if (attentionPage)??>class="current"</#if> id='topicattention'>关注(<#if (Session.operationSum.topicsattesum)??>${Session.operationSum.topicsattesum}</#if>)</a>
-	                       <a href='/51jobplusCore/myCenter/getMyTopicsComment' <#if (topicsCommentPage)??>class="current"</#if> id='topicreplay'>回复(<#if (Session.operationSum.topicscomsum)??>${Session.operationSum.topicscomsum}</#if>)</a>
+	                       <a href='/myCenter/getMyTopicsUploaded' <#if (topicsPage)??>class="current"</#if> id='topicshare'>分享&nbsp;<#if (Session.operationSum.topicssharesum)??>${Session.operationSum.topicssharesum}</#if></a>
+	                       <a href='/myCenter/getMyTopicsAttention' <#if (attentionPage)??>class="current"</#if> id='topicattention'>关注&nbsp;<#if (Session.operationSum.topicsattesum)??>${Session.operationSum.topicsattesum}</#if></a>
+	                       <a href='/myCenter/getMyTopicsComment' <#if (topicsCommentPage)??>class="current"</#if> id='topicreplay'>回复&nbsp;<#if (Session.operationSum.topicscomsum)??>${Session.operationSum.topicscomsum}</#if></a>
 					    </p>
 				    </div>
-				   </div>
+				     <a href='javascript:void(0);' onclick="share('topic');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
 			</div>
 		    <#if (topicsPage)??>
 			 <div class="uc-mydocshare">
@@ -115,25 +118,35 @@
 		           <div class="successshare">
 		             <div class="docs-list-box">
 		               <div class='delete-box normal-console-box clearfix'>
-		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
+		                 <#--<span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>-->
 		               </div>
 		               <div class="status-box">
-						  <div class="w340 ib"><div class="checkbox select-all"></div>话题名称</div>
+						  <div class="w332 ib">话题名称</div>
+						  <div class="w92 ib">是否匿名</div>
 						  <div class="w92 ib">关注</div>
 						  <div class="w92 ib">回复</div>
 						  <div class="w92 ib">点赞</div>
-						  <div class="w140 ib">创建时间</div>
-						  <div class="w119 ib">操作</div>
+						  <div class="w92 ib">创建时间</div>
+						  <div class="w92 ib">操作</div>
 					   </div>
 					   <div class="docs-list">
 					     <ul>
 					       <#if (topicsPage)??>
                               <#list topicsPage.list as list>
-                                <#if (list.ispublic==1)>
+                                <#--<#if (list.ispublic==1)>-->
                                   <li>
-                                    <div class='w340 fs14 fc3 ib titlehidden'>
-                                   	  <div class="checkbox chk" data-topicid="${list.id}" data-name="${list.title}"></div>
-                                      <a href="/51jobplusCore/topics/getTopicsDetail?topicId=${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
+                                    <div class='w332 fs14 fc3 ib titlehidden'>
+                                   	  <#--<div class="checkbox chk" data-topicid="${list.id}" data-name="${list.title}"></div>-->
+                                      <a href="/topics/getTopicsDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
+                                    </div>
+                                    <div class='w92 ib topic-ispublic'>
+                                       <#if list.ispublic==1>
+                                         	公开
+                                        <#elseif list.ispublic==0>
+                                        	匿名
+                                        <#else>
+                                        	公开
+                                       </#if>
                                     </div>
                                     <div class='w92 ib iltopic'>
                                        <#if (list.followssum)??>
@@ -150,21 +163,21 @@
                                          ${list.likesum}
                                        </#if>
                                     </div>
-                                    <div class='w140 ib'>
+                                    <div class='w92 ib'>
                                         <#if (list.createtime?string("yyyy-MM-dd"))??>
                                          ${list.createtime?string("yyyy-MM-dd")}
                                        </#if>
                                     </div>
-                                    <div class='w119 ib operate'>
-                                       <a href="/51jobplusCore/topics/getTopicsDetail?topicId=${list.id}"  class='pr10 modify-doc __HIDE__' target='_self'>
+                                    <div class='w92 ib operate edittopic'>
+                                       <a href="/topics/getTopicsDetail/${list.id}"  class='pr10 modify-doc __HIDE__' target='_self'>
 								         <b class="iconfont pr2"></b>修改
 								       </a>
-								       <span data-id='${list.id}' data-name='${list.title}' data-type='1'>
+								       <#--<span data-id='${list.id}' data-name='${list.title}' data-type='1'>
 						                  <b class="iconfont pr2"></b> 删除
-								       </span>
+								       </span>-->
                                     </div>
                                   </li>  
-                                </#if>
+                                <#--</#if>-->
                               </#list>
                            </#if>
 					     </ul>
@@ -217,7 +230,7 @@
 				           <li>
 				             <div class='w340 fs14 fc3 ib titlehidden'>
 				                <div class="checkbox chk" data-topicid="${alist.id}" data-name="${alist.topics.title}"></div>
-                                <a href="/51jobplusCore/topics/getTopicsDetail?topicId=${alist.objectid}" target="_blank" title="${alist.topics.title}">${alist.topics.title}</a>  
+                                <a href="/topics/getTopicsDetail/${alist.objectid}" target="_blank" title="${alist.topics.title}">${alist.topics.title}</a>  
 				             </div>
 				             <div class='w92 ib iltopic'>
 				                <#if (alist.topics.likesum)??>
@@ -241,7 +254,7 @@
 				             </div>
 				             <div class='w119 ib attention'>
 				                    <span data-topicid='${alist.id}' data-id='${alist.objectid}' data-name='${alist.topics.title}' data-actiontype='0' data-titlename='${alist.topics.title}' data-createperson='${alist.userid}'> 
-						                <input type="botton" class="topic-disblue"  value="取消关注">
+						                <a  class="topic-disblue" href='javascript:void(0)'>取消关注</a>
 								    </span>
 				             </div>
 				           </li>
@@ -292,9 +305,9 @@
 				       <#if (topicsCommentPage)??>
 				        <#list topicsCommentPage.list as clist>
 				          <li>
-				            <div class='w450 fs14 fc3 ib titlehidden'>
+				            <div class='w430 fs14 fc3 ib titlehidden'>
 				              <div class="checkbox chk" data-topicid="${clist.id}" data-name="${clist.topics.title}"></div>
-                              <a href="/51jobplusCore/topics/getTopicsDetail?topicId=${clist.topicsid}" target="_blank" title="${clist.topics.title}">${clist.topics.title}</a>  
+                              <a href="/topics/getTopicsDetail/${clist.topicsid}" target="_blank" title="${clist.topics.title}">${clist.topics.title}</a>  
 				            </div>
 				            <div class='w214 ib replayhidden' >
 				              <#if (clist.commcontent)??>
@@ -347,7 +360,7 @@
 	  <div class='pagetemplate'></div>
       <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
       <#include "/mydocs/commonTemplate/bottomjs/bottomjs.ftl"/>
-      <script type='text/javascript' src='/51jobplusCore/scripts/pj_mycentertopic.js'></script>
+      <script type='text/javascript' src='/scripts/pj_mycentertopic.js'></script>
 	  <script type="text/javascript">
 		  <#if (topicsPage.list)??>
 			$(function(){

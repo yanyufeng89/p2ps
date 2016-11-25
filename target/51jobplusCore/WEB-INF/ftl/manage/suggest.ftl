@@ -62,17 +62,18 @@
             height: 350,
             colModel: [
                 {name: 'id', key: 'true', hidedlg: true, hidden: true},
+                {name: 'isdeal', hidden: true},
                 {label: '用户电话', name: 'sugtel', width: '100', sortable: false},
                 {label: '用户邮箱', name: 'sugemail', width: '100', sortable: false},
                 {label: '建议内容', name: 'sugcontent', sortable: false},
                 {
                     label: '是否处理',
-                    name: 'isdeal',
+                    name: 'isdealcopy',
                     width: '20',
                     sortable: false,
                     align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
-                        if (cellvalue == 1)
+                        if (rowObject.isdeal == 1)
                             return '<i class="icon-ok" style="color: #34c951;" title="已处理"></i>';
                         return '<i class="icon-remove" style="color: #dc4256;" title="待处理"></i>';
                     }
@@ -99,8 +100,11 @@
                 updatePagerIcons(this);
                 var rowIds = $("#jqGrid").jqGrid('getDataIDs');
                 for (var i = 0; i < rowIds.length; i++) {
-                    var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deal(' + rowIds[i] + ');">确认处理</button>';
-                    $("#jqGrid").jqGrid("setRowData", rowIds[i], {operates: operate});
+                    var rowData = $("#jqGrid").jqGrid('getRowData', rowIds[i]);
+                    if (rowData.isdeal == 1) {
+                        var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deal(' + rowIds[i] + ');">确认处理</button>';
+                        $("#jqGrid").jqGrid("setRowData", rowIds[i], {operates: operate});
+                    }
                 }
             }
         });

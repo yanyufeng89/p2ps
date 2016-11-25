@@ -319,15 +319,17 @@ a.upload-btn:hover{
 
 .upload-notice {
 	border-top: 1px dotted #cacaca;
-	padding: 32px 0 60px 150px;
+	padding: 32px 150px 60px 150px;
 	font-size: 12px;
+	word-break: break-all;
+    word-wrap: break-word;
 }
 .successupload-notice {
 	padding: 32px 0 60px 115px;
 	font-size: 12px;
 	color:#555;
 }
-.upload-notice h4,.successupload-notice h4{
+.upload-notice h4,.successupload-notice h4,.uploadinfobook h4{
 	font-size: 15px;
 	color:#333;
 }
@@ -335,6 +337,7 @@ a.upload-btn:hover{
 .upload-notice ol,.successupload-notice ol{
 	line-height:3;
 	color:#555;
+	font-size:12px;
 }
 
 .uploadinfo {
@@ -476,8 +479,8 @@ a.upload-btn:hover{
 	box-sizing: border-box;
 	float: none;
 	outline:none;
-    font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 }
 
 .mod-upload .bddoc .link .file{
@@ -508,8 +511,8 @@ a.upload-btn:hover{
     border-radius:4px;
     font-size:14px;
     border: 1px solid #e5e5e5;
-    font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 }
 
 .mod-upload .bar>div {
@@ -539,6 +542,9 @@ a.upload-btn:hover{
 }
 .mod-upload .link .tocapture.active{
 	background: url(../image/correct-grey.png) center center no-repeat #eff6fA;
+}
+.mod-upload .link .docpreview.active{
+	background: url(../image/doc-share.png) center center no-repeat #eff6fA;
 }
 .mod-upload .bar .btn-blue {
 	background: #1b85d5;
@@ -584,8 +590,8 @@ a.upload-btn:hover{
     line-height:30px;
     cursor: pointer;
     opacity: 0;
-    font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 }
 .mod-upload .bar .btn-loading {
 	right: 0;
@@ -1918,10 +1924,6 @@ a.upload-btn:hover{
 	background-position: -264px -32px;
 }
 
-.block-hack a {
-	text-decoration: none;
-}
-
 .block-hack .block-cnt a:hover {
 	border: 1px solid #0867c5;
 	color: #0867c5;
@@ -2187,8 +2189,8 @@ a.upload-btn:hover{
     font-size: 12px;
     height: 25px;
     display: block;
-    font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 }
  .booksedit .content {
 	height: 120px!important;
@@ -2454,14 +2456,15 @@ a.upload-btn:hover{
 	padding-top:30px;
 	padding-left:115px;
 	padding-right: 10px;
+	padding-bottom:60px;
 	height:190px;
 }
 .uploadinfobook ol {
 	list-style: none;
-	line-height:2.5;
+	line-height:3;
 	padding-bottom: 12px;
 	font-size: 12px;
-	color:#a7a7a7;
+	color:#555;
 }
 
 .modal-dialog-content p{
@@ -2483,7 +2486,7 @@ a.upload-btn:hover{
 .editlayoutbook .zm-tag-editor-editor,.editlayoutarticle .zm-tag-editor-editor{
     box-shadow: 0 1px 3px rgba(0,0,0,.1) inset;
     border: 1px solid #ccc!important;
-    padding:3px 8px 4px;
+    padding:3px 8px 3px 8px;
     position: relative;
     width: 300px;
     background: #f9f9f9;
@@ -2525,12 +2528,12 @@ a.upload-btn:hover{
     border: 0 none;
     font-size: 12px;
     outline:none;
-    font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
     background: #f9f9f9;
 }
 .editlayoutbook  .label-input-label,.editlayoutarticle  .label-input-label{
-    line-height: 20px;
+    /* line-height: 20px; */
     color: #999!important;
 }
 .doc-error{
@@ -2577,13 +2580,13 @@ a.upload-btn:hover{
     resize: none;
     border: solid 1px #ccc;
     outline: none;
-    font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
     background: #f9f9f9;
 }
 #pj-article-suggest-title-content{
 	border-bottom:0!important;
-	width:96.7%!important;
+	width:96.6%!important;
 	font-size: 20px;
     color: #333;
     font-weight: bold;
@@ -2617,7 +2620,7 @@ a.upload-btn:hover{
     margin-top: 10px;
 }
 #pj-article-suggest-detail-container{
-	 margin-top:-18px!important;
+	 margin-top:-20px!important;
 }
 .add-course-title-form .courseinfo span {
     color: #555;

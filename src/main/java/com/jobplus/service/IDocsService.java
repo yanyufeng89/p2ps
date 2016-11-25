@@ -75,7 +75,7 @@ public interface IDocsService {
 	 * @param userid
 	 * @return
 	 */
-	public int deleteDocs(String[] condition,String userid);
+	public int deleteDocs(String[] condition,String userid,String ispublic);
 	
 	/**
 	 * 收藏文档
@@ -88,5 +88,5 @@ public interface IDocsService {
 	 */
 	public MyCollect downloadDoc(MyCollect record,Docs doc,HttpServletRequest request);
 	
-	
+	int updDocAndUpdMoney(Docs record,String preIsPublic);
 }

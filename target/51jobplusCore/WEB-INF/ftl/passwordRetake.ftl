@@ -4,14 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-          忘记密码
+          忘记密码-JobPlus
     </title>
-    <meta name="viewport" content="width=1230"/> 
+    
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" href="/51jobplusCore/scripts/layer.css" id="layui_layer_skinlayercss"> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_passretake.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_base.css" charset="UTF-8">
+    <link rel="stylesheet" href="/scripts/layer.css" id="layui_layer_skinlayercss"> 
+    <link rel="stylesheet" type="text/css" href="/css/pj_passretake.css" charset="UTF-8">
     <#include "/mydocs/commonTemplate/pwretake/pwretake.ftl"/> 
   </head>
   <body>
@@ -64,13 +64,13 @@
 				        <!--step2--发送邮件-------------------------------------->
 				         <div class="password_cont " style="display:none;" id="step3_email">
 					          <div class="password_list fl m10">
-					            <div class="password_list_s"> 密码重置邮件已发送到你的邮箱：<span id="step3_email_halt"></span>请在20分钟内查收，并在下方填写您收到的验证码</div>
+					            <div class="password_list_s"> 密码重置邮件已发送到你的邮箱：<span id="step3_email_halt"></span>请在5分钟内查收，并在下方填写您收到的验证码</div>
 					          </div>
 					          <div class="password_list fl m10">
 					            <div class="password_list_left">验证码：</div>
 					            <input type="text" value="" placeholder="请输入邮箱验证码" class="password_list_text password_list_textw110" id="sendcode_email">
 					            <div class="password_list_r step3_email_timer">
-					               <input type="button" value="点击免费获取" class="input_btn" data-messagetype='1' id="emailcode" onclick="sendmsg(this)" style="width:160px;">
+					               <input type="button" value="点击免费获取" class="input_btn" data-messagetype='1' id="emailcode" onclick="sendmsg(this,'forgetpw');" style="width:160px;">
 					            </div>
 					          </div>
 					          <div class="password_list fl m15">
@@ -80,7 +80,7 @@
 					      </div>
 					      <div class="password_cont " style="display:none;" id="step3_moblie">
 					          <div class="password_list fl m10">
-					            <div class="password_list_s"> 密码重置短信已发送到你的手机：<span id="step3_email_halt"></span>请在20分钟内查收，并在下方填写您收到的验证码</div>
+					            <div class="password_list_s">密码重置短信已发送到你的手机：<span id="step3_email_halt"></span>请在5分钟内查收，并在下方填写您收到的验证码</div>
 					          </div>
 					          <div class="password_list fl m10">
 					            <div class="password_list_left">验证码：</div>

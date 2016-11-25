@@ -34,7 +34,7 @@
 						     恭喜！书籍分享成功!
 						</div>
 						<div class='addtreasure'>
-						              系统自动给您加上<span class="success-upload-tips">1财富值</span>的奖励
+						              系统自动给您加上<span class="success-upload-tips">${num}财富值</span>的奖励
 						      <a href="/myCenter/getSharedBookList" class='checkshare'>&nbsp;&nbsp;查看已分享的书籍>></a>
 						 </div>
 						 <a class="goon-upload log-xsend"  href="/sharein/searchuploadFile?type=2">继续分享</a>
@@ -47,13 +47,13 @@
                     </h4>
                     <ol>
                       <li>
-                        1.当您的书籍推荐成功后,系统会为你添加1财富的奖励,累计到一定的财富值即可兑换;
+                        1. 当您的书籍分享成功后，系统会为你添加1财富的奖励，累计到一定的财富值即可兑换；
                       </li>
                       <li>
-                        2.内容优秀的书籍，将为您带来更多的关注与收益;
+                        2. 内容优秀的书籍，将为您带来更多的关注与收益；
                       </li>
                       <li>
-                        3.书籍推荐有问题需要帮助？详情请查看知识库
+                        3. 书籍推荐有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_self">服务条款</a>
                         和
                         <a href="/about/newbie_guide" target="_self">帮助中心。</a>

@@ -22,7 +22,9 @@
     <div class='positioninfo'>
 	    <label> 工作职位:</label>
 	    <span class='position'>
-	       <textarea name="position" class="content"  placeholder="填写工作职位"></textarea>   
+	       <textarea name="position" class="content"  placeholder="填写工作职位"></textarea>  
+	       <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+	       <span class="item-msg-content"  style="display:none">工作职位超出最大限制</span> 
 	    </span>
 	    <a href="javascript:;" class="zu-edit-button" name="editsposition" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
     </div>
@@ -60,13 +62,15 @@
       <a href="javascript:;" class="zu-edit-button" name="editsonjobtime"  data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
   </div>
   
-  <div class='workdescription'>
+  <div class='workdescription clearfix'>
     <div class='description'>
 	     <label>工作内容:</label>
 	     <span class='workcontent'>
-	       <textarea name="description" class="content"  placeholder="填写工作内容"></textarea>   
+	       <textarea name="description" class="content"  placeholder="填写工作内容"></textarea>
+	       <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+	       <span class="item-msg-content"  style="display:none">工作内容超出最大限制</span>   
+	       <a href="javascript:;" class="zu-edit-button" name="editsdescription" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a> 
 	     </span>
-	    <a href="javascript:;" class="zu-edit-button" name="editsdescription" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
     </div>
   </div>
   <div class="zm-command append-delete">

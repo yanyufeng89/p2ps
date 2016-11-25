@@ -8,7 +8,6 @@
           <div class="header-alignright">
              <div class="header-secondary-menu">
                <ul id="menu-top-new" class="menu">
-              
                 <#if (Session.myHeadTop)??>
                  <li id="menu-item-5" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5">
                        <span class='pm-img img'></span>
@@ -36,17 +35,10 @@
                  </li>
                  </#if>
                  <#if (Session.user)??>
-                 <input type="hidden" value="${Session.user.userid}" id="currentUserId"/>
-                 <li id="menu-item-1" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1">
-                    <a href='/myCenter/getMyHeadTop' target='_self'>您好!
-                     <font>
-                       <#if (Session.user.username?length gt 7)>
-	                     ${Session.user.username?substring(0,7)}...
-	                   <#else>
-	                     ${Session.user.username}
-	                   </#if>
-                      </font>
-                    </a>
+                 <input type="hidden" value="${Session.user.userid}" id="currentUserId">
+                 <input type="hidden" value="${Session.user.username}" id="currentUserName">
+                 <li id="menu-item-1" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1 pj-top-nav-userinfo">
+                    <a href='/myCenter/getMyHeadTop' target='_self'>您好!  ${Session.user.username}</a>
                  </li> 
                  <li style='line-height:44px;font-size: 14px;'>|</li>
                  <li id="menu-item-3" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3">
@@ -91,6 +83,7 @@
     </div>
     <script src="/scripts/sockjs-0.3.min.js"></script>
 	<script type="text/javascript">
+	   
 		//用户登录成功后需要初始化websocket以便服务器进行消息通知
 		var socket;
         if(document.getElementById("currentUserId")){

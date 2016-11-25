@@ -5,6 +5,7 @@ import com.jobplus.pojo.*;
 import com.jobplus.service.IIndexService;
 import com.jobplus.utils.Common;
 import com.jobplus.utils.ConstantManager;
+import com.jobplus.utils.SolrJUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,6 +42,8 @@ public class IndexServiceImpl implements IIndexService {
     private TopicsMapper topicsMapper;
     @Resource
     private SequenceServiceImpl seqService;
+    @Resource
+    private SolrJUtils solrJUtils;
 
     /**
      * 精彩分享
@@ -95,6 +98,17 @@ public class IndexServiceImpl implements IIndexService {
                 redisService.set(ConstantManager.REDIS_KEY_HOTRECOMM, list);
             return list;
         }
+    }
+
+    /**
+     * 最热推荐
+     *
+     * @return
+     */
+    @Override
+    public String getHotRecommDataBySolr() {
+        List<Object> objs = solrJUtils.searchBook(null, null, null, null, null, "1");
+        return (String) objs.get(1);
     }
 
     /**

@@ -5,23 +5,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             上传文档
+             修改文档-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_doc.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_doc.css">
   </head>
   <body>
    
     <div id="doc" class="page">
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
-      <div id="bd">
         <div class='docdetail'>JobPlus知识库>上传文档</div>
         <div class="upload-doc"></div>
         <div class="bd-wrap">
         <div class="body">
             <div class="main">
               <div id="upload-widget" class="upload-widget ">
-               <form method="post"  enctype="multipart/form-data" id ='test11form' action='/51jobplusCore/docs/upload'>
+               <form method="post"  enctype="multipart/form-data" id ='test11form' action='/docs/upload'>
                   <input type='hidden' name='docId' value='${record.id}'>
                   <div id="upload-files-container">
 	                  <div class="upload-steps clearfix">
@@ -84,9 +83,11 @@
 						                
 										  <span class='ispublic'>
 											<input type="hidden" name='ispublic' value='${record.ispublic}'>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic0"  <#if (record.ispublic==1)>checked</#if>>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic0" value='1'  <#if (record.ispublic==1)>checked</#if>>
 											<label for="gpublic0" style="margin-right:20px;">公开</label>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="spublic1"  <#if (record.ispublic==0)>checked</#if>>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic1" value='2'  <#if (record.ispublic==2)>checked</#if>>
+											<label for="gpublic0" style="margin-right:20px;">匿名</label>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="spublic1" value='0' <#if (record.ispublic==0)>checked</#if>>
 											<label for="spublic1">私有</label>
 										  </span>
 						              </td>
@@ -171,7 +172,7 @@
 										   <label class="err-tip" style="display:none;">最多添加五个话题</label>
 										  </div>
 						                </div>
-						                <span class="topic-error">至少添加一个标签</span></td>
+						                <span class="pj-warmprompt">至少添加一个标签</span></td>
 						            </tr>
 						          </tbody>
 						        </table>
@@ -182,128 +183,34 @@
 						</div>
                      </div>
                   <div class="uploadinfobook">
-                    <ol>
+                    <h4>
+                                                        温馨提示
+                    </h4>
+                   <ol>
                       <li class="doc-type"></li>
-                      <li>1.上传涉及侵权内容的文档将会被移除。如何判断文档是否侵权？查看
-                        <a href="#" target="_blank">文库协议</a>和
-                        <a href="#" target="_blank">用户规则</a></li>
-                      <li>2.上传有问题需要帮助？查看
-                        <a href="#" target="_blank">文库帮助</a>和
-                        <a href="#" target="_blank">意见反馈</a></li>
-                      <li>3.为营造绿色网络环境，严禁上传含有淫秽色情及低俗信息等文档，让我们一起携手共同打造健康文库</li></ol>
+                      <li>1. 完善上传的文档简介，可以让别人更加清晰的了解分享文档的相关内容；</li>
+                      <li>2. 将您上传的文档可以免财富值免费分享，也可以提高财富值进行售价赚取财富值；同时可以对文档进行设置“公开”和“私有”属性；</li>
+                      <li>3. 文档上传时必须添加分类，详细的分类，方便更准确找到你的文档；</li>
+                      <li>4. 添加文档标签，更精准的搜索目标文档，多个标签之间要用逗号隔开，便于区分；</li>
+                      <li>5. 请勿上传已设置加密或只读的文档，JobPlus不支持此类文档；</li>
+                      <li>
+                        6. 文档提问有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
+                      </li>
+                    </ol>
                   </div>
               </div>
-               </form>
-                <div id="upload-success-container" class="upload-success-container" style="">
-                  <div class="upload-steps clearfix">
-                    <ul>
-                      <li class="step-num active">
-                        1
-                        <span class="tips">
-                          选择文档
-                        </span>
-                      </li>
-                      <li class="step-bar active">
-                      </li>
-                      <li class="step-num active">
-                        2
-                        <span class="tips">
-                          补充信息
-                        </span>
-                      </li>
-                      <li class="step-bar active">
-                      </li>
-                      <li class="step-num active">
-                        3
-                        <span class="tips">
-                          完成上传
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="hd">
-                    <div class="hd-wrap">
-                      <h1>
-                        <span class="ic ic-success">
-                        </span>
-                        恭喜！文档上传成功
-                      </h1>
-                      <p>
-                        <span class="success-upload-tips">
-                          文档通过审核后，即可收到财富值奖励
-                        </span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#">
-                          查看已上传文档
-                        </a>
-                        &gt;
-                      </p>
-                      <a class="goon-upload log-xsend" data-logxsend="[1, 100711, {&quot;index&quot;: 4}]"
-                      href="javascript:void function(){location.reload();}()">
-                        继续上传
-                      </a>
-                    </div>
-                  </div>
-                  <div class="bd">
-                    <div class="bd-wrap clearfix">
-                      <h2>
-                        <span class="title-emphasize">
-                          高赏金
-                        </span>
-                        悬赏任务
-                        <span class="title-tips">
-                          上传悬赏话题，获取下载券奖励
-                        </span>
-                        <a class="title-more" target="_blank" href="#">
-                          更多&gt;
-                        </a>
-                      </h2>
-                      <div class="award-cards clearfix">
-                        <ul class="award-ul-wrap clearfix">
-                        </ul>
-                        <div class="award-nav">
-                          <span class="active">
-                          </span>
-                          <span>
-                          </span>
-                          <span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="task-upload-success-container" class="task-upload-success-container">
-                  <h1>
-                    <i class="iconfont">
-                      
-                    </i>
-                    上传成功，话题被采纳后即可获得赏金
-                  </h1>
-                  <p>
-                    话题被审核公开后，悬赏者将选择是否采纳，您在
-                    <a href="#" target="_blank">
-                      悬赏任务
-                    </a>
-                    中可以看到文档状态
-                  </p>
-                  <p class="nav">
-                    <a href="#">
-                      返回当前悬赏任务
-                    </a>
-                    <a href="#" target="_blank">
-                      查看已上传的文档
-                    </a>
-                  </p>
-                </div>
+             </form>
+                
               </div>
             </div>
           </div>
         </div>
-      </div>
+
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_docsharein.js"></script>
+     <script type="text/javascript" src="/scripts/pj_docsharein.js"></script>
   </body>
 
 </html>

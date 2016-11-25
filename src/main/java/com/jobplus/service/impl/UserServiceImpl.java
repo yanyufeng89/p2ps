@@ -57,6 +57,8 @@ public class UserServiceImpl implements IUserService {
 	private IOperationSumService operationSumService;
 	@Resource
 	private IAccountService accountService;
+	@Resource
+	private IMyHomePageService myHomePageService;
 
 	@Override
 	public User get(Integer userid) {
@@ -155,7 +157,9 @@ public class UserServiceImpl implements IUserService {
 			// 后期邮箱注册默认为未激活状态，发送激活邮件激活账号
 			user.setIsvalid(1);
 		}
-
+		//用户等级默认为1
+		user.setUserlevel(1);
+		
 		// 入库
 		if (userDao.insert(user) == 1) {
 			// 初始化账户信息
@@ -253,9 +257,27 @@ public class UserServiceImpl implements IUserService {
 	 * @param userid
 	 * @return
 	 */
+	@Transactional
 	@Override
 	public User getUserSimpleInformation(Integer userid) {
-		User user = userDao.getUserSimpleInformation(userid);
+		// 查看他人主页数据不准确 临时改动 FIXME  查看他人主页数据不准确 临时改动********************************
+//		User user = userDao.getUserSimpleInformation(userid);
+		User user = userDao.selectByPrimaryKey(userid);
+//		//我关注的人总数
+		int attenManSum = attentionService.getAttenManSum(userid);
+//		//我的粉丝总数
+		int fansSum = attentionService.getFansSum(userid); 
+		
+		OperationSum opts = myHomePageService.getRealSum(userid);
+		int allShareSum = opts.getDocsharesum() + opts.getTopicssharesum() + opts.getBooksharesum()
+							+opts.getCoursessharesum() + opts.getArticlesharesum() + opts.getSitessharesum();
+		opts.setAllshresum(allShareSum);		
+		opts.setAttentionsum(attenManSum);
+		opts.setFanssum(fansSum);
+		
+		user.setOperationSum(opts);
+		// 查看他人主页数据不准确 临时改动 FIXME  查看他人主页数据不准确 临时改动********************************
+		
 		String fansIds = (String)this.findFandIds(String.valueOf(userid)).get(0).get("fansIds");
 		user.setFansIds(fansIds);		
 		return user;

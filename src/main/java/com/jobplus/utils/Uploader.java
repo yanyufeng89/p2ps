@@ -24,7 +24,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Service;
 
-import sun.misc.BASE64Decoder;
 /**
  * UEditor文件上传辅助类
  *
@@ -183,11 +182,11 @@ public class Uploader {
 		String base64Data = this.request.getParameter(fieldName);
 		this.fileName = this.getName("test.png");
 		this.url = savePath + "/" + this.fileName;
-		BASE64Decoder decoder = new BASE64Decoder();
+		java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();
 		try {
 			File outFile = new File(this.getPhysicalPath(this.url));
 			OutputStream ro = new FileOutputStream(outFile);
-			byte[] b = decoder.decodeBuffer(base64Data);
+			byte[] b = decoder.decode(base64Data);
 			for (int i = 0; i < b.length; ++i) {
 				if (b[i] < 0) {
 					b[i] += 256;

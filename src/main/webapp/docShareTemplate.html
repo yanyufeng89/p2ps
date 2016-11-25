@@ -1,12 +1,31 @@
 <!-- 个人主页 文档--文档分享 -->
 {#foreach $T.docsPage as list}
   <li>
-     <div class='w342 fs14 fc3 ib dochidden'>
-        <div class="checkbox chk" data-docid="{$T.list.id}" data-name="{$T.list.title}" ></div>
+     <div class='w300 fs14 fc3 ib dochidden'>
+        <div class="checkbox chk" data-docid="{$T.list.id}" data-ispublic='{$T.list.ispublic}' data-name="{$T.list.title}" ></div>
         <b class="ic ic-{$T.list.docsuffix} mr14"></b>
-        <a href="/docs/getDocsDetail/{$T.list.id}"   data-docid='{$T.list.id}' class='doctitle' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
+        {#if $T.list.isconverter!=1 && $T.list.isconverter!=3}
+		<!-- 状态为提交中： 先查询是否转换成功  是跳转 否则 return false  href="/docs/getDocsDetail/${list.id}"	 -->	
+			<a href="/docs/getDocsDetail/{$T.list.id}" data-docid='{$T.list.id}' data-ispublic='{$T.list.ispublic}' class='doctitle notCvt' target="_blank" title="{$T.list.title}">{$T.list.title}</a>					           
+		{#else}
+			<a href="/docs/getDocsDetail/{$T.list.id}"   data-docid='{$T.list.id}' data-ispublic='{$T.list.ispublic}' class='doctitle{#if $T.list.isconverter!=1} disabled{#/if}' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
+		{#/if}
      </div>
-     <div class='w105 ib doc-ispublic'>
+     <div class='w84 ib'>
+     <!-- 1:成功  0:未转换 3:转换失败 2：转换中  -->
+
+		{#if $T.list.isconverter==1} 
+		上传成功 
+		{#elseif $T.list.isconverter==0 || $T.list.isconverter==2}
+		<b class='ib tijiao'></b>审核中 
+		{#elseif $T.list.isconverter==3} 
+		审核未通过
+		{#else} 
+		<b class='ib tijiao'></b>审核中 
+		{#/if}
+
+     </div>
+     <div class='w84 ib doc-ispublic'>
       {#if $T.list.ispublic==1}
        	公开
       {#elseif $T.list.ispublic==2}
@@ -15,20 +34,20 @@
       	公开
       {#/if}
      </div>
-     <div class='w105 ib il'>
+     <div class='w84 ib il'>
        {$T.list.downsum}
      </div>
-     <div class='w105 ib il'>
+     <div class='w84 ib il'>
        {$T.list.collectsum}
      </div>
-     <div class="w105 ib">
+     <div class="w94 ib ilb">
         {$T.list.showcreatetime}
      </div>
-     <div class='w119 ib operate'>
+     <div class='w119 ib operate ilb'>
          <a href='/myCenter/getDocsDetailForEdit?docId={$T.list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
            <b class="iconfont pr2"></b>修改
          </a>
-         <span data-id='{$T.list.id}' data-name='{$T.list.title}' data-type='1'>
+         <span data-id='{$T.list.id}' data-name='{$T.list.title}' data-ispublic='{$T.list.ispublic}' data-type='1'>
              <b class="iconfont pr2"></b>
                                        删除
           </span>

@@ -4,6 +4,7 @@ var url_rules = {
     "TOPICS": "topics/getTopicsDetail/",
     "tbl_books": "books/getBookDetail/",
     "BOOK": "books/getBookDetail/",
+    "6": "books/getBookDetail/",
     "tbl_courses": "courses/getCourseDetail/",
     "COURSES": "courses/getCourseDetail/",
     "tbl_sites": "sites/getSiteDetail/",

@@ -7,6 +7,7 @@ import com.jobplus.service.IHomePageService;
 import com.jobplus.service.IIndexService;
 import com.jobplus.service.ISensitiveWordsService;
 import com.jobplus.service.ITypeConfigService;
+import com.jobplus.utils.Common;
 import com.jobplus.utils.ConstantManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
@@ -79,7 +80,7 @@ public class IndexController {
 		mv = homePageService.getHome(mv);
 		mv.addObject("latestDatas", indexService.getLatestShareData());
 		mv.addObject("hotShareDataMap", indexService.getHotShareDataMap());
-		mv.addObject("recommDatas", indexService.getHotRecommData());
+		mv.addObject("recommDatas", indexService.getHotRecommDataBySolr());
 		mv.addObject("indexPage", "1");
 		mv.setViewName("knowledgeBaseIndex");
 		// logger.info("**首页信息** mv=="+mv);
@@ -146,6 +147,7 @@ public class IndexController {
 			map.put("pageSize", pageSize);
 			return new ModelAndView(new MappingJackson2JsonView(), map);
 		} else {
+			
 			mv.setViewName("searchNavigation");
 			mv.addObject("result", result);
 			mv.addObject("reCount", reCount);
@@ -173,6 +175,9 @@ public class IndexController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 		mv.addObject("indexPage", "0");
+		if (Common.isWapReq(request, "index")) {
+			mv.setViewName("redirect:wap/index");
+		}
 		return mv;
 	}
 
@@ -267,4 +272,38 @@ public class IndexController {
 		mv.setViewName("loginSuccess");
 		return mv;
 	}
+	/**
+	 * wap跳转搜索页
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/wap/index", method = RequestMethod.GET)
+	public ModelAndView wapIndex(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		// 这里设置 默认每页显示条数
+		String pageSize = "10";
+		// 搜索结果 List
+		List<?> resultList = homePageService.search("", "", "", "", "", pageSize);
+		// 搜索结构总条数
+		Long reCount = resultList.size() > 0 ? (Long) resultList.get(0) : 0L;
+		// 搜索结果集
+		String result = resultList.size() > 0 ? resultList.get(1).toString() : "";
+		// 搜索页导航
+//		List<Map<String, Object>> searchTypeList = homePageService.getSearchTypes();
+
+		mv.addObject("result", result);
+		mv.addObject("reCount", reCount);
+		mv.addObject("pageSize", pageSize);
+//		mv.addObject("searchTypeList", searchTypeList);
+
+//		mv.addObject("preSharedType", "");
+//		mv.addObject("preCondition", "");
+//		mv.addObject("preProtoType", "");
+//		mv.addObject("prePages", "");
+
+		mv.setViewName("/wap/index");
+		return mv;
+	}
+	
+	
 }

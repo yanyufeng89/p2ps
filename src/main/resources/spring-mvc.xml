@@ -41,14 +41,14 @@
 
 	<!-- 上传文件拦截，设置最大上传文件大小20M        10M=10*1024*1024(B)=10485760 bytes--> 
 	<bean id="multipartResolver" class="com.jobplus.utils.CommonsMultiparResolver">  
-	    <property name="maxUploadSize" value="20971520" />  
+	    <!-- <property name="maxUploadSize" value="20971520" />   将文件大小校验写入到CommonsMultiparResolver进行单个文件校验 -->
 	</bean>  
 
 
 	<!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
 	<!-- 配置freeMarker视图解析器 -->
 	<bean id="viewResolverFtl"
-		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		class="com.jobplus.utils.FreeMarkerViewResolverUtil">
 		<property name="viewClass"	value="com.jobplus.utils.FreeMarkerViewUtil" />
 		<property name="contentType" value="text/html; charset=UTF-8" />
 		<property name="exposeRequestAttributes" value="true" />

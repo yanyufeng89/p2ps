@@ -83,6 +83,7 @@ public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
                 user.setUsername(record.getNickname() + "_" + (index + 1));
             user.setHeadicon(record.getHeadicon());
             user.setIsvalid(1);
+            user.setUserlevel(1);
             user.setCreatetime(time);
             user.setUpdatetime(time);
             userMapper.insertSelective(user);

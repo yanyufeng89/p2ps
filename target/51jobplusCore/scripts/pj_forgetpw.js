@@ -3,7 +3,9 @@ function forgetpw(){
 	var aucode = $.trim($("#CheckCode").val());
 	var usertel =  $.trim($("#email").val());
 	if(usertel==""){
-		layer.msg('请填写你绑定的邮箱或手机！',  {offset:'36%',shade:0.3,shadeClose:true});return false;    
+		layer.msg('请填写你绑定的邮箱或手机！',  {offset:'36%',shade:0.3,shadeClose:true});
+		check_codes(1);
+		return false;    
 	}
 	
 	var myreg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -15,10 +17,14 @@ function forgetpw(){
 		type=2;
 	}
 	if(!myreg.test(usertel) && !reg.test(usertel)){
-		layer.msg('邮箱或手机格式错误！',{offset:'36%',shade:0.3,shadeClose:true});return false;
+		layer.msg('邮箱或手机格式错误！',{offset:'36%',shade:0.3,shadeClose:true});
+		check_codes(1);
+		return false;
 	}
 	if(aucode==""){
-		layer.msg('验证码不能为空！',  {offset:'36%',shade:0.3,shadeClose:true});return false; 
+		layer.msg('验证码不能为空！',  {offset:'36%',shade:0.3,shadeClose:true});
+		check_codes(1);
+		return false; 
 	}
 	var checkCode="";
 	$("#vcode_imgs1 div span").each(function(){
@@ -26,6 +32,7 @@ function forgetpw(){
 	});
 	if($.trim(aucode.toLowerCase())!= $.trim(checkCode.toLowerCase())){
 	  layer.msg('请输入正确的验证码！', {offset:'36%',shade:0.3,shadeClose:true});
+	  check_codes(1);
 	  return false;  
 	}
 	//判断手机或邮箱是否存在
@@ -53,7 +60,7 @@ function forgetpw(){
 function Isexistsmoble(usertel,type){
 	var flag=true;
 	$.ajax({
-		url:"/51jobplusCore/user/check/"+usertel+"/"+type,
+		url:"/user/check/"+usertel+"/"+type,
 		type : "POST", 
 		data :{id:usertel},
 		dataType:"json",
@@ -87,7 +94,7 @@ function checksendcode(sendtype){
 	 }
 	 $.ajax({
 			type:"POST",
-	      	url:"/51jobplusCore/mobilesms/checkSms",
+	      	url:"/mobilesms/checkSms",
 	      	data:{smsId:verification_code,validateCode:code},
 	    	dataType:"json",
 	    	async:false,
@@ -131,7 +138,7 @@ function editpw(){
 		 }
 		 $.ajax({
 				type:"POST",
-		      	url:"/51jobplusCore/user/changePassword",
+		      	url:"/user/changePassword",
 		      	data:col,
 		    	dataType:"json",
 		    	async:false,

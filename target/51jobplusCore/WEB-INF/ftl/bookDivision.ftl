@@ -5,9 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-            书籍专区
+            书籍专区-JobPlus
     </title>
-    <meta name="viewport" content="width=1230"/> 
+    <meta name="description" content="JobPlus网是国内领先的企业知识库公共平台,书籍推荐,分享阅读,书籍分类包括热门书籍,最新书籍,JobPlus为7亿职场人员提供优质书籍交流分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
+    <meta name="keywords" content="JobPlus,知识分享,创新书籍,创业书籍,IT书籍,互联网书籍,咨询书籍,财务书籍,工业技术书籍,工程书籍,市场管理书籍,销售管理书籍,供应链书籍,生产管理书籍,设计书籍,创意书籍,翻译书籍,文案策划,新媒体书籍,影视书籍,图书,热门书籍,最新书籍">
+    
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" type="text/css" href="/css/pj_searchres.css">
     <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css">
@@ -21,9 +23,18 @@
     <div class='division-banner'>
 	  <span>JobPlus知识库>书籍专区</span>
 	</div>
-    <input type="hidden" id="topicstype" value="${topicstype}"/>
+    <input type="hidden" id="preSharedType" value="${preSharedType}"/>
 	<div class='pj-topics-content' id='pj-topics-content'> 
 	    <div class='pj-topics-left'>
+	        <div id="books" class="searches">
+			   <div class="searchForm">
+				<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+				<input type="button" id="books_button" class="search_icon"  value="书籍搜索" onclick="javascript:reloadPage();" style="width:140px">
+				<input type="text" id="books_input" class="search_input ui-autocomplete-input" name="Condition" style="width:552px" tabindex="1" maxlength="64" autocomplete="off" placeholder="JobPlus海量知识库"  value="${preCondition}" onkeypress="if(event.keyCode==13){reloadPage();};"  >
+				<input type="hidden" name="fromSearch" id="frombooks" value="true">
+				<input type="botton" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="books-form-submit" value="分类搜索" onclick="javascript:reloadPage();" style="width:140px">
+			  </div>
+		    </div>
 		    <div id="topic-division-container" class='topic-division-container'>
 			  <div class="content">
 				<div class="positionHead">
@@ -31,11 +42,11 @@
 						<div class="details" id="filterCollapse">
 						    <li class="first">
 								<dl class="title">知识分类:</dl>
-								<span <#if topicstype==''>class="active"</#if> data-index="">所有</span>
+								<span <#if preSharedType==''>class="active"</#if> data-index="0">所有</span>
 								<dl class='select-1'>
 									<#list typeConfigs as type>
 									 <#if  (type_index <=11)>
-										<#if topicstype==type.typeid?c>
+										<#if preSharedType==type.typeid?c>
 											<span data-index="${type.typeid}" class="active">${type.typename}</span>
 										<#else>
 											<span data-index="${type.typeid}">${type.typename}</span>
@@ -47,7 +58,7 @@
 								<dl class='select-1  pt5'>
 									<#list typeConfigs as type>
 									 <#if  (type_index >11)>
-										<#if topicstype==type.typeid?c>
+										<#if preSharedType==type.typeid?c>
 											<span data-index="${type.typeid}" class="active">${type.typename}</span>
 										<#else>
 											<span data-index="${type.typeid}">${type.typename}</span>
@@ -64,10 +75,8 @@
 								<dl class="title">
 									书籍分类:
 								</dl>
-								<span <#if theme==1>class="active"</#if> data-index="1">最新书籍</span>
-								<span <#if theme==2>class="active"</#if> data-index="2">热门书籍</span>
-								<span <#if theme==3>class="active"</#if> data-index="3">编辑推荐</span>
-								<span <#if theme==4>class="active"</#if> data-index="4">精品书籍</span>
+								<span <#if sortType!=2>class="active"</#if> data-index="1">热门书籍</span>
+								<span <#if sortType==2>class="active"</#if> data-index="2">最新书籍</span>				
 							 </dl>
 							</li>
 							
@@ -75,56 +84,54 @@
 					</ul>
 				</div>
 			  </div>
+			
 			  <div class="all-news-list" id="all-news-list">
 				  <div class="alllist" id="allnews_all">
-				    <#if topicsPage.count gt 0>
+				    <#if reCount gt 0>
 					   <div class="items_area">
-						 
-							 <#list topicsPage.list as data>
+						 <#--查询结果集-->
+  						<#assign resultList=result?eval />
+							 <#list resultList as data>
 								 <div class="item">
-									 <div class='topicdivision-content'>
-										 <div class='topicdivision-left'>
+									 <div class='bookdivision-content'>
+										 <div class='bookdivision-left'>
 											 <div class="title">
-												 <a target="_blank" href="javascript:void(0);" onclick="toHref('tbl_topics',${data.id})" title="${data.title}">${data.title}</a>
+												 <a target="_self" href="javascript:void(0);" onclick="toHref('tbl_books',${data.data_id})">${data.title}</a>
 											 </div>
-											 <div class="newsinfo" <#if data.intro??>title="${data.intro}"</#if>>
-												 <p>
-													<#if data.intro??>
-														${data.intro}
-													</#if>
-												 </p>
+											 <div class="newsinfo">
+												 <a target="_self" href="javascript:void(0);"  onclick="toHref('tbl_books',${data.data_id})"><#if data.description??>${data.description}</#if></a>
 											 </div>
-											 <div class="tools">
-												 <div class="zm-meta-panel">
-													 <a  class="answer-date-link meta-item" target="_blank" href="javascript:void(0);">编辑于&nbsp;${data.showcreatetime}</a>
+											 <div class="tool">
+												 <div class="pj-meta-panel">
+													 <a  class="answer-date-link pj-meta-item" target="_self" href="javascript:void(0);">发布于&nbsp;${data.createTime}</a>
 
-													 <a href="javascript:void(0);" class="meta-item zu-autohide js-recommend">
-														 <i class="z-icon-comment"></i>
-														 <#if data.likesum??>${data.likesum}<#else>0</#if>人推荐
+													 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-recommend">
+														 <i class="z-icon-comment"></i><#if data.replySum??>${data.replySum}<#else>0</#if>人推荐
 													 </a>
 
-													 <a href="javascript:void(0);" class="meta-item zu-autohide js-collect goog-inline-block goog-menu-button">
-														 <i class="z-icon-collect"></i><#if data.replysum??>${data.replysum}<#else>0</#if>人收藏
+													 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-collect">
+														 <i class="z-icon-collect"></i><#if data.collectSum??>${data.collectSum}<#else>0</#if>人收藏
 													 </a>
 												 </div>
 											 </div>
 										 </div>
-										 <div class='topicdivision-right'>
-											 <div class="picno">
-												 <div class="pic">
-													 <div class="picx">
-														 <#if data.topicimg??>
-															 <div class="pict">
-															   <img src='${data.topicimg}' alt=''>
-															 </div>
-														 <#else>
-															 <div class="pict">
-																<img src='/image/default/65.jpg' alt=''>
-															 </div>
-														 </#if>
+										 <div class='bookdivision-right'>
+											 <a target="_self" href="javascript:void(0);"  onclick="toHref('tbl_books',${data.data_id})">
+												<#if data.imgUrl?length gt 5>
+												 <div class="picno">
+													 <div class="pic">
+														 <div class="picx">			
+																 <div class="pict">
+																   <img src='${data.imgUrl}' alt="书籍图标" class="lazy" >
+																 </div>
+														 </div>
 													 </div>
 												 </div>
-											 </div>
+												<span class="hexagon"  href="javascript:void(0)" ><img src='/image/default/hexagon-border.png'></span>									
+												<#else>
+												<img src='/image/default/default_book.png' alt="书籍图标" class="lazy" >
+												</#if>	
+	                                       	</a>	
 										 </div>
 									 </div>
 								 </div>
@@ -136,7 +143,7 @@
 						 <div class='emptyList'>
 						   <div class='empty-tip'>
 							   <div class="empty-img">
-								  <img src="/image/angry.png" alt="">
+								  <img src="/image/angry.png" alt="提示" class="lazy">
 							   </div>
 							   <div class="empty-info">
 									对不起，没有找到满足搜索条件的信息<br>
@@ -150,13 +157,13 @@
 				  
 			  </div>
 			</div>
-			<#if (topicsPage.last)??>
-				<#if (topicsPage.last gt 1)>
+			<#if (reCount)??>
+				<#if (reCount gt rows)>
 					<div class='page-inner'>
 						<div class="ui-pager pager-center">
 							<div class='pager'>
 								<div class="pager-inner">
-									<div id="sharetopicpaging" class="page"></div>
+									<div id="bookdivisionpaging" class="page"></div>
 								</div>
 							</div>
 						</div>
@@ -167,16 +174,18 @@
 		</div>
         <div class='pj-topics-right'>
 		  <div class="share-plaza">
-	            <a class="share-icon bg-index" href="/sharein/searchuploadFile?type=1"></a>
-	            <a target="_blank" href="javascript:void(0)" class="text">
+	            <a class="share-icon bg-index" target="_self" href="/sharein/searchuploadFile?type=2"></a>
+	            <a target="_self" href="javascript:void(0)" class="text">
 				   文档---话题---书籍---课程---文章---站点
 				</a>
 	      </div>
 	      <div class='pj_jsonp ad_exposure'>
-	        <img src='/image/ad_exposure_11.jpg' alt='' width='310' height='278'>
+	        <img src='/image/ad_exposure_11.jpg'  width='308' height='246' alt="广告" class="lazy">
+	        <div class='advertising-direction'>广告</div>
 	      </div>
 	     <div class='pj_jsonp ad_exposure'>
-	        <img src='/image/ad_exposure_12.jpg' alt='' width='310' height='278'>
+	        <img src='/image/ad_exposure_12.jpg'  width='308' height='246' alt="广告" class="lazy">
+	        <div class='advertising-direction'>广告</div>
 	     </div>
 		</div>
     </div>
@@ -187,15 +196,15 @@
     <a id="topdivisionbacktop" title="回到顶部" href="#topdivisiontop" class='back-to-top' style="bottom: 300px; display: none;"></a>
 	<#include "/mydocs/commonTemplate/pmorsmgjs/pmorsmg.ftl"/>
     <script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
-	<script type="text/javascript" src="/scripts/pj_topicdivision.js"></script>
+	<script type="text/javascript" src="/scripts/pj_bookdivision.js"></script>
     <script type="text/javascript">
-        <#if (topicsPage.list)??>
+        <#if (reCount)?number gt rows?number>
             $(function () {
-                $("#sharetopicpaging").pagination({
-                    items: ${topicsPage.count},
-                    itemsOnPage:${topicsPage.pageSize},
+                $("#bookdivisionpaging").pagination({
+                    items: ${reCount},
+                    itemsOnPage:${rows},
                     cssStyle: 'light-theme',
-                    moduleType: 'topicsearch'
+                    moduleType: 'booksearch'
                 });
             });
         </#if>

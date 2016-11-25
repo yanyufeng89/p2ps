@@ -91,7 +91,8 @@ public class BooksController {
 				//后台管理员查看
 				mv.setViewName("manage/bookDetail");
 			}else{
-				mv.setViewName("/mydocs/docs/bookDetail");
+				
+				mv.setViewName("mydocs/docs/bookDetail");
 			}
 		} else {
 			logger.info("**getBookDetail*获取书籍详情  失败   record.getId() == null  999****");
@@ -209,24 +210,27 @@ public class BooksController {
 	 * @param record
 	 * @return
 	 */
-	@RequestMapping(value = "/shareBook", method = RequestMethod.POST)
-	public ModelAndView shareBook(HttpServletRequest request, HttpServletResponse response, BookShare record) {
+	@RequestMapping(value = "/shareBook")
+	public String shareBook(HttpServletRequest request, HttpServletResponse response, BookShare record) {
+		String rest = "redirect:success";
+		String num = "?num=";
 		int userid = Integer.parseInt((String) request.getSession().getAttribute("userid"));
 		// 设置推荐人
 		record.setUserid(userid);
 		// 1.插入话题
-		@SuppressWarnings("unused")
 		int ret = bookShareService.insert(record);
-
-		ModelAndView mv = new ModelAndView();
+		//返回财富值
+		num += ret<=0?"0":ret+"";
+//		ModelAndView mv = new ModelAndView();
 		// 返回前端数据设置
-		// mv.addObject("record", record);
+//		mv.addObject("num", num);
 		// 返回视图名设置
-		mv.setViewName("redirect:success");
+//		mv.setViewName("redirect:success?num="+num);
 		logger.info("**shareBook*  分享书籍  ***record==" + JSON.toJSONString(record));
 		//个人操作数之类的信息放入session
 		userService.getMyHeadTopAndOper(request);
-		return mv;
+		String tmp = rest+num;
+		return tmp;
 	}
 
 	/**
@@ -436,6 +440,7 @@ public class BooksController {
 	public ModelAndView success(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("sharein/success/successUploadBook");
+		mv.addObject("num",request.getParameter("num"));
 		return mv;
 	}
 	

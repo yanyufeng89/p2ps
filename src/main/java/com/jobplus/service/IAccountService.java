@@ -40,7 +40,8 @@ public interface IAccountService {
 	 * @param changeitem    AccountDetail  CHANGEITEMS = {"jiaMoney","points"};
 	 * @param changetype    AccountDetail  CHANGETYPES = {"1","2"}; 1增加  2减少
 	 * @param changevalue   AccountDetail  []CHANGEVALUES = {1,2,3,4,5,6,7,8,9,10,15,20};
-	 * @param changecause   AccountDetail  CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题","文档被下载","打赏文章","文章被打赏","话题悬赏","话题回答被采纳","取消悬赏,积分返还"};
+	 * @param changecause   AccountDetail  CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点"5,"下载文档","回答问题","文档被下载","打赏文章","文章被打赏"10,"话题悬赏","话题回答被采纳","取消悬赏,积分返还"
+    		,"话题悬赏提高","文档私有"15,"文档公开","删除文档"};
 	 * @return
 	 */
 	public int modAccountAndDetail(Integer userid,Integer moneyType,Integer score,

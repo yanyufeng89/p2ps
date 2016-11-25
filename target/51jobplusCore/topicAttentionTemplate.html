@@ -1,9 +1,9 @@
 <!-- 个人主页 话题--话题关注 -->
 {#foreach $T.attentionPage as sharelist}
 <li>
-         <div class='w330 fs14 fc3 ib titlehidden'>
+         <div class='w340 fs14 fc3 ib titlehidden'>
             <div class="checkbox chk" data-topicid="{$T.sharelist.id}" data-name="{$T.sharelist.topics.title}"></div>
-              <a href="/51jobplusCore/topics/getTopicsDetail?topicId={$T.sharelist.objectid}" target="_blank" title="{$T.sharelist.topics.title}">{$T.sharelist.topics.title}
+              <a href="/topics/getTopicsDetail/{$T.sharelist.objectid}" target="_blank" title="{$T.sharelist.topics.title}">{$T.sharelist.topics.title}
               </a>  
          </div>
          <div class='w92 ib iltopic'>
@@ -20,7 +20,7 @@
          </div>
          <div class='w119 ib attention'>
            <span data-topicid='${alist.id}' data-id='{$T.sharelist.objectid}' data-name='{$T.sharelist.topics.title}' data-actiontype='0'> 
-              <input type="botton" class="topic-disblue"  value="取消关注">
+              <a class="topic-disblue" href='javascript:void(0)'>取消关注</a>
           </span>
          </div>
  </li>

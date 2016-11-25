@@ -229,9 +229,10 @@ $(function(){
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
     	    		contentdisplayorhide();
-    	    		about+="<a href='javascript:;' class='zu-edit-button' name='edit'><i class='zu-edit-button-icon'></i>修改</a></p>"
-    	    		$('.article-content .bookbrief').empty().append(about);
-    	    		$('.article-content .bookbrief').preeng
+    	    		var edit="<a href='javascript:;' class='zu-edit-button' name='edit' style='float:right'><i class='zu-edit-button-icon'></i>修改</a>";
+    	    		about+=edit;
+    	    		$('.article-content .bookbrief').empty().append("<div class='clearfix'>"+about+"</div>");
+    	    		$('.article-content .bookbrief').prepend(edit);
     	    	}
     	    }
     	    
@@ -285,6 +286,7 @@ function payMent(obj){
 	    	success:function(data){
 	    		if(data.returnStatus=='000'){//返回成功
 	    			ZENG.msgbox.show('打赏成功,感谢您的打赏!', 4, 3000);
+	    			$("#support-author").attr('data-sumValue',parseInt(sumvalue)-parseInt(supportValue));
 	    			closeReport(obj);
 	    			//打赏成功之后界面显示个人头像
 	    			if($('.fa-ellipsis-s').length==1){

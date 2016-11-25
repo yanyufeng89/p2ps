@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.jobplus.dao.BookShareMapper;
@@ -25,7 +26,7 @@ import com.jobplus.utils.DateUtils;
 
 @Service("bookShareService")
 public class BookShareServiceImpl implements IBookShareService {
-
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(BookShareServiceImpl.class);
 	@Resource
 	private BookShareMapper bookShareDao;
 	@Resource
@@ -86,17 +87,30 @@ public class BookShareServiceImpl implements IBookShareService {
 	@Override
 	public int insert(BookShare record) {
 		int ID = seqService.getSeqByTableName("tbl_books_share");
-		record.setId(ID);
+		record.setId(ID);	
+		int ret = 0;
+		
 		if (record.getUserid() != null && record.getBookid() != null) {
-			// 新增书籍推荐语：1.个人书籍分享数+1; 2.书籍评论数+1
-			updTableColumnService.updNums(1, 1, 0, 1, record.getBookid());
-			operationSumService.updOperationSum(6, 0, 1,null);
 			
-			//增加财富值
-			accountService.modAccountAndDetail(record.getUserid(), 0, new Account().getSCORES()[0], 
-					1, 0, new Account().getSCORES()[0],2);
+			// 书籍评论数+1
+			updTableColumnService.updNums(1, 1, 0, 1, record.getBookid());
+			int isShared = bookShareDao.isShared(record);
+			
+			logger.info("*****书籍分享  isShared== "+isShared);
+			if(isShared==0){//没有分享过这本书
+				
+				// 新增书籍推荐语：1.个人书籍分享数+1;
+				operationSumService.updOperationSum(6, 0, 1,null);
+				
+				//增加财富值
+				accountService.modAccountAndDetail(record.getUserid(), 0, new Account().getSCORES()[0], 
+						1, 0, new Account().getSCORES()[0],2);
+			}else{//已经分享过了
+				return -9;
+			}
+			ret = bookShareDao.insert(record);
 		}
-		return bookShareDao.insert(record);
+		return ret;
 	}
 
 	@Transactional

@@ -5,7 +5,7 @@
       <div class="item-index">
        {$T.index}
       </div>
-       <div class="ui-imgBtn-delete" title="删除" data-size='{$T.size}' data-name='{$T.name}' data-index='{$T.num}'>
+       <div class="ui-imgBtn-delete" title="删除" data-size='{$T.size}' data-name='{$T.namesuffix}' data-index='{$T.num}'>
                               删除    
       </div>
       <table class="edit-table"> 
@@ -19,7 +19,11 @@
         </tr> 
         <tr> 
          <td class="name">简介：</td> 
-         <td> <textarea name="description" class="bookcontent" style="resize: none" placeholder='新建文本文档'></textarea> </td> 
+         <td> 
+            <textarea name="description" class="bookcontent" style="resize: none" placeholder='新建文本文档'></textarea> 
+            <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+            <span class="item-msg-content" style='display:none'>简介字数超出最大限制</span>
+         </td> 
         </tr> 
         <tr> 
          <td class="name">售价：</td> 
@@ -39,7 +43,9 @@
            <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='1' checked id='g{$T.pid}'/>
            <label for='g{$T.pid}' style="margin-right:20px;">公开</label> 
            <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='0' id='s{$T.pid}'/>
-           <label for='s{$T.pid}'>私有</label>
+           <label for='s{$T.pid}' style="margin-right:20px;">私有</label>
+           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='2' id='p{$T.pid}'/>
+           <label for='p{$T.pid}'>匿名</label>
          </span>
         </td> 
        </tr> 
@@ -90,7 +96,10 @@
             <label class="err-tip" style="display:none;">最多添加五个话题</label> 
            </div> 
           </div>
-          <span class="doc-error">至少添加一个标签</span> </td> 
+          <span class="pj-warmprompt">
+             <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+          </span>
+          </td> 
         </tr> 
        </tbody> 
       </table> 

@@ -93,7 +93,7 @@
             title: '课程编辑',
             shadeClose: true,
             shade: 0.5,
-            area: ['800px', '450px'],
+            area: ['1000px', '750px'],
             content: $path_base + "/manage/backstage/course/" + id,
             end : function(){
                 search();

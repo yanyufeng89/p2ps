@@ -35,6 +35,12 @@
     bs.shareType AS "bookShare.sharetype", bs.shareClass AS "bookShare.shareclass", bs.updateTime AS "bookShare.updatetime",
      bs.createTime AS "bookShare.createTime", bs.likeSum  AS "bookShare.likeSum"
   </sql>
+   <sql id="books_share_Column_List2" >
+    bss.ID AS "bookShare.id", bss.bookID AS "bookShare.bookid", bss.userID AS "bookShare.userid", bss.recommend AS "bookShare.recommend", 
+    bss.knsite AS "bookShare.knsite", bss.extendeds AS "bookShare.extendeds", bss.isdelete AS "bookShare.isdelete", bss.commentby AS "bookShare.commentby", 
+    bss.shareType AS "bookShare.sharetype", bss.shareClass AS "bookShare.shareclass", bss.updateTime AS "bookShare.updatetime",
+     bss.createTime AS "bookShare.createTime", bss.likeSum  AS "bookShare.likeSum"
+  </sql>
   <sql id="collect_List" >
     myc.ID AS "myCollect.id", myc.userId AS "myCollect.userid", myc.collectType AS "myCollect.collecttype", myc.objectId AS "myCollect.objectid", 
     myc.folderId AS "myCollect.folderid", myc.collTime AS "myCollect.colltime",myc.actionType AS "myCollect.actiontype"
@@ -43,22 +49,64 @@
   
   <!-- 个人中心我分享的书籍列表     getSharedBookList 排除自己评论：commentBy为空 -->
   <select id="getSharedBookList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Books">
-    select 
+   SELECT 
+	<include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+    <include refid="books_share_Column_List2" />	
+   from tbl_books t JOIN tbl_books_share bss join (
+	select max(bs.id) as id,bs.bookId from tbl_books_share bs 
+		where bs.commentBy IS NULL
+		AND bs.isdelete = 0
+		AND	bs.userID = #{bookShare.userid,jdbcType=INTEGER}
+		GROUP BY bs.bookID
+	
+) bs ON t.id = bss.bookID and bss.id = bs.id
+	where 1 = 1
+	<!-- AND t.isvalid = 1 -->
+ ORDER BY bss.createTime desc
+   
+   
+<!--    SELECT 
+	<include refid="Base_Column_List2" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+    <include refid="books_share_Column_List" />	
+	from tbl_books t JOIN (
+		select 
+ bs.ID , bs.bookID, bs.userID , bs.recommend, 
+    bs.knsite, bs.extendeds , bs.isdelete, bs.commentby, 
+    bs.shareType, bs.shareClass, bs.updateTime,
+ bs.likeSum  AS "bookShare.likeSum"
+
+,max(bs.createTime) from tbl_books_share bs 
+			where bs.commentBy IS NULL
+			AND bs.isdelete = 0
+			AND	bs.userID = 30
+			GROUP BY bs.bookID
+		
+	) bs ON t.id = bs.bookID
+		where 1 = 1
+		AND t.isvalid = 1
+	ORDER BY bs.createTime desc -->
+   
+   
+ <!--    select 
     <include refid="Base_Column_List2" />
     ,
     <include refid="Blob_Column_List" />
     ,
     <include refid="books_share_Column_List" />
-<!-- 	,(select count(*) from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID where 1 = 1 AND t.isvalid = 1 AND bs.commentBy IS NULL AND bs.isdelete = 0
-	AND bs.userID = #{bookShare.userid,jdbcType=INTEGER}) as pageCount  -->
 	from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID
 	where 1 = 1
-	AND t.isvalid = 1
 	AND bs.commentBy IS NULL
 	AND bs.isdelete = 0
 	AND
 	bs.userID = #{bookShare.userid,jdbcType=INTEGER}
-	ORDER BY bs.createTime desc
+	GROUP BY bs.bookID
+	ORDER BY bs.createTime desc -->
 	 <choose>
 		<when test="pageNo !=null">
 			limit #{limitSt},#{pageSize}
@@ -70,8 +118,10 @@
   </select>
   <!-- 统计总数    个人中心我分享的书籍列表     getSharedBookList 排除自己评论：commentBy为空 -->
   <select id="getSharedBookListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Books">
-    select count(*) from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID where 1 = 1 AND t.isvalid = 1 AND bs.commentBy IS NULL AND bs.isdelete = 0
-	AND bs.userID = #{bookShare.userid,jdbcType=INTEGER}
+    <!-- select count(*) from tbl_books t JOIN tbl_books_share bs ON t.id = bs.bookID where 1 = 1 AND t.isvalid = 1 AND bs.commentBy IS NULL AND bs.isdelete = 0
+	AND bs.userID = #{bookShare.userid,jdbcType=INTEGER} -->
+	select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk where bks.bookID = bk.ID and bks.userID = #{bookShare.userid,jdbcType=INTEGER} AND bks.commentby IS NULL
+	AND bks.isdelete = 0
   </select>
   <!-- 个人中心我收藏的书籍列表     getCollectedBookList -->
   <select id="getCollectedBookList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.Books">

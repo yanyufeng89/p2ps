@@ -1,32 +1,35 @@
-<!-- 课程详情加载更多 -->
+<!-- 详情加载更多 -->
 {#foreach $T.courseslist as list}
   <div class='item'>
         <div class='media-left'>
-          <a class='uhead' href='javascript:void(0)' target='_blank' data-userid='{$T.list.userid}'>
+          <a class='uhead' href='/myHome/getHomePage/{$T.list.userid}' target='_blank' data-userid='{$T.list.userid}'>
             {#if $T.list.userHeadIcon}
               <img class='uname lazy'  src="{$T.list.userHeadIcon}" alt="个人头像"  data-userid='{$T.list.userid}' data-moduletype='1'>
             {#else}
               <img class='uname lazy'  src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='{$T.list.userid}' data-moduletype='1'>
             {#/if}
             {#if $T.list.commentbyName}
-                <a href='javascript:void(0)' class="uname" data-userid='{$T.list.userid}' target='_blank'>{$T.list.userName}</a>
+                <a href='/myHome/getHomePage/{$T.list.userid}' class="uname" data-userid='{$T.list.userid}' target='_blank'>{$T.list.userName}</a>
                   <span class="desc">&nbsp;回复&nbsp;</span>
                 <span class="uname"  data-userid='{$T.list.commentby}' data-moduletype='1'>
-                  <a href='javascript:void(0)' target='_blank'>{$T.list.commentbyName}</a>
+                  <a href='/myHome/getHomePage/{$T.list.commentby}' target='_blank'>{$T.list.commentbyName}</a>
                 </span>
             {#else}
-                <a href='javascript:void(0)' class='uname' data-userid='{$T.list.userid}' target='_blank'>{$T.list.userName}</a>
+                <a href='/myHome/getHomePage/{$T.list.userid}' class='uname' data-userid='{$T.list.userid}' target='_blank'>{$T.list.userName}</a>
             {#/if}
           </a>
         </div>
         <div class='media-right'>
           <div class="reason">{$T.list.recommend}</div>
           <div class="operate">
-            <a itemprop="url" class="answer-date-link meta-item" target="_self" href="javascript:;">
-              {#if $T.list.userCommentTime}
+            <a  class="answer-date-link meta-item"  href="javascript:;">
+               {#if $T.list.userCommentTime}
 		            {$T.list.userCommentTime}
 		       {#/if}
-		 </a>
+		    </a>
+		    <a href="javascript:;" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox" data-recommend='{$T.list.userid}' data-relationid='{$T.list.id}' data-recommendname='{$T.list.userName}'> 
+				<i class="z-icon-comment"></i>评论
+			</a>
           </div>
         </div>
   </div>

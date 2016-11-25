@@ -1,13 +1,13 @@
 <div class="background-skills-container section-container zg-empty" id='skill0'>
 	    <div class="header">
-			<span>技能专长</span> 
+			<span class='skill-icon'>技能专长</span> 
 			<a href="javascript:void(0)" id="addcontinuousskill" class="add-all ml20  add-all-able" data-skillid='{$T.skillid}' data-skillitem='{$T.skillitems}'>
 			  <span>+</span>&nbsp;继续添加
 			</a>
 	    </div>
 	    <div class="skills-detail zg-empty">
 		  {#foreach $T.skillitem as skill}
-			 <a href="javascript:void(0);" class='zm-item-tag' href='' data-skillid='{$T.skill.id}'>{$T.skill.name}</a>
+			 <span  class='skillzone'  data-skillid='{$T.skill.id}'>{$T.skill.name}</span>
 		  {#/for}
 		  <a href="javascript:;" class="zu-edit-button" name="editskill" data-skillid='{$T.skillid}' data-skillitem='{$T.skillitems}'>
 		      <i class="zu-edit-button-icon"></i>修改

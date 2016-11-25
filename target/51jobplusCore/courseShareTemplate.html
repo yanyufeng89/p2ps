@@ -1,9 +1,9 @@
 <!-- 个人主页 课程--课程分享 -->
 {#foreach $T.shaCoursePage as sharelist}
  <li>
-    <div class='w356 fs14 fc3 ib titlehidden'>
+    <div class='w336 fs14 fc3 ib titlehidden'>
           <div class="checkbox chk" data-courseid="{$T.sharelist.id}" data-name="{$T.sharelist.coursesname}"></div>
-                <a href="/51jobplusCore/{$T.detail}?id={$T.sharelist.id}" target="_blank" title="{$T.sharelist.coursesname}">{$T.sharelist.coursesname}</a>  
+                <a href="/{$T.detail}/{$T.sharelist.id}" target="_blank" title="{$T.sharelist.coursesname}">{$T.sharelist.coursesname}</a>  
           </div>
           <div class='w204 ib replayhidden'>
              <p title='{$T.sharelist.recommend}'>

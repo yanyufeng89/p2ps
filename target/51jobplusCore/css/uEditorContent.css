@@ -1,6 +1,6 @@
 /* HTML TAGS */
 body {
-	font-family: "microsoft yahei" "微软雅黑" "宋体";
+	font-family: Arial,'Microsoft YaHei';;
 	font-size:14px;
 	line-height:20px;
 	background: #fff;
@@ -11,7 +11,7 @@ a {
 }
 h3 {
 	color:#00B3BE;
-	font-family: "microsoft yahei" "微软雅黑" "宋体";
+	font-family: Arial,'Microsoft YaHei';;
 	font-size:20px;
 	margin:10px 0;
 }

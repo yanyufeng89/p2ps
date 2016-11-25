@@ -42,6 +42,7 @@
 		<if test="skillitem != null">
 			and skillitem = #{skillitem,jdbcType=LONGVARCHAR}
 		</if>
+		limit 1
 	</select>
   
   
@@ -173,9 +174,10 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null" >
+       updateTime = now(),
+      <!-- <if test="updatetime != null" >
         updateTime = now(),
-      </if>
+      </if> -->
       <if test="extendinfo != null" >
         extendInfo = #{extendinfo,jdbcType=VARCHAR},
       </if>

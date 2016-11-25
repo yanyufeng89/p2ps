@@ -47,15 +47,15 @@
                     </h4>
                     <ol>
                       <li>
-                        1.当您的话题分享成功后,系统会为你添加1财富的奖励,累计到一定的财富值即可兑换;
+                        1. 当您的话题分享成功后，系统会为你添加1财富的奖励，累计到一定的财富值即可兑换；
                       </li>
                       <li>
-                        2.当您分享的话题评论达到一定的数量后将不能被编辑和删除;
+                        2. 当您分享的话题评论达到一定的数量后将不能被编辑和删除；
                       </li>
                       <li>
-                        3.提问有问题需要帮助？详情请查看知识库
-                        <a href="/about/terms_service" target="_self"> 服务条款 </a>和
-                        <a href="/about/newbie_guide" target="_self"> 帮助中心。</a>
+                        3. 提问有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_self">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_self">帮助中心。</a>
                       </li>
                     </ol>
                   </div>

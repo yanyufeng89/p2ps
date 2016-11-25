@@ -71,7 +71,8 @@
   <update id="deleteTopics" parameterType="java.lang.Integer" >
     update tbl_topics 
     set 
-      isValid = 0
+      isValid = 0,
+      lastEditTime=now()
     where ID in 
     	<foreach collection="condition" item="item" index="index"
             open="(" close=")" separator=",">

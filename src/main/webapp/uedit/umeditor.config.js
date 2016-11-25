@@ -296,7 +296,8 @@
                         return;
                     }
                     node.setAttr();
-                    node.setAttr('href', 'javascript:void(0);')
+                    node.setAttr('href','#');
+                    node.setAttr('onclick', 'return false;');
                 },
                 strong: {$: {}},
                 b:function(node){

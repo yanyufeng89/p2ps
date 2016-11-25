@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -194,6 +196,36 @@ public class Common {
             return source;
         }
     }
+    
+    /**
+	 * 是否wap请求
+	 *
+	 * @param request
+	 * @param url
+	 * @return
+	 */
+	public static  boolean isWapReq(HttpServletRequest request, String url) {
+		if (Common.judgeIsMoblie(request) && wapReqUrlList.contains(url))
+			return true;
+		return false;
+	}
+
+	// 需要进行wap处理的视图名称
+	public static List<String> wapReqUrlList = new ArrayList(){
+	{
+		add("index");
+		add("login");
+		add("passwordRetake");
+		add("searchNavigation");
+		add("mydocs/mycenter/mycenter");
+		add("mydocs/mycenter/aboutme");
+		add("mydocs/docs/bookDetail");
+		add("mydocs/docs/courseDetail");
+		add("mydocs/docs/articleDetail");
+		add("mydocs/docs/documentDetail");
+		add("mydocs/docs/siteDetail");
+		add("mydocs/docs/topicDetail");
+	}};
 
     /**
      * 是否是手机浏览器访问

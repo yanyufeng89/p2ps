@@ -97,6 +97,11 @@ $(function(){
     	if($.trim(username).length==0){
     		return false;
     	}
+    	if($.trim(username).replace(/[^x00-xFF]/g,'**').length<4 || $.trim(username).replace(/[^x00-xFF]/g,'**').length>18 ){
+    		$(this).parent().find('b').show();
+    		$(this).parent().find('.item-msg-content').html('合法长度为4-18个字符').show();
+    		return false;
+    	}
     	$('#titlename .full-name').text(username);
     	//同时更改数据库中的字段值
     	updateColumn(username,"username=");
@@ -109,6 +114,7 @@ $(function(){
 			compname = '';
     	var data={
 				title:$.trim(compname),
+			    placeholder:'填写公司名称',
 				canclename:'canclecompname',
 				savename:'savecompname'
 		}
@@ -132,6 +138,11 @@ $(function(){
     	if($.trim(compname).length==0){
     		$('.editcompname').hide();
     	}
+    	if($.trim(compname).replace(/[^x00-xFF]/g,'**').length>120){
+    		$(this).parent().find('b').show();
+    		$(this).parent().find('.item-msg-content').html('公司名称超出最大限制').show();
+    		return false;
+    	}
     	$('.position-split').show();
     	//同时更改数据库中的字段值
     	updateColumn(compname,'compname=');
@@ -151,6 +162,7 @@ $(function(){
 			position = '';
     	var data={
 				title:$.trim(position),
+			    placeholder:'填写职位',
 				canclename:'cancleposition',
 				savename:'saveposition'
 		}
@@ -173,6 +185,11 @@ $(function(){
     	if($.trim(position).length==0){
     		$('.editposition').hide();
     	}
+    	if($.trim(position).replace(/[^x00-xFF]/g,'**').length>120){
+    		$(this).parent().find('b').show();
+    		$(this).parent().find('.item-msg-content').html('职位超出最大限制').show();
+    		return false;
+    	}
     	$('.position-split').show();
     	$('.position').text(position);
     	//同时更改数据库中的字段值
@@ -186,6 +203,7 @@ $(function(){
 			industry = '';
     	var data={
 				title:$.trim(industry),
+			    placeholder:'填写行业',
 				canclename:'cancleindustry',
 				savename:'saveindustry'
 		}
@@ -207,6 +225,11 @@ $(function(){
     	var industry=$('#nameedit').val();
     	if($.trim(industry).length==0){
     		$('.editindustry').hide();
+    	}
+    	if($.trim(industry).replace(/[^x00-xFF]/g,'**').length>120){
+    		$(this).parent().find('b').show();
+    		$(this).parent().find('.item-msg-content').html('行业超出最大限制').show();
+    		return false;
     	}
     	$('.area-split').show();
     	$('.industry').text(industry);
@@ -422,11 +445,13 @@ $(function(){
             	$('.homepageTemplate').processTemplate(data);
             	if($lastDiv.last().length==0){
             		$('#recommended-sections').append($('.homepageTemplate').html());
+            		window.location.href='#education'+anchorlen;
             	}else{
             		$lastDiv.last().after($('.homepageTemplate').html());
+            		window.location.href='#education'+(anchorlen-1);
             	}
             	$('.homepageTemplate').empty();
-            	window.location.href='#education'+(anchorlen-1);
+            	
             	$('#education'+anchorlen).css('background','#f9f9f9');
             	$('#schoolstartTime'+randomid).dateSelect();
             	$('#schoolendTime'+randomid).dateSelect();
@@ -471,11 +496,13 @@ $(function(){
             	$('.homepageTemplate').processTemplate(data);
             	if($lastDiv.last().length==0){
             		$('#recommended-sections').append($('.homepageTemplate').html());
+            		window.location.href='#work'+anchorlen;
             	}else{
             		$lastDiv.last().after($('.homepageTemplate').html());
+            		window.location.href='#work'+(anchorlen-1);
             	}
             	$('.homepageTemplate').empty();
-            	window.location.href='#work'+(anchorlen-1);
+            	
             	$('#work'+anchorlen).css('background','#f9f9f9');
             	$('#jobstartTime'+randomid).dateSelect();
             	$('#jobendTime'+randomid).dateSelect();
@@ -508,6 +535,12 @@ $(function(){
     	
     	//工作描述
     	var description=$(this).parents('.background-workexperience-container').find('.workcontent .content').val();
+    	description=description.replace(/\n/g,'<br/>');
+    	if(description.replace(/[^x00-xFF]/g,'**').length>512){
+    		$(this).parents('.background-workexperience-container').find('.workcontent b').show();
+    		$(this).parents('.background-workexperience-container').find('.workcontent .item-msg-content').show();
+    		return false;
+    	}
     	
     	if((onjobstartTime!=''&&onjobendTime=='')||(onjobstartTime==''&&onjobendTime!='')){
     		$(this).parents('.background-workexperience-container').find('.onjobtime b').show();
@@ -528,6 +561,11 @@ $(function(){
 	    
     	//工作职位
     	var position=$.trim($(this).parents('.background-workexperience-container').find('.position .content').val());
+    	if(position.replace(/[^x00-xFF]/g,'**').length>128){
+    		$(this).parents('.background-workexperience-container').find('.position b').show();
+    		$(this).parents('.background-workexperience-container').find('.position .item-msg-content').show();
+    		return false;
+    	}
     	if(companyname!=''){
     		if(onjobendTime1==''){
     			$(this).parents('.background-workexperience-container').find('.onjobtime b').show();
@@ -543,9 +581,14 @@ $(function(){
     	
     	if(companyname==''){
     		$(this).parents('.background-workexperience-container').find('.companyname b').show();
-    		$(this).parents('.background-workexperience-container').find('.companyname .item-msg-content').show();
+    		$(this).parents('.background-workexperience-container').find('.companyname .item-msg-content').html('请填写公司名称').show();
     		return false;
-    	}else{
+    	}else if(companyname.replace(/[^x00-xFF]/g,'**').length>256){
+    		$(this).parents('.background-workexperience-container').find('.companyname b').show();
+    		$(this).parents('.background-workexperience-container').find('.companyname .item-msg-content').html('公司名称超出最大限制').show();
+    		return false;
+    	}
+    	else{
         	saveWorkExperience(companyname,onjobstartTime,onjobendTime,position,description,$(this))
     	}
     })
@@ -577,6 +620,11 @@ $(function(){
     	var topDegree=$.trim($(this).parents('.background-education-container').find('.topDegree .degree-select').val());
     	//所学专业
     	var profession=$.trim($(this).parents('.background-education-container').find('.profession .content').val());
+    	if(profession.replace(/[^x00-xFF]/g,'**').length>512){
+    		$(this).parents('.background-education-container').find('.profession b').show();
+	    	$(this).parents('.background-education-container').find('.profession .item-msg-content').show();
+	        return false;  
+    	}
     	if(schoolname!=''){
     		if(schoolendTime1==''){
     			$(this).parents('.background-education-container').find('.schooltime b').show();
@@ -592,7 +640,11 @@ $(function(){
     	//学校名称必填
     	if(schoolname==''){
     		$(this).parents('.background-education-container').find('.schoolname b').show();
-    		$(this).parents('.background-education-container').find('.schoolname .item-msg-content').show();
+    		$(this).parents('.background-education-container').find('.schoolname .item-msg-content').html('请填写学校名称').show();
+    		return false;
+    	}else if(schoolname.replace(/[^x00-xFF]/g,'**').length>256){
+    		$(this).parents('.background-education-container').find('.schoolname b').show();
+    		$(this).parents('.background-education-container').find('.schoolname .item-msg-content').html('学校名称超出最大限制').show();
     		return false;
     	}else{
         	saveEducationBg(topDegree=="--请选择--"?'':topDegree,schoolname,schoolstartTime,schoolendTime,profession,schoollogo,$(this))
@@ -653,19 +705,19 @@ $(function(){
    });
    //保存我的联系方式
     $('a[name=mycontanctsave]').live('click',function(){
-		$('.email b').hide();
-		$('.email .item-msg-content').hide();
-		$('.phone b').hide();
-		$('.phone .item-msg-content').hide();
-
+       $('.email b,.phone b,.email .item-msg-content,.phone .item-msg-content').hide();
        var email=$('.emailinfo textarea[name=email]').val();
   	   var phone=$('.phoneinfo textarea[name=phone]').val();
 		if (email != null && email != '' && !isEmail(email)) {
 			$('.email b').show();
-			$('.email .item-msg-content').show();
+			$('.email .item-msg-content').html('邮箱格式不正确').show();
 			return false;
 		}
-
+        if(email.length>32){
+        	$('.email b').show();
+			$('.email .item-msg-content').html('邮箱超出最大限制').show();
+			return false;
+        }
 		if (phone != null && phone != '' && !isTel(phone)) {
 			$('.phone b').show();
 			$('.phone .item-msg-content').show();
@@ -677,6 +729,7 @@ $(function(){
     $('a[name=mycontanctcancel]').live('click',function(){
     	 var email=$(this).attr('data-email');
     	 var phone=$(this).attr('data-phone');
+    	 $('.email b,.phone b,.email .item-msg-content,.phone .item-msg-content').hide();
     	 updateMyContanctData(email,phone)
     })
     
@@ -1202,7 +1255,7 @@ function loadMoreFansAndAttenData(obj){
 	    						item.fansIds=0;
 	    					}
 	    				}else{
-	    					if(item.fansIds==(userInfo==undefined?'':serInfo.userid)){
+	    					if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
 	    						item.fansIds=1;
 	    					}else{
 	    						item.fansIds=0;
@@ -1238,8 +1291,25 @@ function loadMoreFansAndAttenData(obj){
 			ansyc:false,
 	        success:function(data){
 	        	$.each(data.attenManPage.list,function(index,item){
-					item.fansIds=1;
-				})
+	    			if(item.fansIds!=undefined){
+	    				if(item.fansIds.indexOf(',')!=-1){
+	    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.fansIds.split(','))!=-1){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
+	    				}else{
+	    					if(item.fansIds==(userInfo==undefined?'':userInfo.userid)){
+	    						item.fansIds=1;
+	    					}else{
+	    						item.fansIds=0;
+	    					}
+	    					
+	    				}
+		    		}else{
+		    			item.fansIds=0;
+		    		}
+	        	})
 				 var model={
 						 attenManPage:data.attenManPage.list,
 				 }
@@ -1342,7 +1412,7 @@ function loadMoreHtml(shares,name,tablename){
 		$.each(shares,function(index,item){
 			shtml+='<li>'
 		    shtml+='  <div class="allnewscontent textoverflow">'
-		    shtml+='     <a href='+getLinkUrl(tablename,item.id)+' target="_blank" title="'+item.title+'"><span class="allnewsname">'+item.title+'</span></a>'
+		    shtml+='     <a href='+getLinkUrl(tablename,item.id)+' target="_blank" title="'+item.title+'"><span class="allnewsname control-display">'+item.title+'</span></a>'
 		    shtml+='     <span class="smsdate zg-right">'+formatDate(item.createtime)+'</span>'
 		    shtml+=' </div>'	
 		    shtml+='</li>'	
@@ -1351,7 +1421,7 @@ function loadMoreHtml(shares,name,tablename){
 		$.each(shares,function(index,item){
 			shtml+='<li>'
 		    shtml+='  <div class="allnewscontent textoverflow">'
-		    shtml+='     ['+convertCh(item.type)+']<a href='+item.objurl+' target="_blank" title="'+item.title+'"><span class="allnewsname">'+item.title+'</span></a>'
+		    shtml+='     ['+convertCh(item.type)+']<a href='+item.objurl+' target="_blank" title="'+item.title+'"><span class="allnewsname control-display">'+item.title+'</span></a>'
 		    shtml+='     <span class="smsdate zg-right">'+formatDate(item.createtime)+'</span>'
 		    shtml+=' </div>'	
 		    shtml+='</li>'	
@@ -1431,7 +1501,7 @@ function getWorkData($layer,currentid,obj){
 	}
 	var jobtitle=$.trim($layer.find('input[name=jobtitle]').val());
 	var description=$.trim($layer.find('input[name=description]').val());
-
+	/*description=description.replace('<br/>',/\n/g);*/
 	editWorkData(companyname,schoolstartTime,schoolendTime,jobtitle,description,currentid,obj);
 }
 //保存教育背景
@@ -1580,8 +1650,7 @@ function editWorkData(companyname,onjobstartTime,onjobendTime,jobtitle,descripti
 	$('.homepageTemplate').empty();
 	if(companyname!='')
 		obj.parents('.background-workexperience-container').next().find('.companyname textarea[name=company]').val(companyname);
-	if(description!='')
-		obj.parents('.background-workexperience-container').next().find('textarea[name=description]').val(description);
+		obj.parents('.background-workexperience-container').next().find('textarea[name=description]').val(description.replace(/<br\s*\/?\s*>/ig, '\n'));
 	if(jobtitle!='')
 		obj.parents('.background-workexperience-container').next().find('textarea[name=position]').val(jobtitle);
 	$('#jobstartTime'+randomid).dateSelect();
@@ -1647,9 +1716,8 @@ function updateMyIntroData(birthdayday,birthdaymonth,marriage,description){
 		birthday+=birthdaymonth+'月'
 		birthday+=birthdayday+'日'
 		$('.birthday .birth').html(birthday);
-		$('a[name=editbirthday]').show();
 	}
-
+	$('a[name=editbirthday]').show();
 	if(marriage!=''&&marriage!='2'){
 		if(marriage=='1'){
 			marriage='已婚'
@@ -1657,14 +1725,12 @@ function updateMyIntroData(birthdayday,birthdaymonth,marriage,description){
 			marriage='未婚'
 		}
 		$('.birthday .marriage').html("婚姻状况:&nbsp;&nbsp;"+marriage);
-		$('a[name=editmarriage]').show();
 	}
-	
+	$('a[name=editmarriage]').show();
 	if(description!=''){
-		$('.intro .introinfo').text(description);
-		$('a[name=editintroinfo]').show();
+		$('.intro .introinfo').html(description);
 	}
-
+	$('a[name=editintroinfo]').show();
 	$('#birthdaymonth,#birthdayday,#marriage,textarea[name=recommend],.background-selfinfo-container .zm-command').hide();
 }
 //教育背景界面赋值
@@ -1675,8 +1741,10 @@ function updateMyEducationData(topDegree,schoolname,schoolstartTime,schoolendTim
 	if(schoolname!=''){
 		obj.parents('.background-education-container').find('.education .schoolname').text(schoolname);
 		obj.parents('.background-education-container').find('input[name=school]').val(schoolname);
-		obj.parents('.background-education-container').find('a[name=editschoolname]').show();
+	}else{
+		obj.parents('.background-education-container').find('input[name=school]').val('');
 	}
+	obj.parents('.background-education-container').find('a[name=editschoolname]').show();
 	if(schoolstartTime!=''){
 		var starttime=obj.parents('.background-education-container').find('.schoolstartTime').val();
 		obj.parents('.background-education-container').find('input[name=starttime]').val(starttime);
@@ -1694,13 +1762,17 @@ function updateMyEducationData(topDegree,schoolname,schoolstartTime,schoolendTim
 	if(topDegree!=''){
 		obj.parents('.background-education-container').find('.degree .topDegree').text(topDegree);
 		obj.parents('.background-education-container').find('input[name=degree]').val(topDegree);
-		obj.parents('.background-education-container').find('a[name=editsdegree]').show();
+	}else{
+		obj.parents('.background-education-container').find('input[name=degree]').val('');
 	}
+	obj.parents('.background-education-container').find('a[name=editsdegree]').show();
 	if(profession!=''){
 		obj.parents('.background-education-container').find('.major .profession').text(profession);
 		obj.parents('.background-education-container').find('input[name=major]').val(profession);
-		obj.parents('.background-education-container').find('a[name=editsmajor]').show();
+	}else{
+		obj.parents('.background-education-container').find('input[name=major]').val('');
 	}
+	obj.parents('.background-education-container').find('a[name=editsmajor]').show();
 	var edittype=obj.parents('.background-education-container').find('input[name=edittype]').val();
 	obj.parents('.background-education-container').find('.section-logo img').remove();
 	if(schoollogo!=''){
@@ -1725,8 +1797,10 @@ function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,descr
 	if(companyname!=''){
 		obj.parents('.background-workexperience-container').find('.companyname').text(companyname);
 		obj.parents('.background-workexperience-container').find('input[name=companyname]').val(companyname);
-		obj.parents('.background-workexperience-container').find('a[name=editscompanyname]').show();
+	}else{
+		obj.parents('.background-workexperience-container').find('input[name=companyname]').val('');
 	}
+	obj.parents('.background-workexperience-container').find('a[name=editscompanyname]').show();
 	if(onjobstartTime!=''){
 		var onjobstartTime=obj.parents('.background-workexperience-container').find('.onjobstartTime').val();
 		obj.parents('.background-workexperience-container').find('input[name=onjobstartTime]').val(onjobstartTime);
@@ -1753,13 +1827,17 @@ function updateMyWorkData(companyname,onjobstartTime,onjobendTime,position,descr
 	if(position!=''){
 		obj.parents('.background-workexperience-container').find('.position').text(position);
 		obj.parents('.background-workexperience-container').find('input[name=jobtitle]').val(position);
-		obj.parents('.background-workexperience-container').find('a[name=editsposition]').show();
+	}else{
+		obj.parents('.background-workexperience-container').find('input[name=jobtitle]').val('');
 	}
+	obj.parents('.background-workexperience-container').find('a[name=editsposition]').show();
 	if(description!=''){
-		obj.parents('.background-workexperience-container').find('.workcontent').text(description);
+		obj.parents('.background-workexperience-container').find('.workcontent').html(description+"<a href='javascript:;' class='zu-edit-button' name='editsdescription' data-currentid='"+id+"' style='display:none'><i class='zu-edit-button-icon'></i>修改</a>");
 		obj.parents('.background-workexperience-container').find('input[name=description]').val(description);
-		obj.parents('.background-workexperience-container').find('a[name=editsdescription]').show();
+	}else{
+		obj.parents('.background-workexperience-container').find('input[name=description]').val('');
 	}
+	obj.parents('.background-workexperience-container').find('a[name=editsdescription]').show();
 	var edittype=obj.parents('.background-workexperience-container').find('input[name=edittype]').val();
 
 	//获取工作经验的第一个div层
@@ -1830,13 +1908,12 @@ function previewImage(file){
          var div = document.getElementById('preview');
          var filetype=['jpg','png','jpeg','pns'];
          var imgtype=file.files[0].name.substring(file.files[0].name.length-3,file.files[0].name.length)
-         if($.inArray(imgtype,filetype)!=-1){
+         if($.inArray(imgtype.toLowerCase(),filetype)!=-1){
         	 updUserInfo();
-        	 if (file.files && file.files[0])
-             {
+        	 if (file.files && file.files[0]){
                  div.innerHTML =
                 	 //'<form method="POST"  id="previewImage" enctype="multipart/form-data"><img id=imghead> <span class="ProfileAvatarEditor-tip">修改头像</span> <input id="previewImage" class="file-3" type="file" size="30" onchange="previewImage(this)"></form>';
-                '<img id=imghead width="120" height="120"><span class="ProfileAvatarEditor-tip">更换头像</span><form method="POST"  id="previewImage" enctype="multipart/form-data"><input name="headIconFile" class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this)" /> </form>';
+                '<img id=imghead width="150" height="190"><span class="ProfileAvatarEditor-tip">更换头像</span><form method="POST"  id="previewImage" enctype="multipart/form-data"><input name="headIconFile" class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this)" /> </form>';
                  
                  
                  var img = document.getElementById('imghead');

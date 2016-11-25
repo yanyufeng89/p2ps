@@ -19,11 +19,11 @@
 	margin:-130px 0 0 -230px;
 	border: 1px solid #888;
     box-shadow: 0 0 80px 0 rgba(0,0,0,.4);
-	border-radius:2px;
+	border-radius:4px;
 	-moz-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
 	-webkit-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
-	font-family:"Microsoft YaHei";
-	_font-family:"Microsoft YaHei";
+	font-family: Arial,'Microsoft YaHei';
+	_font-family: Arial,'Microsoft YaHei';
 	background: #fff;
 }
 
@@ -45,9 +45,9 @@
 
 #confirmBox p{
 	background:none;
-	font-size:14px;
+	font-size:16px;
 	padding:20px;
-	color:#090909;
+	color:#555;
 }
 
 #confirmButtons{
@@ -63,8 +63,8 @@
 	height:30px;
 	width:80px;
 	font-size:14px;
-	font-family:"Microsoft YaHei";
-	_font-family:"Microsoft YaHei";
+	font-family: Arial,'Microsoft YaHei';
+	_font-family: Arial,'Microsoft YaHei';
 	text-decoration:none;
 	border:none;
 	line-height: 30px;
@@ -79,7 +79,7 @@
 }
 
 #confirmBox .blue{			
-	border-radius:2px;
+	border-radius:4px;
     background-position: left top;
     color: #fff;
     background: #1b85d5;
@@ -96,8 +96,10 @@
 }
 #confirmBox .gray {
 	background-position:-200px top;
-	border-radius: 6px;
+	border-radius: 4px;
 	color: #0867c5;
+	border: 1px solid #e5e5e5;
+    margin-right: 12px;
 	float: left;
 }
 #confirmBox .gray span {

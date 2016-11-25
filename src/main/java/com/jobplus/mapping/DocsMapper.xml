@@ -23,14 +23,15 @@
     <result column="isValid" property="isvalid" jdbcType="INTEGER" />
     <result column="isconverter" property="isconverter" jdbcType="INTEGER" />    
     <result column="readUrl" property="readurl" jdbcType="VARCHAR" />
+    <result column="firstPageText" property="firstPageText" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, title, description, filePath, docPages, createTime, lastEditTime, userId, collectSum, 
-    downSum, readSum, likeSum, recommendSum,downValue, docSuffix, docType, docClass, isPublic, isValid, isconverter, readUrl
+    downSum, readSum, likeSum, recommendSum,downValue, docSuffix, docType, docClass, isPublic, isValid, isconverter, readUrl, firstPageText
   </sql>
   <sql id="Base_Column_List2" >
     t.ID, t.title, t.description, t.filePath, t.docPages, t.createTime, t.lastEditTime, t.userId, t.collectSum, t.downSum, 
-    t.readSum, t.likeSum, t.recommendSum,downValue, t.docSuffix, t.docType, t.docClass, t.isPublic, t.isValid, t.isconverter, t.readUrl
+    t.readSum, t.likeSum, t.recommendSum,downValue, t.docSuffix, t.docType, t.docClass, t.isPublic, t.isValid, t.isconverter, t.readUrl, t.firstPageText
   </sql>
 
 	<!-- 插入多条记录       由于是默认第一次插入 所以部分字段插入了默认值 --><!-- <include refid="menuColumns"/> -->
@@ -111,7 +112,8 @@
   <update id="deleteDocs" parameterType="java.lang.Integer" >
     update tbl_docs 
     set 
-      isValid = 0
+      isValid = 0,
+      lastEditTime=now()
     where ID in 
     	<foreach collection="condition" item="item" index="index"
             open="(" close=")" separator=",">

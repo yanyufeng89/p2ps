@@ -1,7 +1,7 @@
 var ispublic=true;
 var num=0;//上传数量
 var arrFiles=[];//需要上传的文件数组
-var filetypes =[".doc",".docx",".ppt",".pptx",".xls",".xlsx",".vsd",".pot",".pps",
+var filetypes =[".doc",".docx",".ppt",".pptx",".xls",".xlsx",".pot",".pps",
                 ".rtf",".wps",".pdf",".txt",]; 
 $(function(){
 	//上传文档
@@ -12,6 +12,7 @@ $(function(){
 		var isnext = true;
 	   for(var i=0;i<files.length;i++){
 		    var fileend = files[i].name.substring(files[i].name.lastIndexOf("."));
+		    files[i].name=files[i].name.substring(0,files[i].name.lastIndexOf("."));
 		    if(filetypes.indexOf(fileend.toLowerCase())<0){
 		    	isnext=false;
 		    }
@@ -37,9 +38,9 @@ $(function(){
 		
 	    $(".txtdocument").val(filename.substring(0,filename.length-1));
 	    //启用确定按钮
-	        $("#btnsure").removeClass("btn-disblue").addClass("btn-blue").removeAttr('disabled');
+	        $("#btndocsure").removeClass("btn-disblue").addClass("btn-blue");
 	    if(filename==""){
-	    	$("#btnsure").removeClass("btn-blue").addClass("btn-disblue").attr('disabled','disabled');
+	    	$("#btndocsure").removeClass("btn-blue").addClass("btn-disblue");
 	     }
     });
 	$('input[name=title]').live('input propertychange',function(){
@@ -84,7 +85,8 @@ $(function(){
 	});
 	
 	//确定
-	$("#upload-init-container .btn-blue").live('click',function(){
+	$("#btndocsure").live('click',function(){
+		$(this).addClass('capture-loading').html('');
 		$("#upload-init-container").hide();
 		$("#upload-files-container").show();
 		$("#upload-list").append(funDisposePreviewHtml(arrFiles,true));
@@ -96,15 +98,13 @@ $(function(){
    		$floor.find(':first-child').show();
    		$floor.find('input[type=text]').show();
    		$floor.find(':last-child').hide();
-   		//之前这边是为了删掉所有的标签之后 提示至少添加一个标签 (现在标签不是必填项  临时注释掉)
-   		/*if($(this).parents('.zg-inline').find('div').length==1){
-   			$(this).parents('.zm-tag-editor-editor').next().show();
-   		}*/
    		$(this).parent().remove();
    		
    	});
     //删除
 	$("#upload-files-container .ui-imgBtn-delete").live('click',function(){
+		    if($('#btndocsure').hasClass('capture-loading'))
+		    $('#btndocsure').removeClass('capture-loading').html('确定');
 			var index=$(this).data('index');
 			var name=$(this).data('name');
 			var size=$(this).data('size');
@@ -117,7 +117,7 @@ $(function(){
 				}
 			}
 			//当上传的文档全部被删完  调到重新上传文档界面
-			if(arrFiles.length==0){
+			if($('.editlayoutbook').length==0){
 				arrFiles=[];
 				$("#upload-init-container").show();
 				$("#upload-files-container").hide();
@@ -127,17 +127,33 @@ $(function(){
 				})
 				num=0;
 				$("#textfield").val(' ').val("请选择文档...");
-				$("#btnsure").removeClass("btn-blue").addClass("btn-disblue").attr('disabled','abled');
+				$("#btndocsure").removeClass("btn-blue").addClass("btn-disblue");
 			}
 	})
 	//确认上传
 	$('#btn-submit-all').live('click',function(){
-		 var flag=true;
+		var flag=true;
          //标题必填
 		$('input[name=title]').each(function(){
 			if($(this).val().length==0){
 				$(this).parents('.edit-table').find('.item-msg-content').html('').html('标题不能为空');
 				$(this).parents('.edit-table').find('.ic-msg').css('background-position','-47px -144px');
+				window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
+				return false;
+				flag=false;
+			}
+			if($(this).val().replace(/[^x00-xFF]/g,'**').length>256){
+				$(this).parents('.edit-table').find('.item-msg-content').html('').html('标题超出最大限制');
+				$(this).parents('.edit-table').find('.ic-msg').css('background-position','-47px -144px');
+				window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
+				return false;
+				flag=false;
+			}
+		})
+	    //简介限制
+		$('.bookcontent').each(function(){
+			if($(this).val().replace(/[^x00-xFF]/g,'**').length>512){
+				$(this).nextAll().show();
 				flag=false;
 			}
 		})
@@ -150,6 +166,8 @@ $(function(){
 			$('input[name=doctype]').each(function(){
 				if($.trim($(this).val()).length==0||$(this).val().indexOf('undefined')!=-1){
 					$(this).parents('ul').next().show();
+					window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
+					return false;
 					flag=false;
 				}
 			})
@@ -163,8 +181,12 @@ $(function(){
 			})
 			$(this).parents('td').find('input[name=docclass]').val(tagid.substring(0,tagid.length-1));
 		})
-		if(flag)
-		$('#test11form').submit();
+		if(flag){
+			 //添加遮罩层 防止在上传的同时做其他操作
+			 addMaskLayer();
+			 $('#test11form').submit();
+		}
+		
 	})
 
    //获取财富值
@@ -197,6 +219,7 @@ var funDisposePreviewHtml=function(files,flag){
 	    		num:num,
 	    		size:v.size,
 	    		name:v.name.substring(0,v.name.lastIndexOf('.')),
+	    		namesuffix:v.name,
 	    		pid:'public'+num,
 	    		doctype:parentConfigList[0].typeid+":"+parentConfigList[0].typename+","+childConfigList[0].typeid+":"+childConfigList[0].typename,
 	    		parentConfigList:parentConfigList,
@@ -207,12 +230,15 @@ var funDisposePreviewHtml=function(files,flag){
 	  if(exist){
 		  if(v.size!=0){
 			  for(var i=0;i<arrFiles.length;i++){
-				if(arrFiles[i].name!=v.name&&arrFiles[i].size!=v.size)
+				/*if(arrFiles[i].name!=v.name&&arrFiles[i].size!=v.size)
 				{
+					arrFiles.push(v); 
+				}*/
+				if($.inArray(v, arrFiles)==-1){
 					arrFiles.push(v); 
 				}
 			  }
-			  $("#addtemp").setTemplateURL("/51jobplusCore/doctTemplate.html");
+			  $("#addtemp").setTemplateURL("/doctTemplate.html");
 		  }  
 		  else{
 			  //删除已经保存到数组中的数据
@@ -223,13 +249,13 @@ var funDisposePreviewHtml=function(files,flag){
 				}
 			  }
 			  data.tips='上传附件失败!';
-			  $("#addtemp").setTemplateURL("/51jobplusCore/docreTemplate.html");
+			  $("#addtemp").setTemplateURL("/docreTemplate.html");
 		  }
 	  }
 	  //重复上传
 	  else{
 		     data.tips='您刚刚已上传了该文档，不需要重复上传!';
-		     $("#addtemp").setTemplateURL("/51jobplusCore/docreTemplate.html");
+		     $("#addtemp").setTemplateURL("/docreTemplate.html");
 		}
 	    $("#addtemp").processTemplate(data);
 	    $('#upload-list').append($("#addtemp").html());

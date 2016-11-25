@@ -257,13 +257,13 @@ public class MyHomeController {
 		
 		return mv;
 	}	
-	/**
+/*	*//**
 	 * 个人主页  && 浏览他人主页
 	 * 传入的userid为被访问人的id
 	 * @param request
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value = "/getAnotherHomePage/{userid}")
 	@ResponseBody
 	public ModelAndView getAnotherHomePage(HttpServletRequest request,@PathVariable String userid) throws Exception  {
@@ -281,7 +281,7 @@ public class MyHomeController {
 		mv = myHomePageService.getHomePage(request,mv,userid, cutUserid, isReview);
 		
 		return mv;
-	}	
+	}*/	
 	/**
 	 * 分页加载更多最近分享      userid必传
 	 * @param encoding
@@ -296,7 +296,7 @@ public class MyHomeController {
 		ModelAndView mv = new ModelAndView();
 		
 		Page<MyHomePage> recentShare = myHomePageService.getRecentShare(request,record);	
-		logger.info("moreRecentVistors 分页加载更多最近分享    recentShare:" + JSON.toJSONString(recentShare));
+		logger.info("moreRecentShare 分页加载更多最近分享    recentShare:" + JSON.toJSONString(recentShare));
 		if (encoding.indexOf("application/json") != -1) {
 			//分页   post请求
 			Map<String, Page<MyHomePage>> map = new HashMap<String, Page<MyHomePage>>();

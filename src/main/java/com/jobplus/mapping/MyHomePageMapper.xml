@@ -12,9 +12,13 @@
   <!-- Integer objectId; String tableName; String tableColumn; String addOrDecrease; Integer AdOrDeNum; -->
  <select id="getRecentShare" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyHomePage" >
   	select * from (
-	SELECT 	bk.ID AS id,	bk.bookname AS title,	bks.createTime AS createtime,	'tbl_books' AS type FROM	(select bks.bookid as bookID,max(bks.createtime) as  createTime from tbl_books_share bks where <!-- TO_DAYS(NOW()) - TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10 AND --> bks.userID = #{userid , jdbcType=INTEGER} group by bks.bookid) bks,tbl_books bk WHERE	bks.bookID = bk.ID
+	<!-- SELECT 	bk.ID AS id,	bk.bookname AS title,	bks.createTime AS createtime,	'tbl_books' AS type FROM	(select bks.bookid as bookID,max(bks.createtime) as  createTime from tbl_books_share bks where TO_DAYS(NOW()) - TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10 AND bks.userID = #{userid , jdbcType=INTEGER} group by bks.bookid) bks,tbl_books bk WHERE	bks.bookID = bk.ID -->
+	<!-- SELECT t.ID as id ,t.bookname as title,bs.createTime as createTime,	'tbl_books' AS type FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID WHERE bs.userID = #{userid , jdbcType=INTEGER} AND bs.commentby IS NULL and t.isValid=1 -->
+	SELECT 	bk.ID AS id,	bk.bookname AS title,	bks.createTime AS createtime,	'tbl_books' AS type FROM	
+		(select bks.bookid as bookID,max(bks.createtime) as  createTime ,bks.commentby as commentby from tbl_books_share bks where 
+		 bks.userID = #{userid , jdbcType=INTEGER}  AND bks.commentby IS NULL AND bks.isdelete = 0 group by bks.bookid) bks,tbl_books bk WHERE	bks.bookID = bk.ID 
 	UNION all
-	select ds.ID as id ,ds.title as title, ds.createTime as createtime,'tbl_docs' as type   from tbl_docs ds where  <!-- TO_DAYS(NOW())-TO_DAYS(ds.createTime) <![CDATA[ < ]]> 10 and --> ds.isValid='1' and ds.isPublic='1' and ds.userId = #{userid , jdbcType=INTEGER}
+	select ds.ID as id ,ds.title as title, ds.createTime as createtime,'tbl_docs' as type   from tbl_docs ds where  <!-- TO_DAYS(NOW())-TO_DAYS(ds.createTime) <![CDATA[ < ]]> 10 and --> ds.isValid='1' and ds.isPublic='1' and ds.isConverter = 1 and ds.userId = #{userid , jdbcType=INTEGER}
 	UNION all
 	select tps.ID as id ,tps.title as title, tps.createTime as createtime,'tbl_topics' as type   from tbl_topics tps where  <!-- TO_DAYS(NOW())-TO_DAYS(tps.createTime) <![CDATA[ < ]]> 10 and --> tps.isValid='1' and tps.isPublic='1' and tps.createPerson=#{userid , jdbcType=INTEGER}
 	UNION all
@@ -39,7 +43,9 @@
   <!-- 统计总数    Integer objectId; String tableName; String tableColumn; String addOrDecrease; Integer AdOrDeNum; -->
  <select id="getRecentShareCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.MyHomePage" >
   	select * from (select sum(countRs) as pageCount from (
-		select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk where bks.bookID = bk.ID <!-- and TO_DAYS(NOW())-TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10 -->  and bks.userID = #{userid , jdbcType=INTEGER}
+		<!-- select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk where bks.bookID = bk.ID and TO_DAYS(NOW())-TO_DAYS(bks.createTime) <![CDATA[ < ]]> 10  and bks.userID = #{userid , jdbcType=INTEGER} -->
+		<!-- SELECT count(*)  as countRs  FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID WHERE bs.userID = #{userid , jdbcType=INTEGER} AND bs.commentby IS NULL and t.isValid=1 -->
+		select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk where bks.bookID = bk.ID and bks.userID = #{userid , jdbcType=INTEGER} AND bks.commentby IS NULL AND bks.isdelete = 0
 		UNION all
 		select count(*)  as countRs  from tbl_docs ds where  <!-- TO_DAYS(NOW())-TO_DAYS(ds.createTime) <![CDATA[ < ]]> 10 and --> ds.isValid='1' and ds.isConverter = '1' and ds.isPublic='1' and ds.userId = #{userid , jdbcType=INTEGER}
 		UNION all
@@ -109,12 +115,14 @@
   
   <!-- 只返回数据的分享    因为书籍信息需要关联查询 -->
   <select id="getOneSharesJustToBooks" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.MyHomePage" >
-    SELECT t.bookname as title,t.ID as id ,bs.createTime  as createTime
-    ,(select count(*)  FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID 
-		WHERE bs.userID = #{userid,jdbcType=INTEGER} AND bs.commentby IS NULL) as pageCount
+    <!-- SELECT t.bookname as title,t.ID as id ,bs.createTime  as createTime
     FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID 
 	WHERE bs.userID = #{userid,jdbcType=INTEGER} AND bs.commentby IS NULL and t.isValid=1
-	ORDER BY bs.createTime DESC
+	ORDER BY bs.createTime DESC -->
+	SELECT 	bk.ID AS id,	bk.bookname AS title,	bks.createTime AS createtime,	'tbl_books' AS type FROM	
+		(select bks.bookid as bookID,max(bks.createtime) as  createTime, bks.commentby as  commentby from tbl_books_share bks where 
+		 bks.userID = #{userid , jdbcType=INTEGER} AND bks.commentby IS NULL AND bks.isdelete = 0 group by bks.bookid) bks,tbl_books bk WHERE	bks.bookID = bk.ID 
+		 ORDER BY bks.createTime DESC
     <choose>
 		<when test="pageNo !=null">
 			limit #{limitSt},#{pageSize}
@@ -126,8 +134,10 @@
   </select>
   <!--  统计总数    只返回数据的分享    因为书籍信息需要关联查询 -->
   <select id="getOneSharesJustToBooksCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.MyHomePage" >
-    select count(*)  FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID 
-		WHERE bs.userID = #{userid,jdbcType=INTEGER} AND bs.commentby IS NULL
+    <!-- select count(*)  FROM tbl_books_share bs LEFT JOIN tbl_books t ON bs.bookID = t.ID 
+		WHERE bs.userID = #{userid,jdbcType=INTEGER} AND bs.commentby IS NULL -->
+	select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk where bks.bookID = bk.ID and bks.userID = #{userid , jdbcType=INTEGER} AND bks.commentby IS NULL
+	AND bks.isdelete = 0
   </select>
   
   

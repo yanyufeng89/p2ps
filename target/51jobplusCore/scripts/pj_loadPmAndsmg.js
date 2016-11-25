@@ -28,7 +28,10 @@ $(function () {
         smsInfo($(this));
     })
     //回复私信
-    $('.zg-link-replypm').live('click', function (e) {
+    $('.zg-link-replypm,#site-mail').live('click', function (e) {
+    	//分为两个模块的发送  一个是在查看别人主页的时候发站点信息   一个是回复别人发给自己的信息  1表示站内信
+    	var issitemail=$(this).attr('data-issitemail');
+    	
         $('#top-nav-live-new1').hide();
         var receivedid = $(this).attr('data-receivedid');
         var name = $(this).attr('data-name');
@@ -38,12 +41,19 @@ $(function () {
         }
         $('.pagetemplate').setTemplateURL(projectName + 'privateMessage.html');
         $('.pagetemplate').processTemplate(datamodel);
-        $(this).parents('#top-nav-live-new1').after($('.pagetemplate').html());
+        if(issitemail=='1'){
+    		$('#backaboutmetop').after($('.pagetemplate').html());
+    	}else{
+    		$(this).parents('#top-nav-live-new1').after($('.pagetemplate').html());
+            $('.edui-container').css('z-index', '0');
+    	}
         $('.pagetemplate').empty();
-        $('.edui-container').css('z-index', '0');
         e.stopPropagation();
     })
-
+    /*//用户名截取
+    if($('.pj-top-nav-userinfo a').width()<80){
+    	$('.pj-top-nav-userinfo a').css('width',$('.pj-top-nav-userinfo a').width());
+    }*/
     //私信或消息点击 (颜色变暗)
     $('.zm-noti7-content-item').live('click', function (e) {
         var id = $(this).attr('data-id');
@@ -269,3 +279,92 @@ function getpmCount() {
         }
     })
 }
+//内容超出截取字符串
+function autoAddEllipsis(pStr, pLen) {  
+	  
+    var _ret = cutString(pStr, pLen);  
+    var _cutFlag = _ret.cutflag;  
+    var _cutStringn = _ret.cutstring;  
+  
+    if ("1" == _cutFlag) {  
+        return _cutStringn + "...";  
+    } else {  
+        return _cutStringn;  
+    }  
+}  
+  
+/* 
+ * 注：半角长度为1，全角长度为2 
+ *  
+ * pStr:字符串 
+ * pLen:截取长度 
+ *  
+ * return: 截取后的字符串 
+ */  
+function cutString(pStr, pLen) {  
+  
+    // 原字符串长度  
+    var _strLen = pStr.length;  
+  
+    var _tmpCode;  
+  
+    var _cutString;  
+  
+    // 默认情况下，返回的字符串是原字符串的一部分  
+    var _cutFlag = "1";  
+  
+    var _lenCount = 0;  
+  
+    var _ret = false;  
+  
+    if (_strLen <= pLen/2) {  
+        _cutString = pStr;  
+        _ret = true;  
+    }  
+  
+    if (!_ret) {  
+        for (var i = 0; i < _strLen ; i++ ) {  
+            if (isFull(pStr.charAt(i))) {  
+                _lenCount += 2;  
+            } else {  
+                _lenCount += 1;  
+            }  
+  
+            if (_lenCount > pLen) {  
+                _cutString = pStr.substring(0, i);  
+                _ret = true;  
+                break;  
+            } else if (_lenCount == pLen) {  
+                _cutString = pStr.substring(0, i + 1);  
+                _ret = true;  
+                break;  
+            }  
+        }  
+    }  
+      
+    if (!_ret) {  
+        _cutString = pStr;  
+        _ret = true;  
+    }  
+  
+    if (_cutString.length == _strLen) {  
+        _cutFlag = "0";  
+    }  
+  
+    return {"cutstring":_cutString, "cutflag":_cutFlag};  
+}  
+  
+/* 
+ * 判断是否为全角 
+ *  
+ * pChar:长度为1的字符串 
+ * return: true:全角 
+ *          false:半角 
+ */  
+function isFull (pChar) {  
+    if ((pChar.charCodeAt(0) > 128)) {  
+        return true;  
+    } else {  
+        return false;  
+    }  
+} 

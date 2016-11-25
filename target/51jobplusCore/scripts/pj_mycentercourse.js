@@ -1,7 +1,19 @@
 $(function(){
 	//头像信息
 	intoUserInfo();
-
+	//课程详情简介 
+	if($('input[name=coursecontent]').length>0){
+		var content=$('input[name=coursecontent]').val();
+		if(content.replace(/[^x00-xFF]/g,'**').length>600){
+			$('#coursebrief .brief-content').text(autoAddEllipsis($('#coursebrief .brief-content').text(),420)).after("<span class='showall'>展示全部</span>");
+		}
+	}
+	//详情简介收起
+	$('.slideup').live('click',function(){
+		$(this).hide().prev().show();
+		$('.brief-content').text(autoAddEllipsis($('.brief-content').text(),420));
+		$(this).parents('.brief').addClass('book-height');
+	})
 	//单个删除 课程已分享
     $('.operate .cancelshare').live('click',function(){
 	    	var courseid=$(this).data('courseid');
@@ -111,34 +123,20 @@ $(function(){
     $('#courselike').live('click',function(){
     	courseLike($(this));
     })
-    
-    //回到顶部
-    $("#coursebacktop").mousemove(function(){
-    	$("#coursebacktop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#coursebacktop").css("background-position-x", "0");
-    })
-
-    /*当界面下拉到一定位置出现向上的箭头 start*/
-    $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
-            $("#coursebacktop").fadeIn("fast");  
-        } else{  
-            $("#coursebacktop").fadeOut("fast");  
-        }  
+    //发布文本框获取焦点
+    $('.commentcontent').live('focus',function(){
+    	$('.item-msg-content,.ic-msg').hide();
     });
-   /*当界面下拉到一定位置出现向上的箭头 end*/
-    
    //课程详情页加载更多
     $('.loadmore').live('click',function(){
     	$(this).addClass('loading').empty().append("<span class='capture-loading'></span>加载中");
     	courseLoadMore($(this))
     });
-    $('#courseurl').live('click',function(){
+   /* $('#courseurl').live('click',function(){
     	var url=$(this).attr('data-url');
     	url=url.substr(0,7).toLowerCase()=="http://"?url:"http://"+url;
     	window.location.href=url;
-    })
+    })*/
 })
 //课程加载更多
 function courseLoadMore(obj){
@@ -147,7 +145,7 @@ function courseLoadMore(obj){
     var coursesid=$('input[name=courseid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"courses/loadComments",
+      	url:"/courses/loadComments",
       	data:{pageNo:Number(pageNo)+1,coursesid:coursesid},
     	dataType:"json",
     	success:function(data){
@@ -157,12 +155,13 @@ function courseLoadMore(obj){
     			}
     		   $('.headiconintotem').setTemplateURL(projectName+'coursesLoadMoreTemplate.html');
           	   $('.headiconintotem').processTemplate(datamodel);
-          	   $('.loadmore').before($('.headiconintotem').html());
+          	   $('.loadmore').prev().append($('.headiconintotem').html());
           	   $(".headiconintotem").empty();
           	   $('.loadmore').attr('data-pageno',Number(pageNo)+1);
           	   obj.removeClass('loading').empty().append('更多');
-          	   if(Number(sumpage)==Number(pageNo)+1)
-          		 $('.loadmore').hide();
+          	   if(Number(sumpage)==Number(pageNo)+1){
+          		 $('.loadmore').hide(); 
+          	   }
           	   intoUserInfo();
     		}else{
     			
@@ -179,7 +178,7 @@ function courseLike(obj){
 	var coursesname=$('input[name=coursename]').val();
 	$.ajax({
 		type:"POST",
-      	url:projectName+"courses/clickLikeOnCourse",
+      	url:"/courses/clickLikeOnCourse",
       	data:{likeOperate:islike,id:coursesid,objCreatepersonPg:courseCreatePerson,relationidPg:coursesid,objectNamePg:coursesname},
       	dataType:"json",
       	success:function(data){
@@ -209,7 +208,7 @@ function collectCourse(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"courses/collectCourses",
+      	url:"/courses/collectCourses",
       	data:{actionType:actiontype,objectid:coursesid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -219,12 +218,16 @@ function collectCourse(obj){
       				$this.empty().html('取消收藏');
       				$this.attr('data-actiontype','1');
       				$this.next().find('strong').html(Number($this.next().find('strong').html())+1);
+      				//添加对应的头像信息
+      				showHeadIcon();
          		}
          		else{
          			$this.removeClass('zg-btn-white').addClass('zg-btn-green');
          			$this.attr('data-actiontype','0');
          			$this.empty().html('收藏课程');
          			$this.next().find('strong').html(Number($this.next().find('strong').html())-1);
+         			//移除对应的头像信息
+         			deleteHeadIcon();
          		} 
       		}
       		else{
@@ -239,13 +242,15 @@ function cancelCommtent(obj){
 	var coursesid=$('input[name=courseid]').val();
 	$.ajax({
 	    type:"POST",
-     	url:projectName+"courses/delComment",
+     	url:"/courses/delComment",
      	data:{id:recommend,coursesid:coursesid},
      	dataType:"json",
      	success:function(data){
      		if(data.returnStatus=='000'){//返回成功
      			//同时从界面上移除一条推荐语
      			obj.parents('.item').remove();
+     			$('#course-commcount').html('用户推荐('+(Number($('#course-commcount').attr('data-num'))-1)+')');
+  	            $('#course-commcount').attr('data-num',Number($('#course-commcount').attr('data-num'))-1);
      		}
      		else{
      			
@@ -257,7 +262,7 @@ function cancelCommtent(obj){
 function delSharedCourses(conditions,obj){
 	   $.ajax({
 	    	type:"POST",
-	    	url:projectName+"courses/delSharedCourses",
+	    	url:"/courses/delSharedCourses",
 	    	data:{condition:conditions},
 	    	dataType:"json",
 	    	success:function(data){
@@ -276,7 +281,7 @@ function delSharedCourses(conditions,obj){
 	         					obj.parents('li').remove();
 	         				}
 		        	}
-		        	$('#courseshare').html("分享("+data.operationSum.coursessharesum+")");
+		        	$('#courseshare').html("分享&nbsp;"+data.operationSum.coursessharesum);
 		   		}else{//返回失败
 		   		}
 
@@ -287,7 +292,7 @@ function delSharedCourses(conditions,obj){
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_courses"},
    	dataType:"json",
    	success:function(data){
@@ -307,7 +312,7 @@ function deleteMyCollects(conditions,obj){
  					obj.parents('li').remove();
  				}
     		}
-    		$('#coursecollect').html("收藏("+data.operationSum.coursescollsum+")");
+    		$('#coursecollect').html("收藏&nbsp;"+data.operationSum.coursescollsum);
 
   		}else{//返回失败
   		}
@@ -317,7 +322,7 @@ function deleteMyCollects(conditions,obj){
 }
 //加载用户信息
 function intoUserInfo(){
-	$('.uname,.zm-item-link-avatar,.zm-list-avatar,.author-link').pinwheel();
+	$('.uname,.zm-item-link-avatar,.zm-list-avatar,.author-link,.zm-item-img-avatar').pinwheel();
 }
 //新增推荐语
 function insertComment(obj,type){
@@ -330,7 +335,7 @@ function insertComment(obj,type){
 	 var commentby=obj.attr('data-recommend');
 	 //被推荐人的名字
 	 var recommendname=obj.attr('data-recommendname');
-	 var objectName=$('input[name=articlename]').val();
+	 var objectName=$('input[name=coursename]').val();
 	 //评论内容
 	 if(type==0){
 	   commendcontent=obj.parent().prev().val();
@@ -342,17 +347,24 @@ function insertComment(obj,type){
        commendcontent=$('.commentcontent').val();
        relationid=coursesid;
      }
-	 var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
+	 if($.trim(commendcontent).length==0){
+		 return false;
+	 }
+	/* var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
 	 if(len>1000){
 	 		if(obj.parent().find('span').length==0)
 	 			obj.before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
 	     		return false;
-	 }
-	 if(commendcontent.length==0)return false;
+	 }*/
+	 if($.trim(commendcontent).replace(/[^x00-xFF]/g,'**').length>65535){
+			obj.prevAll().show();
+			return false;
+     }
+	
 	 var $this=obj;
 	 $.ajax({
 		type:"POST",
-       	url:projectName+"courses/addComment",
+       	url:"/courses/addComment",
        	data:{coursesid:coursesid,recommend:commendcontent,commentby:commentby,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid,objectNamePg:objectName},
        	dataType:"json",
        	success:function(data){
@@ -370,15 +382,16 @@ function insertComment(obj,type){
        		   $('.headiconintotem').setTemplateURL(projectName+'bookAppendTemplate.html');
            	   $('.headiconintotem').processTemplate(datamodel);
                if($('.loadmore').length>0)
-            	   $('.loadmore').before($('.headiconintotem').html());
+            	   $('.loadmore').prev().append($('.headiconintotem').html());
                else
             	   $('.detail-list').append($('.headiconintotem').html());
            	   $(".headiconintotem").empty();
                $this.parent().find('.errortip').remove();
            	   intoUserInfo();
            	   $('.commentcontent').val('');
-       		}  
-       		else{
+               $('#course-commcount').html('用户推荐('+(Number($('#course-commcount').attr('data-num'))+1)+')');
+	           $('#course-commcount').attr('data-num',Number($('#course-commcount').attr('data-num'))+1);
+       		}else{
        			
        		}
        	}

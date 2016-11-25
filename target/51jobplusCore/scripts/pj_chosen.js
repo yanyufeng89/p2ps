@@ -41,7 +41,7 @@ var container_each='';
 						})
 						if($this.data.length==0||!mark){
 							container_div+="<div class='ac-create ac-tag ac-active createtag' data-name='"+$this.conds+"'>"
-						    container_div+="   <span class='zu-autocomplete-row-name'>创建&nbsp;'"+$this.conds+"'&nbsp;技能</span>"
+						    container_div+="   <span class='zu-autocomplete-row-name textoverflow'>创建&nbsp;'"+$this.conds+"'&nbsp;技能</span>"
 						    container_div+="</div>"	
 						}
 		    		    $.each($this.data.skillList,function(a,b){
@@ -50,13 +50,13 @@ var container_each='';
 							}else{
 								container_div+="<div class='ac-row ac-tag'  id='"+generate_field_id()+"' data-name='"+b.skillname+"' data-id='"+b.id+"'>"
 							}
-							container_div+="      <span class='zu-autocomplete-row-name'>"+b.skillname+"</span>"
+							container_div+="      <span class='zu-autocomplete-row-name textoverflow'>"+b.skillname+"</span>"
 							container_div+="    </div>"
 						})
 						container_div+="</div>";
 						$(".zm-tag-editor-command-buttons-wrap").append(container_div);	
 						//计算新添加层的高度
-		    		    $('#skill0').height('145px').height($('#skill0').height()+$('#'+$this.id).height());
+		    		    $('#skill0').removeAttr('style').height($('#skill0').height()+$('#'+$this.id).height());
 						$this.container_click();
 		    	}else{
 		    		    if(this.type=='topic'||this.type=='topictag')
@@ -73,7 +73,7 @@ var container_each='';
 						})
 						if($this.data['tagsList'].length==0||!flag){
 							container_div+="<div class='ac-create ac-tag ac-active createtag' data-name='"+$this.conds+"'>"
-						    container_div+="   <span class='zu-autocomplete-row-name'>创建&nbsp;'"+$this.conds+"'&nbsp;标签</span>"
+						    container_div+="   <span class='zu-autocomplete-row-name textoverflow'>创建&nbsp;'"+$this.conds+"'&nbsp;标签</span>"
 						    container_div+="</div>"	
 						}
 						$.each($this.data['tagsList'],function(a,b){
@@ -82,7 +82,7 @@ var container_each='';
 							}else{
 								container_div+="<div class='ac-row ac-tag'  id='"+generate_field_id()+"' data-name='"+b.tagname+"' data-id='"+b.id+"'>"
 							}
-							container_div+="      <span class='zu-autocomplete-row-name'>"+b.tagname+"</span>"
+							container_div+="      <span class='zu-autocomplete-row-name textoverflow'>"+b.tagname+"</span>"
 							container_div+="    </div>"
 						})
 						container_div+="</div>";
@@ -128,7 +128,7 @@ var container_each='';
 			    	});
 		    		$(document).click(function(){
 		    			$('.zu-question-suggest-skill-input').parent().find('.ac-renderer').hide();
-		    			$('#skill0').height('145px');
+		    			$('#skill0').removeAttr('style').css('min-height','150px');
 					});
 		    	}
 		    	if(this.type=='doc'||this.type=='book'){
@@ -155,7 +155,7 @@ var container_each='';
 		  
 		    //话题标签(新增)
 		    Chosen.prototype.iniTopicIputTags=function(name,id,type){
-		    	$('.topic-error').hide();
+		    	$('.pj-warmprompt').hide();
 		    	var html='';
 		    	html+="<div class='zm-tag-editor-edit-item'>";
 		    	html+=" <span>"+name+"</span>"
@@ -171,8 +171,8 @@ var container_each='';
 			    		$('#searchTopic').parent().find('.err-tip').hide();
 			    		
 			    		if($("#inputtags").children().length==0){
-			    			var $child=$('.topic-error').children();
-			    			$('.topic-error').empty().append($child).append('至少添加一个标签').show();
+			    			var $child=$('.pj-warmprompt').children();
+			    			$('.pj-warmprompt').empty().append($child).append('至少添加一个标签').show();
 			    		}
 					});
 			    	if($("#inputtags>div").length==5){
@@ -200,6 +200,11 @@ var container_each='';
 				if(!isExistSkill(skillname)){
 					return false;
 				};
+				if($('#skillinputtags>div').length>50){
+					var $child=$('.skill-error').children();
+					$('.skill-error').empty().append($child).append('最多只能添加50个技能').show();
+					return false;
+				}
 				var html='';
 		    	html+="<div class='zm-tag-editor-edit-item'>";
 		    	html+=" <span>"+skillname+"</span>"
@@ -214,10 +219,11 @@ var container_each='';
 					$('#searchSkill').show().focus().prev().show();
 		    		$('#searchSkill').parent().find('.err-tip').hide();
 				});
-			    $('#skill0').height('145px');
+			    $('#skill0').removeAttr('style').css('min-height','150px');
 			}
 		    //文档
 			Chosen.prototype.iniDocIputTags=function(name,id){
+				$('.pj-warmprompt').hide();
 				$this.obj.parents('.zm-tag-editor-editor').next().hide();
                 var html='';
 			    
@@ -234,7 +240,7 @@ var container_each='';
 		    	 //标签删除
 		        $('.zg-inline a[name=remove]').bind('click',function(){
 		       		var $floor=$(this).parents('.zg-inline').next();
-		       		$floor.find(':first-child').show();
+		       		/*$floor.find(':first-child').show();*/
 		       		$floor.find('input[type=text]').show();
 		       		$floor.find(':last-child').hide();
 		       		$(this).parent().remove();
@@ -251,7 +257,6 @@ var container_each='';
 		})()
 	    //话题  书籍 文章 站点 课程  技能
         $('#searchTopic,.zu-question-suggest-topic-input,#topictag,#searchSkill').live('keydown',function(event){ 
-        	
         	upOrDownConvert($(this));
         });
         //创建新的标签
@@ -305,25 +310,30 @@ function createtag(obj){
 		return false;
 	};
 	if(tagname.length>10&&$this.type!='skill'){
-		var $child=$('.topic-error').children();
-		$('.topic-error').empty().append($child).append('标签长度不能大于10个字').show();
+		if($this.type=='topictag'){
+			var $pjchild=$('#pj-warmprompt').children()
+			$('#pj-warmprompt').empty().append($pjchild).append('标签长度不能大于10个字').show(); 
+		}else{
+			var $child=$this.obj.parents('td').find('.pj-warmprompt').children();
+			$this.obj.parents('td').find('.pj-warmprompt').empty().append($child).append('标签长度不能大于10个字').show();
+		}
 		return false;
-	}else if(tagname.length>6&&$this.type=='skill'){
+	 }else if(tagname.length>20&&$this.type=='skill'){
 		var $child=$('.skill-error').children();
-		$('.skill-error').empty().append($child).append('技能长度不能大于6个字').show();
+		$('.skill-error').empty().append($child).append('技能长度不能大于20个字').show();
 		return false;
 	}
 	//技能
 	if($this.type=='skill'){
 		$.ajax({
 			type:"POST",
-	     	url:projectName+"skills/insert",
+	     	url:"/skills/insert",
 	     	data:{skillname:tagname},
 	     	dataType:'json',
 	     	success:function(data){
 	     		if(data.returnStatus=='000'){
 	     			$this.iniSkillsIputTags(tagname,data.obj.id);
-	     			$('#skill0').height('145px');
+	     			$('#skill0').removeAttr('style').css('min-height','150px');
 	     		}else if(data.returnStatus=='-999'){
 	     			var $child=$('.skill-error').children();
 	     			$('.skill-error').empty().append($child).append('敏感词语不能添加').show();
@@ -334,7 +344,7 @@ function createtag(obj){
 	}else{
 		$.ajax({
 			type:"POST",
-	     	url:projectName+"tags/insertTags",
+	     	url:"/tags/insertTags",
 	     	data:{tagname:tagname,tagtype:'9',tier:'1'},
 	     	dataType:"json",
 	     	success:function(data){
@@ -347,8 +357,8 @@ function createtag(obj){
 	                }
 	                		
 	     		}else if(data.returnStatus=='-999'){
-	     			var $child=$('.topic-error').children();
-	     			$('.topic-error').empty().append($child).append('敏感词语不能添加').show();
+	     			var $child=$('.pj-warmprompt').children();
+	     			$('.pj-warmprompt').empty().append($child).append('敏感词语不能添加').show();
 	     			return false;
 	     		}
 	     	}
@@ -367,7 +377,7 @@ function addTagToDatabase(topicindex){
 	tagclass=tagclass.substring(0,tagclass.length-1);
 	$.ajax({
 		type:'POST',
-		url:projectName+"myCenter/updateTopics",
+		url:"/myCenter/updateTopics",
 	    data:{id:tagid,topicsclass:tagclass},
 	    dataType:"json",
 	    success:function(data){

@@ -37,7 +37,7 @@ public class AccountDetail extends PageParent implements Serializable{
      * 更改原因
      */
     private String[] CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题","文档被下载","打赏文章","文章被打赏","话题悬赏","话题回答被采纳","取消悬赏,积分返还"
-    		,"话题悬赏提高"};
+    		,"话题悬赏提高","文档私有","文档公开","删除文档"};
     
     /**
      * 创建时间  	用于前端显示
@@ -72,7 +72,8 @@ public class AccountDetail extends PageParent implements Serializable{
 	}
 
 	/**
-	 *  CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题"};
+	 *  CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题","文档被下载","打赏文章","文章被打赏","话题悬赏","话题回答被采纳","取消悬赏,积分返还"
+    		,"话题悬赏提高","文档私有","文档公开"};
 	 */
 	public String[] getCHANGECAUSES() {
 		return CHANGECAUSES;

@@ -1,7 +1,7 @@
 <!-- 回答里面的评论 -->
 <div class="comment-app-holder">
   <div class="_CommentBox_root_G_1m _CommentBox_bordered_3Fo-" data-count='{$T.topiccount}'>
-    <i class="icon icon-spike" data-reactid=".0.0" style="left: 110px;"></i>
+    <i class="icon icon-spike" data-reactid=".0.0" style="{#if $T.iswap!=1}left: 110px;{#else}left:200px!important;{#/if}"></i>
     <div class="_CommentBox_list_10_K" data-reactid=".0.2">
        {#foreach $T.topicscommentList as commlist}
       <div class="_CommentItem_root_PQNS" tabindex="-1" aria-label="" data-id="{$T.commlist.typeid}">
@@ -53,17 +53,29 @@
           </div>
            <div class="_CommentItem_content_CYqW">{$T.commlist.commcontent}</div>
            <!--   判断当前用户是否为自己 -->
-            {#if $T.commlist.userid != $T.userid}
+           {#if $T.commlist.userid != $T.userid}
+            
            <div class="_CommentItem_footer_46v8 clearfix">
+           {#if $T.iswap!=1}
             <span class="_CommentItem_likes_2hey" data-tip="">
               <span>{$T.commlist.likesum}</span>
-                <span>赞</span>
-              </span>
-            <time title="{$T.commlist.showcreatetime}">{$T.commlist.showcreatetime}</time>
+              <span>赞</span>
+            </span>
+            {#/if}
+           <!--  <time title="{$T.commlist.showcreatetime}">{$T.commlist.showcreatetime}</time> -->
+            <span class="date">{$T.commlist.showcreatetime}</span>
+           {#if $T.iswap==1}
+            <a class="_CommentItem_action_Hk0w _CommentBox_textButton_3t9_  CommentItem_reply" href='javascript:void(0)' data-commentid='{$T.commlist.userid}'  data-name='{$T.commlist.tmpUserName}'  data-parentcommid='{$T.answerid}' data-createperson='{$T.commlist.userid}'>
+               <i class="zg-icon zg-icon-comment-reply" data-reactid=""></i>
+               <span>回复</span>
+            </a>
+            {#else}
             <button class="_CommentItem_action_Hk0w _CommentBox_textButton_3t9_  CommentItem_reply"  data-commentid='{$T.commlist.userid}'  data-name='{$T.commlist.tmpUserName}'  data-parentcommid='{$T.answerid}' data-createperson='{$T.commlist.userid}'>
                <i class="zg-icon zg-icon-comment-reply" data-reactid=""></i>
                <span>回复</span>
             </button>
+            {#/if}
+            {#if $T.iswap!=1}
             {#if $T.commlist.likedIds==1}
             <button class="_CommentItem_action_Hk0w _CommentBox_textButton_3t9_  CommentItem_like" data-topiccommentid='{$T.commlist.id}' data-like='0' data-createperson='{$T.commlist.userid}'>
               <i class="zg-icon zg-icon-comment-like"></i>
@@ -79,14 +91,23 @@
               <i class="zg-icon zg-icon-comment-report" data-reactid=""></i>
               <span>举报</span>
             </button>
+            {#/if}
           </div>
+         
           {#else}
           <div class="_CommentItem_footer_46v8 clearfix">
            <span class="date">{$T.commlist.showcreatetime}</span>
+           {#if $T.iswap==1}
+           <a label="删除" href='javascript:void(0)' class="_CommentItem_action_Hk0w _CommentBox_textButton_3t9_  CommentItem_cancel" data-reply='{$T.commlist.id}'   data-answer='{$T.answerid}'>
+              <i class="zg-icon zg-icon-comment-del" data-reactid=""></i>
+              <span>删除</span>
+            </a>
+           {#else}
            <button label="删除"  class="_CommentItem_action_Hk0w _CommentBox_textButton_3t9_  CommentItem_cancel" data-reply='{$T.commlist.id}'   data-answer='{$T.answerid}'>
               <i class="zg-icon zg-icon-comment-del" data-reactid=""></i>
               <span>删除</span>
             </button>
+           {#/if}
           </div>
           {#/if}
            <div class='_CommentItem_template' style='display:none'></div>

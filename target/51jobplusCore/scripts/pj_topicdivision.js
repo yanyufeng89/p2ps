@@ -9,36 +9,15 @@ $(function () {
 })
 
 function reloadPage() {
-    var theme = $("#filterCollapse li.last span.active").attr("data-index");
-    var topicstype = $("#filterCollapse li.first span.active").attr("data-index");
-    $.ajax({
-        type: "POST",
-        url: projectName + "topics/fore/search/" + theme,
-        data: {topicstype: topicstype},
-        dataType: "json",
-        ansync: false,
-        success: function (data) {
-            var datamodel = {
-                topicsPage: data.topicsPage.list,
-            }
-            //加载模板
-            $('.pagetemplate').setTemplateURL(projectName + 'topicSearchTemplate.html');
-            $('.pagetemplate').processTemplate(datamodel);
-            $('.items_area').empty().append($('.pagetemplate').html());
-            $('.pagetemplate').empty();
-            //刷新分页插件
-            var count = data.topicsPage.count;
-            var pageSize = data.topicsPage.pageSize;
-            if (count > 0) {
-                $("#sharetopicpaging").pagination({
-                    items: count,
-                    itemsOnPage: pageSize,
-                    cssStyle: 'light-theme',
-                    moduleType: 'topicsearch'
-                });
-            } else {
-                $("#sharetopicpaging").empty();
-            }
-        }
-    })
+
+	var Condition = $("#topics_input").val();
+	var sortType = $("#filterCollapse li.last span.active").attr("data-index");
+	var sharedType = $("#filterCollapse li.first span.active").attr(
+			"data-index");
+	var tags = "";
+	var uurl = encodeURI(projectName + "topics/fore/search/" + sharedType
+			+ "?Condition=" + Condition + "&sortType=" + sortType);
+	
+	window.location.href = uurl;
+
 }

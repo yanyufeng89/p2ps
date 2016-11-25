@@ -24,10 +24,12 @@
 			<h2 class="zm-list-content-title">
 			   <a href="/myHome/getHomePage/{$T.attenlist.userid}"  data-userid="{$T.attenlist.userid}"  target='_blank' class="zg-link author-link" title={$T.attenlist.username}>{$T.attenlist.username}</a>
 			</h2>
-			<div class="ellipsis">
+			<div class="pj-introduction ellipsis">
 			    <span class="bio">
-			       {#if list.description}
+			       {#if $T.attenlist.description}
 					  {$T.attenlist.description}
+				   {#else}
+				   无简介
 				   {#/if}
 			    </span>
 			</div>

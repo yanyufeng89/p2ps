@@ -2,20 +2,23 @@
 <html>
   
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
-           导航搜索
+           ${title}搜索结果-JobPlus
     </title>
-    <meta name="viewport" content="width=1230"/> 
+    <meta name="description" content="JobPlus网是国内首创的企业知识库公共平台,结构化的知识体系,包含文档,书籍,文章,网站,问答,在线课程的分享学习社区。一站式知识库平台,为7亿职场人员提供优质学习分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
+    <meta name="keywords" content="JobPlus,知识分享,知识库,文档,书籍,问答,课程,文章,网站,在线培训,企业课堂,员工培训,在线教育,职业技能,视频课程,培训网站,职场培训,网络课堂,人才培训,内容管理">
+    
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_searchres.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_framework.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_wkcommon_base.css" charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_index.css">
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_simplePagination.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" type="text/css" href="/css/pj_searchres.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_framework.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_wkcommon_base.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/pj_index.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_simplePagination.css">
   </head>
   
-  <body>
+  <body  id="searchtop">
     <#include "/mydocs/commonTemplate/topandtail/top.ftl"/> 
 
     <div class='division-banner'>
@@ -43,18 +46,18 @@
 	 <div class='pj-searches-left'>
 		<div id="searches" class="searches">
 		<#-- 
-		 <form id="searchresForm" class="searchForm" name="searchForm" action="/51jobplusCore/search/" method="get">
+		 <form id="searchresForm" class="searchForm" name="searchForm" action="/search/" method="get">
 		 -->
 		   <div class="searchForm">
 			<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
 			<#-- 
 			<input type="submit" id="searchres_button" class="search_icon" value="知识搜索">
 			-->
-			<input type="button" id="searchres_button" class="search_icon" onclick="javascript:reloadPage();" value="知识搜索">
-			<input type="text" id="searchres_input" class="search_input ui-autocomplete-input" name="Condition" tabindex="1" maxlength="64" autocomplete="off" 
-			placeholder="JobPlus海量知识库" style="color: rgb(153, 153, 153);" value="${preCondition}" onkeypress="if(event.keyCode==13){reloadPage();};">
+			<input type="button" id="searchres_button" class="search_icon" onclick="javascript:reloadPage();" value="知识搜索" style='width:140px'>
+			<input type="text" id="searchres_input" class="search_input ui-autocomplete-input" name="Condition"  style='width:552px' tabindex="1" maxlength="64" autocomplete="off" 
+			placeholder="JobPlus海量知识库" style="color: rgb(153, 153, 153);" value="${preCondition}" onkeypress="if(event.keyCode==13){reloadPage();};" >
 			<input type="hidden" name="fromSearch" id="fromSearches" value="true">
-			<input type="botton" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="searches-form-submit" value="分类搜索" onclick="javascript:reloadPage();">
+			<input type="botton" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="searches-form-submit" value="分类搜索" onclick="javascript:reloadPage();" style='width:140px'>
 		  </div>
 		  <#--  
 		  </form>
@@ -140,12 +143,12 @@
               <li class="last">
                     <dl class="title">知识类型:</dl>
 	                <span data-objtype="" <#if (preProtoType == 0)||(preProtoType == "")>class="active"</#if>>所有</span>
-					<span data-objtype="doc" <#if preProtoType?? && preProtoType == "doc">class="active"</#if>>文档</span>
-	                <span data-objtype="topics" <#if preProtoType?? && preProtoType == "topics">class="active"</#if>>话题</span>
-	                <span data-objtype="book" <#if preProtoType?? && preProtoType == "book">class="active"</#if>>书籍</span>
-	                <span data-objtype="courses" <#if preProtoType?? && preProtoType == "courses">class="active"</#if>>课程</span>
-	                <span data-objtype="article" <#if preProtoType?? && preProtoType == "article">class="active"</#if>>文章</span>
-	                <span data-objtype="site" <#if preProtoType?? && preProtoType == "site">class="active"</#if>>站点</span>
+					<span data-objtype="1" <#if preProtoType?? && preProtoType == "1">class="active"</#if>>文档</span>
+	                <span data-objtype="5" <#if preProtoType?? && preProtoType == "5">class="active"</#if>>话题</span>
+	                <span data-objtype="6" <#if preProtoType?? && preProtoType == "6">class="active"</#if>>书籍</span>
+	                <span data-objtype="3" <#if preProtoType?? && preProtoType == "3">class="active"</#if>>课程</span>
+	                <span data-objtype="2" <#if preProtoType?? && preProtoType == "2">class="active"</#if>>文章</span>
+	                <span data-objtype="4" <#if preProtoType?? && preProtoType == "4">class="active"</#if>>站点</span>
               </li>
             </div>
           </ul>
@@ -153,278 +156,17 @@
       </div>
       <div class="all-news-list" id="all-search-list">
           <div class="alllist" id="allsearch_all">
-		    <#if (result?eval)?? && result?eval ?size gt 0>
+		    <#if (reCount) gt 0>
              <div class="items_area">
-  <#--查询结果集-->
-  <#assign resultList=result?eval />
-  <#list resultList as item>
-  <#if item.protoType == "doc">
-  		<div class="item" id="item-1">
-                  <div class="topicdivision-content">
-					<div class="topicdivision-left">
-						 <div class="title">
-							 <a target="_blank" href="${request.getContextPath()}/docs/getDocsDetail?id=${item.data_id}"  title="${item.title}" style='margin-left: -6px;' >【文档】<#if item.title??>${item.title}<#else>0</#if></a>
-						 </div>
-						 <div class="newsinfo" title="${item.description}">
-							 <p>
-									<#if item.description??>${item.description}<#else>0</#if>
-							 </p>
-						 </div>
-						 <div class="tools">
-							 <div class="pj-meta-panel">
-								 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;${item.createTime}</a>
-
-                                 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-preview"></i>
-									 <#if item.readSum??>${item.readSum}<#else>0</#if>人浏览
-								 </a>
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 <#if item.likeSum??>${item.likeSum}<#else>0</#if>人赞
-								 </a>
-                                <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
-									 <i class="z-icon-download"></i><#if item.downSum??>${item.downSum}<#else>0</#if>人下载
-								 </a>
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
-									 <i class="z-icon-collect"></i><#if item.collectSum??>${item.collectSum}<#else>0</#if>人收藏
-								 </a>
-							 </div>
-						 </div>
-						 </div>
-						 <div class="topicdivision-right">
-							 <div class="picno">
-								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='<#if item.imgUrl?? && item.imgUrl?length gt 5>${item.imgUrl}<#else>${request.getContextPath()}/image/search_default.jpg</#if>' alt='' width='52' height='65'></div>
-									 </div>
-								 </div>
-							 </div>
-						 </div>
-					 </div>
-                </div>
-  <#elseif item.protoType == "book">
-  			<div class="item" id="item-1">
-                  <div class="topicdivision-content">
-					<div class="topicdivision-left">
-						 <div class="title">
-							 <a target="_blank" href="${request.getContextPath()}/books/getBookDetail?id=${item.data_id}"  title="${item.title}" style='margin-left: -6px;'>【书籍】<#if item.title??>${item.title}<#else>0</#if></a>
-						 </div>
-						 <div class="newsinfo" title="${item.description}">
-							 <p>
-									<#if item.description??>${item.description}<#else>0</#if>
-							 </p>
-						 </div>
-						 <div class="tools">
-							 <div class="pj-meta-panel">
-								 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;${item.createTime}</a>
-							<#--
-							<a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
-									 <i class="z-icon-preview"></i><#if item.readSum??><#if item.readSum??>${item.readSum}<#else>0</#if><#else>0</#if>人浏览
-								 </a>							
-							 -->
-								 
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-comment"></i>
-									 <#if item.replySum??>${item.replySum}<#else>0</#if>人推荐
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
-									 <i class="z-icon-collect"></i><#if item.collectSum??>${item.collectSum}<#else>0</#if>人收藏
-								 </a>
-							 </div>
-						 </div>
-						 </div>
-						 <div class="topicdivision-right">
-							 <div class="picno">
-								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='<#if item.imgUrl?? && item.imgUrl?length gt 5>${item.imgUrl}<#else>${request.getContextPath()}/image/search_default.jpg</#if>' alt='' width='52' height='65'></div>
-									 </div>
-								 </div>
-							 </div>
-						 </div>
-					 </div>
-                </div>
-  <#elseif item.protoType == "article">
-  				<div class="item" id="item-1">
-                  <div class="topicdivision-content">
-					<div class="topicdivision-left">
-						 <div class="title">
-							 <a target="_blank" href="${request.getContextPath()}/article/getArticleDetail?id=${item.data_id}"  title="${item.title}" style='margin-left: -6px;'>【文章】<#if item.title??>${item.title}<#else>0</#if></a>
-						 </div>
-						 <div class="newsinfo" title="${item.description}">
-							 <p>
-									<#if item.description??>${item.description}<#else>0</#if>
-							 </p>
-						 </div>
-						 <div class="tools">
-							 <div class="pj-meta-panel">
-                                 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;${item.createTime}</a>
-								 <a href="javascript:void(0);;" name="addcomment" class="meta-item toggle-comment js-comment">
-									 <i class="z-icon-preview"></i><#if item.readSum??>${item.readSum}<#else>0</#if>人浏览
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 <#if item.likeSum??>${item.likeSum}<#else>0</#if>人赞
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
-									 <i class="z-icon-collect"></i><#if item.collectSum??>${item.collectSum}<#else>0</#if>人收藏
-								 </a>
-							 </div>
-						 </div>
-						 </div>
-						 <div class="topicdivision-right">
-							 <div class="picno">
-								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='<#if item.imgUrl?? && item.imgUrl?length gt 5>${item.imgUrl}<#else>${request.getContextPath()}/image/search_default.jpg</#if>' alt=''  width='52' height='65'></div>
-									 </div>
-								 </div>
-							 </div>
-						 </div>
-					 </div>
-                </div>
-  <#elseif item.protoType == "courses">
-  				<div class="item" id="item-1">
-                  <div class="topicdivision-content">
-					<div class="topicdivision-left">
-						 <div class="title">
-							 <a target="_blank" href="${request.getContextPath()}/courses/getCourseDetail?id=${item.data_id}"  title="${item.title}" style='margin-left: -6px;'>【课程】<#if item.title??>${item.title}<#else>0</#if></a>
-						 </div>
-						 <div class="newsinfo" title="${item.description}">
-							 <p>
-									<#if item.description??>${item.description}<#else>0</#if>
-							 </p>
-						 </div>
-						 <div class="tools">
-							 <div class="pj-meta-panel">
-								<a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;${item.createTime}</a>
-
-								 <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
-									 <i class="z-icon-preview"></i><#if item.readSum??>${item.readSum}<#else>0</#if>人浏览
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 <#if item.likeSum??>${item.likeSum}<#else>0</#if>人赞
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
-									 <i class="z-icon-collect"></i><#if item.collectSum??>${item.collectSum}<#else>0</#if>人收藏
-								 </a>
-							 </div>
-						 </div>
-						 </div>
-						 <div class="topicdivision-right">
-							 <div class="picno">
-								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='<#if item.imgUrl?? && item.imgUrl?length gt 5>${item.imgUrl}<#else>${request.getContextPath()}/image/search_default.jpg</#if>' alt=''  width='52' height='65'></div>
-									 </div>
-								 </div>
-							 </div>
-						 </div>
-					 </div>
-                </div>
-  <#elseif item.protoType == "site">
-  			<div class="item" id="item-1">
-                  <div class="topicdivision-content">
-					<div class="topicdivision-left">
-						 <div class="title">
-							 <a target="_blank" href="${request.getContextPath()}/sites/getSiteDetail?id=${item.data_id}" title="${item.title}" style='margin-left: -6px;'>【站点】<#if item.title??>${item.title}<#else>0</#if></a>
-						 </div>
-						 <div class="newsinfo" title="${item.description}">
-							 <p>
-									<#if item.description??>${item.description}<#else>0</#if>
-							 </p>
-						 </div>
-						 <div class="tools">
-							 <div class="pj-meta-panel">
-							     <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">发布于&nbsp;${item.createTime}</a>
-								 <a href="javascript:void(0);;" name="addcomment" class="pj-meta-item toggle-comment js-comment">
-									 <i class="z-icon-preview"></i><#if item.readSum??>${item.readSum}<#else>0</#if>人浏览
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 <#if item.likeSum??>${item.likeSum}<#else>0</#if>人赞
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share  goog-menu-button">
-									 <i class="z-icon-collect"></i><#if item.collectSum??>${item.collectSum}<#else>0</#if>人收藏
-								 </a>
-							 </div>
-						 </div>
-						 </div>
-						 <div class="topicdivision-right">
-							 <div class="picno">
-								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='<#if item.imgUrl?? && item.imgUrl?length gt 5>${item.imgUrl}<#else>${request.getContextPath()}/image/search_default.jpg</#if>' alt=''  width='52' height='65'></div>
-									 </div>
-								 </div>
-							 </div>
-						 </div>
-					 </div>
-                </div>
-                
-  
-  <#else>
-  		<div class="item" id="item-1">
-                  <div class="topicdivision-content">
-					<div class="topicdivision-left">
-						 <div class="title">
-							 <a target="_blank" href="${request.getContextPath()}/topics/getTopicsDetail?topicId=${item.data_id}"  title="${item.title}" style='margin-left: -6px;'>【话题】<#if item.title??>${item.title}<#else>0</#if></a>
-						 </div>
-						 <div class="newsinfo" title="${item.title}">
-							 <p>
-									<#if item.title??>${item.title}<#else>0</#if>
-							 </p>
-						 </div>
-						 <div class="tools">
-							 <div class="pj-meta-panel">
-								 <a class="answer-date-link pj-meta-item" target="_blank" href="javascript:void(0);">编辑于&nbsp;${item.createTime}</a>
-								<a href="javascript:void(0);;" name="addcomment" class="meta-item toggle-comment js-comment">
-									 <i class="z-icon-comment"></i><#if item.readSum??>${item.readSum}<#else>0</#if>人评论
-								 </a>
-								 
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-thank">
-									 <i class="z-icon-thank"></i>
-									 <#if item.likeSum??>${item.collectSum}<#else>0</#if>人关注
-								 </a>
-
-								 <a href="javascript:void(0);;" class="pj-meta-item zu-autohide js-share goog-menu-button">
-									 <i class="z-icon-comment"></i><#if item.replySum??>${item.replySum}<#else>0</#if>人回答
-								 </a>
-							 </div>
-						 </div>
-						 </div>
-						 <div class="topicdivision-right">
-							 <div class="picno">
-								 <div class="pic">
-									 <div class="picx">
-											 <div class="pict"><img src='<#if item.imgUrl?? && item.imgUrl?length gt 5>${item.imgUrl}<#else>${request.getContextPath()}/image/search_default.jpg</#if>' alt=''  width='52' height='65'></div>
-									 </div>
-								 </div>
-							 </div>
-						 </div>
-					 </div>
-                </div>
-  </#if>          
-             
-</#list>
-
               
-          </div>
+             </div>
+            
 		  <#else>
 		  <div class='resultList'>
 			     <div class='emptyList'>
 				   <div class='empty-tip'>
 				       <div class="empty-img">
-					      <img src="/51jobplusCore/image/angry.png" alt="">
+					      <img src="/image/angry.png" alt="提示" class="lazy">
 					   </div>
 					   <div class="empty-info">
 							对不起，没有找到满足搜索条件的信息<br>
@@ -460,7 +202,7 @@
                 <div class="ui-pager pager-center">
                     <div class='pager'>
                         <div class="pager-inner">
-                            <div id="searchpaging" class="page"></div>
+                            <div id="searchpaging" class="page" onclick="href=#top"></div>
                         </div>
                     </div>
                 </div>
@@ -471,21 +213,55 @@
    </div>
    <div class='pj-searches-right'>
 	   <div class="share-plaza">
-	            <a class="share-icon bg-index" href="/51jobplusCore/sharein/searchuploadFile"></a>
-	            <a target="_blank" href="javascript:void(0)" class="text">
+	            <a class="share-icon bg-index" target="_self" href="/sharein/searchuploadFile"></a>
+	            <a target="_self" href="javascript:void(0)" class="text">
 				 文档---话题---书籍---课程---文章---站点
 				</a>
+	   </div>
+	    <div class='pj_jsonp ad_exposure'>
+	    <a href='http://www.hozenlab.com' target='_blank'>
+	      <img src='/image/ad_exposure_2.jpg' alt='广告' width='308' height='246' class="lazy">
+	    </a>
+	    <div class='advertising-direction'>广告</div>
+	   </div>
+	   <div class='pj_jsonp ad_exposure'>
+	   <a href='http://www.zhiguoguo.com' target='_blank'>
+	      <img src='/image/ad_exposure_1.jpg' alt='广告' width='308' height='246' class="lazy">
+	   </a>
+	   <div class='advertising-direction'>广告</div>
+	   </div>
+	   <div class='pj_jsonp ad_exposure'>
+	   <a href='http://www.qidianla.com/' target='_blank'>
+	      <img src='/image/ad_exposure_3.png' alt='广告' width='308' height='246' class="lazy">
+	   </a>
+	   <div class='advertising-direction'>广告</div>
 	   </div>
    </div>
   </div>
     <div class='pagetemplate'></div>
-    <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
+    <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
+    <a id="searchbacktop" title="回到顶部" href="#searchtop" class='back-to-top' style="bottom: 300px; display: none;"></a>
 	<#include "/mydocs/commonTemplate/pmorsmgjs/pmorsmg.ftl"/> 
-	<script type="text/javascript" src="/51jobplusCore/scripts/jquery.media.js"></script>
-	<script type="text/javascript" src="/51jobplusCore/scripts/pj_searchResult.js"></script>
-	<script type='text/javascript' src='/51jobplusCore/scripts/jquery.simplePagination.js'></script>
+	<script type='text/javascript'>
+			    var res=eval(${result});
+				var datamodel={
+					result:res,
+				}
+				//加载模板
+				$('.pagetemplate').setTemplateURL(projectName+'searchTemplate.html');
+				$('.pagetemplate').processTemplate(datamodel);
+				$('#allsearch_all  .items_area').append($('.pagetemplate').html());
+				$('.pagetemplate').empty();
+				$('.newsinfo a').each(function(){
+			      $(this).text(autoAddEllipsis($(this).text(),200));
+			    })
+    </script>
+	<script type="text/javascript" src="/scripts/jquery.media.js"></script>
+	<script type="text/javascript" src="/scripts/pj_searchResult.js"></script>
+	<script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
 	<script type="text/javascript">
-        <#if (reCount) gt 0>
+	<#-- 搜索条数大于10 显示分页 -->
+        <#if (reCount) gt 10>
             $(function () {
                 $("#searchpaging").pagination({
                     items: ${reCount},
@@ -496,6 +272,7 @@
             });
         </#if>
     </script>
+     
   </body>
 
 </html>

@@ -34,6 +34,13 @@ public interface IIndexService {
     public List<HotReommInfo> getHotRecommData();
 
     /**
+     * 最热推荐
+     *
+     * @return
+     */
+    public String getHotRecommDataBySolr();
+
+    /**
      * 最新分享
      *
      * @return

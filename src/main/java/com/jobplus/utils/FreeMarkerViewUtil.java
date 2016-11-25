@@ -48,13 +48,13 @@ public class FreeMarkerViewUtil extends FreeMarkerView {
         Locale locale = RequestContextUtils.getLocale(request);
 
         //如果是wap请求则调转到wap目录
-       /* if (isWapReq(request, getUrl()))
-            this.setUrl("wap/" + this.getUrl());*/
-        /*
-         * 默认不生成静态文件,除非在编写ModelAndView时指定CREATE_HTML = true, 这样对静态文件生成的粒度控制更细一点
-         * 例如：ModelAndView mav = new ModelAndView("search");
-         * mav.addObject("CREATE_HTML", true);
-         */
+      // if (isWapReq(request, getUrl()))
+       //     this.setUrl("wap/" + this.getUrl());
+        
+          // 默认不生成静态文件,除非在编写ModelAndView时指定CREATE_HTML = true, 这样对静态文件生成的粒度控制更细一点
+         //例如：ModelAndView mav = new ModelAndView("search");
+          //mav.addObject("CREATE_HTML", true);
+         
         if (Boolean.TRUE.equals(model.get("CREATE_HTML"))) {
             createHTML(getTemplate(locale), fmModel, request, response);
         } else {
@@ -99,31 +99,5 @@ public class FreeMarkerViewUtil extends FreeMarkerView {
     	String servletPath =   	request.getServletPath() ;
         String requestURI = servletPath+".html";
         return requestURI;
-    }
-
-    //wap允许的请求路径
-    List<String> wapReqUrlList = new ArrayList();
-
-    {
-        wapReqUrlList.add("index.ftl");
-        wapReqUrlList.add("mydocs/docs/bookDetail.ftl");
-        wapReqUrlList.add("mydocs/docs/courseDetail.ftl");
-        wapReqUrlList.add("mydocs/docs/articleDetail.ftl");
-        wapReqUrlList.add("mydocs/docs/documentDetail.ftl");
-        wapReqUrlList.add("mydocs/docs/siteDetail.ftl");
-        wapReqUrlList.add("mydocs/docs/topicDetail.ftl");
-    }
-
-    /**
-     * 是否wap请求
-     *
-     * @param request
-     * @param url
-     * @return
-     */
-    private boolean isWapReq(HttpServletRequest request, String url) {
-        if (Common.judgeIsMoblie(request) && wapReqUrlList.contains(url))
-            return true;
-        return false;
     }
 }

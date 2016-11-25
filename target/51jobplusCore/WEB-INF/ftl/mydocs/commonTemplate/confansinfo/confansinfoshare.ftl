@@ -1,13 +1,15 @@
 <div class="uc-head-top">
-       <div class='infotiptemplate'></div>
+       <div class='infotiptemplate'>
+         <img src='/image/sharetop.jpg' alt='分享' class="lazy">
+       </div>
 	   <div style="float:left">
-		   <a href="javascript:void(0)"  id='myselfattenman' data-userid='${Session.user.userid}'>我关注的人
+		   <#--<a href="javascript:void(0)"  id='myselfattenman' data-userid='${Session.user.userid}'>我关注的人
 		    <#if (Session.myHeadTop)??>
 			     <#list Session.myHeadTop?keys as itemKey>
 				     <#if itemKey="attenManSum">
 				        (${Session.myHeadTop[itemKey]})
 				     </#if>
-			     </#list>  
+			     </#list>
 		     </#if>
 		   </a>
 		   <a href="javascript:void(0)"  id='myselffans' data-userid='${Session.user.userid}'>  我的粉丝
@@ -16,13 +18,13 @@
 			     <#if itemKey="fansSum">
 			        (${Session.myHeadTop[itemKey]})
 			     </#if>
-		      </#list>   
+		      </#list>
 		     </#if>
-		   </a>
+		   </a>-->
 	  </div>
-	  
-	     <a href='javascript:void(0);' onclick="share();" target='_blank' class='head-sharein' style='float:right'></a>
-	  
+
+	  <#--<a href='javascript:void(0);' onclick="share();" class='head-sharein' style='float:right'></a>-->
+
 </div>
 <script type="text/javascript">
     function share() {
@@ -38,6 +40,7 @@
             type = 4;
         else if (currentUrl.indexOf("getSharedSiteList") > -1)
             type = 5;
-        window.open("/51jobplusCore/sharein/searchuploadFile?type=" + type);
+        //window.open("/sharein/searchuploadFile?type=" + type);
+        window.location.href = "/sharein/searchuploadFile?type=" + type;
     }
 </script>

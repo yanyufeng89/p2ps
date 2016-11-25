@@ -22,8 +22,8 @@
 	border-radius:4px;
 	-moz-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
 	-webkit-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
-	font-family: Arial,'微软雅黑';
-	_font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
+	_font-family: Arial,'Microsoft YaHei';
 	background: #fff;
 }
 
@@ -45,9 +45,9 @@
 
 #confirmBox p{
 	background:none;
-	font-size:14px;
+	font-size:16px;
 	padding:20px;
-	color:#333;
+	color:#555;
 }
 
 #confirmButtons{
@@ -63,8 +63,8 @@
 	height:30px;
 	width:80px;
 	font-size:14px;
-	font-family: Arial,'微软雅黑';
-	_font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
+	_font-family: Arial,'Microsoft YaHei';
 	text-decoration:none;
 	border:none;
 	line-height: 30px;

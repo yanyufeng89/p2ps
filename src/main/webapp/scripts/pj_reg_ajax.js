@@ -1,6 +1,15 @@
 var myreg = /^([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9\-]+@([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 var reg= /^[1][34578]\d{9}$/; //验证手机号码  
 var istrue=false;
+$(function(){
+	//注册界面切换
+	$('#reg li').live('click',function(){
+		var index=$(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$(this).parent().attr('data-active-index',index);
+		$('input[name=usertype]').val(Number(index)+1);
+	});
+})
 function reg_checkAjax(id){
 	var obj = $.trim($("#"+id).val());
 	var msg="";
@@ -40,15 +49,15 @@ function reg_checkAjax(id){
          						$("#regtype").val(0);
          						$("#regcode").show();
          						$('#mobliecode').attr('placeholder','邮箱验证码');
-         						$('#phonecode').val('获取邮箱验证码').attr('data-messagetype','1');//0是获取手机验证码 1是获取邮箱验证码
+         						$('#phonecode').attr('data-messagetype','1');//0是获取手机验证码 1是获取邮箱验证码
          					}else{
          						$("#regtype").val(1);
          						$("#regcode").show();
          						$('#mobliecode').attr('placeholder','短信验证码');
-         						$('#phonecode').val('获取手机验证码').attr('data-messagetype','0');
+         						$('#phonecode').attr('data-messagetype','0');
          					}
          					istrue=true;
-         					return true;
+//         					return true;
          				}else{
          					if(myreg.test(obj)){
          						var msg='该邮箱已存在！';
@@ -66,47 +75,8 @@ function reg_checkAjax(id){
 	//用户名验证
 	if(id=="username")
 	{
-	  type=1;
-      if(obj==""){
-	     msg='昵称不能为空！';
-		 update_html(id,"0",msg);
-		 return false;
-    	}
-       else if(/^\d.*$/.test(obj)){
-    	 msg='用户名不能以数字开头';
-		 update_html(id,"0",msg);
-		 return false;
-    	}
-       else if(obj.replace(/[^x00-xFF]/g,'**').length<4 || obj.replace(/[^x00-xFF]/g,'**').length>18 ){
-    	 msg='合法长度为4-18个字符';
-		 update_html(id,"0",msg);
-		 return false;
-    	}
-       else if(!(/^[_,.!\n\w\u4e00-\u9fa5]*$/.test(obj))){
-         msg='用户名只能包含_,英文字母，数字或者中文';
-		 update_html(id,"0",msg);
-		 return false;
-    	}
-    	else{
-    		$.ajax({
-    			url:"user/check/"+obj+"/"+type,
-				type : "POST", 
-				data :{id:obj},
-				contentType: "application/text",
-                success:function(data){
-                	 if(data==0){	
-     					msg='填写正确！';
-     					update_html(id,"1",msg);
-     					return true;
-     				}else{
-     					msg='用户名已存在！';
-     					update_html(id,"0",msg);
-     					return false;
-     				} 
-                 }
-    		})
-			 return true;
-    	}
+		//校验昵称
+	  checkNcName(obj,id);
       
 	}
 	if(id=="email1"||id=="email3"){
@@ -144,6 +114,7 @@ function reg_checkAjax(id){
 		 if(obj==""){
 			msg="短信验证码不能为空！";
 			 update_html(id,"0",msg);
+			 check_codes(1);
 			 return false;
 		 }else{
 			msg="输入成功！";
@@ -153,6 +124,50 @@ function reg_checkAjax(id){
 	}
 }
 
+function checkNcName(obj,id){
+	type=1;
+    if(obj==""){
+	     msg='昵称不能为空！';
+		 update_html(id,"0",msg);
+		 return false;
+  	}
+     else if(/^\d.*$/.test(obj)){
+  	 msg='用户名不能以数字开头';
+		 update_html(id,"0",msg);
+		 return false;
+  	}
+     else if(obj.replace(/[^x00-xFF]/g,'**').length<4 || obj.replace(/[^x00-xFF]/g,'**').length>18 ){
+  	 msg='合法长度为4-18个字符';
+		 update_html(id,"0",msg);
+		 return false;
+  	}
+     else if(!(/^[_,.!\n\w\u4e00-\u9fa5]*$/.test(obj))){
+       msg='用户名只能包含_,英文字母，数字或者中文';
+		 update_html(id,"0",msg);
+		 return false;
+  	}
+  	else{
+  		$.ajax({
+  			url:"user/check/"+obj+"/"+type,
+				type : "POST", 
+				data :{id:obj},
+				contentType: "application/text",
+              success:function(data){
+              	 if(data==0){	
+   					msg='填写正确！';
+   					update_html(id,"1",msg);
+   					return true;
+   				}else{
+   					msg='用户名已存在！';
+   					update_html(id,"0",msg);
+   					return false;
+   				} 
+               }
+  		})
+			 return true;
+  	}
+	
+}
 function update_html(id,type,msg){
 	
 	if(type=="0"){  
@@ -346,16 +361,25 @@ function sendmsg(obj,mtype){
 	var moblie=$("#email").val();
 	var authcode=$("#CheckCode").val();
 	if(mtype!='forgetpw'){
+		var ncName = $("#username").val();
+		if(!checkNcName(ncName,'username')){
+			check_codes(1);
+			return false;
+		}
+		
 		reg_checkAjax("email");
 		if(!istrue){
+			check_codes(1);
 			return false;
 		};
 		if(!reg.test(moblie)&&!myreg.test(moblie)){
 			layer.msg('请输入正确的手机号码！', {offset:'36%',shade:0.3,shadeClose:true});
+			check_codes(1);
 			return false;
 		}
 		if(authcode==""){
 			layer.msg('请输入验证码！', {offset:'36%',shade:0.3,shadeClose:true});
+			check_codes(1);
 			return false;
 		}
 		var checkCode="";
@@ -364,8 +388,10 @@ function sendmsg(obj,mtype){
 		});
 		if($.trim($("#CheckCode").val().toLowerCase())!= $.trim(checkCode.toLowerCase())){
 		  layer.msg('请输入正确的验证码！', {offset:'36%',shade:0.3,shadeClose:true});
+		  check_codes(1);
 		  return false;  
 		}
+		
 	}
 
 	//mtype 不同表示两个界面 一个是找回密码界面获取验证码  一个是注册界面获取验证码
@@ -391,6 +417,7 @@ function sendmsg(obj,mtype){
     			$('input[name=verification_code]').val(data.returnData);
     		}else{
     			layer.msg('发送异常,请稍后再试！', {offset:'36%',shade:0.3,shadeClose:true});
+    			check_codes(1);
     		}
     	}
 	})

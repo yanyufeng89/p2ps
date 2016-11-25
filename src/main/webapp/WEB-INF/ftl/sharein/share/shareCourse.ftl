@@ -101,16 +101,16 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的课程;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关的课件；
                       </li>
                       <li>
-                        2.输入框里粘贴你要分享的视频链接或者音频链接, 点击"√"进行校对无误之后确定分享;
+                        2. 输入框里粘贴你要分享的视频链接或者音频链接，点击"√"进行校对无误之后确定分享；
                       </li>
                       <li>
-                        3.严禁分享含有辱骂他人、淫秽色情及低俗信息等视频和音频链接;
+                        3. 严禁分享含有辱骂他人、淫秽色情及低俗信息等视频和音频链接；
                       </li>
                       <li>
-                        4.课程分享有问题需要帮助？详情请查看知识库
+                        4. 课程分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
@@ -118,6 +118,7 @@
                   </div>
                 </div>
 			  <form method="post" action="/myCenter/shareCourse" enctype="multipart/form-data" id='courseaddForm'>
+			     <input style='display:none'/>
                 <div id="upload-course-container" style="display:none;">
                   <div class="upload-steps clearfix">
                     <ul>
@@ -143,6 +144,8 @@
 				   <div id="uploadcourse-list" class="uploadcourse-list">
                       <input type='hidden' name='coursesurl' value=''>
                       <input type='hidden' name='coursesname' value=''>
+                      <#-- 这里是课程目录  -->
+                      <input type='hidden' name='contents' value=''>
                       <div class="editlayoutbook" id="upload-item-0">
                         <dl class="editupload">
                           <dd>
@@ -209,7 +212,7 @@
                                       <div class="zm-tag-editor-editor zg-clear">
                                         <div class="zg-inline" id="courseinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
-                                          <input style='display:none'/>
+                                         
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" 
@@ -236,16 +239,16 @@
                     </h4>
                     <ol>
                       <li>
-                        1.分享课程时必须对该课件填写推荐理由，可以让别人更加清晰的了解该课件的相关内容;
+                        1. 分享课程时必须对该课件填写推荐理由，可以让别人更加清晰的了解该课件的相关内容；
                       </li>
                       <li>
-                        2.课程分享一定要选择分类,方便记录、查询以及搜索;
+                        2. 课程分享一定要选择分类，方便记录、查询以及搜索；
                       </li>
                       <li>
-                        3.多个标签之间要用逗号隔开,便于更多的好友发现查看;
+                        3. 多个标签之间要用逗号隔开，便于更多的好友发现查看；
                       </li>
                        <li>
-                        4.课程分享有问题需要帮助？详情请查看知识库
+                        4. 课程分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>

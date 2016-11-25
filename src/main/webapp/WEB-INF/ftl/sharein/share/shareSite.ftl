@@ -96,16 +96,16 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的站点;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关的站点；
                       </li>
                       <li>
-                        2.输入框里粘贴你要分享的网站链接, 点击"√"进行校对无误之后确定分享;
+                        2. 输入框里粘贴你要分享的网站链接, 点击"√"进行校对无误之后确定分享；
                       </li>
                       <li>
-                        3.禁止分享非法，含有淫秽色情及低俗信息的站点链接;
+                        3. 禁止分享非法，含有淫秽色情及低俗信息的站点链接；
                       </li>
                       <li>
-                        4.站点分享有问题需要帮助？详情请查看知识库
+                        4. 站点分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
@@ -113,6 +113,7 @@
                   </div>
                 </div>
 			   <form method="post" action="/myCenter/shareSite" enctype="multipart/form-data" id='siteaddForm'>
+			    <input style='display:none'/>
                 <div id="upload-site-container"  style="display:none;">
                   <div class="upload-steps clearfix">
                     <ul>
@@ -205,7 +206,7 @@
                                       <div class="zm-tag-editor-editor zg-clear">
                                         <div class="zg-inline" id="siteinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
-                                          <input style='display:none'/>
+                                          
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" 
@@ -232,16 +233,16 @@
                     </h4>
                     <ol>
                       <li>
-                        1.站点分享时必须对该站点填写推荐理由，可以让别人更加清晰的了解该站点的亮点以及相关内容;
+                        1. 站点分享时必须对该站点填写推荐理由，可以让别人更加清晰的了解该站点的亮点以及相关内容；
                       </li>
                       <li>
-                        2.分享站点一定要选择分类,方便记录、查询以及搜索;
+                        2. 分享站点一定要选择分类，方便记录、查询以及搜索；
                       </li>
                       <li>
-                        3.多个标签之间要用逗号隔开，便于更多的好友发现查看;
+                        3. 多个标签之间要用逗号隔开，便于更多的好友发现查看；
                       </li>
                        <li>
-                        4.站点分享有问题需要帮助？详情请查看知识库
+                        4. 站点分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>

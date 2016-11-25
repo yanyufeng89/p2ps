@@ -8,9 +8,7 @@
 #upload-initcourse-container, #upload-course-container {
     border: 1px solid #cdcdcd;
 }
-.edit-table .edit-class-sub {
-    height: 223px!important;
-}
+
 .add-question-title-form .booksimg, .add-question-title-form .booksinfo {
     float: left;
     font-size: 12px;

@@ -2,93 +2,93 @@ var ispublic=true;
 $(function(){
 	//分类
 	getAllParentTypeConfigs('articletype');
-	
-	//输入文章链接  点击确定
-	$('.articlepreview').live('click',function(){
-		
-		var url=$('#searcharticle').val();
-		var $child=$(this).nextAll('.error').children();
-		if($.trim(url)==''){
-			 $(this).nextAll('.error').empty().append($child).append('请输入正确的链接').show();
-	    	 return false;
-		}
-		//判断链接是否合法   
-	     if(isURL(url)){
-	    	$('.capture-loading').prev().val('');
-	 		$('.capture-loading').show();
-	    	//后台判断是否能够拼通链接
-	        get3WInfo(url);
-	     }else{
-	    	 $(this).nextAll('.error').empty().append($child).append('链接格式不正确').show();
-	    	 return false;
-	     }
-	})
-	
+	//实例化编辑器
+	 var editor=UM.getEditor('arsummernote',{
+		    initialFrameWidth :720,//设置编辑器宽度
+			initialFrameHeight:603,//设置编辑器高度 
+			scaleEnabled:true
+		});
+   /*$(".edui-body-container").css("width", "98%");*/
+	//UEditor点击全屏按钮事件
+   $('.edui-btn-fullscreen').live('click',function(){
+	   	if($('.edui-body-container').height()=='603'){
+	   		 $('.edui-body-container').css('height','950px');
+	   		 $('.zg-noti-number,#ft,#footnote').hide();
+	   		$('.editlayoutarticle dd').eq(1).hide();
+	   	}else{
+	   		 $('.edui-body-container').css('height','603px');
+	   		 $('.zg-noti-number,#ft,#footnote').show();
+	   		$('.editlayoutarticle dd').eq(1).show();
+	   	}
+   });
 	//确认分享
 	$('#sharearticle').live('click',function(){
-		//推荐理由必填
-		$('textarea[name=recommend]').each(function(){
-			if($.trim($(this).val()).length==0){
-				$(this).nextAll().css('display','inline-block');
-                $(this).focus();
-                return false;
-			}
-		})
+		//标题不为空
+		if($.trim($('#pj-article-suggest-title-content').val()).length==0){
+			$('#pj-article-warnmsg .item-msg-content').html('请输入文章标题').show();
+			$('#pj-article-warnmsg').show();
+			$('#pj-article-suggest-title-content').focus();
+			return false;
+		}
+		if($.trim($('#pj-article-suggest-title-content').val()).replace(/[^x00-xFF]/g,'**').length>256){
+			$('#pj-article-warnmsg .item-msg-content').html('标题字数超出最大限制').show();
+			$('#pj-article-warnmsg').show();
+			$('#pj-article-suggest-title-content').focus();
+			return false;
+		}
+		if(!editor.hasContents()){
+			$('#pj-article-warnmsg .item-msg-content').html('请输入文章内容');
+			$('#pj-article-warnmsg').show();
+			return false;
+		}
+		if(editor.getContent().replace(/[^x00-xFF]/g,'**').length>16777215){
+			$('#pj-article-warnmsg .item-msg-content').html('文章内容字数超出最大限制');
+			$('#pj-article-warnmsg').show();
+			return false;
+		}
 		//分类
 		if($('input[name=articletype]').val()==''||$('input[name=articletype]').val().indexOf('undefined')!=-1){
 			$('#pj-modal-dialog-articleclassify').show();
 			return false;
 		}
+		$('input[name=intro]').val(editor.getContent());
 		//标签
 		var tagid="";
 		$("#articleinputtags div a").each(function(){
 			tagid+=$(this).attr('id')+":"+$(this).data('name')+",";
 		});
 		$("input[name=articleclass]").val(tagid.substring(0,tagid.length-1));
-		
+		//添加遮罩层 防止在上传的同时做其他操作
+		addMaskLayer();
 		$('#articleaddForm').submit();
 	})
 	//推荐理由获得焦点
 	$('textarea[name=recommend]').live('click',function(){
 		$(this).nextAll().css('display','none');
 	})
-    /*//标签删除
-    $('.zg-inline a[name=remove]').live('click',function(){
-   		var $floor=$(this).parents('.zg-inline').next();
-   		$floor.find(':first-child').show();
-   		$floor.find('input[type=text]').show();
-   		$floor.find(':last-child').hide();
-   		$(this).parent().remove();
-   	});*/
+    //确定
+	$('#btnarticlesure').live('click',function(){
+		if($.trim($('#searcharticle').val()).length==0){
+			var $child=$('#searcharticle').next().children();
+			$('#searcharticle').next().empty().append($child).append('请输入标题').show();
+	    	return false;
+		}else{
+			$('#upload-initarticle-container').hide();
+	    	$('#upload-article-container').show();
+	    	$('#pj-article-suggest-title-content').val($('#searcharticle').val());
+		}
+	})
+	//窗体缩放
+	$(window).resize(function(){
+		$('.edui-container').css('z-index','0');
+	})
+	//获取公开 或 匿名
+    $("input[type=radio]").live('change',function(){
+	    $('input[name=ispublic]').val($(this).val());
+    }) 
 })
 
-//判断输入的链接是否拼通
-function get3WInfo(url){
-	$.ajax({
-		type:"POST",
-		url:projectName+"/myCenter/get3WInfo",
-		data:{url:url,tableName:'tbl_article'},
-		dataType:"json",
-     	success:function(data){
-     		if(data.returnStatus=='000'){//返回成功
-     			$('.capture-loading').show();
-     			$('#upload-initarticle-container').hide();
-    	    	$('#upload-article-container').show();
-    	    	$('input[name=articleurl]').val(url);
-    	    	
-    	    	
-    	    	//文章详情
-	            initTitleInfoBySearchArticle(data);
-    		}else{//返回失败
-    			var $child=$('.articlepreview').nextAll('.error').children();
-    			$('.articlepreview').nextAll('.error').empty().append($child).append(data.returnMsg).show();
-    		}   
-     		$('.capture-loading').prev().val('确定');
-    		$('.capture-loading').hide();
-    	}
-		
-	})
-}
+
 //文章详情
 function initTitleInfoBySearchArticle(data){
     $('.add-course-title-form').empty();
@@ -98,29 +98,10 @@ function initTitleInfoBySearchArticle(data){
 	container_div+="  <input type='hidden' name='intro' value='"+data.obj.intro+"'>"
 	container_div+="  <p><span>[文章]</span>"+data.obj.title+"</p>"
 	if(data.obj.intro!=undefined){
-		if(data.obj.intro.length>180){
-			container_div+="  <p title='"+data.obj.intro+"'><span>简介:</span>"+data.obj.intro.substring(0,180)+"..."+"</p>"
-		}
-		else
-			container_div+="  <p title='"+data.obj.intro+"'><span>简介:</span>"+data.obj.intro+"</p>"
+	   container_div+="  <p><span>简介:</span>"+data.obj.intro+"</p>"
 	}
 	
 	container_div+="</div>";
 	
 	$('.add-course-title-form').append(container_div);
 }
-//判断是否是合格的URL
-function isURL (str_url) {// 验证url  
-    var strRegex="^((https|http|rtsp|mms)?://)"  
-    + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@  
-    + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184  
-    + "|" // 允许IP和DOMAIN（域名）  
-    + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.  
-    + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名  
-    + "[a-z]{2,6})" // first level domain- .com or .museum  
-    + "(:[0-9]{1,4})?" // 端口- :80  
-    + "((/?)|" // a slash isn't required if there is no file name  
-    + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$"; 
-    var re=new RegExp(strRegex); 
-    return re.test(str_url); 
-} 

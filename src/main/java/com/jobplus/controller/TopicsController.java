@@ -152,6 +152,7 @@ public class TopicsController {
 			//后台管理员查看
 			mv.setViewName("manage/topicDetail");
 		}else{
+			
 			mv.setViewName("mydocs/docs/topicDetail");
 		}
 		return mv;

@@ -3,8 +3,10 @@ package com.jobplus.service.impl;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.jobplus.controller.DocsController;
 import com.jobplus.dao.AccountMapper;
 import com.jobplus.pojo.Account;
 import com.jobplus.pojo.AccountDetail;
@@ -20,6 +22,7 @@ import com.jobplus.service.IAccountService;
 @Service("accountService")
 public class AccountServiceImpl implements IAccountService {
 
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 	@Resource
 	private IAccountDetailService accountDetailService;
 	@Resource
@@ -91,6 +94,7 @@ public class AccountServiceImpl implements IAccountService {
         actd.setAccountid(accountid);
         
         ret = this.adOrDecAccount(act, actd);
+        logger.info("积分扣减**ret==" + ret +"  " + actd.getCHANGECAUSES()[changecause] + " 值："+ changevalue);
 		return ret;
 	}
 

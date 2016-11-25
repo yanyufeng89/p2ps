@@ -2,30 +2,20 @@
 {#foreach $T.collectedBookPage as collist}
 <li>
 
-    <div class="w356 fs14 fc3 ib titlehidden">
+    <div class="w346 fs14 fc3 ib titlehidden">
         <div class="checkbox chk" data-bookid="{$T.collist.id}" data-commentid="{$T.collist.myCollect.id}" data-name="{$T.collist.bookname}">
         </div>
-        <a href="/51jobplusCore/books/getBookDetail?id={$T.collist.id}" target="_blank" title="{$T.collist.bookname}">
+        <a href="/books/getBookDetail/{$T.collist.id}" target="_blank" title="{$T.collist.bookname}">
            {$T.collist.bookname}
         </a>
     </div>
     
-    <div class="w92 ib ilbook">
-      {#if $T.collist.author}
-         {$T.collist.author}
-      {#/if}
-    </div>
+    <div class="w73 ib ilbook recommendhidden"><p title='{$T.collist.author}'>{#if $T.collist.author}{$T.collist.author}{#/if}</p></div>
     
-    <div class="w125 ib">
-         {$T.collist.press}
-    </div>
+    <div class="w125 ib recommendhidden"><p title='{$T.collist.press}'>{$T.collist.press}</p></div>
     
-    <div class="w92 ib ilbookc">
-        {$T.collist.collectsum}
-    </div>
-    <div class="w119 ib ilbook">
-        {$T.collist.userShareTime}
-    </div>
+    <div class="w92 ib ilbookc">{$T.collist.collectsum}</div>
+    <div class="w119 ib ilbook">{$T.collist.userShareTime}</div>
     
     <div class="w92 ib operate">
         <span data-bookid="{$T.collist.id}" data-commentid="{$T.collist.myCollect.id}" data-name="{$T.collist.bookname}">

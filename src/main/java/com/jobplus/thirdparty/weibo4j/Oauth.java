@@ -48,8 +48,8 @@ public class Oauth extends Weibo {
 		m.update(t[1].getBytes());
 		String part1Expect = BASE64Encoder.encode(m.doFinal());
 
-		sun.misc.BASE64Decoder decode = new sun.misc.BASE64Decoder();
-		String s = new String(decode.decodeBuffer(t[1]));
+		java.util.Base64.Decoder decode = java.util.Base64.getDecoder();
+		String s = new String(decode.decode(t[1]));
 		if (part1.equals(part1Expect)) {
 			return ts(s);
 		} else {

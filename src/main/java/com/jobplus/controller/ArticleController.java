@@ -129,7 +129,8 @@ public class ArticleController {
 				//后台管理员查看
 				mv.setViewName("manage/articleDetail");
 			}else{
-				mv.setViewName("/mydocs/docs/articleDetail");
+				
+				mv.setViewName("mydocs/docs/articleDetail");
 			}
 		} else {
 			logger.info("**getArticleDetail*获取文章详情  失败   record.getId() == null  999****");

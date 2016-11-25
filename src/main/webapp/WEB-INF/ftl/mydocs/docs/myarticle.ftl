@@ -17,8 +17,8 @@
 		
 		<div class="uc-aside">
 		<div class="uc-user-box">
-		<div class="img-center">
-		<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
+		<div class="<#if Session.user.usertype==2>img-business-center<#else>img-center</#if>">
+		<a href="/myCenter/getMyHeadTop" target="_self">
 		   <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
 		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
@@ -30,10 +30,20 @@
 			<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
 	           <#if (Session.user)??>
 		           ${Session.user.username}
-		        </#if>
+		       </#if>
 		    </a>
+		   <#if Session.user.usertype==2>
+		   <#else>
+             <span class="pj-level"><em>LV.${Session.user.userlevel}</em></span>
+		   </#if> 
 		</p>
-		<p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+		<p class="user-level">
+		  <#if Session.user.usertype==2>
+		    <a href="javascript:void(0)" target="_blank">&nbsp;进入公司主页</a> 
+		  <#else>
+		    <a href="/myHome/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入个人主页</a>
+		  </#if>
+		</p>
 
 		<div class="mydoc-list">
 		    <ul id="accordion">

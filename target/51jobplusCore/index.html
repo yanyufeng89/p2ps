@@ -6,7 +6,7 @@
     <title>
            首页
     </title>
-    <meta name="viewport" content="width=1230"/>
+    
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta property="wb:webmaster" content="a07e8efa7bc99422" />
     <link rel="stylesheet" type="text/css" href="css/pj_wkcommon_framework.css">
@@ -41,7 +41,7 @@
         <div class="box top-search-box">
           <div class="navbar-header">
             <a class="navbar-brand" href="#">
-               <img src="/51jobplusCore/image/pluslogo.png" class="img-responsive">
+               <img src="/image/pluslogo.png" class="img-responsive">
             </a>
           </div>
         </div>
@@ -1541,4 +1541,13 @@
     </div>
     <script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="scripts/pj_content.js"></script>
+     <script type="text/javascript" src="/scripts/jquery.lazyload.min.js"></script>
+     <script>
+       jQuery(document).ready(function ($) {
+           $("img.lazy").lazyload({
+               placeholder: "image/loading_1.gif",
+               effect: "fadeIn"
+           });
+       });
+     </script>
 </html>

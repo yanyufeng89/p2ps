@@ -1,20 +1,12 @@
 <div class="background-skills-container section-container zg-empty" id='skill0'>
   <div class="header">
-	<span>技能专长</span> 
+	<span class='skill-icon'>技能专长</span> 
 	<a href="javascript:void(0)" id="addcontinuousskill" class="add-all ml20  add-all-able"  data-skillid='{$T.skillid}' data-skillitem='{$T.skillitems}'>
 	  <span>+</span>&nbsp;继续添加
 	</a>
   </div>
   <div class="manage-skills  zg-empty">
-      <div class="zg-inline" id="skillinputtags">
-         {#foreach $T.skillitem as skill}
-            <div class="zm-tag-editor-edit-item">
-            <span class="nor">{$T.skill.name}</span>
-            <a id="{$T.skill.id}"  data-name='{$T.skill.name}' href="javascript:void(0)" class="zm-tag-editor-remove-button"
-              name="removeskill">
-            </a>
-            </div>
-         {#/for}
+      <div class="zg-inline">
       </div>
       <div class="zm-tag-editor-command-buttons-wrap zg-left">
         <input type="hidden" name="currentskillval" value="">
@@ -22,7 +14,17 @@
         <label class="err-tip" style="display:none;">最多添加50个技能</label>
        </div>
   </div>  
-  <div class="zm-command">
+  <div class='skills-editor' id='skillinputtags'>
+     {#foreach $T.skillitem as skill}
+            <div class="zm-tag-editor-edit-item">
+            <span class="nor">{$T.skill.name}</span>
+            <a id="{$T.skill.id}"  data-name='{$T.skill.name}' href="javascript:void(0)" class="zm-tag-editor-remove-button"
+              name="removeskill">
+            </a>
+            </div>
+     {#/for}
+  </div>
+  <div class="zm-command maincontent">
     <span class="skill-error">
         <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
     </span>

@@ -12,6 +12,9 @@
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
     
     <link rel='stylesheet' type='text/css' href='/css/pj_bookdetail.css'>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+          <img src='/image/logo_1.jpg' />
+    </div>
   </head>
   <body id='doctop'>
     <div class="page">
@@ -46,14 +49,13 @@
 		<div class='authorinfo doc-value'>
 		<#-- 匿名用户  -->
 		 <#if record.ispublic==2>
-			
-			   <a href='javaScript:void(0);' target='_blank'>
+			   <a target='_blank'>
 			    <img class="uname lazy" src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像"  data-moduletype="1">
-			  </a>
-				<span class='author-link'>
-				   <a href='javaScript:void(0);' target='_blank'>匿名用户</a>
-				</span>
-		<#else>
+			   </a>
+			   <span class='author-link'>
+				   <a  target='_blank'>匿名用户</a>
+			   </span>
+		 <#else>
 			 <#if (record)??>
 			   <a href='/myHome/getHomePage/${record.objCreator.userid}' target='_blank'>
 			   <#if (record.objCreator.headicon)??>
@@ -61,14 +63,11 @@
 			   <#else>
 			    <img class="uname lazy" src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" data-userid="${record.objCreator.userid}" data-moduletype="1">
 			   </#if>
-			  </a>
-				<span class='author-link' data-userid="${record.objCreator.userid}">
+			   </a>
+			   <span class='author-link' data-userid="${record.objCreator.userid}">
 				   <a href='/myHome/getHomePage/${record.objCreator.userid}' target='_blank'>${record.objCreator.username}</a>
-				</span>
-		
-		</#if>
-			
-			
+			   </span>
+		    </#if>
 			<span class='createtime'>${record.createtime?string("yyyy-MM-dd")}</span>
 			<span class='likesum'>${record.likesum}人赞</span>
 			<span class='readsum'>${record.readsum}人浏览</span>
@@ -99,7 +98,7 @@
 		      <#assign  url=record.readurl?substring(0,record.readurl?index_of('.swf'))/>
 		      <input type='hidden' name='readurl' value='${url}'>
 		    </#if>
-		    <#if record.docsuffix?lower_case=='ppt'>
+		    <#if record.docsuffix?lower_case=='ppt' || record.docsuffix?lower_case=='pptx' || record.docsuffix?lower_case=='pps' || record.docsuffix?lower_case=='pot'>
 		        <div class='doc-ppt'>
 		          <a class="media" href="${url}1.swf"></a>
 		        </div>
@@ -224,8 +223,7 @@
 					</#if>
 
                    <span id="docreport" data-commentbyid="${record.userid}" data-topiccommentid="${record.id}" data-reporttype="4">
-							   <i class="z-icon-report-o"></i>
-							   举报
+							   <i class="z-icon-report-o"></i>举报
 				   </span>
 				  分享到
 				</div>

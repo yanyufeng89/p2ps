@@ -61,7 +61,7 @@
   <update id="adOrDecAccount" parameterType="com.jobplus.pojo.Account" >
     update tbl_account
      set ${moneyType} = CASE 
-	     WHEN ( #{score,jdbcType=INTEGER} + ${moneyType} )  <![CDATA[ <= ]]>   0 THEN 0
+	     WHEN ( #{score,jdbcType=INTEGER} + ${moneyType} )  <![CDATA[ < ]]>   0 THEN 'false'
 	     ELSE ( #{score,jdbcType=INTEGER} + ${moneyType} )
 	     END  
     where userId = #{userid,jdbcType=INTEGER}

@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.jobplus.dao.PersonalSkillMapper;
@@ -82,18 +83,25 @@ public class PersonalSkillServiceImpl implements IPersonalSkillService {
 	@Override
 	public int insertOrUpdSkill(PersonalSkill record,String skillIds) {
 		int ret = 0;
-		PersonalSkill tmp = this.selectByPrimaryKey(record.getId());
-		if(tmp == null){
-			ret = this.insert(record);
-		}else{
-			if(StringUtils.isBlank(record.getSkillitem())){
-				//技能项为空  相当于删除记录
-				ret = this.deleteByPrimaryKey(record.getId());
+		try {
+			PersonalSkill tmp = this.selectByPrimaryKey(record.getId());
+			if(tmp == null){
+				ret = this.insert(record);
 			}else{
-				//更改记录
-				ret = this.updateByPrimaryKeySelective(record);
-			}
-		}		
+				if(StringUtils.isBlank(record.getSkillitem())){
+					//技能项为空  相当于删除记录
+					ret = this.deleteByPrimaryKey(record.getId());
+				}else{
+					//更改记录
+					ret = this.updateByPrimaryKeySelective(record);
+				}
+			}	
+		} catch (DuplicateKeyException e) {
+//			e.printStackTrace();
+			//更改记录
+			ret = this.updateByPrimaryKeySelective(record);
+		}
+			
 		// 更新用户 updatetime
 		User user = new User();
 		user.setUserid(record.getUserid());

@@ -3,20 +3,20 @@
 <div class="email">
   <span>邮箱:&nbsp;&nbsp;</span>
   <span class='emailinfo'>
-	   <textarea name="email" class="content" style="resize: none" placeholder="填写邮箱"></textarea>   
+	   <textarea type="text" name="email" class="contact-content" placeholder="填写邮箱">{$T.email}</textarea>
   </span>
-  <a href="javascript:void(0)" class="zu-edit-button" name="editemail" data-currentid="24">
-    <i class="zu-edit-button-icon"></i>修改
-  </a>
+  <a href="javascript:;" class="zu-edit-button" name="editemail" style="display: none;"><i class="zu-edit-button-icon"></i>修改</a>
+  <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+  <span class="item-msg-content"  style="display:none">邮箱格式不正确</span>
 </div>
 <div class="phone">
   <span>电话:&nbsp;&nbsp;</span>
    <span class='phoneinfo'>
-	   <textarea name="phone" class="content" style="resize: none" placeholder="填写电话"></textarea>   
+       <textarea type="text" name="phone" class="contact-content" placeholder="填写电话">{$T.phone}</textarea>
    </span>
-  <a href="javascript:void(0)" class="zu-edit-button" name="editphone" data-currentid="24">
-    <i class="zu-edit-button-icon"></i>修改
-  </a>
+   <a href="javascript:;" class="zu-edit-button" name="editphone" style="display: none;"><i class="zu-edit-button-icon"></i>修改</a>
+   <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+   <span class="item-msg-content"  style="display:none">电话格式不正确</span>
 </div>
 <div class="zm-command">
     <a class="zm-command-cancel" data-email='{$T.email}' data-phone='{$T.phone}'  data-currentid='{$T.currentid}'  name="mycontanctcancel" href="javascript:;" style='font-size:14px;font-weight:500;'>取消</a>

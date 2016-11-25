@@ -309,7 +309,7 @@ public class ManageController {
                     retMap.put("objName", obj.getTitle());
                     retMap.put("objTblName", "tbl_docs");
                     //
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs") + id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs") + id);
                     break;
                 }
                 case "1": {
@@ -319,7 +319,7 @@ public class ManageController {
                     retMap.put("objCreator", "");
                     retMap.put("objName", obj.getBookname());
                     retMap.put("objTblName", "tbl_books");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books") + id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books") + id);
                     break;
                 }
                 case "2": {
@@ -329,7 +329,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getCreateperson());
                     retMap.put("objName", obj.getTitle());
                     retMap.put("objTblName", "tbl_topics");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics") + id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics") + id);
                     break;
                 }
                 case "3": {
@@ -339,7 +339,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getCoursesname());
                     retMap.put("objTblName", "tbl_courses");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses") + id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses") + id);
                     break;
                 }
                 case "4": {
@@ -349,7 +349,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getTitle());
                     retMap.put("objTblName", "tbl_article");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article") + id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article") + id);
                     break;
                 }
                 case "5": {
@@ -359,7 +359,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getTitle());
                     retMap.put("objTblName", "tbl_sites");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites") + id + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites") + id);
                     break;
                 }
                 case "6": {
@@ -369,7 +369,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getComments());
                     retMap.put("objTblName", "tbl_docs_comment");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs") + obj.getDocid() + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_docs") + obj.getDocid());
                     break;
                 }
                 case "7": {
@@ -379,7 +379,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getRecommend());
                     retMap.put("objTblName", "tbl_books_share");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books") + obj.getBookid() + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_books") + obj.getBookid());
                     break;
                 }
                 case "8": {
@@ -389,7 +389,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getCommcontent());
                     retMap.put("objTblName", "tbl_topics_comment");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics") + obj.getTopicsid() + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_topics") + obj.getTopicsid());
                     break;
                 }
                 case "9": {
@@ -399,7 +399,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getRecommend());
                     retMap.put("objTblName", "tbl_courses_share");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses") + obj.getCoursesid() + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_courses") + obj.getCoursesid());
                     break;
                 }
                 case "10": {
@@ -409,7 +409,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getRecommend());
                     retMap.put("objTblName", "tbl_article_share");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article") + obj.getArticleid() + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_article") + obj.getArticleid());
                     break;
                 }
                 case "11": {
@@ -419,7 +419,7 @@ public class ManageController {
                     retMap.put("objCreator", obj.getUserid());
                     retMap.put("objName", obj.getRecommend());
                     retMap.put("objTblName", "tbl_sites_share");
-                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites") + obj.getSiteid() + "&isAdmin=7");
+                    retMap.put("objUrl", request.getContextPath() + SmsServiceImpl.urlMap.get("tbl_sites") + obj.getSiteid());
                     break;
                 }
 

@@ -103,7 +103,7 @@
 											 </div>
 											 <div class="tool">
 												 <div class="pj-meta-panel">
-													 <a  class="answer-date-link pj-meta-item" target="_self" href="javascript:void(0);">发布于&nbsp;${data.updateTime}</a>
+													 <a  class="answer-date-link pj-meta-item" target="_self" href="javascript:void(0);">发布于&nbsp;${data.createTime}</a>
 
 													 <a href="javascript:void(0);" class="pj-meta-item zu-autohide js-recommend">
 														 <i class="z-icon-comment"></i><#if data.replySum??>${data.replySum}<#else>0</#if>人推荐
@@ -198,7 +198,7 @@
     <script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
 	<script type="text/javascript" src="/scripts/pj_bookdivision.js"></script>
     <script type="text/javascript">
-        <#if (reCount) gt rows>
+        <#if (reCount)?number gt rows?number>
             $(function () {
                 $("#bookdivisionpaging").pagination({
                     items: ${reCount},

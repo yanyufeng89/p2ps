@@ -69,7 +69,7 @@
                       企业管理 
                       </li>
                       <li class="query-box">
-                         互联网运营
+                      互联网运营
                       </li>
                       <li class="">
                        供应链金融
@@ -97,24 +97,25 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的文章;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关的文章；
                       </li>
                       <li>
-                        2.您可以先拟好文章标题，点击确定进入文章编辑内容;
+                        2. 您可以先拟好文章标题，点击确定进入文章编辑内容；
                       </li>
                       <li>
-                        3.分享涉及侵权内容的文章将会被移除，严禁分享含有淫秽色情及低俗信息的文章;
+                        3. 分享涉及侵权内容的文章将会被移除，严禁分享含有淫秽色情及低俗信息的文章；
                       </li>
                       <li>
-                        4.文章分享有问题需要帮助？详情请查看知识库
+                        4. 文章分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款
                         </a>和
-                        <a href="/about/newbie_guide" target="_blank"> 帮助中心。</a>
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
                 </div>
 				<form method="post" action="/myCenter/shareArticle" enctype="multipart/form-data" id='articleaddForm'>
+				<input style='display:none'/>
                 <div id="upload-article-container"  style="display:none;">
                   <div class="upload-steps clearfix">
                     <ul>
@@ -148,7 +149,6 @@
                                     <td style='height:25px;'>
                                       <textarea rows="1" class="zg-editor-input zu-seamless-input-origin-element"   title="在这里输入标题" id="pj-article-suggest-title-content"  placeholder="写下你的标题" name="title" data-searchtype='1'></textarea>
                                     </td>
-                                    
                                   </tr>
                                   <tr>
                                     <td>
@@ -188,17 +188,7 @@
                                       </div>
                                     </td>
                                   </tr>
-                                  <tr>
-                                  <td>
-                                    <span class="article-ispublic">      
-							           <input type='hidden' value='1' name='ispublic'>
-							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='1' checked id='artIspublic' />
-							           <label  for='artIspublic' style="margin-right:20px;">公开</label> 
-							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='0' id='artIsprivate'/>
-							           <label for='artIsprivate'>匿名</label>
-							         </span>
-								  </td>
-								  </tr>
+                                  
                                   <tr><td class="name articleicon">标签:</td></tr>
                                   <tr>
                                     <td>
@@ -206,7 +196,7 @@
                                       <div class="zm-tag-editor-editor zg-clear" style='margin-left:13px;width:301px;'>
                                         <div class="zg-inline" id="articleinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
-                                          <input style='display:none'/>
+                                          
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" 
@@ -218,6 +208,17 @@
                                       </span>
                                      </td>
                                   </tr>
+								  <tr>
+                                  <td>
+                                    <span class="article-ispublic">      
+							           <input type='hidden' value='1' name='ispublic'>
+							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='1' checked id='artIspublic' />
+							           <label  for='artIspublic' style="margin-right:20px;">公开</label> 
+							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='0' id='artIsprivate'/>
+							           <label for='artIsprivate'>匿名</label>
+							         </span>
+								  </td>
+								  </tr>
                                 </tbody>
                               </table>
                             </div>
@@ -227,22 +228,22 @@
                       </div>
                     </div>
 					
-					<div class="upload-notice">
+					<div class="upload-notice"  style='padding: 32px 0 60px 50px;'>
                     <h4>
                       温馨提示
                     </h4>
                     <ol>
                       <li>
-                        1.文章编辑内容时，您可以随时更改文章标题，点击“电脑”标志按钮时可以全屏编辑，营造沉浸式的写作氛围;
+                        1. 文章编辑内容时，您可以随时更改文章标题，点击“电脑”标志按钮时可以全屏编辑，营造沉浸式的写作氛围；
                       </li>
                       <li>
-                        2.文章分享一定要选择分类,方便记录、查询以及搜索;
+                        2. 文章分享一定要选择分类，方便记录、查询以及搜索；
                       </li>
                       <li>
-                        3.多个标签之间要用逗号隔开,便于更多的好友发现查看;
+                        3. 多个标签之间要用逗号隔开，便于更多的好友发现查看；
                       </li>
                       <li>
-                        4.文章分享有问题需要帮助？详情请查看知识库
+                        4. 文章分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>

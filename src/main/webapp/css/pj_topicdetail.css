@@ -361,7 +361,7 @@ ul.filter-wrapper li span lable {
 
 ._CommentItem_body_3qwB {
     overflow: hidden;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 18px;
     text-align: justify;
 }
@@ -372,6 +372,7 @@ ul.filter-wrapper li span lable {
 ._CommentItem_content_CYqW {
     min-height: 22px;
     word-wrap: break-word;
+    word-break: break-all;
     color: #444;
     margin-top: 10px;
 }
@@ -384,7 +385,10 @@ ul.filter-wrapper li span lable {
     list-style: none;
     outline: none;
     padding: .9em 0;
-    border-bottom: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
+}
+._CommentItem_root_PQNS:first-child,.zm-item-comment:first-child{
+	border-top:none
 }
 ._CommentItem_action_Hk0w {
     margin-left: .6em;
@@ -397,6 +401,8 @@ ul.filter-wrapper li span lable {
     background: none;
     color: #999;
     font-size:12px;
+     font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 }
 #zh-question-detail .zm-editable-content{
 	padding-top:0;
@@ -424,12 +430,7 @@ ul.filter-wrapper li span lable {
     height: 8px;
     background-position: -200px -165px;
 }
-.icon{
-	background-image: url(../image/sprites-1.9.2.4c54885a.png);
-    background-repeat: no-repeat;
-    display: inline-block;
-    vertical-align: middle;
-}
+
 ._CommentBox_root_G_1m._CommentBox_bordered_3Fo- {
     border: 1px solid #ddd;
     border-radius:4px;
@@ -576,12 +577,14 @@ ul.filter-wrapper li span lable {
 	line-height: 18px;
 	text-align: justify;
 	margin:12px 0 0 10px;
+	word-wrap: break-word;
+    word-break: break-all;
 }
 .zm-item-comment{
 	outline:none; 
     padding: .9em 0;
-    border-bottom: 1px solid #e5e5e5;
-     font-size:14px;
+    border-top: 1px solid #e5e5e5;
+    font-size:14px;
 }
 .publishanswer{
 	margin-left:16px;
@@ -697,7 +700,9 @@ ul.filter-wrapper li span lable {
     padding-right: 20px;
     width:192px;
     line-height: 15px;
-    color: #444;
+    color: #333;
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 }
 
 .question-invitetoans-panel .input-wrapper .zg-icon {
@@ -833,8 +838,8 @@ ul.filter-wrapper li span lable {
     font-size: 16px;
     outline: none;
     top: 2px;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 .RewardMenu-actions {
     clear: both;
@@ -869,7 +874,7 @@ ul.filter-wrapper li span lable {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 

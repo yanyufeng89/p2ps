@@ -12,7 +12,7 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	width: 235px
 }
 .not-login-wrap .upload-doc {
-	border: 1px solid #DFDFDF;
+	border: 1px solid #d6d6d6;
 	background-color: #FFF;
 	text-align: center;
 	height: 96px;
@@ -76,7 +76,7 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	margin-right: 2px
 }
 .logined-wrap .upload-doc {
-	border: 1px solid #DFDFDF;
+	border: 1px solid #d6d6d6;
 	background-color: #FFF;
 	text-align: center;
 	height: 96px;
@@ -118,9 +118,9 @@ article,aside,footer,header,section,footer,nav,figure,main{
 }
 
 .loginMod .hd {
-	border-top: 1px solid #DFDFDF;
-	border-right: 1px solid #DFDFDF;
-	border-left: 1px solid #DFDFDF;
+	border-top: 1px solid #d6d6d6;
+	border-right: 1px solid #d6d6d6;
+	border-left: 1px solid #d6d6d6;
 	font-size: 15px;
 	height: 36px;
 	line-height: 45px;
@@ -142,7 +142,7 @@ article,aside,footer,header,section,footer,nav,figure,main{
 }
 
 .loginMod .bd {
-	border: 1px solid #DFDFDF;
+	border: 1px solid #d6d6d6;
 	margin-top: -1px;
 	_margin-top: -15px;
 	clear: both;
@@ -246,7 +246,7 @@ article,aside,footer,header,section,footer,nav,figure,main{
 }
 
 .loginMod .bd .pass-text-input-focus {
-	border: 1px solid #1ea06a
+	border: 1px solid #d6d6d6
 }
 
 .loginMod .bd .pass-form-item {
@@ -354,7 +354,7 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	height: 29px;
 	overflow: hidden;
 	float:left;
-	border-right: 1px dotted #dcd7d7;
+	border-right: 1px dotted #d6d6d6;
 	background: transparent
 		url(../image/bg_doc_num.png)
 	   no-repeat scroll;
@@ -479,14 +479,13 @@ article,aside,footer,header,section,footer,nav,figure,main{
 #TANGRAM__PSP_7__submitWrapper{
    margin-bottom: 0px;
 }
-.logined-wrap .logined-user-info .user-brief .avatar div img {
+ .avatar .img-person{
 	width: 60px;
 	border-radius: 50%;
 }
-/* .logined-wrap .logined-user-info .user-brief .avatar div img:hover{
-	background:#0867c5;
-	border-radius: 50%;
-} */
+ .avatar .img-company{
+	width: 60px;
+}
 .logined-wrap .logined-user-info .user-brief .avatar div .user-icon {
 	height: 60px
 }
@@ -504,12 +503,11 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	overflow: hidden;
 	margin-top: 10px;
 	*margin-top: 20px;
-	line-height: 24px
+	line-height: 20px
 }
 
-.logined-wrap .logined-user-info .user-brief .name-task .name a {
-	font-size: 16px;
-	color: #312f2f
+.name-link{
+	color: #333!important
 }
 .logined-wrap .logined-user-info .user-brief .name-task .name .ic-eduVip{
 	font-size: 16px;
@@ -558,7 +556,7 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	_margin: 4px 7px 0 17px
 }
 .zm-relate-content {
-    border: 1px solid #e5e5e5;
+    border: 1px solid #d6d6d6;
     margin-top: 14px;
     background:#fff;
 }
@@ -585,7 +583,7 @@ article,aside,footer,header,section,footer,nav,figure,main{
 
 .logined-wrap .logined-user-info .doc-info-wrap .my-wk ul li span.page-num{
 	float: right;
-	font-size: 11px
+	font-size: 12px
 }
 
 .logined-wrap .logined-user-info .doc-info-wrap .my-wk ul li.loading {
@@ -638,8 +636,8 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	font-size: 14px;
 	padding: 5px 8px 5px 10px;
 	border: 2px solid #1b85d5;
-	font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+	font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 
 .bdcs-search-form-submit {
@@ -649,8 +647,8 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	border: 2px solid #1b85d5;
 	border-radius: 0;
 	border-left:0;
-	font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+	font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
     cursor: pointer;
 }
 
@@ -678,8 +676,8 @@ article,aside,footer,header,section,footer,nav,figure,main{
 	background: #1b85d5;
 	cursor: pointer;
 	float: left;
-	font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+	font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 
  @media screen and (min-width:1100px) {
@@ -884,7 +882,7 @@ a:hover.normal-btn .ic-jia, span.normal-btn:hover .ic-jia {
 }
 
 .hot-recommend-book ul li {
-	padding:8px 4px 9px 4px;
+	padding:8px 4px 14px 4px;
 }
 .hot-recommend-book ul li:first-child{
 	padding-top:7px;
@@ -896,7 +894,7 @@ a:hover.normal-btn .ic-jia, span.normal-btn:hover .ic-jia {
 
 .hot-recommend-book ul li .book-img img {
 	width:72px;
-	height:98px;
+	height:108px;
 	padding: 2px 3px 4px;
 	background-position: left -1313px
 }
@@ -932,6 +930,11 @@ a:hover.normal-btn .ic-jia, span.normal-btn:hover .ic-jia {
 	color: #555;
 	margin-top:6px;
 	font-size:12px;
+	display: -webkit-box;
+	overflow: hidden;
+    -webkit-line-clamp:1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
 }
 
 .hot-recommend-book ul li .book-info .read-num span {
@@ -1193,9 +1196,9 @@ ul.doc-list li .li-wrap p.author img {
 	color: #49bb97
 }
 
-.screen-hd-wrap {
+/* .screen-hd-wrap {
 	text-align: left
-}
+} */
 
 .screen-hd-wrap .banner {
 	width: 100%;
@@ -1357,7 +1360,7 @@ ul.doc-list li .li-wrap p.author img {
     width: 48.6%;
     height:72px;
     overflow: hidden;
-    border: 1px solid #e1e1e1;
+    border: 1px solid #d6d6d6;
     background-color:#fff;
 }
 .screen-hd-wrap .banner .banner-con .topic h5 {
@@ -1374,7 +1377,7 @@ ul.doc-list li .li-wrap p.author img {
 	width:32%;
 	height: 90px;
 	overflow: hidden;
-	border: 1px solid #E1E1E1;
+	border: 1px solid #d6d6d6;
 	background-color: #FAFAFA;
 	float: left
 }
@@ -1413,7 +1416,7 @@ ul.doc-list li .li-wrap p.author img {
 }
 
 .screen-hd-wrap .banner .banner-con .topic ul li:hover {
-	border: 1px solid #d5d5d5;
+	border: 1px solid #d6d6d6;
 	background-color: #F7F7F7
 }
 
@@ -1471,6 +1474,7 @@ ul.doc-list li .li-wrap p.author img {
 }
 .news-shareinfo ul li{
 	padding-bottom:9px;
+	line-height:19px;
 }
 .screen-hd-wrap .user-info .task {
 	_margin-top: 6px
@@ -1478,7 +1482,7 @@ ul.doc-list li .li-wrap p.author img {
 
 .screen-hd-wrap .user-info .task a {
 	font-size: 12px;
-	color: #656565
+	color: #555
 }
 
 .screen-hd-wrap .user-info .task b.ic-wealth {
@@ -1510,7 +1514,7 @@ ul.doc-list li .li-wrap p.author img {
     width: 245px;
     margin: 14px 0 0 -249px;
     border: 1px solid #d6d6d6;
-    height: 940px;
+    height: 1004px;
     overflow: hidden;
     background: #fff;
 }
@@ -1750,7 +1754,7 @@ ul.doc-list li .li-wrap p.author img {
 .zone dl {
     float: left;
     width:302px;
-    height:303px;
+    height:324px;
     border: 1px solid #d6d6d6;
     margin:14px 0 0 13px;
     background:#fff;
@@ -1768,7 +1772,7 @@ ul.doc-list li .li-wrap p.author img {
    border-bottom:1px solid #e5e5e5;
 }
 .zone dl dd {
-	margin:9px 0 0 16px;
+	margin:15px 0 0 16px;
 	font-size: 14px;
 	line-height: 20px
 }
@@ -1832,15 +1836,16 @@ ul.doc-list li .li-wrap p.author img {
 
 .zone dl dd .zone-recom p {
 	max-width:160px;
-	padding: 2px 0;
 	text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     margin-right: 12px;
+    padding-bottom: 9px;
+	line-height:19px;
 }
 .newscontent-left .title-label,.newscontent-right .title-label{
 	padding-left: 0!important;
-    color: #333;
+    color: #555;
     max-width: 366px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1859,8 +1864,14 @@ ul.doc-list li .li-wrap p.author img {
 }
 
 .zone dl dd .related-doc ul li {
-	padding: 2px 0;
-	_padding: 3px 0;	
+	/* padding: 2px 0;
+	_padding: 3px 0;	 */
+    padding-bottom: 9px;
+	line-height:19px;
+	/* letter-spacing: 1px; */
+}
+.zone dl dd .related-doc ul li:first-child{
+	 padding-top: 9px;
 }
 .zone dl dd .related-doc .title-label{
 	margin-left:2px;
@@ -3050,8 +3061,8 @@ transform
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 .ReportMenu .dialog-inner {
     width: 100%;
@@ -3074,15 +3085,16 @@ transform
     clear: both;
 }
 .ui-bz-btn-senior {
+	position:relative;
     cursor: pointer;
     color: rgb(255, 255, 255);
     display: inline-block;
     text-shadow:#0867c5 0px 1px 0px;
-    text-decoration: none;
     border: 0px;
     border-radius: 4px;
     background:#0867c5;
 }
+
 .ui-bz-btn-senior b {
     cursor: pointer;
 }

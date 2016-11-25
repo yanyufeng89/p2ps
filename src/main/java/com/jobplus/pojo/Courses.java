@@ -43,6 +43,11 @@ public class Courses extends PageParent implements Serializable{
 	private String recommend;
 
 	private String intro;
+	
+	/**
+	 * 课程目录
+	 */
+	private String contents;
 
 	private MyCollect myCollect;
 	/**
@@ -85,6 +90,14 @@ public class Courses extends PageParent implements Serializable{
 
 
 	private CommonsMultipartFile coursesimgFile;
+
+	public String getContents() {
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
 
 	public User getObjCreator() {
 		return objCreator;

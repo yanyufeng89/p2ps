@@ -168,7 +168,7 @@
     <script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
 	<script type="text/javascript" src="/scripts/pj_topicdivision.js"></script>
     <script type="text/javascript">
-        <#if (reCount) gt rows>
+        <#if (reCount)?number gt rows?number>
             $(function () {
                 $("#sharetopicpaging").pagination({
                      items: ${reCount},

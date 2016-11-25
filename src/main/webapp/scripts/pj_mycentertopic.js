@@ -144,6 +144,7 @@ $(function(){
 	  $('.pagetemplate').processTemplate(data);
 	  $('#zh-question-title').append($('.pagetemplate').html());
 	  $(".pagetemplate").empty();
+	  /*$('.titleedit').focus();*/
       $('#zh-question-title .zm-editable-content').hide();
       $('#zh-question-title .pj-editable-editor-wrap').show();
     });
@@ -166,6 +167,7 @@ $(function(){
     	$('#tagtemplate').setTemplateURL(projectName+'topicTagEditTemplate.html',null, {filter_data: false});
         $('#tagtemplate').processTemplate(data);
         $('.zm-tag-editor').append($('#tagtemplate').html());
+       
         $("#tagtemplate").empty();
        
     })
@@ -250,15 +252,19 @@ $(function(){
     	var titleid=$('input[name=titleid]').val();
     	/*var about=$(".edui-body-container").html();*/
        	var about=umtor.getContent();
-        //判断输入的字节大小
+       /* //判断输入的字节大小
     	var leng=about.length+(about.match(/[^\x00-\xff]/g) ||"").length;
     	if(leng>10000){
     		$(this).before('<span class="errortip">请控制在10000 字以下</span>&nbsp;&nbsp;');
     		return false;
-    	}
-    	if(!UM.getEditor('topiceditor').hasContents()){
+    	}*/
+    	if($.trim(about).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).parent().prepend('<span class="errortip">字数超出最大限制</span>&nbsp;&nbsp;');
     		return false;
     	}
+    	/*if(!UM.getEditor('topiceditor').hasContents()){
+    		return false;
+    	}*/
     	$.ajax({
     		type:'POST',
     	    url:"/myCenter/updateTopics",
@@ -277,14 +283,14 @@ $(function(){
     })
     //话题详情--回答里面的评论收起或展开
     $('#zh-question-answer-wrap .js-comment').live('click',function(){
-       	$(this).toggle(function(){
+    	$(this).toggle(function(){
         	var $child=$(this).children();
         	$(this).empty().append($child).append('收起评论');
         	var answerid=$(this).attr('data-answer');
         	var createperson=$(this).attr('data-createperson');
         	var objectName=$('input[name=titlename]').val();
-        	$this=$(this);
         	var $holder=$(this).parent().nextAll('.comment-app-holder');
+        	$this=$(this);
         	if($holder.length>0){
         		$holder.show();
         	}
@@ -615,7 +621,7 @@ $(function(){
     	var topicname=$('input[name=titlename]').val();
     	var topicid=$('#content input[name=titleid]').val();
     	$this=$(this);
-    	var $container=$(this).parents('.zm-meta-panel').nextAll('.panel-container')
+    	var $container=$this.parents('.zm-meta-panel').nextAll('.panel-container')
     	//判断是否存在
     	if($container.length>0){
     		$container.show();
@@ -1177,7 +1183,7 @@ function topicLoadMore(obj){
           		 $('.loadmore').hide();
           	   }
           	   intoUserInfo();
-				bindShare();
+			   bindShare();
     		}else{
     			
     		}

@@ -126,7 +126,8 @@ public class CoursesController {
 				//后台管理员查看
 				mv.setViewName("manage/courseDetail");
 			}else{
-				mv.setViewName("/mydocs/docs/courseDetail");
+				
+				mv.setViewName("mydocs/docs/courseDetail");
 			}
 		} else {
 			logger.info("**getCourseDetail*获取课程详情  失败   record.getId() == null  999****");

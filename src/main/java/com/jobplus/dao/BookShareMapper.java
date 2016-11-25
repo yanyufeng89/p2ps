@@ -42,4 +42,9 @@ public interface BookShareMapper {
      * @return
      */
     public int deleteByConditions(@Param("conditions")String conditions[]);
+    
+    /**
+     * 用户是否分享过这本书籍
+     */
+    int isShared(BookShare record);
 }

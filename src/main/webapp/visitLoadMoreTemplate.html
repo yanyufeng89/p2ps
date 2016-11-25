@@ -19,7 +19,7 @@
 			<h2 class="zm-list-content-title">
 			  <a  href="/myHome/getHomePage/{$T.list.visitorid}" data-userid='{$T.list.visitorid}' target="_blank" class="zg-link author-link" title="{$T.list.userName}">{$T.list.userName}</a>
 			</h2>
-			<div class="ellipsis">
+			<div class="pj-introduction ellipsis">
 			    <span class="bio">
 			       {#if $T.list.description}
 					   {$T.list.description}
@@ -27,16 +27,25 @@
 			    </span>
 			</div>
 			<div class="details zg-gray">
-			<a target="_self" href="/people/jing-si-cong-28/followers" class="zg-link-gray-normal">
+			<a target="_self" href="javascript:void(0)" class="zg-link-gray-normal">
 			  {$T.list.attentionsum}关注
 			</a>
 			<a class="zg-link-gray-normal">/</a>
-			<a target="_self" href="/people/jing-si-cong-28/asks" class="zg-link-gray-normal">
+			<a target="_self" href="javascript:void(0)" class="zg-link-gray-normal">
 			   {$T.list.fanssum}粉丝
 			</a>
+			{#if $T.iswap!=1}
 			<a target="_self"  class="zg-link-gray-normal" href='javascript:void(0)'>
 				&nbsp;&nbsp;{$T.list.showVTime}
 			</a>
+			{#/if}
+			</div>
+			<div class="details zg-gray">
+			{#if $T.iswap==1}
+			<a target="_self"  class="zg-link-gray-normal" href='javascript:void(0)'>
+				{$T.list.showVTime}
+			</a>
+			{#/if}
 			</div>
 	  </div>
  </div>

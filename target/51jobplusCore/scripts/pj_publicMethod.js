@@ -2,7 +2,7 @@ var userInfo;
 $(function(){	
 	//获取用户信息
 	getCurrentUser();
-	
+
 	//举报按钮点击
 	$('#topicreport').live('click',function(){
 		//举报人电话
@@ -18,7 +18,7 @@ $(function(){
 		var reporttype=$(this).attr("data-reporttype");
 		
 		//举报原因
-		var reportcause=$('#reportReasons input[type=text]').val();
+		var reportcause=$('#reportReasons textarea[name=reportcontent]').val();
 		//举报选项的id
 		var reportcauseid='';
 		//1代表是其他理由
@@ -42,13 +42,14 @@ $(function(){
 		// 从0开始数  
 		$.ajax({
 			type:"POST",
-	     	url:projectName+"myCenter/reportReportInfo",
+	     	url:"/myCenter/reportReportInfo",
 	     	data:{reportuserid:userid,reporttel:tel,reportbyuserid:userreportid,reporttargetid:topiccommentid,
 	     		reportcause:reportcause,REPORTTYPE_INDEX:reporttype,reportcauseid:reportcauseid},
 	        dataType:"json",
 	        success:function(data){
 	        	if(data.returnStatus=='000'){//返回成功
 	        		closeReport($this);
+	        		ZENG.msgbox.show('您的举报正在等待人工审核,我们会在24小时内审核完成!', 4, 3000);
 	            }
 	        	else{
 	        		
@@ -101,6 +102,7 @@ $(function(){
     	answerreplyCancel($(this));
     })
 	
+    
 	/*//右侧部分始终固定在顶部(话题详情页  书籍详情页)
 	 if($('.plus-main-sidebar').length){
 		 var t=$('.plus-main-sidebar').offset().top;
@@ -120,7 +122,7 @@ $(function(){
 	 }*/
 	
 	//关掉弹出层(举报)
-    $('.modal-dialog-title-close').live('click',function(){
+    $('.modal-dialog-title-close,.RewardMenu-actions .cancel-btn').live('click',function(){
     	closeReport($(this));
     });
 
@@ -158,7 +160,7 @@ $(function(){
     	}
     	$.ajax({
     		type:"POST",
-        	url:projectName+"myCenter/sendSmsPrivate",
+        	url:"/myCenter/sendSmsPrivate",
         	data:{receivedid:receivedid,smstype:1,smscontent:smscontent},
         	dataType:"json",
             success:function(data){
@@ -184,22 +186,41 @@ $(function(){
 		 topicFocus($(this));
 	 });
     //详情简介展开
-	$('.slidedown').live('click',function(){
+	$('.showall').live('click',function(){
 		$(this).hide().next().show();
+		$(this).prev().html($(this).parent().attr('data-brief'));
 		$(this).parents('.brief').removeClass('book-height');
 	})
-	//书籍详情简介收起
-	$('.slideup').live('click',function(){
-		$(this).hide().prev().show();
-		$(this).parents('.brief').addClass('book-height');
+	
+	 //回到顶部
+    $(".back-to-top").mousemove(function(){
+    	$(".back-to-top").css("background-position-x", "-28px");
+    }).mouseleave(function(){
+    	$(".back-to-top").css("background-position-x", "0");
+    })
+    /*当界面下拉到一定位置出现向上的箭头 start*/
+    $(window).scroll(function(){  
+        if ($(window).scrollTop()>200){  
+            $(".back-to-top").fadeIn("fast");  
+        }else{  
+            $(".back-to-top").fadeOut("fast");  
+        }  
+    });
+    /*当界面下拉到一定位置出现向上的箭头 end*/
+	
+	//6大类详情界面   当关注的人数  大于6人时  省略  
+	$('.fa-ellipsis-h').live('click',function(){
+		$(this).parents('.zu-small-avatar-list').hide();
+		$(this).parents('.zu-small-avatar-list').next().show();
 	})
+	
 })
 
 //时间日期转换
 function formatDate(str){
 	var now=new Date(str);
 	var year=now.getFullYear();
-	var month=now.getMonth();
+	var month=now.getMonth()+1;
 	var date=now.getDate();
     var hours=now.getHours();
     var minute=now.getMinutes();
@@ -240,19 +261,26 @@ function answerreplyCancel(obj){
 	obj.parents('._CommentForm_root_1-ko').children(':first').empty().addClass('_InputBox_blur_3JWV')
 	obj.parents('.comment-app-holder').remove();
 }
+//获取请求的url的参数
+String.prototype.getQuery = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 
+    var r = this.substr(this.indexOf("\?") + 1).match(reg);
+
+    if (r != null) return unescape(r[2]); return null;
+ }
 //举报
 function topicReport(obj){
 	//被举报人
 	var commentbyid=obj.attr("data-commentbyid");
 	//被举报的话题
 	var bookcommentid=obj.attr("data-topiccommentid");
-	//举报类型  为了区分是书籍 还是话题举报  书籍举报是2  话题是6  课程是3  文章是1
+	//举报类型  为了区分是书籍 还是话题举报  书籍举报是2  话题是6  课程是3  文章评论1  文章7 
 	var reporttype=obj.attr("data-reporttype");
 	var datamodel='';
 	$.ajax({
 		type:"POST",
-    	url:projectName+"myCenter/getReportInfoConfigList",
+    	url:"/myCenter/getReportInfoConfigList",
     	dataType:"json",
     	async:false, 
         success:function(data){
@@ -283,7 +311,7 @@ function topicReport(obj){
 function getCurrentUser(){
 	$.ajax({
 		type:"POST",
-		url:projectName+"/myCenter/getCurrentUser",
+		url:"/myCenter/getCurrentUser",
 		dataType:"json",
 		success:function(data){
 			if(data.returnStatus=='000'){
@@ -311,7 +339,7 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
 	var actiontype=obj.attr('data-actionType');
 	$.ajax({
 		type:"POST",
-		url:projectName+"myCenter/addFollows",
+		url:"/myCenter/addFollows",
 		data:{objectType:objecttype,objectid:objectId,actionType:actiontype,objectNamePg:titlename,objCreatepersonPg:createperson,relationidPg:titleid},
 		dataType:"json",
         success:function(data){
@@ -322,12 +350,16 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
 	          			obj.empty().html('取消关注');
 	          			obj.attr('data-actiontype','0');
 	          			obj.next().find('strong').html(Number(obj.next().find('strong').html())+1);
+	          			//添加对应人的头像信息
+	          			showHeadIcon();
 	          		}
 	          		else{
 	          			obj.removeClass('zg-btn-white').addClass('zg-btn-green');
 	          			obj.attr('data-actiontype','1');
 	          			obj.empty().html('关注话题');
 	          			obj.next().find('strong').html(Number(obj.next().find('strong').html())-1);
+	          			//移除对应的头像信息
+	          			deleteHeadIcon();
 	          		} 
         	  }
         	  if(objecttype==0&&type==undefined){
@@ -338,7 +370,7 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
             		}
             		else{
             			obj.removeClass('zg-btn-unfollow').addClass('zg-btn-follow');
-            			obj.empty().html('关注');
+            			obj.empty().html('+关注');
             			obj.attr('data-actiontype','1');
             		} 
         	  }
@@ -347,6 +379,44 @@ function topicFollow(obj,objecttype,type,createperson,titleid,titlename){//objec
         		
         	}
         }
+	})
+}
+//添加对应人的头像信息
+function addHead(){
+	var isexist=false;
+   //判断列表里是否有当前头像
+   $('.zu-small-avatar-list img').each(function(){
+	   if($(this).attr('data-userid')==String(userInfo.userid)){
+		   isexist=true;
+	   }
+   })
+   if(!isexist){
+	   var headHtml='';
+	   headHtml+='<a title="'+userInfo.username+'" target="_blank" class="zm-item-link-avatar" href="/myHome/getHomePage/'+userInfo.userid+'" data-moduletype="0">';
+	   if(userInfo.headicon==''||userInfo.headicon==undefined){
+		   headHtml+='<img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
+	   }else{
+		   headHtml+='<img src="'+userInfo.headicon+'" class="zm-item-img-avatar lazy" data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
+	   }
+	   headHtml+='</a>'
+	   return headHtml;
+   }
+}
+//列表添加个人头像
+function showHeadIcon(){
+	if($('.fa-ellipsis-h').length==1){
+		$('.fa-ellipsis-h').before(addHead());
+	}else{
+		$('.zu-small-avatar-list').first().append(addHead());
+	}
+	intoUserInfo();
+}
+//删除头像
+function deleteHeadIcon(){
+	$('.zu-small-avatar-list img').each(function(){
+			if($(this).attr('data-userid')==userInfo.userid){
+				$(this).parent().remove();
+			}
 	})
 }
 //根据条件查询(标签) url:"tags/findClass/"+condition
@@ -358,7 +428,7 @@ var getTagsByCondition=function(obj,type){
 	if(conds !== null &&conds !== undefined&&$.trim(conds).length!=0&&$.trim(oldval).length!=$.trim(conds).length){
 		 $.ajax({
 	         	type:"POST",
-	         	url:"/51jobplusCore/tags/findClass/"+conds,
+	         	url:"/tags/findClass/"+conds,
 	         	//data:{condition:100},
 	         	dataType:"json",
 	         	success:function(data){
@@ -373,6 +443,38 @@ var getTagsByCondition=function(obj,type){
 		   $this.parent().find('div:last-child').remove();
 		   $this.parent().find('input[name=currenttagval]').val('');
 		} 		
+}
+//判断是否是合格的URL
+function isURL (str_url) {// 验证url  
+    /*var strRegex="^((https|http|rtsp|mms)?://)"  
+    + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@  
+    + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184  
+    + "|" // 允许IP和DOMAIN（域名）  
+    + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.  
+    + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名  
+    + "[a-z]{2,6})" // first level domain- .com or .museum  
+    + "(:[0-9]{1,4})?" // 端口- :80  
+    + "((/?)|" // a slash isn't required if there is no file name  
+    + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$"; */
+	var strRegex=/((https|http|ftp|rtsp|mms):\/\/)?(([0-9a-z_!~*'().&=+$%-]+:)?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+\/?)/g;
+    var re=new RegExp(strRegex); 
+    return re.test(str_url); 
+} 
+function share(types) {
+   /* var currentUrl = window.location.href;*/
+    var type = 0;
+    if (types=='topic')
+        type = 1;
+    else if (types=='book')
+        type = 2;
+    else if (types=='course')
+        type = 3;
+    else if (types=='article')
+        type = 4;
+    else if (types=='sites')
+        type = 5;
+    //window.open("/sharein/searchuploadFile?type=" + type);
+    window.location.href = "/sharein/searchuploadFile?type=" + type;
 }
 /*window._bd_share_config = {
 	    "common": {
@@ -396,3 +498,18 @@ var getTagsByCondition=function(obj,type){
 	  };
 with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~ ( - new Date() / 36e5)];
 */
+
+
+//添加遮罩层 防止在上传的同时做其他操作
+var maskLayerIndex ;
+function addMaskLayer(){
+	/*$('.edui-container').css('z-index','0');
+	$('body').append('<div class="modal-dialog-bg" style="opacity: 0.5; width: 1920px; height: 12986px;" aria-hidden="true"></div>');
+*/
+	maskLayerIndex = parent.layer.load(0, {shade: 0.1});
+}
+
+//关闭遮罩
+function closeMaskLayer(){
+	parent.layer.close(maskLayerIndex);
+}

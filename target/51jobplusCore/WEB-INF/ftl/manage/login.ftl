@@ -6,24 +6,24 @@
     <meta name="description" content="User login page"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- basic styles -->
-    <link href="/51jobplusCore/manage/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/font-awesome.min.css"/>
+    <link href="/manage/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/manage/css/font-awesome.min.css"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/font-awesome-ie7.min.css"/>
+    <link rel="stylesheet" href="/manage/css/font-awesome-ie7.min.css"/>
     <![endif]-->
 
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/ace.min.css"/>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/ace-rtl.min.css"/>
+    <link rel="stylesheet" href="/manage/css/ace.min.css"/>
+    <link rel="stylesheet" href="/manage/css/ace-rtl.min.css"/>
 
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="/51jobplusCore/manage/css/ace-ie.min.css"/>
+    <link rel="stylesheet" href="/manage/css/ace-ie.min.css"/>
     <![endif]-->
     <!-- inline styles related to this page -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="/51jobplusCore/manage/js/html5shiv.js"></script>
-    <script src="/51jobplusCore/manage/js/respond.min.js"></script>
+    <script src="/manage/js/html5shiv.js"></script>
+    <script src="/manage/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body class="login-layout" style="background-color: #e4e6e9;">
@@ -43,7 +43,7 @@
 
                                     <div class="space-6"></div>
 
-                                    <form method="post" action="/51jobplusCore/manage/login">
+                                    <form method="post" action="/manage/login">
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -90,8 +90,8 @@
         </div><!-- /.row -->
     </div>
 </div><!-- /.main-container -->
-<script src="/51jobplusCore/manage/js/jquery-1.10.2.min.js"></script>
-<script src="/51jobplusCore/manage/js/jquery.validate.min.js"></script>
+<script src="/manage/js/jquery-1.10.2.min.js"></script>
+<script src="/manage/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
     $(function(){
          $("form").validate({

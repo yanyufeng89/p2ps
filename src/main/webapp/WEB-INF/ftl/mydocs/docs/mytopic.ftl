@@ -15,8 +15,8 @@
 		<div class="bd-wrap">
 		<div class="uc-aside">
 		<div class="uc-user-box">
-		<div class="img-center">
-		 <a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
+		<div class="<#if Session.user.usertype==2>img-business-center<#else>img-center</#if>">
+		 <a  href="/myCenter/getMyHeadTop" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
 		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
@@ -30,8 +30,18 @@
 		           ${Session.user.username}
 		        </#if>
 		     </a>
+		    <#if Session.user.usertype==2>
+		    <#else>
+             <span class="pj-level"><em>LV.${Session.user.userlevel}</em></span>
+		    </#if>
 		</p>
-	    <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>
+	    <p class="user-level">
+	      <#if Session.user.usertype==2>
+		    <a href="javascript:void(0)" target="_blank">&nbsp;进入公司主页</a> 
+		  <#else>
+		    <a href="/myHome/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入个人主页</a>
+		  </#if>
+	    </p>
 		<div class="mydoc-list">
 		    <ul id="accordion">
 		      <li class="open">
@@ -117,10 +127,10 @@
 		           <div class="successshare">
 		             <div class="docs-list-box">
 		               <div class='delete-box normal-console-box clearfix'>
-		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
+		                 <#--<span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>-->
 		               </div>
 		               <div class="status-box">
-						  <div class="w332 ib"><div class="checkbox select-all"></div>话题名称</div>
+						  <div class="w332 ib">话题名称</div>
 						  <div class="w92 ib">是否匿名</div>
 						  <div class="w92 ib">关注</div>
 						  <div class="w92 ib">回复</div>
@@ -135,7 +145,7 @@
                                 <#--<#if (list.ispublic==1)>-->
                                   <li>
                                     <div class='w332 fs14 fc3 ib titlehidden'>
-                                   	  <div class="checkbox chk" data-topicid="${list.id}" data-name="${list.title}"></div>
+                                   	  <#--<div class="checkbox chk" data-topicid="${list.id}" data-name="${list.title}"></div>-->
                                       <a href="/topics/getTopicsDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>  
                                     </div>
                                     <div class='w92 ib topic-ispublic'>

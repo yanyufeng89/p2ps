@@ -16,8 +16,8 @@
 		<div class="bd-wrap">
 		<div class="uc-aside">
 		<div class="uc-user-box">
-		<div class="img-center">
-		 <a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
+		<div class="<#if Session.user.usertype==2>img-business-center<#else>img-center</#if>">
+		 <a  href="/myCenter/getMyHeadTop" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
 		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像"  class='lazy'>
 		  <#else>
@@ -31,8 +31,18 @@
 		           ${Session.user.username}
 		      </#if>
 		    </a>
+		    <#if Session.user.usertype==2>
+		    <#else>
+             <span class="pj-level"><em>LV.${Session.user.userlevel}</em></span>
+		    </#if>
 		</p>
-        <p class="user-level"><a href="/myHome/getHomePage/${Session.user.userid}" target="_blank">&nbsp;进入个人主页</a></p>    
+        <p class="user-level">
+          <#if Session.user.usertype==2>
+		    <a href="javascript:void(0)" target="_blank">&nbsp;进入公司主页</a> 
+		  <#else>
+		    <a href="/myHome/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入个人主页</a>
+		  </#if>
+        </p>    
 		<div class="mydoc-list">
              <ul id="accordion">
 		      <li class="open">
@@ -101,7 +111,7 @@
 	                       <a href='/myCenter/getMyDocsCollected' <#if (myCollectPage)??>class="current"</#if> id='doccollect'>收藏&nbsp;<#if (Session.operationSum.doccollsum)??>${Session.operationSum.doccollsum}</#if></a>
 	                    </p>
                     </div>
-                     <a href='javascript:void(0);' onclick="share('doc');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
+                    <a href='javascript:void(0);' onclick="share('doc');" class='head-sharein' style='float:right;margin:23px 28px 0 0'></a>
 				  
 			</div>
 		    <#if (docsPage)??>
@@ -119,6 +129,8 @@
 	             <#if (ispublic)??>
 	               <#if (ispublic==1)>
 	               <div class="successshare">
+	               <#-- 公开的文档删除  需要扣除财富值 -->
+				   <input type='hidden' name='alMn' value='${Session.account.points}'>
 	               <#else>
 	                <div class="successshare" style='display:none'>
 	               </#if>
@@ -130,11 +142,12 @@
 		                 <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		               </div>
 		               <div class="status-box">
-		                   <div class="w342 ib"><div class="checkbox select-all"></div>文档名称</div>						   
-						   <div class="w105 ib">是否匿名</div>
-						   <div class="w105 ib">下载次数</div>
-						   <div class="w105 ib">收藏次数</div>
-						   <div class="w105 ib">上传时间</div>
+		                   <div class="w322 ib"><div class="checkbox select-all"></div>文档名称</div>	
+		                   <div class="w84 ib">文档状态</div>					   
+						   <div class="w84 ib">是否匿名</div>
+						   <div class="w84 ib">下载次数</div>
+						   <div class="w84 ib">收藏次数</div>
+						   <div class="w94 ib">上传时间</div>
 						   <div class="w119 ib">操作</div>
 					   </div>
 					   <div class="docs-list">
@@ -142,18 +155,33 @@
 					       <#if (docsPage)??>
 							      <#list docsPage.list as list>
 								         <li>
-								          <div class='w342 fs14 fc3 ib dochidden'>
-								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}" ></div>
+								          <div class='w300 fs14 fc3 ib dochidden'>
+								             <div class="checkbox chk" data-docid="${list.id}" data-ispublic='${list.ispublic}' data-name="${list.title}" ></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
-								             <#--<#if list.title?index_of(list.docsuffix)!=-1>
-								               <#assign dtitle=list.title?substring(0,list.title?index_of(list.docsuffix)?number-1) />
-								                 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${dtitle}">${dtitle}</a>
+								           
+								           <#if list.isconverter!=1 && list.isconverter!=3>	
+								           <#-- 状态为提交中： 先查询是否转换成功  是跳转 否则 return false  href="/docs/getDocsDetail/${list.id}" -->							           
+								             <a data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle notCvt' target="_blank" title="${list.title}">${list.title}</a>
 								             <#else>
-								                 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
-								             </#if>-->
-								             <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
+								              	 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle <#if list.isconverter!=1>disabled</#if>' target="_blank" title="${list.title}">${list.title}</a>
+								             </#if>
+
 								          </div>
-								          <div class='w105 ib doc-ispublic'>
+								          <div class='w84 ib'>
+								          <#-- 1:成功  0:未转换 3:转换失败 2：转换中 -->
+
+								             <#if list.isconverter==1>
+								             	上传成功
+								             <#elseif list.isconverter==0 || list.isconverter==2>
+								                <b class='ib tijiao'></b>审核中
+								             <#elseif list.isconverter==3>
+								                                                     审核未通过
+								              <#else>
+								              	<b class='ib tijiao'></b>审核中
+								             </#if>
+
+								          </div>
+								          <div class='w84 ib doc-ispublic'>
 								           <#if list.ispublic==1>
 								             	公开
 								            <#elseif list.ispublic==2>
@@ -162,24 +190,24 @@
 								            	公开
 								           </#if>
 								          </div>
-								          <div class='w105 ib il'>
+								          <div class='w84 ib il'>
 								           <#if (list.downsum)??>
 								             ${list.downsum}
 								           </#if>
 								          </div>
-								          <div class='w105 ib il'>
+								          <div class='w84 ib il'>
 								           <#if (list.collectsum)??>
 								            ${list.collectsum}
 								           </#if>
 								          </div>
-								          <div class="w105 ib">
+								          <div class="w94 ib ilb">
 								             ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
-								          <div class='w119 ib operate'>
+								          <div class='w119 ib operate ilb'>
 								              <a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
 								                <b class="iconfont pr2"></b>修改
 								              </a>
-								              <span data-id='${list.id}' data-name='${list.title}' data-type='1'>
+								              <span data-id='${list.id}' data-name='${list.title}' data-ispublic='${list.ispublic}' data-type='1'>
 								                  <b class="iconfont pr2"></b>
 								                                            删除
 								               </span>
@@ -222,16 +250,17 @@
 		                     <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
 		                  </div>
 			               <div class="status-box">
-							   <div class="w560 ib"><div class="checkbox select-all"></div>文档名称</div>
-							   <div class="w204 ib">上传时间</div>
-							   <div class="w119 ib">操作</div>
+							   <div class="w425 ib"><div class="checkbox select-all"></div>文档名称</div>
+							   <div class="w165 ib">文档状态</div>
+							   <div class="w165 ib">上传时间</div>
+							   <div class="w125 ib">操作</div>
 						   </div>
 						   <div class="docs-list">
 						      <ul>
 					           <#if (docsPage)??>
 							      <#list docsPage.list as list>
 								         <li>
-								          <div class='w560 fs14 fc3 ib dochidden'>
+								          <div class='w405 fs14 fc3 ib dochidden'>
 								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}"></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
 								             <#--<#if list.title?index_of(list.docsuffix)!=-1>
@@ -240,12 +269,29 @@
 								             <#else>
 								               <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
 								             </#if>-->
-								             <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
+								              <#if list.isconverter!=1 && list.isconverter!=3>	
+								           <#-- 状态为提交中： 先查询是否转换成功  是跳转 否则 return false  href="/docs/getDocsDetail/${list.id}" -->							           
+								             <a data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle notCvt' target="_blank" title="${list.title}">${list.title}</a>
+								             <#else>
+								              	 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle <#if list.isconverter!=1>disabled</#if>' target="_blank" title="${list.title}">${list.title}</a>
+								             </#if>
 								          </div>
-								          <div class="w204 ib">
+								          <div class='w165 ib'>
+								             <#-- 1:成功  0:未转换 3:转换失败 2：转换中 -->
+								             <#if list.isconverter==1>
+								             	上传成功
+								             <#elseif list.isconverter==0 || list.isconverter==2>
+								             <b class='ib tijiao'></b>审核中
+								             <#elseif list.isconverter==3>
+								                                                     审核未通过
+								             <#else>
+								              	<b class='ib tijiao'></b>审核中
+								             </#if>
+								          </div>
+								          <div class="w165 ib">
 								              ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
-								          <div class='w119 ib operate'>
+								          <div class='w125 ib operate'>
 								              <a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
 								                <b class="iconfont pr2"></b>修改
 								              </a>
@@ -312,7 +358,7 @@
 								            <#else>
 								                <a href="/docs/getDocsDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>
 								            </#if>-->
-								            <a href="/docs/getDocsDetail/${list.id}" target="_blank" title="${list.title}">${list.title}</a>
+								            <a href="/docs/getDocsDetail/${list.id}" target="_blank"  title="${list.title}">${list.title}</a>
 								          </div>
 								          <div class="w204 ib">
 								             ${list.createtime?string("yyyy-MM-dd")}
@@ -384,7 +430,7 @@
 									    <a href="/docs/getDocsDetail/${list.objectid}" target="_blank" title="${atitle}">${atitle}</a>
 				                    <#else>				                       
 				                    </#if>-->
-				                     <a href="/docs/getDocsDetail/${list.objectid}" target="_blank" title="${list.docs.title}">${list.docs.title}</a>
+				                     <a href="/docs/getDocsDetail/${list.objectid}" data-ispublic='${list.ispublic}' target="_blank" title="${list.docs.title}">${list.docs.title}</a>
 				                </div>
 				                <div class='w140 ib il'>
 				                  ${list.docs.downsum}
@@ -563,6 +609,7 @@
 				});
 			});
 	  </#if>
+
 	 </script>
   </body>
 

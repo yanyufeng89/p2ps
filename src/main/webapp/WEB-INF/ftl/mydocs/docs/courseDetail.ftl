@@ -11,6 +11,9 @@
     <meta name="keywords" content="JobPlus,知识分享,创新课程,创业课程,IT课程,互联网课程,咨询课程,财务课程,工业技术课程,工程课程,市场管理课程,销售管理课程,供应链课程,生产管理课程,设计课程,创意课程,翻译课程,音频课程,新媒体课程,影视课程,视频课程,写作课程">
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
     <link rel='stylesheet' type='text/css' href='/css/pj_bookdetail.css'>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+          <img src='/image/logo_1.jpg' />
+    </div>
   </head>
   <body id='coursetop'>
     <div class="page">
@@ -31,9 +34,9 @@
                           <div class='infor-left'>
                            <a href='${record.coursesurl}' target='_blank' id='courseurl'>
 	                           <#if (record.coursesimg)??>
-	                             <img src="${record.coursesimg}" class="book-logo lazy" alt="课程图标">
+	                              <img src="${record.coursesimg}" class="book-logo lazy" alt="课程图标">
 	                            <#else>
-	                              <img src="/image/default/167.jpg" class="book-logo lazy" alt="课程图标">
+	                              <img src="/image/default/167.jpg" onMouseOver="this.src='/image/default/168.jpg'"; onMouseOut="this.src='/image/default/167.jpg'" class="book-logo lazy" alt="课程图标">
 	                           </#if>
 	                        </a>
 	                       </div>

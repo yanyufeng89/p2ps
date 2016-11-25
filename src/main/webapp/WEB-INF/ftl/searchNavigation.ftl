@@ -230,7 +230,12 @@
 	   </a>
 	   <div class='advertising-direction'>广告</div>
 	   </div>
-	  
+	   <div class='pj_jsonp ad_exposure'>
+	   <a href='http://www.qidianla.com/' target='_blank'>
+	      <img src='/image/ad_exposure_3.png' alt='广告' width='308' height='246' class="lazy">
+	   </a>
+	   <div class='advertising-direction'>广告</div>
+	   </div>
    </div>
   </div>
     <div class='pagetemplate'></div>
@@ -255,7 +260,8 @@
 	<script type="text/javascript" src="/scripts/pj_searchResult.js"></script>
 	<script type='text/javascript' src='/scripts/jquery.simplePagination.js'></script>
 	<script type="text/javascript">
-        <#if (reCount) gt 0>
+	<#-- 搜索条数大于10 显示分页 -->
+        <#if (reCount) gt 10>
             $(function () {
                 $("#searchpaging").pagination({
                     items: ${reCount},

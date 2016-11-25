@@ -183,7 +183,7 @@ $(function () {
    
    
    //登录
-    $("#userlogin").live('click',function(){
+   $("#userlogin").live('click',function(){
 		$.ajax({
 			type:'POST',
     		url:"/userinfo.txt",
@@ -203,6 +203,7 @@ $(function () {
         $("input[name='Condition']").val($.trim($(this).text()));
        $("#searchForm").submit();
     });
+    
     // 采用了防抖动
     /*window.addEventListener('scroll',debounce(realFunc,500))*/; 
     /*window.addEventListener('scroll',realFunc);*/

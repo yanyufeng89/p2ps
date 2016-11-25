@@ -5,12 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-               ${record.title}-JobPlus
+       ${record.title}-JobPlus
     </title>
     <meta name="description" content="JobPlus网是国内领先的企业知识库公共平台,为创业者、大学生、职场人士提供各个实用网站的链接,JobPlus为7亿职场人员提供优质学习分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
     <meta name="keywords" content="jobplus,知识分享,创新网站,创业网站,IT网站,互联网,咨询网站,财务网站,工业技术网站,工程网站,市场管理网站,销售管理网站,供应链网站,生产管理网站,设计网站,创意网站,翻译网站,互联网+,新媒体网站,影视网站">
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
     <link rel='stylesheet' type='text/css' href='/css/pj_bookdetail.css'>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+          <img src='/image/logo_1.jpg' />
+    </div>
   </head>
   <body id='sitetop'>
     <div  class="page">
@@ -52,8 +55,8 @@
                    <div class='additional after resCollectionButton'>
                      <div class="topic-shareto">
                         <div class='shareto-share'>
-                          <span><a href='/myHome/getHomePage/${record.userid}' class='zm-item-link-avatar avatar-link' target='_blank' data-userid='${record.userid}'>${record.objCreator.username}</a></span>
-                          <span class='createtime'>${record.createtime?string("yyyy-MM-dd")}</span>
+                          <span><a href='/myHome/getHomePage/${record.userid}'  target='_blank' data-userid='${record.userid}'>${record.objCreator.username}</a></span>
+                          <span>${record.createtime?string("yyyy-MM-dd")}</span>
 						  <span><i class="z-icon-preview"></i>${record.readsum}人浏览</span>
                           
                           <#if (record.likedIds)??&&record.likedIds?length gt 0>

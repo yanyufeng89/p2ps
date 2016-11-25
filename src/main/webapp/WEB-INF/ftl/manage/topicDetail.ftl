@@ -130,7 +130,7 @@
 							   <#if (list.isPublic==1)>
 							    <span class="author-link" data-tip="" target="_self"  data-userid='${list.userid}' data-moduletype='0'>${list.tmpUserName}</span>
 							   <#else>
-							     <span class="anonymous-user" data-tip="" target="_self"  data-userid='${list.userid}' data-moduletype='0'>匿名用户</span>
+							     <span class="anonymous-user" data-tip="" target="_self" data-userid=''  data-moduletype='0'>匿名用户</span><#-- data-userid='${list.userid}' -->
 							   </#if>
 						    </a>
 							

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <title>JobPlus- 构建企业知识服务体系</title>
+    <title>JobPlus官方网站- 构建企业知识服务体系</title>
     <meta name="description" content="JobPlus网是国内首创的企业知识库公共平台,结构化的知识体系,包含文档,书籍,文章,网站,问答,在线课程的分享学习社区。一站式知识库平台,为7亿职场人员提供优质学习分享社区,JobPlus是你最值得信赖的终身学习伙伴。">
     <meta name="keywords" content="JobPlus,知识分享,知识库,文档,书籍,问答,课程,文章,网站,在线培训,企业课堂,员工培训,在线教育,职业技能,视频课程,培训网站,职场培训,网络课堂,人才培训,内容管理">
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,26 +266,19 @@
 				   <div>
 				      <a href="/myCenter/getMyHeadTop" target="_self" class="bg-avatar bg-index">
 				         <#if (Session.user.headicon)??&& Session.user.headicon?length gt 0>
-		                   <img src="${Session.user.headicon}"  class="lazy" width='60' height='60' alt="个人头像">
+		                   <img src="${Session.user.headicon}"  class="lazy <#if Session.user.usertype==2>img-company<#else>img-person</#if>" width='60' height='60' alt="个人头像">
 		                 <#else>
-		                   <img src="/image/myphoto.jpg"  class="lazy" width='60' height='60' alt="个人头像">
-		              </#if>
-		               </a>
+		                   <img src="/image/myphoto.jpg"  class="lazy <#if Session.user.usertype==2>img-company<#else>img-person</#if>" width='60' height='60' alt="个人头像">
+		                 </#if>
+		              </a>
 				   </div>
 				   
 				</div>
 				<div class="name-task">
 				<p class="name">
-			   <#if (Session.user)??>
-				<a href='/myCenter/getMyHeadTop' class="name-link" title="<#if (Session.user)??> ${Session.user.username} </#if>" target="_self">
-	                   <#if (Session.user.username?length gt 7)>
-	                     ${Session.user.username?substring(0,7)}...
-	                   <#else>
-	                     ${Session.user.username}
-	                   </#if>
-				</a>
+			    <#if (Session.user)??>
+				<a href='/myCenter/getMyHeadTop' class="name-link" title="<#if (Session.user)??> ${Session.user.username} </#if>" target="_self">${Session.user.username}</a>
 				</#if>
-				<a href="#" target="_self"><span class="iconfont ic-eduVip hide"></span></a>
 				</p>
 				<p class="task">
 				    <a href="javascript:void(0)" target="_self" class="daily-task">分享知识,领财富值</a>
@@ -381,7 +374,6 @@
              <div class='newstitle'>
 			  <span>最新分享</span>
 			 </div>
-			
 			   <div class='newscontent-left'>
 			     <ul>
                  <#list latestDatas as data>
@@ -837,12 +829,13 @@
           </div>
          <div id='hot-recommend' class='hot-recommend-book'>
           <ul>
-              <#list recommDatas[0..6] as data>
+              <#assign resultList=recommDatas?eval />
+              <#list resultList as data>
                   <li class="clearfix">
                       <div class="book-img">
-                          <a href='javascript:void(0)' onclick="toHref('${data.datatype}',${data.dataid})">
-                            <#if (data.imgurl)?? && (data.imgurl)!=''>
-                                <img  src="${data.imgurl}"
+                          <a href='javascript:void(0)' onclick="toHref('${data.protoType}',${data.data_id})">
+                            <#if (data.imgUrl)?? && (data.imgUrl)!=''>
+                                <img  src="${data.imgUrl}"
                                      title="${data.title}" alt="${data.title}" class="lazy">
                               <#else>
                                   <img  src="/image/default/166.jpg"
@@ -852,20 +845,20 @@
                       </div>
                       <div class="book-info">
                           <h6 class='textoverflow'>
-                              <a href='javascript:void(0)' onclick="toHref('${data.datatype}',${data.dataid})"
+                              <a href='javascript:void(0)' onclick="toHref('${data.protoType}',${data.data_id})"
                                  title="${data.title}">
                                 ${data.title}
                               </a>
                           </h6>
                           <p class="author">
-                              作者:${data.extendinfo}
+                              作者:${data.author}
                           </p>
                           <p class="press">
-                              出版社:${data.extendinfo2}
+                              出版社:${data.press}
                           </p>
                           <p class="read-num">
                           <span>
-                          ${data.kpi2}
+                          ${data.replySum}
                           </span>
                               人推荐
                           </p>

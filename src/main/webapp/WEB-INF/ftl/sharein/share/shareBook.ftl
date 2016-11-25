@@ -105,16 +105,17 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要推荐与之无关的书籍;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关的书籍；
                       </li>
                       <li>
-                        2.输入推荐的书籍名称, 按回车键或点击"√"， 选择你要推荐的书籍。 如果发现没有您要推荐的书籍,请把书籍的相关信息发到我们的邮箱service@jobplus.com.cn, 我们会尽快为你添加;
+                        2. 输入分享的书籍名称，按回车键或点击"√"，选择你要分享的书籍。如果发现没有您要分享的书籍，请把书籍的相关信息发到我们的邮箱
+                        <a href="mailto:service@jobplus.com">service@jobplus.com</a>，我们会尽快为你添加；
                       </li>
                       <li>
-                       3.禁止分享低俗、含有淫秽色情及低俗信息等书籍;
+                       3. 禁止分享低俗、含有淫秽色情及低俗信息等书籍；
                       </li>
                       <li>
-                        4.书籍推荐有问题需要帮助？详情请查看知识库
+                        4. 书籍分享有问题需要帮助？详情请查看知识库 
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
@@ -122,6 +123,7 @@
                   </div>
                 </div>
                   <form method="post" action="/books/shareBook" enctype="multipart/form-data">
+                  <input style='display:none'/>
                   <div id="upload-book-container" style="display:none">
                     <div class="upload-steps clearfix">
                       <ul>
@@ -206,7 +208,6 @@
                                       <div class="zm-tag-editor-editor zg-clear">
                                         <div class="zg-inline" id="bookinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
-                                          <input style='display:none'/>
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchBook" oninput="getTagsByCondition(this,'book')">
@@ -231,16 +232,16 @@
                     </h4>
                     <ol>
                       <li>
-                        1.推荐书籍时必须对该书籍填写推荐理由，可以让别人更加清晰的了解该书籍的相关内容;
+                        1. 分享书籍时必须对该书籍填写推荐理由，可以让别人更加清晰的了解该书籍的相关内容；
                       </li>
                       <li>
-                        2.书籍推荐一定要选择分类及标签,方便记录、查询以及搜索;
+                        2. 书籍分享一定要选择分类及标签，方便记录、查询以及搜索；
                       </li>
                       <li>
-                        3.多个标签之间要用逗号隔开,便于区分;
+                        3. 多个标签之间要用逗号隔开，便于区分；
                       </li>
                      <li>
-                        4.书籍推荐有问题需要帮助？详情请查看知识库
+                        4. 书籍分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>

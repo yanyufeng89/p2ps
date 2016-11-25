@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jobplus.pojo.MyHomePage;
+import com.jobplus.pojo.OperationSum;
 import com.jobplus.pojo.Page;
 
 public interface IMyHomePageService {
@@ -32,4 +33,8 @@ public interface IMyHomePageService {
 	 * @return
 	 */
 	public ModelAndView getHomePage(HttpServletRequest request,ModelAndView mv, String userid,String cutUserid,String isReview);
+	/**
+	 * 实时获取用户分享的总数（成功的）
+	 */
+	public OperationSum getRealSum(Integer userid);
 }

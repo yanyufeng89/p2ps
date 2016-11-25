@@ -9,6 +9,11 @@ $(function(){
 		initialFrameHeight:150,//设置编辑器高度
 		scaleEnabled:true
 	});
+	
+	if(window.location.href.indexOf('sortType')!=-1){
+		var t = $('#zh-answers-count').offset().top;
+        $(window).scrollTop(t);
+	}
 	//我的话题 ---已分享单个删除
 	 $('.operate span').live('click',function(){
 	    	var elem = $(this).closest('.item');    	
@@ -81,15 +86,15 @@ $(function(){
     //取消关注
     $('.attention span').live('click',function(){
     	var topicid=$(this).data('topicid');
-    	var $btn=$(this).find('input[type=botton]');
+    	var $btn=$(this).find('a');
     	var createperson=$(this).data('createperson');
     	var titlename=$(this).data('titlename');
     	if($btn.hasClass('topic-disblue')){
-    		$btn.removeClass('topic-disblue').addClass('topic-blue').val('关注');
+    		$btn.removeClass('topic-disblue').addClass('topic-blue').html('+&nbsp;关注');
     		deleteAttentions(topicid.toString(),$(this));
     		$(this).attr('data-actiontype','1');
     	}else{
-    		$btn.removeClass('topic-blue').addClass('topic-disblue').val('取消关注');
+    		$btn.removeClass('topic-blue').addClass('topic-disblue').html('取消关注');
     		topicFollow($(this),1,'1',createperson,topicid,titlename);
     		$(this).attr('data-actiontype','0');
     	}
@@ -126,21 +131,21 @@ $(function(){
 	 $('.edui-body-container').live('click',function(){
 		 topicFocus($(this));
 	 })
-
+     
      //话题的标题点击修改(模板)
     $('#zh-question-title a[name=edit]').live('click',function(){
-		var titletext=$(this).prev().text();
-		var tid=$(this).data('id');
+		var titletext=$('input[name=titlename]').val();
+		var tid=$('input[name=titleid]').val();
 		var data={
 				id:tid,
 				title:titletext,
 		}
-	  $('#titletemplate').setTemplateURL(projectName+'topicTitleEditTemplate.html',null, {filter_data: false});
-	  $('#titletemplate').processTemplate(data);
-	  $('#zh-question-title h2').append($('#titletemplate').html());
-	  $("#titletemplate").empty();
-      $('#zh-question-title h2 .zm-editable-content').css('display','none');
-      $('#zh-question-title h2 .pj-editable-editor-wrap').css('display','block');
+	  $('.pagetemplate').setTemplateURL(projectName+'topicTitleEditTemplate.html',null, {filter_data: false});
+	  $('.pagetemplate').processTemplate(data);
+	  $('#zh-question-title').append($('.pagetemplate').html());
+	  $(".pagetemplate").empty();
+      $('#zh-question-title .zm-editable-content').hide();
+      $('#zh-question-title .pj-editable-editor-wrap').show();
     });
     //话题标签点击修改
     $('.zm-tag-editor a[name=edit]').live('click',function(){
@@ -172,7 +177,7 @@ $(function(){
     //话题的标题点击修改--确定
     $('#zh-question-title a[name=save]').live('click',function(){
     	var titleid=$('input[name=titleid]').val();
-    	var titlename=$('#titleedit').val();
+    	var titlename=$('.titleedit').val();
     	//是否加问号
     	if(titlename.substring(titlename.length-1,titlename.length)!="?"&&titlename.substring(titlename.length-1,titlename.length)!="？")
     		{
@@ -192,13 +197,14 @@ $(function(){
     	
     	$.ajax({
     		type:'POST',
-    	    url:projectName+"myCenter/updateTopics",
+    	    url:"/myCenter/updateTopics",
     	    data:{id:titleid,title:titlename},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
     	    		titledisplayorhide();
-    	    		$('#zh-question-title .title').text(titlename);
+    	    		$('#zh-question-title .topic-title').text(titlename);
+    	    		$('input[name=titlename]').val(titlename);
     	    	}
     	    	else{
     	    		
@@ -244,18 +250,22 @@ $(function(){
     	var titleid=$('input[name=titleid]').val();
     	/*var about=$(".edui-body-container").html();*/
        	var about=umtor.getContent();
-        //判断输入的字节大小
+       /* //判断输入的字节大小
     	var leng=about.length+(about.match(/[^\x00-\xff]/g) ||"").length;
     	if(leng>10000){
     		$(this).before('<span class="errortip">请控制在10000 字以下</span>&nbsp;&nbsp;');
     		return false;
-    	}
-    	if(!UM.getEditor('topiceditor').hasContents()){
+    	}*/
+    	if($.trim(about).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).parent().prepend('<span class="errortip">字数超出最大限制</span>&nbsp;&nbsp;');
     		return false;
     	}
+    	/*if(!UM.getEditor('topiceditor').hasContents()){
+    		return false;
+    	}*/
     	$.ajax({
     		type:'POST',
-    	    url:projectName+"myCenter/updateTopics",
+    	    url:"/myCenter/updateTopics",
     	    data:{id:titleid,content:about},
     	    dataType:"json",
     	    success:function(data){
@@ -271,61 +281,60 @@ $(function(){
     })
     //话题详情--回答里面的评论收起或展开
     $('#zh-question-answer-wrap .js-comment').live('click',function(){
-    	userInfo=$('#currentUserId');
-       	$(this).toggle(function(){
+    	$(this).toggle(function(){
         	var $child=$(this).children();
         	$(this).empty().append($child).append('收起评论');
         	var answerid=$(this).attr('data-answer');
         	var createperson=$(this).attr('data-createperson');
         	var objectName=$('input[name=titlename]').val();
-        	$this=$(this);
         	var $holder=$(this).parent().nextAll('.comment-app-holder');
+        	$this=$(this);
         	if($holder.length>0){
         		$holder.show();
         	}
         	else{
             	$.ajax({
             		type:'POST',
-            		url:projectName+"topics/getPartTopicsComment",
+            		url:"/topics/getPartTopicsComment",
             		data:{parentcommid:answerid,type:2,relationidPg:answerid,objectNamePg:objectName,objCreatepersonPg:createperson},
             	    dataType:"json",
             	    success:function(data){
            	    	if(data.returnStatus=='000'){//返回成功
            	    		$.each(data.obj.list,function(index,item){
-            	    			if(item.likedUsers!=undefined){
-            	    				if(item.likedUsers.indexOf(',')!=-1){
-            	    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.likedUsers.split(','))!=-1){
-            	    						item.likedUsers=1;
+            	    			if(item.likedIds!=undefined){
+            	    				if(item.likedIds.indexOf(',')!=-1){
+            	    					if($.inArray(String(userInfo==undefined?'':userInfo.userid), item.likedIds.split(','))!=-1){
+            	    						item.likedIds=1;
             	    					}else{
-            	    						item.likedUsers=0;
+            	    						item.likedIds=0;
             	    					}
             	    				}else{
-            	    					if(item.likedUsers==(userInfo==undefined?'':userInfo.userid)){
-            	    						item.likedUsers=1;
+            	    					if(item.likedIds==String(userInfo==undefined?'':userInfo.userid)){
+            	    						item.likedIds=1;
             	    					}else{
-            	    						item.likedUsers=0;
+            	    						item.likedIds=0;
             	    					}
             	    					
             	    				}
     	        	    		}else{
-    	        	    			item.likedUsers=0;
+    	        	    			item.likedIds=0;
     	        	    		}
             	    	})
            	    	 	var datamodel={
            	    				answerid:answerid,
            	    				topicscommentList:data.obj.list,
            	    				topiccount:data.obj.list.length,
-           	    				userid:userInfo==undefined?'':userInfo.userid,
+           	    				userid:String(userInfo==undefined?'':userInfo.userid),
            	    				createperson:createperson,
            	    				objectName:objectName,
            	    		}
            	    		//加载模板
-           	    	 	$('.anscommtemplate').setTemplateURL(projectName+'topicAskCommentTemplate.html');
-           	        	$('.anscommtemplate').processTemplate(datamodel);
-           	        	$this.parents('.zm-item-meta').append($('.anscommtemplate').html());
+           	    	 	$('.pagetemplate').setTemplateURL(projectName+'topicAskCommentTemplate.html');
+           	        	$('.pagetemplate').processTemplate(datamodel);
+           	        	$this.parents('.js-contentActions').append($('.pagetemplate').html());
            	        	//textarea高度自适应
            	        	autosize(document.querySelectorAll('._InputBox_blur_3JWV'));
-           	        	$('.anscommtemplate').empty();
+           	        	$('.pagetemplate').empty();
            	        	$('.zg-link').pinwheel();
            	        	$('.Avatar').pinwheel();
            	    	}
@@ -378,13 +387,17 @@ $(function(){
     	var createperson=$('input[name=createperson]').val();
     	var name=$('input[name=titlename]').val();
     	var content=$(this).parent().prev().val();
-    	//字数不能大于1000
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能大于1000
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     			$(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         		return false;
-    	}
+    	}*/
     	var topicid=$('#content input[name=titleid]').val();
     	if($.trim(content)==''){
     		return false;
@@ -392,8 +405,8 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,objCreatepersonPg:createperson,objectNamePg:name,relationidPg:topicid},
+    		url:"/topics/insertTopicsComment",
+    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,objCreatepersonPg:createperson,objectNamePg:name,relationidPg:topicid},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -426,13 +439,17 @@ $(function(){
     //话题详情---回答里面评论  再添加评论
     $('button[name=answeraddnew]').live('click',function(){
     	var content=$(this).parent().prev().val();
-    	//字数不能大于1000
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能大于1000
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     			$(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         		return false;
-    	}
+    	}*/
     	var topicid=$('#content input[name=titleid]').val();
     	var parentcommid=$(this).attr('data-parentcommid');
     	var createperson=$(this).attr('data-createperson');
@@ -441,8 +458,8 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,parentcommid:parentcommid,relationidPg:parentcommid,objCreatepersonPg:createperson,objectNamePg:objectName},
+    		url:"/topics/insertTopicsComment",
+    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,parentcommid:parentcommid,relationidPg:parentcommid,objCreatepersonPg:createperson,objectNamePg:objectName},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -471,13 +488,17 @@ $(function(){
     //话题详情--评论里面针对每条评论回复
     $('.zm-comment-submit-comment').live('click',function(){	
     	var content=$(this).parent().prev().find('.pj-replaycontent').val();
-    	//字数不能超过一千字
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能超过一千字
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     		   $(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         	   return false;
-    	}
+    	}*/
     	var topicid=$('#content input[name=titleid]').val();
     	//被评论人的id 和名字
     	var commentby=$(this).attr('data-commentid');
@@ -491,8 +512,8 @@ $(function(){
     	$this=$(this);
     	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo.userid,commentby:commentby,objCreatepersonPg:commentby,relationidPg:relationid,objectNamePg:objectname},
+    		url:"/topics/insertTopicsComment",
+    		data:{topicsid:topicid,type:'3',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,commentby:commentby,objCreatepersonPg:commentby,relationidPg:relationid,objectNamePg:objectname},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -528,13 +549,17 @@ $(function(){
     //话题详细---回答里面针对每条评论进行回复
      $('.zm-comment-submit-answer').live('click',function(){
     	var content=$(this).parent().prev().find('.pj-replaycontent').val();
-    	//字数不能超过一千字
+    	if($.trim(content).replace(/[^x00-xFF]/g,'**').length>65535){
+    		$(this).prevAll().show();
+    		return false;
+    	}
+    	/*//字数不能超过一千字
     	var len=content.length+(content.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>1000){
     		if($(this).parent().find('.errortip').length==0)
     		   $(this).before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
         	   return false;
-    	}
+    	}*/
      	var topicid=$('#content input[name=titleid]').val();
      	var commentby=$(this).attr('data-commentid');
      	var commentname=$(this).attr('data-name');
@@ -547,8 +572,8 @@ $(function(){
      	$this=$(this);
      	$.ajax({
     		type:'POST',
-    		url:projectName+"topics/insertTopicsComment",
-    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo.userid,commentby:commentby,parentcommid:parentcommid,objectNamePg:objectName,relationidPg:relationid,objCreatepersonPg:commentby},
+    		url:"/topics/insertTopicsComment",
+    		data:{topicsid:topicid,type:'2',commcontent:content,useid:userInfo==undefined?'':userInfo.userid,commentby:commentby,parentcommid:parentcommid,objectNamePg:objectName,relationidPg:relationid,objCreatepersonPg:commentby},
     	    dataType:"json",
     	    success:function(data){
     	    	if(data.returnStatus=='000'){//返回成功
@@ -594,7 +619,7 @@ $(function(){
     	var topicname=$('input[name=titlename]').val();
     	var topicid=$('#content input[name=titleid]').val();
     	$this=$(this);
-    	var $container=$(this).parents('.zm-meta-panel').nextAll('.panel-container')
+    	var $container=$this.parents('.zm-meta-panel').nextAll('.panel-container')
     	//判断是否存在
     	if($container.length>0){
     		$container.show();
@@ -602,7 +627,7 @@ $(function(){
     	else{
         	$.ajax({
         		type:'POST',
-        		url:projectName+"topics/getPartTopicsComment",
+        		url:"/topics/getPartTopicsComment",
         		data:{topicsid:topicid,type:'3'},
         	    dataType:"json",
         	    success:function(data){
@@ -640,7 +665,7 @@ $(function(){
         	    			topicid:topicid,
        	    				topicscommentList:data.obj.list,
        	    				topiccount:data.obj.count,
-       	    				userid:userInfo==undefined?userInfo.userid:'',
+       	    				userid:userInfo==undefined?'':userInfo.userid,
        	    				last:data.obj.last,
        	    				createperson:createperson
        	    		}
@@ -653,7 +678,7 @@ $(function(){
        	    		$('.zm-item-link-avatar').pinwheel();
        	            $('.zg-link').pinwheel();
        	            //为了分页
-       	    		$.getScript('/51jobplusCore/scripts/jquery.simplePagination.js',function(){
+       	    		$.getScript('/scripts/jquery.simplePagination.js',function(){
        	    			$("#topiccompaging").pagination({
        	    				items:data.obj.count,
        	    				itemsOnPage:data.obj.pageSize,
@@ -752,24 +777,31 @@ $(function(){
     //发布回答
     $('.submit-button').live('click',function(){
     	var topicsid=$(this).attr('data-id');
+    	var objCreateperson=$('input[name=createperson]').val();
+    	var isreward=$('input[name=isreward]').val();
     	//关联的主体名称(话题名称)
     	var topicname=$('input[name=titlename]').val();
-    	var objCreateperson=$('input[name=createperson]').val();
+    	
         /*var commcontent=$('.publishanswer .edui-body-container').html();*/
     	var commcontent=editor.getContent();
-    	//判断输入的字节大小
+		if($.trim(commcontent).replace(/[^x00-xFF]/g,'**').length>65535){
+			$(this).prevAll().show();
+			return false;
+		}
+    	/*//判断输入的字节大小
     	var len=commcontent.length+(commcontent.match(/[^\x00-\xff]/g) ||"").length;
     	if(len>10000){
     		if($(this).parent().find('.errortip').length==0)
     		$(this).before('<span class="errortip">请控制在 10000 字以下</span>&nbsp;&nbsp;');
     		return false;
-    	}
+    	}*/
     	var $this=$(this);
     	var isPublic=$('input[type=checkbox]').is(':checked')?0:1;
-    	if(!UM.getEditor('uEditorCustom').hasContents())return false;
+    	//判断不为空 或者是在IE浏览器下umeditor插件 会把placeholder属性转换为P标签里面的内容
+    	if(!UM.getEditor('uEditorCustom').hasContents()||commcontent=='<p>在这里输入回答</p>"')return false;
     	$.ajax({
     		type:"POST",
-    		url:projectName+"topics/insertTopicsComment",
+    		url:"/topics/insertTopicsComment",
     		data:{commcontent:commcontent,type:1,topicsid:topicsid,isPublic:isPublic,objCreatepersonPg:objCreateperson,relationidPg:topicsid,objectNamePg:topicname},
     	    dataType:"json",
             success:function(data){
@@ -777,26 +809,30 @@ $(function(){
             		data.topicsComment.showcreatetime=data.topicsComment.showcreatetime.substring(11);
             		//界面加载数据
             		var datamodel={
-            			userid:userInfo.userid,
-            			username:userInfo.username,
-            			headicon:userInfo.headicon,
+            			userid:userInfo==undefined?'':userInfo.userid,
+            			username:userInfo==undefined?'':userInfo.username,
+            			headicon:userInfo==undefined?'':userInfo.headicon,
             			topicsComment:data.topicsComment,
             			commcontent:commcontent,
             			ispublic:isPublic,
+            			topicname:topicname,
             		}
-            		$('.anscommtemplate').setTemplateURL(projectName+'answerTemplate.html',null, {filter_data: false});
-            		$('.anscommtemplate').processTemplate(datamodel);
+            		$('.pagetemplate').setTemplateURL(projectName+'answerTemplate.html',null, {filter_data: false});
+            		$('.pagetemplate').processTemplate(datamodel);
             		if($('.loadmore').length>0){
-            			$('.loadmore').before($('.anscommtemplate').html());
+            			$('.loadmore').before($('.pagetemplate').html());
             		}else{
-            			$('#zh-question-answer-wrap').append($('.anscommtemplate').html());
+            			$('#zh-question-answer-wrap').append($('.pagetemplate').html());
             		}
             		
-            		$('.anscommtemplate').empty();
+            		$('.pagetemplate').empty();
             		$('.publishanswer .edui-body-container').empty();
             		 intoUserInfo();
             		//发布成功之后去掉提示信息
             		$this.parent().find('.errortip').remove();
+            		$('#zh-question-answer-num').html(Number($('#zh-question-answer-num').attr('data-num'))+1+'个回答');
+            		$('#zh-question-answer-num').attr('data-num',Number($('#zh-question-answer-num').attr('data-num'))+1);
+					bindShare();
                 }
             	else{
             		
@@ -816,25 +852,6 @@ $(function(){
     	topicFollow($(this),1,undefined,createperson,titleid,titlename)
     })
     
-   //回到顶部
-   $("#topicbacktop").mousemove(function(){
-    	$("#topicbacktop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#topicbacktop").css("background-position-x", "0");
-    })
-    
-    /*当界面下拉到一定位置出现向上的箭头 start*/
-    $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
-            $("#topicbacktop").fadeIn("fast");  
-        }  
-        else  
-        {  
-            $("#topicbacktop").fadeOut("fast");  
-        }  
-    });
-    /*当界面下拉到一定位置出现向上的箭头 end*/
-   
     //话题详情加载更多
     $('.loadmore').live('click',function(){
     	$(this).addClass('loading').empty().append("<span class='capture-loading'></span>加载中");
@@ -855,9 +872,196 @@ $(function(){
     setInterval("cancelHeight()",1000); 
     /*--end--*/
     
+    //提高悬赏
+    $('#advancereward').live('click',function(){
+    	advanceReward();
+    })
+     //话题提高悬赏值 确定btn
+    $('#reward-btn').live('click',function(){
+    	upReward($(this));
+    });
     
-   
+    //取消悬赏
+    $('#cancelreward').live('click',function(){
+    	cancelReward();
+    })
+    //取消悬赏 确定 btn
+    $('#cancel-reward-btn').live('click',function(){
+    	cancelRewd($(this));
+    })
+    //选择悬赏的财富值
+//    $(".reward-select").live('change',function(){
+//        $('#reward-val').val($(this).val());
+//    });
+    //采纳答案
+    $('.adopt-answer').live('click',function(){
+    	adoptAnswer($(this));
+    });
+    //确定采纳答案
+    $('#adoptAnswer-btn').live('click',function(){
+    	acptAnswer($(this));
+    });
+    
+    
 })
+//采纳最佳答案  确定btn
+function acptAnswer(obj){
+	var topicId = $('input[name=titleid]').val();
+	var rewardValue = $('input[name=rewardValue]').val();
+	var comId = obj.data('adopt-answer');
+	var title = $('input[name=titlename]').val();
+	var priMsg = $('.adopt-reasons').val();
+	var receiveUid = obj.data('receiveuid');
+	$.ajax({
+		type:"POST",
+    	url:"/topics/acptAnswer",
+    	data:{id:topicId,rewardValue:rewardValue,comId:comId,title:title,priMsg:priMsg,receiveUid:receiveUid},
+    	dataType:"json",
+        success:function(data){
+        	if(data.returnStatus=='000'){//返回成功 
+        		$('.adopt-answer').each(function(){
+        			if($(this).attr('data-adopt')==comId){
+        				$('#zh-question-answer-wrap').prepend($(this).parents('.zm-item-expanded').css('background','#f3f9ff'));
+        			}
+        		})
+        		$('#zh-question-answer-wrap').prepend("<i class='z-icon-answer-adopt'></i><span class='answer-title h2 grid'>已采纳</span>");
+        		disIcon();
+        		closeReport(obj);
+        	}
+        	else{
+        	}
+        }
+	})
+}
+//取消悬赏 确定btn
+function cancelRewd(obj){
+	var topicId = $('input[name=titleid]').val();
+	var rewardValue = $('input[name=rewardValue]').val();
+	$.ajax({
+		type:"POST",
+    	url:"/topics/cancelRewd",
+    	data:{id:topicId,rewardValue:rewardValue},
+    	dataType:"json",
+        success:function(data){
+        	if(data.returnStatus=='000'){//返回成功 
+        		disIcon();
+        		closeReport(obj);
+        	}
+        	else{
+        	}
+        }
+	})
+}
+//禁用悬赏图标
+function disIcon(){
+	$('.reward .z-icon-reward-o').addClass('z-icon-accept-reward-o').removeClass('z-icon-reward-o');
+	$('#advancereward i').addClass('z-icon-accept-advancereward-o').removeClass('z-icon-advancereward-o');
+	$('#cancelreward i').addClass('z-icon-accept-cancelreward-o').removeClass('z-icon-cancelreward-o');
+	$('#advancereward,#cancelreward,#rewardval').addClass('disabled');
+	$('input[name=isreward]').val('-1');
+	//移除采纳答案
+	$('.adopt-answer').remove();
+}
+//提高悬赏确定 btn
+function upReward(obj){	
+	//原悬赏值
+	var oldRewValue = parseInt($('input[name=rewardValue]').val());
+//	//新
+//	var newRewValue = $("#reward-val").val();
+//	//差值
+//	var Dvalue = newRewValue - oldRewValue;
+	
+	//差值
+	var Dvalue =$("#reward-val").val(); 
+	var reg=/^(\+|-)?\d+$/;
+	if(!reg.test(Dvalue)){
+		 $('.zh-pm-warnmsg').html('请输入整数!').show();
+		 return false;
+	}
+	if(isNaN(Dvalue)){
+	   $('.zh-pm-warnmsg').html('请正确输入财富值!').show();
+	   return false;
+	}
+	//新
+	var newRewValue = parseInt(Dvalue) + parseInt(oldRewValue);
+	
+	var topicId = $('input[name=titleid]').val();
+	var points = parseInt($('input[name=points]').val());
+	var len=newRewValue.length;
+	for(var i=0;i<len;i++){
+		c=newRewValue.charAt(i).charCodeAt(0);
+		if(c<48 || c>57){
+			$('.zh-pm-warnmsg').html('悬赏值不能小于1个财富值!').show();
+			return false;
+		}
+	}
+	if(Dvalue <=0 || oldRewValue==null || newRewValue==null){
+		//悬赏值减少或者没变
+		$('.zh-pm-warnmsg').html('请增加悬赏值!').show();
+		return false;
+	}	
+	if(Dvalue >  points){
+		//积分不够
+		$('.zh-pm-warnmsg').html('积分不够!').show();
+		return false;
+	}
+	
+	$.ajax({
+		type:"POST",
+    	url:"/topics/upRewd",
+    	data:{id:topicId,rewardValue:newRewValue,dValue:Dvalue},
+    	dataType:"json",
+        success:function(data){
+        	if(data.returnStatus=='000'){//返回成功 
+        		$('.lable-rewardValue').html(newRewValue).attr('data-rewardvalue',newRewValue);
+        		$('input[name=rewardValue]').val(newRewValue);
+        		$('input[name=points]').val(Number(points)-Number(Dvalue));
+        		closeReport(obj);
+        	}
+        	else{
+        	}
+        }
+	})
+}
+//采纳答案
+function adoptAnswer(obj){
+	var comId = obj.data("adopt");
+	var receiveUid = obj.data("receiveuid");
+	//加载模板
+	var data = {
+			comId:comId,
+			receiveUid:receiveUid
+			};
+	$('.pagetemplate').setTemplateURL(projectName+'adoptAnswer.html');
+	$('.pagetemplate').processTemplate(data);
+	$('body').append($('.pagetemplate').html());
+	$('.pagetemplate').empty();
+	$('.edui-container').css('z-index','0');
+}
+//提高悬赏
+function advanceReward(){
+	var points=$('input[name=points]').val();
+	var rewardValue=$('input[name=rewardValue]').val();
+	//加载模板
+	var data={
+			points:points,
+			rewardValue:rewardValue
+	}
+	$('.pagetemplate').setTemplateURL(projectName+'advanceReward.html');
+	$('.pagetemplate').processTemplate(data);
+	$('body').append($('.pagetemplate').html());
+	$('.pagetemplate').empty();
+	$('.edui-container').css('z-index','0');
+}
+//取消悬赏
+function cancelReward(){
+	//加载模板
+	$('.pagetemplate').setTemplateURL(projectName+'cancelReward.html');
+	$('.pagetemplate').processTemplate();
+	$('body').append($('.pagetemplate').html());
+	$('.pagetemplate').empty();
+	$('.edui-container').css('z-index','0');
+}
 //邀请回答按钮点击
 function askPeople(obj){
 	var userid=obj.attr('data-userid');
@@ -865,13 +1069,14 @@ function askPeople(obj){
 	var topicid=$('input[name=titleid]').val();
 	$.ajax({
 		type:'POST',
-		url:projectName+"topics/askPeople",
+		url:"/topics/askPeople",
 		data:{id:topicid,title:topictitle,objCreatepersonPg:userid},
 		dataType:"json",
      	async:false,
      	success:function(data){
      		if(data.returnStatus=='000'){
-     			ZENG.msgbox.show('邀请成功!',4, 3000);
+     			/*ZENG.msgbox.show('邀请成功!',4, 3000);*/
+     			obj.addClass('zg-btn-white').removeClass('zg-btn-green').addClass('disabled');
      		}else{
      			
      		}
@@ -885,7 +1090,7 @@ function findInvitePerson(val){
 	var nskillitem='';
 	$.ajax({
 		type:'POST',
-		url:projectName+"skills/findUser/"+val,
+		url:"/skills/findUser/"+val,
 		dataType:"json",
      	async:false,
      	success:function(data){
@@ -895,7 +1100,7 @@ function findInvitePerson(val){
 	     		  if(item.skillitem!=undefined){
 	     			 if(item.skillitem.indexOf(',')!=-1){
 		     				$.each(item.skillitem.split(','),function(index,item1){
-		     					nskillitem+=item1.split(':')[1]+',';
+		     					nskillitem+=item1.split(':')[1]+'，';
 		     				})
 		     				item.skillitem=nskillitem.substring(0,nskillitem.length-1)
 		     		  }else{
@@ -931,9 +1136,11 @@ function topicLoadMore(obj){
     var sumpage=obj.data('sumpage');
     var sorttype=$('input[name=sorttype]').val();
     var topicid=$('#content input[name=titleid]').val();
+    var isreward=$('input[name=isreward]').val();
+    var createperson=$('input[name=createperson]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"topics/getSortTopicsCommentsByTopicId",
+      	url:"/topics/getSortTopicsCommentsByTopicId",
       	data:{pageNo:Number(pageNo)+1,topicsid:topicid,sortType:sorttype},
     	dataType:"json",
     	success:function(data){
@@ -960,7 +1167,9 @@ function topicLoadMore(obj){
   	    	    })
     			var datamodel={
     			   topiclist:data.obj.list,
-    			   userid:userInfo.userid,
+    			   isreward:isreward,
+    			   iscreateperson:(createperson==(userInfo==undefined?'':userInfo.userid))?1:0,
+    			   createperson:createperson
     		    }
     		   $('.headiconintotem').setTemplateURL(projectName+'topicLoadMoreTemplate.html',null, {filter_data: false});
           	   $('.headiconintotem').processTemplate(datamodel);
@@ -968,9 +1177,11 @@ function topicLoadMore(obj){
           	   $(".headiconintotem").empty();
           	   $('.loadmore').attr('data-pageno',Number(pageNo)+1);
           	   obj.removeClass('loading').empty().append('更多');
-          	   if(Number(sumpage)==Number(pageNo)+1)
+          	   if(Number(sumpage)==Number(pageNo)+1){
           		 $('.loadmore').hide();
+          	   }
           	   intoUserInfo();
+			   bindShare();
     		}else{
     			
     		}
@@ -985,13 +1196,12 @@ function closereply(obj){
 
 //显示隐藏
 function titledisplayorhide(){
-	$('#zh-question-title h2 .zm-editable-content').css('display','block');
-    $('#zh-question-title h2 .pj-editable-editor-wrap').remove();
+	$('#zh-question-title .zm-editable-content').show();
+    $('#zh-question-title .pj-editable-editor-wrap').remove();
 }
 function titlecondisplayorhide(){
 	$('#zh-question-detail .zm-editable-content').show();
-	$('#zh-question-detail .edui-container').hide();
-	$('#zh-question-detail .zm-command').hide();
+	$('#zh-question-detail .edui-container,#zh-question-detail .zm-command').hide();
 }
  //批量删除话题 --分享  
 function deleteTopics(conditions,obj){
@@ -999,7 +1209,7 @@ function deleteTopics(conditions,obj){
 	   console.log(s)*/;
   	   $.ajax({
          	type:"POST",
-         	url:projectName+"myCenter/deleteTopics",
+         	url:"/myCenter/deleteTopics",
          	data:{condition:conditions},
          	dataType:"json",
          	success:function(data){
@@ -1021,7 +1231,7 @@ function deleteTopics(conditions,obj){
             			}
             			
             		}
-            		$('#topicshare').html("分享("+data.operationSum.topicssharesum+")");
+            		$('#topicshare').html("分享&nbsp;"+data.operationSum.topicssharesum);
 
         		}else{//返回失败
 
@@ -1036,7 +1246,7 @@ function deleteAttentions(conditions,obj){
 	   console.log(s);*/
 	   $.ajax({
        	type:"POST",
-       	url:projectName+"myCenter/deleteAttentions",
+       	url:"/myCenter/deleteAttentions",
        	data:{condition:conditions},
        	dataType:"json",
        	success:function(data){
@@ -1056,7 +1266,7 @@ function deleteAttentions(conditions,obj){
         			}
           		}
 
-             $('#topicattention').html("关注("+data.operationSum.topicsattesum+")");
+             $('#topicattention').html("关注&nbsp;"+data.operationSum.topicsattesum);
       		}else{//返回失败
 
       		}
@@ -1069,7 +1279,7 @@ function deleteAttentions(conditions,obj){
 function deleteTopicsComments(conditions,obj){
 	   $.ajax({
        	type:"POST",
-       	url:projectName+"myCenter/deleteTopicsComments",
+       	url:"/myCenter/deleteTopicsComments",
        	data:{condition:conditions},
        	dataType:"json",
        	success:function(data){
@@ -1090,7 +1300,7 @@ function deleteTopicsComments(conditions,obj){
         				obj.parents('li').remove();
         			}
           		}
-          		$('#topicreplay').html("回复("+data.operationSum.topicscomsum+")");
+          		$('#topicreplay').html("回复&nbsp;"+data.operationSum.topicscomsum);
           		
       		}else{//返回失败
       			
@@ -1100,43 +1310,12 @@ function deleteTopicsComments(conditions,obj){
    });
 }
 
-//根据条件查询(标签) url:"tags/findClass/"+condition
-/*function getTagsByCondition(obj){
-	var conds=$(obj).val();
-	//过滤掉空格 "" null 等
-	if (conds !== null || conds !== undefined || conds !== '') { 
-		//过滤掉正在输入汉字的情况
-		if($.trim(conds).length>0){
-		 $.ajax({
-	         	type:"POST",
-	         	url:projectName+"tags/findClass/"+conds,
-	         	//data:{condition:100},
-	         	dataType:"json",
-	         	success:function(data){
-	         		if(data.returnStatus=='000'){//返回成功
-	            		console.log(data);
-	         			initTagBySearchTopic(data);	
-	            		$("#topictag").chosen(data,'','topictag',conds);
-	        		}else{//返回失败
-	        			
-	        		}
-	        		
-	        	}
-	     });
-		} 
-	   else{
-			//当input为空时 隐藏搜索的下拉列表
-		   $(".zm-tag-editor-command-buttons-wrap div:last-child").remove();
-		}
-	}else{//输入值 为   空格 "" null 等
-		
-	}   		
-}*/
+
 //话题编辑
 function updateTopics(){
 	   $.ajax({
      	type:"POST",
-     	url:projectName+"/myCenter/updateTopics",
+     	url:"//myCenter/updateTopics",
      	data:{id:2,topicsclass:"测试话题标签",content:"<p><img src='http://192.168.0.39:8199/2016/07/01/1fe0d531d23540d99e94e6001bd46d9f.png' _src='http://192.168.0.39:8199/2016/07/01/1fe0d531d23540d99e94e6001bd46d9f.png'/></p>",topicsclass:"100:语文"},
      	dataType:"json",
      	success:function(data){
@@ -1170,7 +1349,7 @@ function topicLike(obj,type){
 	}
 	$.ajax({
 		type:"POST",
-     	url:projectName+"myCenter/clickOnLike",
+     	url:"/myCenter/clickOnLike",
      	data:{id:commid,likeOperate:isLiked,objectNamePg:objectName,objCreatepersonPg:createperson,relationidPg:commid,topObjId:topObjId},
      	dataType:"json",
      	success:function(data){
@@ -1278,7 +1457,7 @@ function cancelnewreply(obj,type){
 	$this=obj;
 	$.ajax({
        	type:"POST",
-       	url:projectName+"topics/delCommentOnTopDetail",
+       	url:"/topics/delCommentOnTopDetail",
        	data:{id:replyid,type:operatetype,topicsid:topicsid,parentcommid:parentcommId},
        	dataType:"json",
        	success:function(data){
@@ -1302,5 +1481,5 @@ function answerreplyCancel(obj){
 
 //加载用户信息
 function intoUserInfo(){
-	$('.zm-list-avatar,.author-link,.zm-item-link-avatar,.zg-link,.zm-item-img-avatar,.Avatar-s').pinwheel();
+	$('.zm-list-avatar,.author-link,.zm-item-link-avatar,.zm-item-img-avatar,.zg-link,.Avatar-s').pinwheel();
 }

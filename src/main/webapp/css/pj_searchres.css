@@ -281,6 +281,7 @@ p {
 	position: relative;
 	height: 3.6em;
     overflow: hidden;
+    padding-top:6px;
 }
 .slidedown {
 	cursor: pointer;
@@ -616,4 +617,10 @@ ul.filter-wrapper input[type=button] {
 }
 .js-reward i{
 	vertical-align: -2px!important;
+}
+.topicdivision-left .title{
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }

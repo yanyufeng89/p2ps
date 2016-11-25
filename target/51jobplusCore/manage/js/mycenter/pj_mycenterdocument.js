@@ -187,7 +187,7 @@ function docDownLoad(obj){
      $('.modal-wrapper').remove();
 	 $.ajax({
 	    	type:"POST",
-	      	url:projectName+"docs/downloadDocs",
+	      	url:"/docs/downloadDocs",
 	      	data:{downvalue:downvalue,id:docid,userid:docCreatePerson},
 	    	dataType:"json",
 	    	 async:false, 
@@ -233,7 +233,7 @@ function docLoadMore(obj){
     var docid=$('input[name=docid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"docs/loadComments",
+      	url:"/docs/loadComments",
       	data:{pageNo:Number(pageNo)+1,docid:docid},
     	dataType:"json",
     	success:function(data){
@@ -266,7 +266,7 @@ function cancelComment(obj){
 	var tableName=obj.attr('data-tableName');
 	$.ajax({
 			type:"POST",
-			url:projectName+"manage/backstage/delComment",//url:projectName+"docs/delComment",
+			url:"/manage/backstage/delComment",//url:"/docs/delComment",
 			data:{id:id,tableName:tableName},//data:{id:id,docid:docid},
 			dataType:"json",
 		    success:function(data){
@@ -308,7 +308,7 @@ function commentDocs(obj,type){//type 1代表用户直接发布评价语  0代�
 	$this=obj;
 	$.ajax({
 		type:"POST",
-     	url:projectName+"docs/addComment",
+     	url:"/docs/addComment",
      	data:{docid:docid,commentby:commentby,comments:comments,objCreatepersonPg:docCreatePerson,relationidPg:docid,objectNamePg:objectNamePg},
 	    dataType:"json",
 	    success:function(data){
@@ -359,7 +359,7 @@ function docCollect(obj){
 	var collectcount=obj.attr('data-collectcount');
 	$.ajax({
 		type:"POST",
-     	url:projectName+"docs/collectDocs",
+     	url:"/docs/collectDocs",
      	data:{judgeTodo:iscollect,objectid:docid},
 	    dataType:"json",
 	    success:function(data){
@@ -389,7 +389,7 @@ function docLike(obj){
 	var likecount=obj.attr('data-likecount');
 	$.ajax({
 		type:"POST",
-     	url:projectName+"docs/clickLikeOnDoc",
+     	url:"/docs/clickLikeOnDoc",
      	data:{likeOperate:islike,id:relationidPg,objCreatepersonPg:docCreatePerson,relationidPg:relationidPg,objectNamePg:objectNamePg},
      	dataType:"json",
      	success:function(data){
@@ -415,7 +415,7 @@ function docLike(obj){
 function deleteDocs(conditions,obj){
   	   $.ajax({
          	type:"POST",
-         	url:projectName+"myCenter/deleteDocs",
+         	url:"/myCenter/deleteDocs",
          	data:{condition:conditions},
          	dataType:"json",
          	success:function(data){
@@ -453,7 +453,7 @@ function deleteMyCollects(conditions,obj,actiontype){
 	  //actionType 下载0 收藏1
 	   $.ajax({
       	type:"POST",
-      	url:"/51jobplusCore/myCenter/deleteMyCollects",
+      	url:"/myCenter/deleteMyCollects",
       	data:{condition:conditions,actionType:actiontype,collecttype:"tbl_docs"},
       	dataType:"json",
       	success:function(data){

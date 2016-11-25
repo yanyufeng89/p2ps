@@ -1071,12 +1071,8 @@ public class FTPClientTemplate {
 		ftp.setPassiveMode(false);
 		ftp.setEncoding("utf-8");
 		 try {
-			 String fileID = UUIDGenerator.getUUID();
-			 String fileName = "mydict.dic";
-			 String remotePath= "/docsDir/"+fileID+fileName;
-			 InputStream is = new FileInputStream(new File("C:\\Users\\pj01\\Desktop\\mydict.dic"));
-			 FTPStatus result = ftp.upload("C:\\Users\\pj01\\Desktop\\mydict.dic", remotePath, true);
-			 FTPStatus result2 = ftp.upload(is, remotePath, true);
+			 String remotePath= "imgDir/2016/11/15/88_9d6ef69c52ca4f3c9c1726005dd2cbe2.jpg";
+			 FTPStatus result = ftp.upload("C:\\Users\\pj01\\Desktop\\e67f2efe601b45bb8caf4cd2a3ff30aa.jpg", remotePath, true);
 			 System.out.println(result);
 			 } catch (FileNotFoundException e) {
 			 // TODO Auto-generated catch block

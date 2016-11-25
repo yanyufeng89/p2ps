@@ -1,0 +1,44 @@
+<!-- 话题加载详情 -->
+{#foreach $T.courseslist as list}
+  <div class='item'>
+        <div class='media-left'>
+		{#if $T.list.tmpHeadIcon}
+	     {#if $T.list.isPublic==1}
+	      <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.list.userid}' target="_blank">
+	        <img src="{$T.list.tmpHeadIcon}" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid='{$T.list.userid}' data-moduletype="0">
+	      </a>
+	     {#else}
+	        <img src="{$T.list.tmpHeadIcon}" alt="个人头像" class="zm-list-avatar avatar lazy"  data-moduletype="0">
+	     {#/if}
+	   {#else}
+	      {#if $T.list.isPublic==1}
+	       <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.list.userid}' target="_blank">
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid='{$T.list.userid}' data-moduletype='0'>
+	       </a>
+	      {#else}
+	         <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-list-avatar avatar lazy"  data-moduletype='0'>
+	      {#/if}
+	   {#/if}
+	   {#if ($T.list.isPublic==1)}
+	                <a href='/myHome/getHomePage/{$T.list.userid}' class='uname' data-userid='{$T.list.userid}' target='_blank'>{$T.list.tmpUserName}</a>
+       {#else}
+	                <a  class='uname' data-userid='' target='_blank'>匿名用户</a><!-- {$T.list.userid} -->
+       {#/if}
+        </div>
+         <div class='media-right'>
+	           <div class="reason">
+				      {$T.list.commcontent}
+			   </div>
+	           <div class="operate">
+	             <a  class="answer-date-link meta-item"  href="javascript:;">
+	                {#if $T.list.showcreatetime}
+		               {$T.list.showcreatetime}
+		            {#/if}
+				 </a>
+				 <a href="javascript:;" name="addcomment" class="meta-item toggle-comment topic-com"  data-answer='{$T.list.id}'  data-commentcount='{$T.list.replysum}' data-createperson='{$T.list.userid}'> 
+					<i class="z-icon-comment"></i>{$T.list.replysum}条评论
+			     </a>
+	           </div>
+		</div>
+  </div>
+{#/for}

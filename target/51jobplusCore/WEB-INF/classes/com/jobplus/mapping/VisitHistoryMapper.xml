@@ -21,12 +21,12 @@
     <include refid="Base_Column_List2" />
     ,u.userName as userName,u.headIcon as headIcon,u.description as description,p.attentionsum as attentionsum,p.fanssum as fanssum
     ,(select group_concat(userid)  from tbl_attention where objectId = t.visitorId and colltype='tbl_user') as fansIds
-    ,(select count(*) from tbl_visitHistory t left join tbl_user u
+<!--     ,(select count(*) from tbl_visitHistory t left join tbl_user u
 	    on t.visitorId = u.userId join tbl_operationSum p on t.visitorId = p.userid
 	    where t.userId = #{userid,jdbcType=INTEGER}
 	    <if test="visittype != null" >
 	     and  visitType =  #{visittype,jdbcType=INTEGER}
-	    </if> ) as pageCount 
+	    </if> ) as pageCount  -->
     
     from tbl_visitHistory t left join tbl_user u
     on t.visitorId = u.userId join tbl_operationSum p on t.visitorId = p.userid
@@ -75,7 +75,7 @@
 		SELECT COUNT(*) FROM tbl_visitHistory 
 		WHERE TO_DAYS(visitTime) = TO_DAYS(NOW()) 
 		AND visitorId =  #{visitorid,jdbcType=INTEGER} AND userId = #{userid,jdbcType=INTEGER} 
-		and visitUrl = #{visiturl,jdbcType=VARCHAR} and visitType = #{visittype,jdbcType=INTEGER}
+		<!--  and visitUrl = #{visiturl,jdbcType=VARCHAR} --> and visitType = #{visittype,jdbcType=INTEGER}
 	</selectKey>
 	<if test="count > 0">
 		update tbl_visitHistory
@@ -83,7 +83,7 @@
 	      visitTime = now()
 	    where TO_DAYS(visitTime) = TO_DAYS(NOW()) 
 		AND visitorId =  #{visitorid,jdbcType=INTEGER} AND userId = #{userid,jdbcType=INTEGER} 
-		and visitUrl = #{visiturl,jdbcType=VARCHAR} and visitType = #{visittype,jdbcType=INTEGER}
+		<!-- and visitUrl = #{visiturl,jdbcType=VARCHAR} --> and visitType = #{visittype,jdbcType=INTEGER}
 	</if>
 	<if test="count==0">
 	insert into tbl_visitHistory (id, visitorId, userId, visitTime, visitUrl, visitType)

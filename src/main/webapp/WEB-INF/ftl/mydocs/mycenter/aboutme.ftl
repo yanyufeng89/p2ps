@@ -27,12 +27,13 @@
                             
 							<div class="profile-overview">
                                 <div class="profile-overview-content">
-                                    <div id="member-498233445" class="masthead">
+                                    
                                         <div id="name-container">
                                             <div id="name" class="editable-item">
-                                                <span class="n fn field-text">
+                                                <div class="n fn field-text">
                                                     <span class="full-name">${userInfo.username?html}</span>
-												</span>
+                                                    <span class="pj-level" style='vertical-align:0;'><em>LV.${userInfo.userlevel?html}</em></span>
+												</div>
                                             </div>
                                         </div>
                                         <div id="location-container">
@@ -78,7 +79,7 @@
 											  </p>
                                             </div>
                                         </div>
-                                    </div>
+                                    
                                     <div class="field" data-add-entity="WORK" data-trk="prof-edit-topcard-edu-inline_cta">
                                         <#if (workExList)?? && workExList?size gt 0>
 										    <#list workExList as wlist>
@@ -111,7 +112,7 @@
                         </div>
 					    <div class='profile-func'>
                                  <#if (userInfo.userid?string==(Session.user.userid?string)!)>
-                                       <a href="/myHome/getHomePage/${Session.user.userid}" class="preview-profile button-primary">返回编辑界面</a>
+                                       <a href="/myHome/getHomePage/${Session.user.userid}?isReview=0" class="preview-profile button-primary">返回编辑界面</a>
 								 <#else>
 								  <#if (userInfo.fansIds)??>
 										   <#if (userInfo.fansIds)?? && userInfo.fansIds?length gt 0>										     
@@ -208,18 +209,18 @@
 								  </#if>
 									
 									<#if (userInfo.ismarry)?? && userInfo.ismarry!=2 && userInfo.ismarry?length gt 0>
-									  <span class="marriage"><label>婚姻状况:</label>	<#if userInfo.ismarry==1> 已婚<#elseif userInfo.ismarry==0> 未婚</#if></span>
+									  <span class="marriage"><label>婚姻状况:</label>	<#if userInfo.ismarry==1>已婚<#elseif userInfo.ismarry==0>未婚</#if></span>
 									 <#else>
 									   <span class="marriage">婚姻状况:&nbsp;&nbsp;</span>
 									 </#if>
 									
 								</div>
 								<div class="header">
-									<span>个人简介</span>
+									<span style='font-size:14px'>个人简介</span>
 								</div>
 								 <div class="intro">
 								 <#if (userInfo.description)?? && userInfo.description?length gt 0>
-									<span class="introinfo">${userInfo.description?html}</span>
+									<span class="introinfo">${userInfo.description}</span>
 							     </#if>
 								</div>
 						   </div>
@@ -334,11 +335,11 @@
 									</span>
 								  </div>
 								 
-								  <div class='workdescription'>
+								  <div class='workdescription clearfix'>
 									<span class='description'>
 											<label>工作内容:</label>
 									 <#if (worklist.description)?? && worklist.description?length gt 0>
-										 <span class='workcontent'>${worklist.description?html}</span>										
+										 <span class='workcontent'>${worklist.description}</span>										
 									 </#if>
 									</span>
 								  </div>

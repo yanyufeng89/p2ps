@@ -67,19 +67,29 @@
   </delete>
   <!-- 我关注的人总数 getAttenManSum -->
   <select id="getAttenManSum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
-    select 
+    <!-- select 
     count(objectId)
     from tbl_attention
     where userid = #{userid,jdbcType=INTEGER}
-    and collType = 'tbl_user'
+    and collType = 'tbl_user' -->
+    
+    select COUNT(at.objectId) from  tbl_user t left join tbl_attention at on t.userId = at.objectId left join tbl_operationSum p on at.objectId = p.userid
+		where at.collType='tbl_user'  and t.isValid=1
+		and at.userid = #{userid,jdbcType=INTEGER} 
   </select>
   <!-- 我的粉丝总数 -->
   <select id="getFansSum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
-    select 
+    <!-- select 
     count(userId)
     from tbl_attention
     where objectId = #{userid,jdbcType=INTEGER}
-    and collType = 'tbl_user'
+    and collType = 'tbl_user' -->
+    
+    select COUNT( at.userid) from tbl_attention at RIGHT join tbl_user t on
+		t.userId = at.userId
+		left join tbl_operationSum p on t.userId = p.userid
+		where at.collType='tbl_user' and t.isValid=1
+		and at.objectId = #{userid,jdbcType=INTEGER} 
   </select>
   <!-- 我关注的人 ids -->
   <select id="getAttenMan" parameterType="java.lang.Integer" resultType="java.lang.String" >

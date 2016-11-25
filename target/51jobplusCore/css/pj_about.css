@@ -1,27 +1,29 @@
 .pj-container{
+	clear: both;
 	max-width: 1200px;
-    clear: both;
+	min-width: 960px;
     overflow: hidden;
     margin:0 auto;
     margin-top: 35px;
     position: relative;
     z-index: 2;
-    background: #fff;  
 }
 .pj-container .left{
 	position:relative;
     float:left;
-    width:20.1%;
+    width:20%;
     min-height: 800px;
     border: 1px solid #d6d6d6;
+    background: #fff;  
 }
 .pj-container .right{
 	margin-left:12px;
 	border:1px solid #d6d6d6;
 	position:relative;
     float:left;
-    width:78.5%;
+    width:78%;
     min-height: 800px;
+    background: #fff;  
 }
 .menuhome{
 	height:38px;
@@ -29,9 +31,10 @@
 	font-size: 16px;
 	text-align: center;
 	color:#fff;
-	background:#1b85d5;
-	border-top-right-radius:16px;
+	background:#83c0ef;
+	/* border-top-right-radius:16px; */
 }
+
 .pj-container .leftnav li{
 	text-align: center;
     height:34px;
@@ -40,7 +43,7 @@
 }
 .pj-container .leftnav a{
 	font-size:14px;
-	color:#090909;
+	color:#333;
 }
 .pj-container .leftnav a.active{
 	color:#1b85d5;
@@ -51,47 +54,262 @@
 .feedback .slogan{
 	font-size:18px;
 	font-weight:bold;
-	color:#090909;
+	color:#333;
 	margin-bottom:6px;
 }
 .feedback span{
-	color:#666;
+	color:#555;
 }
 .feedback input{
 	height:30px;
 	line-height:30px;
 	border: 1px solid #d6d6d6;
 	padding-left:6px;
-	font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+	font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
     outline:none;
+    background: #f9f9f9;
+    border-radius: 2px;
 }
 .email,.mobile{
 	margin-top:16px;
-	color:#090909;
+	color:#333;
 	font-size:14px;
 }
-.email input{
+.email input,.mobile input{
 	width:400px;
 }
-.mobile input{
-	width:500px;
-}
+
 .btn-send{
-	font-family: "Microsoft YaHei";
-    _font-family: "Microsoft YaHei";
+	font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 	font-size:16px;
 	background: #1b85d5;
-	border-radius:2px;
+	border-radius:4px;
 	float:right;
 	width:60px!important;
     text-align: center;
     border: 1px solid #e5e5e5!important;
     color:#fff;
     cursor:pointer;
-    margin-right:38px;
+    margin-right:50px;
+    height: 30px;
+    line-height: 30px;
 }
 .btn-send:hover{
 	background:#0867c5;
 }
+.com_txt,.wrapcontent,.aboutme-img,.legal-notice,.terms_service{
+	margin: 22px;
+    zoom: 1;
+    overflow: hidden;
+    text-align: justify;
+}
+.wrapcons{
+	float:left;
+	position: relative;
+	margin-right:20px;
+}
+.wraptxt{
+	position: relative; 
+}
+.wraptxt p,.wrapcontent dt,.legal-notice dt,.terms_service dt{
+	font-size:20px;
+	font-weight:700;
+	margin-top: 4px;
+	color: #333;
+}
+.terms_service dt{
+	margin-top: 24px!important;
+	padding-bottom:8px;
+	border-bottom:1px solid #e5e5e5;
+}
+.wrapcontent dt,.legal-notice dt{
+	padding-bottom:10px;
+	border-bottom:1px solid #e5e5e5;
+	margin-top: 40px!important;
+}
+.wrapcontent dd:not(first-child){
+	line-height:30px;
+}
+.legal-notice dd:first-child{
+	margin-top:24px;
+}
+.wraptxt span,.wrapcontent dd,.legal-notice dd,.terms_service dd{
+	font-size:14px;
+	line-height:28px;
+	color:#555;
+    display: block;
+    margin-top: 4px;
+}
 
+.comslogan{
+	height:200px;
+	margin-top: 80px;
+}
+.comslogan p:first-child{
+    position: relative;
+    top: -80px;
+}
+.comslogan p:last-child{
+    position: relative;
+    top: -300px;
+}
+.position_statement{
+	padding:3px 0 3px 0;
+	font-size:15px!important;
+	color:#1b85d5!important
+}
+.comslogan li{
+	position: relative;
+    width:200px;
+    height:120px;
+    font-size: 22px;
+    background: #83c0ef;
+    line-height: 252px;
+    text-align: center;
+    color: #fff;
+    margin:20px 0 0 72px;
+    float: left;
+    letter-spacing: 4px;
+}
+.comslogan li:before{
+    content: "";
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 60px solid #83c0ef;
+}
+.comslogan li:after{
+	content: "";
+    position: absolute;
+    bottom: -60px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 60px solid #83c0ef;
+}
+.comslogan:before,.comslogan:after{
+	clear: both;
+    content: "";
+    display: table;
+}
+.jobList {
+    margin: 20px 0;
+}
+.jobList li {
+    font-size: 16px;
+    width: 176px;
+    height: 54px;
+    line-height: 54px;
+    background: #f8f8f8;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    cursor: pointer;
+    color:#333;
+}
+.currents {
+    background: #83c0ef!important;
+    color: #fff!important;
+}
+.header{
+	text-align:center;
+	font-size:24px;
+	color:#333;
+	margin-top:30px;
+}
+.newbie-main{
+	border-bottom:1px solid #ccc;
+}
+#common-problem,#use-process,.newbie-main{
+	margin:20px 70px 0 70px;
+	width:796px;
+}
+#common-problem,#use-process{
+	font-size:14px;
+	color:#555;
+}
+.newbie-first,.newbie-second{
+	width: 390px;
+    display: inline-block;
+    border-left: 1px solid #ccc;
+    font-size: 20px;
+    color: #555;
+    padding-bottom: 10px;
+}
+.newbie-second{
+	 border-left:0!important
+}
+#use-process dl dd:nth-child(even){
+	padding:0 0 20px 0;
+	border-bottom:1px dotted #ccc;
+	text-align: center;
+}
+#use-process dl dd{
+	margin-top:20px;
+}
+#common-problem dl dd:nth-child(odd){
+	font-size:14px;
+	color:#1890ed;
+	padding-bottom:20px;
+	padding-top:20px;
+}
+#common-problem dl dd:nth-child(even){
+	padding-bottom:20px;
+	border-bottom:1px dotted #ccc;
+}
+#common-problem dl dd:last-child,#use-process dl dd:last-child{
+	border-bottom:none;
+	padding-bottom:60px;
+}
+.use-branch a{
+	color: #333;
+}
+.common-problem,.use-process{	
+    padding-bottom: 12px;
+    margin-left: 130px;
+}
+
+.common-problem span,.use-process span{
+    background: url(../image/strategy-icon.png) transparent no-repeat;
+    display: inline-block;
+    text-indent: -9999px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.common-problem span{
+	width: 23px;
+    height: 26px;
+	background-position:0 0;
+}
+.use-process span{
+	width: 20px;
+    height: 26px;
+	background-position:-46px 0;
+}
+.curr{
+	 border-bottom: 3px solid #1b85d5;
+}
+.serial-number{
+	width:30px;
+    height:30px;
+	background-color:#1b85d5; 
+    border-radius:16px;
+    float:left;
+    margin-right:6px;
+}
+.serial-number .num{
+	height:30px; 
+	line-height:30px; 
+	display:block; 
+	color:#FFF; 
+	text-align:center
+}

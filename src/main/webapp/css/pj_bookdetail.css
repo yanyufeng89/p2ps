@@ -22,9 +22,13 @@
 	width: 166px;
 	height: 176px;
 }
+.book-basic .infor .infor-left .book-logo:hover{
+	
+}
 .book-basic .infor .infor-right>div {
    margin-top:6px;
    word-wrap: break-word;
+   word-break: break-all;
    font-size: 14px;
    color: #555;
 }
@@ -32,6 +36,9 @@
     border: 1px solid #cce1ef;
     background: #eff6fA;
     text-shadow: none;
+}
+.article-content{
+	margin-top: 20px!important;
 }
 .showall{
 	cursor: pointer;
@@ -119,8 +126,12 @@
     visibility: hidden;
 }
 
-.bookname .noborder,.bookname .tip{
+.bookname .tip{
 	font-weight:bold;
+}
+.bookname .noborder{
+	font-weight:bold;
+	font-size:16px;
 }
 .shareto,.topic-shareto{
     float: right;
@@ -211,7 +222,7 @@
     font-size:14px;
     color:#555;
     word-wrap: break-word;
-    word-break: normal;
+    word-break: break-all;
     text-align: justify;
     line-height:1.7
 }
@@ -367,10 +378,13 @@ input[type=text], input[type=password]:focus {
     color: #999;
     height:30px;
     line-height:30px;
+    font-size: 14px;
     width: 60px;
     text-align: center;
     border: 1px solid #e5e5e5;
     vertical-align: super;
+     font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 }
 
 .ReportMenu span {
@@ -418,8 +432,8 @@ input[type=text], input[type=password]:focus {
     color: #333;
     outline: none;
     border-radius:4px;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 .zm-command {
     padding: 10px 0;
@@ -453,7 +467,9 @@ input[type=text], input[type=password]:focus {
     border-radius: 50%;
     margin-right: 10px;
 }
-
+.press .uname{
+	margin-top: -4px;
+} 
 #docfollow,.docfollow{
 	float:left;
 }
@@ -635,8 +651,8 @@ input[type=text], input[type=password]:focus {
     margin-bottom: 0;
     font-size: 16px;
     outline:none;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 .reward_amount{
 	vertical-align: super;
@@ -663,8 +679,8 @@ input[type=text], input[type=password]:focus {
     -moz-box-shadow: none;
     box-shadow: none;
     outline:none;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 
 .ui-toolbar-middle .arrow-btn {
@@ -712,8 +728,8 @@ input[type=text], input[type=password]:focus {
 .ui-toolbar-middle .ipt-box .total-page {
 	font-size: 10px;
 	color: #555;
-	font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+	font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 
  .pj-kong{

@@ -489,7 +489,7 @@ input {
 	padding-left: 20px;
 	color: #a6a6a6;
 	float: left;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 }
 
 .header_city_h1 {
@@ -499,7 +499,7 @@ input {
 	float: left;
 	font-size: 14px;
 	font-weight: bold;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 }
 
 .heder_city_jr {
@@ -641,7 +641,7 @@ input {
 	padding-left: 12px;
 	padding-right: 12px;
 	font-size: 15px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	min-width: 85px;
 	text-align: center;
 }
@@ -768,7 +768,7 @@ input {
 
 .footer_tel {
 	color: #FF6600;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 24px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -1209,7 +1209,7 @@ input {
 
 .fri_left h1 {
 	color: #006697;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 16px;
 	font-weight: bold;
 	line-height: 30px;
@@ -1234,7 +1234,7 @@ input {
 
 .fri_right h1 {
 	color: #006697;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 16px;
 	font-weight: bold;
 	line-height: 30px;
@@ -1428,7 +1428,7 @@ input {
 	float: left;
 	padding-bottom: 50px;
 	min-height: 500px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 }
 
 .about_left_h1 {
@@ -1498,7 +1498,7 @@ input {
 	height: 30px;
 	line-height: 30px;
 	background: #f8f8f8;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 }
 
 .about_right_span {
@@ -1621,7 +1621,7 @@ input {
 	border: none;
 	text-align: left;
 	font-size: 16px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	color: #666;
 	cursor: pointer;
 	padding-left: 10px;
@@ -1643,7 +1643,7 @@ input {
 	border: none;
 	text-align: left;
 	font-size: 16px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	color: #666;
 	cursor: pointer;
 	padding-left: 10px;
@@ -1662,7 +1662,7 @@ input {
 	background: #F60;
 	color: #fff;
 	font-size: 16px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	border: none;
 	cursor: pointer
 }
@@ -1673,7 +1673,7 @@ input {
 	margin-left: 20px;
 	background: #ccc;
 	font-size: 16px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	border: none;
 	cursor: pointer
 }
@@ -1799,7 +1799,7 @@ input {
 	background: #F60;
 	color: #fff;
 	font-size: 16px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 }
 
 .post_read_body_c {
@@ -1884,7 +1884,7 @@ input {
 	background: #e45c00;
 	color: #fff;
 	font-size: 18px;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	border: none;
 	margin-top: 10px;
 	cursor: pointer
@@ -1935,7 +1935,7 @@ input {
 	background: url(../image/map_line.jpg) no-repeat top right;
 	line-height: 43px;
 	text-align: center;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 16px;
 }
 
@@ -1974,7 +1974,7 @@ input {
 	height: 40px;
 	line-height: 40px;
 	background: #fff;
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 16px;
 	border-bottom: 1px solid #d6dbe1;
 }
@@ -2259,7 +2259,7 @@ input {
 }
 
 .jh_main_name {
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 18px;
 	color: #40505f;
 	padding: 15px 0;
@@ -2273,7 +2273,7 @@ input {
 }
 
 .jh_wel span {
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 18px;
 	background: #fff;
 	padding: 0 20px;
@@ -2311,7 +2311,7 @@ input {
 }
 
 .jh_con_det_name {
-	font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
 	font-size: 20px;
 	color: #40505f;
 	padding-bottom: 16px;
@@ -2550,7 +2550,7 @@ input {
 
 .pwdmain_title_r {
 	border-bottom: 2px solid #ececec;
-	font-family:  Arial,'微软雅黑';
+	font-family:  Arial,'Microsoft YaHei';
 	font-size: 18px;
 	height: 35px;
 	line-height: 35px;
@@ -2765,7 +2765,7 @@ input {
 .popWeixin dd {
 	margin-left: 20px;
 	font-size: 16px;
-	font-family:  Arial,'微软雅黑';
+	font-family:  Arial,'Microsoft YaHei';
 	background: url(../image/weixin.jpg) 90px 0px no-repeat;
 	line-height: 23px;
 }

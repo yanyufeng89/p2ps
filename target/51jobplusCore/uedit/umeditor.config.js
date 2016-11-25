@@ -20,7 +20,7 @@
      * window.UMEDITOR_HOME_URL = "/xxxx/xxxx/";
      * 
      */
-	window.UMEDITOR_HOME_URL="/51jobplusCore/uedit/";
+	window.UMEDITOR_HOME_URL="/uedit/";
     var URL = window.UMEDITOR_HOME_URL || (function(){
 
         function PathStack() {
@@ -138,7 +138,7 @@
         UMEDITOR_HOME_URL : URL
 
         //图片上传配置区
-        ,imageUrl:"/51jobplusCore/topics/imageUp"             //图片上传提交地址
+        ,imageUrl:"/topics/imageUp"             //图片上传提交地址
         ,imagePath:"http://192.168.0.39:8199/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
         ,imageFieldName:"upfile"                   //图片数据的key,若此处修改，需要在后台对应文件修改对应参数
 
@@ -148,7 +148,7 @@
             'source | undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
             'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize' ,
             '| justifyleft justifycenter justifyright justifyjustify |',
-            'link unlink | emotion image video ',
+            'link unlink | emotion image video drafts',
             '|preview fullscreen',
         ]
 
@@ -296,7 +296,8 @@
                         return;
                     }
                     node.setAttr();
-                    node.setAttr('href', '#')
+                    node.setAttr('href','#');
+                    node.setAttr('onclick', 'return false;');
                 },
                 strong: {$: {}},
                 b:function(node){

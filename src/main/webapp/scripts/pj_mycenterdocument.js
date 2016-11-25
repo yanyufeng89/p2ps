@@ -1,13 +1,15 @@
 var userInfo,sumpage,readurl,docsuffix;
 //鼠标位置
 var screenX,screenY;
+//文档默认分享值
+var docValue = 2;
 $(function(){
 	//加载用户信息
 	intoUserInfo();
 	//加载文档阅读插件
 	if($('input[name=docsuffix]').length>0){
 		docsuffix=$('input[name=docsuffix]').val();
-		if(docsuffix.toLowerCase()=='ppt'){
+		if(docsuffix.toLowerCase()=='ppt' || docsuffix.toLowerCase()=='pptx' || docsuffix.toLowerCase()=='pps' || docsuffix.toLowerCase()=='pot'){
 			$('a.media').media({width:830, height:800});
 		}else{
 			$('a.media').media({width:830, height:1200});
@@ -27,11 +29,34 @@ $(function(){
         var $this=$(this);
     	if($this.hasClass('enabled')){
     		var conditions="";
+    		//是否私有
+    		var isP = "";
     		$this.parent().nextAll('.docs-list').find('.select-icon').each(function(){
     			//从界面上移除当前
     			conditions+=$(this).data('docid')+',';
+    			isP = $(this).data('ispublic');
     		}); 
     		conditions=conditions.substring(0,conditions.length-1);
+    		// 查看积分是否够删除批量文档
+    		 if($(this).parents().find('input[name=alMn]').val() < Number(conditions.split(',').length)*docValue 
+    				&& isP!='0'  ){
+    			 $.confirm({
+ 					'title'		: '积分扣除',
+ 					'message'	: "当前积分不够扣除!",
+ 					'buttons'	: {
+ 						'确认'	: {
+ 							'class'	: 'blue',
+ 							'action': function(){
+ 								
+ 							}
+ 						}
+ 					}
+ 				});
+    			 return false;
+    		 }
+    		
+    		
+    		
 			$.confirm({
 				'title': '确认删除',
 				'message': "确认要删除这些文档吗?",
@@ -40,7 +65,7 @@ $(function(){
 						'class': 'blue',
 						'action': function () {
 							if(type=="1")
-								deleteDocs(conditions,$this);
+								deleteDocs(conditions,$this,isP);
 							else{
 								deleteMyCollects(conditions,$this,actiontype);
 							}
@@ -66,6 +91,27 @@ $(function(){
     	//0代表下载 1代表收藏
         var actiontype=$(this).data('actiontype');
     	$this=$(this);
+    	
+    	//
+    	var isP = $(this).data('ispublic');
+    	// 查看积分是否够删除批量文档
+		 if($(this).parents().find('input[name=alMn]').val() < docValue 
+				&& isP!='0'  ){
+			 $.confirm({
+					'title'		: '积分扣除',
+					'message'	: "当前积分不够扣除!",
+					'buttons'	: {
+						'确认'	: {
+							'class'	: 'blue',
+							'action': function(){
+								
+							}
+						}
+					}
+				});
+			 return false;
+		 }
+    	
 		$.confirm({
 			'title'		: '确认删除文档',
 			'message'	: "确认要删除文档&nbsp;\""+name+"\"&nbsp;吗?",
@@ -74,7 +120,7 @@ $(function(){
 					'class'	: 'blue',
 					'action': function(){
 						if(type=='1')
-						    deleteDocs(id.toString(),$this);
+						    deleteDocs(id.toString(),$this,isP);
 						else{
 							deleteMyCollects(id.toString(),$this,actiontype);
 						}
@@ -89,6 +135,18 @@ $(function(){
 		});
     })
     //判断当前点击的文档格式是否转换 未转换的不能打开
+    $('.notCvt').live('click',function(){
+    	var docid=$(this).attr('data-docid');
+    	if(!isConverter(docid)){//未转换或者未转换成功
+//    		console.log("转换失败");
+    		return false;
+    	}else{
+//    		console.log("转换成功");
+    		$(this).parent().next('div').html("上传成功");
+    		window.open("/docs/getDocsDetail/"+docid);
+    	}
+    });  
+    /*//判断当前点击的文档格式是否转换 未转换的不能打开
     $('.doctitle').live('click',function(){
     	var docid=$(this).attr('data-docid');
     	if(!isConverter(docid)){//未转换或者未转换成功
@@ -97,7 +155,7 @@ $(function(){
     		setInterval("startrequest()",3000); 
     		return false;
     	}
-    });    
+    });  */  
    
     //文档详情 点赞
     $('#doclike').live('click',function(){
@@ -277,6 +335,17 @@ function turnRight(){
     	$('#right-btn').removeClass('enable-btn').addClass('disable-btn');
     }
 }
+/*
+function checkIsCvt(obj){
+	if(isConverter(obj.data('docid'))){
+		console.log("转换成功");
+		window.open("/docs/getDocsDetail/"+obj.data('docid'));
+	}else{
+		console.log("转换失败");
+		return false;
+	}
+}*/
+
 // 当前文档是否转换
 function isConverter(docid){
 	var isconvert=true;
@@ -399,7 +468,7 @@ function docDownLoad(obj){
 	 $.ajax({
 	    	type:"POST",
 	      	url:"/docs/downloadDocs",
-	      	data:{downvalue:downvalue,id:docid,userid:docCreatePerson,filePath:filePath},
+	      	data:{downvalue:downvalue,id:docid,userid:docCreatePerson,filePath:filePath,title:title},
 	    	dataType:"json",
 	    	 async:false, 
 	    	success:function(data){
@@ -640,11 +709,11 @@ function docLike(obj){
 	})
 }
  //批量删除文档 --上传  
-function deleteDocs(conditions,obj){
+function deleteDocs(conditions,obj,ispublic){
   	   $.ajax({
          	type:"POST",
          	url:"/myCenter/deleteDocs",
-         	data:{condition:conditions},
+         	data:{condition:conditions,ispublic:ispublic},
          	dataType:"json",
          	success:function(data){
          		if(data.returnStatus=='000'){//返回成功

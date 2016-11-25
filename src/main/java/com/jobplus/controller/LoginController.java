@@ -50,7 +50,8 @@ public class LoginController {
 		ModelAndView mv = new ModelAndView();
         mv.addObject("backurl", backurl.indexOf("/fore/retakepwd") > -1 ? "/index" : backurl);
         // 返回视图名设置
-		mv.setViewName("login");
+		
+        mv.setViewName("login");
 		return mv;
 	}
 

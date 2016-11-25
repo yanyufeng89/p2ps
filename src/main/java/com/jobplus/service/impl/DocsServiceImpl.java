@@ -103,7 +103,7 @@ public class DocsServiceImpl implements IDocsService {
 				changevalue += new Account().getSCORES()[1];
 			
 		}
-
+			
 		rest = docsDao.insertDocs(list);
 		logger.info("***批量插入文档*****rest=== "+ rest+"   *****  changevalue =="+changevalue);
 
@@ -148,30 +148,38 @@ public class DocsServiceImpl implements IDocsService {
 			//文档标签
 			String[] docclass = request.getParameterValues("docclass");
 			
+			//是否是有效文件
+			String[] index = request.getParameterValues("docIndex");
+			
 			// 单个文档
 			Docs doc = null;
 			
 			//用于文档标签使用数 +1
 //			String  tagsArray ="";
-			for (int i = 0; i < files.length; i++) {
-				if (files[i].getOriginalFilename() != null) {
+			for (int i = 0; i < title.length; i++) {
+				int dex = Integer.parseInt(index[i])-1;
+				if (files[dex].getOriginalFilename() != null) {
 					// 重命名上传后的文件名
-					String myFileName = files[i].getOriginalFilename();
+					String myFileName = files[dex].getOriginalFilename();
 					//文件类型
 					String docsuffix = myFileName.substring(myFileName.lastIndexOf(".") + 1);
 					// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
 					if (myFileName.trim() != "") {
+						//**去掉文件类型的title
+						String myFileTitle = myFileName.substring(0,myFileName.lastIndexOf("."));
+						
 						// 重命名上传后的文件名 + 时间戳
 						String fileName = System.currentTimeMillis() +"." + docsuffix;//+ myFileName;
 						doc = new Docs();
-						doc.setFile(files[i]);
+						doc.setFile(files[dex]);
 						//dir.server=http://192.168.0.39:8199/
 						// 定义上传路径//路径格式  "/docsDir/2016/06/22/UUID测试文件 - 副本s.txt"   +doc.getDoctype()
 						String path ="/"+ftpClientTemplate.ftpFileDir+"/"+DateUtils.getDateTime2()+"/"+UUIDGenerator.getUUID()+fileName;
 						//设置路径
 						doc.setFilepath(path);
 						//设置标题
-						doc.setTitle(title==null?myFileName:title[i]);
+						doc.setTitle(myFileTitle);
+//						doc.setTitle(title==null?myFileTitle:title[i]);
 						//设置财富值
 						doc.setDownvalue(Integer.parseInt(downValue == null || StringUtils.isBlank(downValue[i])?ConstantManager.DEAAULT_DOWN_VALUE:downValue[i]));
 						//设置类型
@@ -205,34 +213,44 @@ public class DocsServiceImpl implements IDocsService {
 						
 						if(doc.getIspublic() != 0)
 							num += new AccountDetail().getCHANGEVALUES()[1];
-						if("0".equals(ispublic[i]))
+						if(!"0".equals(ispublic[i]))
 							shareNum++;
 					}
 				}
 			}
-
-			// 文档入库
-			int rest = this.insertDocs(docsList);
-			//所选标签总数 +1
-//			tagsService.addOrDecreaseTagUsenumer(tagsArray);
 			
-			//对应用户分享文档数  增加  files.length   st*******  上传一个文件files.length==2;上传两个文件files.length==3
-//			operationSumService.updOperationSum(0, 0, (files.length-1)>0?files.length-1:0,null);
-			operationSumService.updOperationSum(0, 0, shareNum>=0?shareNum:0,null);
-			//个人操作数之类的信息放入session
-			userService.getMyHeadTopAndOper(request);
-			//文档入库成功  文件上传到服务器
-			if(rest > 0){
-				for (int i = 0; i < files.length-1 && i<docsList.size(); i++) {
-					//文件上传到服务器
-					try {
-						FTPStatus result = ftpClientTemplate.upload(files[i].getInputStream(),docsList.get(i).getFilepath(),true);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			FTPStatus result = null;
+			for (int i = 0; i < title.length; i++) {
+				int dex = Integer.parseInt(index[i]) - 1;
+				//文件上传到服务器
+				try {
+					result = ftpClientTemplate.upload(files[dex].getInputStream(),docsList.get(i).getFilepath(),true);
+					logger.info("*文件上传到服务器**id== "+docsList.get(i).getId()+" FTPStatus== " + result.toString() + " docName=="+docsList.get(i).getTitle());
+				} catch (Exception e) {
+					logger.info("文档上传服务器失败**" + docsList.get(i).getId());
+					e.printStackTrace();
+					return "";
 				}
 			}
+			//文档上传服务器成功
+			if("Upload_New_File_Success".equals(result.toString())){
+				// 文档入库
+				int rest = this.insertDocs(docsList);
+				logger.info("**文档入库*** rest=="+ rest);
+				if(rest>0){
+					//所选标签总数 +1
+//					tagsService.addOrDecreaseTagUsenumer(tagsArray);
+					
+					//对应用户分享文档数  增加  files.length   st*******  上传一个文件files.length==2;上传两个文件files.length==3
+//					operationSumService.updOperationSum(0, 0, (files.length-1)>0?files.length-1:0,null);
+					operationSumService.updOperationSum(0, 0, shareNum>=0?shareNum:0,null);
+					//个人操作数之类的信息放入session
+					userService.getMyHeadTopAndOper(request);
+				}else
+					return "";
+				
+			}else
+				return "";
 			
 		return ""+num;
 	}
@@ -325,12 +343,29 @@ public class DocsServiceImpl implements IDocsService {
 	 */
 	@Transactional
 	@Override
-	public int deleteDocs(String[] condition,String userid) {
+	public int deleteDocs(String[] condition,String userid,String ispublic) {
 		int ret = 0;
 		ret = docsDao.deleteDocs(condition);
 		if(ret>0){
 			//对应用户操作文档数  减少  st*******
-			operationSumService.updOperationSum(0, 1, condition.length,null);
+			ret = operationSumService.updOperationSum(0, 1, condition.length,null);
+			if(ret > 0){
+				//不是私有文档删除
+				if(!StringUtils.isBlank(ispublic) && !"0".equals(ispublic)){
+					//个人积分扣减
+					//扣除财富值
+					ret = accountService.modAccountAndDetail(Integer.parseInt(userid), 0, - ConstantManager.DEAAULT_DOWN_VALUE2*condition.length, 
+							1, 1, ConstantManager.DEAAULT_DOWN_VALUE2*condition.length,17);
+					if(ret==0){
+						logger.info("批量逻辑删除docs  :  个人积分扣减      扣除财富值 失败  userid=="+userid +"  condition=" + condition);
+						return 0;
+					}	
+				}								
+			}else{
+				logger.info("批量逻辑删除docs  :  对应用户操作文档数  减少  st 失败  userid=="+userid +"  condition=" + condition);
+				return 0;				
+			}
+			
 		}		
 		return ret;
 	}
@@ -401,7 +436,7 @@ public class DocsServiceImpl implements IDocsService {
 		} else if (record.getJudgeTodo() == 1) {
 			// 取消收藏文档
 			// 删除记录
-
+			
 			if (record.getCollecttype() != null && record.getObjectid() != null && record.getUserid() != null) {
 				ret = myCollectService.delMycollects(record);
 			}
@@ -467,6 +502,34 @@ public class DocsServiceImpl implements IDocsService {
 			return null;
 		}
 		
+	}
+
+
+	@Transactional
+	@Override
+	public int updDocAndUpdMoney(Docs record, String preIsPublic) {
+		String isPublic = record.getIspublic().toString();
+		int ret;
+		ret = docsDao.updateByPrimaryKeySelective(record);
+		if(ret > 0){
+			// 私有变公开或者匿名
+			if("0".equals(preIsPublic) && !"0".equals(isPublic)){
+				//财富值增加
+				//文档所有者增加财富值
+				ret = accountService.modAccountAndDetail(record.getUserid(), 0,  ConstantManager.DEAAULT_DOWN_VALUE2, 
+						1, 0, ConstantManager.DEAAULT_DOWN_VALUE2,16);
+				
+			}else if(!"0".equals(preIsPublic) && "0".equals(isPublic)){
+				//公开或者匿名  改为 私有
+				//扣减财富值
+				//扣除财富值
+				ret = accountService.modAccountAndDetail(record.getUserid(), 0, - ConstantManager.DEAAULT_DOWN_VALUE2, 
+						1, 1, ConstantManager.DEAAULT_DOWN_VALUE2,15);
+				
+			}
+		}
+		
+		return ret;
 	}
 	
 }

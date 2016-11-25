@@ -11,6 +11,9 @@
     <meta name="keywords" content="Jobplus,知识分享,创新文章,创业文章,IT文章,互联网文章,财务文章,工业技术文章,市场管理文章,工程文章,咨询管理文章,销售管理文章,供应链文章,生产管理文章,设计文章,创意文章,翻译文章,采编校对,新媒体文章,影视文章,设计方案">
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
     <link rel='stylesheet' type='text/css' href='/css/pj_bookdetail.css'>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+          <img src='/image/logo_1.jpg' />
+    </div>
   </head>
   <body id='articletop'>
     <div class="page">
@@ -49,7 +52,7 @@
 									</#if>${record.objCreator.username}
 								</a>
                              <#else>
-                             	<a href="javascript:void(0);"  class='author-link' target="_blank">
+                             	<a  class='author-link' target="_blank">
 									    <img class="uname lazy" src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像">
 									    匿名用户
 								</a>
@@ -61,16 +64,16 @@
                              </div>
                              <div class='brief article-content'>
                                
-                               <#if (record.intro)??>
+                               <#if (record.intro?length gt 0)>
                                <div class='showbrief bookbrief' style='line-height:32px;font-size:16px;'>
                                   <#if record.userid==(Session.user.userid)!>
-	                          		<a href="javascript:;" class="zu-edit-button" name="edit" style='padding-left:0;margin-left:0'>
+	                          		<a href="javascript:;" class="zu-edit-button" name="edit" style='float:right'>
 	                                  <i class="zu-edit-button-icon"></i>修改
 	                                </a>
                                   </#if>
-                                  ${record.intro}
+                                  <div class='clearfix'>${record.intro}</div>
                                   <#if record.userid==(Session.user.userid)!>
-	                          		<a href="javascript:;" class="zu-edit-button" name="edit">
+	                          		<a href="javascript:;" class="zu-edit-button" name="edit" style='float:right'>
 	                                  <i class="zu-edit-button-icon"></i>修改
 	                                </a>
                                   </#if>
@@ -180,7 +183,7 @@
                </div>
            </div>
        
-		<div class='userrecommend' id='article-commcount' data-num='${record.recommendsum}'> 用户推荐(${record.recommendsum})</div>
+		<div class='userrecommend' id='article-commcount' data-num='${record.recommendsum}'> 用户评价(${record.recommendsum})</div>
 		<div class='detail'>
 		  <div class='detail-list'>
 		  <#if record.commentList.list?size lte 0>
@@ -241,7 +244,7 @@
 				 <#else>
 				   <img src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" class='zm-list-avatar lazy' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 </#if>
-				 <span class="mycommentinfo">推荐语</span>
+				 <span class="mycommentinfo">评价语</span>
 			  </a>
 			</div>
 			<div class='publishbook'>

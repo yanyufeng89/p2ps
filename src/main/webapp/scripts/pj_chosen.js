@@ -240,7 +240,7 @@ var container_each='';
 		    	 //标签删除
 		        $('.zg-inline a[name=remove]').bind('click',function(){
 		       		var $floor=$(this).parents('.zg-inline').next();
-		       		$floor.find(':first-child').show();
+		       		/*$floor.find(':first-child').show();*/
 		       		$floor.find('input[type=text]').show();
 		       		$floor.find(':last-child').hide();
 		       		$(this).parent().remove();

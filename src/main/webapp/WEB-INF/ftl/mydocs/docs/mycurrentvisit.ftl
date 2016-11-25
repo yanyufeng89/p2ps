@@ -113,9 +113,9 @@
 								<div class="profile-aux">
                                       <div class="profile-actions">
                                         <#if cutUser.userid==Session.userid>
-                                           <a href="/myHome/getAnotherHomePage/${cutUser.userid}" class="preview-profile button-primary" >个人资料预览</a>
+                                           <a href="/myHome/getHomePage/${cutUser.userid}" class="preview-profile button-primary" >个人资料预览</a>
                                         <#else>
-                                            <a href="/myHome/getAnotherHomePage/${cutUser.userid}" class="preview-profile button-primary" >返回他的个人主页</a>
+                                            <a href="/myHome/getHomePage/${cutUser.userid}" class="preview-profile button-primary" >返回他的个人主页</a>
 									    </#if>
 									  </div>
                                </div>

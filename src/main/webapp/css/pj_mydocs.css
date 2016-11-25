@@ -161,6 +161,7 @@
 .w105{
 	width:105px
 }
+
 .w94{
 	width:94px;
 }
@@ -182,6 +183,16 @@
 }
 .w214 {
 	width:214px
+}
+.w322{
+	width:322px;
+}
+.w300{
+	width:300px;
+	margin-right:22px;
+}
+.w302{
+	width:302px
 }
 .w332{
 	width:332px
@@ -220,6 +231,13 @@
 }
 .w423 {
 	width:423px
+}
+.w425{
+	width:425px;	
+}
+.w405{
+	width:405px;
+	margin-right:26px;
 }
 .w446 {
 	width:446px
@@ -260,9 +278,9 @@
 	border-right:1px solid #d6d6d6;
 	border-bottom:1px solid #e5e5e5;
 	border-left:0;
-	min-height:834px;
+	min-height:836px;
 	height:auto!important;
-	*height:834px;
+	*height:836px;
 	background:#fff;
 	/* width:950px  */
 	width:79.08%;
@@ -283,9 +301,15 @@
 	font-weight:500;
 	margin-right:8px;
 }
- #sharecontent{
+#sharecontent{
 	min-height:579px;
 } 
+.tijiao{
+	width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    background:url(../image/submission.gif) no-repeat;
+}
 .concerncontent .people .photo:before,#sharecontent .people .photo:before{
     font-weight: normal;
     font-style: normal;
@@ -540,7 +564,7 @@
     position: relative;
     float: left;
     width:19%; 
-    min-height:833px;
+    min-height:835px;
     background: #eff6fA;
     border:1px solid #e5e5e5;
 }
@@ -548,29 +572,29 @@
     text-align: center;
     padding-top:32px;
 }
-.uc-aside .uc-user-box .img-center {
+.uc-aside .uc-user-box .img-center,.uc-aside .uc-user-box .img-business-center{
     width: 100px;
     height: 100px;
     overflow: hidden;
     margin-left:62px;
-    border-radius:50%;
-    margin-bottom: 13px;
+    margin-bottom: 11px;
     border: 4px solid #fff;
     background: #fff;
+}
+.uc-aside .uc-user-box .img-center{
+	border-radius:50%;
 }
 .uc-aside .uc-user-box .img-center div {
     display: table-cell;
     vertical-align: middle;
     height: 80px;
 }
-
 .uc-aside .user-name {
-    color: #dadada;
     font-size: 14px;
-    line-height: 14px;
-    padding-bottom: 15px;
+    padding-bottom: 14px;
     width: 220px;
     margin: 0 auto;
+    display: inline-block;
 }
 
 .uc-aside .user-level {
@@ -627,15 +651,12 @@
     font-size: 16px;
 }
 .uc-head .uc-head-top {
-	/*height: 92px; */
     border-top: 1px solid #e5e5e5;
-    /* border-bottom: 1px solid #e5e5e5; */
     width: 100%;
     position: relative;
-    /* line-height: 92px; */
 }
 .uc-head-bottom{
-	padding:12px 0 100px 30px;
+	padding:12px 0 104px 30px;
 	position: relative;
 	border-bottom: 2px solid #e4e4e4;
 	background: #f9f9f9;
@@ -882,7 +903,7 @@
 }
 .datacount{
 	padding-left:22px;
-	padding-bottom:22px;
+	height: 46px;
 	border-bottom: 2px solid #e4e4e4;
 	background: #f9f9f9;
 }
@@ -892,7 +913,10 @@
     color: #1b85d5;
     position: relative;
     background: #f9f9f9;
-    padding:22px;
+    /* padding:22px; */
+    height: 70px;
+    line-height: 70px;
+    padding: 0 22px 0 22px;
 }
 .uc-mydoc .mydoccontent img{
 	float:right;
@@ -1265,8 +1289,8 @@
     vertical-align: middle;
     font-size: 18px;
     position: absolute;
-    width:30px;
-    height:30px;
+    width: 28px;
+    height: 28px;
     top: 13px;
 }
 .icon-account{
@@ -1545,9 +1569,8 @@
     right: 0;
     bottom: 0;
     border: 0;
-    padding: 0;
-    margin: 0;
-    height:12rem;
+    
+    height:188px;
     width: 100%;
     cursor: pointer;
     border: solid 1px #ddd;
@@ -1559,9 +1582,11 @@
     float: left;
     margin-top:20px; 
     word-wrap: break-word;
+    word-break: break-all;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 0px;
+    width: 670px;
 }
 .profile-card .profile-overview-content {
    min-height: 150px;
@@ -1670,7 +1695,6 @@
     cursor: pointer;
     margin: 0;
     overflow: visible;
-    text-decoration: none !important;
     width: auto;
     text-shadow: 0 1px 1px rgba(0,0,0,0.35);
     -webkit-border-radius: 4px;
@@ -1692,7 +1716,6 @@
     display: inline-block;
     vertical-align: middle;
     zoom: 1;
-    vertical-align: middle;
 }
 .profile-func .split {
 	color: #d5d5d5;
@@ -2062,7 +2085,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
     display: inline-block;
     text-indent: -9999px;
     overflow: hidden;
-    vertical-align: middle;
+    vertical-align:-12px;
     width: 36px;
     height: 36px;
     margin-right:8px;
@@ -2091,23 +2114,26 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	position: relative;
     padding:20px 10px 20px 18px;
     float:left;
-    width: 350px;
+    width: 380px;
 }
 .birthday,.background-selfinfo-container .intro,.workdescription,.graduate,.major,.company,.onjob,.workposition,.education,.degree{
+	position: relative;
 	font-size:14px;
 	color:#555;
+	line-height: 20px;
 	clear:both;
-	position: relative;
+	word-wrap: break-word;
+    word-break: break-all;
 }
 .birthday,.background-selfinfo-container .intro,.workdescription,.graduate{
-    padding:8px 25px 8px 25px;
+    padding:8px 25px 12px 25px;
     text-align: justify;
 }
 .major,.company,.onjob,.degree{
-    padding:4px 0 4px 25px;
+    padding:4px 25px 4px 25px;
 }
 .workposition,.education{
-	padding:8px 0 4px 25px;
+	padding:12px 0 4px 25px;
 }
 .background-selfinfo-container .birthday .marr,.background-selfinfo-container .email .phone{
    float:right;
@@ -2291,6 +2317,9 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 .il{
 	left:28px;
 }
+.ilb{
+	left:12px;
+}
 .iltopic{
 	left:14px;
 }
@@ -2298,11 +2327,10 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	left:8px;
 }
 .operate a{
-	text-decoration:none;
 	color:#999;
 }
 .operate a:hover,.operate span:hover b,.docs-list ul li span:hover,.more:hover,.top-border p a:hover{
-	 color:#0867c5;
+	color:#0867c5;
 }
 
 .checkbox {
@@ -2348,8 +2376,8 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
     border: 1px solid #ddd;
     color:#fff;
     cursor: pointer;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 .replayhidden,.titlehidden,.dochidden,.replayhidden p,.recommendhidden p{
 	text-overflow: ellipsis;
@@ -2468,11 +2496,8 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 .zm-rich-follow-btn {
     height:30px;
     line-height:26px!important;
-    font-family: Arial,'微软雅黑';
-	_font-family: Arial,'微软雅黑';
-}
-.maincontent{
-	clear:both;
+    font-family: Arial,'Microsoft YaHei';
+	_font-family: Arial,'Microsoft YaHei';
 }
 
 .zg-btn-white.loading{
@@ -2507,9 +2532,10 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 }
 .myAllMessage li:last-child{
 	border-bottom:none;
+	padding-top: 0;
 }
 .myAllMessage li:first-child{
-    padding-top:1px;	
+    padding-top:0;	
 }
 .myAllMessage .smsdate,.cancelorreply{
 	clear:both;
@@ -2524,6 +2550,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	padding-top:2px;
 	zoom: 1;
     overflow: hidden;
+    line-height:15px;
 }
 
 .allpageview p{
@@ -2658,7 +2685,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
  .recommended-sections .selfdescription,.recommended-sections .content,.contact-content{
     resize: none;
     border: 1px solid #ccc;
-    line-height: 12px;
+    line-height:20px;
     padding: 5px;
     width:826px;
     height: 80px;
@@ -2666,13 +2693,21 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
     background: white;
     color: #333;
     vertical-align: top;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 
  .workdescription .content{
     width: 493px!important;
     height:56px!important;
+ }
+
+ .workdescription label{
+    float: left;
+ }
+ .workcontent{
+    float: left;
+    width: 760px;
  }
  .zm-command{
     float: right;
@@ -2727,7 +2762,6 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	color: #555;
 	text-align: center;
 	font-size: 16px;
-	text-decoration: none;
 	line-height: 20px;
     border-right: 1px solid #e5e5e5;
     outline:none;
@@ -2757,10 +2791,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 .zm-profile-section-list li{
 	padding-top: 20px;
 }
-.zm-profile-section-list .smsdate{
-	color:#555;
-    font-size: 13px;
-}
+
 
 .form-basic .group{
 	margin-bottom: 1em;
@@ -2808,7 +2839,12 @@ a.zg-r3px{
 .manage-skills{
     box-shadow: 0 1px 3px rgba(0,0,0,.1) inset;
     border: 1px solid #ccc!important;
-    padding:4px 8px 4px;
+     padding:4px 8px 4px 8px;
+    /*padding-left:8px;
+     height:30px;
+    *height:20px;
+    *line-height:20px;
+    line-height:30px; */
     position: relative;
     margin:15px;
     width: 830px;
@@ -2817,7 +2853,7 @@ a.zg-r3px{
 	margin: 15px 25px 20px 25px;
 }
 .manage-skills  .label-input-label {
-    line-height: 20px;
+    /* line-height: 20px; */
     color: #999!important;
 }
 .manage-skills .zu-question-suggest-skill-input {
@@ -2825,8 +2861,8 @@ a.zg-r3px{
     border: 0 none;
     font-size: 12px;
     outline: none;
-    font-family:  Arial,'微软雅黑';
-    _font-family:  Arial,'微软雅黑';
+    font-family:  Arial,'Microsoft YaHei';
+    _font-family:  Arial,'Microsoft YaHei';
 }
 .skill-error{
 	display: none; 
@@ -2848,7 +2884,7 @@ a.zg-r3px{
     display: inline-block;
     margin-bottom: 10px;
 }
-.name-link,.more a{
+.more a{
 	color:#333;
 }
 .skills-editor{
@@ -2969,7 +3005,7 @@ a.zg-r3px{
 .append-delete a:first-child{
 	margin-right:10px;
 }
-.append-delete a:first-child:hover{
+.append-delete a[name=deleteschool]:hover{
 	color:#0867c5;
 	text-decoration: underline;
 }
@@ -2988,4 +3024,8 @@ a.zg-r3px{
 }
 .area-split,.position-split{
 	margin:0 10px 0 10px;
+}
+.allnewscontent{
+	color:#555;
+    font-size: 14px;
 }

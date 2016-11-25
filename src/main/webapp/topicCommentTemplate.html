@@ -8,8 +8,6 @@
      {#foreach $T.topicscommentList as commlist}
       <div class="zm-item-comment" data-id="{$T.commlist.typeid}" tabindex="-1" aria-label="评论">
         <a class="zg-anchor-hidden" name="comment-{$T.commlist.typeid}"></a>
-
-         
          {#if $T.commlist.tmpHeadIcon}
             {#if $T.commlist.tmpUserName}
              <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">

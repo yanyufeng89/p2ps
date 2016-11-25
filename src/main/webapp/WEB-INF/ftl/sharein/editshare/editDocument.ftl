@@ -22,6 +22,8 @@
               <div id="upload-widget" class="upload-widget ">
                <form method="post"  enctype="multipart/form-data" id ='test11form' action='/docs/upload'>
                   <input type='hidden' name='docId' value='${record.id}'>
+                  <input type='hidden' name='preIsPublic' value='${record.ispublic}'>
+                  <input type='hidden' name='alMn' value='${Session.account.points}'>
                   <div id="upload-files-container">
 	                  <div class="upload-steps clearfix">
 	                    <ul>
@@ -34,11 +36,11 @@
 	                  </div>
 	                  <div class="nhd nedit-all-head">
 	                    <span class="act btn-submit-all-wrap logSend">
-	                      
 	                      <a  id="btn-submit-all" class="submit-all ml20  submit-all-able">
 	                        <i class="iconfont"></i>&nbsp;确认上传
 	                      </a>
-	                      </span>
+	                    </span>
+	                    <p class="error" style='margin:0'><i class="tips_icon"></i></p>
 	                    <h3 id="item-message-all" class="item-message-all item-message-all-ok">
 	                      <span>
 	                                                                    文档更新                       
@@ -83,12 +85,14 @@
 						                
 										  <span class='ispublic'>
 											<input type="hidden" name='ispublic' value='${record.ispublic}'>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic0" value='1'  <#if (record.ispublic==1)>checked</#if>>
-											<label for="gpublic0" style="margin-right:20px;">公开</label>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic1" value='2'  <#if (record.ispublic==2)>checked</#if>>
-											<label for="gpublic0" style="margin-right:20px;">匿名</label>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="spublic1" value='0' <#if (record.ispublic==0)>checked</#if>>
-											<label for="spublic1">私有</label>
+											
+											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic1" value='1'  <#if (record.ispublic==1)>checked</#if>>
+											<label for="gpublic1" style="margin-right:20px;">公开</label>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="public1" value='0' <#if (record.ispublic==0)>checked</#if>>
+											<label for="public1"  style="margin-right:20px;">私有</label>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="spublic1" value='2'  <#if (record.ispublic==2)>checked</#if>>
+											<label for="spublic1">匿名</label>
+											
 										  </span>
 						              </td>
 						            </tr>
@@ -183,15 +187,22 @@
 						</div>
                      </div>
                   <div class="uploadinfobook">
-                    <ol>
+                    <h4>
+                                                        温馨提示
+                    </h4>
+                   <ol>
                       <li class="doc-type"></li>
-                      <li>1.上传涉及侵权内容的文档将会被移除。如何判断文档是否侵权？查看
-                        <a href="#" target="_self">文库协议</a>和
-                        <a href="#" target="_self">用户规则</a></li>
-                      <li>2.上传有问题需要帮助？查看
-                        <a href="#" target="_self">文库帮助</a>和
-                        <a href="#" target="_self">意见反馈</a></li>
-                      <li>3.为营造绿色网络环境，严禁上传含有淫秽色情及低俗信息等文档，让我们一起携手共同打造健康文库</li></ol>
+                      <li>1. 完善上传的文档简介，可以让别人更加清晰的了解分享文档的相关内容；</li>
+                      <li>2. 将您上传的文档可以免财富值免费分享，也可以提高财富值进行售价赚取财富值；同时可以对文档进行设置“公开”和“私有”属性；</li>
+                      <li>3. 文档上传时必须添加分类，详细的分类，方便更准确找到你的文档；</li>
+                      <li>4. 添加文档标签，更精准的搜索目标文档，多个标签之间要用逗号隔开，便于区分；</li>
+                      <li>5. 请勿上传已设置加密或只读的文档，JobPlus不支持此类文档；</li>
+                      <li>
+                        6. 文档提问有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
+                      </li>
+                    </ol>
                   </div>
               </div>
              </form>

@@ -5,10 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             课程分享
+             课程分享-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
-    <link rel="stylesheet" type="text/css" href="/51jobplusCore/css/pj_course.css">
+    <link rel="stylesheet" type="text/css" href="/css/pj_course.css">
   </head>
   <body>
     
@@ -25,68 +25,73 @@
                 <div id="upload-initcourse-container" style="display: block;">
                 <div class="upload-steps clearfix">
 					<ul>
-						<li class="step-num active">1<span class="tips">输入链接</span>
-						</li>
+						<li class="step-num active">1<span class="tips">输入链接</span></li>
 						<li class="step-bar"></li>
-						<li class="step-num">2<span class="tips">补充信息</span>
-						</li>
+						<li class="step-num">2<span class="tips">补充信息</span></li>
 						<li class="step-bar"></li>
-						<li class="step-num">3<span class="tips">分享成功</span>
-						</li>
+						<li class="step-num">3<span class="tips">推荐成功</span></li>
 					</ul>
 				 </div>
                  <div class="mod mod-upload">
                    <div class="bdcourse" style="">
-	                     <a class="titleinfo">【课程】</a>
-	                     <span class="titlename">请输入分享的课程链接</span>
+					     <div class="titleinfo">
+							 <span>【课程】</span>
+							 <span style='font-weight:500'>请输入分享的课程链接</span>
+						 </div>
 	                     <div class="link after">
+	                        <input type='hidden' name='isverify' value='0'>
 				            <input type="text" id="searchcourse" class='coursedocument' placeholder="请输入链接...">
-				            <input type="button" class="coursepreview" value="确定">
-				            <span class="capture-loading" style="display: none;"></span>
+				            <#--<input type="button" class="coursepreview" value="确定">-->
+				            <span class="tocapture active coursepreview"></span>
 				            <p class="error" style="display: none;">
 				              <i class="tips_icon"></i>
 				            </p>
+							<div class="bar after">
+								<a class="btn-disblue btnsure" id="btncoursesure" href="javascript:void(0)">确定</a>
+								<a href="/sharein/searchuploadFile" class="btn-cancleupload">取消</a>
+								<div class="btn-loading push-loading"></div>
+		                    </div>
 	                     </div>
 	                 </div>
                   </div>
                   <div class="upload-intro-query clearfix">
-                    <h4>
-                      课程推荐
-                     
-                    </h4>
-                     <span class='pj-encourage'>
-                     每成功分享一节课程即可获得一定的财富奖励哦!
-                      </span>
+                   <h4>推荐分享</h4>
                     <ul>
                       <li class="">
-                        平面设计
+                       创新创业
                       </li>
                       <li class="query-box">
-                        三维设计和CAD
+                      工业4.0
                       </li>
                       <li class="">
-                        Web前端
+                       新型材料
                       </li>
                       <li class="query-box">
-                       编程语言
+                      互联网+
                       </li>
                       <li class="">
-                        数据库
+                      企业管理 
                       </li>
                       <li class="query-box">
-                        操作系统
+                         互联网运营
                       </li>
                       <li class="">
-                        办公应用
+                       供应链金融
                       </li>
                       <li class="query-box">
-                     互联网络
+                       新媒体
                       </li>
                       <li class="">
-                    多媒体开发
+                      融资股权
                       </li>
                       <li class="query-box">
-                        网络应用
+                       生物医药
+                      </li>
+                       <li class="">
+                    财务管理
+                      </li>
+                      <li class="query-box">
+                       大数据
                       </li>
                     </ul>
                   </div>
@@ -96,99 +101,78 @@
                     </h4>
                     <ol>
                       <li>
-                        1.如果你发现一节好的教程,可以推荐给更多的朋友,让更多的人一起学习;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关的课件；
                       </li>
                       <li>
-                        2.分享和已分享的课程重复将会被移除,为避免重复,分享前可想进行搜索;
+                        2. 输入框里粘贴你要分享的视频链接或者音频链接，点击"√"进行校对无误之后确定分享；
                       </li>
                       <li>
-                        3.严禁分享含有辱骂他人,淫秽色情以及低俗信息等视频链接;
+                        3. 严禁分享含有辱骂他人、淫秽色情及低俗信息等视频和音频链接；
                       </li>
                       <li>
-                        4.课程分享有问题需要帮助？查看
-                        <a href="#" target="_blank">
-                                                                 知识库帮助
-                        </a>
+                        4. 课程分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
                 </div>
-			  <form method="post" action="/51jobplusCore/myCenter/shareCourse" enctype="multipart/form-data" id='courseaddForm' onkeydown="if(event.keyCode==13)return false;" >
+			  <form method="post" action="/myCenter/shareCourse" enctype="multipart/form-data" id='courseaddForm'>
+			     <input style='display:none'/>
                 <div id="upload-course-container" style="display:none;">
                   <div class="upload-steps clearfix">
                     <ul>
-                      <li class="step-num active">
-                        1
-                        <span class="tips">
-                          输入链接
-                        </span>
-                      </li>
-                      <li class="step-bar active">
-                      </li>
-                      <li class="step-num active">
-                        2
-                        <span class="tips">
-                          补充信息
-                        </span>
-                      </li>
-                      <li class="step-bar">
-                      </li>
-                      <li class="step-num">
-                        3
-                        <span class="tips">
-                          分享成功
-                        </span>
-                      </li>
+                      <li class="step-num active">1 <span class="tips">输入链接</span></li>
+                      <li class="step-bar active"></li>
+                      <li class="step-num active">2<span class="tips">补充信息</span></li>
+                      <li class="step-bar"></li>
+                      <li class="step-num">3<span class="tips">推荐成功</span></li>
                     </ul>
                   </div>
 				  
                   <div class="nhd nedit-all-head">
                       <span class="act btn-submit-all-wrap logSend">
-                        <!-- <a href="javascript:;" id="btn-addcourse-all" class="add-all ml20   add-all-able">
-                          <span>+</span>&nbsp;继续添加
-                        </a> -->
-                        
+                        <a href="javascript:location.reload();"  class="add-all ml20  add-all-able" style="width:60px;">取消</a>
                         <a id="sharecourse" class="submit-all ml20  submit-all-able">
-                          <i class="iconfont"></i>&nbsp;确认分享
+                          <i class="iconfont"></i>&nbsp;确认推荐
                         </a>
                        </span>
                        <h3  class="item-message-all item-message-all-ok">
-                        <span>请补充课程信息，完成分享
-                        <br>
-                        <span class="item-message-all-subtitle">审核通过后，您将获得
-                          <span class="item-reward-wealth">1财富值</span>的奖励
-                        </span>
-                        </span>
+                                                                         请补充课程信息，完成推荐
                        </h3>
                    </div>
 				   <div id="uploadcourse-list" class="uploadcourse-list">
                       <input type='hidden' name='coursesurl' value=''>
+                      <input type='hidden' name='coursesname' value=''>
+                      <#-- 这里是课程目录  -->
+                      <input type='hidden' name='contents' value=''>
                       <div class="editlayoutbook" id="upload-item-0">
                         <dl class="editupload">
                           <dd>
                             <div class="booksedit  booksedit-bdr">
-                            
-                              <!--<div class="item-index">1</div>
-                              <div class="ui-imgBtn-delete" title="删除"  data-name="工作吧.xlsx" data-index="0"> 
-                                  <b class="iconfont pr2"></b><span>删除</span>          
-                              </div> -->
-                              
+
                               <table class="edit-table">
                                 <tbody>
                                   <tr>
-                                    <td class="name">
-                                                                                                      详情：
-                                    </td>
-                                    <td>
-                                      <div class="zg-form-text-input add-course-title-form">
-                                        
+                                    <td class="name"><i>*</i>课程：</td> 
+                                    <td> 
+                                      <div class="add-title-form">
+                                          
                                       </div>
+                                    </td>
+                                   </tr>
+                                   <tr>
+                                    <td class="name"><i>*</i>简介：</td> 
+                                    <td> 
+	                                    <textarea name="intro" class="add-brief-form"></textarea>
+	                                    <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+                                        <span class="item-msg-content" style='display:none'>简介必填</span>
                                     </td>
                                   </tr>
                                   <tr>
                                     <td class="name"><i>*</i>推荐：</td>
                                     <td>
-                                        <textarea name="recommend" class="content" style="resize: none" placeholder='填写推荐理由'></textarea>
+                                         <textarea name="recommend" class="content"  placeholder='填写推荐理由'></textarea>
                                          <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
                                          <span class="item-msg-content" style='display:none'>推荐理由必填</span>
                                     </td>
@@ -228,12 +212,16 @@
                                       <div class="zm-tag-editor-editor zg-clear">
                                         <div class="zg-inline" id="courseinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
+                                         
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" 
                                           aria-autocomplete="list" placeholder="搜索标签"  oninput="getTagsByCondition(this,'doc')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
+                                      <span class="pj-warmprompt">
+                                           <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+                                      </span>
                                      </td>
                                   </tr>
                                 </tbody>
@@ -251,13 +239,18 @@
                     </h4>
                     <ol>
                       <li>
-                        1.分享课程一定要选择分类;
+                        1. 分享课程时必须对该课件填写推荐理由，可以让别人更加清晰的了解该课件的相关内容；
                       </li>
                       <li>
-                        2.点击继续添加按钮,您还可以继续添加多个链接同时上传,操作快速、便捷、满足您的需求;
+                        2. 课程分享一定要选择分类，方便记录、查询以及搜索；
                       </li>
                       <li>
-                        3.您还可以添加推荐以及多个标签,便于更多的好友发现查看;
+                        3. 多个标签之间要用逗号隔开，便于更多的好友发现查看；
+                      </li>
+                       <li>
+                        4. 课程分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
@@ -272,7 +265,7 @@
       </div>
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_coursesharein.js"> </script>            
+     <script type="text/javascript" src="/scripts/pj_coursesharein.js"> </script>            
   </body>
 
 </html>

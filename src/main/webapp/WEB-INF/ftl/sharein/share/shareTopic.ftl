@@ -100,16 +100,16 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要分享与之无关的话题;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关内容；
                       </li>
                       <li>
-                        2.话题分享应遵循客观、真实、简洁、明确、规范的原则，提问尽可能简洁明了，尽量避免太宽泛的问题;
+                        2. 话题分享应遵循客观、真实、简洁、明确、规范的原则，提问尽可能简洁明了，尽量避免太宽泛的问题；
                       </li>
                       <li>
-                        3.输入你的话题名称,  话题名称尾部要加"?" 禁止提问辱骂他人、含有淫秽色情及低俗信息等话题;
+                        3. 输入你的话题名称，话题名称尾部要加“?”禁止提问辱骂他人、含有淫秽色情及低俗信息等话题；
                       </li>
                       <li>
-                        4.提问有问题需要帮助？详情请查看知识库
+                        4. 提问有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
@@ -117,6 +117,7 @@
                   </div>
                 </div>
                 <form method='post' action='/topics/add' enctype="multipart/form-data" id='topicaddForm'>
+                  <input style='display:none'/>
                   <input type='hidden' name='content' value=''>
                   <input type='hidden' name='topicsclass' value=''>
                   <input type='hidden' name='ispublic' value=''>
@@ -238,7 +239,6 @@
                                       <div class="zm-tag-editor-editor zg-clear">
                                         <div class="zg-inline" id='inputtags'></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
-                                          <input style='display:none'/>
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" aria-autocomplete="list" aria-label="搜索标签" placeholder="搜索标签" id="searchTopic" oninput="getTagsByCondition(this,'topic')">
@@ -258,17 +258,26 @@
                       </div>
                     </div>
                     <div class="uploadinfobook">
+                      <h4>温馨提示</h4>
                       <ol>
                         <li class="doc-type"></li>
-                        <li>1.提问时必须对该话题进行说明，可以让别人更加清晰的了解该话题的相关内容,根据内容说明可以随时更改话题名称，话题名称尾部要加"?";</li>
-                        <li>2.您可以免财富值提问话题，也可以悬赏选择1到20点财富值提问；同时可以对话题进行设置是否"匿名"提问;</li>
-                        <li>3.话题提问时必须添加分类，详细的分类，方便更好的查找话题内容;</li>
-                        <li>4.添加话题标签，更精准的搜索目标话题,多个标签之间要用逗号隔开，便于区分;</li>
                         <li>
-                        5.提问有问题需要帮助？详情请查看知识库
+                        1. 提问时必须对该话题进行说明，可以让别人更加清晰的了解该话题的相关内容,根据内容说明可以随时更改话题名称，话题名称尾部要加"?"；
+                        </li>
+                        <li>
+                        2. 您可以免财富值提问话题，也可以提高财富值悬赏提问；同时可以对话题进行设置是否“匿名”提问；
+                        </li>
+                        <li>
+                        3. 话题提问时必须添加分类，详细的分类，方便更好的查找话题内容；
+                        </li>
+                        <li>
+                        4. 添加话题标签，更精准的搜索目标话题，多个标签之间要用逗号隔开，便于区分；
+                        </li>
+                        <li>
+                        5. 提问有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
-                      </li>
+                        </li>
                         </ol>
                     </div>
                   </div>

@@ -41,7 +41,7 @@ $(function(){
 			$('#pj-article-warnmsg').show();
 			return false;
 		}
-		if(editor.hasContents().replace(/[^x00-xFF]/g,'**').length>16777215){
+		if(editor.getContent().replace(/[^x00-xFF]/g,'**').length>16777215){
 			$('#pj-article-warnmsg .item-msg-content').html('文章内容字数超出最大限制');
 			$('#pj-article-warnmsg').show();
 			return false;

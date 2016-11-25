@@ -9,101 +9,13 @@
     </title> 
 	<link rel='stylesheet' type='text/css' href='/css/pj_wapdetail.css'>
     <link rel='stylesheet' type='text/css' href='/css/pj_wapbase.css'>
-  </head>
-  <body>
-    <div class="wrap bc">
-      <#include "/mydocs/commonTemplate/topandtail/waptop.ftl"/>
-        <div class="main bookMain">
-           <input type='hidden' name='bookid' value='${record.id}'>
-           <input type='hidden' name='bookcontent' value='${record.intro?trim}'>
-           <div class="plus-main-content-inner book-content">
-				  <#if (record)??>
-						<div class='bookmain-left'>
-	                           <#if (record.bookimg)??>
-	                             <img src="${record.bookimg}" class="book-logo lazy" alt="书籍图片" height='220px' width='158px'>
-	                            <#else>
-	                              <img src="/image/thief.jpg" class="book-logo lazy" alt="书籍图片" height='220px' width='158px'>
-	                           </#if>
-	                     </div>
-	                     
-	                     <div class='bookmain-right'>
-                             <div class='headline'>${record.bookname}</div>
-                             <div class='author'>
-                                <span class='tip'>作者:</span>
-                                <span class='noborder'>${record.author}</span>
-                             </div>
-                             <div class='press'>
-                                <span class="tip">出版社:</span>
-                                <span class='noborder'>${record.press}</span>
-                             </div>
-                             <a href='${record.supplierUrl}' target='_blank' class='purchaseurl zg-btn-white' rel='nofollow'>购买本书</a>
-	                     </div>
-				  </#if>
-           </div>
-           <div class='book-introduction'>
-             <div class='headline'>内容简介:</div>
-             <div class='description tool-height'>
-                ${record.intro?trim}
-                <span class="slidedown slide" style="display: none;"><label>...&nbsp;&nbsp;&nbsp;</label>展示全部</span>
-                <div class="slideup slide" style="display: none;"><span>收起</span></div>
-             </div>
-           </div>
-		</div>
-		<div class='relatedcontent'>
-		<div class='userrecommend'> 用户推荐${record.recommendsum}</div>
-		<div class='detail'>
-		  <div class='detail-list'>
-		  <#if record.commentList.list?size lte 0>
-		     <p class='uncomment'>暂无推荐，你也可以发布推荐哦:) </p>
-		  </#if>
-		  <#if (record.commentList)??>
-		     <#list  record.commentList.list as booklist>
-		       <div class='item'>
-		         <div class='media-left'>
-		           <a class='uhead' href='javascript:void(0)' target='_blank' data-userid='${booklist.userid}'>
-		             <#if (booklist.userHeadIcon)??>
-		               <img class='uname lazy' src="${booklist.userHeadIcon}" alt="个人头像"  data-userid='${booklist.userid}' data-moduletype='1'>
-		             <#else>
-		               <img class='uname lazy' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='${booklist.userid}' data-moduletype='1'>
-		             </#if>
-		             <#if (booklist.commentbyName)??>
-			                <a href='javascript:void(0)' class="uname" data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
-			                  <span class="desc">&nbsp;回复&nbsp;</span>
-			                <span class="uname"  data-userid='${booklist.commentby}' data-moduletype='1'>
-			                <a href='javascript:void(0)' target='_blank'>${booklist.commentbyName}</a>
-			                </span>
-		             <#else>
-			                <a href='javascript:void(0)' class='uname' data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
-		             </#if>
-		           </a>
-		         </div>
-		         <div class='media-right'>
-		           <div class="reason">${booklist.recommend?html}</div>
-		           <div class="operate">
-		             <a itemprop="url" class="answer-date-link meta-item" target="_self" href="javascript:;">
-		               <#if (booklist.createtime?string("yyyy-MM-dd"))??>
-		                  ${booklist.createtime?string("yyyy-MM-dd")}
-		               </#if>
-					 </a>
-		           </div>
-		         </div>
-		       </div>
-		     </#list>
-		  </#if>
-		 </div>
-		  
-		</div>
-		<#if (record.commentList.last gt 1)>
-			   <a data-pageno='1' data-sumpage='${record.commentList.last}' class="zg-btn-white zu-button-more loadmore">更多</a>
-	    </#if>
-	    </div>
-      
-	</div>
-	 <div class='pagetemplate'></div>
-	 <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
+     <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
 	 <script type="text/javascript" src="/scripts/jquery-jtemplates.js"></script>
      <script type="text/javascript" src="/scripts/pj_wap.js"></script>
-	 <script type="text/javascript">
+     <script type="text/javascript" src="/scripts/pj_wap_book.js"></script>
+     <script type="text/javascript" src="/scripts/pj_wap_searchResult.js"></script>
+     <script type="text/javascript" src="/scripts/pj_constant.js"></script>
+      <script type="text/javascript">
 	         var phoneWidth =  parseInt(window.screen.width);
 	         var phoneScale = phoneWidth/640;
 	         var ua = navigator.userAgent;
@@ -118,6 +30,134 @@
 	                   document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
 	         }
 	 </script>
+  </head>
+  <body>
+    <div class="wrap bc">
+      <#include "/mydocs/commonTemplate/topandtail/waptop.ftl"/>
+        <div class='search-box' style='display:none'>
+		    <input type="text" id="searchres_input" class="search_input ui-autocomplete-input" placeholder="JobPlus海量知识库" name="Condition"  tabindex="1" maxlength="64" autocomplete="off"  value="">
+            <botton name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="searches-form-submit" value="分类搜索"></botton>
+		</div>
+        <div class="main bookMain">
+           <input type='hidden' name='bookid' value='${record.id}'>
+           <input type='hidden' name='bookcontent' value='${record.intro?trim}'>
+           <input type='hidden' name='bookname' value='${record.bookname}'>
+           <input type='hidden' name='bookCreatePerson' value='${record.objCreator.userid}'>
+           <div class="plus-main-content-inner book-content">
+				  <#if (record)??>
+						<div class='main-left'>
+	                           <#if (record.bookimg)??>
+	                             <img src="${record.bookimg}" class="book-logo lazy" alt="书籍图片" height='220' width='166'>
+	                            <#else>
+	                              <img src="/image/thief.jpg" class="book-logo lazy" alt="书籍图片" height='220' width='166'>
+	                           </#if>
+	                     </div>
+	                     
+	                     <div>
+                             <div class='headline control-display'>${record.bookname}</div>
+                             <div class='author control-display'>
+                                <span class='tip'>作者:</span>
+                                <span class='noborder'>${record.author}</span>
+                             </div>
+                             <div class='press control-display'>
+                                <span class="tip">出版社:</span>
+                                <span class='noborder'>${record.press}</span>
+                             </div>
+                             <a href='${record.supplierUrl}' target='_blank' class='purchaseurl zg-btn-white' rel='nofollow'>购买本书</a>
+	                     </div>
+				  </#if>
+           </div>
+           <div class='book-introduction'>
+             <div class='headline'>内容简介:</div>
+             <div class='description tool-height' id='bookbrief'>
+                <span class='brief-content'>${record.intro?trim}</span>
+                <div class="slideup slide" style="display: none;font-size:2.6rem;"><span><i class="z-icon-up"></i>收起</span></div>
+             </div>
+           </div>
+		</div>
+		<div class='relatedcontent'>
+		<div class='userrecommend'> 用户推荐(${record.recommendsum})</div>
+		<div class='detail'>
+		  <div class='detail-list'>
+		  <#if record.commentList.list?size lte 0>
+		     <p class='uncomment' id='book-commcount' data-num='${record.recommendsum}'>暂无推荐，你也可以发布推荐哦:) </p>
+		  </#if>
+		  <#if (record.commentList)??>
+		     <#list  record.commentList.list as booklist>
+		       <div class='item'>
+		         <div class='media-left'>
+		           <a class='uhead' href='/myHome/getHomePage/${booklist.userid}' target='_blank' data-userid='${booklist.userid}'>
+		             <#if (booklist.userHeadIcon)??>
+		               <img class='uname lazy' src="${booklist.userHeadIcon}" alt="个人头像"  data-userid='${booklist.userid}' data-moduletype='1'>
+		             <#else>
+		               <img class='uname lazy' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='${booklist.userid}' data-moduletype='1'>
+		             </#if>
+		             <#if (booklist.commentbyName)??>
+			                <a href='/myHome/getHomePage/${booklist.userid}' class="uname" data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
+			                  <span class="desc">&nbsp;回复&nbsp;</span>
+			                <span class="uname"  data-userid='${booklist.commentby}' data-moduletype='1'>
+			                <a href='/myHome/getHomePage/${booklist.commentby}' target='_blank'>${booklist.commentbyName}</a>
+			                </span>
+		             <#else>
+			                <a href='/myHome/getHomePage/${booklist.userid}' class='uname' data-userid='${booklist.userid}' target='_blank'>${booklist.userName}</a>
+		             </#if>
+		           </a>
+		         </div>
+		         <div class='media-right'>
+		           <div class="reason">${booklist.recommend?html}</div>
+		           <div class="operate">
+		             <a  class="answer-date-link meta-item"  href="javascript:;">
+		               <#if (booklist.createtime?string("yyyy-MM-dd"))??>
+		                  ${booklist.createtime?string("yyyy-MM-dd")}
+		               </#if>
+					 </a>
+					 <a href="javascript:;" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox"  data-relationid='${booklist.id}' data-recommend='${booklist.userid}' data-recommendname='${booklist.userName}'> 
+						<i class="z-icon-comment"></i>评论
+				     </a>
+		           </div>
+		         </div>
+		       </div>
+		     </#list>
+		  </#if>
+		 </div>
+		  
+		</div>
+		<#if (record.commentList.last gt 1)>
+			   <a data-pageno='1' data-sumpage='${record.commentList.last}' class="zg-btn-white zu-button-more loadmore">更多</a>
+	    </#if>
+	    </div>
+        <#--判断是否登录-->
+	    <#if (Session.user)??>
+		<div class="mycomment halving-line">
+			  <a href="/myHome/getHomePage/${Session.user.userid}" data-userid="2" target="_blank">
+				 <#if (Session.user.headicon)??>
+				   <img src="${Session.user.headicon}" alt="个人头像" class='zm-list-avatar lazy' data-userid='${Session.user.userid}' data-moduletype='1'>
+				 <#else>
+				   <img src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" class='zm-list-avatar lazy' data-userid='${Session.user.userid}' data-moduletype='1'>
+				 </#if>
+				 <span class="mycommentinfo">推荐语</span>
+			  </a>
+        </div>
+        <div class="publishbook">
+	       <textarea title="在这里输入回答" class="commentcontent" placeholder="在这里输入推荐语..." ></textarea>	
+	    </div>
+	    <div class="pj-command clearfix">
+			   <span class="zg-right">
+			      <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+				  <span class="item-msg-content" style='display:none'>文字超出最大限制</span>
+				  <a class="submit-button zg-btn-blue" name="savebook" href="javascript:void(0)">发布</a>
+			   </span>
+	    </div>
+	    <#else>
+	    <div class="col-md-6 col-md-offset-3 login-after-comments">
+	            <span class="hidden-xs">登录后才能发布评论</span><br>
+	            <span class="comments-login-register hidden-xs loginprompt-null"><a href='javascript:void(0);' onclick="toLogin();">登录</a> | <a  target='_blank' href='/registration.html'>立即注册</a> </span>
+	    </div>
+	    </#if>
+	</div>
+	 <div class='pagetemplate'></div>
+	
+	
   </body>
 
 </html>

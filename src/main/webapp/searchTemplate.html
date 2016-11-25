@@ -2,15 +2,14 @@
 {#foreach $T.result as item}
 <!-- {$T.item.protoType} -->
 {#if $T.item.protoType == "1"}
-  		<div class="item">
+  	<div class="item">
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/docs/getDocsDetail/{$T.item.data_id}"   style='margin-left: -6px;' >【文档】{$T.item.title}</a>
+							 <a  href="/docs/getDocsDetail/{$T.item.data_id}"  target="_blank" style='margin-left: -6px;' >【文档】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo">
-							 <a target="_blank" href="/docs/getDocsDetail/{$T.item.data_id}"> {$T.item.description}</a>
-							 
+							 <a  href="/docs/getDocsDetail/{$T.item.data_id}" target="_blank"> {$T.item.description}</a>
 						 </div>
 						 <div class="tool">
 							 <div class="pj-meta-panel">
@@ -32,7 +31,7 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
-						 <a target="_blank" href="/docs/getDocsDetail/{$T.item.data_id}">
+						 <a  href="/docs/getDocsDetail/{$T.item.data_id}" target="_blank">
 							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
@@ -45,7 +44,7 @@
 						    {#else}
 							 <img src='/image/default/default_doc.png' class="lazy" alt='文档图标'>
 					        {#/if}
-					    </a>    
+					     </a>    
 						 </div>
 					 </div>
                 </div>
@@ -54,10 +53,10 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/books/getBookDetail/{$T.item.data_id}"   style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
+							 <a  href="/books/getBookDetail/{$T.item.data_id}"  target="_blank" style='margin-left: -6px;'>【书籍】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo">
-							 <a target="_blank" href="/books/getBookDetail/{$T.item.data_id}">{$T.item.description}</a>
+							 <a  href="/books/getBookDetail/{$T.item.data_id}" target="_blank">{$T.item.description}</a>
 							
 						 </div>
 						 <div class="tool">
@@ -79,7 +78,7 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
-						  <a target="_blank" href="/books/getBookDetail/{$T.item.data_id}">{
+						  <a href="/books/getBookDetail/{$T.item.data_id}" target="_blank" >{
 							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
@@ -101,10 +100,10 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/article/getArticleDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
+							 <a href="/article/getArticleDetail/{$T.item.data_id}"  target="_blank"  style='margin-left: -6px;'>【文章】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo" title="{$T.item.description}">
-							 <a target="_blank" href="/article/getArticleDetail/{$T.item.data_id}">{$T.item.description}</a>
+							 <a  href="/article/getArticleDetail/{$T.item.data_id}" target="_blank">{$T.item.description}</a>
 							 
 						 </div>
 						 <div class="tool">
@@ -128,7 +127,7 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
-						 <a target="_blank" href="/article/getArticleDetail/{$T.item.data_id}">
+						 <a href="/article/getArticleDetail/{$T.item.data_id}"  target="_blank" >
 							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
@@ -150,10 +149,10 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/courses/getCourseDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
+							 <a  href="/courses/getCourseDetail/{$T.item.data_id}"  target="_blank"  style='margin-left: -6px;'>【课程】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo">
-							 <a target="_blank" href="/courses/getCourseDetail/{$T.item.data_id}">{$T.item.description} </a>
+							 <a  href="/courses/getCourseDetail/{$T.item.data_id}" target="_blank">{$T.item.description} </a>
 							 
 						 </div>
 						 <div class="tool">
@@ -197,10 +196,10 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/sites/getSiteDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【站点】{$T.item.title}</a>
+							 <a  href="/sites/getSiteDetail/{$T.item.data_id}" target="_blank" style='margin-left: -6px;'>【站点】{$T.item.title}</a>
 						 </div>
 						 <div class="newsinfo">
-							 <a target="_blank" href="/sites/getSiteDetail/{$T.item.data_id}">{$T.item.description}</a>
+							 <a  href="/sites/getSiteDetail/{$T.item.data_id}" target="_blank">{$T.item.description}</a>
 							
 						 </div>
 						 <div class="tool">
@@ -221,7 +220,7 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
-						  <a target="_blank" href="/sites/getSiteDetail/{$T.item.data_id}">
+						  <a  href="/sites/getSiteDetail/{$T.item.data_id}" target="_blank">
 							 {#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">
@@ -245,10 +244,10 @@
                   <div class="topicdivision-content">
 					<div class="topicdivision-left">
 						 <div class="title">
-							 <a target="_blank" href="/topics/getTopicsDetail/{$T.item.data_id}"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
+							 <a href="/topics/getTopicsDetail/{$T.item.data_id}"  target="_blank"  style='margin-left: -6px;'>【话题】{$T.item.title}</a>
 						 </div>
 						<div class="newsinfo">
-							 <a target="_blank" href="/topics/getTopicsDetail/{$T.item.data_id}">{$T.item.description}</a>
+							 <a  href="/topics/getTopicsDetail/{$T.item.data_id}" target="_blank">{$T.item.description}</a>
 							 
 						 </div>
 						 <div class="tool">
@@ -279,7 +278,7 @@
 						 </div>
 						 </div>
 						 <div class="topicdivision-right">
-						  <a target="_blank" href="/topics/getTopicsDetail/{$T.item.data_id}">
+						  <a  href="/topics/getTopicsDetail/{$T.item.data_id}"  target="_blank">
 							{#if $T.item.imgUrl && $T.item.imgUrl.length > 5}
 							 <div class="picno">
 								 <div class="pic">

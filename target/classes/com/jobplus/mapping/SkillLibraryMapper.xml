@@ -25,6 +25,7 @@
   <update id="updSkillUsesum" parameterType="java.lang.String">
     update tbl_skilllibrary
     set useSum = useSum + 1
+    ,updateTime = now()
     where id in ( ${skillIds} )
   </update>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

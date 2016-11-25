@@ -11,10 +11,8 @@
 	</context-param>
 
 	<listener>   
-    <listener-class>   
-           com.jobplus.utils.ContextFinalizer
-    </listener-class>   
-  </listener>
+    	<listener-class>com.jobplus.utils.ContextFinalizer</listener-class>   
+  	</listener>
 	<!-- Spring监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -162,11 +160,11 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.xml</url-pattern>
 	</servlet-mapping>
-<!-- 	
+ 	
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error/500</location>
-	</error-page> -->
+	</error-page> 
 	<error-page>
 		<error-code>404</error-code>
 		<location>/error/404</location>

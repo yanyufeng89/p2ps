@@ -1,18 +1,18 @@
-<!-- 个人主页 文档--文档下载-->
+<!-- 个人主页 文档--文档下载  -->
 {#foreach $T.myDownloadPage as list}
  <li>
-       <div class='w450 fs14 fc3 ib dochidden'>
-          <div class="checkbox chk" data-docid="{$T.list.id}" data-name="{$T.list.docs.title}"></div>
-			 <b class="ic ic-{$T.list.docs.docsuffix} mr14"></b>
-			 <a href="/51jobplusCore/docs/getDocsDetail?id={$T.list.docs.id}" target="_blank" title="{$T.list.docs.title}">{$T.list.docs.title}</a>
-	   </div>
-	   <div class='w165 ib il'>
+	    <div class='w525 fs14 fc3 ib dochidden'>
+	          <div class="checkbox chk" data-docid="{$T.list.id}" data-name="{$T.list.docs.title}"></div>
+				 <b class="ic ic-{$T.list.docs.docsuffix} mr14"></b>
+				 <a href="/docs/getDocsDetail/{$T.list.docs.id}" target="_blank" title="{$T.list.docs.title}">{$T.list.docs.title}</a>
+		 </div>
+	     <div class='w140 ib il'>
 			 {$T.list.docs.downsum}
          </div>
-         <div class='w165 ib'>
+         <div class='w140 ib'>
             {$T.list.showcolltime}
          </div>
-         <div class='w119 ib operate'>
+         <div class='w92 ib operate'>
             <span data-id='{$T.list.id}' data-name='{$T.list.docs.title}' data-type='0' data-actiontype='0'>
             <b class="iconfont pr2"></b>
                                       删除

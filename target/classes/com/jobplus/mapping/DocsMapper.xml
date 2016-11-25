@@ -23,14 +23,15 @@
     <result column="isValid" property="isvalid" jdbcType="INTEGER" />
     <result column="isconverter" property="isconverter" jdbcType="INTEGER" />    
     <result column="readUrl" property="readurl" jdbcType="VARCHAR" />
+    <result column="firstPageText" property="firstPageText" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, title, description, filePath, docPages, createTime, lastEditTime, userId, collectSum, 
-    downSum, readSum, likeSum, recommendSum,downValue, docSuffix, docType, docClass, isPublic, isValid, isconverter, readUrl
+    downSum, readSum, likeSum, recommendSum,downValue, docSuffix, docType, docClass, isPublic, isValid, isconverter, readUrl, firstPageText
   </sql>
   <sql id="Base_Column_List2" >
     t.ID, t.title, t.description, t.filePath, t.docPages, t.createTime, t.lastEditTime, t.userId, t.collectSum, t.downSum, 
-    t.readSum, t.likeSum, t.recommendSum,downValue, t.docSuffix, t.docType, t.docClass, t.isPublic, t.isValid, t.isconverter, t.readUrl
+    t.readSum, t.likeSum, t.recommendSum,downValue, t.docSuffix, t.docType, t.docClass, t.isPublic, t.isValid, t.isconverter, t.readUrl, t.firstPageText
   </sql>
 
 	<!-- 插入多条记录       由于是默认第一次插入 所以部分字段插入了默认值 --><!-- <include refid="menuColumns"/> -->
@@ -78,7 +79,9 @@
 				and isPublic = #{ispublic,jdbcType=INTEGER}
 			</when>
 			<otherwise>
-				and isPublic = 1
+			<!-- 是否公开  0 私有 ;1 公开 ;2 匿名 -->
+			<!-- 因公开1 和 匿名2 在同一个方法里 -->
+				and isPublic != 0
 			</otherwise>
 		</choose>		
 		 ORDER BY t.createTime DESC 
@@ -99,7 +102,9 @@
 					and isPublic = #{ispublic,jdbcType=INTEGER}
 				</when>
 				<otherwise>
-					and isPublic = 1
+			<!-- 是否公开  0 私有 ;1 公开 ;2 匿名 -->
+			<!-- 因公开1 和 匿名2 在同一个方法里 -->
+				and isPublic != 0
 				</otherwise>
 			</choose>
 	</select>
@@ -107,7 +112,8 @@
   <update id="deleteDocs" parameterType="java.lang.Integer" >
     update tbl_docs 
     set 
-      isValid = 0
+      isValid = 0,
+      lastEditTime=now()
     where ID in 
     	<foreach collection="condition" item="item" index="index"
             open="(" close=")" separator=",">
@@ -119,6 +125,7 @@
     update tbl_docs 
     set 
       readSum = readSum + 1
+      ,lastEditTime = now()
     where ID = #{id,jdbcType=INTEGER}
   </update> 
   
@@ -135,7 +142,7 @@
     where t.ID = #{id,jdbcType=INTEGER}
     <!-- 必须是有效资源 -->
     and t.isValid = 1
-    and u.isValid = 1
+   <!-- 	u.isValid = 1 -->
   </select>
   
   

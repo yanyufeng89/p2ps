@@ -76,22 +76,33 @@ public class DocsController {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	@RequestMapping("/upload")  
+	@RequestMapping("/upload")
 	  public String upload(@RequestParam(value="fileField",required=false) MultipartFile[] files,HttpServletRequest request,HttpServletResponse response,Docs record) throws IllegalStateException, IOException {
 		String rest = "redirect:success";
 		String num = "?num=";
 		// 用于编辑功能
 		String docId = request.getParameter("docId");
 		if(!StringUtils.isBlank(docId)){//编辑
+			logger.info("****文档编辑****"+docId);
+			String userid = (String) request.getSession().getAttribute("userid");
 			record.setId(Integer.parseInt(docId));
-			docsService.updateByPrimaryKeySelective(record);
+			record.setUserid(Integer.parseInt(userid));
+			//文档原状态   用于积分扣减
+			String preIsPublic = request.getParameter("preIsPublic");
+			docsService.updDocAndUpdMoney(record,preIsPublic);			
+			// 更新用户操作统计数 存入session
+			userService.getMyHeadTopAndOper(request);
 			num += "0";
+			return "redirect:modSuccess";
 		}else{// 多文件上传
-			num += docsService.upload(files, request, response);
+			//如果返回""  则num=0
+			String tmp = docsService.upload(files, request, response);
+			num += "".equals(tmp)?"0":tmp;
 		}
 		//防止重复提交   转发到静态页面   定义财富值是2
 //		int num = files.length == 0 ?files.length*new AccountDetail().getCHANGEVALUES()[1]:(files.length - 1)*new AccountDetail().getCHANGEVALUES()[1];
-	     return rest+num;  
+		String tmp = rest+num;
+	     return tmp;  
 	  }  
 	/**
 	 * 判断文档是否转换成功
@@ -147,6 +158,7 @@ public class DocsController {
 			//后台管理员查看
 			mv.setViewName("manage/documentDetail");
 		}else{
+			
 			mv.setViewName("mydocs/docs/documentDetail");
 		}
 		return mv;
@@ -423,6 +435,19 @@ public class DocsController {
 	
 
 	
+	/**
+	 * 防止重复提交   转发到静态页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/modSuccess", method = RequestMethod.GET)
+	public ModelAndView modSuccess(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("sharein/success/successModifyDocument");
+		mv.addObject("num",request.getParameter("num"));
+		return mv;
+	}
 	/**
 	 * 防止重复提交   转发到静态页面
 	 * @param request

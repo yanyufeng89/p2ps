@@ -71,9 +71,17 @@
 		<if test="bookid != null"> AND
 			bookID = #{bookid,jdbcType=INTEGER}
 		</if>
-		<if test="bookid != null"> AND
-			bookID = #{bookid,jdbcType=INTEGER}
-		</if>
+	</select>
+  <!-- isShared用户是否分享过这本书籍 -->
+	<select id="isShared" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.BookShare">
+		select count(*)  from tbl_books_share bks
+		where  bks.isdelete=0 
+		and bks.userID = #{userid,jdbcType=INTEGER}
+		AND bks.bookID = #{bookid,jdbcType=INTEGER}
+<!-- 		select count(DISTINCT bk.ID ) as countRs from tbl_books_share bks,tbl_books bk 
+		where bks.bookID = bk.ID and bks.isdelete=0 
+		and bks.userID = #{userid,jdbcType=INTEGER}
+		AND bks.bookID = #{bookid,jdbcType=INTEGER} -->
 	</select>
 	<!-- 获取书籍分享详情用以编辑 -->
   <select id="getBookShareDetailForEdit" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -89,7 +97,8 @@
   <!-- deleteByConditions -->
   <update id="deleteByConditions" parameterType="java.lang.Integer">
   	 update tbl_books_share
-    set isdelete = 1
+    set isdelete = 1,
+    updateTime=now()
     where ID in
     <foreach collection="conditions" item="item" index="index"
             open="(" close=")" separator=",">
@@ -108,7 +117,8 @@
   </select>
 	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		update tbl_books_share
-		set isdelete = 1
+		set isdelete = 1,
+		updateTime=now()
 		where ID = #{id,jdbcType=INTEGER}
 	</update>
 <!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

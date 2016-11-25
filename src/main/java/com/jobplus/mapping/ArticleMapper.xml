@@ -105,7 +105,8 @@
   <update id="delSharedArticle" parameterType="com.jobplus.pojo.Article">
     update tbl_article
     set 
-      isValid = 0      
+      isValid = 0 ,
+      updateTime=now()     
     where ID in 
     	<foreach collection="condition" item="item" index="index"
             open="(" close=")" separator=",">

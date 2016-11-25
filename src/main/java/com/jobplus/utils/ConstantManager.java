@@ -35,6 +35,8 @@ public class ConstantManager {
 
 	/** 文档上传、下载财富默认值 */
 	public static final String DEAAULT_DOWN_VALUE = "1";
+	
+	public static final Integer DEAAULT_DOWN_VALUE2 = 2;
 
 	/** 文档上传、下载默认类型ID  需数据库有此值*/
 	public static final String DEFAULT_DOCTYPE_ID = "101";

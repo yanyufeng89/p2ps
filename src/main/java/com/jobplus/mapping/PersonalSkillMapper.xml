@@ -42,6 +42,7 @@
 		<if test="skillitem != null">
 			and skillitem = #{skillitem,jdbcType=LONGVARCHAR}
 		</if>
+		limit 1
 	</select>
   
   

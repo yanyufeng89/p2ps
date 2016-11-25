@@ -20,6 +20,7 @@
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jobplus.pojo.Courses">
     <result column="intro" jdbcType="LONGVARCHAR" property="intro" />
+    <result column="contents" jdbcType="LONGVARCHAR" property="contents" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, coursesName, coursesUrl, coursesImg, userId, coursesClass, coursesType, isValid, 
@@ -33,6 +34,7 @@
   </sql>
   <sql id="Blob_Column_List">
     intro
+    ,contents
   </sql>
    <sql id="collect_List" >
     myc.ID AS "myCollect.id", myc.userId AS "myCollect.userid", myc.collectType AS "myCollect.collecttype", myc.objectId AS "myCollect.objectid", 
@@ -102,7 +104,8 @@
   <update id="delSharedCourses" parameterType="com.jobplus.pojo.Courses">
     update tbl_courses
     set 
-      isValid = 0      
+      isValid = 0,
+      updateTime=now()      
     where ID in 
     	<foreach collection="condition" item="item" index="index"
             open="(" close=")" separator=",">
@@ -113,7 +116,8 @@
   <update id="updateReadSum" parameterType="java.lang.Integer">
     update tbl_courses
     set 
-      readSum = readSum + 1      
+      readSum = readSum + 1  
+      ,updateTime = now()    
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
@@ -130,7 +134,7 @@
     where t.ID = #{id,jdbcType=INTEGER}
     <!-- 必须是有效资源 -->
     and t.isValid = 1
-    and u.isValid = 1
+    <!-- and u.isValid = 1 -->
   </select>
   
   <!-- <select id="selectByRecord" parameterType="com.jobplus.pojo.Courses" resultMap="ResultMapWithBLOBs">
@@ -170,13 +174,13 @@
       coursesType, isValid, updateTime, 
       createTime, collectSum, recommendSum, 
       likeSum, readSum, recommend, 
-      intro)
+      intro,contents)
     values (#{id,jdbcType=INTEGER}, #{coursesname,jdbcType=VARCHAR}, #{coursesurl,jdbcType=VARCHAR}, 
       #{coursesimg,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{coursesclass,jdbcType=VARCHAR}, 
       #{coursestype,jdbcType=VARCHAR}, 1, Now(), 
       Now(), 0, 0, 
       0, 0, #{recommend,jdbcType=VARCHAR}, 
-      #{intro,jdbcType=LONGVARCHAR})
+      #{intro,jdbcType=LONGVARCHAR},#{contents,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.Courses">
     insert into tbl_courses
@@ -229,6 +233,9 @@
       <if test="intro != null">
         intro,
       </if>
+      <if test="contents != null">
+        contents,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -278,6 +285,9 @@
       </if>
       <if test="intro != null">
         #{intro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contents != null">
+        #{contents,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -329,6 +339,9 @@
       <if test="intro != null">
         intro = #{intro,jdbcType=LONGVARCHAR},
       </if>
+      <if test="contents != null">
+        contents = #{contents,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -348,7 +361,8 @@
       likeSum = #{likesum,jdbcType=INTEGER},
       readSum = #{readsum,jdbcType=INTEGER},
       recommend = #{recommend,jdbcType=VARCHAR},
-      intro = #{intro,jdbcType=LONGVARCHAR}
+      intro = #{intro,jdbcType=LONGVARCHAR},
+      contents = #{contents,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.Courses">
@@ -366,8 +380,20 @@
       recommendSum = #{recommendsum,jdbcType=INTEGER},
       likeSum = #{likesum,jdbcType=INTEGER},
       readSum = #{readsum,jdbcType=INTEGER},
-      recommend = #{recommend,jdbcType=VARCHAR}
+      recommend = #{recommend,jdbcType=VARCHAR},
+      contents = #{contents,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
- 
+
+  <update id="updateByAdmin" parameterType="com.jobplus.pojo.Courses">
+    update tbl_courses
+    set
+        coursesName = #{coursesname,jdbcType=VARCHAR},
+        coursesUrl = #{coursesurl,jdbcType=VARCHAR},
+        coursesImg = #{coursesimg,jdbcType=VARCHAR},
+        updateTime = now(),
+        intro = #{intro,jdbcType=LONGVARCHAR},
+        contents = #{contents,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

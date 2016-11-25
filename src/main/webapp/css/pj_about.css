@@ -65,8 +65,8 @@
 	line-height:30px;
 	border: 1px solid #d6d6d6;
 	padding-left:6px;
-	font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
     outline:none;
     background: #f9f9f9;
     border-radius: 2px;
@@ -81,8 +81,8 @@
 }
 
 .btn-send{
-	font-family: Arial,'微软雅黑';
-    _font-family: Arial,'微软雅黑';
+	font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
 	font-size:16px;
 	background: #1b85d5;
 	border-radius:4px;

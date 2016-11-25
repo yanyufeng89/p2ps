@@ -2,7 +2,19 @@ var userInfo,edit;
 $(function(){
 	//头像信息
 	intoUserInfo();
-	
+	//书籍详情简介 
+	if($('input[name=bookcontent]').length>0){
+		var content=$('input[name=bookcontent]').val();
+		if(content.replace(/[^x00-xFF]/g,'**').length>460){
+			$('#bookbrief .brief-content').text(autoAddEllipsis($('#bookbrief .brief-content').text(),420)).after("<span class='showall'>展示全部</span>");
+		}
+	}
+	//详情简介收起
+	$('.slideup').live('click',function(){
+		$(this).hide().prev().show();
+		$('.brief-content').text(autoAddEllipsis($('.brief-content').text(),420));
+		$(this).parents('.brief').addClass('book-height');
+	})
     //我的书籍批量删除(已分享)   批量删除 书籍已收藏
     $('.remove').live('click',function(){
     	//0代表已分享  1代表收藏 
@@ -99,7 +111,7 @@ $(function(){
 		var $this=$(this);
 		$.ajax({
 			type:"POST",
-         	url:projectName+"books/clickOnLike",
+         	url:"/books/clickOnLike",
          	data:{id:reasonid,likeOperate:islike,topObjId:bookid,objectNamePg:objectNamePg,relationidPg:reasonid,objCreatepersonPg:recommend},
          	dataType:"json",
          	success:function(data){
@@ -123,7 +135,10 @@ $(function(){
 		})
 	});
 	
-
+	//发布文本框获取焦点
+    $('.commentcontent').live('focus',function(){
+    	$('.item-msg-content,.ic-msg').hide();
+    });
 	
 	//书籍详情 点击评论
 	$('._CommentForm_actions_ooEq [name=answeraddnew]').live('click',function(){
@@ -154,24 +169,6 @@ $(function(){
     	topicFollow($(this),0)
     })
     
-    //回到顶部
-    $("#bookbacktop").mousemove(function(){
-    	$("#bookbacktop").css("background-position-x", "-28px");
-    }).mouseleave(function(){
-    	$("#bookbacktop").css("background-position-x", "0");
-    });
-    /*当界面下拉到一定位置出现向上的箭头 start*/
-    $(window).scroll(function(){  
-        if ($(window).scrollTop()>100){  
-            $("#bookbacktop").fadeIn("fast");  
-        }  
-        else  
-        {  
-            $("#bookbacktop").fadeOut("fast");  
-        }  
-    });
-   /*当界面下拉到一定位置出现向上的箭头 end*/
-    
     //书籍详情页加载更多
     $('.loadmore').live('click',function(){
     	$(this).addClass('loading').empty().append("<span class='capture-loading'></span>加载中");
@@ -185,7 +182,7 @@ function bookLoadMore(obj){
     var bookid=$('input[name=bookid]').val();
     $.ajax({
     	type:"POST",
-      	url:projectName+"books/loadComments",
+      	url:"/books/loadComments",
       	data:{pageNo:Number(pageNo)+1,bookid:bookid},
     	dataType:"json",
     	success:function(data){
@@ -216,12 +213,14 @@ function bookLoadMore(obj){
     		   //判断是否点赞
     		   $('.headiconintotem').setTemplateURL(projectName+'bookLoadMoreTemplate.html');
           	   $('.headiconintotem').processTemplate(datamodel);
-          	   $('.loadmore').before($('.headiconintotem').html());
+          	   $('.loadmore').prev().append($('.headiconintotem').html());
           	   $(".headiconintotem").empty();
           	   $('.loadmore').attr('data-pageno',Number(pageNo)+1);
           	   obj.removeClass('loading').empty().append('更多');
-          	   if(Number(sumpage)==Number(pageNo)+1)
-          		 $('.loadmore').hide();
+          	   if(Number(sumpage)==Number(pageNo)+1){
+          		 $('.loadmore').hide(); 
+          	   }
+          		
           	   intoUserInfo();
     		}else{
     			
@@ -236,7 +235,7 @@ function collectBook(obj){
 	var $this=obj;
 	$.ajax({
 		type:"POST",
-      	url:projectName+"books/collectBook",
+      	url:"/books/collectBook",
       	data:{actionType:actiontype,objectid:bookid,judgeTodo:actiontype},
       	dataType:"json",
       	success:function(data){
@@ -246,12 +245,16 @@ function collectBook(obj){
       				$this.empty().html('取消收藏');
       				$this.attr('data-actiontype','1');
       				$this.next().find('strong').html(Number($this.next().find('strong').html())+1);
+      				//添加对应的头像信息
+      				showHeadIcon();
          		}
          		else{
          			$this.removeClass('zg-btn-white').addClass('zg-btn-green');
          			$this.attr('data-actiontype','0');
          			$this.empty().html('收藏书籍');
          			$this.next().find('strong').html(Number($this.next().find('strong').html())-1);
+         			//移除对应的头像信息
+         			deleteHeadIcon();
          		} 
       		}
       		else{
@@ -267,13 +270,15 @@ function cancelCommtent(obj){
 	var bookid=$('input[name=bookid]').val();
 	$.ajax({
 	    type:"POST",
-     	url:projectName+"books/delComment",
+     	url:"/books/delComment",
      	data:{id:recommend,commentby:commentby,bookid:bookid},
      	dataType:"json",
      	success:function(data){
      		if(data.returnStatus=='000'){//返回成功
      			//同时从界面上移除一条推荐语
      			obj.parents('.item').remove();
+     			$('#book-commcount').html('用户推荐('+(Number($('#book-commcount').attr('data-num'))-1)+')');
+		        $('#book-commcount').attr('data-num',Number($('#book-commcount').attr('data-num'))-1);
      		}
      		else{
      			
@@ -283,14 +288,14 @@ function cancelCommtent(obj){
 }
 //加载用户信息
 function intoUserInfo(){
-    $('.uname,.zm-item-link-avatar,.zm-list-avatar,.author-link').pinwheel();
+    $('.uname,.zm-item-img-avatar,.zm-list-avatar,.author-link').pinwheel();
 }
 
 //删除已收藏书籍
 function deleteMyCollects(conditions,obj){
    $.ajax({
    	type:"POST",
-   	url:projectName+"myCenter/deleteMyCollects",
+   	url:"/myCenter/deleteMyCollects",
    	data:{condition:conditions,collecttype:"tbl_books"},
    	dataType:"json",
    	success:function(data){
@@ -310,7 +315,7 @@ function deleteMyCollects(conditions,obj){
  					obj.parents('li').remove();
  				}
     		}
-    		$('#bookcollect').html("收藏("+data.operationSum.booksharesum+")");
+    		$('#bookcollect').html("收藏&nbsp;"+data.operationSum.bookcollsum);
 
   		}else{//返回失败
   		}
@@ -322,7 +327,7 @@ function deleteMyCollects(conditions,obj){
 function delComment(conditions,obj){
 	   $.ajax({
     	type:"POST",
-    	url:projectName+"books/delComment",
+    	url:"/books/delComment",
     	data:{condition:conditions},
     	dataType:"json",
     	success:function(data){
@@ -341,7 +346,7 @@ function delComment(conditions,obj){
 	     					obj.parents('li').remove();
 	     				}
 	        		}
-	        		$('#bookshare').html("分享("+data.operationSum.booksharesum+")");
+	        		$('#bookshare').html("分享&nbsp;"+data.operationSum.booksharesum);
 	   		}else{//返回失败
 	   		}
 
@@ -372,18 +377,25 @@ function insertComment(obj,type){
 		 //被评论人
 		 objCreatepersonPg=$('input[name=bookCreatePerson]').val();
 	 }
-	 var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
+	 if($.trim(commendcontent).length==0){
+		 return false;
+	 }
+	/* var len=commendcontent.length+(commendcontent.match(/[^\x00-\xff]/g) ||"").length;
 	 if(len>1000){
 	 		if(obj.parent().find('span').length==0)
 	 			obj.before('<span class="errortip">请控制在 1000 字以下</span>&nbsp;&nbsp;');
 	     		return false;
-	 }
-	 if(commendcontent.length==0)return false;
+	 }*/
+	 if($.trim(commendcontent).replace(/[^x00-xFF]/g,'**').length>65535){
+		obj.prevAll().show();
+		return false;
+      }
+	 /*if(commendcontent.length==0)return false;*/
 	 
 	 var $this=obj;
 	 $.ajax({
 		    type:"POST",
-         	url:projectName+"books/insertComment",
+         	url:"/books/insertComment",
          	data:{bookid:bookid,recommend:commendcontent,commentby:commentby,objectNamePg:bookname,objCreatepersonPg:objCreatepersonPg,relationidPg:relationid},
          	dataType:"json",
          	success:function(data){
@@ -401,8 +413,9 @@ function insertComment(obj,type){
          		   $('.headiconintotem').setTemplateURL(projectName+'bookAppendTemplate.html');
              	   $('.headiconintotem').processTemplate(datamodel);
              	   if($('.loadmore').length>0){
-             		   $('.loadmore').before($('.headiconintotem').html());
+             		   $('.loadmore').prev().append($('.headiconintotem').html());
              	   }else{
+             		   $('.uncomment').remove();
                  	   $('.detail-list').append($('.headiconintotem').html());
              	   }
              	   $(".headiconintotem").empty();
@@ -412,8 +425,9 @@ function insertComment(obj,type){
              	   $this.parent().find('.errortip').remove();
              	   //推荐语文本框清空
              	   $('.commentcontent').val('');
-         		}  
-         		else{
+             	   $('#book-commcount').html('用户推荐('+(Number($('#book-commcount').attr('data-num'))+1)+')');
+		           $('#book-commcount').attr('data-num',Number($('#book-commcount').attr('data-num'))+1);
+         		}else{
          			
          		}
          	}

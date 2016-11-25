@@ -5,46 +5,46 @@ document.write("<script src='/scripts/layer/layer.js'></script>");
  * @Description: 社会化分享
  */
 ;
-(function($, window, document, undefined) {
+(function ($, window, document, undefined) {
     //插件初始化
     function init(target, options) {
         var settings = $.extend({}, $.fn.socialShare.defaults, options);
-		//初始化各个组件
+        //初始化各个组件
         var $msb_main = "<a class='msb_main'><img title='分享' src='images/share_core_square.jpg'></a>";
         var $social_group = "<div class='social_group'>"
-		+ "<a target='_blank' class='msb_network_button weixin'>weixin</a>"
-		+ "<a target='_blank' class='msb_network_button sina'>sina</a>"
-		+ "<a target='_blank' class='msb_network_button tQQ'>tQQ</a>"
-		+ "<a target='_blank' class='msb_network_button qZone'>qZone</a>"
-		+ "<a target='_blank' class='msb_network_button douban'>douban</a>"
-		+ "</div>";
+            + "<a target='_blank' class='msb_network_button weixin'>weixin</a>"
+            + "<a target='_blank' class='msb_network_button sina'>sina</a>"
+            + "<a target='_blank' class='msb_network_button tQQ'>tQQ</a>"
+            + "<a target='_blank' class='msb_network_button qZone'>qZone</a>"
+            + "<a target='_blank' class='msb_network_button douban'>douban</a>"
+            + "</div>";
         $(target).append($msb_main);
         $(target).append($social_group);
         $(target).addClass("socialShare");
 
 
-		//添加腾讯微博分享事件
-		$(document).on("click",".msb_network_button.tQQ",function(){
-			tQQ(this,settings);
-		});
-		//添加QQ空间分享事件
-		$(document).on("click",".msb_network_button.qZone",function(){
-			qZone(this,settings);
-		});
-		//添加新浪微博分享事件
-		$(document).on("click",".msb_network_button.sina",function(){
-			sinaWeibo(this,settings);
-		});
-		//添加豆瓣分享事件
-		$(document).on("click",".msb_network_button.douban",function(){
-			doubanShare(this,settings);
-		});
-		//添加微信分享事件
-		$(document).on("click",".msb_network_button.weixin",function(){
-			weixinShare(this,settings);
-		});
-        $(document).on("click",".msb_main",function(){
-			if ($(this).hasClass("disabled")) return;
+        //添加腾讯微博分享事件
+        $(document).on("click", ".msb_network_button.tQQ", function () {
+            tQQ(this, settings);
+        });
+        //添加QQ空间分享事件
+        $(document).on("click", ".msb_network_button.qZone", function () {
+            qZone(this, settings);
+        });
+        //添加新浪微博分享事件
+        $(document).on("click", ".msb_network_button.sina", function () {
+            sinaWeibo(this, settings);
+        });
+        //添加豆瓣分享事件
+        $(document).on("click", ".msb_network_button.douban", function () {
+            doubanShare(this, settings);
+        });
+        //添加微信分享事件
+        $(document).on("click", ".msb_network_button.weixin", function () {
+            weixinShare(this, settings);
+        });
+        $(document).on("click", ".msb_main", function () {
+            if ($(this).hasClass("disabled")) return;
             var e = 500;//动画时间
             var t = 250;//延迟时间
             var r = $(this).parent().find(".msb_network_button").length;  //分享组件的个数
@@ -59,11 +59,11 @@ document.write("<script src='/scripts/layer/layer.js'></script>");
             var d = (f - h) / 2; //起始位置
             var v = 0 / 180 * Math.PI;
             if (!$(this).hasClass("active")) {
-                $(this).addClass("disabled").delay(s).queue(function(e) {
+                $(this).addClass("disabled").delay(s).queue(function (e) {
                     $(this).removeClass("disabled").addClass("active");
                     e()
                 });
-                $(this).parent().find(".msb_network_button").each(function() {
+                $(this).parent().find(".msb_network_button").each(function () {
                     var n = p + (p + i * o) * Math.cos(v);  //结束位置
                     var r = d + (d + i * o) * Math.sin(v);  //结束位置
                     $(this).css({
@@ -78,11 +78,11 @@ document.write("<script src='/scripts/layer/layer.js'></script>");
                 })
             } else {
                 o = r;
-                $(this).addClass("disabled").delay(s).queue(function(e) {
+                $(this).addClass("disabled").delay(s).queue(function (e) {
                     $(this).removeClass("disabled").removeClass("active");
                     e()
                 });
-                $(this).parent().find(".msb_network_button").each(function() {
+                $(this).parent().find(".msb_network_button").each(function () {
                     $(this).stop().delay(t * o).animate({
                         left: p,
                         top: d
@@ -90,63 +90,62 @@ document.write("<script src='/scripts/layer/layer.js'></script>");
                     o--
                 })
             }
-		});
-
+        });
 
 
     }
 
-	function replaceAPI (api,options) {
-		api = api.replace('{url}', options.url);
-		api = api.replace('{title}', options.title);
-		api = api.replace('{content}', options.content);
-		api = api.replace('{pic}', options.pic);
+    function replaceAPI(api, options) {
+        api = api.replace('{url}', options.url);
+        api = api.replace('{title}', options.title);
+        api = api.replace('{content}', options.content);
+        api = api.replace('{pic}', options.pic);
 
-		return api;
-	}
+        return api;
+    }
 
-	function tQQ(target,options){
-	    var options = $.extend({}, $.fn.socialShare.defaults, options);
+    function tQQ(target, options) {
+        var options = $.extend({}, $.fn.socialShare.defaults, options);
 
-		window.open(replaceAPI(tqq,options));
-	}
+        window.open(replaceAPI(tqq, options));
+    }
 
-	function qZone(target,options){
-		var options = $.extend({}, $.fn.socialShare.defaults, options);
+    function qZone(target, options) {
+        var options = $.extend({}, $.fn.socialShare.defaults, options);
 
-		window.open(replaceAPI(qzone,options));
-	}
+        window.open(replaceAPI(qzone, options));
+    }
 
-	function sinaWeibo(target,options){
-		var options = $.extend({}, $.fn.socialShare.defaults, options);
+    function sinaWeibo(target, options) {
+        var options = $.extend({}, $.fn.socialShare.defaults, options);
 
-		window.open(replaceAPI(sina,options));
-	}
+        window.open(replaceAPI(sina, options));
+    }
 
-	function doubanShare(target,options){
-		window.open(replaceAPI(douban,$.extend({},$.fn.socialShare.defaults,options)));
-	}
+    function doubanShare(target, options) {
+        window.open(replaceAPI(douban, $.extend({}, $.fn.socialShare.defaults, options)));
+    }
 
-	function weixinShare(target,options){
-		/*window.open(replaceAPI(weixin,$.extend({},$.fn.socialShare.defaults,options)));*/
+    function weixinShare(target, options) {
+        /*window.open(replaceAPI(weixin,$.extend({},$.fn.socialShare.defaults,options)));*/
 
-		layer.open({
-			type: 2,
-			title: '分享到微信',
-			shadeClose: true,
-			shade: 0.3,
-			area: [frameWidth, '359px'],
-			content: replaceAPI(weixin,$.extend({},$.fn.socialShare.defaults,options))
-		});
-	}
+        layer.open({
+            type: 2,
+            title: '分享到微信',
+            shadeClose: true,
+            shade: 0.3,
+            area: [frameWidth, '359px'],
+            content: replaceAPI(weixin, $.extend({}, $.fn.socialShare.defaults, options))
+        });
+    }
 
-    $.fn.socialShare = function(options, param) {
-        if(typeof options == 'string'){
-		    var method = $.fn.socialShare.methods[options];
-			if(method)
-				return method(this,param);
-		}else
-			init(this,options);
+    $.fn.socialShare = function (options, param) {
+        if (typeof options == 'string') {
+            var method = $.fn.socialShare.methods[options];
+            if (method)
+                return method(this, param);
+        } else
+            init(this, options);
     }
 
 
@@ -155,75 +154,79 @@ document.write("<script src='/scripts/layer/layer.js'></script>");
         url: window.location.href,
         title: document.title,
         content: '',
-        pic: ''
+        pic: 'http://www.jobplus.com.cn/image/logo_1.jpg'
     }
 
-	//插件方法
-	$.fn.socialShare.methods = {
-		//初始化方法
-		init:function(jq,options){
-			return jq.each(function(){
-				init(this,options);
-			});
-		},
-		tQQ:function(jq,options){
-			return jq.each(function(){
-				tQQ(this,options);
-			})
-		},
-		qZone:function(jq,options){
-			return jq.each(function(){
-				qZone(this,options);
-			})
-		},
-		sinaWeibo:function(jq,options) {
-			return jq.each(function(){
-				sinaWeibo(this,options);
-			});
-		},
-		doubanShare:function(jq,options) {
-			return jq.each(function(){
-				doubanShare(this,options);
-			});
-		},
-		weixinShare:function(jq,options){
-		    return jq.each(function(){
-				weixinShare(this,options);
-			});
-	    }
-	}
+    //插件方法
+    $.fn.socialShare.methods = {
+        //初始化方法
+        init: function (jq, options) {
+            return jq.each(function () {
+                init(this, options);
+            });
+        },
+        tQQ: function (jq, options) {
+            return jq.each(function () {
+                tQQ(this, options);
+            })
+        },
+        qZone: function (jq, options) {
+            return jq.each(function () {
+                qZone(this, options);
+            })
+        },
+        sinaWeibo: function (jq, options) {
+            return jq.each(function () {
+                sinaWeibo(this, options);
+            });
+        },
+        doubanShare: function (jq, options) {
+            return jq.each(function () {
+                doubanShare(this, options);
+            });
+        },
+        weixinShare: function (jq, options) {
+            return jq.each(function () {
+                weixinShare(this, options);
+            });
+        }
+    }
 
 
-	//分享地址
-	var qzone = 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={url}&title={title}&pics={pic}&summary={content}';
-	var sina = 'http://service.weibo.com/share/share.php?url={url}&title={title}&pic={pic}&searchPic=false';
-	var tqq = 'http://share.v.t.qq.com/index.php?c=share&a=index&url={url}&title={title}&appkey=801cf76d3cfc44ada52ec13114e84a96';
-	var douban = 'http://www.douban.com/share/service?href={url}&name={title}&text={content}&image={pic}';
-	var weixin = 'http://pan.baidu.com/share/qrcode?w=300&h=300&url={url}';
+    //分享地址
+    var qzone = 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={url}&title={title}&pics={pic}&summary={content}';
+    var sina = 'http://service.weibo.com/share/share.php?url={url}&title={title}&pic={pic}&searchPic=false';
+    var tqq = 'http://share.v.t.qq.com/index.php?c=share&a=index&url={url}&title={title}&appkey=801cf76d3cfc44ada52ec13114e84a96';
+    var douban = 'http://www.douban.com/share/service?href={url}&name={title}&text={content}&image={pic}';
+    var weixin = 'http://pan.baidu.com/share/qrcode?w=300&h=300&url={url}';
 
 
 })(jQuery, window, document);
 
-$(function(){
-	bindShare();
+$(function () {
+    bindShare();
 });
 
-function bindShare(){
-	$(".log_qq").on("click",function(){
-		$(this).socialShare("qZone");
-	});
-	$(".log_sina").on("click",function(){
-		$(this).socialShare("sinaWeibo");
-	});
-	$(".log_wx").on("click",function(){
-		getOs();
-		$(this).socialShare("weixinShare");
-	});
+function bindShare() {
+    $(".log_qq").on("click", function () {
+        $(this).socialShare("qZone");
+    });
+    $(".log_sina").on("click", function () {
+        $(this).socialShare("sinaWeibo");
+    });
+    $(".log_wx").on("click", function () {
+        getOs();
+        $(this).socialShare("weixinShare");
+    });
 }
 
 var frameWidth = '305px';
 function getOs() {
-	if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
-		frameWidth = '320px'
-	}
+    var userAgent = navigator.userAgent;
+    if (isFirefox = userAgent.indexOf("Firefox") > -1) {
+        frameWidth = '320px';
+    } else if (((userAgent.indexOf('MSIE') > -1)
+        && (userAgent.indexOf('Opera') < 0)) || userAgent.indexOf("rv:11") > -1) {
+        frameWidth = '320px';
+    }
 }

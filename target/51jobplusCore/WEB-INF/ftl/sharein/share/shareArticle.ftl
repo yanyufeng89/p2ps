@@ -5,9 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>
-             文章分享
+             文章分享-JobPlus
     </title> 
     <#include "/mydocs/commonTemplate/shareknowledge/shareknowledge.ftl"/>
+    <link rel="stylesheet" type="text/css" href="/uedit/themes/default/css/umeditor.css" charset="UTF-8">
   </head>
   <body>
 
@@ -21,70 +22,72 @@
               
               <div id="upload-widget" class="upload-widget ">
                 
-                <div id="upload-initarticle-container" style="display: block;">
+                <div id="upload-initarticle-container" style="display:block;">
                 <div class="upload-steps clearfix">
 					<ul>
-						<li class="step-num active">1<span class="tips">输入链接</span>
+						<li class="step-num active">1<span class="tips">输入标题</span>
 						</li>
 						<li class="step-bar"></li>
-						<li class="step-num">2<span class="tips">补充信息</span>
-						</li>
+						<li class="step-num">2<span class="tips">编辑内容</span></li>
 						<li class="step-bar"></li>
-						<li class="step-num">3<span class="tips">完成上传</span>
-						</li>
+						<li class="step-num">3<span class="tips">发布成功</span></li>
 					</ul>
 				 </div>
                  <div class="mod mod-upload">
                    <div class="bdarticle" style="">
-	                     <a class="titleinfo">【文章】</a>
-	                     <span class="titlename">请输入分享的文章链接</span>
+				         <div class="titleinfo">
+	                       <span>【文章】</span>
+	                       <span style='font-weight:500'>请输入文章标题</span>
+						 </div>
 	                     <div class="link after">
-				            <input type="text" id="searcharticle" class='coursedocument' placeholder="请输入链接...">
-				            <input type="button" class="articlepreview" value="确定">
-				            <span class="capture-loading" style="display: none;"></span>
-				            <p class="error" style="display: none;">
-				              <i class="tips_icon"></i>
-				            </p>
+				            <input type="text" id="searcharticle" class='articledocument' placeholder="请输入标题...">
+				            <p class="error" style="display: none;"><i class="tips_icon"></i></p>
+							<div class="bar after">
+								<a class="btnsure btn-blue" id="btnarticlesure" href="javascript:void(0)">确定</a>
+								<a href="/sharein/searchuploadFile" class="btn-cancleupload">取消</a>
+								<div class="btn-loading push-loading"></div>
+		                    </div>
 	                     </div>
 	                    </div>
                   </div>
                   <div class="upload-intro-query clearfix">
-                    <h4>
-                            文章推荐
-                    </h4>
-                     <span class='pj-encourage'>
-                       每成功分享一篇文章即可获得一定的财富奖励哦!
-                      </span>
+                    <h4>推荐分享</h4>
                     <ul>
                       <li class="">
-                       团队管理
+                       创新创业
                       </li>
                       <li class="query-box">
-                      政治历史
+                      工业4.0
                       </li>
                       <li class="">
-                       科技创新
+                       新型材料
                       </li>
                       <li class="query-box">
-                      医学论坛
+                      互联网+
                       </li>
                       <li class="">
-                      经济管理
+                      企业管理 
                       </li>
                       <li class="query-box">
-                        社会科学
+                      互联网运营
                       </li>
                       <li class="">
-                        家庭教育
+                       供应链金融
                       </li>
                       <li class="query-box">
-                       旅游地图
+                       新媒体
                       </li>
                       <li class="">
-                      报刊杂志
+                      融资股权
                       </li>
                       <li class="query-box">
-                        烹饪美食
+                       生物医药
+                      </li>
+                       <li class="">
+                    财务管理
+                      </li>
+                      <li class="query-box">
+                       大数据
                       </li>
                     </ul>
                   </div>
@@ -94,100 +97,69 @@
                     </h4>
                     <ol>
                       <li>
-                        1.如果你发现一节好的文章,可以推荐给更多的朋友,让更多的人一起学习;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关的文章；
                       </li>
                       <li>
-                        2.分享和已分享的文章重复将会被移除,为避免重复,分享前可想进行搜索;
+                        2. 您可以先拟好文章标题，点击确定进入文章编辑内容；
                       </li>
                       <li>
-                        3.严禁分享含有辱骂他人,淫秽色情以及低俗信息等视频链接;
+                        3. 分享涉及侵权内容的文章将会被移除，严禁分享含有淫秽色情及低俗信息的文章；
                       </li>
                       <li>
-                        4.文章分享有问题需要帮助？查看
-                        <a href="#" target="_blank">
-                                                                 知识库帮助
-                        </a>
+                        4. 文章分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款
+                        </a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
                 </div>
-				<form method="post" action="/51jobplusCore/myCenter/shareArticle" enctype="multipart/form-data" id='articleaddForm' onkeydown="if(event.keyCode==13)return false;" >
+				<form method="post" action="/myCenter/shareArticle" enctype="multipart/form-data" id='articleaddForm'>
+				<input style='display:none'/>
                 <div id="upload-article-container"  style="display:none;">
                   <div class="upload-steps clearfix">
                     <ul>
-                      <li class="step-num active">
-                        1
-                        <span class="tips">
-                         输入链接
-                        </span>
-                      </li>
-                      <li class="step-bar active">
-                      </li>
-                      <li class="step-num active">
-                        2
-                        <span class="tips">
-                          补充信息
-                        </span>
-                      </li>
-                      <li class="step-bar">
-                      </li>
-                      <li class="step-num">
-                        3
-                        <span class="tips">
-                          分享成功
-                        </span>
-                      </li>
+                      <li class="step-num active">1<span class="tips">输入标题</span></li>
+                      <li class="step-bar active"></li>
+                      <li class="step-num active">2<span class="tips">编辑内容</span></li>
+                      <li class="step-bar"></li>
+                      <li class="step-num">3<span class="tips">发布成功</span></li>
                     </ul>
                   </div>
                  <div class="nhd nedit-all-head">
                       <span class="act btn-submit-all-wrap logSend">
-                        <!-- <a href="javascript:;" id="btn-addcourse-all" class="add-all ml20   add-all-able">
-                          <span>+</span>&nbsp;继续添加
-                        </a> -->
-                        
+                        <a href="javascript:location.reload();"  class="add-all ml20  add-all-able" style="width:60px;">取消</a>
                         <a id="sharearticle" class="submit-all ml20  submit-all-able">
-                          <i class="iconfont"></i>&nbsp;确认分享
+                          <i class="iconfont"></i>&nbsp;确认发布
                         </a>
                        </span>
                        <h3  class="item-message-all item-message-all-ok">
-                        <span>请补充文章信息，完成分享
-                        <br>
-                        <span class="item-message-all-subtitle">审核通过后，您将获得
-                          <span class="item-reward-wealth">1财富值</span>的奖励
-                        </span>
-                        </span>
+                                                                   请编辑文章内容，完成发布
                        </h3>
                   </div>
-                  	   <div id="uploadcourse-list" class="uploadcourse-list">
-                      <input type='hidden' name='articleurl' value=''>
-                      <div class="editlayoutbook" id="upload-item-0">
-                        <dl class="editupload">
+                  	  <div id="uploadcourse-list" class="uploadcourse-list">
+                      <div class="editlayoutarticle" id="upload-item-0">
+                        <dl>
                           <dd>
-                            <div class="booksedit  booksedit-bdr">
-                            
-                              <!--<div class="item-index">1</div>
-                              <div class="ui-imgBtn-delete" title="删除"  data-name="工作吧.xlsx" data-index="0"> 
-                                  <b class="iconfont pr2"></b><span>删除</span>          
-                              </div> -->
-                              
+                            <div class="articlesedit  booksedit-bdr">
+ 
                               <table class="edit-table">
                                 <tbody>
                                   <tr>
-                                    <td class="name">
-                                                                                                      详情：
-                                    </td>
-                                    <td>
-                                      <div class="zg-form-text-input add-course-title-form">
-                                        
-                                      </div>
+                                    <td style='height:25px;'>
+                                      <textarea rows="1" class="zg-editor-input zu-seamless-input-origin-element"   title="在这里输入标题" id="pj-article-suggest-title-content"  placeholder="写下你的标题" name="title" data-searchtype='1'></textarea>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td class="name"><i>*</i>推荐：</td>
                                     <td>
-                                        <textarea name="recommend" class="content" style="resize: none" placeholder='填写推荐理由'></textarea>
-                                         <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
-                                         <span class="item-msg-content" style='display:none'>推荐理由必填</span>
+                                      <input type='hidden' name='intro' value=''>
+                                      <div id='pj-article-suggest-detail-container'>
+                                        <textarea title="在这里输入内容" id='arsummernote' class='arsummernote' placeholder='在这里输入内容'></textarea>
+                                      </div>
+                                      <div id='pj-article-warnmsg' style="display:none">
+                                        <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+                                        <span class="item-msg-content" >问题字数太少了吧</span>
+                                      </div>
                                     </td>
                                   </tr>
                                 </tbody>
@@ -195,20 +167,18 @@
                             </div>
                           </dd>
                           <dd>
-                            <div class="booksedit">
+                            <div class="articlesedit">
                               <table class="edit-table">
                                 <tbody>
-                                  <tr>
-                                    <td class="name">
-                                         <i>*</i>分类:
-                                    </td>
+                                  <tr><td class="name"><i>*</i>分类:</td></tr>
+                                  <tr> 
                                     <td>
                                       <ul>
-                                        <li class="edit-class-sub topic-sort">
+                                        <li class="edit-class-sub topic-sort" style='margin-left:13px;height:424px;'>
                                           <ol>
                                             <li class="tltle display-n">一级分类</li></ol>
                                         </li>
-                                        <li class="edit-class-sub edit-class-sec">
+                                        <li class="edit-class-sub edit-class-sec" style='height:263px;'>
                                           <ol></ol>
                                         </li>
                                       </ul>
@@ -218,21 +188,37 @@
                                       </div>
                                     </td>
                                   </tr>
+                                  
+                                  <tr><td class="name articleicon">标签:</td></tr>
                                   <tr>
-                                    <td class="name">标签:</td>
                                     <td>
                                       <input type="hidden" value="" name="articleclass">
-                                      <div class="zm-tag-editor-editor zg-clear">
+                                      <div class="zm-tag-editor-editor zg-clear" style='margin-left:13px;width:301px;'>
                                         <div class="zg-inline" id="articleinputtags"></div>
                                         <div class="zm-tag-editor-command-buttons-wrap zg-left">
+                                          
                                           <label for="docs" class="zg-icon icon-magnify"></label>
                                           <input type='hidden' name='currenttagval' value=''>
                                           <input class="zu-question-suggest-topic-input label-input-label" type="text" role="combobox" 
                                           aria-autocomplete="list" placeholder="搜索标签"  oninput="getTagsByCondition(this,'doc')">
                                           <label class="err-tip" style="display:none;">最多添加五个话题</label></div>
                                       </div>
+                                      <span class="pj-warmprompt">
+                                           <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+                                      </span>
                                      </td>
                                   </tr>
+								  <tr>
+                                  <td>
+                                    <span class="article-ispublic">      
+							           <input type='hidden' value='1' name='ispublic'>
+							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='1' checked id='artIspublic' />
+							           <label  for='artIspublic' style="margin-right:20px;">公开</label> 
+							           <input type="radio" class="zg-addq-isanon" name='artIspublic' value='0' id='artIsprivate'/>
+							           <label for='artIsprivate'>匿名</label>
+							         </span>
+								  </td>
+								  </tr>
                                 </tbody>
                               </table>
                             </div>
@@ -242,19 +228,24 @@
                       </div>
                     </div>
 					
-					<div class="upload-notice">
+					<div class="upload-notice"  style='padding: 32px 0 60px 50px;'>
                     <h4>
                       温馨提示
                     </h4>
                     <ol>
                       <li>
-                        1.分享文章一定要选择分类,方便查找;
+                        1. 文章编辑内容时，您可以随时更改文章标题，点击“电脑”标志按钮时可以全屏编辑，营造沉浸式的写作氛围；
                       </li>
                       <li>
-                        2.点击继续添加按钮,您还可以继续添加多个链接同时上传,操作快速、便捷、满足您的需求;
+                        2. 文章分享一定要选择分类，方便记录、查询以及搜索；
                       </li>
                       <li>
-                        3.您还可以添加推荐以及多个标签,便于更多的好友发现查看;
+                        3. 多个标签之间要用逗号隔开，便于更多的好友发现查看；
+                      </li>
+                      <li>
+                        4. 文章分享有问题需要帮助？详情请查看知识库
+                        <a href="/about/terms_service" target="_blank">服务条款</a>和
+                        <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
                     </ol>
                   </div>
@@ -268,7 +259,7 @@
 
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
      <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
-     <script type="text/javascript" src="/51jobplusCore/scripts/pj_articlesharein.js"></script>
+     <script type="text/javascript" src="/scripts/pj_articlesharein.js"></script>
      
   </body>
 

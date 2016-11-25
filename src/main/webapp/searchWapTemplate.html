@@ -1,0 +1,80 @@
+<!-- 搜索专区 -->
+{#foreach $T.result as item}
+<!-- {$T.item.protoType} -->
+{#if $T.item.protoType == "1"}
+  		<div class="item">
+           <div class='item-title'>    
+                <a href="/docs/getDocsDetail/{$T.item.data_id}" target="_blank">[文档]{$T.item.title}</a>
+           </div>
+           <div class='item-content'>
+		         <a href="/docs/getDocsDetail/{$T.item.data_id}" target="_blank">{$T.item.description}</a>
+		   </div>
+		   <div class='operate'>
+		          {$T.item.createTime}
+		   </div>
+        </div>
+  {#elseif $T.item.protoType == "6"}
+  		<div class="item">
+           <div class='item-title'>    
+               <a href="/books/getBookDetail/{$T.item.data_id}"  target="_blank">[书籍]{$T.item.title}</a>
+           </div>
+           <div class='item-content'>
+		       <a href="/books/getBookDetail/{$T.item.data_id}"  target="_blank">{$T.item.description}</a>
+		   </div>
+		   <div class='operate'>
+		         {$T.item.createTime}
+		   </div>
+        </div>
+  {#elseif $T.item.protoType == "2"}
+  		<div class="item">
+           <div class='item-title'>    
+             <a href="/article/getArticleDetail/{$T.item.data_id}" target="_blank">[文章]{$T.item.title}</a>  
+           </div>
+           <div class='item-content'>
+		     <a href="/article/getArticleDetail/{$T.item.data_id}" target="_blank">{$T.item.description}</a>
+		   </div>
+		   <div class='operate'>
+		         {$T.item.createTime}
+		   </div>
+        </div>
+  {#elseif $T.item.protoType == "3"}
+  		<div class="item"> 
+           <div class='item-title'>    
+                <a href="/courses/getCourseDetail/{$T.item.data_id}"  target="_blank" >[课程]{$T.item.title}</a>  
+           </div>
+           <div class='item-content'>
+		        <a href="/courses/getCourseDetail/{$T.item.data_id}"  target="_blank" >{$T.item.description}</a>
+		   </div>
+		   <div class='operate'>
+		          {$T.item.createTime}
+		   </div>
+        </div>
+  {#elseif $T.item.protoType == "4"}
+  	  <div class="item">
+           <div class='item-title'>    
+               <a href="/sites/getSiteDetail/{$T.item.data_id}" target="_blank">[站点]{$T.item.title}</a>  
+           </div>
+           <div class='item-content' href="/sites/getSiteDetail/{$T.item.data_id}" target="_blank">
+		       <a href="/sites/getSiteDetail/{$T.item.data_id}" target="_blank">{$T.item.description}</a>
+		   </div>
+		   <div class='operate'>
+		          {$T.item.createTime}
+		   </div>
+        </div>
+  {#else}
+  		<div class="item">
+           <div class='item-title'>    
+                <a href="/topics/getTopicsDetail/{$T.item.data_id}"  target="_blank" >[话题]{$T.item.title}</a>
+           </div>
+           <div class='item-content'>
+		         <a href="/topics/getTopicsDetail/{$T.item.data_id}"  target="_blank" >{$T.item.description}</a>
+		   </div>
+		   <div class='operate'>
+		          {$T.item.createTime}
+		   </div>
+        </div>
+  {#/if}  
+             
+
+{#/for}
+

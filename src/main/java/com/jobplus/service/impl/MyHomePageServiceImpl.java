@@ -174,11 +174,11 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		
 		// 获取当前url
 		StringBuffer url = request.getRequestURL();
-		if (request.getQueryString() != null) {
+		/*if (request.getQueryString() != null) {
 			url.append("?");
 			url.append("userid="+userid);
 //			url.append(request.getQueryString());
-		}
+		}*/
 
 		mv.addObject("visitors", visitors);
 		mv.addObject("userInfo", userInfo);
@@ -192,7 +192,7 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 		request.getSession().setAttribute("eduList", eduList);
 
 		// 如果是个人信息预览 isReview为1
-		if (userid.equals(cutUserid) && StringUtils.isBlank(isReview)) {
+		if (userid.equals(cutUserid) && "0".equals(isReview)) {
 			/********** 本人 查看自己主页 ***/
 			mv.setViewName("mydocs/mycenter/mycenter");
 		} else {
@@ -215,7 +215,12 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 			String attenMan = attentionService.getAttenMan(Integer.parseInt(userid));
 			String fans = attentionService.getFans(Integer.parseInt(userid));
 			OperationSum operationSum = new OperationSum();
-			operationSum = operationSumService.selectByPrimaryKey(Integer.parseInt(userid));
+			// 查看他人主页数据不准确 临时改动 FIXME  查看他人主页数据不准确 临时改动********************************
+//			operationSum = operationSumService.selectByPrimaryKey(Integer.parseInt(userid));
+			operationSum = this.getRealSum(Integer.parseInt(userid));		
+			// 查看他人主页数据不准确 临时改动 FIXME  查看他人主页数据不准确 临时改动********************************
+			
+			
 			// 我的关注和我的粉丝
 			Map<Object, Object> atdAndFans = new HashMap<>();
 			atdAndFans.put("attenManSum", attenManSum);
@@ -246,7 +251,7 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 			// 他人访问
 			mv.setViewName("mydocs/mycenter/aboutme");
 
-			if (!StringUtils.isBlank(cutUserid)) {
+			if (!StringUtils.isBlank(cutUserid) && !userid.equals(cutUserid)) {
 				// 增加访问记录
 				VisitHistory vhy = new VisitHistory();
 				vhy.setVisitorid(Integer.parseInt(cutUserid));
@@ -258,6 +263,74 @@ public class MyHomePageServiceImpl implements IMyHomePageService {
 			}
 		}
 		return mv;
+	}
+	
+	/**
+	 * 实时获取用户分享的总数（成功的）
+	 */
+	@Override
+	public OperationSum getRealSum(Integer userid){
+		OperationSum opts = new OperationSum();
+		// 默认查看分享是文档
+		MyHomePage home = new MyHomePage();
+		int allShareCount = 0;
+		
+		//文档分享总数(成功的 非私有)
+		home.setTableName("tbl_docs");
+		home.setTableColumn("title ");
+		home.setTableColumn2("userid ");
+		home.setUserid(userid);
+		int count = myHomePageDao.getOneSharesCount(home);
+		opts.setDocsharesum(count);
+		allShareCount =allShareCount + count;
+		
+		//话题分享总数
+		home.setTableName("tbl_topics");
+		home.setTableColumn("title ");
+		home.setTableColumn2("createPerson ");
+		home.setUserid(userid);
+		count = myHomePageDao.getOneSharesCount(home);
+		opts.setTopicssharesum(count);
+		allShareCount =allShareCount + count;
+		
+		//书籍分享总数
+		home.setTableName("tbl_books");
+		home.setTableColumn("bookname ");
+		home.setTableColumn2("userid ");
+		home.setUserid(userid);
+		count = myHomePageDao.getOneSharesJustToBooksCount(home);
+		opts.setBooksharesum(count);
+		allShareCount =allShareCount + count;
+		
+		//文章分享总数
+		home.setTableName("tbl_article");
+		home.setTableColumn("title ");
+		home.setTableColumn2("userid ");
+		home.setUserid(userid);
+		count = myHomePageDao.getOneSharesCount(home);
+		opts.setArticlesharesum(count);
+		allShareCount =allShareCount + count;
+		
+		//课程分享总数
+		home.setTableName("tbl_courses");
+		home.setTableColumn("coursesName ");
+		home.setTableColumn2("userid ");
+		home.setUserid(userid);
+		count = myHomePageDao.getOneSharesCount(home);
+		opts.setCoursessharesum(count);
+		allShareCount =allShareCount + count;
+		
+		//站点分享总数
+		home.setTableName("tbl_sites");
+		home.setTableColumn("title ");
+		home.setTableColumn2("userid ");
+		home.setUserid(userid);
+		count = myHomePageDao.getOneSharesCount(home);
+		opts.setSitessharesum(count);
+		allShareCount =allShareCount + count;
+		
+		opts.setAllshresum(allShareCount);
+		return opts;
 	}
 
 }

@@ -11,6 +11,9 @@
     <meta name="keywords" content="JobPlus,知识分享,创新书籍,创业书籍,IT书籍,互联网书籍,咨询书籍,财务书籍,工业技术书籍,工程书籍,市场管理书籍,销售管理书籍,供应链书籍,生产管理书籍,设计书籍,创意书籍,翻译书籍,文案策划,新媒体书籍,影视书籍">
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
     <link rel='stylesheet' type='text/css' href='/css/pj_bookdetail.css'>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+          <img src='/image/logo_1.jpg' />
+    </div>
   </head>
   <body id='booktop'>
     <div class="page">

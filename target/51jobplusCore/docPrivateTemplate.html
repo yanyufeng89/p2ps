@@ -1,16 +1,27 @@
 <!-- 个人主页 文档--文档私有 草稿-->
 {#foreach $T.docsPage as list}
 	<li>
-	     <div class='w525 fs14 fc3 ib dochidden'>
+	     <div class='w405 fs14 fc3 ib dochidden'>
 	        <div class="checkbox chk" data-docid="{$T.list.id}" data-name="{$T.list.title}"></div>
 	        <b class="ic ic-{$T.list.docsuffix} mr14"></b>
-	        <a href="/51jobplusCore/docs/getDocsDetail?id={$T.list.id}" target="_blank" title="{$T.list.title}">{$T.list.title}</a>
+	        <a href="/docs/getDocsDetail/{$T.list.id}" class='doctitle{#if $T.list.isconverter!=1} disabled{#/if}' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
+	     </div>
+	     <div class='w165 ib'>
+	           {#if $T.list.isconverter==1} 
+				上传成功 
+				{#elseif $T.list.isconverter==0 || $T.list.isconverter==2}
+				<b class='ib tijiao'></b>提交中 
+				{#elseif $T.list.isconverter==3} 
+				转换失败
+				{#else} 
+				<b class='ib tijiao'></b>提交中 
+			   {#/if}
 	     </div>
 	     <div class="w165 ib">
 	        {$T.list.showcreatetime}
 	     </div>
-	     <div class='w165 ib operate'>
-	         <a href='/51jobplusCore/myCenter/getDocsDetailForEdit?docId={$T.list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
+	     <div class='w125 ib operate'>
+	         <a href='/myCenter/getDocsDetailForEdit?docId={$T.list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
 	           <b class="iconfont pr2"></b>修改
 	         </a>
 	         <span data-id='{$T.list.id}' data-name='{$T.list.title}' data-type='1'>

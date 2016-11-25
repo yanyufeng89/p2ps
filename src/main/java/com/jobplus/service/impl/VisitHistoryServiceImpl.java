@@ -3,6 +3,7 @@ package com.jobplus.service.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class VisitHistoryServiceImpl implements IVisitHistoryService {
 		}
 		return visitHistoryDao.insert(record);
 	}
+	@Transactional
 	@Override
 	public int insertOrUpdate(VisitHistory record) {
 		int id = seqService.getSeqByTableName("tbl_visitHistory");

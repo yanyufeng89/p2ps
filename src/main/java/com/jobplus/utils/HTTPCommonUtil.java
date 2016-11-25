@@ -47,11 +47,11 @@ public class HTTPCommonUtil {
             URL url = new URL("https", address.replace("https://", ""), -1, "");
             trustEveryone();
             Connection conn = HttpConnection.connect(url);
-            conn.timeout(timeout);
-            conn.header("Accept-Encoding", "gzip,deflate,sdch");
-            conn.header("Connection", "close");
-            conn.header("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)");
-            conn.get();
+            conn.header("Accept", "text/html, application/xhtml+xml, */*")
+                    .header("Accept-Encoding", "gzip, deflate")
+                    .header("Accept-Language", "zh-CN")
+                    .header("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)").timeout(timeout)
+                    .get();
             return conn.response().parse();
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,16 +59,27 @@ public class HTTPCommonUtil {
         return null;
     }
 
-    public static Document getHtmlByUrl(String url) throws IOException {
-        if (url.indexOf("https://") > -1) {
-            return getHttpsDocument(url, 5000);
-        } else {
+    public static Document getHtmlByUrl(String url) throws Exception {
+        Document document = getHtmlByJsoup(url);
+        if (document == null && url.indexOf("https://") > -1) {
+            document = getHttpsDocument(url, 5000);
+        }
+        if (document == null)
+            throw new Exception("抓取" + url + "页面数据失败");
+        return document;
+    }
+
+    public static Document getHtmlByJsoup(String url) {
+        try {
             return Jsoup.connect(url)
                     .header("Accept", "text/html, application/xhtml+xml, */*")
                     .header("Accept-Encoding", "gzip, deflate")
                     .header("Accept-Language", "zh-CN")
                     .header("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)").timeout(3000)
                     .get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

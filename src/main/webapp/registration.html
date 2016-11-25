@@ -47,17 +47,19 @@
 	    <div class="reg_content">
 	      <div class="logoin_cont">
 	        <div class="reg_h1_tit">
-	          <ul class="reg_ul_list">
-	            <li  id="reg1" class="reg_cur">
-	              <a class="reg_h1_icon">
-	                个人注册
-	              </a>
+	          <ul class="reg_ul_list clearfix" id='reg' data-active-index='0'>
+	            <li id="reg1" class="reg_h1_icon active">
+	                                   个人注册
 	            </li>
-	            
+	            <li id="reg2" class="reg_h1_icon">
+	                                   企业注册
+	            </li>
+	            <span class="pj-navs-slider-bar"></span>
 	          </ul>
 	        </div>
 	        <div class="register_box">
 	          <form class="register_Switching_box" id="regtype1" method="post" action="user/reg">
+	            <input type='hidden' name='usertype' value='1'>
 	            <ul class="register_list">
 	              <li class="mt20">
 	                <span id="pass1">
@@ -106,7 +108,6 @@
 	                    </div>
 	                  </div>
 	                </div>
-	              </li>
 	             <li class="mt20">
 	                <input id="CheckCode" placeholder="验证码" type="text" class="logoin_text_yz"
 	                maxlength="4">
@@ -135,7 +136,7 @@
 	              <li class="m10">
 	                <input type="checkbox" id="xieyi" class="logoin_check" value="1" checked="checked">
 	                我已阅读并自愿遵守
-	                <a href="#" target="_self" class="reg_yhxy">
+	                <a href="javascript:void(0)" target="_self" class="reg_yhxy">
 	                  用户协议
 	                </a>
 	              </li>
@@ -216,7 +217,7 @@
       <div class="fusion-row">
 		<div class="fusion-copyright-content">
 		  <div class="fusion-copyright-notice" style="padding-bottom: 0px;">
-			<div>Copyright © 2016-2017 jobplus.com.cn All rights reserved JobPlus 版权所有 苏ICP备16046992号<</div>
+			 <div>Copyright © 2016-2017 苏州聘十信息技术有限公司版权所有<span style='margin-left:20px'>苏ICP备16046992号</span></div>
 		 </div>
 		</div>
 	  </div>

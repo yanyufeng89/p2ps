@@ -29,9 +29,9 @@
       <div class="lower clearfix">
         <div class="meta">
          {#if $T.cutuserid==$T.userid}
-            <a class="item" target="_blank"  href="/myHome/getAnotherHomePage/{$T.userid}?requesType=0">
+            <a class="item" target="_blank"  href="/myHome/getHomePage/{$T.userid}?requesType=0">
          {#else}
-            <a class="item" target="_blank"  href="/myHome/getAnotherHomePage/{$T.userid}?requesType=0">
+            <a class="item" target="_blank"  href="/myHome/getHomePage/{$T.userid}?requesType=0">
          {#/if}
             <span class="value">
               {#if $T.userSimpleInformation.operationSum.attentionsum}
@@ -43,9 +43,9 @@
             <span class="key">关注</span>
            </a>
            {#if $T.cutuserid==$T.userid}
-             <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=1">
+             <a class="item" target="_blank" href="/myHome/getHomePage/{$T.userid}?requesType=1">
            {#else}
-              <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=1">
+              <a class="item" target="_blank" href="/myHome/getHomePage/{$T.userid}?requesType=1">
            {#/if}
             <span class="value">
             {#if $T.userSimpleInformation.operationSum.fanssum}
@@ -57,7 +57,7 @@
             <span class="key">粉丝</span>
           </a>
             {#if $T.cutuserid==$T.userid}
-	          <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=2">
+	          <a class="item" target="_blank" href="/myHome/getHomePage/{$T.userid}?requesType=2">
 	            <span class="value">
 	            {#if $T.userSimpleInformation.operationSum.allshresum}
 		              {$T.userSimpleInformation.operationSum.allshresum}
@@ -68,7 +68,7 @@
 	              <span class="key">我的分享</span>
 	          </a>
 	      {#else}
-	          <a class="item" target="_blank" href="/myHome/getAnotherHomePage/{$T.userid}?requesType=2">
+	          <a class="item" target="_blank" href="/myHome/getHomePage/{$T.userid}?requesType=2">
 	            <span class="value">
 	            {#if $T.userSimpleInformation.operationSum.allshresum}
 		              {$T.userSimpleInformation.operationSum.allshresum}
@@ -86,7 +86,7 @@
           </a>
           {#if $T.userSimpleInformation.fansIds==1}
 	          <button data-follow="m:button" data-userid="{$T.userid}" data-actiontype='1' class="zg-btn zg-btn-follow zm-rich-follow-btn" >
-	          		关注
+	          		+&nbsp;关注
 	          </button>
 	      {#else}
 	          <button data-follow="m:button" data-userid="{$T.userid}" data-actiontype='0' class="zg-btn zg-btn-unfollow zm-rich-follow-btn" >

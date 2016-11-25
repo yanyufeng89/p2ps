@@ -26,7 +26,7 @@
                  <dd><img alt='联系我们' src='/image/contactus.jpg' width='100%' height='120'></dd>
                  <dt>联系方式</dt>
                  <dd>地址：苏州园区星湖街328号创意产业园1栋A座</dd>
-                 <dd>邮箱：<a href='mailto:service@jobplus.com.cn'>service@jobplus.com.cn</a></dd>
+                 <dd>邮箱：<a href='mailto:service@jobplus.com'>service@jobplus.com</a></dd>
                  <dd>电话：0512-62794830</dd>
                  <dd>邮编：215000</dd>
               </dl>

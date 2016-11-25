@@ -264,11 +264,11 @@ public class SmsServiceImpl implements ISmsService{
 						// 当前用户是我关注的人, 可以发送私信
 						ret = this.insertSmsAndNotice(record);//smsDao.insert(record);
 						return ret;
-					}else{
-						logger.info("当前用户并不是是我关注的人, 不能发送私信          ids==" + ids +"  record.getSenderid()=="+record.getSenderid());
-						return 1;
 					}
 				}
+					logger.info("当前用户并不是是我关注的人, 不能发送私信          ids==" + fansIds +"  record.getSenderid()=="+record.getSenderid());
+					return 1;
+				
 			} else {
 				logger.info("只允许我关注的人发私信           但是当前用户并没有关注任何人");
 				// 未关注任何人

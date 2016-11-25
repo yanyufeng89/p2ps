@@ -134,8 +134,8 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 		if (ret > 0) {
 			// 2.分享话题成功 增加积分 3.记录积分动作
 
-			accountService.modAccountAndDetail(userID, 0, new Account().getSCORES()[0], 1, 0,
-					new Account().getSCORES()[0], 1);
+//			accountService.modAccountAndDetail(userID, 0, new Account().getSCORES()[0], 1, 0,
+//					new Account().getSCORES()[0], 1);
 
 			if (record.getType() != null) {
 				if (record.getType() == ConstantManager.TBL_TOPICSCOMMENT_TYPE_REPLY) {// 话题回答+1

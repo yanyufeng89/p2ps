@@ -43,7 +43,7 @@
 		where 1=1
 		<!-- 资源必须未被删除 -->
 		and t.isdelete = 0
-		and u.isValid = 1
+		<!-- and u.isValid = 1 -->
 		<!--FIXME 他人浏览不需要登录 TEST 
 		<if test="userid != null"> AND
 			t.userID = #{userid,jdbcType=INTEGER}
@@ -67,7 +67,7 @@
 			where 1=1
 			<!-- 资源必须未被删除 -->
 		and t.isdelete = 0
-		and u.isValid = 1
+		<!-- and u.isValid = 1 -->
 			<if test="docid != null">
 				and t.docId = #{docid,jdbcType=INTEGER}
 			</if>

@@ -6,6 +6,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\XssHttpSe
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\SuggestionServiceImpl.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\controller\LoginController.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\ICoursesService.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\SchoolInfoMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\model\MentionsIds.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\Courses.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\MyHomePageServiceImpl.java
@@ -41,6 +42,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\D
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\IndexGenerateMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\cache\MybatisRedisCache.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\OperationSumServiceImpl.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\ContextFinalizer.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\MyHomePageMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\Sites.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\Register.java
@@ -62,6 +64,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\B
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\EmailService.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\TagsMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\CoursesShareServiceImpl.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\ConstantMsg.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\IDocsService.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\FreeMarkerViewUtil.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\CoursesMapper.java
@@ -84,6 +87,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\wei
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\IMyCollectService.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\http\Response.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\OperationSumMapper.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\FreeMarkerViewResolverUtil.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\UserServiceImpl.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\DocRecordMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\IArticleService.java
@@ -115,6 +119,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\S
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\BookLiked.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\util\ArrayUtils.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\UserRoleMapper.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\SupportListMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\SiteShareServiceImpl.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\DocCommentMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\org\json\CookieList.java
@@ -202,6 +207,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\wei
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\controller\ThirdPartyLoginController.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\RedisServiceImpl.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\ReportInfoConfig.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\HTTPCommonUtil.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\ITypeConfigService.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\http\BASE64Encoder.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\ThreadFTPUtils.java
@@ -225,6 +231,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\ReportInfo
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\TopicsRecord.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\util\URLEncodeUtils.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\controller\TagsController.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\ISupportListService.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\SmsMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\LogBean.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\IEducationBgrdService.java
@@ -244,6 +251,7 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\MyCollect
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\DocsMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\WebSocketUtil.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\GridDataUtil.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\SchoolInfo.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\MobileSmsMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\cache\LoggingRedisCache.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\CoursesLiked.java
@@ -317,9 +325,11 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\wei
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\TypeConfigMapper.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\User.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\ITopicsLikedService.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\SupportList.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\controller\DocsController.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\org\json\JSONArray.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\EmailUtil.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\SupportListServiceImpl.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\response\TopicsCommentResponse.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\ICoursesLikedService.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\dao\BookLikedMapper.java
@@ -353,3 +363,4 @@ E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\DateUtil
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\thirdparty\weibo4j\model\UserTimelineIds.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\pojo\SmsFilter.java
 E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\service\impl\VisitHistoryServiceImpl.java
+E:\Workspaces\EclipseMars\51jobplusCore\src\main\java\com\jobplus\utils\FTPClientTemplate.java

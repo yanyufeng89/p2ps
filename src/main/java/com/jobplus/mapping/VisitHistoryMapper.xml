@@ -75,7 +75,7 @@
 		SELECT COUNT(*) FROM tbl_visitHistory 
 		WHERE TO_DAYS(visitTime) = TO_DAYS(NOW()) 
 		AND visitorId =  #{visitorid,jdbcType=INTEGER} AND userId = #{userid,jdbcType=INTEGER} 
-		and visitUrl = #{visiturl,jdbcType=VARCHAR} and visitType = #{visittype,jdbcType=INTEGER}
+		<!--  and visitUrl = #{visiturl,jdbcType=VARCHAR} --> and visitType = #{visittype,jdbcType=INTEGER}
 	</selectKey>
 	<if test="count > 0">
 		update tbl_visitHistory
@@ -83,7 +83,7 @@
 	      visitTime = now()
 	    where TO_DAYS(visitTime) = TO_DAYS(NOW()) 
 		AND visitorId =  #{visitorid,jdbcType=INTEGER} AND userId = #{userid,jdbcType=INTEGER} 
-		and visitUrl = #{visiturl,jdbcType=VARCHAR} and visitType = #{visittype,jdbcType=INTEGER}
+		<!-- and visitUrl = #{visiturl,jdbcType=VARCHAR} --> and visitType = #{visittype,jdbcType=INTEGER}
 	</if>
 	<if test="count==0">
 	insert into tbl_visitHistory (id, visitorId, userId, visitTime, visitUrl, visitType)

@@ -96,7 +96,8 @@
   <update id="delSharedSites" parameterType="com.jobplus.pojo.Sites">
     update tbl_sites
     set 
-      isValid = 0      
+      isValid = 0,
+      updateTime=now()      
     where ID in 
     	<foreach collection="condition" item="item" index="index"
             open="(" close=")" separator=",">

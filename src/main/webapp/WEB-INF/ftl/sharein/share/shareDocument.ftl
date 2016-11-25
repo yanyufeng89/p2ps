@@ -23,6 +23,7 @@
               </div>
               <div id="upload-widget" class="upload-widget ">
                <form method="post"  enctype="multipart/form-data" id ='test11form' action='/docs/upload'>
+                <input style='display:none'/>
                 <input type='hidden' name='docId' value=''>
                 <div id="upload-init-container" style="display: block;">
 	                 <div class="upload-steps clearfix">
@@ -44,10 +45,10 @@
 	                       <span style='font-weight:500'>请选择上传文档</span>
 						 </div>
 	                     <div class="link after file-box">
-	                        <input style='display:none'/>
+	                       
 				            <input type='text' name='textfield' style='color:darkgrey;visible:hidden' id='textfield' class='txtdocument' placeholder='请选择文档...'/>
 				            <#--<input type='button' class='docpreview' value='浏览' />-->
-				            <span class="tocapture active docpreview"></span>
+				            <span class="active docpreview"></span>
 				            <input type="file" name="fileField" class="file" id="docfileField"  multiple="multiple"/>
                                <p class="error"><i class="tips_icon"></i>包含不支持的文件类型,具体文件类型参考温馨提示</p>
 				           	<div class="bar after">
@@ -106,19 +107,19 @@
                     </h4>
                     <ol>
                       <li>
-                        1.JobPlus专注企业知识服务平台，请不要上传与之无关文档， 请勿上传已设置加密或只读的文档，不支持此类文档;
+                        1. JobPlus专注企业知识服务平台，请不要分享与之无关的文档；
                       </li>
                       <li class="doc-type">
-                        2.您可以分享日常积累和撰写的文档资料，支持多种文档类型：doc，docx，ppt，pptx，xls，xlsx，vsd，pot，pps，pdf，txt，wps，etc;
+                        2. 您可以分享日常积累或撰写的文档资料，支持多种文档类型：doc,docx,ppt,pptx,xls,xlsx,pps,pot,pdf,txt,wps,rtf；
                       </li>
                       <li>
-                        3.从我的电脑选择要分享的文档：按住CTRL可以点击多份文档分享, 分享的文件大小限制在20M以内;
+                        3. 从我的电脑选择要分享的文档：按住Ctrl可以点击多份文档分享，分享的文件大小限制在20M以内；
                       </li>
                       <li>
-                        4.分享涉及侵权内容的文档将会被移除，严禁分享含有淫秽色情及低俗信息等文档; 
+                        4. 分享涉及侵权内容的文档将会被移除，严禁分享含有淫秽色情及低俗信息等文档；
                       </li>
                       <li>
-                        5.分享有问题需要帮助？详情请查看知识库
+                        5. 文档分享有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
@@ -156,14 +157,18 @@
                   </div>
                  
                   <div class="uploadinfobook">
+                    <h4>
+                                                        温馨提示
+                    </h4>
                     <ol>
                       <li class="doc-type"></li>
-                      <li>1.完善上传的文档简介，可以让别人更加清晰的了解分享文档的相关内容;</li>
-                      <li>2.将您上传的文档可以免财富值免费分享，也可以1到20点财富值进行售价赚取财富值；同时可以对文档进行设置"公开"和"私有"属性;</li>
-                      <li>3.文档上传时必须添加分类，详细的分类，方便更准确找到你的文档;</li>
-                      <li>4.添加文档标签，更精准的搜索目标文档，多个标签之间要用逗号隔开，便于区分;</li>
+                      <li>1. 完善上传的文档简介，可以让别人更加清晰的了解分享文档的相关内容；</li>
+                      <li>2. 将您上传的文档可以免财富值免费分享，也可以提高财富值进行售价赚取财富值；同时可以对文档进行设置“公开”和“私有”属性；</li>
+                      <li>3. 文档上传时必须添加分类，详细的分类，方便更准确找到你的文档；</li>
+                      <li>4. 添加文档标签，更精准的搜索目标文档，多个标签之间要用逗号隔开，便于区分；</li>
+                      <li>5. 请勿上传已设置加密或只读的文档，JobPlus不支持此类文档；</li>
                       <li>
-                        5.文档分享有问题需要帮助？详情请查看知识库
+                        6. 文档提问有问题需要帮助？详情请查看知识库
                         <a href="/about/terms_service" target="_blank">服务条款</a>和
                         <a href="/about/newbie_guide" target="_blank">帮助中心。</a>
                       </li>
@@ -178,7 +183,7 @@
           </div>
         </div>
      <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/> 
-     <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/> 
+     <#include "/mydocs/commonTemplate/sharejs/sharejs.ftl"/>
      <script type="text/javascript" src="/scripts/pj_docsharein.js"></script>
      <script type="text/javascript" src="/scripts/pj_docClassInit.js"></script>
   </body>

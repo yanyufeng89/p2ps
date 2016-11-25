@@ -348,7 +348,8 @@ public class MyCenterController {
 	 */
 	@RequestMapping(value = "/deleteDocs", method = RequestMethod.POST)
 	@ResponseBody
-	public String deleteDocs(HttpServletRequest request, HttpServletResponse response,@RequestParam(required=false) String condition) {
+	public String deleteDocs(HttpServletRequest request, HttpServletResponse response,@RequestParam(required=false) String condition,
+			@RequestParam(required=false) String ispublic) {
 		DocsResponse DocsResponse = new DocsResponse();
 		try {
 			String userid = (String) request.getSession().getAttribute("userid");
@@ -357,7 +358,7 @@ public class MyCenterController {
 				// 拼装成数组 "1,2,3" ——> [1,2,3]
 				if (condition.length() > 0) {
 					String conditions[] = condition.split(",");
-					ret = docsService.deleteDocs(conditions, userid);
+					ret = docsService.deleteDocs(conditions, userid,ispublic);
 				}
 				if (ret > 0) {
 					// 个人操作数之类的信息放入session

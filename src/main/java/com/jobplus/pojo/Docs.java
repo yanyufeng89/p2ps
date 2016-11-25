@@ -53,6 +53,9 @@ public class Docs extends PageParent implements Serializable {
 	 */
 	private Integer isvalid;
 	
+	/**
+	 * 1:成功  0:为转换 3:转换失败 2：转换中
+	 */
 	private Integer isconverter;
 
 	/**
@@ -104,6 +107,29 @@ public class Docs extends PageParent implements Serializable {
 	 */
 	private String collectIds;
 	
+	/**
+	 * 第一页文本内容
+	 */
+	private String firstPageText;
+	
+
+	/**
+	 * this method get the firstPageText of value
+	 * 
+	 * @return Returns the firstPageText.
+	 */
+	public String getFirstPageText() {
+		return firstPageText;
+	}
+
+	/**
+	 * this method set the firstPageText of value
+	 * 
+	 * @param enName The firstPageText to set.
+	 */
+	public void setFirstPageText(String firstPageText) {
+		this.firstPageText = firstPageText;
+	}
 
 	public User getObjCreator() {
 		return objCreator;

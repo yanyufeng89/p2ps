@@ -84,13 +84,16 @@
        and id = #{id,jdbcType=INTEGER}
       </if>
  </update>
- <!-- 批量删除消息   只有单个和全部两种 传递ID即为单个,否则全部  -->
+ <!-- 批量删除消息   只有单个和全部两种 传递ID即为单个,否则全部  isLook  -->
  <delete id="delSms" parameterType="com.jobplus.pojo.Sms" >
     delete from tbl_sms
   	where 1 = 1
 	and  receivedId = #{receivedid,jdbcType=INTEGER}
 	 <if test="id != null" >
         and id = #{id,jdbcType=INTEGER}
+      </if>
+	 <if test="islook != null" >
+        and islook = #{islook,jdbcType=INTEGER}
       </if>
   </delete>
   <!-- 获取所有消息     -->
@@ -147,6 +150,30 @@
     from ${tableName}
     where t.id = ${id}
   </select>
+  <insert id="insertOrUpdateSms" parameterType="com.jobplus.pojo.Sms" >
+		<selectKey keyProperty="limitSt" resultType="long" order="BEFORE">
+			select count(*) from tbl_sms where senderid = #{senderid,jdbcType=INTEGER} and receivedId = #{receivedid,jdbcType=INTEGER}
+			and isLook = 0 and smsType = #{smstype} and  find_in_set("关注了您", smsContent) 
+		</selectKey>
+		<if test="limitSt > 0">
+			update tbl_sms
+			set sendTime = now()
+			where senderid = #{senderid,jdbcType=INTEGER} and receivedId = #{receivedid,jdbcType=INTEGER}
+			and isLook = 0 and smsType = #{smstype} and  find_in_set("关注了您", smsContent)
+		</if>
+		<if test="limitSt==0">
+			insert into tbl_sms (id, senderId, receivedId, 
+		      sendTime, isLook, smsType, 
+		      smsTitle, relationId, smsContent
+		      )
+		    values (#{id,jdbcType=INTEGER}, #{senderid,jdbcType=INTEGER}, #{receivedid,jdbcType=INTEGER}, 
+		      Now(), 0, #{smstype,jdbcType=INTEGER}, 
+		      #{smstitle,jdbcType=VARCHAR}, #{relationid,jdbcType=INTEGER}, #{smscontent,jdbcType=LONGVARCHAR}
+		      )
+		</if>
+	</insert>
+  
+  
   
   
   

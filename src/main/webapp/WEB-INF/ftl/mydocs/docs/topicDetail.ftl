@@ -11,6 +11,9 @@
     <#include "/mydocs/commonTemplate/detailjs/detailcss.ftl"/>
     <link rel="stylesheet" type="text/css" href="/css/pj_simplePagination.css">
     <link rel='stylesheet' type='text/css' href='/css/pj_topicdetail.css'>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+          <img src='/image/logo_1.jpg' />
+    </div>
   </head>
   <body id='topictop'>
     <div  class="page">
@@ -76,7 +79,7 @@
                        <#if (topicsDetail.ispublic==1)>
 						<a href='/myHome/getHomePage/${topicsDetail.createperson}' class='zm-item-link-avatar avatar-link' target='_blank' data-userid='${topicsDetail.createperson}'>${topicsDetail.objCreator.username}</a>
 					   <#else>
-						 <a href='javascript:void(0)' class=''  data-userid=''>匿名用户</a>
+						 <a  class=''  data-userid=''>匿名用户</a>
 					   </#if>
                          <span class='meta-item'>${topicsDetail.createtime?string("yyyy-MM-dd")}</span>
                        <#--  <#if topicsDetail.acceptStatus != 0 && topicsDetail.createperson==(Session.user.userid)!>
