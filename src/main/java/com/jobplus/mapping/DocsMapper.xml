@@ -108,11 +108,35 @@
 				</otherwise>
 			</choose>
 	</select>
+	<!-- 回收站文档列表 -->
+	<select id="getGbgDocs" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.Docs">
+		select
+		<include refid="Base_Column_List2" />
+		from tbl_docs t
+		where 1 =1
+		AND t.userId = #{userid}
+
+		AND t.isValid = 2
+		 ORDER BY t.createTime DESC 
+		<choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+	</select>
+	<!-- 统计数      回收站文档列表  -->
+	<select id="getGbgDocsCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.Docs">
+		select count(*) from tbl_docs t where 1 =1 AND t.userId = #{userid} AND t.isValid = 2
+	</select>
+	
 <!-- 批量逻辑删除docs -->
   <update id="deleteDocs" parameterType="java.lang.Integer" >
     update tbl_docs 
     set 
-      isValid = 0,
+      isValid = #{delStatus},
       lastEditTime=now()
     where ID in 
     	<foreach collection="condition" item="item" index="index"

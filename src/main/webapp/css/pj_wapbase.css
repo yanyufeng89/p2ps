@@ -13,7 +13,8 @@
       height: 100%;
       word-wrap: break-word;
       word-break: break-all;
-      -webkit-tap-highlight-color:rgba(0,0,0,0)
+      -webkit-tap-highlight-color:rgba(0,0,0,0);
+      -webkit-text-size-adjust: 100% !important;
 }
 html{
 	 font-size: 62.5%;
@@ -206,7 +207,7 @@ input[type=checkbox]{
 .zg-btn-white {
     border: 1px solid #bbb;
     text-shadow: none!important;
-    box-shadow: 0 1px 0 #fff inset,0 1px 0 rgba(0,0,0,.1);
+    /* box-shadow: 0 1px 0 #fff inset,0 1px 0 rgba(0,0,0,.1); */
     text-decoration: none!important;
     vertical-align: middle;
     text-align: center;
@@ -221,12 +222,12 @@ input[type=checkbox]{
 	float: right;
 	width:12rem;
 	background:#0867c5;
-	border: 1px solid #1b85d5;
+	/* border: 1px solid #1b85d5; */
 	border-radius:4px;
 	color: #fff;
     font-size: 2.4rem;
     height: 60px;
-    line-height: 60px;
+    line-height:62px;
     vertical-align: middle;
     display: inline-block;
     text-align: center;

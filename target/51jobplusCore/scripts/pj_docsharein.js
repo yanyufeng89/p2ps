@@ -10,6 +10,10 @@ $(function(){
 		var files=e.target.files;
 		var filename="";
 		var isnext = true;
+	   if(files.length>10){
+		   $(this).next().html('每次只能上传10份文档').show();
+		   return false; 
+	   }
 	   for(var i=0;i<files.length;i++){
 		    var fileend = files[i].name.substring(files[i].name.lastIndexOf("."));
 		    files[i].name=files[i].name.substring(0,files[i].name.lastIndexOf("."));
@@ -53,7 +57,13 @@ $(function(){
 		var addfilename="";
 		var flag = true;
 		var newarrFiles=[];//继续上传的文件数组
-	   for(var i=0;i<addfiles.length;i++){
+		//限制上传的个数
+		var $child=$('#upload-files-container .error').children();
+		if((arrFiles.length+addfiles.length)>10){
+	    	$('#upload-files-container .error').empty().append($child).append('每次只能上传10份文档').show();
+			return false;
+		}
+	    for(var i=0;i<addfiles.length;i++){
 		    var fileend = addfiles[i].name.substring(addfiles[i].name.lastIndexOf("."));
 		    if(filetypes.indexOf(fileend.toLowerCase())<0){
 		    	flag=false;
@@ -135,42 +145,59 @@ $(function(){
 		var flag=true;
          //标题必填
 		$('input[name=title]').each(function(){
-			if($(this).val().length==0){
+			try{if($(this).val().length==0){
 				$(this).parents('.edit-table').find('.item-msg-content').html('').html('标题不能为空');
 				$(this).parents('.edit-table').find('.ic-msg').css('background-position','-47px -144px');
 				window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
-				return false;
 				flag=false;
-			}
+				throw '标题不能为空';
+			}}catch (e) {
+		    	return false;
+		    }
+			try{
 			if($(this).val().replace(/[^x00-xFF]/g,'**').length>256){
 				$(this).parents('.edit-table').find('.item-msg-content').html('').html('标题超出最大限制');
 				$(this).parents('.edit-table').find('.ic-msg').css('background-position','-47px -144px');
 				window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
-				return false;
 				flag=false;
-			}
+				throw '标题超出最大限制';
+			}}catch (e) {
+		    	return false;
+		    }
 		})
 	    //简介限制
 		$('.bookcontent').each(function(){
-			if($(this).val().replace(/[^x00-xFF]/g,'**').length>512){
+			try{if($(this).val().replace(/[^x00-xFF]/g,'**').length>512){
 				$(this).nextAll().show();
+				window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
 				flag=false;
-			}
+				throw '简介超出最大限制';
+			}}catch (e) {
+		    	return false;
+		    }
 		})
 		
 		//分类必选
 		if($('input[name=doctype]').length==0){
-			$('.docclassify').show();
+			try {$('.docclassify').show();
+			window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
 			flag=false;
+			throw '分类左右必选';
+			}catch (e) {
+		    	return false;
+		    }
 		}else{
-			$('input[name=doctype]').each(function(){
+		    try {$('input[name=doctype]').each(function(){
 				if($.trim($(this).val()).length==0||$(this).val().indexOf('undefined')!=-1){
 					$(this).parents('ul').next().show();
 					window.location.href='#'+$(this).parents('.editlayoutbook').attr('id');
-					return false;
 					flag=false;
+					throw '分类左右必选';
 				}
 			})
+		    }catch (e) {
+		    	return false;
+		    }
 		}
 
 		//获取标签的值
@@ -182,7 +209,16 @@ $(function(){
 			$(this).parents('td').find('input[name=docclass]').val(tagid.substring(0,tagid.length-1));
 		})
 		if(flag){
-			 //添加遮罩层 防止在上传的同时做其他操作
+			//文档更改alMn preIsPublic
+			if($('#test11form').find('input[name=preIsPublic]').val()!='0'
+				&& $('#test11form').find('input[name=ispublic]').val()=='0'
+				&& $('#test11form').find('input[name=alMn]').val()<2){
+				var $child=$('#upload-files-container .error').children();
+				$('#upload-files-container .error').empty().append($child).append('您当前财富值不足').show();
+				return false;
+			}
+				
+			//添加遮罩层 防止在上传的同时做其他操作
 			 addMaskLayer();
 			 $('#test11form').submit();
 		}
@@ -218,13 +254,14 @@ var funDisposePreviewHtml=function(files,flag){
 	    		index:num+1,
 	    		num:num,
 	    		size:v.size,
+	    		docIndex:k,
 	    		name:v.name.substring(0,v.name.lastIndexOf('.')),
 	    		namesuffix:v.name,
 	    		pid:'public'+num,
 	    		doctype:parentConfigList[0].typeid+":"+parentConfigList[0].typename+","+childConfigList[0].typeid+":"+childConfigList[0].typename,
 	    		parentConfigList:parentConfigList,
 	    		childConfigList:childConfigList,
-	    }
+               }
 	  $("#addtemp").empty();
 	  
 	  if(exist){

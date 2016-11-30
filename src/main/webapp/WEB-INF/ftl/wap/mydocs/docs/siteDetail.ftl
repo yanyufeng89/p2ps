@@ -11,6 +11,9 @@
     
 	<link rel='stylesheet' type='text/css' href='/css/pj_wapdetail.css'>
     <link rel='stylesheet' type='text/css' href='/css/pj_wapbase.css'>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+          <img src='/image/logo_1.jpg' />
+    </div>
      <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
 	 <script type="text/javascript" src="/scripts/jquery-jtemplates.js"></script>
      <script type="text/javascript" src="/scripts/pj_wap.js"></script>

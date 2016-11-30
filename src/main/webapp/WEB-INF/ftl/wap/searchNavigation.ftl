@@ -13,7 +13,7 @@
      <script type="text/javascript" src="/scripts/pj_wap.js"></script>
      <script type="text/javascript" src="/scripts/pj_wap_searchResult.js"></script>
      <script type="text/javascript" src="/scripts/pj_constant.js"></script>
-      <script type="text/javascript">
+     <script type="text/javascript">
 	         var phoneWidth =  parseInt(window.screen.width);
 	         var phoneScale = phoneWidth/640;
 	         var ua = navigator.userAgent;

@@ -266,11 +266,11 @@
 				   <div>
 				      <a href="/myCenter/getMyHeadTop" target="_self" class="bg-avatar bg-index">
 				         <#if (Session.user.headicon)??&& Session.user.headicon?length gt 0>
-		                   <img src="${Session.user.headicon}"  class="lazy" width='60' height='60' alt="个人头像">
+		                   <img src="${Session.user.headicon}"  class="lazy <#if Session.user.usertype==2>img-company<#else>img-person</#if>" width='60' height='60' alt="个人头像">
 		                 <#else>
-		                   <img src="/image/myphoto.jpg"  class="lazy" width='60' height='60' alt="个人头像">
-		              </#if>
-		               </a>
+		                   <img src="/image/myphoto.jpg"  class="lazy <#if Session.user.usertype==2>img-company<#else>img-person</#if>" width='60' height='60' alt="个人头像">
+		                 </#if>
+		              </a>
 				   </div>
 				   
 				</div>
@@ -829,7 +829,7 @@
           </div>
          <div id='hot-recommend' class='hot-recommend-book'>
           <ul>
-              <#list recommDatas[0..6] as data>
+              <#list recommDatas as data>
                   <li class="clearfix">
                       <div class="book-img">
                           <a href='javascript:void(0)' onclick="toHref('${data.datatype}',${data.dataid})">

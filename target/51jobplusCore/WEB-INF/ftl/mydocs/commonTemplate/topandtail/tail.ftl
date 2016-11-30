@@ -60,9 +60,7 @@
       <div class="fusion-row">
 		<div class="fusion-copyright-content">
 		  <div class="fusion-copyright-notice" style="padding-bottom: 0px;">
-			<div>Copyright © 2016-2017 苏州聘十信息技术有限公司版权所有
-			<a target="_blank" href="www.miitbeian.gov.cn" title="苏ICP备16046992号" rel="nofollow">苏ICP备16046992号</a>
-			</div>
+			 <div>Copyright © 2016-2017 苏州聘十信息技术有限公司版权所有<span style='margin-left:20px'>苏ICP备16046992号</span></div>
 		 </div>
 		</div>
 	  </div>

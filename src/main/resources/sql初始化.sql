@@ -503,6 +503,11 @@ INSERT INTO `tbl_sequence` VALUES ('tbl_user', '1', '1');
 INSERT INTO `tbl_sequence` VALUES ('tbl_visitHistory', '1', '1');
 INSERT INTO `tbl_sequence` VALUES ('tbl_workExper', '1', '1');
 INSERT INTO `tbl_sequence` VALUES ('tbl_article_supportlist', '1', '1');
+INSERT INTO `tbl_sequence` VALUES ('tbl_busiarealib', '10', '1');
+INSERT INTO `tbl_sequence` VALUES ('tbl_company_news', '1', '1');
+INSERT INTO `tbl_sequence` VALUES ('tbl_cpnews_isliked', '1', '1');
+INSERT INTO `tbl_sequence` VALUES ('tbl_cpnews_comment', '1', '1');
+INSERT INTO `tbl_sequence` VALUES ('tbl_company_intro', '1', '1');
 
 
 -- ----------------------------

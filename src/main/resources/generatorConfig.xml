@@ -436,6 +436,42 @@
 			<columnRenamingRule searchString="^D_" replaceString=""/>
 		</table>
 		
+		
+		<table tableName="tbl_company_intro" domainObjectName="CompanyIntro"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_cpnews_comment" domainObjectName="CpnewsComment"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_cpnews_isliked" domainObjectName="CpnewsIsliked"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_company_news" domainObjectName="CompanyNews"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
+		<table tableName="tbl_busiarealib" domainObjectName="BusiAreaLib"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<columnRenamingRule searchString="^D_" replaceString=""/>
+		</table>
+		
 
 	</context>
 </generatorConfiguration>

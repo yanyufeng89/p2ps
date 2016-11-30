@@ -268,7 +268,7 @@
 				         <#if (Session.user.headicon)??&& Session.user.headicon?length gt 0>
 		                   <img src="${Session.user.headicon}"  class="lazy <#if Session.user.usertype==2>img-company<#else>img-person</#if>" width='60' height='60' alt="个人头像">
 		                 <#else>
-		                   <img src="/image/myphoto.jpg"  class="lazy <#if Session.user.usertype==2>img-company<#else>img-person</#if>" width='60' height='60' alt="个人头像">
+		                   <img src="/image/<#if Session.user.usertype==2>cm-defaultIcon.jpg<#else>myphoto.jpg</#if>"  class="lazy <#if Session.user.usertype==2>img-company<#else>img-person</#if>" width='60' height='60' alt="个人头像">
 		                 </#if>
 		              </a>
 				   </div>
@@ -829,13 +829,12 @@
           </div>
          <div id='hot-recommend' class='hot-recommend-book'>
           <ul>
-              <#assign resultList=recommDatas?eval />
-              <#list resultList as data>
+              <#list recommDatas as data>
                   <li class="clearfix">
                       <div class="book-img">
-                          <a href='javascript:void(0)' onclick="toHref('${data.protoType}',${data.data_id})">
-                            <#if (data.imgUrl)?? && (data.imgUrl)!=''>
-                                <img  src="${data.imgUrl}"
+                          <a href='javascript:void(0)' onclick="toHref('${data.datatype}',${data.dataid})">
+                            <#if (data.imgurl)?? && (data.imgurl)!=''>
+                                <img  src="${data.imgurl}"
                                      title="${data.title}" alt="${data.title}" class="lazy">
                               <#else>
                                   <img  src="/image/default/166.jpg"
@@ -845,20 +844,20 @@
                       </div>
                       <div class="book-info">
                           <h6 class='textoverflow'>
-                              <a href='javascript:void(0)' onclick="toHref('${data.protoType}',${data.data_id})"
+                              <a href='javascript:void(0)' onclick="toHref('${data.datatype}',${data.dataid})"
                                  title="${data.title}">
                                 ${data.title}
                               </a>
                           </h6>
                           <p class="author">
-                              作者:${data.author}
+                              作者:${data.extendinfo}
                           </p>
                           <p class="press">
-                              出版社:${data.press}
+                              出版社:${data.extendinfo2}
                           </p>
                           <p class="read-num">
                           <span>
-                          ${data.replySum}
+                          ${data.kpi2}
                           </span>
                               人推荐
                           </p>

@@ -1,0 +1,195 @@
+<div class='editWebsit'>
+  <ul>
+     <li>
+        <span>网站链接</span>
+        <input type="text" id="edit-company-url" class="ember-text-field ember-view">
+     </li>
+     <li>
+        <span>公司规模</span>
+        <select id="edit-company-size" class="ember-view">
+            <option value="">选择公司规模</option>
+			<option value="0">0-1 人</option>
+			<option value="2">2-10 人</option>
+			<option value="11">11-50 人</option>
+			<option value="51">51-200 人</option>
+			<option value="201">201-500 人</option>
+			<option value="501">501-1,000 人</option>
+			<option value="1001">1,001-5,000 人</option>
+			<option value="5001">5,001-10,000 人</option>
+			<option value="10001">10,001+ 人</option>
+        </select>
+     </li>
+     <li>
+        <span>所属行业</span>
+        <select id="edit-company-industry" class="ember-text-field ember-view">
+          <option value="">选择所属行业</option>
+		  <option value="urn:li:fs_industry:121">安保和调查</option>
+		  <option value="urn:li:fs_industry:7">半导体</option>
+		  <option value="urn:li:fs_industry:138">办公用品和设备</option>
+		  <option value="urn:li:fs_industry:146">包装与容器制造</option>
+		  <option value="urn:li:fs_industry:124">保健和健身</option>
+		  <option value="urn:li:fs_industry:42">保险</option>
+		  <option value="urn:li:fs_industry:81">报纸</option>
+		  <option value="urn:li:fs_industry:145">玻璃、陶瓷和混凝土</option>
+		  <option value="urn:li:fs_industry:29">博彩</option>
+		  <option value="urn:li:fs_industry:37">博物馆和展览机构</option>
+		  <option value="urn:li:fs_industry:56">采矿/金属</option>
+		  <option value="urn:li:fs_industry:32">餐饮服务</option>
+		  <option value="urn:li:fs_industry:93">仓储</option>
+		  <option value="urn:li:fs_industry:22">超市</option>
+		  <option value="urn:li:fs_industry:82">出版</option>
+		  <option value="urn:li:fs_industry:131">慈善</option>
+		  <option value="urn:li:fs_industry:109">电脑游戏</option>
+		  <option value="urn:li:fs_industry:112">电器/电子制造</option>
+		  <option value="urn:li:fs_industry:8">电信</option>
+		  <option value="urn:li:fs_industry:127">动画</option>
+		  <option value="urn:li:fs_industry:10">法律服务</option>
+		  <option value="urn:li:fs_industry:108">翻译和本地化</option>
+		  <option value="urn:li:fs_industry:44">房地产</option>
+		  <option value="urn:li:fs_industry:60">纺织</option>
+		  <option value="urn:li:fs_industry:120">非诉讼纠纷解决</option>
+		  <option value="urn:li:fs_industry:100">非营利组织管理</option>
+		  <option value="urn:li:fs_industry:106">风险投资和私募股权</option>
+		  <option value="urn:li:fs_industry:91">服务业</option>
+		  <option value="urn:li:fs_industry:19">服装和时尚</option>
+		  <option value="urn:li:fs_industry:68">高等教育</option>
+		  <option value="urn:li:fs_industry:88">个人及家庭服务</option>
+		  <option value="urn:li:fs_industry:135">工业设计/机械设计</option>
+		  <option value="urn:li:fs_industry:147">工业自动化</option>
+		  <option value="urn:li:fs_industry:111">工艺品</option>
+		  <option value="urn:li:fs_industry:78">公共安全</option>
+		  <option value="urn:li:fs_industry:59">公共基础设施</option>
+		  <option value="urn:li:fs_industry:79">公共政策</option>
+		  <option value="urn:li:fs_industry:98">公关传播</option>
+		  <option value="urn:li:fs_industry:11">管理咨询</option>
+		  <option value="urn:li:fs_industry:36">广电传媒</option>
+		  <option value="urn:li:fs_industry:1">国防</option>
+		  <option value="urn:li:fs_industry:141">国际贸易</option>
+		  <option value="urn:li:fs_industry:74">国际事务</option>
+		  <option value="urn:li:fs_industry:95">海事/船运</option>
+		  <option value="urn:li:fs_industry:52">航天</option>
+		  <option value="urn:li:fs_industry:6">互联网</option>
+		  <option value="urn:li:fs_industry:54">化学</option>
+		  <option value="urn:li:fs_industry:18">化妆品</option>
+		  <option value="urn:li:fs_industry:86">环保服务</option>
+		  <option value="urn:li:fs_industry:47">会计</option>
+		  <option value="urn:li:fs_industry:110">活动服务</option>
+		  <option value="urn:li:fs_industry:55">机械</option>
+		  <option value="urn:li:fs_industry:101">集资</option>
+		  <option value="urn:li:fs_industry:118">计算机和网络安全</option>
+		  <option value="urn:li:fs_industry:4">计算机软件</option>
+		  <option value="urn:li:fs_industry:5">计算机网络</option>
+		  <option value="urn:li:fs_industry:3">计算机硬件</option>
+		  <option value="urn:li:fs_industry:26">家具</option>
+		  <option value="urn:li:fs_industry:49">建材</option>
+		  <option value="urn:li:fs_industry:50">建筑和规划</option>
+		  <option value="urn:li:fs_industry:48">建筑施工</option>
+		  <option value="urn:li:fs_industry:92">交通运输/货运/铁路</option>
+		  <option value="urn:li:fs_industry:69">教育系统</option>
+		  <option value="urn:li:fs_industry:43">金融服务</option>
+		  <option value="urn:li:fs_industry:134">进出口</option>
+		  <option value="urn:li:fs_industry:31">酒店</option>
+		  <option value="urn:li:fs_industry:142">酒业</option>
+		  <option value="urn:li:fs_industry:71">军事</option>
+		  <option value="urn:li:fs_industry:144">可再生能源</option>
+		  <option value="urn:li:fs_industry:87">快递/货运</option>
+		  <option value="urn:li:fs_industry:72">立法机关</option>
+		  <option value="urn:li:fs_industry:27">零售</option>
+		  <option value="urn:li:fs_industry:30">旅游观光</option>
+		  <option value="urn:li:fs_industry:9">律师</option>
+		  <option value="urn:li:fs_industry:126">媒体制作</option>
+		  <option value="urn:li:fs_industry:38">美术</option>
+		  <option value="urn:li:fs_industry:94">民航/航空</option>
+		  <option value="urn:li:fs_industry:64">牧业</option>
+		  <option value="urn:li:fs_industry:114">纳米技术</option>
+		  <option value="urn:li:fs_industry:63">农业</option>
+		  <option value="urn:li:fs_industry:133">批发</option>
+		  <option value="urn:li:fs_industry:140">平面设计</option>
+		  <option value="urn:li:fs_industry:53">汽车</option>
+		  <option value="urn:li:fs_industry:137">人力资源</option>
+		  <option value="urn:li:fs_industry:25">日用品</option>
+		  <option value="urn:li:fs_industry:65">乳业</option>
+		  <option value="urn:li:fs_industry:128">商业地产</option>
+		  <option value="urn:li:fs_industry:143">奢侈品和珠宝</option>
+		  <option value="urn:li:fs_industry:136">摄影</option>
+		  <option value="urn:li:fs_industry:90">社会组织</option>
+		  <option value="urn:li:fs_industry:99">设计</option>
+		  <option value="urn:li:fs_industry:12">生物技术</option>
+		  <option value="urn:li:fs_industry:57">石油和能源</option>
+		  <option value="urn:li:fs_industry:34">食品和饮料</option>
+		  <option value="urn:li:fs_industry:23">食品生产</option>
+		  <option value="urn:li:fs_industry:97">市场研究</option>
+		  <option value="urn:li:fs_industry:80">市场营销与广告</option>
+		  <option value="urn:li:fs_industry:16">兽医</option>
+		  <option value="urn:li:fs_industry:73">司法机关</option>
+		  <option value="urn:li:fs_industry:117">塑料</option>
+		  <option value="urn:li:fs_industry:33">体育</option>
+		  <option value="urn:li:fs_industry:20">体育用品</option>
+		  <option value="urn:li:fs_industry:125">替代医学</option>
+		  <option value="urn:li:fs_industry:62">铁路设备制造</option>
+		  <option value="urn:li:fs_industry:46">投资管理</option>
+		  <option value="urn:li:fs_industry:45">投资银行</option>
+		  <option value="urn:li:fs_industry:85">图书馆</option>
+		  <option value="urn:li:fs_industry:51">土木工程</option>
+		  <option value="urn:li:fs_industry:123">外包/离岸外包</option>
+		  <option value="urn:li:fs_industry:113">网络媒体</option>
+		  <option value="urn:li:fs_industry:119">无线通讯</option>
+		  <option value="urn:li:fs_industry:39">舞台表演</option>
+		  <option value="urn:li:fs_industry:116">物流和供应链管理</option>
+		  <option value="urn:li:fs_industry:122">物业服务</option>
+		  <option value="urn:li:fs_industry:102">项目开发管理</option>
+		  <option value="urn:li:fs_industry:24">消费类电子产品</option>
+		  <option value="urn:li:fs_industry:103">写作和编辑</option>
+		  <option value="urn:li:fs_industry:139">心理保健</option>
+		  <option value="urn:li:fs_industry:84">信息服务</option>
+		  <option value="urn:li:fs_industry:96">信息技术和服务</option>
+		  <option value="urn:li:fs_industry:76">行政办公</option>
+		  <option value="urn:li:fs_industry:75">行政机关</option>
+		  <option value="urn:li:fs_industry:40">休闲运动、娱乐服务</option>
+		  <option value="urn:li:fs_industry:70">学术研究</option>
+		  <option value="urn:li:fs_industry:21">烟草</option>
+		  <option value="urn:li:fs_industry:17">医疗设备</option>
+		  <option value="urn:li:fs_industry:13">医务工作</option>
+		  <option value="urn:li:fs_industry:14">医院和护理</option>
+		  <option value="urn:li:fs_industry:115">音乐</option>
+		  <option value="urn:li:fs_industry:41">银行</option>
+		  <option value="urn:li:fs_industry:83">印刷</option>
+		  <option value="urn:li:fs_industry:35">影视</option>
+		  <option value="urn:li:fs_industry:66">渔业</option>
+		  <option value="urn:li:fs_industry:28">娱乐</option>
+		  <option value="urn:li:fs_industry:132">在线教育</option>
+		  <option value="urn:li:fs_industry:58">造船</option>
+		  <option value="urn:li:fs_industry:104">招聘</option>
+		  <option value="urn:li:fs_industry:148">政府关系</option>
+		  <option value="urn:li:fs_industry:107">政治组织</option>
+		  <option value="urn:li:fs_industry:77">执法机关</option>
+		  <option value="urn:li:fs_industry:61">纸品与林木产品</option>
+		  <option value="urn:li:fs_industry:15">制药</option>
+		  <option value="urn:li:fs_industry:130">智库</option>
+		  <option value="urn:li:fs_industry:67">中小学教育</option>
+		  <option value="urn:li:fs_industry:105">专业培训和指导</option>
+		  <option value="urn:li:fs_industry:129">资本市场/证券</option>
+		  <option value="urn:li:fs_industry:89">宗教机构</option>
+        </select>
+     </li>
+     <li>
+        <span>创立年份</span>
+        <input type="text" id="edit-company-year-founded" class="ember-text-field ember-view">
+     </li>
+     <li>
+        <span>公司类型</span>
+        <select id="edit-company-type" class="ember-text-field ember-view">
+         <option value="">选择公司类型</option>
+		 <option value="PUBLIC_COMPANY">上市公司</option>
+		 <option value="EDUCATIONAL">教育机构</option>
+		 <option value="SELF_EMPLOYED">个体经营</option>
+		 <option value="GOVERNMENT_AGENCY">政府机构</option>
+		 <option value="NON_PROFIT">非营利</option>
+		 <option value="SELF_OWNED">独资</option>
+		 <option value="PRIVATELY_HELD">私人控股</option>
+		 <option value="PARTNERSHIP">合营企业</option>
+        </select>
+     </li>
+     
+  </ul>
+</div>

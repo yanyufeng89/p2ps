@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.CompanyIntroMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.CompanyIntro" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="imgUrl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="busiArea" property="busiarea" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="scale" property="scale" jdbcType="VARCHAR" />
+    <result column="industry" property="industry" jdbcType="VARCHAR" />
+    <result column="establishTime" property="establishtime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.CompanyIntro" extends="BaseResultMap" >
+    <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, imgUrl, busiArea, nation, province, city, postcode, address, url, scale, industry, 
+    establishTime, type, createTime
+  </sql>
+  <sql id="Base_Column_List_t" >
+    t.id, t.imgUrl, t.busiArea, t.nation, t.province, t.city, t.postcode, t.address, t.url, t.scale, t.industry, t.
+    establishTime, t.type, t.createTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    intro
+  </sql>
+  <sql id="Blob_Column_List_t" >
+    t.intro
+  </sql>
+  
+<!--  <select id="selectByUserid" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List_t" />
+    ,
+    <include refid="Blob_Column_List_t" />
+    from tbl_company_intro t join tbl_user u on
+    where id = #{id,jdbcType=INTEGER}
+  </select> -->
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_company_intro
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_company_intro
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.CompanyIntro" >
+    insert into tbl_company_intro (id, imgUrl, busiArea, 
+      nation, province, city, 
+      postcode, address, url, 
+      scale, industry, establishTime, 
+      type, createTime, intro
+      )
+    values (#{id,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, #{busiarea,jdbcType=VARCHAR}, 
+      #{nation,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{scale,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{establishtime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{intro,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.CompanyIntro" >
+    insert into tbl_company_intro
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="imgurl != null" >
+        imgUrl,
+      </if>
+      <if test="busiarea != null" >
+        busiArea,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="scale != null" >
+        scale,
+      </if>
+      <if test="industry != null" >
+        industry,
+      </if>
+      <if test="establishtime != null" >
+        establishTime,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="busiarea != null" >
+        #{busiarea,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null" >
+        #{scale,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null" >
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="establishtime != null" >
+        #{establishtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.CompanyIntro" >
+    update tbl_company_intro
+    <set >
+      <if test="imgurl != null" >
+        imgUrl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="busiarea != null" >
+        busiArea = #{busiarea,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null" >
+        scale = #{scale,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null" >
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="establishtime != null" >
+        establishTime = #{establishtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.CompanyIntro" >
+    update tbl_company_intro
+    set imgUrl = #{imgurl,jdbcType=VARCHAR},
+      busiArea = #{busiarea,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      scale = #{scale,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      establishTime = #{establishtime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      intro = #{intro,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.CompanyIntro" >
+    update tbl_company_intro
+    set imgUrl = #{imgurl,jdbcType=VARCHAR},
+      busiArea = #{busiarea,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      scale = #{scale,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      establishTime = #{establishtime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

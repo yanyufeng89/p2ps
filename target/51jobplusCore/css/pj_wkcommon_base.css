@@ -25,7 +25,6 @@ hr,.secant_line{
 }
 textarea {
     border: 0;
-    border: 0;
     -moz-outline: 0;
     outline: 0;
     overflow: auto;
@@ -1333,7 +1332,6 @@ input[type=checkbox] {
     height:30px;
     font-size: 14px;
     line-height:28px;
-    text-decoration: none!important;
     vertical-align: middle;
     display: inline-block;
     _display: inline!important;
@@ -2090,6 +2088,8 @@ html.no-touchevents .shameimaru-section .shameimaru-close {
 	z-index:9999;
 	text-align:left;
 	width:246px;
+    height:792px;
+    height:788px\0;
 	border:1px solid #d6d6d6;
 	border-right:0;
 	font-size:14px;
@@ -3271,6 +3271,9 @@ p .tips_icon {
 .ac-active {
     background-color:#1b85d5;
 }
+.ac-active .zu-autocomplete-row-name{
+	color: #fff;
+}
 .zg-left span {
     font-size: 12px;
     padding-left: 5px;
@@ -3280,7 +3283,7 @@ p .tips_icon {
     display: block;
     height: 1.2em;
     line-height: 1.2;
-    color: #fff;
+    color: #999;
 }
 .zg-inline {
     display: inline!important;

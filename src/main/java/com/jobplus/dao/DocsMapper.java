@@ -47,13 +47,21 @@ public interface DocsMapper {
      */
     List<Docs> getMyDocsUploaded(Docs record);
     int getMyDocsUploadedCount(Docs record);
+    /**
+     * 回收站文档列表
+     * @param record
+     * @return
+     */
+    List<Docs> getGbgDocs(Docs record);
+    int getGbgDocsCount(Docs record);
     
     /**
      * 批量逻辑删除文档
      * @param condition
+     * @param delStatus 删除状态 ：0 彻底删除  2 放入回收站
      * @return
      */
-    int deleteDocs(@Param(value="condition")String[] condition);
+    int deleteDocs(@Param(value="condition")String[] condition,@Param(value="delStatus")Integer delStatus);
     /**
 	 * 阅读数 ++
 	 * 

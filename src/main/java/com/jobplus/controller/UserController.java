@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpResponse;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -205,4 +206,21 @@ public class UserController {
 			SecurityUtils.getSubject().getSession().setAttribute("user", userService.get(Integer.parseInt((String) request.getSession().getAttribute("userid"))));
 		return String.valueOf(state);
 	}
+	/*批量插入用户
+	 * @RequestMapping("/mInstUser")
+	@ResponseBody
+	public void mInstUser(HttpServletRequest request,HttpServletResponse response) {
+		
+		User u = new User();
+		for(int i =0;i<50;i++){
+			u.setUsertype(1);
+			u.setUsername("ToNo"+i);
+			if(i<10)
+				u.setEmail("1888888880"+i);
+			else
+				u.setEmail("188888888"+i);
+			u.setPasswd("123456");
+			this.addUser(request, response, u);
+		}		
+	}*/
 }

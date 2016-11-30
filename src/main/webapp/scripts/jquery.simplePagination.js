@@ -242,6 +242,9 @@ function initPageData(page,moduleType){
 	  case 'docprivate':
 		  initDocPrivatePageData(page);
 			  break;
+	  case 'docgarbage':
+		  initDocGarbagePageData(page);
+		  break;
 	  case 'docdrafpaging':
 	      initDocDrafPageData(page);
 			  break;
@@ -291,7 +294,7 @@ function initPageData(page,moduleType){
 		  initAllUnReadNewsPageData(page,'0');
 	      break;
 	  case 'readnews':
-		  initAllUnReadNewsPageData(page);
+		  initAllUnReadNewsPageData(page,'1');
 	      break;
 	  case 'fortunecome':
 		  initFortuneComeOrExpendPageData(page,1);
@@ -432,6 +435,32 @@ function initDocPrivatePageData(page){
           	   $('.private .docs-list ul').empty().append($('.pagetemplate').html());
           	   $('.pagetemplate').empty();
      	}
+	})
+	window.scrollTo(0,0);
+}
+//加载文档垃圾箱
+function initDocGarbagePageData(page){
+	$.ajax({
+		type:"POST",
+		url:"/myCenter/getMyDocsUploaded",
+		data:{pageNo:page,isvalid:2},
+		dataType:"json",
+		ansync:false,
+		success:function(data){
+			$.each(data.docsPage.list,function(index,item){
+				/*if(item.title.indexOf(item.docsuffix)!=-1)
+					item.title=item.title.substring(0,item.title.indexOf(item.docsuffix)-1)*/	
+				item.docsuffix=item.docsuffix.toLowerCase()
+			})
+			var datamodel={
+				docsPage:data.docsPage.list,
+			}
+			//加载模板
+			$('.pagetemplate').setTemplateURL(projectName+'docGarbageTemplate.html');
+			$('.pagetemplate').processTemplate(datamodel);
+			$('.garbage .docs-list ul').empty().append($('.pagetemplate').html());
+			$('.pagetemplate').empty();
+		}
 	})
 	window.scrollTo(0,0);
 }

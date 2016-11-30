@@ -50,11 +50,13 @@ function reg_checkAjax(id){
          						$("#regcode").show();
          						$('#mobliecode').attr('placeholder','邮箱验证码');
          						$('#phonecode').attr('data-messagetype','1');//0是获取手机验证码 1是获取邮箱验证码
+         						$('#phonecode').val('获取邮箱验证码');
          					}else{
          						$("#regtype").val(1);
          						$("#regcode").show();
          						$('#mobliecode').attr('placeholder','短信验证码');
          						$('#phonecode').attr('data-messagetype','0');
+         						$('#phonecode').val('获取手机验证码');
          					}
          					istrue=true;
 //         					return true;

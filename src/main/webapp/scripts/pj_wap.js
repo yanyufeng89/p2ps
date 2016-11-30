@@ -1,6 +1,17 @@
 var load_flag=false;
 var userInfo;
 $(function(){
+	 if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+		 handleFontSize();
+	 }else{
+			 if (document.addEventListener){
+				 document.addEventListener("WeixinJSBridgeReady", handleFontSize, false);
+			 }else if(document.attachEvent){
+				 document.attachEvent("WeixinJSBridgeReady", handleFontSize);
+
+				 document.attachEvent("onWeixinJSBridgeReady", handleFontSize);
+			 }
+	 }
 	getCurrentUser();
 	/*$(window).scroll(function() {
         	var  requestUrl=window.location.href;
@@ -16,6 +27,7 @@ $(function(){
             	}
             }
       });*/
+	
 	 $('.loadmore').live('click',function(){
 		 var  requestUrl=window.location.href;
 		 if($('.loadmore').length>0){
@@ -56,6 +68,7 @@ $(function(){
     			   recommend:recommend,
     			   recommendname:recommendname,
     			   relationid:relationid,
+    			   iswap:1
     	   }
     	   $('.pagetemplate').setTemplateURL('/bookCommentTemplate.html');
     	   $('.pagetemplate').processTemplate(data);
@@ -108,6 +121,8 @@ $(function(){
 		 $('#top-nav-profile-dropdown').hide();
 		 $('#username').trigger('click');
 	 });
+	
+	 
 })
 //书籍里面继续评论  点击取消
 function answerreplyCancel(obj){
@@ -123,6 +138,15 @@ function closeReport(obj){
 	obj.parents('.modal-wrapper').prev().remove();
 	obj.parents('.modal-wrapper').remove();
 }
+//是否为微信浏览器打开
+function isWeiXin(){ 
+	var ua = window.navigator.userAgent.toLowerCase(); 
+	if(ua.match(/MicroMessenger/i) == 'micromessenger'){ 
+	return true; 
+	}else{ 
+	return false; 
+	} 
+	} 
 //获取用户信息
 function getCurrentUser(){
 	$.ajax({
@@ -140,6 +164,26 @@ function getCurrentUser(){
 		}
 	
 	})
+}
+function handleFontSize() {
+    // 设置网页字体为默认大小
+    WeixinJSBridge.invoke('setFontSizeCallback', {
+
+    'fontSize': 0
+
+    });
+
+    // 重写设置网页字体大小的事件
+    WeixinJSBridge.on('menu:setfont', function () {
+
+    WeixinJSBridge.invoke('setFontSizeCallback', {
+
+    'fontSize': 0
+
+	});
+
+	});
+
 }
 //时间日期转换
 function formatDate(str){

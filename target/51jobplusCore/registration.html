@@ -10,8 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" href="/css/css.css" type="text/css" charset="UTF-8">
-    <link rel="stylesheet" href="/css/login.css" type="text/css">
-    <link rel="stylesheet" href="/scripts/layer.css" id="layui_layer_skinlayercss">  
+    <link rel="stylesheet" href="/css/login.css" type="text/css" charset="UTF-8">
+    <!--<link rel="stylesheet" href="/css/layer.css" type="text/css" charset="UTF-8">-->
     <link rel="stylesheet" href="/css/pj_wkcommon_base.css" charset="UTF-8">
     <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/scripts/layer.js"></script>
@@ -26,6 +26,7 @@
                effect: "fadeIn"
            });
        });
+       
      </script>
   </head>
   
@@ -47,17 +48,19 @@
 	    <div class="reg_content">
 	      <div class="logoin_cont">
 	        <div class="reg_h1_tit">
-	          <ul class="reg_ul_list">
-	            <li  id="reg1" class="reg_cur">
-	              <a class="reg_h1_icon">
-	                个人注册
-	              </a>
+	          <ul class="reg_ul_list clearfix" id='reg' data-active-index='0'>
+	            <li id="reg1" class="reg_h1_icon active">
+	                                   个人注册
 	            </li>
-	            
+	            <li id="reg2" class="reg_h1_icon">
+	                                   企业注册
+	            </li>
+	            <span class="pj-navs-slider-bar"></span>
 	          </ul>
 	        </div>
 	        <div class="register_box">
 	          <form class="register_Switching_box" id="regtype1" method="post" action="user/reg">
+	            <input type='hidden' name='usertype' value='1'>
 	            <ul class="register_list">
 	              <li class="mt20">
 	                <span id="pass1">
@@ -152,7 +155,6 @@
 	        </div>
 	      </div>
 	    </div>
-	    <input type="hidden" id="usertype" value="1">
 	    <input type="hidden" id="regtype" value="0">
 	    <input type="hidden" id="send" value="0">
  
@@ -215,7 +217,7 @@
       <div class="fusion-row">
 		<div class="fusion-copyright-content">
 		  <div class="fusion-copyright-notice" style="padding-bottom: 0px;">
-			<div>Copyright © 2016-2017 jobplus.com.cn All rights reserved JobPlus 版权所有 苏ICP备16046992号<</div>
+			 <div>Copyright © 2016-2017 苏州聘十信息技术有限公司版权所有<span style='margin-left:20px'>苏ICP备16046992号</span></div>
 		 </div>
 		</div>
 	  </div>

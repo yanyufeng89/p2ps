@@ -13,6 +13,7 @@ import com.jobplus.service.ISequenceService;
 import com.jobplus.service.ISmsService;
 import com.jobplus.utils.ConstantManager;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -107,7 +108,7 @@ public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
             operationSumMapperDao.insert(opSum);
 
             //发送短信
-            smsService.sendSysNotice(userId,ConstantManager.FIRST_LOGIN_SMS);
+            smsService.sendSysNotice(userId, ConstantManager.FIRST_LOGIN_SMS);
         } else {
             user = userMapper.selectByPrimaryKey(loginInfo.getUserid());
         }
@@ -121,5 +122,34 @@ public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
                 return loginParam;
             }
         }
+    }
+
+    @Override
+    public int bindUserFromOauth(OauthLoginInfo loginInfo, OauthLoginInfo record) throws Exception {
+        String userId = (String) SecurityUtils.getSubject().getSession().getAttribute("userid");
+        if (loginInfo == null) {
+            record.setUserid(Integer.parseInt(userId));
+            return oauthLoginInfoMapper.insert(record);
+        } else {
+            loginInfo.setUserid(Integer.parseInt(userId));
+            return oauthLoginInfoMapper.updateByPrimaryKey(loginInfo);
+        }
+    }
+
+    @Override
+    public int unbindUserFromOauth(OauthLoginInfo record) throws Exception {
+        return oauthLoginInfoMapper.deleteByPrimaryKey(record.getId());
+    }
+
+    @Override
+    public int unbindUserFromOauth(int id) throws Exception {
+        OauthLoginInfo record = oauthLoginInfoMapper.selectByPrimaryKey(id);
+        String userId = (String) SecurityUtils.getSubject().getSession().getAttribute("userid");
+        if (record != null) {
+            if (record.getUserid().intValue() != Integer.parseInt(userId))
+                return -1;
+            return oauthLoginInfoMapper.deleteByPrimaryKey(id);
+        }
+        return 0;
     }
 }

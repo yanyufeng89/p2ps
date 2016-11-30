@@ -14,6 +14,7 @@
          <td class="name"><i>*</i>标题：</td> 
          <td> 
             <input type="text" name="title" class="titles" value='{$T.name}'/> 
+            <input type="hidden" name="docIndex"  value="{$T.index}">
             <b class="ic ic-msg"></b><span class="item-msg-content">建议您结合文档正文完善文档标题信息</span>
          </td> 
         </tr> 
@@ -40,11 +41,11 @@
           </select> 
           <span class='ispublic'>
            <input type='hidden' value='1' name='ispublic'>
-           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='1' checked id='g{$T.pid}'/>
-           <label for='g{$T.pid}' style="margin-right:20px;">公开</label> 
-           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='0' id='s{$T.pid}'/>
-           <label for='s{$T.pid}' style="margin-right:20px;">私有</label>
-           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='2' id='p{$T.pid}'/>
+           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='1' checked id='g{$T.pid}'>
+           <label for='g{$T.pid}' style="margin-right:20px">公开</label> 
+           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='0' id='s{$T.pid}'>
+           <label for='s{$T.pid}' style="margin-right:20px">私有</label>
+           <input type="radio" class="zg-addq-isanon" name='{$T.pid}' value='2' id='p{$T.pid}'>
            <label for='p{$T.pid}'>匿名</label>
          </span>
         </td> 

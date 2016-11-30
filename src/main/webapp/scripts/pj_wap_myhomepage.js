@@ -1,4 +1,8 @@
 $(function(){
+	//当个人资料还未维护
+	if($('.section-container').length==0){
+		$('#no-material').show();
+	}
 	//查看他人主页 --当工作经历只有一个时  加底边
     if($('.background-workexperience-container').length==1){
     	$('.preview-workexperience').css('border-bottom','1px solid #d6d6d6');
@@ -21,23 +25,27 @@ $(function(){
     	)
     	$(this).trigger('click');
 	})
-	   //查看他人主页  点击个人资料
+	//查看他人主页  点击个人资料
     $('#personal-data').live('click',function(){
     	addClassFun($(this));
-    	$('.section-container').show();
+    	if($('.section-container').length==0){
+    		$('#no-material').show();
+    	}else{
+    		$('.section-container').show();
+    	}
     	$('.zm-profile-section-wrap,#zh-profile-follows-list,#profile-navbar,#fans-navbar').hide();
     });
    //查看他人主页  点击个人分享
     $('#personal-share').live('click',function(){
     	addClassFun($(this));
-    	$('.section-container,#fans-navbar,#zh-profile-follows-list').hide();
+    	$('.section-container,#fans-navbar,#zh-profile-follows-list,#no-material').hide();
     	$('#profile-navbar,.zm-profile-section-wrap').show();
     })
     //查看他人主页  点击个人关注
     $('#personal-attention').live('click',function(){
     	addClassFun($(this));
     	$('#fans-navbar').show();
-    	$('#profile-navbar,.zm-profile-section-wrap,.section-container').hide();
+    	$('#profile-navbar,.zm-profile-section-wrap,.section-container,#no-material').hide();
     	otherAtten($(this));
     })
     //选择6大类获取分享的数据

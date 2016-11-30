@@ -1,0 +1,17 @@
+<div class="manage-areas  zg-empty">
+      <div class="zg-inline">
+      </div>
+      <div class="zm-tag-editor-command-buttons-wrap zg-left">
+        <input type="hidden" name="currentskillval" value="">
+        <input class="zu-question-suggest-skill-input label-input-label" type="text" role="combobox"  id="searchArea" aria-autocomplete="list" placeholder="添加业务领域" oninput="getSkillsByCondition(this)">
+        <label class="err-tip" style="display:none;">最多添加10个领域</label>
+       </div>
+</div>  
+<div class='areas-editor clearfix' id='areainputtags'>
+     {#foreach $T.skillitem as skill}
+            <div class="zm-tag-editor-edit-item">
+            <span class="nor">{$T.skill.name}</span>
+            <a  href="javascript:void(0)" class="zm-tag-editor-remove-button"  name="removeskill"></a>
+            </div>
+     {#/for}
+ </div>

@@ -30,7 +30,7 @@ var layer = {
         layer.cache = ready.config = $.extend(ready.config, options);
         layer.path = ready.config.path || layer.path;
         typeof options.extend === 'string' && (options.extend = [options.extend]);
-        layer.use('layer.css', (options.extend && options.extend.length > 0) ? (function loop(){
+        layer.use('../css/layer.css', (options.extend && options.extend.length > 0) ? (function loop(){
             var ext = options.extend;
             layer.use(ext[ext[item] ? item : item-1], item < ext.length ? function(){
                 ++item; 
@@ -778,7 +778,7 @@ ready.run = function(){
     return layer;
 }) : function(){
    ready.run();
-   layer.use('layer.css');
+   layer.use('../css/layer.css');
 }();
 
 }(window);

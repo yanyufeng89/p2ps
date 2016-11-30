@@ -26,4 +26,32 @@ public interface IOauthLoginInfoService {
      * @return
      */
     User getUserFromOauth(OauthLoginInfo loginInfo, OauthLoginInfo record) throws Exception;
+
+    /**
+     * 绑定
+     *
+     * @param loginInfo
+     * @param record
+     * @return
+     * @throws Exception
+     */
+    int bindUserFromOauth(OauthLoginInfo loginInfo, OauthLoginInfo record) throws Exception;
+
+    /**
+     * 解绑
+     *
+     * @param record
+     * @return
+     * @throws Exception
+     */
+    int unbindUserFromOauth(OauthLoginInfo record) throws Exception;
+
+    /**
+     * 解绑
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    int unbindUserFromOauth(int id) throws Exception;
 }

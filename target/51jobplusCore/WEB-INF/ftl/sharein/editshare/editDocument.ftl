@@ -22,6 +22,8 @@
               <div id="upload-widget" class="upload-widget ">
                <form method="post"  enctype="multipart/form-data" id ='test11form' action='/docs/upload'>
                   <input type='hidden' name='docId' value='${record.id}'>
+                  <input type='hidden' name='preIsPublic' value='${record.ispublic}'>
+                  <input type='hidden' name='alMn' value='${Session.account.points}'>
                   <div id="upload-files-container">
 	                  <div class="upload-steps clearfix">
 	                    <ul>
@@ -34,11 +36,11 @@
 	                  </div>
 	                  <div class="nhd nedit-all-head">
 	                    <span class="act btn-submit-all-wrap logSend">
-	                      
 	                      <a  id="btn-submit-all" class="submit-all ml20  submit-all-able">
 	                        <i class="iconfont"></i>&nbsp;确认上传
 	                      </a>
-	                      </span>
+	                    </span>
+	                    <p class="error" style='margin:0'><i class="tips_icon"></i></p>
 	                    <h3 id="item-message-all" class="item-message-all item-message-all-ok">
 	                      <span>
 	                                                                    文档更新                       
@@ -83,12 +85,14 @@
 						                
 										  <span class='ispublic'>
 											<input type="hidden" name='ispublic' value='${record.ispublic}'>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic0" value='1'  <#if (record.ispublic==1)>checked</#if>>
-											<label for="gpublic0" style="margin-right:20px;">公开</label>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic1" value='2'  <#if (record.ispublic==2)>checked</#if>>
-											<label for="gpublic0" style="margin-right:20px;">匿名</label>
-											<input type="radio" class="zg-addq-isanon" name="public0" id="spublic1" value='0' <#if (record.ispublic==0)>checked</#if>>
-											<label for="spublic1">私有</label>
+											
+											<input type="radio" class="zg-addq-isanon" name="public0" id="gpublic1" value='1'  <#if (record.ispublic==1)>checked</#if>>
+											<label for="gpublic1" style="margin-right:20px;">公开</label>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="public1" value='0' <#if (record.ispublic==0)>checked</#if>>
+											<label for="public1"  style="margin-right:20px;">私有</label>
+											<input type="radio" class="zg-addq-isanon" name="public0" id="spublic1" value='2'  <#if (record.ispublic==2)>checked</#if>>
+											<label for="spublic1">匿名</label>
+											
 										  </span>
 						              </td>
 						            </tr>

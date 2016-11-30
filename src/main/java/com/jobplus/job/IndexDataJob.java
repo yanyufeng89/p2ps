@@ -119,4 +119,16 @@ public class IndexDataJob {
 
         logger.info("cacheIndexData...finish");
     }
+
+    @Scheduled(cron = "0 0 */12 * * ?")   //每12小时执行一次
+    @Transactional
+    public void refreshRecommNum() {
+        logger.info("refreshRecommNum...begin");
+        //热门推荐
+        List<HotReommInfo> hotRecommDataList = hotReommInfoMapper.getAll();
+        if (hotRecommDataList != null && hotRecommDataList.size() > 0) {
+            redisService.set(ConstantManager.REDIS_KEY_HOTRECOMM, hotRecommDataList);
+        }
+        logger.info("refreshRecommNum...finish");
+    }
 }

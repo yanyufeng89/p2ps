@@ -5,7 +5,7 @@ $(function(){
 	 if(requestUrl.indexOf('index')!=-1||requestUrl.indexOf('search')!=-1){
 		 var scrollTop = $(this).scrollTop(),scrollHeight = $(document).height(),windowHeight = $(this).height();  
 	     var positionValue = (scrollTop + windowHeight) - scrollHeight;  
-	     if (positionValue<0) {  
+    	 if (positionValue<=0) {  
 	    	  $('.search-loadmore').addClass('loading').empty().append("<span class='capture-loading'></span>加载中...");
 	    	  loadMore('search-loadmore');
 	     }  

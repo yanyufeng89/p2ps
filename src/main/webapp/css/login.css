@@ -134,23 +134,32 @@ li {
 .reg_h1_tit {
 	width: 100%;
     position: relative;
-    padding-top: 14px;
-    margin-left: 50px;
+    /* padding-top: 14px; */
+   /*  margin-left: 50px; */
 }
 
 .reg_ul_list {
 	text-align: center;
 }
-
-.reg_ul_list li {
+.tab-line {
+    float: left;
+    width: 1px;
+    height: 43px;
+    overflow: hidden;
+    background: #ddd;
+}
+.reg_ul_list .tab-nav{
 	float: left;
 	color: #555;
-	width: 100px;
+	width: 158px;
 	font-size: 14px;
+	height:43px;
+	line-height:43px;
 	font-weight: bold;
 	margin-top: 0px;
 	cursor: pointer;
 	margin:0 auto;
+	text-align:center;
 }
 .reg_ul_list li.active{
 	opacity: 1;
@@ -158,18 +167,18 @@ li {
     color: #0867c5;
 }
 .reg_ul_list[data-active-index="0"] .pj-navs-slider-bar {
-    left:0;
+    left:160px;
 }
 .reg_ul_list[data-active-index="1"] .pj-navs-slider-bar {
-    left:100px;
+    left:0;
 }
 .reg_ul_list .pj-navs-slider-bar {
     position: absolute;
-    left: 0;
-    bottom: -10px;
-    width:100px;
-    height:2px;
-    background: #0867c5;
+    left:0;
+    bottom:0;
+    width:160px;
+    height:1px;
+    background:#e5e5e5;
     -webkit-transition: left .15s ease-in;
     transition: left .15s ease-in;
 }
@@ -688,7 +697,7 @@ li {
 }
 
 .loginname {
-	border: 1px solid #E4E4E4;
+	border: 1px solid #e5e5e5;
 	color: #999999;
 	font-size: 14px;
 	height: 20px;

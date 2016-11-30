@@ -2,13 +2,13 @@
 {#foreach $T.docsPage as list}
   <li>
      <div class='w300 fs14 fc3 ib dochidden'>
-        <div class="checkbox chk" data-docid="{$T.list.id}" data-ispublic='{$T.list.ispublic}' data-name="{$T.list.title}" ></div>
+        <div class="checkbox chk" data-docid="{$T.list.id}" data-ispublic='{$T.list.ispublic}' data-isvalid='{$T.list.isvalid}' data-name="{$T.list.title}" ></div>
         <b class="ic ic-{$T.list.docsuffix} mr14"></b>
         {#if $T.list.isconverter!=1 && $T.list.isconverter!=3}
 		<!-- 状态为提交中： 先查询是否转换成功  是跳转 否则 return false  href="/docs/getDocsDetail/${list.id}"	 -->	
-			<a href="/docs/getDocsDetail/{$T.list.id}" data-docid='{$T.list.id}' data-ispublic='{$T.list.ispublic}' class='doctitle notCvt' target="_blank" title="{$T.list.title}">{$T.list.title}</a>					           
+			<a href="/docs/getDocsDetail/{$T.list.id}" data-docid='{$T.list.id}' data-ispublic='{$T.list.ispublic}' data-isvalid='{$T.list.isvalid}' class='doctitle notCvt' target="_blank" title="{$T.list.title}">{$T.list.title}</a>					           
 		{#else}
-			<a href="/docs/getDocsDetail/{$T.list.id}"   data-docid='{$T.list.id}' data-ispublic='{$T.list.ispublic}' class='doctitle{#if $T.list.isconverter!=1} disabled{#/if}' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
+			<a href="/docs/getDocsDetail/{$T.list.id}"   data-docid='{$T.list.id}' data-ispublic='{$T.list.ispublic}' data-isvalid='{$T.list.isvalid}' class='doctitle{#if $T.list.isconverter!=1} disabled{#/if}' target="_blank" title="{$T.list.title}">{$T.list.title}</a>
 		{#/if}
      </div>
      <div class='w84 ib'>
@@ -44,13 +44,12 @@
         {$T.list.showcreatetime}
      </div>
      <div class='w119 ib operate ilb'>
-         <a href='/myCenter/getDocsDetailForEdit?docId={$T.list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
-           <b class="iconfont pr2"></b>修改
-         </a>
-         <span data-id='{$T.list.id}' data-name='{$T.list.title}' data-ispublic='{$T.list.ispublic}' data-type='1'>
-             <b class="iconfont pr2"></b>
-                                       删除
-          </span>
-     </div>
+			<a href='/myCenter/getDocsDetailForEdit?docId={$T.list.id}' class='pr10 modify-doc __HIDE__' target='_blank'> 
+			<b class="iconfont pr2"></b>修改 
+			</a>
+			<span class="dltDc" data-id='{$T.list.id}' data-name='{$T.list.title}' data-ispublic='{$T.list.ispublic}' data-isvalid='{$T.list.isvalid}' data-type='1'> 
+			<b class="iconfont pr2"></b> 删除
+		</span>
+	</div>
     </li>
  {#/for}

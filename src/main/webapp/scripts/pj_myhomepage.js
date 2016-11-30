@@ -1,6 +1,10 @@
 var randomid=1;
 var userInfo;
 $(function(){
+	//当个人资料还未维护
+	if($('.section-container').length==0){
+		$('#no-material').show();
+	}
 	 //个人中心  点击联系方式
     $(".show-more-info").on('click',function(){
     	$("#contact-info-section").toggle();
@@ -21,13 +25,17 @@ $(function(){
     //查看他人主页  点击个人资料
     $('#personal-data').live('click',function(){
     	addClassFun($(this));
-    	$('.section-container').show();
+    	if($('.section-container').length==0){
+    		$('#no-material').show();
+    	}else{
+    		$('.section-container').show();
+    	}
     	$('.zm-profile-section-wrap,#zh-profile-follows-list,#profile-navbar,#fans-navbar').hide();
     });
    //查看他人主页  点击个人分享
     $('#personal-share').live('click',function(){
     	addClassFun($(this));
-    	$('.section-container,#fans-navbar,#zh-profile-follows-list').hide();
+    	$('.section-container,#fans-navbar,#zh-profile-follows-list,#no-material').hide();
     	$('#profile-navbar,.zm-profile-section-wrap').show();
     	/*//当最新分享的数量是0是 列表不显示
     	if($('#zh-profile-answers-inner-list ul li').length==0){
@@ -38,7 +46,7 @@ $(function(){
     $('#personal-attention').live('click',function(){
     	addClassFun($(this));
     	$('#fans-navbar').show();
-    	$('#profile-navbar,.zm-profile-section-wrap,.section-container').hide();
+    	$('#profile-navbar,.zm-profile-section-wrap,.section-container,#no-material').hide();
     	otherAtten($(this));
     })
     //定时刷新界面上选中的边框颜色
@@ -999,7 +1007,7 @@ function currVisitor(obj){
 		dataType:"json",
 		success:function(data){
 			if(data.visitors.list.length==0){
-				 $('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无访问信息</span>");
+				 $('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无访问信息</span>").show();
 			}else{
 				$.each(data.visitors.list,function(index,item){
 	    			if(item.fansIds!=undefined){
@@ -1062,7 +1070,7 @@ function otherAtten(obj){
 		dataType:"json",
 		success:function(data){
 			if(data.attenManPage.list.length==0){
-				 $('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无信息</span>");
+				 $('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无信息</span>").show();
 				 
 			}else{
 				$.each(data.attenManPage.list,function(index,item){
@@ -1124,7 +1132,7 @@ function otherFans(obj){
 		dataType:"json",
 		success:function(data){
 			if(data.myFansPage.list.length==0){
-				$('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无信息</span>");
+				$('#zh-profile-follows-list .zh-general-list').empty().append("<span class='nosharelist'>暂无信息</span>").show();
 			}else{
 				$.each(data.myFansPage.list,function(index,item){
 	    			if(item.fansIds!=undefined){
@@ -1900,95 +1908,9 @@ function hiddenEditArea(column){
 	$('a[name=cancle'+column+']').parents('.zm-editable-editor-wrap').remove();
 }
 
-//个人中心更换头像
-function previewImage(file){
-		 var MAXWIDTH  = 260; 
-         var MAXHEIGHT = 180;
-         var imgpath=$('input[type=file]').val();
-         var div = document.getElementById('preview');
-         var filetype=['jpg','png','jpeg','pns'];
-         var imgtype=file.files[0].name.substring(file.files[0].name.length-3,file.files[0].name.length)
-         if($.inArray(imgtype.toLowerCase(),filetype)!=-1){
-        	 updUserInfo();
-        	 if (file.files && file.files[0]){
-                 div.innerHTML =
-                	 //'<form method="POST"  id="previewImage" enctype="multipart/form-data"><img id=imghead> <span class="ProfileAvatarEditor-tip">修改头像</span> <input id="previewImage" class="file-3" type="file" size="30" onchange="previewImage(this)"></form>';
-                '<img id=imghead width="150" height="190"><span class="ProfileAvatarEditor-tip">更换头像</span><form method="POST"  id="previewImage" enctype="multipart/form-data"><input name="headIconFile" class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this)" /> </form>';
-                 
-                 
-                 var img = document.getElementById('imghead');
-                 img.onload = function(){
-                   var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-                   img.width  =  rect.width;
-                   img.height =  rect.height;
-                   /*img.style.marginTop = rect.top+'px';*/
-                 }
-
-                 var reader = new FileReader();
-                 reader.onload = function(evt){img.src = evt.target.result;}
-                 reader.readAsDataURL(file.files[0]);
-             }
-             else //兼容IE
-             {
-               var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
-               file.select();
-               var src = document.selection.createRange().text;
-               div.innerHTML = '<img id=imghead>';
-               var img = document.getElementById('imghead');
-               img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
-               var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-               status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
-               div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
-             }
-         }
-         else{
-        	 ZENG.msgbox.show('抱歉，上传失败 ，请上传小于2M的图片!', 5, 3000);return false;
-         }
-         
-   }
-function clacImgZoomParam( maxWidth, maxHeight, width, height ){
-            var param = {top:0, left:0, width:width, height:height};
-            if( width>maxWidth || height>maxHeight )
-            {
-                rateWidth = width / maxWidth;
-                rateHeight = height / maxHeight;
-                
-                if( rateWidth > rateHeight )
-                {
-                    param.width =  maxWidth;
-                    param.height = Math.round(height / rateWidth);
-                }else
-                {
-                    param.width = Math.round(width / rateHeight);
-                    param.height = maxHeight;
-                }
-            }
-            
-            param.left = Math.round((maxWidth - param.width) / 2);
-            param.top = Math.round((maxHeight - param.height) / 2);
-            return param;
- }
 
 
-//更新用户表tbl_user
-function updUserInfo() {  
-    var formData = new FormData($("#previewImage")[0]);  
-    $.ajax({  
-    	 url:"/myHome/updUserInfo",
-         type: 'POST',  
-         data: formData,  
-         async: false,  
-         cache: false,  
-         contentType: false,  
-         processData: false,  
-         success: function (data) {  
-             /*alert(data);  */
-         },  
-         error: function (data) {  
-             alert(data);  
-         }  
-    });  
-}  
+ 
 //加载用户信息
 function intoUserInfo(){
 	$('.uhead,.zm-item-link-avatar,.author-link').pinwheel();

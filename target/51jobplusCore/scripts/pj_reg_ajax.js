@@ -1,6 +1,15 @@
 var myreg = /^([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9\-]+@([a-zA-Z0-9\-]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 var reg= /^[1][34578]\d{9}$/; //验证手机号码  
 var istrue=false;
+$(function(){
+	//注册界面切换
+	$('#reg li').live('click',function(){
+		var index=$(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$(this).parent().attr('data-active-index',index);
+		$('input[name=usertype]').val(Number(index)+1);
+	});
+})
 function reg_checkAjax(id){
 	var obj = $.trim($("#"+id).val());
 	var msg="";

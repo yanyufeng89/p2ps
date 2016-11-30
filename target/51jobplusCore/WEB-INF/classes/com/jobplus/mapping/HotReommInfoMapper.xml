@@ -298,9 +298,11 @@
   </update>
 
   <select id="getAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tbl_hotrecomm
+     select
+    t.id, title, shreadType, dataType, tags, imgUrl, linkUrl, dataId, lastEditTime, createUser,
+    kpi, kpi3, extendInfo, extendInfo2, extendInfo3, extendInfo4, extendInfo5,
+    b.createTime,b.recommendSum as kpi2
+    from tbl_hotrecomm t INNER JOIN tbl_books b on t.dataId=b.ID
   </select>
 
   <select id="getByDataidAndType" resultMap="BaseResultMap" parameterType="Map">

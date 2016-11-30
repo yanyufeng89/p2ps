@@ -18,7 +18,7 @@
                                <#if (cutUser.headicon)?? && cutUser.headicon?length gt 0>
                                  <img src="${cutUser.headicon}" width="120" height="120" id="imghead" class='lazy' alt="个人头像">
                                <#else>
-                                 <img src="/image/myphoto.jpg" width="120" height="120" id="imghead" class='lazy' alt="个人头像">
+                                 <img src="/image/<#if Session.user.usertype==2>cm-defaultIcon100.jpg<#else>myphoto.jpg</#if>" width="120" height="120" id="imghead" class='lazy' alt="个人头像">
                                </#if>
                                
                               </div>

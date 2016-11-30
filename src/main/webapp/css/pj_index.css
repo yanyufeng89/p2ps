@@ -882,7 +882,7 @@ a:hover.normal-btn .ic-jia, span.normal-btn:hover .ic-jia {
 }
 
 .hot-recommend-book ul li {
-	padding:8px 4px 14px 4px;
+	padding:8px 4px 8px 4px;
 }
 .hot-recommend-book ul li:first-child{
 	padding-top:7px;
@@ -894,7 +894,7 @@ a:hover.normal-btn .ic-jia, span.normal-btn:hover .ic-jia {
 
 .hot-recommend-book ul li .book-img img {
 	width:72px;
-	height:108px;
+	height:98px;
 	padding: 2px 3px 4px;
 	background-position: left -1313px
 }
@@ -1435,7 +1435,7 @@ ul.doc-list li .li-wrap p.author img {
 	width:77.9%;
 	zoom: 1;
     overflow: hidden;
-    height: 307px;
+    height: 306px;
    	background:#fff;
 }
 .screen-hd-wrap .news-shareinfo .newstitle{
@@ -1459,7 +1459,7 @@ ul.doc-list li .li-wrap p.author img {
 	color: #1b85d5;
 }
 .news-shareinfo .newscontent-left,.news-shareinfo .newscontent-right{
-	padding:15px 0 0 20px;
+	padding:14px 0 0 20px;
 	float:left;
 	font-size:14px;
 	color:#555;

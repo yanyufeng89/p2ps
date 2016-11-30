@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.CpnewsCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.CpnewsComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="compId" property="compid" jdbcType="INTEGER" />
+    <result column="newsId" property="newsid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="commentBy" property="commentby" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.CpnewsComment" extends="BaseResultMap" >
+    <result column="comments" property="comments" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, compId, newsId, userId, commentBy, createTime, isdelete, updateTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    comments
+  </sql>
+  <!-- 获取快讯评论list -->
+  <select id="getList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.CpnewsComment" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_cpnews_comment t 
+    WHERE t.isdelete=0 AND t.newsid=#{newsid,jdbcType=INTEGER}
+    ORDER BY t.updateTime
+     <choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+  </select>
+  <!-- 获取快讯评论条数 list count -->
+  <select id="getListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.CpnewsComment" >
+    select count(*)
+    from tbl_cpnews_comment t 
+    WHERE t.isdelete=0 AND t.newsid=#{newsid,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_cpnews_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_cpnews_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.CpnewsComment" >
+    insert into tbl_cpnews_comment (id, compId, newsId, 
+      userId, commentBy, createTime, 
+      isdelete, updateTime, comments
+      )
+    values (#{id,jdbcType=INTEGER}, #{compid,jdbcType=INTEGER}, #{newsid,jdbcType=INTEGER}, 
+      #{userid,jdbcType=INTEGER}, #{commentby,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{isdelete,jdbcType=INTEGER}, #{updatetime,jdbcType=TIMESTAMP}, #{comments,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.CpnewsComment" >
+    insert into tbl_cpnews_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="compid != null" >
+        compId,
+      </if>
+      <if test="newsid != null" >
+        newsId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="commentby != null" >
+        commentBy,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="compid != null" >
+        #{compid,jdbcType=INTEGER},
+      </if>
+      <if test="newsid != null" >
+        #{newsid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.CpnewsComment" >
+    update tbl_cpnews_comment
+    <set >
+      <if test="compid != null" >
+        compId = #{compid,jdbcType=INTEGER},
+      </if>
+      <if test="newsid != null" >
+        newsId = #{newsid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commentby != null" >
+        commentBy = #{commentby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.CpnewsComment" >
+    update tbl_cpnews_comment
+    set compId = #{compid,jdbcType=INTEGER},
+      newsId = #{newsid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      commentBy = #{commentby,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      comments = #{comments,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.CpnewsComment" >
+    update tbl_cpnews_comment
+    set compId = #{compid,jdbcType=INTEGER},
+      newsId = #{newsid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      commentBy = #{commentby,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

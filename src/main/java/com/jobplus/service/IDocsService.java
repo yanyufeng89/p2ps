@@ -52,6 +52,11 @@ public interface IDocsService {
 	 * @return
 	 */
 	public Page<Docs> getMyDocsUploaded(Docs record); 
+	/**
+	 * 回收站文档
+	 * @return
+	 */
+	public Page<Docs> getGbgDocs(Docs record); 
 	
 	
 	/**
@@ -73,9 +78,28 @@ public interface IDocsService {
 	 * 批量逻辑删除docs
 	 * @param condition
 	 * @param userid
+	 * @param ispublic
+	 * @param delStatus 删除状态 ：0 彻底删除  2 放入回收站 
 	 * @return
 	 */
-	public int deleteDocs(String[] condition,String userid,String ispublic);
+	public int deleteDocs(String[] condition,String userid,String ispublic, String delStatus);
+	/**
+	 * 回收站   逻辑删除docs
+	 * @param condition
+	 * @param delStatus 删除状态 ：0 彻底删除  2 放入回收站 
+	 * @return
+	 */
+	public int gbgDelDocs(String[] condition,String delStatus);
+	
+	/**
+	 * 回收站 文档还原
+	 * @param condition
+	 * @param userid
+	 * @param ispublic 被还原文档的ispublic
+	 * @param delStatus 删除状态 ：0 彻底删除  2 放入回收站 
+	 * @return
+	 */
+	public int gbgReBackDocs(String[] condition,String userid,String ispublic, String delStatus);
 	
 	/**
 	 * 收藏文档

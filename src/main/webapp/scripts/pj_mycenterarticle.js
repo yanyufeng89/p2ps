@@ -175,6 +175,11 @@ $(function(){
     		ZENG.msgbox.show('文章标题不能为空!', 5, 3000);
     		return false;
     	}
+    	if($.trim(articlename).replace(/[^x00-xFF]/g,'**').length>256){
+    		ZENG.msgbox.show('标题字数超出最大限制!', 5, 3000);
+    		return false;
+    	}
+    	
     	$.ajax({
     		type:'POST',
     	    url:"/article/updateArticle",

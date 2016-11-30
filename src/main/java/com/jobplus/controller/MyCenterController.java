@@ -91,8 +91,18 @@ public class MyCenterController {
 		ModelAndView mv = new ModelAndView();
 		String userid = (String) request.getSession().getAttribute("userid");
 		record.setUserid(Integer.parseInt(userid));
-		Page<Docs> docsPage = docsService.getMyDocsUploaded(record);
-		logger.info("getMyDocsUploaded 个人中心-我上传的文档   列表 :" + JSON.toJSONString(docsPage));
+		//如果前端不传值过来 默认传到页面为1
+		record.setIsvalid(record.getIsvalid()==null?1:record.getIsvalid());
+		Page<Docs> docsPage =  new Page<>();
+		if(1!=record.getIsvalid()){
+			//回收站文档列表
+			docsPage = docsService.getGbgDocs(record);
+			logger.info("getGbgDocs 回收站文档列表   列表 :" + JSON.toJSONString(docsPage));
+		}else{
+			//公开、私有文档列表
+			docsPage = docsService.getMyDocsUploaded(record);
+			logger.info("getMyDocsUploaded 个人中心-我上传的文档   列表 :" + JSON.toJSONString(docsPage));
+		}
 		if (encoding.indexOf("application/json") != -1) {
 			// 分页 post请求
 			Map<String, Page<Docs>> map = new HashMap<String, Page<Docs>>();
@@ -101,6 +111,8 @@ public class MyCenterController {
 		} else {
 			mv.addObject("docsPage", docsPage);
 			mv.addObject("ispublic", record.getIspublic() == null ? 1 : record.getIspublic());
+			
+			mv.addObject("record", record);
 			mv.setViewName("mydocs/docs/mydocument");
 			return mv;
 		}
@@ -343,13 +355,15 @@ public class MyCenterController {
 	 * 文档删除 逻辑删除
 	 * @param request
 	 * @param response
-	 * @param record
+	 * @param condition
+	 * @param ispublic
+     * @param delStatus 设定为2    删除状态 ：0 彻底删除  2 放入回收站   若为空 放入回收站
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteDocs", method = RequestMethod.POST)
 	@ResponseBody
 	public String deleteDocs(HttpServletRequest request, HttpServletResponse response,@RequestParam(required=false) String condition,
-			@RequestParam(required=false) String ispublic) {
+			@RequestParam(required=false) String ispublic,@RequestParam(required=false) String delStatus,@RequestParam(required=false) String isvalid) {
 		DocsResponse DocsResponse = new DocsResponse();
 		try {
 			String userid = (String) request.getSession().getAttribute("userid");
@@ -358,7 +372,26 @@ public class MyCenterController {
 				// 拼装成数组 "1,2,3" ——> [1,2,3]
 				if (condition.length() > 0) {
 					String conditions[] = condition.split(",");
-					ret = docsService.deleteDocs(conditions, userid,ispublic);
+					//回收站文档删除
+					if("2".equals(isvalid)){
+						ret = docsService.gbgDelDocs(conditions,"0");
+						if (ret > 0) {
+							logger.info("**gbgDelDocs **回收站文档    删除 ***condition==" + JSON.toJSONString(condition) + "   userid=="
+									+ userid );
+							//获取统计数 
+							OperationSum operationSum = userService.getOperationSum(request);
+							DocsResponse.setOperationSum(operationSum);
+							DocsResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+							DocsResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+						} else {
+							DocsResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+							logger.info("*******gbgDelDocs ****回收站文档    删除 * *999*****");
+						}
+						return JSON.toJSONString(DocsResponse);
+					}
+					
+					delStatus = "2";
+					ret = docsService.deleteDocs(conditions, userid,ispublic,delStatus);
 				}
 				if (ret > 0) {
 					// 个人操作数之类的信息放入session

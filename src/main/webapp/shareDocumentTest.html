@@ -6,24 +6,65 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <title>上传文档</title>
 <script type="text/javascript">
-function doUpload() {  
-    var formData = new FormData($( "#uploadForm" )[0]); 
-    $.ajax({  
-         url: 'myHome/updUserInfo' ,  
-         type: 'POST',  
-         data: formData,  
-         async: false,  
-         cache: false,  
-         contentType: false,  
-         processData: false,  
-         success: function (returndata) {  
-             alert(returndata);  
-         },  
-         error: function (returndata) {  
-             alert(returndata);  
-         }  
-    });  
-}  
+
+	function updUserInfo(){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"comp/updUserInfo",
+	         	data:{user_userid:30,user_addres:"江苏苏州",companyIntro_id:31,companyIntro_province:"山东"},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+	//加载企业快讯 param:compid
+	function loadNews(){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"comp/loadNews",
+	         	data:{compid:31},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+	function loadNewsComments(){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"comp/loadNewsComments",
+	         	data:{newsid:1},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+	function addComment(){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"comp/addComment",
+	         	data:{compid:31,newsid:1,comments:"非常好"},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+
 
 </script>
 
@@ -33,16 +74,15 @@ function doUpload() {
 </head>
 <body>
 
-	<form id="uploadForm">
-		<p>
-			指定文件名： <input type="text" name="username" value="" />
-		</p>
-		<p>上传文件： <input type="file" name="headIconFile"  onchange="doUpload()"/></p> 
-		<input type="button" value="上传" onclick="doUpload()" />
-	</form>
-
-
-
+	<input type="button" value="updUserInfo" onclick="updUserInfo()" /><br><br>
+	<input type="button" value="loadNews" onclick="loadNews()" /><br><br>
+	<input type="button" value="loadNewsComments" onclick="loadNewsComments()" /><br><br>
+	<input type="button" value="addComment" onclick="addComment()" /><br><br>
+	
+	<form action="comp/updImg" method="post" enctype="multipart/form-data">
+		<input type="file"  name="imgField" multiple="multiple"> 
+		<input type="submit" value="上传图片">
+</form>
 </body>
 
 <script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>

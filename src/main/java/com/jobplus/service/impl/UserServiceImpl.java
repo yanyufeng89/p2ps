@@ -572,4 +572,5 @@ public class UserServiceImpl implements IUserService {
 		int complete = userDao.userInfoCompletion(userId);
 		return complete;
 	}
+	
 }

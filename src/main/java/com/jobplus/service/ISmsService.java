@@ -74,6 +74,9 @@ public interface ISmsService {
 		urlMap.put("tbl_books_share","/books/getBookDetail/");
 		urlMap.put("tbl_books_isLiked","/books/getBookDetail/");
 		urlMap.put("tbl_docs_isLiked","/docs/getDocsDetail/");
+		
+		//企业快讯
+		urlMap.put("tbl_company_news","/myHome/getHomePage/");
      * @param topObjId  文档、书籍、课程等 id
      * @param objCreateperson 文档、书籍、课程等创作人 id
      * @param smsType 消息类型   0系统消息    1私信  2关注通知(成为你的粉丝) 

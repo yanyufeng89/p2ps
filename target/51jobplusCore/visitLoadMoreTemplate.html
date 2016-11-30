@@ -34,9 +34,18 @@
 			<a target="_self" href="javascript:void(0)" class="zg-link-gray-normal">
 			   {$T.list.fanssum}粉丝
 			</a>
+			{#if $T.iswap!=1}
 			<a target="_self"  class="zg-link-gray-normal" href='javascript:void(0)'>
 				&nbsp;&nbsp;{$T.list.showVTime}
 			</a>
+			{#/if}
+			</div>
+			<div class="details zg-gray">
+			{#if $T.iswap==1}
+			<a target="_self"  class="zg-link-gray-normal" href='javascript:void(0)'>
+				{$T.list.showVTime}
+			</a>
+			{#/if}
 			</div>
 	  </div>
  </div>

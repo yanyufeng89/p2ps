@@ -8,8 +8,9 @@ package com.jobplus.service;
 public interface IUpdTableColumnService {
 	
 	/**
-	 * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites", 5
-				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
+	 * TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",
+				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share",
+				"tbl_company_news"};
 	 * DOCSCOLUMNS = new String[]{"collectSum","downSum","readSum","likeSum","recommendSum" };
 	 * BOOKSCOLUMNS = new String[]{"collectSum","recommendSum" };
 	 * TOPICSCOLUMNS = new String[]{"followsSum","readSum","replySum","likeSum","futilitySum","collectSum","commentSum"};	
@@ -23,6 +24,7 @@ public interface IUpdTableColumnService {
 	 * COURSESSHARECOLUMNS = new String[]{ "likesum"};
 	 * ARTICLESHARECOLUMNS = new String[]{ "likesum"};
 	 * SITESSHARECOLUMNS = new String[]{ "likesum"};
+	 * COMPANYNEWSCOLUMNS = new String[]{"commentsum", "likesum"};
 	 * @param tableName 要更改的表名
 	 * @param tableColumn 要更改的表字段
 	 * @param addOrDec 增加or减少

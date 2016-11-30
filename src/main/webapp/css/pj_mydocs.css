@@ -572,7 +572,7 @@
     text-align: center;
     padding-top:32px;
 }
-.uc-aside .uc-user-box .img-center,.uc-aside .uc-user-box .img-business-center{
+.uc-aside .uc-user-box .img-center{
     width: 100px;
     height: 100px;
     overflow: hidden;
@@ -580,6 +580,13 @@
     margin-bottom: 11px;
     border: 4px solid #fff;
     background: #fff;
+}
+.uc-aside .uc-user-box .img-business-center{
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+.img-business-center img{
+	border:2px solid #fff;
 }
 .uc-aside .uc-user-box .img-center{
 	border-radius:50%;
@@ -602,7 +609,7 @@
     font-size: 13px;
     line-height: 12px;
     border-bottom: 2px solid #E4E4E4;
-    padding-bottom:10px;
+    padding-bottom:11px;
     margin: 0 auto;
     width: 160px;
 }
@@ -1536,7 +1543,7 @@
 	line-height: 25px;
 	color: #999;
 }
-.ProfileAvatarEditor-tip {
+.ProfileAvatarEditor-tip,.update-comimg-tip{
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -1563,17 +1570,14 @@
 	opacity:1;
 	-ms-filter:"alpha(Opacity=100)"
 }
-.profile-picture input[type=file] {
+.profile-picture input[type=file],.top-card-company-logo input[type=file],.profile-logo input[type=file]{
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     border: 0;
-    
-    height:188px;
     width: 100%;
     cursor: pointer;
-    border: solid 1px #ddd;
     opacity: 0;
 }
 .profile-card .profile-overview {
@@ -1588,8 +1592,9 @@
     padding-top: 0px;
     width: 670px;
 }
-.profile-card .profile-overview-content {
+.profile-overview-content {
    min-height: 150px;
+   text-align: justify;
 }
 .profile-card .fn {
     font-size:14px;
@@ -1727,6 +1732,11 @@
     padding-left:10px;
     padding-right:10px;
     vertical-align: middle;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
 }
 .profile-navbar .pjitem:hover,.profile-func span:hover{
 	color:#0867c5
@@ -1885,7 +1895,7 @@ li[class^=recommended-section-]:nth-child(3n){
     padding-bottom: 5px;
     cursor:pointer;
 }
-.top-card{
+.top-card {
     border: 1px solid #d6d6d6;
     background: #fff;
 }
@@ -2184,7 +2194,6 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	border-left:0!important
 }
 .top-border p a {
-    text-decoration: none;
     cursor: pointer;
     color: #555;
     outline: none;
@@ -2206,12 +2215,12 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
     font-size: 14px;
     line-height: 12px;
 }
-#bd-2 .seeme{
+#bd-2 .seeme,.middle-card-right .seeme{
     zoom:1;
     overflow:hidden;
     padding-bottom:12px;
 }
-#bd-2 .news .recent-new,#bd-2 .seeme .recent-seeme,#bd-2 .sharelist .recent-share{
+#bd-2 .news .recent-new,.seeme .recent-seeme,#bd-2 .sharelist .recent-share{
 	margin:10px 10px 0 10px;
 	font-size:14px;
 	color:#333;
@@ -2525,14 +2534,13 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 }
 .myAllMessage li{
 	border-bottom: 1px solid #eee;
-	padding: 3px 0 8px 0;
+	padding: 12px 0 10px 0;
 	font-size:14px;
 	color:#333;
 	cursor: pointer;
 }
 .myAllMessage li:last-child{
 	border-bottom:none;
-	padding-top: 0;
 }
 .myAllMessage li:first-child{
     padding-top:0;	
@@ -2771,7 +2779,7 @@ li[class^=recommended-section-].recommended-section-program .recommended-section
 	border-right:0;
 }
 
-.zm-profile-section-wrap,.zh-profile-follows-list{
+.zm-profile-section-wrap,.zh-profile-follows-list,.no-material{
 	clear:both;
     border:1px solid #d6d6d6;
     border-top:none;
@@ -2871,7 +2879,7 @@ a.zg-r3px{
     font-weight: 400;
     margin-right:6px;
 }
-.skillzone{
+.skillzone,.areazone{
     padding: 0 13px 0 13px;
     font-size: 14px;
     color:#555;
@@ -3028,4 +3036,82 @@ a.zg-r3px{
 .allnewscontent{
 	color:#555;
     font-size: 14px;
+}
+.center-top{
+	margin:0 auto;
+	width:1200px
+}
+.strength{
+    width: 298px;
+    position: relative;
+    padding: 10px 0 10px 10px;
+    border: 1px solid #cce1ef;
+    margin-bottom: 14px;
+    background: #eff6fA;
+    font-size: 14px;
+    color: #333;
+}
+
+.strength .strength-meter.v2 .strength-data ,.strength .strength-meter.v2{
+   position: relative;
+} 
+
+.strength .strength-meter.v2 .level-indicator {
+	position: relative;
+	overflow: hidden;
+	height:100px;
+	width: 100px;
+}
+.strength .strength-meter.v2 .fill {
+	width: 90px;
+	height: 0;
+	display: block;
+	background: #e14650;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.strength .strength-meter.v2 .level-separator {
+	background: #fff;
+	display: block;
+	position: absolute;
+	height: 1px;
+	width: 90px;
+	left: 0;
+	bottom: 0;
+}
+
+.strength .strength-meter.v2 .fill-marker {
+	position: absolute;
+	display: block;
+	height: 1px;
+	background: #000;
+	visibility: hidden;
+	z-index: 2;
+}
+
+.strength .strength-meter.v2 .next-level-description {
+	visibility: visible;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+	opacity: 0;
+}
+.strength .strength-meter.v2 .next-level-description, .strength .strength-meter.v2 .current-level-description {
+	position: absolute;
+	visibility: hidden;
+	white-space: nowrap;
+	left: 220px;
+	bottom: 0;
+	margin-top: -20px;
+	margin-bottom: 0px;
+	padding: 0;
+}
+.strength .strength-meter.v2 .mask {
+	position: absolute;
+	height: 90px;
+	width: 90px;
+	top: 10px;
+	left: 0;
+	display: block;
+	z-index: 1;
 }

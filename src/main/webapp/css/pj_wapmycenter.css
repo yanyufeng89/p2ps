@@ -341,7 +341,7 @@
 .zg-right {
     float: right;
 }
-.zm-profile-section-wrap, .zh-profile-follows-list {
+.zm-profile-section-wrap, .zh-profile-follows-list,.no-material{
     clear: both;
     border: 1px solid #e5e5e5;
     /* border-top:none;  */
@@ -399,4 +399,12 @@
 }
 .profile-navbar .pjitem:last-child{
 	border-right:none;
+}
+.nosharelist, .nofanslist {
+    text-align: center;
+    font-size:2.2rem;
+    color: #999;
+    height: 100px;
+    display: block;
+    line-height: 70px;
 }

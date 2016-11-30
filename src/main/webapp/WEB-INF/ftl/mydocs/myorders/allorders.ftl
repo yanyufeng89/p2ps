@@ -17,16 +17,16 @@
 		<div class="uc-aside">
 		<div class="uc-user-box">
 		<div class="<#if Session.user.usertype==2>img-business-center<#else>img-center</#if>">
-		<a  href="/myCenter/getMyHeadTop" target="_self">
+		<a  href="<#if Session.user.usertype==2>/comp/getHomePage/${Session.user.userid}?isReview=0<#else>/myCenter/getMyHeadTop</#if>" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
 		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像" class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
+		    <img src="/image/<#if Session.user.usertype==2>cm-defaultIcon100.jpg<#else>myphoto.jpg</#if>" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		  </a>
 		</div>
 		<p class="user-name">
-			<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
+			<a class="name-link" href="<#if Session.user.usertype==2>/comp/getHomePage/${Session.user.userid}?isReview=0<#else>/myCenter/getMyHeadTop</#if>" target="_self">
 	          <#if (user.username)??>
 	           ${user.username}
 	         </#if>
@@ -38,7 +38,7 @@
 		</p>
 		<p class="user-level">
 		   <#if Session.user.usertype==2>
-		    <a href="javascript:void(0)" target="_blank">&nbsp;进入公司主页</a> 
+		    <a href="/comp/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入公司主页</a> 
 		  <#else>
 		    <a href="/myHome/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入个人主页</a>
 		  </#if>

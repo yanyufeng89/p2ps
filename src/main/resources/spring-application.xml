@@ -29,8 +29,6 @@
 	      <value>UTF-8</value>
 	    </property>
 	</bean>
-	
-	<mvc:resources mapping="/*.txt" location="/" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">

@@ -144,6 +144,7 @@ $(function(){
 	  $('.pagetemplate').processTemplate(data);
 	  $('#zh-question-title').append($('.pagetemplate').html());
 	  $(".pagetemplate").empty();
+	  /*$('.titleedit').focus();*/
       $('#zh-question-title .zm-editable-content').hide();
       $('#zh-question-title .pj-editable-editor-wrap').show();
     });
@@ -166,6 +167,7 @@ $(function(){
     	$('#tagtemplate').setTemplateURL(projectName+'topicTagEditTemplate.html',null, {filter_data: false});
         $('#tagtemplate').processTemplate(data);
         $('.zm-tag-editor').append($('#tagtemplate').html());
+       
         $("#tagtemplate").empty();
        
     })

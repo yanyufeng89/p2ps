@@ -98,7 +98,7 @@
 		      <#assign  url=record.readurl?substring(0,record.readurl?index_of('.swf'))/>
 		      <input type='hidden' name='readurl' value='${url}'>
 		    </#if>
-		    <#if record.docsuffix?lower_case=='ppt'>
+		    <#if record.docsuffix?lower_case=='ppt' || record.docsuffix?lower_case=='pptx' || record.docsuffix?lower_case=='pps' || record.docsuffix?lower_case=='pot'>
 		        <div class='doc-ppt'>
 		          <a class="media" href="${url}1.swf"></a>
 		        </div>

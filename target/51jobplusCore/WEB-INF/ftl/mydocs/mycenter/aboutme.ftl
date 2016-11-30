@@ -361,7 +361,15 @@
 						  </div>
 					  </#list>
 					</#if>
-                      <div class="profile-navbar clearfix" id='profile-navbar' style='display:none'>
+					<#--个人资料未维护-->
+					<div class="no-material" id='no-material'style="display:none">					   
+						<div class="zm-profile-section-list">
+						   <ul>
+							   <span class="nosharelist">这家伙很懒，还没填写个人资料</span>
+						   </ul>
+						</div>
+				    </div>
+                    <div class="profile-navbar clearfix" id='profile-navbar' style='display:none'>
 					    <a class="pjitem current"  href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='' data-tablecolumn='' data-tablecolumn2=''>
 						   最新分享
 						   <span class="num">
@@ -436,7 +444,7 @@
                       </div>
 					  <div class='profile-navbar clearfix' id='fans-navbar' style='display:none'>
 					     <a class="pjitem current" href="javascript:void(0)" data-userid='${userInfo.userid}'>
-							<#if userInfo.userid==(Session.user.userid)!>我关注的人<#else>他关注的人</#if><span class="num">
+							<#if userInfo.userid==(Session.user.userid)!>我的关注<#else>他的关注</#if><span class="num">
 									   <#if (atdAndFans)??>
 									     ${atdAndFans.attenManSum}
 									   <#else>
@@ -485,7 +493,6 @@
 					     </#if>
 					  </div>	
                       <div id='zh-profile-follows-list' class='zh-profile-follows-list' style='display:none'>
-                          
 					      <div class="zh-general-list clearfix">
 						  </div>
 					  </div>					  
@@ -503,7 +510,7 @@
 									 </#if>
 								 </#list>
 							   </span>
-                               <span class="count-concern">我关注的人</span>
+                               <span class="count-concern">我的关注</span>
                             </a>
 						   <#else>
 						    <a href="javascript:void(0)" self="_self" id='otheratten' data-userid='${userInfo.userid}'>
@@ -514,7 +521,7 @@
 								   0
 								 </#if>
 							   </span>
-                               <span class="count-concern">他关注的人</span>
+                               <span class="count-concern">他的关注</span>
                              </a>
                            </#if>							
                           </p>

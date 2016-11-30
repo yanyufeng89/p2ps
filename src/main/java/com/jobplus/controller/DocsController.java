@@ -1,12 +1,8 @@
 package com.jobplus.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,15 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
@@ -31,9 +24,11 @@ import com.jobplus.pojo.DocComment;
 import com.jobplus.pojo.Docs;
 import com.jobplus.pojo.DocsLiked;
 import com.jobplus.pojo.MyCollect;
+import com.jobplus.pojo.OperationSum;
 import com.jobplus.pojo.Page;
 import com.jobplus.pojo.User;
 import com.jobplus.pojo.response.BaseResponse;
+import com.jobplus.pojo.response.DocsResponse;
 import com.jobplus.service.IDocCommentService;
 import com.jobplus.service.IDocsLikedService;
 import com.jobplus.service.IDocsService;
@@ -464,6 +459,107 @@ public class DocsController {
 	
 	
 	/**
+	 * 回收站文档删除
+	 * @param request
+	 * @param response
+	 * @param condition
+	 * @return
+	 */
+	@RequestMapping(value = "/gbgDelDocs", method = RequestMethod.POST)
+	@ResponseBody
+	public String gbgDelDocs(HttpServletRequest request, HttpServletResponse response,@RequestParam(required=true) String condition) {
+		DocsResponse DocsResponse = new DocsResponse();
+		try {
+			String userid = (String) request.getSession().getAttribute("userid");
+			if (!StringUtils.isBlank(userid)) {
+				int ret = 0;
+				// 拼装成数组 "1,2,3" ——> [1,2,3]
+				if (condition.length() > 0) {
+					String conditions[] = condition.split(",");
+					//彻底删除
+					ret = docsService.gbgDelDocs(conditions,"0");
+				}
+				if (ret > 0) {
+					logger.info("**gbgDelDocs **回收站文档    删除 ***condition==" + JSON.toJSONString(condition) + "   userid=="
+							+ userid );
+					//获取统计数 
+					OperationSum operationSum = userService.getOperationSum(request);
+					DocsResponse.setOperationSum(operationSum);
+					DocsResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					DocsResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				} else {
+					DocsResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					logger.info("*******gbgDelDocs ****回收站文档    删除 * *999*****");
+				}
+				return JSON.toJSONString(DocsResponse);
+			} else {
+				DocsResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				logger.info("*******gbgDelDocs ***回收站文档    删除 ** 失败 999*****");
+				return JSON.toJSONString(DocsResponse);
+			}
+		} catch (Exception e) {
+			DocsResponse.setReturnMsg(e.getMessage());
+			DocsResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("*******gbgDelDocs***回收站文档    删除 **失败 999*****" + e.getMessage());
+			return JSON.toJSONString(DocsResponse);
+		}
+	}
+	/**
+	 * 回收站文档还原
+	 * @param request
+	 * @param response
+	 * @param condition
+	 * @param ispublic
+	 * @return
+	 */
+	@RequestMapping(value = "/gbgReBackDocs", method = RequestMethod.POST)
+	@ResponseBody
+	public String gbgReBackDocs(HttpServletRequest request, HttpServletResponse response,@RequestParam(required=true) String condition,
+			@RequestParam(required=true) String ispublic) {
+		DocsResponse DocsResponse = new DocsResponse();
+		try {
+			String userid = (String) request.getSession().getAttribute("userid");
+			if (!StringUtils.isBlank(userid)) {
+				int ret = 0;
+				// 拼装成数组 "1,2,3" ——> [1,2,3]
+				if (condition.length() > 0 && ispublic.length()>0) {
+					
+					String conditions[] = condition.split(",");
+					//文档还原
+					ret = docsService.gbgReBackDocs(conditions, userid, ispublic, "1");
+				}
+				if (ret > 0) {
+					logger.info("**gbgReBackDocs **回收站文档还原***condition==" + JSON.toJSONString(condition) + "   userid=="
+							+ userid );
+					// 个人操作数之类的信息放入session
+					userService.getMyHeadTopAndOper(request);
+					//获取统计数 
+					OperationSum operationSum = userService.getOperationSum(request);
+					DocsResponse.setOperationSum(operationSum);
+					DocsResponse.setReturnMsg(ConstantManager.SUCCESS_MESSAGE);
+					DocsResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
+				} else {
+					DocsResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+					logger.info("*******gbgReBackDocs **回收站文档还原*999*****");
+				}
+				return JSON.toJSONString(DocsResponse);
+			} else {
+				DocsResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+				logger.info("*******gbgReBackDocs **回收站文档还原* 失败 999*****");
+				return JSON.toJSONString(DocsResponse);
+			}
+		} catch (Exception e) {
+			DocsResponse.setReturnMsg(e.getMessage());
+			DocsResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
+			logger.info("*******gbgReBackDocs**回收站文档还原*失败 999*****" + e.getMessage());
+			return JSON.toJSONString(DocsResponse);
+		}
+	}
+	
+	
+	
+	
+	/**
 	 * 暂时不用
 	 * 多文件上传保存   
 	 * 
@@ -472,7 +568,7 @@ public class DocsController {
 	 * @return
 	 * @throws IllegalStateException
 	 * @throws IOException
-	 */
+	 *//*
 	@RequestMapping("/upload2" )  
 	  public String upload2(@RequestParam("textfield") MultipartFile[] files,HttpServletRequest request,HttpServletResponse response, Model model) throws IllegalStateException, IOException {  
 	      //创建一个通用的多部分解析器  		
@@ -528,6 +624,6 @@ public class DocsController {
 	          
 	      }  
 	      return "sharein/upload/uploadTopic";  
-	  }  
+	  }  */
 	
 }

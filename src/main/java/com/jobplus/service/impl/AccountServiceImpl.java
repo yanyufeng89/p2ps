@@ -94,7 +94,7 @@ public class AccountServiceImpl implements IAccountService {
         actd.setAccountid(accountid);
         
         ret = this.adOrDecAccount(act, actd);
-        logger.info("积分扣减**ret==" + ret +"  " + actd.getCHANGECAUSES()[changecause] + " 值："+ changevalue);
+        logger.info("积分扣减或增加(CHANGETYPES = {1,2}; 1增加  2减少)*changetype=" + changetype+" *ret==" + ret +"  " + actd.getCHANGECAUSES()[changecause] + " 值："+ changevalue);
 		return ret;
 	}
 

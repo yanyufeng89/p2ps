@@ -73,6 +73,9 @@ public class SmsServiceImpl implements ISmsService{
 		map.put("90","下载了您的文档");
 		map.put("100","打赏了您的文章");
 		map.put("110","采纳您的回答");
+		
+		//企业
+		map.put("1000","评论了您的主页快讯");
 
 		urlMap.put("tbl_user","");
 		urlMap.put("tbl_topics","/topics/getTopicsDetail/");
@@ -93,6 +96,9 @@ public class SmsServiceImpl implements ISmsService{
 		urlMap.put("tbl_books_share","/books/getBookDetail/");
 		urlMap.put("tbl_books_isLiked","/books/getBookDetail/");
 		urlMap.put("tbl_docs_isLiked","/docs/getDocsDetail/");
+		
+		//企业快讯
+		urlMap.put("tbl_company_news","/myHome/getHomePage/");
 		
 		
 	}	
@@ -315,8 +321,11 @@ public class SmsServiceImpl implements ISmsService{
 	public Page<Sms> getAllSms(Sms record) {
 		Page<Sms> page = new Page<Sms>();
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
-		record.setPageSize(page.getPageSize());
-		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		//此处修改为每页8条  page.pageSize 相应的改变     原:page.getPageSize()
+		record.setPageSize(8);
+		page.setPageSize(8);
+		
+		record.setLimitSt(record.getPageNo() * 8 - 8);
 		int count = smsDao.getAllSmsCount(record);
 		if(count < 1)
 			return page;

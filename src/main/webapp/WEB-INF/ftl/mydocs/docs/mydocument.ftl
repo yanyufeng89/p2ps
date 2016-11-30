@@ -17,16 +17,16 @@
 		<div class="uc-aside">
 		<div class="uc-user-box">
 		<div class="<#if Session.user.usertype==2>img-business-center<#else>img-center</#if>">
-		 <a  href="/myCenter/getMyHeadTop" target="_self">
+		 <a  href="<#if Session.user.usertype==2>/comp/getHomePage/${Session.user.userid}?isReview=0<#else>/myCenter/getMyHeadTop</#if>" target="_self">
 		  <#if (Session.user.headicon)?? && Session.user.headicon?length gt 0>
 		    <img src="${Session.user.headicon}" width='100' height='100' alt="个人头像"  class='lazy'>
 		  <#else>
-		    <img src="/image/myphoto.jpg" width='100' height='100' alt="个人头像" class='lazy'>
+		    <img src="/image/<#if Session.user.usertype==2>cm-defaultIcon100.jpg<#else>myphoto.jpg</#if>" width='100' height='100' alt="个人头像" class='lazy'>
 		  </#if>
 		 </a>
 		</div>
 		<p class="user-name">
-			<a class="name-link" href="/myCenter/getMyHeadTop" target="_self">
+			<a class="name-link" href="<#if Session.user.usertype==2>/comp/getHomePage/${Session.user.userid}?isReview=0<#else>/myCenter/getMyHeadTop</#if>" target="_self">
 	          <#if (Session.user)??>
 		           ${Session.user.username}
 		      </#if>
@@ -38,7 +38,7 @@
 		</p>
         <p class="user-level">
           <#if Session.user.usertype==2>
-		    <a href="javascript:void(0)" target="_blank">&nbsp;进入公司主页</a> 
+		    <a href="/comp/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入公司主页</a> 
 		  <#else>
 		    <a href="/myHome/getHomePage/${Session.user.userid}?isReview=0" target="_blank">&nbsp;进入个人主页</a>
 		  </#if>
@@ -120,13 +120,14 @@
 			<div class="uc-mydocshare" style='display:none'>
 			</#if>
 			   <div class="console-box">
-					<a <#if (ispublic)??><#if (ispublic==1)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded'>已分享</a>
-					<a <#if (ispublic)??><#if (ispublic==0)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded?ispublic=0'>私有</a>
+					<a <#if (ispublic)?? && record.isvalid!=2><#if (ispublic==1)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded'>已分享</a>
+					<a <#if (ispublic)?? && record.isvalid!=2><#if (ispublic==0)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded?ispublic=0'>私有</a>
+					<a <#if (record.isvalid==2)>class="current"</#if> href='/myCenter/getMyDocsUploaded?isvalid=2'>回收站</a>
 					<#-- <a <#if (ispublic)??><#if (ispublic==2)>class="current"</#if></#if> href='/myCenter/getMyDocsUploaded?ispublic=2'>匿名分享</a> -->	
 	           </div>
 	           <!-- 首先判断是否有上传的内容 没有的话 就显示为隐藏 -->
 	           <div id="sharecontent">
-	             <#if (ispublic)??>
+	             <#if (ispublic)?? && record.isvalid!=2>
 	               <#if (ispublic==1)>
 	               <div class="successshare">
 	               <#-- 公开的文档删除  需要扣除财富值 -->
@@ -156,14 +157,14 @@
 							      <#list docsPage.list as list>
 								         <li>
 								          <div class='w300 fs14 fc3 ib dochidden'>
-								             <div class="checkbox chk" data-docid="${list.id}" data-ispublic='${list.ispublic}' data-name="${list.title}" ></div>
+								             <div class="checkbox chk" data-docid="${list.id}" data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  data-name="${list.title}" ></div>
 								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
 								           
 								           <#if list.isconverter!=1 && list.isconverter!=3>	
 								           <#-- 状态为提交中： 先查询是否转换成功  是跳转 否则 return false  href="/docs/getDocsDetail/${list.id}" -->							           
-								             <a data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle notCvt' target="_blank" title="${list.title}">${list.title}</a>
+								             <a data-docid='${list.id}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  class='doctitle notCvt' target="_blank" title="${list.title}">${list.title}</a>
 								             <#else>
-								              	 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle <#if list.isconverter!=1>disabled</#if>' target="_blank" title="${list.title}">${list.title}</a>
+								              	 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  class='doctitle <#if list.isconverter!=1>disabled</#if>' target="_blank" title="${list.title}">${list.title}</a>
 								             </#if>
 
 								          </div>
@@ -204,10 +205,10 @@
 								             ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
 								          <div class='w119 ib operate ilb'>
-								              <a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
-								                <b class="iconfont pr2"></b>修改
-								              </a>
-								              <span data-id='${list.id}' data-name='${list.title}' data-ispublic='${list.ispublic}' data-type='1'>
+									          	<a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
+									                <b class="iconfont pr2"></b>修改
+									              </a>
+								              <span class='dltDc' data-id='${list.id}' data-name='${list.title}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  data-type='1'>
 								                  <b class="iconfont pr2"></b>
 								                                            删除
 								               </span>
@@ -219,7 +220,7 @@
 					     </ul>
 					   </div>
 		             </div>
-		             <#if (docsPage.last)??>
+		             <#if (docsPage.last)?? && record.isvalid!=2>
 						 <#if (docsPage.last gt 1)>
 							<div class='page-inner'>
 							  <div class="ui-pager pager-center">
@@ -271,9 +272,9 @@
 								             </#if>-->
 								              <#if list.isconverter!=1 && list.isconverter!=3>	
 								           <#-- 状态为提交中： 先查询是否转换成功  是跳转 否则 return false  href="/docs/getDocsDetail/${list.id}" -->							           
-								             <a data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle notCvt' target="_blank" title="${list.title}">${list.title}</a>
+								             <a data-docid='${list.id}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  class='doctitle notCvt' target="_blank" title="${list.title}">${list.title}</a>
 								             <#else>
-								              	 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}' data-ispublic='${list.ispublic}' class='doctitle <#if list.isconverter!=1>disabled</#if>' target="_blank" title="${list.title}">${list.title}</a>
+								              	 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  class='doctitle <#if list.isconverter!=1>disabled</#if>' target="_blank" title="${list.title}">${list.title}</a>
 								             </#if>
 								          </div>
 								          <div class='w165 ib'>
@@ -292,10 +293,10 @@
 								              ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
 								          <div class='w125 ib operate'>
-								              <a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
-								                <b class="iconfont pr2"></b>修改
-								              </a>
-								              <span data-id='${list.id}' data-name='${list.title}' data-type='1'>
+									          	<a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
+									                <b class="iconfont pr2"></b>修改
+									              </a>
+								              <span class="dltDc" data-id='${list.id}' data-name='${list.title}' data-type='1'>
 								                  <b class="iconfont pr2"></b>
 								                                            删除
 								              </span>
@@ -315,6 +316,95 @@
 								 
 								  <div class="pager-inner">
 									<div id="docprivatepaging" class="page"></div>
+									
+								  </div>
+								
+								</div>
+							  </div>
+							</div>
+						 </#if>
+					  </#if>
+		           </div>
+		           <#if (record.isvalid)??>
+		             <#if (record.isvalid==2)>
+		                   <div class="garbage">
+		             <#else>
+		                   <div class="garbage" style='display:none'>
+		             </#if>
+		           <#else>
+		                   <div class="garbage" style='display:none'>
+		           </#if>
+		              <div class="docs-list-box">
+		                  <div class='delete-box normal-console-box clearfix'>
+		                     <span class="remove" data-type='1'><b class="iconfont"></b>&nbsp;&nbsp;删除</span>
+		                  </div>
+			               <div class="status-box">
+							   <div class="w425 ib"><div class="checkbox select-all"></div>文档名称</div>
+							   <div class="w165 ib">文档状态</div>
+							   <div class="w165 ib">上传时间</div>
+							   <div class="w125 ib">操作</div>
+						   </div>
+						   <div class="docs-list">
+						      <ul>
+					           <#if (docsPage)??>
+							      <#list docsPage.list as list>
+								         <li>
+								          <div class='w405 fs14 fc3 ib dochidden'>
+								             <div class="checkbox chk" data-docid="${list.id}" data-name="${list.title}"></div>
+								             <b class="ic ic-${list.docsuffix?lower_case} mr14"></b>
+								             <#--<#if list.title?index_of(list.docsuffix)!=-1>
+								               <#assign ctitle=list.title?substring(0,list.title?index_of(list.docsuffix)?number-1) />
+								               <a href="/docs/getDocsDetail/${list.id}"  data-docid='${list.id}'  data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${ctitle}">${ctitle}</a>
+								             <#else>
+								               <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}'  data-isconverter='${list.isconverter}' class='doctitle' target="_blank" title="${list.title}">${list.title}</a>
+								             </#if>-->
+								              <#if list.isconverter!=1 && list.isconverter!=3>	
+								           <#-- 状态为提交中： 先查询是否转换成功  是跳转 否则 return false  href="/docs/getDocsDetail/${list.id}" -->							           
+								             <a data-docid='${list.id}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  class='doctitle notCvt' target="_blank" title="${list.title}">${list.title}</a>
+								             <#else>
+								              	 <a href="/docs/getDocsDetail/${list.id}" data-docid='${list.id}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  class='doctitle <#if list.isconverter!=1>disabled</#if>' target="_blank" title="${list.title}">${list.title}</a>
+								             </#if>
+								          </div>
+								          <div class='w165 ib'>
+								             <#-- 1:成功  0:未转换 3:转换失败 2：转换中 -->
+								             <#if list.isconverter==1>
+								             	上传成功
+								             <#elseif list.isconverter==0 || list.isconverter==2>
+								             <b class='ib tijiao'></b>审核中
+								             <#elseif list.isconverter==3>
+								                                                     审核未通过
+								             <#else>
+								              	<b class='ib tijiao'></b>审核中
+								             </#if>
+								          </div>
+								          <div class="w165 ib">
+								              ${list.createtime?string("yyyy-MM-dd")}
+								          </div>
+								          <div class='w125 ib operate'>
+								              <#-- 回收站文档还原 -->
+										       <span class='gbgrbk' data-id='${list.id}' data-name='${list.title}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  data-type='1'>
+								                                            还原
+								               </span>
+								              <span data-id='${list.id}' data-name='${list.title}' data-type='1'>
+								                  <b class="iconfont pr2"></b>
+								                                            删除
+								              </span>
+								          </div>
+								        </li>
+							       
+							       </#list>
+						       </#if>
+					        </ul>
+						   </div>
+			            </div>
+			            <#if (docsPage.last)??>
+						 <#if (docsPage.last gt 1)>
+							<div class='page-inner'>
+							  <div class="ui-pager pager-center">
+								<div class='pager'>
+								 
+								  <div class="pager-inner">
+									<div id="docgarbagepaging" class="page"></div>
 									
 								  </div>
 								
@@ -364,9 +454,17 @@
 								             ${list.createtime?string("yyyy-MM-dd")}
 								          </div>
 								          <div class='w119 ib operate'>
-								              <a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
-								                <b class="iconfont pr2"></b>修改
-								              </a>
+								              <#-- 回收站文档还原 -->
+									          <#if (list.isvalid==2)>
+										       <span class='gbgrbk' data-id='${list.id}' data-name='${list.title}' data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  data-type='1'>
+								                  
+								                                            还原
+								               </span>
+									          <#else>
+									          	<a href='/myCenter/getDocsDetailForEdit?docId=${list.id}'  class='pr10 modify-doc __HIDE__' target='_blank'>
+									                <b class="iconfont pr2"></b>修改
+									              </a>
+									          </#if>
 								              <span data-id='${list.id}' data-name='${list.title}' data-type='1'>
 								                  <b class="iconfont pr2"></b>
 								                                            删除
@@ -430,7 +528,7 @@
 									    <a href="/docs/getDocsDetail/${list.objectid}" target="_blank" title="${atitle}">${atitle}</a>
 				                    <#else>				                       
 				                    </#if>-->
-				                     <a href="/docs/getDocsDetail/${list.objectid}" data-ispublic='${list.ispublic}' target="_blank" title="${list.docs.title}">${list.docs.title}</a>
+				                     <a href="/docs/getDocsDetail/${list.objectid}" data-ispublic='${list.ispublic}' data-isvalid='${list.isvalid}'  target="_blank" title="${list.docs.title}">${list.docs.title}</a>
 				                </div>
 				                <div class='w140 ib il'>
 				                  ${list.docs.downsum}
@@ -573,6 +671,18 @@
 					itemsOnPage:${docsPage.pageSize},
 					cssStyle: 'light-theme',
 					moduleType:'docprivate'
+				});
+			});
+	  </#if>
+
+
+	  <#if (docsPage.list)??>
+		  $(function(){
+				$("#docgarbagepaging").pagination({
+					items: ${docsPage.count},
+					itemsOnPage:${docsPage.pageSize},
+					cssStyle: 'light-theme',
+					moduleType:'docgarbage'
 				});
 			});
 	  </#if>

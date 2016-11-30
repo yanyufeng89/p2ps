@@ -80,7 +80,7 @@ public class IndexController {
 		mv = homePageService.getHome(mv);
 		mv.addObject("latestDatas", indexService.getLatestShareData());
 		mv.addObject("hotShareDataMap", indexService.getHotShareDataMap());
-		mv.addObject("recommDatas", indexService.getHotRecommDataBySolr());
+		mv.addObject("recommDatas", indexService.getHotRecommData());
 		mv.addObject("indexPage", "1");
 		mv.setViewName("knowledgeBaseIndex");
 		// logger.info("**首页信息** mv=="+mv);

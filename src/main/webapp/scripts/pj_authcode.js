@@ -98,7 +98,7 @@
 			}
 		}
 		function update_w(num,t){
-			document.getElementById('phonecode').style.backgroundColor="#ccc";
+			document.getElementById('pj-send-code').style.backgroundColor="#ccc";
 			if(num == t) {
 					document.getElementById('pj-send-code').innerHTML='重新发送';
 					document.getElementById('pj-send-code').style.backgroundColor="#1b85d5";

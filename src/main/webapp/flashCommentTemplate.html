@@ -1,0 +1,68 @@
+<!--快讯的评论 列表-->
+<div class="panel-container">
+  <div class="question-invite-panel"></div>
+  <div class="cm-comment-box clearfix" data-count='{$T.topiccount}'>
+    <i class="icon icon-spike zm-comment-bubble" style="display: inline; left:55px;"></i>
+    <a class="zg-anchor-hidden" name="comment-0"></a>
+    <div class="zm-comment-list">
+     {#foreach $T.flashcommentList as commlist}
+      <div class="zm-item-comment" data-id="{$T.commlist.typeid}" tabindex="-1" aria-label="评论">
+        <a class="zg-anchor-hidden" name="comment-{$T.commlist.typeid}"></a>
+         {#if $T.commlist.tmpHeadIcon}
+            {#if $T.commlist.tmpUserName}
+             <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">
+                <img src="{$T.commlist.tmpHeadIcon}" alt="个人头像" class="zm-item-img-avatar lazy" data-userid='{$T.commlist.userid}'>
+             </a>
+            {#else}
+                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
+            {#/if}
+         {#else}
+           {#if $T.commlist.tmpUserName}
+             <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">
+                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy" data-userid='{$T.commlist.userid}'>
+             </a>
+           {#else}
+             <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
+           {#/if}
+         {#/if}
+       
+        <div class="zm-comment-content-wrap">
+          <div class="zm-comment-content">
+            {$T.commlist.commcontent}
+          </div>
+          <div class="zm-comment-ft">
+		      <span class="date">{$T.commlist.showcreatetime}</span>
+		      <a href="javascript:void(0)" class="del zm-comment-op-link needsfocus" name="delcomment" data-reply='{$T.commlist.id}'>
+		          <i class="zg-icon zg-icon-comment-del"></i>删除
+		      </a>
+          </div>
+          <div class='zm-comment-form' style='display:none'></div>
+        </div>
+      </div>
+     {#/for}
+     {#if $T.last=='1'}
+	     <div class='page-inner'>
+		  <div class="ui-pager pager-center">
+		    <div class='pager'>
+			 
+			  <div class="pager-inner">
+			    <div id="flashcompaging" class="page"></div>
+			  </div>
+			
+			</div>
+		  </div>
+		 </div>
+	 {#/if}
+    </div>
+    <div class="cm-comment-form zm-comment-box-ft">
+      <textarea  placeholder="我说两句…"  class='zm-comment-editable pj-replaycontent'></textarea>
+      <div class="cm-command zg-clear">
+        <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+		<span class="item-msg-content" style='display:none'>文字超出最大限制</span>
+        <span  name="addnew" class="flash-comment zg-btn-blue" data-topicid='{$T.topicid}'>评论</span>
+        <span  name="closeform" class="_CommentForm_cancelButton_cy3u _CommentBox_textButton_3t9_">取消</span>
+      </div>
+    </div>
+  </div>
+  
+</div>

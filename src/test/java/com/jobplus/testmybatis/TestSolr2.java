@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.alibaba.fastjson.JSON;
+import com.jobplus.pojo.BusiAreaLib;
 import com.jobplus.pojo.SkillLibrary;
 import com.jobplus.pojo.Tags;
 import com.jobplus.utils.SolrJUtils;
@@ -150,18 +151,6 @@ public class TestSolr2 {
        //查询a和b下面的数据，
 		
 		System.out.println("++++++++++++++++++++++"+solrJUtils.findSkill("软件"));
-		System.out.println("++++++++++++++++++++++"+solrJUtils.findUser("anan.wang","29"));
-        HttpSolrClient sc = new HttpSolrClient("http://192.168.0.39:18080/solr/skillCore");
-        ModifiableSolrParams solrParams = new ModifiableSolrParams();
-        solrParams.set("q", "skillname:"+"*");
-        //solrParams.set("q.op", "AND");//设置查询关系
-        QueryResponse rsp = sc.query(solrParams);
-        System.out.println("命中数量："+rsp.getResults().getNumFound());
-        logger.info(JSON.toJSONString(rsp.getResults()));
-        for(SolrDocument sd:rsp.getResults()){
-            System.out.println(sd);
-        }
-        sc.close();
     }
 	
 	@Test
@@ -180,5 +169,21 @@ public class TestSolr2 {
 		String str = SolrJUtils.findSchool("清华");
 		logger.info(">>>>>>>>>>>>>>>>>findschool" + JSON.toJSONString(str));
 	}
+	
+	
+	@Test
+	public void addBusiArea() throws Exception {
+		// doc 48 /book 8/article 12/courses 44/site topics 42
+		BusiAreaLib busiAreaLib = new BusiAreaLib();
+		busiAreaLib.setId(4);
+		busiAreaLib.setBusiareaname("工程制造");
+		solrJUtils.addBusiAreaIndexToSolr(busiAreaLib);
+	}
+	@Test
+	public void findBusiArea()throws Exception{
+       //查询a和b下面的数据，
+		
+		System.out.println("++++++++++++++++++++++"+solrJUtils.findBusiArea("软件"));
+    }
 
 }

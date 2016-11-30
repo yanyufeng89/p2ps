@@ -78,7 +78,7 @@ public class Sms extends PageParent implements Serializable{
 			"tbl_article_share",
 			"tbl_article_isLiked",
 			"tbl_sites_share",
-    		"tbl_sites_isliked","tbl_user","tbl_docs_isLiked","tbl_topics"};
+    		"tbl_sites_isliked","tbl_user","tbl_docs_isLiked","tbl_topics","tbl_company_news"};
 //    private String []TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",
 //    		"tbl_docs_comment tt right join tbl_docs t on tt.docId = t.ID",
 //    		"tbl_books_share tt right join tbl_books t on tt.commId = t.ID",
@@ -109,18 +109,18 @@ public class Sms extends PageParent implements Serializable{
 //	}
 
 	/**
-	 * {"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",5
+	 * {"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",
 			"tbl_docs_comment",
 			"tbl_books_share",
 			"tbl_books_isLiked",
 			"tbl_topics_comment",
-			"tbl_topics_isLiked",10
+			"tbl_topics_isLiked",
 			"tbl_courses_share",
-			"tbl_courses_sLiked",
+			"tbl_courses_Liked",
 			"tbl_article_share",
 			"tbl_article_isLiked",
-			"tbl_sites_share",15
-    		"tbl_sites_isliked","tbl_user","tbl_docs_isLiked","tbl_topics"};
+			"tbl_sites_share",
+    		"tbl_sites_isliked","tbl_user","tbl_docs_isLiked","tbl_topics","tbl_company_news"}};
 	 */
 	public String[] getTABLENAMES() {
 		return TABLENAMES;

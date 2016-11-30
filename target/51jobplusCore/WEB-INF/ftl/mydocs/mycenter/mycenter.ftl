@@ -13,7 +13,7 @@
     <body id='centertop'>
         <div  class="page">
             <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
-            <div id="bd" style="margin:0 auto; width:1200px">
+            <div id="bd" class='center-top'>
                 <div id="bd-1">
                     <div class='top-card' id="top-card">
                         <div class="profile-card vcard entity">
@@ -27,7 +27,7 @@
                                 <form method="POST"  id="previewImage" enctype="multipart/form-data">
                                   <input name='headIconFile' class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this)" />
                                 </form>
-                              </div>
+                            </div>
                             <div class="profile-overview">
                                 <div class="profile-overview-content">
                                     <div id="member-498233445" class="masthead">
@@ -128,7 +128,7 @@
                                 </div>
 								<div class="profile-aux">
                                       <div class="profile-actions">
-                                           <a href="/myHome/getHomePage/${Session.user.userid}" class="preview-profile button-primary">个人资料预览</a>
+                                           <a href="/myHome/getHomePage/${Session.user.userid}" class="preview-profile button-primary">个人主页预览</a>
 									  </div>
                                </div>
                             </div>
@@ -442,12 +442,12 @@
 								  <div class='workdescription clearfix'>
 									<span class='description'>
 											<label>工作内容:</label>
-									 <#if (worklist.description)?? && worklist.description?length gt 0>
+									 <#--<#if (worklist.description)?? && worklist.description?length gt 0>-->
 										 <span class='workcontent'>
-										   ${worklist.description}
+										   ${worklist.description!}
 										   <a href="javascript:;" class="zu-edit-button" name="editsdescription" data-currentid='${worklist.id}'><i class="zu-edit-button-icon"></i>修改</a>		 
 										 </span>
-									</#if>
+									<#--</#if>-->
 									</span>
 								  </div>
 							  </div>
@@ -504,7 +504,7 @@
 									 </#if>
 								 </#list>
 							   </span>
-                               <span class="count-concern">我关注的人</span>
+                               <span class="count-concern">我的关注</span>
                              </a>
                           </p>
 						  <p>
@@ -561,6 +561,7 @@
             <script type="text/javascript" src="/scripts/jquery.pinwheel-0.1.0.js"></script>
             <script type="text/javascript" src="/scripts/pj_area.js"></script>
             <script type="text/javascript" src="/scripts/pj_myhomepage.js" charset="UTF-8"></script>
+            <script type="text/javascript" src="/scripts/pj_changeHeadIcon.js" charset="UTF-8"></script>
             <script type="text/javascript" src="/scripts/dateSelect.js"></script>
             <script type="text/javascript" src="/scripts/pj_msgbox.js"></script>
             <script type="text/javascript" src="/scripts/waterbubble.js"></script>

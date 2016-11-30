@@ -12,6 +12,7 @@
 	 <script type="text/javascript" src="/scripts/jquery-jtemplates.js"></script>
      <script type="text/javascript" src="/scripts/pj_wap.js"></script>
      <script type="text/javascript" src="/scripts/pj_constant.js"></script>
+     <script type="text/javascript" src="/scripts/pj_wap_searchResult.js"></script>
      <script type="text/javascript" src="/scripts/pj_wap_myhomepage.js"></script>
      <script type="text/javascript">
 	         var phoneWidth =  parseInt(window.screen.width);
@@ -33,7 +34,7 @@
     <div class="wrap bc">
       <#include "/mydocs/commonTemplate/topandtail/waptop.ftl"/>
       <div class='search-box' style='display:none'>
-		    <input type="text" id="searchres_input" class="search_input ui-autocomplete-input" name="Condition"  tabindex="1" maxlength="64" autocomplete="off"  value="">
+		    <input type="text" id="searchres_input" class="search_input ui-autocomplete-input" name="Condition" placeholder="JobPlus海量知识库" tabindex="1" maxlength="64" autocomplete="off"  value="">
             <botton name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier" id="searches-form-submit" value="分类搜索"></botton>
 	  </div>
 	  <div class="top-ceng">
@@ -342,10 +343,17 @@
 						  </div>
 					  </#list>
 					</#if>
-					
+					<#--个人资料未维护-->
+					<div class="no-material" id='no-material'style="display:none">					   
+						<div class="zm-profile-section-list">
+						   <ul>
+							   <span class="nosharelist">这家伙很懒，还没填写个人资料</span>
+						   </ul>
+						</div>
+				    </div>
                     <div class='profile-navbar clearfix' id='fans-navbar' style='display:none'>
 					     <a class="pjitem current" href="javascript:void(0)" data-userid='${userInfo.userid}'>
-							<#if userInfo.userid==(Session.user.userid)!>我关注的人<#else>他关注的人</#if><span class="num">
+							<#if userInfo.userid==(Session.user.userid)!>我的关注<#else>他的关注</#if><span class="num">
 									   <#if (atdAndFans)??>
 									     ${atdAndFans.attenManSum}
 									   <#else>

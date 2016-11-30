@@ -4,7 +4,7 @@ $(function () {
     	$("#hot-recommend").jCarouselLite({
     		vertical: true,
     		hoverPause:true,
-    		visible:7,
+    		visible:8,
     		auto:955,
     		speed:2000
     	});

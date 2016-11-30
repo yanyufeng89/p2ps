@@ -158,12 +158,29 @@ addEvent(window, 'storage', function (event) {
     }
 });
 
+function setCurrentLocationForBackUrlCookie() {
+    var currentUrl = window.location.href.replace("http://", "");
+    if (currentUrl.indexOf("registration") == -1 && currentUrl.indexOf("login") == -1) {
+        var backurl = encodeURI(currentUrl.substring(currentUrl.indexOf(projectName) + projectName.length, currentUrl.length));
+        if (backurl.startWith("?"))
+            backurl = "";
+        else if (backurl.indexOf("?message=") > -1) {
+            backurl = backurl.substring(0, backurl.indexOf("?message="));
+        }
+        setBackUrlCookie(backurl);
+    }
+}
+
 function setBackUrlCookie() {
     var paramName = "backurl=";
     var currentUrl = window.location.href.replace("http://", "");
     var backurl = "";
     if (currentUrl.indexOf(paramName) > -1)
         backurl = encodeURI(currentUrl.substring(currentUrl.indexOf(paramName) + paramName.length, currentUrl.length));
+    setBackUrlCookie(backurl);
+}
+
+function setBackUrlCookie(backurl) {
     $.cookie("backurl", backurl);
 }
 

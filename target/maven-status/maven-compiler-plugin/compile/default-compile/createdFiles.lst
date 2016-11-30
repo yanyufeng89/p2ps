@@ -53,6 +53,7 @@ com\jobplus\pojo\OauthLoginInfo.class
 com\jobplus\dao\PvLogDaoImpl.class
 com\jobplus\dao\SchoolInfoMapper.class
 com\jobplus\thirdparty\weibo4j\model\Source.class
+com\jobplus\dao\CompanyIntroMapper.class
 com\jobplus\pojo\EducationBgrd.class
 com\jobplus\utils\ConstantManager.class
 com\jobplus\service\IRedisService.class
@@ -157,6 +158,7 @@ com\jobplus\thirdparty\weibo4j\model\WeiboException.class
 com\jobplus\service\impl\ReportInfoServiceImpl.class
 com\jobplus\thirdparty\weibo4j\org\json\CDL.class
 com\jobplus\dao\VisitHistoryMapper.class
+com\jobplus\pojo\CpnewsIslikedKey.class
 com\jobplus\pojo\MobileSms.class
 com\jobplus\thirdparty\weibo4j\model\Privacy.class
 com\jobplus\service\impl\SmsServiceImpl.class
@@ -203,6 +205,7 @@ com\jobplus\utils\SishuokCleaner.class
 com\jobplus\thirdparty\weibo4j\model\UserCounts.class
 com\jobplus\utils\BaseRedisDao.class
 com\jobplus\utils\SHAUtil.class
+com\jobplus\pojo\CompanyNews.class
 com\jobplus\thirdparty\weibo4j\Users.class
 com\jobplus\dao\SysLoginLogMapper.class
 com\jobplus\pojo\HotdataInfo.class
@@ -217,14 +220,19 @@ com\jobplus\pojo\LatesdataInfo.class
 com\jobplus\thirdparty\weibo4j\org\json\JSONObject$Null.class
 com\jobplus\dao\SitesLikedMapper.class
 com\jobplus\pojo\response\DocsResponse.class
+com\jobplus\pojo\BusiAreaLib.class
 com\jobplus\pojo\Suggestion.class
 com\jobplus\controller\ManageController.class
 com\jobplus\controller\ThirdPartyLoginController.class
+com\jobplus\controller\CompanyController.class
 com\jobplus\controller\AccountController.class
+com\jobplus\pojo\CpnewsComment.class
 com\jobplus\controller\MyHomeController.class
 com\jobplus\thirdparty\weibo4j\http\ImageItem.class
 com\jobplus\thirdparty\weibo4j\org\json\JSONWriter.class
 com\jobplus\controller\SitesController.class
+com\jobplus\dao\BusiAreaLibMapper.class
+com\jobplus\pojo\CompanyIntro.class
 com\jobplus\service\IUpdTableColumnService.class
 com\jobplus\utils\ContextFinalizer.class
 com\jobplus\controller\TopicsController.class
@@ -252,6 +260,7 @@ com\jobplus\thirdparty\weibo4j\model\PostParameter.class
 com\jobplus\service\impl\MycollectServiceImpl.class
 com\jobplus\service\ISitesService.class
 com\jobplus\thirdparty\weibo4j\model\UserWapper.class
+com\jobplus\dao\CompanyNewsMapper.class
 com\jobplus\thirdparty\weibo4j\model\Status.class
 com\jobplus\thirdparty\weibo4j\Suggestion.class
 com\jobplus\pojo\TypeConfig.class
@@ -369,6 +378,7 @@ com\jobplus\pojo\BookShare.class
 com\jobplus\utils\SolrJUtils.class
 com\jobplus\service\ISupportListService.class
 com\jobplus\dao\SequenceMapper.class
+com\jobplus\dao\CpnewsIslikedMapper.class
 com\jobplus\service\IBookShareService.class
 com\jobplus\utils\SishuokWhitelist$TypedValue.class
 com\jobplus\dao\TopicsLikedMapper.class
@@ -379,6 +389,7 @@ com\jobplus\service\IIndexService.class
 com\jobplus\thirdparty\weibo4j\model\RepostTimelineIds.class
 com\jobplus\thirdparty\weibo4j\model\MentionsIds.class
 com\jobplus\pojo\Courses.class
+com\jobplus\dao\CpnewsCommentMapper.class
 com\jobplus\dao\MyFolderMapper.class
 com\jobplus\thirdparty\weibo4j\model\Version.class
 com\jobplus\utils\HTTPCommonUtil$2.class

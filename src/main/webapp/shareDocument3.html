@@ -660,13 +660,81 @@
 	       	}
 	    });
 	 } 
-  
-  
+	//回收站文档删除
+	 	function gbgDelDocs(){
+	 		//var conditions ='1,2,3,4';
+		  	//console.log(conditions);
+		  	//console.log(JSON.stringify(conditions));
+		  	///var s = JSON.stringify(conditions);
+		   $.ajax({
+	       	type:"POST",
+	       	url:"docs/gbgDelDocs",
+	       	data:{condition:'113966,113954'},
+	       	dataType:"json",
+	       	success:function(data){
+	       		if(data.returnStatus=='000'){//返回成功
+	      			//alert(data.list);
+	          		console.log(data);
+	          		
+	      		}else{//返回失败
+	      		}
+	      		
+	      	}
+	   });
+	}
+	//回收站文档还原
+	 	function gbgReBackDocs(){
+	 		//var conditions ='1,2,3,4';
+		  	//console.log(conditions);
+		  	//console.log(JSON.stringify(conditions));
+		  	///var s = JSON.stringify(conditions);
+		   $.ajax({
+	       	type:"POST",
+	       	url:"docs/gbgReBackDocs",
+	       	data:{condition:'22,23',ispublic:'1,1'},
+	       	dataType:"json",
+	       	success:function(data){
+	       		if(data.returnStatus=='000'){//返回成功
+	      			//alert(data.list);
+	          		console.log(data);
+	          		
+	      		}else{//返回失败
+	      		}
+	      		
+	      	}
+	   });
+	}
+	 	function mInstUser(){
+	 		//var conditions ='1,2,3,4';
+		  	//console.log(conditions);
+		  	//console.log(JSON.stringify(conditions));
+		  	///var s = JSON.stringify(conditions);
+		   $.ajax({
+	       	type:"POST",
+	       	url:"user/mInstUser",
+	       	//data:{condition:'22,23',ispublic:'1,1'},
+	       	dataType:"json",
+	       	success:function(data){
+	       		if(data.returnStatus=='000'){//返回成功
+	      			//alert(data.list);
+	          		console.log(data);
+	          		
+	      		}else{//返回失败
+	      		}
+	      		
+	      	}
+	   });
+	} 
     
     </script>
 </head>
 <body>
 
+	<input type="button" value="mInstUser" onclick="mInstUser()" /><br><br>
+	<input type="button" value="gbgDelDocs" onclick="gbgDelDocs()" /><br><br>
+	<input type="button" value="gbgReBackDocs" onclick="gbgReBackDocs()" /><br><br>
+	
+	
 	<input type="button" value="deleteMyCollects" onclick="deleteMyCollects()" /><br><br>
 	<input type="button" value="getCourseDetail" onclick="getCourseDetail()" /><br><br>
 	<input type="button" value="delSharedCourses" onclick="delSharedCourses()" /><br><br>

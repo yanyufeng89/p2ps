@@ -106,7 +106,7 @@ public class MobileSmsService implements IMobileSmsService {
 			sms.setMobile(mobileNo);
 			sms.setValidatecode(validateCode);
 			sms.setIp(ipAddr);
-			
+			LOG.info("发送验证码***reaultStr==" + reaultStr+"**mobileNo=="+mobileNo+"   validateCode=="+validateCode);
 			mobileSmsDao.insert(sms);
 			//发送短信
 			return str;

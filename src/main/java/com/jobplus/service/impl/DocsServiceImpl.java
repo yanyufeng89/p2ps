@@ -99,7 +99,7 @@ public class DocsServiceImpl implements IDocsService {
 			Docs docs = list.get(i);
 			docs.setId(docsId[i]);
 			//如果是公开的 增加财富值 
-			if(docs.getIspublic()==1)
+			if(docs.getIspublic()!=0)
 				changevalue += new Account().getSCORES()[1];
 			
 		}
@@ -130,6 +130,7 @@ public class DocsServiceImpl implements IDocsService {
 			//跳转页面  分享文档获取的财富值显示
 			int num = 0;
 			//文档分享数   如果是私有不统计
+			@SuppressWarnings("unused")
 			int shareNum = 0;
 			// 文档list
 			List<Docs> docsList = new ArrayList<>();
@@ -241,9 +242,8 @@ public class DocsServiceImpl implements IDocsService {
 					//所选标签总数 +1
 //					tagsService.addOrDecreaseTagUsenumer(tagsArray);
 					
-					//对应用户分享文档数  增加  files.length   st*******  上传一个文件files.length==2;上传两个文件files.length==3
-//					operationSumService.updOperationSum(0, 0, (files.length-1)>0?files.length-1:0,null);
-					operationSumService.updOperationSum(0, 0, shareNum>=0?shareNum:0,null);
+					//对应用户分享文档数  增加  私有公开都计入分享总数
+					operationSumService.updOperationSum(0, 0, docsList.size(),null);
 					//个人操作数之类的信息放入session
 					userService.getMyHeadTopAndOper(request);
 				}else
@@ -271,6 +271,29 @@ public class DocsServiceImpl implements IDocsService {
 			return page;
 		
 		List<Docs> list = docsDao.getMyDocsUploaded(record);
+		if(list.size()>0){
+			
+			page.initialize((long)count,record.getPageNo());
+			page.setList(list);
+			for (Docs docs : list) {
+				//用于前端页面显示
+				docs.setShowcreatetime(DateUtils.formatDate(docs.getCreatetime(), "yyyy-MM-dd"));
+			}
+		}
+		return page;
+	}
+	//回收站文档列表
+	@Override
+	public Page<Docs> getGbgDocs(Docs record) {
+		Page<Docs> page = new Page<Docs>();
+		record.setPageNo(record.getPageNo()==null?1:record.getPageNo());
+		record.setLimitSt(record.getPageNo()*page.getPageSize() - page.getPageSize());
+		record.setPageSize(page.getPageSize());	
+		int count = docsDao.getGbgDocsCount(record);
+		if(count < 1)
+			return page;
+		
+		List<Docs> list = docsDao.getGbgDocs(record);
 		if(list.size()>0){
 			
 			page.initialize((long)count,record.getPageNo());
@@ -339,13 +362,16 @@ public class DocsServiceImpl implements IDocsService {
 	/**
 	 * 批量逻辑删除docs
 	 * @param condition
+	 * @param userid
+	 * @param ispublic
+	 * @param delStatus  只针对放入回收站     删除状态 ：0 彻底删除  2 放入回收站 
 	 * @return
 	 */
 	@Transactional
 	@Override
-	public int deleteDocs(String[] condition,String userid,String ispublic) {
+	public int deleteDocs(String[] condition,String userid,String ispublic,String delStatus) {
 		int ret = 0;
-		ret = docsDao.deleteDocs(condition);
+		ret = docsDao.deleteDocs(condition,Integer.parseInt(delStatus));
 		if(ret>0){
 			//对应用户操作文档数  减少  st*******
 			ret = operationSumService.updOperationSum(0, 1, condition.length,null);
@@ -369,6 +395,61 @@ public class DocsServiceImpl implements IDocsService {
 		}		
 		return ret;
 	}
+	/**
+	 * 回收站删除docs
+	 * @param condition
+	 * @param delStatus  只针对放入回收站     删除状态 ：0 彻底删除  2 放入回收站 
+	 * @return
+	 */
+	@Transactional
+	@Override
+	public int gbgDelDocs(String[] condition,String delStatus) {
+		int ret = 0;
+		ret = docsDao.deleteDocs(condition,Integer.parseInt(delStatus));
+		return ret;
+	}
+	/**
+	 * 回收站 文档还原
+	 * @param condition
+	 * @param userid
+	 * @param ispublic 被还原文档的ispublic
+	 * @param delStatus 删除状态 ：0 彻底删除  2 放入回收站 
+	 * @return
+	 */
+	@Transactional
+	@Override
+	public int gbgReBackDocs(String[] condition, String userid, String ispublic, String delStatus) {
+		int ret = 0;
+		ret = docsDao.deleteDocs(condition, Integer.parseInt(delStatus));
+		if (ret > 0) {
+			// 对应用户操作文档数 增加 st*******
+			ret = operationSumService.updOperationSum(0, 0, condition.length, null);
+			String ispublics[] = ispublic.split(",");
+			// 非私有文档还原个数
+			int num = 0;
+			for (String item : ispublics) {
+				if (!StringUtils.isBlank(item) && !"0".equals(item)) {
+					num++;
+				}
+			}
+			// 不是私有文档还原
+			// 财富值增加
+			if(num > 0)
+				ret = accountService.modAccountAndDetail(Integer.parseInt(userid), 0,
+						ConstantManager.DEAAULT_DOWN_VALUE2 * num, 1, 0,
+						ConstantManager.DEAAULT_DOWN_VALUE2 * num, 16);
+			if (ret == 0) {
+				logger.info("回收站 文档还原  :  对应用户操作文档数  减少  st 失败  userid==" + userid + "  condition=" + condition);
+				return 0;
+			}
+
+		} else {
+			logger.info("回收站 文档还原  :  文档入库     失败 ret ==0  userid==" + userid + "  condition=" + condition);
+			return 0;
+		}
+		return ret;
+	}
+	
 //获取文档详情   浏览次数++
 	@SuppressWarnings("unchecked")
 	@Override
@@ -518,6 +599,8 @@ public class DocsServiceImpl implements IDocsService {
 				//文档所有者增加财富值
 				ret = accountService.modAccountAndDetail(record.getUserid(), 0,  ConstantManager.DEAAULT_DOWN_VALUE2, 
 						1, 0, ConstantManager.DEAAULT_DOWN_VALUE2,16);
+//				//对应用户分享文档数  增加 1  因私有计入统计
+//				operationSumService.updOperationSum(0, 0, 1,null);
 				
 			}else if(!"0".equals(preIsPublic) && "0".equals(isPublic)){
 				//公开或者匿名  改为 私有
@@ -525,6 +608,8 @@ public class DocsServiceImpl implements IDocsService {
 				//扣除财富值
 				ret = accountService.modAccountAndDetail(record.getUserid(), 0, - ConstantManager.DEAAULT_DOWN_VALUE2, 
 						1, 1, ConstantManager.DEAAULT_DOWN_VALUE2,15);
+//				//对应用户分享文档数  减少 1  因私有计入统计
+//				operationSumService.updOperationSum(0, 1, 1,null);
 				
 			}
 		}

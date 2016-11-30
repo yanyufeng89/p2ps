@@ -12,6 +12,7 @@
      <script type="text/javascript" src="/scripts/pj_reg_wap_ajax.js"></script>
      <script type="text/javascript" src="/scripts/js.KinerCode.js"></script>
      <script type="text/javascript" src="/scripts/pj_authcode.js"></script>
+     <script type='text/javascript' src='/scripts/pj_publicMethod.js'></script>
      <script type="text/javascript" src="/scripts/pj_constant.js"></script>
      <script type="text/javascript">
 		 var phoneWidth =  parseInt(window.screen.width);

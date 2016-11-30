@@ -10,8 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="stylesheet" href="/css/css.css" type="text/css" charset="UTF-8">
-    <link rel="stylesheet" href="/css/login.css" type="text/css">
-    <link rel="stylesheet" href="/scripts/layer.css" id="layui_layer_skinlayercss">  
+    <link rel="stylesheet" href="/css/login.css" type="text/css" charset="UTF-8">
+    <!--<link rel="stylesheet" href="/css/layer.css" type="text/css" charset="UTF-8">-->
     <link rel="stylesheet" href="/css/pj_wkcommon_base.css" charset="UTF-8">
     <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/scripts/layer.js"></script>
@@ -26,6 +26,7 @@
                effect: "fadeIn"
            });
        });
+       
      </script>
   </head>
   
@@ -48,10 +49,11 @@
 	      <div class="logoin_cont">
 	        <div class="reg_h1_tit">
 	          <ul class="reg_ul_list clearfix" id='reg' data-active-index='0'>
-	            <li id="reg1" class="reg_h1_icon active">
+	            <li id="reg1" class="tab-nav active">
 	                                   个人注册
 	            </li>
-	            <li id="reg2" class="reg_h1_icon">
+	            <li class='tab-line'></li>
+	            <li id="reg2" class="tab-nav">
 	                                   企业注册
 	            </li>
 	            <span class="pj-navs-slider-bar"></span>
@@ -154,7 +156,6 @@
 	        </div>
 	      </div>
 	    </div>
-	    <input type="hidden" id="usertype" value="1">
 	    <input type="hidden" id="regtype" value="0">
 	    <input type="hidden" id="send" value="0">
  

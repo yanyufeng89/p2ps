@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jobplus.dao.CompanyNewsMapper" >
+  <resultMap id="BaseResultMap" type="com.jobplus.pojo.CompanyNews" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="compId" property="compid" jdbcType="INTEGER" />
+    <result column="imgUrl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="commentSum" property="commentsum" jdbcType="INTEGER" />
+    <result column="likeSum" property="likesum" jdbcType="INTEGER" />
+    <result column="isValid" property="isvalid" jdbcType="INTEGER" />
+    <result column="isTop" property="istop" jdbcType="INTEGER" />
+    <result column="topTime" property="toptime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.CompanyNews" extends="BaseResultMap" >
+    <result column="news" property="news" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, compId, imgUrl, commentSum, likeSum, isValid, isTop, topTime, createTime, updateTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    news
+  </sql>
+  <!-- 分页获取所有企业快讯 -->
+  <select id="getList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.CompanyNews" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />,
+    (SELECT group_concat(tcl.userid) FROM tbl_cpnews_isliked tcl WHERE tcl.newsId=#{id,jdbcType=INTEGER})AS likedIds
+    from tbl_company_news t
+    where t.compId = #{compid,jdbcType=INTEGER}
+    and t.isValid=1 ORDER BY t.isTop,t.topTime,t.updateTime
+    <choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>
+  </select>
+  <!-- 分页获取所有企业快讯条数 -->
+  <select id="getListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.CompanyNews" >
+    select count(*)
+    from tbl_company_news t
+    where t.compId = #{compid,jdbcType=INTEGER}
+    and t.isValid=1 
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_company_news
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_company_news
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jobplus.pojo.CompanyNews" >
+    insert into tbl_company_news (id, compId, imgUrl, 
+      commentSum, likeSum, isValid, 
+      isTop, topTime, createTime, 
+      updateTime, news)
+    values (#{id,jdbcType=INTEGER}, #{compid,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, 
+      #{commentsum,jdbcType=INTEGER}, #{likesum,jdbcType=INTEGER}, #{isvalid,jdbcType=INTEGER}, 
+      #{istop,jdbcType=INTEGER}, #{toptime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{news,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jobplus.pojo.CompanyNews" >
+    insert into tbl_company_news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="compid != null" >
+        compId,
+      </if>
+      <if test="imgurl != null" >
+        imgUrl,
+      </if>
+      <if test="commentsum != null" >
+        commentSum,
+      </if>
+      <if test="likesum != null" >
+        likeSum,
+      </if>
+      <if test="isvalid != null" >
+        isValid,
+      </if>
+      <if test="istop != null" >
+        isTop,
+      </if>
+      <if test="toptime != null" >
+        topTime,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="news != null" >
+        news,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="compid != null" >
+        #{compid,jdbcType=INTEGER},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsum != null" >
+        #{commentsum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="istop != null" >
+        #{istop,jdbcType=INTEGER},
+      </if>
+      <if test="toptime != null" >
+        #{toptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="news != null" >
+        #{news,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.CompanyNews" >
+    update tbl_company_news
+    <set >
+      <if test="compid != null" >
+        compId = #{compid,jdbcType=INTEGER},
+      </if>
+      <if test="imgurl != null" >
+        imgUrl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsum != null" >
+        commentSum = #{commentsum,jdbcType=INTEGER},
+      </if>
+      <if test="likesum != null" >
+        likeSum = #{likesum,jdbcType=INTEGER},
+      </if>
+      <if test="isvalid != null" >
+        isValid = #{isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="istop != null" >
+        isTop = #{istop,jdbcType=INTEGER},
+      </if>
+      <if test="toptime != null" >
+        topTime = #{toptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="news != null" >
+        news = #{news,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.CompanyNews" >
+    update tbl_company_news
+    set compId = #{compid,jdbcType=INTEGER},
+      imgUrl = #{imgurl,jdbcType=VARCHAR},
+      commentSum = #{commentsum,jdbcType=INTEGER},
+      likeSum = #{likesum,jdbcType=INTEGER},
+      isValid = #{isvalid,jdbcType=INTEGER},
+      isTop = #{istop,jdbcType=INTEGER},
+      topTime = #{toptime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      news = #{news,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.CompanyNews" >
+    update tbl_company_news
+    set compId = #{compid,jdbcType=INTEGER},
+      imgUrl = #{imgurl,jdbcType=VARCHAR},
+      commentSum = #{commentsum,jdbcType=INTEGER},
+      likeSum = #{likesum,jdbcType=INTEGER},
+      isValid = #{isvalid,jdbcType=INTEGER},
+      isTop = #{istop,jdbcType=INTEGER},
+      topTime = #{toptime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

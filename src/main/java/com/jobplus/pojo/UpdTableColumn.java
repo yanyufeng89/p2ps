@@ -44,12 +44,15 @@ public class UpdTableColumn {
 	private static String[] COURSESSHARECOLUMNS;
 	private static String[] ARTICLESHARECOLUMNS;
 	private static String[] SITESSHARECOLUMNS;
+	//新增企业快讯表
+	private static String[] COMPANYNEWSCOLUMNS;
 	
 	public static Map<String,String[]> TABLECOLUMN = new HashMap<String,String[]>();
 
 	static{
 		TABLENAMES =  new String[]{"tbl_docs","tbl_books","tbl_topics","tbl_courses","tbl_article","tbl_sites",
-				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share"};
+				"tbl_docs_comment","tbl_books_share","tbl_topics_comment","tbl_courses_share","tbl_article_share","tbl_sites_share",
+				"tbl_company_news"};
 		
 		DOCSCOLUMNS = new String[]{"collectSum","downSum","readSum","likeSum","recommendSum"};
 		BOOKSCOLUMNS = new String[]{"collectSum","recommendSum" };
@@ -64,6 +67,7 @@ public class UpdTableColumn {
 		COURSESSHARECOLUMNS = new String[]{ "likesum"};
 		ARTICLESHARECOLUMNS = new String[]{ "likesum"};
 		SITESSHARECOLUMNS = new String[]{ "likesum"};
+		COMPANYNEWSCOLUMNS = new String[]{"commentsum", "likesum"};
 		
 		
 		TABLECOLUMN.put(TABLENAMES[0], DOCSCOLUMNS);
@@ -78,6 +82,7 @@ public class UpdTableColumn {
 		TABLECOLUMN.put(TABLENAMES[9], COURSESSHARECOLUMNS);
 		TABLECOLUMN.put(TABLENAMES[10], ARTICLESHARECOLUMNS);
 		TABLECOLUMN.put(TABLENAMES[11], SITESSHARECOLUMNS);
+		TABLECOLUMN.put(TABLENAMES[12], COMPANYNEWSCOLUMNS);
 		
 	}
 

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.jobplus.pojo.BusiAreaLib;
 import com.jobplus.pojo.SkillLibrary;
 import com.jobplus.pojo.Tags;
 
@@ -44,6 +45,8 @@ public class SolrJUtils {
 
 	@Value("${slor.basepath}")
 	public void setBasePath(String basePath) {
+		
+		SolrJUtils.busiAreaClienct = new HttpSolrClient(basePath + "busiAreaCore");
 		
 		SolrJUtils.tagClient = new HttpSolrClient(basePath + "tagsCore");
 
@@ -76,6 +79,8 @@ public class SolrJUtils {
 		SolrJUtils.solrPort = solrPort;
 	}
 
+	private static HttpSolrClient busiAreaClienct;
+	
 	private static HttpSolrClient tagClient;
 
 	private static HttpSolrClient topicsClient;
@@ -96,7 +101,61 @@ public class SolrJUtils {
 	
 	private static HttpSolrClient schoolClient;
 
-
+	/**
+	 * 添加业务领域到索引库
+	 */
+	public static void addBusiAreaIndexToSolr(BusiAreaLib busiAreaLib) {
+		try {
+			// 创建一个http连接
+			// 构造文档和域
+			SolrInputDocument doc = new SolrInputDocument();
+			// 确认schema.xml中是否有id，name，price这几个域
+			// <field name="id" type="string" indexed="true" stored="true"
+			// required="true" />
+			// <field name="sku" type="text_en_splitting_tight" indexed="true"
+			// stored="true" omitNorms="true"/>
+			// <field name="name" type="text_general" indexed="true"
+			// stored="true"/>
+			
+			// 添加域
+			doc.addField("id", busiAreaLib.getId());
+			doc.addField("busiareaname", busiAreaLib.getBusiareaname());
+			
+			// 批量添加文档
+			Collection<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
+			docs.add(doc);
+			
+			busiAreaClienct.add(docs);
+			busiAreaClienct.commit();
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 根据关键字获取对应的技能
+	 * 
+	 * @return
+	 */
+	public static String findBusiArea(String Condition) {
+		SolrQuery solrParams = new SolrQuery();
+		solrParams.set("q", "busiareaname:\"" + ClientUtils.escapeQueryChars(Condition)+"\"");
+		QueryResponse rsp = new QueryResponse();
+		try {
+			rsp = busiAreaClienct.query(solrParams);
+			// logger.info(JSON.toJSONString(rsp.getResults()));
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String str = "{\"busiareaList\":" + JSON.toJSONString(rsp.getResults())
+				+ ",\"returnMsg\":\"SUCCESS\",\"returnStatus\":\"000\"}";
+		return str;
+	}
+	
+	
 	/**
 	 * 添加技能到索引库
 	 */

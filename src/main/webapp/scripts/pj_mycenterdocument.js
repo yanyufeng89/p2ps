@@ -31,12 +31,37 @@ $(function(){
     		var conditions="";
     		//是否私有
     		var isP = "";
+    		//是否是回收站删除
+    		var isvalid = "";
     		$this.parent().nextAll('.docs-list').find('.select-icon').each(function(){
     			//从界面上移除当前
     			conditions+=$(this).data('docid')+',';
     			isP = $(this).data('ispublic');
+    			isvalid = $(this).data('isvalid');
     		}); 
     		conditions=conditions.substring(0,conditions.length-1);
+    		/******************/
+    		//回收站文档删除
+    		if(Number(isvalid)==2){
+    			$.confirm({
+    	    		'title'		: '删除文档',
+    	    		'message'	: "确认要永久删除这些文档吗?",
+    	    		'buttons'	: {
+    	    			'确认'	: {
+    	    				'class'	: 'blue',
+    	    				'action': function(){
+    	    					gbgDelDocs(conditions,isP.toString(),$this);
+    	    				}
+    	    			},
+    	    			'取消'	: {
+    	    				'class'	: 'gray',
+    	    				'action': function(){}
+    	    			}
+    	    		}
+    	    	})
+    		}
+    		/******************/
+    		
     		// 查看积分是否够删除批量文档
     		 if($(this).parents().find('input[name=alMn]').val() < Number(conditions.split(',').length)*docValue 
     				&& isP!='0'  ){
@@ -65,7 +90,7 @@ $(function(){
 						'class': 'blue',
 						'action': function () {
 							if(type=="1")
-								deleteDocs(conditions,$this,isP);
+								deleteDocs(conditions,$this,isP,isvalid);
 							else{
 								deleteMyCollects(conditions,$this,actiontype);
 							}
@@ -82,7 +107,7 @@ $(function(){
     	$(this).removeClass('enabled');
     })
     //我的文档--操作--删除(单个删除)
-    $('.operate span').live('click',function(){
+    $('.operate .dltDc').live('click',function(){
     	var elem = $(this).closest('.item');    	
     	var id=$(this).data('id');
     	var name=$(this).data('name');
@@ -94,6 +119,7 @@ $(function(){
     	
     	//
     	var isP = $(this).data('ispublic');
+    	var isvalid = $(this).data('isvalid');
     	// 查看积分是否够删除批量文档
 		 if($(this).parents().find('input[name=alMn]').val() < docValue 
 				&& isP!='0'  ){
@@ -120,7 +146,7 @@ $(function(){
 					'class'	: 'blue',
 					'action': function(){
 						if(type=='1')
-						    deleteDocs(id.toString(),$this,isP);
+						    deleteDocs(id.toString(),$this,isP,isvalid);
 						else{
 							deleteMyCollects(id.toString(),$this,actiontype);
 						}
@@ -133,6 +159,62 @@ $(function(){
 				}
 			}
 		});
+    })
+    //我的文档--回收站文档还原
+    $('.operate .gbgrbk').live('click',function(){
+    	var elem = $(this).closest('.item');    	
+    	var id=$(this).data('id');
+    	var name=$(this).data('name');
+    	$this=$(this);
+    	
+    	//
+    	var isP = $(this).data('ispublic');
+    	var isvalid = $(this).data('isvalid');
+    	
+    	$.confirm({
+    		'title'		: '还原文档',
+    		'message'	: "确认要还原文档&nbsp;\""+name+"\"&nbsp;吗?",
+    		'buttons'	: {
+    			'确认'	: {
+    				'class'	: 'blue',
+    				'action': function(){
+    						gbgReBackDocs(id.toString(),isP.toString(),$this);
+    				}
+    			},
+    			'取消'	: {
+    				'class'	: 'gray',
+    				'action': function(){}
+    			}
+    		}
+    	});
+    })
+    //我的文档--回收站文档删除
+    $('.operate .gbgdel').live('click',function(){
+    	var elem = $(this).closest('.item');    	
+    	var id=$(this).data('id');
+    	var name=$(this).data('name');
+    	$this=$(this);
+    	
+    	//
+    	var isP = $(this).data('ispublic');
+    	var isvalid = $(this).data('isvalid');
+    	
+    	$.confirm({
+    		'title'		: '删除文档',
+    		'message'	: "确认要永久删除文档&nbsp;\""+name+"\"&nbsp;吗?",
+    		'buttons'	: {
+    			'确认'	: {
+    				'class'	: 'blue',
+    				'action': function(){
+    					gbgDelDocs(id.toString(),isP.toString(),$this);
+    				}
+    			},
+    			'取消'	: {
+    				'class'	: 'gray',
+    				'action': function(){}
+    			}
+    		}
+    	});
     })
     //判断当前点击的文档格式是否转换 未转换的不能打开
     $('.notCvt').live('click',function(){
@@ -709,11 +791,11 @@ function docLike(obj){
 	})
 }
  //批量删除文档 --上传  
-function deleteDocs(conditions,obj,ispublic){
+function deleteDocs(conditions,obj,ispublic,isvalid){
   	   $.ajax({
          	type:"POST",
          	url:"/myCenter/deleteDocs",
-         	data:{condition:conditions,ispublic:ispublic},
+         	data:{condition:conditions,ispublic:ispublic,isvalid:isvalid},
          	dataType:"json",
          	success:function(data){
          		if(data.returnStatus=='000'){//返回成功
@@ -781,4 +863,73 @@ function deleteMyCollects(conditions,obj,actiontype){
 
      	}
   });
+}
+//回收站文档还原
+function gbgReBackDocs(conditions,ispublic,obj){
+  	   $.ajax({
+         	type:"POST",
+         	url:"/docs/gbgReBackDocs",
+         	data:{condition:conditions,ispublic:ispublic},
+         	dataType:"json",
+         	success:function(data){
+         		if(data.returnStatus=='000'){//返回成功
+         			/*//批量还原回收站文档
+         			if(conditions.indexOf(',')>0){
+         				obj.parent().nextAll('.docs-list').find('.select-icon').each(function(){
+    	        			$(this).parents('li').remove();
+    	        		});
+         			}
+         			//单个还原回收站文档
+         			else{*/
+         			//单个还原回收站文档
+         				if(obj.hasClass('remove')){
+         					obj.parent().nextAll('.docs-list').find('.select-icon').parents('li').remove()
+         				}else{
+         					obj.parents('li').remove();
+         				}
+         			/*}*/
+          		   $('.remove ').removeClass('enabled');
+          		   //上传
+          		   $('#docupload').html('').html('上传&nbsp;'+data.operationSum.docsharesum);
+
+        		}else{//返回失败
+
+        		}
+
+        	}
+     });
+  }
+//回收站文档删除
+function gbgDelDocs(conditions,ispublic,obj){
+	$.ajax({
+		type:"POST",
+		url:"/docs/gbgDelDocs",
+		data:{condition:conditions},
+		dataType:"json",
+		success:function(data){
+			if (data.returnStatus == '000') {// 返回成功
+				// 批量删除
+				if (conditions.indexOf(',') > 0) {
+					obj.parent().nextAll('.docs-list').find('.select-icon') .each(function() {
+								$(this).parents('li').remove();
+							});
+				}
+				else {
+					// 单个删除
+					if (obj.hasClass('remove')) {
+						obj.parent().nextAll('.docs-list').find('.select-icon').parents('li').remove()
+					} else {
+						obj.parents('li').remove();
+					}
+					/* } */
+					$('.remove ').removeClass('enabled');
+					// 上传
+					$('#docupload').html('').html('上传&nbsp;' + data.operationSum.docsharesum);
+				}
+			}else{// 返回失败
+				console.log("文档删除失败");
+			}
+			
+		}
+	});
 }
