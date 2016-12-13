@@ -94,11 +94,11 @@
 		     <#list  record.commentList.list as booklist>
 		       <div class='item'>
 		         <div class='media-left'>
-		           <a class='uhead' href='/myHome/getHomePage/${booklist.userid}' data-userid='${booklist.userid}' target='_blank'>
+		           <a class='uhead' href='/myHome/getHomePage/${booklist.userid}'  target='_blank'>
 		             <#if (booklist.userHeadIcon)??>
-		               <img class='uname lazy' src="${booklist.userHeadIcon}" alt="个人头像"  data-userid='${booklist.userid}' data-moduletype='1'>
+		               <img class='uname lazy <#if booklist.usertype==2>company-img</#if>' src="${booklist.userHeadIcon}" alt="个人头像"  data-userid='${booklist.userid}' data-moduletype='1'>
 		             <#else>
-		               <img class='uname lazy' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='${booklist.userid}' data-moduletype='1'>
+		               <img class='uname lazy <#if booklist.usertype==2>company-img</#if>' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='${booklist.userid}' data-moduletype='1'>
 		             </#if>
 		            </a>
 		             <#if (booklist.commentbyName)??>
@@ -174,9 +174,9 @@
 		    <div class='mycomment'>
 			  <a href='/myHome/getHomePage/${Session.user.userid}' data-userid='${Session.user.userid}' target='_blank'>
 				 <#if (Session.user.headicon)??>
-				   <img src="${Session.user.headicon}" alt="个人头像" class='zm-list-avatar lazy' data-userid='${Session.user.userid}' data-moduletype='1'>
+				   <img src="${Session.user.headicon}" alt="个人头像" class='zm-list-avatar lazy <#if Session.user.usertype==2>company-img</#if>' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 <#else>
-				   <img src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" class='zm-list-avatar lazy' data-userid='${Session.user.userid}' data-moduletype='1'>
+				   <img src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" class='zm-list-avatar lazy <#if Session.user.usertype==2>company-img</#if>' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 </#if>
 				 <span class="mycommentinfo">推荐语</span>
 			  </a>
@@ -250,21 +250,22 @@
 					  <#if record.collectUsers?size gt 6>
 						<#list record.collectUsers[0..5] as colllist>
 							<a title="${colllist.username}"  class="zm-item-link-avatar" target='_blank' href='/myHome/getHomePage/${colllist.userid}'  data-moduletype='1'>
+							   <input type='hidden' name='aa' value='${colllist.userid}'>
 							   <#if (colllist.headicon)??>
-								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}" alt='个人头像'>
+								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}" alt='个人头像'>
 							   <#else>
-								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}" alt='个人头像'>
+								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}" alt='个人头像'>
 							   </#if>
 							</a>
 					   </#list>
-					    <a class='fa-ellipsis-h'>...</a>
+					   <a class='fa-ellipsis-h'>...</a>
 					  <#else>
 					    <#list record.collectUsers as colllist>
 							<a title="${colllist.username}"  class="zm-item-link-avatar" target='_blank' href='/myHome/getHomePage/${colllist.userid}' data-moduletype='1'>
 							   <#if (colllist.headicon)??>
-								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy"  data-userid="${colllist.userid}" alt='个人头像'>
+								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>"  data-userid="${colllist.userid}" alt='个人头像'>
 							   <#else>
-								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}" alt='个人头像'>
+								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}" alt='个人头像'>
 							   </#if>
 							</a>
 					   </#list>
@@ -275,9 +276,9 @@
 							<#list record.collectUsers as colllist>
 								<a title="${colllist.username}"  class="zm-item-link-avatar" target='_blank' href='/myHome/getHomePage/${colllist.userid}'  data-moduletype='1'>
 								   <#if (colllist.headicon)??>
-									 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}" alt='个人头像'>
+									 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}" alt='个人头像'>
 								   <#else>
-									  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}" alt='个人头像'>
+									  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}" alt='个人头像'>
 								   </#if>
 								</a>
 						   </#list>

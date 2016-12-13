@@ -109,7 +109,7 @@
                       </li>
                       <li>
                         2. 输入分享的书籍名称，按回车键或点击"√"，选择你要分享的书籍。如果发现没有您要分享的书籍，请把书籍的相关信息发到我们的邮箱
-                        <a href="mailto:service@jobplus.com">service@jobplus.com</a>，我们会尽快为你添加；
+                        <a href="mailto:service@jobplus.com.cn">service@jobplus.com.cn</a>，我们会尽快为你添加；
                       </li>
                       <li>
                        3. 禁止分享低俗、含有淫秽色情及低俗信息等书籍；

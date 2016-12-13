@@ -1,8 +1,7 @@
 package com.jobplus.service.impl;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jobplus.dao.BusiAreaLibMapper;
+import com.jobplus.dao.CompanyIntroMapper;
 import com.jobplus.dao.MyHomePageMapper;
+import com.jobplus.pojo.BusiAreaLib;
 import com.jobplus.pojo.CompanyIntro;
 import com.jobplus.pojo.CompanyNews;
 import com.jobplus.pojo.FTPStatus;
@@ -31,6 +33,7 @@ import com.jobplus.service.IEducationBgrdService;
 import com.jobplus.service.IMyHomePageService;
 import com.jobplus.service.IOperationSumService;
 import com.jobplus.service.IPersonalSkillService;
+import com.jobplus.service.ISequenceService;
 import com.jobplus.service.ISmsFilterService;
 import com.jobplus.service.ISmsService;
 import com.jobplus.service.IUserService;
@@ -71,6 +74,12 @@ public class CompanyServiceImpl implements ICompanyService {
 	private ICompanyNewsService companyNewsService;
 	@Resource
 	private FTPClientTemplate ftpClientTemplate;
+	@Resource
+	private BusiAreaLibMapper busiAreaLibDao;
+	@Resource
+	private ISequenceService seqService;
+	@Resource
+	private CompanyIntroMapper companyIntroDao;
 	
 	
 	
@@ -94,7 +103,7 @@ public class CompanyServiceImpl implements ICompanyService {
 					String fileName = user.getUserid() + "_" + UUIDGenerator.getUUID() + "." + usersuffix;
 					// 定义上传路径
 					path = ftpClientTemplate.ftpImgDir + "/" + DateUtils.getDateTime2() + "/" + fileName;
-					tmpUrl = ftpClientTemplate.headIconServer + "/" + DateUtils.getDateTime2() + "/" + fileName;
+					tmpUrl = ftpClientTemplate.headIconServer + DateUtils.getDateTime2() + "/" + fileName;
 				}
 
 				try {
@@ -127,27 +136,13 @@ public class CompanyServiceImpl implements ICompanyService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 获取最近分享的6类
 	 * 
 	 * @param record
 	 * @return
 	 */
-	@SuppressWarnings("static-access")
+/*	@SuppressWarnings("static-access")
 	@Override
 	public Page<MyHomePage> getRecentShare(HttpServletRequest request,MyHomePage record) {
 
@@ -168,14 +163,14 @@ public class CompanyServiceImpl implements ICompanyService {
 			page.setList(list);
 		}
 		return page;
-	}
+	}*/
 	/**
 	 * 获取我分享的某一类   tableName;tableColumn;userid;
 	 * @param request
 	 * @param record
 	 * @return
 	 */
-	@SuppressWarnings("static-access")
+/*	@SuppressWarnings("static-access")
 	@Override
 	public Page<MyHomePage> getOneShares(HttpServletRequest request, MyHomePage record) {
 		Page<MyHomePage> page = new Page<MyHomePage>();
@@ -214,7 +209,7 @@ public class CompanyServiceImpl implements ICompanyService {
 			page.setList(list);
 		}
 		return page;
-	}
+	}*/
 	/**
 	 *  个人主页  && 浏览他人主页
 	 * @param mv
@@ -247,7 +242,20 @@ public class CompanyServiceImpl implements ICompanyService {
 		Page<VisitHistory> visitors = visitHistoryService.getRecentVistors(vh);
 
 		//简历完成度
-		int completion = userService.userInfoCompletion(Integer.parseInt(userid));
+		int completion = this.cpInfoCompletion(Integer.parseInt(userid));
+
+		//方便前端画图(计算)  头像和用户名权重占 0.06
+		if (completion == 0)
+			completion = 0;
+		else if (completion <= 35)
+			completion = 25;
+		else if (completion <= 60)
+			completion = 50;
+		else if (completion <= 95)
+			completion = 75;
+		else
+			completion = 100;
+		
 		
 		
 		// 获取当前url
@@ -281,7 +289,7 @@ public class CompanyServiceImpl implements ICompanyService {
 			// 最新动态
 			MyHomePage myhp = new MyHomePage();
 			myhp.setUserid(Integer.parseInt(userid));
-			Page<MyHomePage> recentShare = this.getRecentShare(request, myhp);
+			Page<MyHomePage> recentShare = myHomePageService.getRecentShare(request, myhp);
 
 			// 页面端如何判断是否是当前登录人
 			// 如果是不需要获取atdAndFans; 直接从session中获取
@@ -298,7 +306,7 @@ public class CompanyServiceImpl implements ICompanyService {
 			OperationSum operationSum = new OperationSum();
 			// 查看他人主页数据不准确 临时改动 FIXME  查看他人主页数据不准确 临时改动********************************
 //			operationSum = operationSumService.selectByPrimaryKey(Integer.parseInt(userid));
-			operationSum = this.getRealSum(Integer.parseInt(userid));		
+			operationSum = myHomePageService.getRealSum(Integer.parseInt(userid));		
 			// 查看他人主页数据不准确 临时改动 FIXME  查看他人主页数据不准确 临时改动********************************
 			
 			
@@ -342,7 +350,7 @@ public class CompanyServiceImpl implements ICompanyService {
 	/**
 	 * 实时获取用户分享的总数（成功的）
 	 */
-	@Override
+	/*@Override
 	public OperationSum getRealSum(Integer userid){
 		OperationSum opts = new OperationSum();
 		// 默认查看分享是文档
@@ -405,6 +413,28 @@ public class CompanyServiceImpl implements ICompanyService {
 		
 		opts.setAllshresum(allShareCount);
 		return opts;
+	}*/
+	
+
+//插入业务领域
+	@Override
+	public int insertBusLib(BusiAreaLib record) {
+		int ret = 0;
+		int id = seqService.getSeqByTableName("tbl_busiarealib");
+		record.setId(id);
+		record.setCreatetime(new Date());
+		record.setUpdatetime(new Date());
+		record.setIsvalid(1);
+		ret = busiAreaLibDao.insert(record);
+		return ret;
+	}
+
+
+
+
+	@Override
+	public int cpInfoCompletion(Integer id) {
+		return companyIntroDao.cpInfoCompletion(id);
 	}
 
 }

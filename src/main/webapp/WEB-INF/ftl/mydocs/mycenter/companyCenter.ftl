@@ -17,28 +17,42 @@
           <div class='top-card container clearfix'>
               <div class='top-card-company-logo logo' id='comlogo'>
                   <#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
-                     <img src="${userInfo.headicon}"  class='lazy' alt="个人头像" width="180"  id="imghead">
+                     <img src="${userInfo.headicon}"  class='lazy' alt="个人头像" width="180" height='180' id="imghead">
                   <#else>
-                     <img src="/image/cm-defaultIcon.jpg" class='lazy' alt="个人头像" width="180"  id="imghead">
+                     <img src="/image/cm-defaultIcon.jpg" class='lazy' alt="个人头像" width="180" height='180' id="imghead">
                   </#if>
-                    <#--<img src="/image/cm-defaultIcon180.jpg" class='lazy' alt="个人头像" width="180"  id="imghead">-->
-                    <span class="ProfileAvatarEditor-tip">更换头像</span>
+                    <span class="ProfileAvatarEditor-tip">更换logo</span>
                     <form method="POST"  id="previewImage" enctype="multipart/form-data">
-                      <input name='headIconFile' class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this,1)" />
+                      <input name='headIconFile' class="file-3" type="file" accept="image/jpg,image/jpeg,image/png,image/pns" size="30" onchange="previewImage(this,1)" />
                    </form>
               </div>
               <div class='top-card-data'>
                 <div class='profile-overview-content'>
-                    <div id="title-container" class='clearfix'>
+                    <div id="title-container" class='title-container editable-item clearfix'>
+                        <input type='hidden' name='username' value='${userInfo.username?html}'>
                         <span class="title"> ${userInfo.username?html}</span>
 						<a href="javascript:;" class="zu-edit-button" name="edittitle" data-type='title'><i class="zu-edit-button-icon"></i>修改</a>
                     </div> 
-                    <div id="slogan-container" class='slogan-container clearfix'>
-                       <span class="slogan"><#if ((userInfo.description)?? &&  userInfo.description?length gt 0)>${userInfo.description}<#else></#if></span>
+                    <div id="slogan-container" class='slogan-container editable-item clearfix'>
+                       <input type='hidden' name='slogan' value='${userInfo.description}'>
+                       <span class="slogan"><#if ((userInfo.description)?? && userInfo.description?length gt 0)>${userInfo.description}<#else>企业标语</#if></span>
                        <a href="javascript:;" class="zu-edit-button" name="editslogan" data-type='slogan'><i class="zu-edit-button-icon"></i>修改</a>
                     </div>
-                    <div id='enterprise-container' class='enterprise-container clearfix'>
-                       <span class="enterprise"><#if ((userInfo.specialty)?? &&  userInfo.specialty?length gt 0)>${userInfo.specialty}<#else></#if></span>
+                    <div id='enterprise-container' class='enterprise-container editable-item clearfix'>
+                       <input type='hidden' name='enterprise' value='${userInfo.specialty}'>
+                       <span class="enterprise">
+                       <#if ((userInfo.specialty)?? && userInfo.specialty?length gt 0)>
+                       <#list userInfo.specialty?split(" ") as item>
+                         <#if item_index=0>
+                          ${item}
+                         <#else>
+                          &nbsp;${item}
+                         </#if>
+                       </#list>
+                       <#else>
+                                                          企业产品(服务)
+                       </#if>
+                       </span>
                        <a href="javascript:;" class="zu-edit-button" name="editsenterprise" data-type='enterprise'><i class="zu-edit-button-icon"></i>修改</a>
                     </div>
                  </div>
@@ -57,138 +71,329 @@
 		  <div class='middle-card container clearfix'>
 		     <div class='middle-card-left tab-flash'>
 			    <div class='public-flash'>
-				  <h4 class="recent-updates-heading com-heading">
-					  发布快讯
-				  </h4>
+				  <h4 class="recent-updates-heading com-heading">发布快讯</h4>
 				  <div  class="share-view fixed-full">    
 				     <div class="share-view-content">
 				        <div class="identity-header">
 				            <div class='post-meta ember-view'>
 				            	<#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
-			                      <img class="avatar loaded" alt="JobPlus China" width='50' height='50' src="${userInfo.headicon}">
+			                      <img class="avatar loaded" alt="JobPlus China" width='40' height='40' src="${userInfo.headicon}">
 			                  <#else>
-			                     <img class="avatar loaded" alt="JobPlus China" width='50' height='50' src="http://m.c.lnkd.licdn.com/mpr/mpr/shrinknp_100_100/AAEAAQAAAAAAAAg9AAAAJGRiNDAyM2E2LWYwMjUtNGVkOS1iMzU2LWEzMjIyOGRmNmQzYg.png">
+			                     <img class="avatar loaded" alt="JobPlus China" width='40' height='40' src="/image/cm-defaultIcon180.jpg">
 			                  </#if>
 				               <a class='com-name' href='javascript:void(0)'>
 				                 <span class="name semibold">${userInfo.username}</span>
 				               </a>
 				            </div>
 				        </div>
-				        <div class='content expanded'>
-				           <textarea name='flash' class='mentions-input' placeholder='发文章、照片和动态' rows="6" cols="20"></textarea>
-				        </div>
-				        <div class='share-flash-bar ember-view clearfix'>
-				            <a class="photo-button com-icon" href='javascript:void(0)'></a>
-				            <a class="link-button com-icon" href='javascript:void(0)'></a>
-				            <a disabled=""  class="zg-r3px zg-btn-blue" id='public-flash'>发布</a>
-				        </div>
+				        
+				        <form method="POST" action="/comp/addCpNews" id="adNewsForm" enctype="multipart/form-data">
+					        <div class='content expanded' id='addNewsContent'>
+					           <textarea name='news' class='mentions-input' placeholder='发文章、照片和动态' rows="6" cols="20"></textarea>
+					        </div>
+					        <div class='share-flash-bar ember-view clearfix'>
+			                    <form method="POST"  id="previewImage" enctype="multipart/form-data">
+			                      <input name='newsImgFiles' class="file-3"  id="newsImgFiles"  type="file" accept="image/jpg,image/jpeg,image/png,image/pns" size="30"/>
+			                   </form>
+			                    <input type='hidden' name='sitetitle' value=''>
+			                    <input type='hidden' name='siteurl' value=''>
+					            <a class="photo-button com-icon" href='javascript:void(0)'></a>
+					            <a class="link-button com-icon" id="link-button" href='javascript:void(0)'></a>
+					            <a class="zg-r3px zg-btn-blue" id='public-flash'>发布</a>
+					        </div>
+				        </form>
+				        
 				     </div>
 				  </div>
 				</div>
 				<div class='entity-all separate-entities ember-view'>
-				   <h4 class="recent-updates-heading com-heading">
-					      最新快讯
-				   </h4>
-				   <ul class='entity-list row'>
-				   <#if (cpNewes)?? && cpNewes?size gt 0>
+				   <h4 class="recent-updates-heading com-heading">最新快讯</h4>
+				   <input type='hidden' name='companyId' value='${userInfo.userid}'>
+				   <input type='hidden' name='companyName' value='${userInfo.username}'>
+				   <#if (cpNewes.list)?? && cpNewes.list?size gt 0>
+				   <ul class='entity-list row' id='entity-list'>
 				   	<#list cpNewes.list as oneNews>
-				   	<li class='entity-list-item'>
+				   	<li class='entity-list-item' id="entity-list-item-${oneNews.id}">
 				   		<div class='post-meta ember-view'>
 				   			<a href='javascript:void(0)'>
 				   				<#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
-			                      <img class="avatar loaded" alt="JobPlus China" width='50' height='50' src="${userInfo.headicon}">
+			                      <img class="lazy-image avatar loaded" alt="JobPlus China" width='50' height='50' src="${userInfo.headicon}">
 			                  <#else>
-			                     <img class="avatar loaded" alt="JobPlus China" width='50' height='50' src="http://m.c.lnkd.licdn.com/mpr/mpr/shrinknp_100_100/AAEAAQAAAAAAAAg9AAAAJGRiNDAyM2E2LWYwMjUtNGVkOS1iMzU2LWEzMjIyOGRmNmQzYg.png">
+			                      <img class="lazy-image avatar loaded" alt="JobPlus China" width='50' height='50' src="/image/cm-defaultIcon180.jpg">
 			                  </#if>
 				   			</a>
 				   			<a href='javascript:void(0)'>
 				   				<h3 class="actor">
 				   					<span class="name semibold">${userInfo.username}</span>
-				   					<time class="timestamp">${oneNews.updatetime?string("yyyy-MM-dd HH:mm:ss")}</time>
+				   					<time class="timestamp">${oneNews.createtime?string("yyyy-MM-dd HH:mm:ss")}</time>
 				   				</h3>
 				   			</a>
 				   		</div>
-				   		<div  class="inline-show-more-text feed-s-main-content ember-view">       
-				   			${oneNews.news}
+				   		<#if (oneNews.news)?? && oneNews.news?length gt 0>
+				   		<div  class="inline-show-more-text feed-s-main-content ember-view" data-flash='${oneNews.id}'>  
+					   		<#if oneNews_index==0 && (oneNews.istop==1)>     
+					            <i class="com-top com-icon"></i>
+					        </#if>
+					        ${oneNews.news}
 				   		</div>
-				   		<div class='flash-img'>
-				   			<#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
-			                      <img src='${oneNews.imgurl}' alt=''>
-			                  <#else>
-			                     <img src='http://m.c.lnkd.licdn.com/media-proxy/ext?w=800&h=800&f=none&hash=2aZPixKVB6zgDUANI8y04HW%2BwPM%3D&ora=1%2CaFBCTXdkRmpGL2lvQUFBPQ%2CxAVta9Er0Vinkhwfjw8177yE41y87UNCVordEGXyD3u0qYrdf3K7eceMKrCjuVoSfysclA1hdvL6EzS3D5G7LYrsdNsijpfiIo24ZxUBbFI8lWxI' alt=''>
-			                  </#if>
+				   		</#if>     
+				   		<#if (oneNews.siteurl)?? && oneNews.siteurl?length gt 0>
+				   		<div class='flash-url'>
+			               <a href='${oneNews.siteurl}' target='_blank'>${oneNews.sitetitle}<span class='siteurl'>${oneNews.siteurl}</span></a>
 				   		</div>
-				   		<div class='operate-container'>
-				   		<#if oneNews.likeIds>
-				   			<a class="numLikes" href='javascript:void(0)'>赞 ${oneNews.likesum}</a>
-				   		<#else>
-				   			<a class="numLikes" href='javascript:void(0)'>取消赞 ${oneNews.likesum}</a>
 				   		</#if>
-				   			<a class="numComments" href='javascript:void(0)'>评论 ${oneNews.commentsum}</a>
-				   			<a href='javascript:void(0)'   class='update-btn'>
-				   				<span class='delete-falsh'><b class="iconfont pr2"></b>删除</span>
-				   				<span class='stick-botton'><i class='com-stick com-icon'></i>置顶</span>
+				   		<#if (oneNews.imgurl)?? && oneNews.imgurl?length gt 0>
+				   		<div class='flash-img'>
+			              <img src='${oneNews.imgurl}' alt=''>
+				   		</div>
+				   		</#if>
+				   		<div class='operate-container'>
+				   		    <#if (oneNews.likedIds)??&&oneNews.likedIds?length gt 0>
+	                           <#if oneNews.likedIds?index_of(",")==-1>
+	                            <#if (oneNews.likedIds?string==(Session.user.userid?string)!)>
+	                              <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='1' data-flashid='${oneNews.id}' data-likenum='${oneNews.likesum}'>取消赞  (${oneNews.likesum})</a>
+	                            <#else> 
+	                              <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='0' data-flashid='${oneNews.id}' data-likenum='${oneNews.likesum}'>赞  ${oneNews.likesum}</a>                                   
+	                            </#if>                                             
+	                           <#else>
+	                              <#if oneNews.likedIds?split(",")?seq_contains((Session.user.userid?string)!)>
+	                                 <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='1' data-flashid='${oneNews.id}' data-likenum='${oneNews.likesum}'>取消赞  (${oneNews.likesum})</a>
+	                              <#else>
+	                                 <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='0' data-flashid='${oneNews.id}' data-likenum='${oneNews.likesum}'>赞  ${oneNews.likesum}</a> 
+	                              </#if>
+	                           </#if>    
+	                          <#else> 
+	                                 <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='0' data-flashid='${oneNews.id}' data-likenum='${oneNews.likesum}'>赞  ${oneNews.likesum}</a>                                
+	                          </#if>
+				   			<a class="numComments operate" href='javascript:void(0)' data-flashid='${oneNews.id}' data-commsum='${oneNews.commentsum}'>评论 ${oneNews.commentsum}</a>
+				   			<a href='javascript:void(0)'   class='update-btn operate'>
+				   				<span class='delete-falsh' data-newsid='${oneNews.id}'><b class="iconfont pr2"></b>删除</span>
+				   				<span class='stick-botton' data-newsid='${oneNews.id}'><i class='com-stick com-icon'></i>置顶</span>
 				   			</a>
 				   		</div>
 				   	</li>
-
 				   	</#list>
+				   	 <#if (cpNewes.last gt 1)>
+					 <a href="javascript:;" data-pageno="1"  data-sumpage="${cpNewes.last}" data-comtype='1' class="zg-btn-white  zu-button-more flash-load-more">更多</a>
+					 </#if>
+					</ul>
+				   <#else>
+				    <ul class='entity-list row' id='entity-list'>
+				    <li class='no-flashlist'>暂无最新快讯</li>
+				    </ul>
 				   </#if>
-				   </ul>
+				   
 				</div>
 			 </div>
 			 <div class='middle-card-left tab-profile' style='display:none'>
+			      <input type='hidden' name='nation' value='<#if (cpnInfo.nation)??>${cpnInfo.nation}</#if>'>
+			      <input type='hidden' name='province' value='<#if (cpnInfo.province)??>${cpnInfo.province}</#if>'>
+			      <input type='hidden' name='city' value='<#if (cpnInfo.city)??>${cpnInfo.city}</#if>'>
+			      <input type='hidden' name='postcode' value='<#if (cpnInfo.postcode)??>${cpnInfo.postcode}</#if>'>
+			      <input type='hidden' name='address' value='<#if (cpnInfo.address)??>${cpnInfo.address}</#if>'>
+			      <input type='hidden' name='url' value='<#if (cpnInfo.url)??>${cpnInfo.url}</#if>'>
+			      <input type='hidden' name='scale' value='<#if (cpnInfo.scale)??>${cpnInfo.scale}</#if>'>
+			      <input type='hidden' name='industry' value='<#if (cpnInfo.industry)??>${cpnInfo.industry}</#if>'>
+			      <input type='hidden' name='establishtime' value='<#if (cpnInfo.establishtime)??>${cpnInfo.establishtime?string("yyyy")}</#if>'>
+			      <input type='hidden' name='type' value='<#if (cpnInfo.type)??>${cpnInfo.type}</#if>'>
 			    <div class='public-profile'>
-				   <h4 class="com-heading">
-					  图片
-				   </h4>
-				   <div class='profile-logo'>
-				    <img src="/image/bg-computer.jpg" class='lazy' alt="公司图片" width="834" height='220' id="imghead">
+				   <h4 class="com-heading">图片</h4>
+				   <div class='profile-logo' id='briefimg'>
+				   <#if (cpnInfo.imgurl)?? && cpnInfo.imgurl?length gt 0>
+			         <img src="${cpnInfo.imgurl}" class='lazy' alt="简介图片" width="834" height='220' id='imgbrief'>
+			       <#else>
+			         <img src="/image/bg-computer.jpg" class='lazy' alt="简介图片" width="834" height='220' id='imgbrief'>
+			       </#if>
                     <span class="update-comimg-tip">更换图片</span>
-                    <form method="POST"  id="profileImage" enctype="multipart/form-data">
-                      <input name='headIconFile' class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this,2)" />
+                    <form method="POST"  id="briefImage" enctype="multipart/form-data">
+                      <input name='imgFiles' class="file-3" id="brieffile" type="file" accept="image/jpg,image/jpeg,image/png,image/pns" size="30" />
                    </form>
 				   </div>
-				   <h4 class="com-heading">
-					  公司介绍
-				   </h4>
+				   <h4 class="com-heading">公司介绍</h4>
 				   <div class='profile-brief clearfix'>
-				     <span>微软，是一家总部位于美国的跨国科技公司，也是世界PC（Personal Computer，个人计算机）机软件开发的先导，由比尔·盖茨与保罗·艾伦创办于1975年，公司总部设立在华盛顿州的雷德蒙德（Redmond，邻近西雅图）。以研发、制造、授权和提供广泛的电脑软件服务业务为主。</span>
+				    <form id='profile-brief' onsubmit="return postBriefData()"> 
+				     <span class='intro'><#if (cpnInfo.intro)?? && cpnInfo.intro?length gt 0>${cpnInfo.intro}</#if></span>
 				     <a href="javascript:;" class="zu-edit-button" name="editscombrief"><i class="zu-edit-button-icon"></i>修改</a>
+				    </form> 
 				   </div>
-				    <h4 class="com-heading">
-					 业务领域
-				    </h4>
+				    <h4 class="com-heading">业务领域</h4>
 				    <div class='business-area clearfix'>
-				      <span class="areazone" data-skillid="8">软件服务</span>
-				      <a href="javascript:;" class="zu-edit-button" name="editsarea"><i class="zu-edit-button-icon"></i>修改</a>
+				    <form id='business-area' onsubmit="return postAreaData()">
+				    <input type='hidden' name='busiarea' value='${cpnInfo.busiarea}'>
+				    <div class='area'>
+				     <#if (cpnInfo.busiarea)?? && cpnInfo.busiarea?length gt 0>
+				      <#list cpnInfo.busiarea?split(',') as items>
+						 <#assign item=items?split(':')/>
+							<span class="areazone" data-areaid="${item[0]}">${item[1]}</span>
+					  </#list>
+					 </#if>
+					 <a href="javascript:;" class="zu-edit-button" name="editsarea"  data-areaitem='${cpnInfo.busiarea}' style='vertical-align:middle;'><i class="zu-edit-button-icon"></i>修改</a>
+					 </div>
+				     
+				     </form>
 				    </div>
 				    <div class='com-address clearfix'>
-				         详情地址: 中国江苏省苏州市工业园区星湖街创意产业园18号    221700<a href="javascript:;" class="zu-edit-button" name="editsaddress"><i class="zu-edit-button-icon"></i>修改</a>
+				      <form id='com-address' onsubmit="return postAddressData()">
+				        <ul>
+				         <li>
+				           <#--<#if (cpnInfo.nation)?? && cpnInfo.nation?length gt 0>
+				             <span>国家/地区</span>
+				             <p>${cpnInfo.nation}<a href="javascript:;" class="zu-edit-button" name="editsnation"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <#else>
+				             <span>国家/地区<a href="javascript:;" class="zu-edit-button" name="editsnation"><i class="zu-edit-button-icon"></i>修改</a></span>
+				           </#if>-->
+				           <span>国家/地区</span>
+				           <p>
+				             <#if (cpnInfo.nation)?? && cpnInfo.nation?length gt 0>
+				             ${cpnInfo.nation}
+				             </#if>
+				             <a href="javascript:;" class="zu-edit-button" name="editsnation"><i class="zu-edit-button-icon"></i>修改</a>
+				           </p>
+				         </li>
+				         <li>
+				            <#--<#if (cpnInfo.province)?? && cpnInfo.province?length gt 0>
+				             <span>省/自治区/直辖市</span>
+				             <p>${cpnInfo.province}<a href="javascript:;" class="zu-edit-button" name="editsprovince"><i class="zu-edit-button-icon"></i>修改</a></p>
+				            <#else>
+				             <span>省/自治区/直辖市<a href="javascript:;" class="zu-edit-button" name="editsprovince"><i class="zu-edit-button-icon"></i>修改</a></span>
+				           </#if>-->
+				            <span>省/自治区/直辖市</span>
+				            <p>
+				            <#if (cpnInfo.province)?? && cpnInfo.province?length gt 0>
+				            ${cpnInfo.province}
+				            </#if>
+				            <a href="javascript:;" class="zu-edit-button" name="editsprovince"><i class="zu-edit-button-icon"></i>修改</a>
+				            </p>
+				         </li>
+				         <li <#if (cpnInfo.city)??><#else>style='margin-top:20px;'</#if>>
+				           <#--<#if (cpnInfo.city)?? && cpnInfo.city?length gt 0>
+				             <span>市/区</span>
+				             <p>${cpnInfo.city}<a href="javascript:;" class="zu-edit-button" name="editscity"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <#else>
+				             <span>市/区<a href="javascript:;" class="zu-edit-button" name="editscity"><i class="zu-edit-button-icon"></i>修改</a></span>
+				           </#if>-->
+				           <span>市/区</span>
+				           <p>
+				           <#if (cpnInfo.city)?? && cpnInfo.city?length gt 0>
+				             ${cpnInfo.city}
+				           </#if>
+				           <a href="javascript:;" class="zu-edit-button" name="editscity"><i class="zu-edit-button-icon"></i>修改</a>
+				           </p>
+				         </li>
+				         <li <#if (cpnInfo.postcode)??><#else>style='margin-top:20px;'</#if>>
+				           <#--<#if (cpnInfo.postcode)?? && cpnInfo.postcode?length gt 0>
+				             <span>邮编</span>
+				             <p>${cpnInfo.postcode}<a href="javascript:;" class="zu-edit-button" name="editspostcode"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <#else>
+				             <span>邮编<a href="javascript:;" class="zu-edit-button" name="editspostcode"><i class="zu-edit-button-icon"></i>修改</a></span>
+				           </#if>-->
+				           <span>邮编</span>
+				           <p>
+				           <#if (cpnInfo.postcode)?? && cpnInfo.postcode?length gt 0>
+					           ${cpnInfo.postcode}
+					       </#if>
+					           <a href="javascript:;" class="zu-edit-button" name="editspostcode"><i class="zu-edit-button-icon"></i>修改</a>
+				           </p>
+				         </li>
+				         <li <#if (cpnInfo.address)??><#else>style='margin-top:20px;'</#if>>
+				           <#--<#if (cpnInfo.address)?? && cpnInfo.address?length gt 0>
+				             <span>详细地址</span>
+				             <p>${cpnInfo.address}<a href="javascript:;" class="zu-edit-button" name="editsaddress"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <#else>
+				             <span>详细地址<a href="javascript:;" class="zu-edit-button" name="editsaddress"><i class="zu-edit-button-icon"></i>修改</a></span>
+				           </#if>-->
+				            <span>详细地址</span>
+				            <p>
+				            <#if (cpnInfo.address)?? && cpnInfo.address?length gt 0>
+				            ${cpnInfo.address}
+				            </#if>
+				            <a href="javascript:;" class="zu-edit-button" name="editsaddress"><i class="zu-edit-button-icon"></i>修改</a>
+				            </p>
+				         </li>
+				        </ul>
+					 </form>
 				    </div>
 				    <div class='com-websit clearfix'>
+					  <form id='com-websit' onsubmit="return postWebsitData()">
 				       <ul>
 				         <li>
+				          <#--<#if (cpnInfo.url)?? && cpnInfo.url?length gt 0>
 				           <span>公司网站</span>
-				           <p>http://www.jobplus.com.cn <a href="javascript:;" class="zu-edit-button" name="editsurl"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <p><a href='${cpnInfo.url}' target='_blank' class='websiturl' title='${cpnInfo.url}'>${cpnInfo.url}</a> <a href="javascript:;" class="zu-edit-button" name="editsurl"><i class="zu-edit-button-icon"></i>修改</a></p>
+				          <#else>
+				          <span>公司网站<a href="javascript:;" class="zu-edit-button" name="editsurl"><i class="zu-edit-button-icon"></i>修改</a></span>
+				          </#if>-->
+				         
+				           <span>公司网站</span>
+				           <p>
+				            <#if (cpnInfo.url)?? && cpnInfo.url?length gt 0>
+				             <a href='${cpnInfo.url}' target='_blank' class='websiturl' title='${cpnInfo.url}'>${cpnInfo.url}</a> 
+				            </#if>
+				           <a href="javascript:;" class="zu-edit-button" name="editsurl"><i class="zu-edit-button-icon"></i>修改</a>
+				           </p>
+				         
 				         </li>
 				         <li>
+				         <#--<#if (cpnInfo.scale)?? && cpnInfo.scale?length gt 0>
 				           <span>公司规模</span>
-				           <p>10000+ <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <p>${cpnInfo.scale}<a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				         <#else>
+				           <span>公司规模<a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></span>
+				         </#if>-->
+				          <span>公司规模</span>
+				           <p>
+				           <#if (cpnInfo.scale)?? && cpnInfo.scale?length gt 0>
+				           ${cpnInfo.scale}
+				           </#if>
+				           <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a>
+				           </p>
 				         </li>
 				         <li>
+				          <#--<#if (cpnInfo.industry)?? && cpnInfo.industry?length gt 0>
 				           <span>所属行业</span>
-				           <p>互联网 <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <p>${cpnInfo.industry} <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				          <#else>
+				           <span>所属行业<a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></span>
+				          </#if>-->
+				          <span>所属行业</span>
+				          <p>
+				          <#if (cpnInfo.industry)?? && cpnInfo.industry?length gt 0>
+				           ${cpnInfo.industry}
+				          </#if>
+				           <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a>
+				          </p>
 				         </li>
 				         <li>
+				          <#--<#if (cpnInfo.establishtime)??>
 				           <span>创立年份</span>
-				           <p>1985年 <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <p>${cpnInfo.establishtime?string("yyyy")}<a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				          <#else>
+				           <span>创立年份<a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></span>
+				          </#if>-->
+				           <span>创立年份</span>
+				           <p>
+				           <#if (cpnInfo.establishtime)??>
+				           ${cpnInfo.establishtime?string("yyyy")}
+				           </#if>
+				           <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a>
+				           </p>
 				         </li>
 				         <li>
+				           <#--<#if (cpnInfo.type)?? && cpnInfo.type?length gt 0>
 				            <span>公司类型</span>
-				            <p>外商独资 <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				            <p>${cpnInfo.type} <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+				           <#else>
+				           <span>公司类型<a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></span>
+				          </#if>-->
+				          <span>公司类型</span>
+				          <p>
+				          <#if (cpnInfo.type)?? && cpnInfo.type?length gt 0>
+				          ${cpnInfo.type} 
+				          </#if>
+				          <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
 				         </li>
 				       </ul>
+					   </form>
 				    </div>
 				</div>
 			 </div>
@@ -198,8 +403,8 @@
                       <div class="strength-meter v2">
                          <div class="strength-data">
                             <div class="level-indicator"></div>
-                            <em class="fill-marker" style="visibility:visible; width:180px;bottom:84px;left:68px"></em>
-                            <p class="current-level-description" style="visibility: visible; bottom: 86px;; opacity: 1;">高级</p>
+                           	<em class="fill-marker" style="visibility:visible; <#if completion==100>width:180px;bottom:84px;left:68px<#elseif completion==75>width:160px;bottom:64px;left:88px<#elseif completion==50>width:160px;bottom:44px;left:88px<#elseif completion==25>width:160px;bottom:24px;left:88px</#if>"></em>
+                            <p class="current-level-description" style="visibility: visible; bottom: <#if completion==100>86px;<#elseif completion==75>64px;<#elseif completion==50>44px;<#else>24px;</#if>; opacity: 1;"><#if completion==100>高级<#elseif completion==75>中级<#elseif completion==50>初级<#elseif completion==25>初级</#if></p>
                           </div>
                           <canvas id="waterbubble" class="mask" width="82" height="82"></canvas>
                       </div>
@@ -208,17 +413,25 @@
 					  <div class="myattention">
 					   <div class="top-border">
 					    <p>
-						    <a href="/myHome/getHomePage/2?requesType=0" target="_self" data-userid="29">
+						    <a href="/comp/getHomePage/${Session.user.userid}?requesType=0" target="_self"  data-userid='${userInfo.userid}'>
                                <span class="count">
-										9
+								 <#list Session.myHeadTop!?keys as itemKey>
+									 <#if itemKey="attenManSum">
+										${Session.myHeadTop[itemKey]}
+									 </#if>
+								 </#list> 
 							   </span>
                                <span class="count-concern">我的关注</span>
                              </a>
                           </p>
 						  <p>
-							  <a href="/myHome/getHomePage/2?requesType=1" target="_self" data-userid="29">
+							  <a href="/comp/getHomePage/${Session.user.userid}?requesType=1" target="_self"   data-userid="${userInfo.userid}">
                                <span class="count">
-											13
+									 <#list Session.myHeadTop!?keys as itemKey>
+										 <#if itemKey="fansSum">
+											${Session.myHeadTop[itemKey]}
+										 </#if>
+									</#list> 
 							   </span>
                                <span class="count-concern">我的粉丝</span>
                               </a> 
@@ -228,40 +441,56 @@
 					  
                       <div class="recent-seeme" style="border-top:1px solid #e5e5e5; padding-top:10px;">
                             <span>最近访问</span>
-                            <span class="more"><a href="/myHome/getHomePage/2?requesType=3" target="_self">更多&gt;&gt;</a></span>
+                            <#if visitors.last gt 1>
+                            <span class='more'><a href='/comp/getHomePage/${Session.user.userid}?requesType=3' target="_self">更多>></a></span>
+                            </#if>
                        </div>
-                       <div class="detail-list zg-clear">
-								 <a title="Amy" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/479" data-userid="479" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/29/479_38b3a5f56e42417ebb21337a70e011e4.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
+                       <div class='detail-list zg-clear'>
+						  <#if (visitors.list)?? && visitors.list?size gt 0>
+							<#list visitors.list as list>
+								<a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}'  data-moduletype='1'>
+									   <#if (list.headIcon)??>
+										 <img src="${list.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
+									   <#else>
+										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
+									   </#if>
 							    </a>
-								 <a title="admin" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/1" data-userid="1" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/16/1_65e135354a1d48e8bc00f4280f9f49d3.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								 <a title="LEO .Messi" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/30" data-userid="30" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/22/30_01894ca8585b4ad380a241bd9c66a2b1.png" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-					  </div>
+							</#list>
+							<#else>
+							<span class="no-flashlist">暂无最近访问</span>
+					      </#if> 
+					   </div>
 					  
                     </div>
 			 </div>
 		  </div>
         </div>
       </div>
-      <div class='homepageTemplate'></div>
+      <div class='homepageTemplate pagetemplate'></div>
       <a id="backcomtop" title="回到顶部"  class='back-to-top' href="#comtop" style="display:none; bottom:300px;"></a>
       <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
       <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
       <script type="text/javascript" src="/scripts/jquery-jtemplates.js"></script> 
       <script type="text/javascript" src="/scripts/pj_changeHeadIcon.js" charset="UTF-8"></script>
+      <script type="text/javascript" src="/scripts/jquery.pinwheel-0.1.0.js"></script>
       <script type="text/javascript" src="/scripts/waterbubble.js"></script>
       <script type="text/javascript" src="/scripts/pj_mycompage.js"></script>
+      <script type="text/javascript" src="/scripts/pj_randomid.js"></script>
+      <script type="text/javascript" src="/scripts/pj_chosen.js"></script>
       <script type="text/javascript" src="/scripts/pj_constant.js"></script>
-      <#--<script type="text/javascript" src="/scripts/pj_country.js"></script>-->
+      <script type="text/javascript" src='/scripts/pj_centerCommon.js'></script>
+      <script type="text/javascript" src="/scripts/pj_loadPmAndsmg.js"></script>
+      <script type="text/javascript" src="/scripts/jquery.confirm.js"></script>
+      <script type="text/javascript" src="/scripts/pj_msgbox.js"></script>
+      <script type="text/javascript" src="/scripts/pj_constant.js"></script>
+      <script type="text/javascript" src="/scripts/pj_publicMethod.js"></script>
+      <script type="text/javascript" src="/scripts/pj_country.js"></script>
+      <script type="text/javascript" src="/scripts/jquery.simplePagination.js"></script>
       <script type="text/javascript">
         $('#waterbubble').waterbubble({
 			    radius:40,
 			    lineWidth:2,
-			    data:1,
+			    data:${completion/100},
 			    waterColor: '#7cbb2f',
 			    textColor: '',
 			    outsideColor:'#cdcdcd',

@@ -1,5 +1,6 @@
 package com.jobplus.service;
 
+
 /**
  * 更改 某表 某数
  * @author Jerry
@@ -30,6 +31,7 @@ public interface IUpdTableColumnService {
 	 * @param addOrDec 增加or减少
 	 * @param AdOrDeNum 增减数量
 	 * @param objId id
+	 * @param updTime 表中的updatetime  不传递不修改
 	 * @return
 	 */
 	int updNums(Integer tableName, Integer tableColumn, Integer addOrDec, Integer AdOrDeNum, Integer objId);

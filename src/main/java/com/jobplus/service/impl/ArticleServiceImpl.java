@@ -301,11 +301,11 @@ public class ArticleServiceImpl implements IArticleService{
 			//文章打赏次数增加
 			articleDao.updateSupportCount(article.getId());
 			
-			//2.打赏者与被打赏者 积分增减
+			//2.打赏者与被打赏者 财富值增减
 			// 扣减财富值
 			ret = accountService.modAccountAndDetail(supt.getUserid(), 0, -supt.getSupportvalue(), 1, 1,
 					supt.getSupportvalue(), 9);
-			//积分扣减失败（积分不足等）
+			//财富值扣减失败（财富值不足等）
 			if(ret==0)
 				return 0;
 			// 增加财富值

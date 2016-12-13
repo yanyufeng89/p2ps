@@ -8,18 +8,18 @@
          {#if $T.commlist.tmpHeadIcon}
            {#if $T.commlist.tmpUserName}
            <a href='/myHome/getHomePage/{$T.commlist.userid}' target="_blank" tabindex="-1" data-userid='{$T.commlist.userid}' data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
-              <img tabindex="-1" class="Avatar lazy" alt="个人头像" data-userid='{$T.commlist.userid}' src="{$T.commlist.tmpHeadIcon}" data-moduletype="0">
+              <img tabindex="-1" class="Avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" alt="个人头像" data-userid='{$T.commlist.userid}' src="{$T.commlist.tmpHeadIcon}" data-moduletype="0">
            </a>
            {#else}
-              <img tabindex="-1" class="Avatar lazy" alt="个人头像"  src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+              <img tabindex="-1" class="Avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" alt="个人头像"  src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
            {#/if}
          {#else}
            {#if $T.commlist.tmpUserName}
            <a href='/myHome/getHomePage/{$T.commlist.userid}' target="_blank" tabindex="-1" data-userid='{$T.commlist.userid}' data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
-              <img tabindex="-1" class="Avatar lazy" alt="个人头像" data-userid='{$T.commlist.userid}' src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+              <img tabindex="-1" class="Avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" alt="个人头像" data-userid='{$T.commlist.userid}' src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
            </a>
            {#else}
-              <img tabindex="-1" class="Avatar lazy" alt="个人头像"  src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
+              <img tabindex="-1" class="Avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" alt="个人头像"  src="/image/1b48b5a75c71597_100x100.jpg" data-moduletype="0">
            {#/if}
          {#/if}
 

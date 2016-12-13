@@ -197,6 +197,18 @@ function formatDate(str){
     // year+"年"+fixZero(month,2)+"月"+fixZero(date,2)+"日    "+fixZero(hour,2)+":"+fixZero(minute,2)+":"+fixZero(second,2)
     return  year+"-"+fixZero(month,2)+"-"+fixZero(date,2); 
 }
+//时间日期转换
+function formatDate_hhmmss(str){
+	var now=new Date(str);
+	var year=now.getFullYear();
+	var month=now.getMonth()+1;
+	var date=now.getDate();
+	var hours=now.getHours();
+	var minute=now.getMinutes();
+	var second=now.getSeconds();
+	// year+"年"+fixZero(month,2)+"月"+fixZero(date,2)+"日    "+fixZero(hour,2)+":"+fixZero(minute,2)+":"+fixZero(second,2)
+	return  year+"-"+fixZero(month,2)+"-"+fixZero(date,2)+" "+fixZero(hours,2)+":"+fixZero(minute,2)+":"+fixZero(second,2); 
+}
 function fixZero(num,length){     
 	var str=""+num;      
 	var len=str.length;     

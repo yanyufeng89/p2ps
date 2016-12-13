@@ -76,7 +76,19 @@ public class TopicsComment extends PageParent implements Serializable{
      * 用于排序  1：时间  2：回复总数  默认时间排序
      */
     private Integer  sortType;    
+    /**
+     * 用户类型
+     */
+    private String usertype;
     
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 	public Integer getIsAccept() {
 		return isAccept;
 	}

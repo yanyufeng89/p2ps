@@ -1,0 +1,71 @@
+<div id="pj-com-tooltip"  class="goog-hovercard popover top" style="width:363px">
+  <div class="popover-content no-hovercard">
+    <div class="pj-profile-card member">
+      <div class="upper company-head">
+       <p class='photo'>
+	        <a class="avatar-link" target="_blank" href='/myHome/getHomePage/{$T.userid}'>
+	          {#if $T.userSimpleInformation.headicon}
+	              <img class="Cvatar-xs" alt="个人头像" src="{$T.userSimpleInformation.headicon}">
+	          {#else}
+	              <img class="Cvatar-xs" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg">
+	          {#/if}
+	        </a>
+        </p>
+        <p class='name'>
+          {#if $T.userSimpleInformation.username}
+             <span class='name-container'>{$T.userSimpleInformation.username}</span>
+          {#else}
+             <span class='name-container'>匿名用户</span>
+          {#/if}
+        </p>
+        <div class='titles company-title'>{$T.userSimpleInformation.description}</div>
+        <div class="taglines company-tagline">
+           {#if $T.userSimpleInformation.specialty}
+              {$T.userSimpleInformation.specialty}
+           {#/if}
+        </div>
+      </div>
+      <div class="lower clearfix">
+        <div class="meta">
+	          <a class="item" target="_blank" href="/myHome/getHomePage/{$T.userid}?requesType=2" style="padding-right:15px;">
+	            <span class="value">
+	            {#if $T.userSimpleInformation.operationSum.allshresum}
+		              {$T.userSimpleInformation.operationSum.allshresum}
+		        {#else}
+		             0
+		        {#/if}
+	            </span>
+	              <span class="key">公司分享</span>
+	          </a>
+            <a class="item" target="_blank"  href="/myHome/getHomePage/{$T.userid}?requesType=4"  style="padding-left:15px;">
+            <span class="value">
+              {#if $T.userSimpleInformation.cpNewsSum}
+	              {$T.userSimpleInformation.cpNewsSum}
+	          {#else}
+	             0
+	          {#/if}
+            </span>
+            <span class="key">公司快讯</span>
+           </a>
+            
+        </div>
+        <div class="operation">
+          <a href="javascript:;" class="zg-btn-white member-profile-card-pm private-message" data-name="{$T.userSimpleInformation.username}"  data-receivedid="{$T.userid}">
+            <i class="zg-icon pm">私信</i>
+          </a>
+          {#if $T.userSimpleInformation.fansIds==1}
+	          <button data-follow="m:button" data-userid="{$T.userid}" data-actiontype='1' class="zg-btn zg-btn-follow zm-rich-follow-btn" >
+	          		+&nbsp;关注
+	          </button>
+	      {#else}
+	          <button data-follow="m:button" data-userid="{$T.userid}" data-actiontype='0' class="zg-btn zg-btn-unfollow zm-rich-follow-btn" >
+	          		取消关注
+	          </button>
+          {#/if}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="arrow" style="left: 82.5px;"></div>
+  <div class="arrow2" style="left: 82.5px;"></div>
+</div>

@@ -158,18 +158,18 @@
 							   <#if (list.tmpHeadIcon)??&&list.tmpHeadIcon?length gt 0>
 							     <#if (list.isPublic==1)>
 							      <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/${list.userid}' target="_blank">
-							        <img src="${list.tmpHeadIcon}" class="zm-list-avatar avatar lazy"  alt="个人头像" data-userid='${list.userid}' data-moduletype="0">
+							        <img src="${list.tmpHeadIcon}" class="zm-list-avatar avatar lazy <#if list.usertype==2>company-img</#if>"  alt="个人头像" data-userid='${list.userid}' data-moduletype="0">
 							      </a>
 							     <#else>
-							        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar lazy" alt="个人头像" data-moduletype="0">
+							        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar lazy <#if list.usertype==2>company-img</#if>" alt="个人头像" data-moduletype="0">
 							     </#if>
 							    <#else>
 							      <#if (list.isPublic==1)>
 							        <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/${list.userid}' target="_blank">
-							           <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar lazy" alt="个人头像" data-userid='${list.userid}' data-moduletype='0'>
+							           <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-avatar avatar lazy <#if list.usertype==2>company-img</#if>" alt="个人头像" data-userid='${list.userid}' data-moduletype='0'>
 							        </a>
 							      <#else>
-							         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar lazy" alt="个人头像" data-userid='${list.userid}' data-moduletype='0'>
+							         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-list-anonymous-avatar avatar lazy <#if list.usertype==2>company-img</#if>" alt="个人头像" data-userid='${list.userid}' data-moduletype='0'>
 							      </#if>
 							   </#if>
 							   <#if (list.isPublic==1)>
@@ -268,9 +268,9 @@
 							<div class="zh-answer-form clearfix">
 							   <a href='/myHome/getHomePage/${Session.user.userid}' class="zm-item-link-avatar" target='_blank'>
 								 <#if (Session.user.headicon)??&&Session.user.headicon?length gt 0>
-								   <img src="${Session.user.headicon}" class="zm-list-avatar lazy" alt="个人头像" data-userid='${Session.user.userid}' data-moduletype='0'>
+								   <img src="${Session.user.headicon}" class="zm-list-avatar lazy <#if Session.user.usertype==2>company-img</#if>" alt="个人头像" data-userid='${Session.user.userid}' data-moduletype='0'>
 								  <#else>
-								   <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-avatar lazy" data-userid='${Session.user.userid}' data-moduletype='0'>
+								   <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-avatar lazy <#if Session.user.usertype==2>company-img</#if>" data-userid='${Session.user.userid}' data-moduletype='0'>
 								 </#if>
 							   </a>
 							    <div class="zu-answer-form-title">
@@ -364,9 +364,9 @@
 				   <#list topicsDetail.fansList[0..5] as fanlist>
 				       <a title="${fanlist.username}" target='_blank' class='zm-item-link-avatar' href='/myHome/getHomePage/${fanlist.userid}' data-moduletype='0'>
 					     <#if (fanlist.headicon)?? && fanlist.headicon?length gt 0>
-					       <img src="${fanlist.headicon}" class="zm-item-img-avatar" data-moduletype='0' alt="个人头像" data-userid='${fanlist.userid}'>
+					       <img src="${fanlist.headicon}" class="zm-item-img-avatar <#if fanlist.usertype==2>company-img</#if>" data-moduletype='0' alt="个人头像" data-userid='${fanlist.userid}'>
 					     <#else>
-					        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
+					        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar <#if fanlist.usertype==2>company-img</#if>" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
 					     </#if>
 					  </a> 
 				   </#list>
@@ -375,9 +375,9 @@
 				     <#list topicsDetail.fansList as fanlist>
 				       <a title="${fanlist.username}" target='_blank' class='zm-item-link-avatar' href='/myHome/getHomePage/${fanlist.userid}' data-moduletype='0'>
 					     <#if (fanlist.headicon)?? && fanlist.headicon?length gt 0>
-					       <img src="${fanlist.headicon}" class="zm-item-img-avatar lazy" data-moduletype='0' alt="个人头像" data-userid='${fanlist.userid}'>
+					       <img src="${fanlist.headicon}" class="zm-item-img-avatar lazy <#if fanlist.usertype==2>company-img</#if>" data-moduletype='0' alt="个人头像" data-userid='${fanlist.userid}'>
 					     <#else>
-					        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
+					        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if fanlist.usertype==2>company-img</#if>" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
 					     </#if>
 					  </a> 
 				     </#list>
@@ -389,9 +389,9 @@
 				         <#list topicsDetail.fansList as fanlist>
 				           <a title="${fanlist.username}" target='_blank' class='zm-item-link-avatar' href='/myHome/getHomePage/${fanlist.userid}' data-moduletype='0'>
 					        <#if (fanlist.headicon)?? && fanlist.headicon?length gt 0>
-					          <img src="${fanlist.headicon}" class="zm-item-img-avatar lazy" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
+					          <img src="${fanlist.headicon}" class="zm-item-img-avatar lazy <#if fanlist.usertype==2>company-img</#if>" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
 					        <#else>
-					           <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
+					           <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if fanlist.usertype==2>company-img</#if>" alt="个人头像" data-moduletype='0'  data-userid='${fanlist.userid}'>
 					       </#if>
 					      </a> 
 				         </#list>
@@ -423,8 +423,10 @@
 		    </div>
            </div>
            <div class='pj_jsonp ad_exposure'>
-	            <img src='/image/ad_exposure_6.jpg' alt="广告" width='308' height='246' class='lazy'>
+	         <a href='http://www.xjtusz.cn/xjtu/news_more_04jypx_default.asp' target='_blank'>
+	            <img src='/image/ad_exposure_5.jpg' alt="广告" width='308' height='246' class='lazy'>
 	            <div class='advertising-direction'>广告</div>
+	          </a>
 	       </div>  
         </div>
 		</div>

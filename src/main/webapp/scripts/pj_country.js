@@ -1,6 +1,30 @@
     var s=["edit-company-country","edit-company-state","edit-company-city"]; 
     var opt0 = ["国家/地区","省份/自治区/直辖市","市/区"]; 
-    function setup(){ 
+    function setup(){
+    	/*console.log(datas);
+    	for(i=0;i<s.length-1;i++){
+    		if(datas['nation'] !== null || datas['nation'] !== undefined || datas['nation'] !== '')
+    			
+        	if(datas['province'] !== null || datas['province'] !== undefined || datas['province'] !== '')
+        		
+    		if(datas['city'] !== null || datas['city'] !== undefined || datas['city'] !== '')
+    	} */   	 
+    	/*$('#edit-company-country option').each(function(){
+		      	 if($(this).attr('value')==nation){
+		  		 $(this).attr("selected",true);
+		  	 }
+		   })
+		 $('#edit-company-state option').each(function(){
+		   	if($(this).attr('value')==province){
+		   		$(this).attr("selected",true);
+		   	}
+		   })
+		   $('#edit-company-city option').each(function(){
+		   	if($(this).attr('value')==city){
+		   		$(this).attr("selected",true);
+		   	}
+		   })*/
+    	
     	for(i=0;i<s.length-1;i++) 
     	document.getElementById(s[i]).onchange=new Function("change("+(i+1)+")"); 
     	change(0); 
@@ -24,7 +48,7 @@
 	var ss=document.getElementById(s[v]); 
 	with(ss){ 
 	length = 0; 
-	options[0]=new Option(opt0[v],opt0[v]); 
+	options[0]=new Option(opt0[v],''); 
 	if(v && document.getElementById(s[v-1]).selectedIndex>0 || !v) 
 	{ 
 	   if(dsy.Exists(str)){ 

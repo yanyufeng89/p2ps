@@ -52,7 +52,7 @@
 
     $(function ($) {
         $("#jqGrid").jqGrid({
-            url: $path_base + '/manage/backstage/user',
+            url: $path_base + '/m/backstage/user',
             mtype: "POST",
             datatype: "json",
             height: 350,
@@ -102,7 +102,7 @@
         }, function () {
             $.ajax({
                 type: "POST",
-                url: $path_base + "/manage/backstage/user/delete/" + id,
+                url: $path_base + "/m/backstage/user/delete/" + id,
                 dataType: "json",
                 success: function (data) {
                     if (data == '1') {//返回成功

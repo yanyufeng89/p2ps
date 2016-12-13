@@ -56,7 +56,7 @@
 
     $(function ($) {
         $("#jqGrid").jqGrid({
-            url: $path_base + '/manage/backstage/suggest',
+            url: $path_base + '/m/backstage/suggest',
             mtype: "POST",
             datatype: "json",
             height: 350,
@@ -101,7 +101,7 @@
                 var rowIds = $("#jqGrid").jqGrid('getDataIDs');
                 for (var i = 0; i < rowIds.length; i++) {
                     var rowData = $("#jqGrid").jqGrid('getRowData', rowIds[i]);
-                    if (rowData.isdeal == 1) {
+                    if (rowData.isdeal != 1) {
                         var operate = '&emsp;<button type="button" class="btn btn-danger btn-minier" onclick="deal(' + rowIds[i] + ');">确认处理</button>';
                         $("#jqGrid").jqGrid("setRowData", rowIds[i], {operates: operate});
                     }
@@ -121,7 +121,7 @@
         }, function () {
             $.ajax({
                 type: "POST",
-                url: $path_base + "/manage/backstage/suggest/deal/" + id,
+                url: $path_base + "/m/backstage/suggest/deal/" + id,
                 dataType: "json",
                 success: function (data) {
                     if (data == '1') {//返回成功

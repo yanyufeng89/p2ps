@@ -30,7 +30,69 @@ var name_rules = {
     "tbl_docs": "文档",
     "DOC": "文档"
 };
+//根据点击表名转成对应中文
+function convertCh(tablename) {
+    var name;
+    switch (tablename) {
+        case 'tbl_docs':
+            name = '文档';
+            break;
+        case 'tbl_topics':
+            name = '话题';
+            break;
+        case 'tbl_books':
+            name = '书籍';
+            break;
+        case 'tbl_article':
+            name = '文章';
+            break;
+        case 'tbl_courses':
+            name = '课程';
+            break;
+        case '':
+            name = '';
+            break;
+        default:
+            name = '站点';
+            break;
+    }
+    $('.zm-profile-section-name').html(name);
+    return name;
+}
 
+//时间日期转换
+function formatDate(str) {
+    var now = new Date(str);
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var hours = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    // year+"年"+fixZero(month,2)+"月"+fixZero(date,2)+"日    "+fixZero(hour,2)+":"+fixZero(minute,2)+":"+fixZero(second,2)
+    return year + "-" + fixZero(month, 2) + "-" + fixZero(date, 2);
+}
+//时间日期转换
+function formatDate_hhmmss(str){
+	var now=new Date(str);
+	var year=now.getFullYear();
+	var month=now.getMonth()+1;
+	var date=now.getDate();
+	var hours=now.getHours();
+	var minute=now.getMinutes();
+	var second=now.getSeconds();
+	// year+"年"+fixZero(month,2)+"月"+fixZero(date,2)+"日    "+fixZero(hour,2)+":"+fixZero(minute,2)+":"+fixZero(second,2)
+	return  year+"-"+fixZero(month,2)+"-"+fixZero(date,2)+" "+fixZero(hours,2)+":"+fixZero(minute,2)+":"+fixZero(second,2); 
+}
+function fixZero(num, length) {
+    var str = "" + num;
+    var len = str.length;
+    var s = "";
+    for (var i = length; i-- > len;) {
+        s += "0";
+    }
+    return s + str;
+}
 /**
  * 组装超链接url
  * @param type
@@ -167,7 +229,7 @@ function setCurrentLocationForBackUrlCookie() {
         else if (backurl.indexOf("?message=") > -1) {
             backurl = backurl.substring(0, backurl.indexOf("?message="));
         }
-        setBackUrlCookie(backurl);
+        $.cookie("backurl", backurl);
     }
 }
 
@@ -176,11 +238,7 @@ function setBackUrlCookie() {
     var currentUrl = window.location.href.replace("http://", "");
     var backurl = "";
     if (currentUrl.indexOf(paramName) > -1)
-        backurl = encodeURI(currentUrl.substring(currentUrl.indexOf(paramName) + paramName.length, currentUrl.length));
-    setBackUrlCookie(backurl);
-}
-
-function setBackUrlCookie(backurl) {
+        backurl = decodeURI(currentUrl.substring(currentUrl.indexOf(paramName) + paramName.length, currentUrl.length));
     $.cookie("backurl", backurl);
 }
 
@@ -189,7 +247,7 @@ function deleteBackUrlCookie() {
 }
 
 function getBackUrlCookie() {
-    return $.cookie("backurl");
+    return decodeURI($.cookie("backurl"));
 }
 
 function isEmail(str) {
@@ -203,3 +261,19 @@ function isTel(str) {
         return true;
     return false;
 }
+//判断是否是合格的URL
+function isURL (str_url) {// 验证url  
+    /*var strRegex="^((https|http|rtsp|mms)?://)"  
+    + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@  
+    + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184  
+    + "|" // 允许IP和DOMAIN（域名）  
+    + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.  
+    + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名  
+    + "[a-z]{2,6})" // first level domain- .com or .museum  
+    + "(:[0-9]{1,4})?" // 端口- :80  
+    + "((/?)|" // a slash isn't required if there is no file name  
+    + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$"; */
+	var strRegex=/((https|http|ftp|rtsp|mms):\/\/)?(([0-9a-z_!~*'().&=+$%-]+:)?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+\/?)/g;
+    var re=new RegExp(strRegex); 
+    return re.test(str_url); 
+} 

@@ -1,17 +1,25 @@
+<input style='display:none'/>
 <div class="manage-areas  zg-empty">
       <div class="zg-inline">
       </div>
       <div class="zm-tag-editor-command-buttons-wrap zg-left">
-        <input type="hidden" name="currentskillval" value="">
-        <input class="zu-question-suggest-skill-input label-input-label" type="text" role="combobox"  id="searchArea" aria-autocomplete="list" placeholder="添加业务领域" oninput="getSkillsByCondition(this)">
+        <input type="hidden" name="currentareaval" value="">
+        <input class="zu-question-suggest-skill-input label-input-label" type="text" role="combobox" AutoComplete="off"  id="searchArea" aria-autocomplete="list" placeholder="添加业务领域" oninput="getAreaByCondition(this)">
         <label class="err-tip" style="display:none;">最多添加10个领域</label>
        </div>
 </div>  
-<div class='areas-editor clearfix' id='areainputtags'>
-     {#foreach $T.skillitem as skill}
+<div class='areas-editor clearfix' id='skillinputtags'>
+     {#foreach $T.areaitem as area}
             <div class="zm-tag-editor-edit-item">
-            <span class="nor">{$T.skill.name}</span>
-            <a  href="javascript:void(0)" class="zm-tag-editor-remove-button"  name="removeskill"></a>
+            <span class="nor">{$T.area.name}</span>
+            <a href="javascript:void(0)" class="zm-tag-editor-remove-button"  data-name='{$T.area.name}' id="{$T.area.id}"  name="removeskill"></a>
             </div>
      {#/for}
  </div>
+ <div class='cm-command'>
+   <span class="skill-error">
+        <b class="ic ic-msg" style="background-position: -47px -144px;"></b>
+   </span>
+  <button class="zm-command-cancel" name="cancel"  type="button" style="font-size:14px;font-weight:500;">取消</button>
+  <button class="zg-r3px zg-btn-blue" name="save" type="submit">保存</button>
+</div>

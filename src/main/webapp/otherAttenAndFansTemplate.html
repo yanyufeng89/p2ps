@@ -1,4 +1,4 @@
-<!-- 他关注的人 -->
+                                                                                                       <!-- 他关注的人 -->
 {#if $T.attenManPage.length==0}
   <div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
     <span class='nofanslist'>暂无关注信息</span>
@@ -13,16 +13,16 @@
 		 <button  data-userid="{$T.attenlist.userid}" class="zg-btn small nth-0 zg-btn-follow"  data-actiontype='1'>+&nbsp;关注</button>
 		 {#/if}
 	   </div>
-	   <a title="{$T.attenlist.username}" data-userid="{$T.attenlist.userid}" class="zm-item-link-avatar"  target='_blank' href="/myHome/getHomePage/{$T.attenlist.userid}">
+	   <a title="{$T.attenlist.username}" data-userid="{$T.attenlist.userid}" class="zm-item-link-avatar {#if $T.attenlis.usertype==2}company-img{#/if}"  target='_blank' href="{#if $T.attenlist.usertype==2}/comp/getHomePage/{$T.attenlist.userid}{#else}/myHome/getHomePage/{$T.attenlist.userid}{#/if}">
 		   {#if $T.attenlist.headicon}
 			   <img src="{$T.attenlist.headicon}" class="zm-item-img-avatar lazy" alt="个人头像">
 		   {#else}
-			   <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像">
+			   <img src="/image/{#if $T.attenlist.usertype==2}cm-defaultIcon.jpg{#else}1b48b5a75c71597_100x100.jpg{#/if}" class="zm-item-img-avatar lazy" alt="个人头像">
 		   {#/if}
 	   </a>
 	   <div class="zm-list-content-medium">
 			<h2 class="zm-list-content-title">
-			   <a href="/myHome/getHomePage/{$T.attenlist.userid}"  data-userid="{$T.attenlist.userid}"  target='_blank' class="zg-link author-link" title={$T.attenlist.username}>{$T.attenlist.username}</a>
+			   <a href="{#if $T.attenlist.usertype==2}/comp/getHomePage/{$T.attenlist.userid}{#else}/myHome/getHomePage/{$T.attenlist.userid}{#/if}"  data-userid="{$T.attenlist.userid}"  target='_blank' class="zg-link author-link  {#if $T.attenlis.usertype==2}company-img{#/if}" title={$T.attenlist.username}>{$T.attenlist.username}</a>
 			</h2>
 			<div class="pj-introduction ellipsis">
 			    <span class="bio">

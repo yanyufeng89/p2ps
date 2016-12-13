@@ -120,7 +120,7 @@ public class AttentionServiceImpl implements IAttentionService {
 
 					// 添加消息通知
 					smsService.addNotice(user, contextPath, new Sms().getTABLENAMES()[2], record.getObjectid(),
-							record.getObjCreatepersonPg(), 2, record.getRelationidPg(),
+							record.getObjCreatepersonPg(), 3, record.getRelationidPg(),
 							record.getObjectNamePg(),"");
 				}
 			} else {

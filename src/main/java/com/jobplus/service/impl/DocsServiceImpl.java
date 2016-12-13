@@ -89,7 +89,7 @@ public class DocsServiceImpl implements IDocsService {
 	@Override
 	public int insertDocs(List<Docs> list) {
 		int rest = 0;
-		//文档分享积分值
+		//文档分享财富值值
 		int changevalue = 0;
 		// 获取ID数组
 		int docsId[] = seqService.getSeqByTableName("tbl_docs", list.size());
@@ -122,6 +122,7 @@ public class DocsServiceImpl implements IDocsService {
 	/**
 	 * 文件上传
 	 */
+	@SuppressWarnings("unused")
 	@Transactional
 	@Override
 	public String upload(MultipartFile[] files, HttpServletRequest request, HttpServletResponse response)
@@ -130,7 +131,6 @@ public class DocsServiceImpl implements IDocsService {
 			//跳转页面  分享文档获取的财富值显示
 			int num = 0;
 			//文档分享数   如果是私有不统计
-			@SuppressWarnings("unused")
 			int shareNum = 0;
 			// 文档list
 			List<Docs> docsList = new ArrayList<>();
@@ -179,7 +179,7 @@ public class DocsServiceImpl implements IDocsService {
 						//设置路径
 						doc.setFilepath(path);
 						//设置标题
-						doc.setTitle(myFileTitle);
+						doc.setTitle(title[i]);
 //						doc.setTitle(title==null?myFileTitle:title[i]);
 						//设置财富值
 						doc.setDownvalue(Integer.parseInt(downValue == null || StringUtils.isBlank(downValue[i])?ConstantManager.DEAAULT_DOWN_VALUE:downValue[i]));
@@ -193,6 +193,12 @@ public class DocsServiceImpl implements IDocsService {
 						doc.setIsvalid(1);
 						//设置最后更新时间
 //						doc.setLastedittime(new java.sql.Date(new java.util.Date().getTime()));
+
+                        //如果存在相同名称的文件则设置为私有
+						List<Docs> list = docsDao.selectUserRecordByTitle(doc);
+						if (list != null && list.size() > 0) {
+							doc.setIspublic(0);
+						}
 						//设置是否公开   默认公开   
 						try {
 							doc.setIspublic(Integer.parseInt(ispublic == null ||StringUtils.isBlank(ispublic[i])?ConstantManager.DEFAULT_DOC_ISPUBLISHED_PUBLISH:ispublic[i]));
@@ -378,12 +384,12 @@ public class DocsServiceImpl implements IDocsService {
 			if(ret > 0){
 				//不是私有文档删除
 				if(!StringUtils.isBlank(ispublic) && !"0".equals(ispublic)){
-					//个人积分扣减
+					//个人财富值扣减
 					//扣除财富值
 					ret = accountService.modAccountAndDetail(Integer.parseInt(userid), 0, - ConstantManager.DEAAULT_DOWN_VALUE2*condition.length, 
 							1, 1, ConstantManager.DEAAULT_DOWN_VALUE2*condition.length,17);
 					if(ret==0){
-						logger.info("批量逻辑删除docs  :  个人积分扣减      扣除财富值 失败  userid=="+userid +"  condition=" + condition);
+						logger.info("批量逻辑删除docs  :  个人财富值扣减      扣除财富值 失败  userid=="+userid +"  condition=" + condition);
 						return 0;
 					}	
 				}								
@@ -547,7 +553,7 @@ public class DocsServiceImpl implements IDocsService {
 			//扣除财富值
 			ret = accountService.modAccountAndDetail(record.getUserid(), 0, - doc.getDownvalue(), 
 					1, 1, doc.getDownvalue(),6);
-			//积分扣减失败（积分不够）
+			//财富值扣减失败（财富值不够）
 			if(ret == 0)
 				return null;
 			
@@ -591,6 +597,12 @@ public class DocsServiceImpl implements IDocsService {
 	public int updDocAndUpdMoney(Docs record, String preIsPublic) {
 		String isPublic = record.getIspublic().toString();
 		int ret;
+		//如果修改文件名字已存在则强制变更为私有
+		List<Docs> list = docsDao.selectUserRecordByTitle(record);
+		if (list != null && (list.size() > 1 || (list.size()>0&&list.get(0).getId().intValue() != record.getId().intValue()))) {
+			isPublic = "0";
+			record.setIspublic(0);
+		}
 		ret = docsDao.updateByPrimaryKeySelective(record);
 		if(ret > 0){
 			// 私有变公开或者匿名
@@ -616,5 +628,4 @@ public class DocsServiceImpl implements IDocsService {
 		
 		return ret;
 	}
-	
 }

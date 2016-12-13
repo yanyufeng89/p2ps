@@ -590,6 +590,7 @@ a.upload-btn:hover{
     line-height:30px;
     cursor: pointer;
     opacity: 0;
+    font-size:0;
     font-family: Arial,'Microsoft YaHei';
     _font-family: Arial,'Microsoft YaHei';
 }

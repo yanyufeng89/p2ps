@@ -139,7 +139,7 @@
 				   
                   <div id="uploadsite-list" class="uploadcourse-list">
                       <input type='hidden' name='siteurl' value=''>
-                      <input type='hidden' name='title' value=''>
+                      <#--<input type='hidden' name='title' value=''>-->
                       <div class="editlayoutbook" id="upload-item-0">
                         <dl class="editupload">
                           <dd>
@@ -150,9 +150,12 @@
                                  <tr>
                                     <td class="name"><i>*</i>站点：</td> 
                                     <td> 
-                                      <div class="add-title-form">
-                                          
+                                     <#-- 
+                                     <div class="add-title-form">
+                                     
                                       </div>
+                                    -->
+                                     <input type="text" name='title' class="add-title-form">
                                     </td>
                                    </tr>
                                    <tr>

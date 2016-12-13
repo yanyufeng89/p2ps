@@ -7,10 +7,12 @@
     <result column="oauthName" property="oauthname" jdbcType="CHAR" />
     <result column="oauthOpenId" property="oauthopenid" jdbcType="VARCHAR" />
     <result column="oauthAccessToken" property="oauthaccesstoken" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="headicon" property="headicon" jdbcType="VARCHAR" />
     <result column="oauthExpires" property="oauthexpires" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, userId, oauthName, oauthOpenId, oauthAccessToken, oauthExpires
+    id, userId, oauthName, oauthOpenId, oauthAccessToken, oauthExpires, headicon, nickname
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,10 +26,10 @@
   </delete>
   <insert id="insert" parameterType="com.jobplus.pojo.OauthLoginInfo" >
     insert into tbl_oauth_login (id, userId, oauthName, 
-      oauthOpenId, oauthAccessToken, oauthExpires
+      oauthOpenId, oauthAccessToken, oauthExpires, headicon, nickname
       )
     values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{oauthname,jdbcType=CHAR}, 
-      #{oauthopenid,jdbcType=VARCHAR}, #{oauthaccesstoken,jdbcType=VARCHAR}, #{oauthexpires,jdbcType=INTEGER}
+      #{oauthopenid,jdbcType=VARCHAR}, #{oauthaccesstoken,jdbcType=VARCHAR}, #{oauthexpires,jdbcType=INTEGER}, #{headicon,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.OauthLoginInfo" >
@@ -51,6 +53,12 @@
       <if test="oauthexpires != null" >
         oauthExpires,
       </if>
+      <if test="headicon != null" >
+        headicon,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -70,6 +78,12 @@
       </if>
       <if test="oauthexpires != null" >
         #{oauthexpires,jdbcType=INTEGER},
+      </if>
+      <if test="headicon != null" >
+        #{headicon,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,6 +105,12 @@
       <if test="oauthexpires != null" >
         oauthExpires = #{oauthexpires,jdbcType=INTEGER},
       </if>
+      <if test="headicon != null" >
+        headicon = #{headicon,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -100,7 +120,9 @@
       oauthName = #{oauthname,jdbcType=CHAR},
       oauthOpenId = #{oauthopenid,jdbcType=VARCHAR},
       oauthAccessToken = #{oauthaccesstoken,jdbcType=VARCHAR},
-      oauthExpires = #{oauthexpires,jdbcType=INTEGER}
+      oauthExpires = #{oauthexpires,jdbcType=INTEGER},
+      headicon = #{headicon,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -109,5 +131,12 @@
     <include refid="Base_Column_List" />
     from tbl_oauth_login
     where oauthname = #{oauthname,jdbcType=CHAR} and oauthopenid = #{oauthopenid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_oauth_login
+    where userId = #{userid,jdbcType=INTEGER}
   </select>
 </mapper>

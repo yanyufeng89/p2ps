@@ -29,34 +29,62 @@ var container_each='';
 		    Chosen.prototype.initDropdown=function(){
 		    	container_div='';
 		    	container_each='';
-		    	if(this.type=='skill'){
+		    	if(this.type=='skill'||this.type=='area'){
 		    		    var mark=false;
 		    		    this.obj.parent().find('div:last-child').remove();
 		    		    container_div+="<div id='"+this.id+"' class='ac-renderer tagdropdown' style='display:block'>"
 			            $this=this;
-		    		    $.each($this.data.skillList,function(index,item){
-							if($.trim(item.skillname)==$.trim($this.conds)){
-								mark=true;
-							}
-						})
+		    		    if(this.type=='skill'){
+		    		    	$.each($this.data.skillList,function(index,item){
+								if($.trim(item.skillname)==$.trim($this.conds)){
+									mark=true;
+								}
+							})
+		    		    }else{
+		    		    	$.each($this.data.busiareaList,function(index,item){
+								if($.trim(item.busiareaname)==$.trim($this.conds)){
+									mark=true;
+								}
+							})
+		    		    }
+		    		    
 						if($this.data.length==0||!mark){
 							container_div+="<div class='ac-create ac-tag ac-active createtag' data-name='"+$this.conds+"'>"
-						    container_div+="   <span class='zu-autocomplete-row-name textoverflow'>创建&nbsp;'"+$this.conds+"'&nbsp;技能</span>"
+							if(this.type=='skill'){
+								container_div+="   <span class='zu-autocomplete-row-name textoverflow'>添加&nbsp;'"+$this.conds+"'&nbsp;技能</span>"
+							}
+						    else{
+						    	container_div+="   <span class='zu-autocomplete-row-name textoverflow'>添加&nbsp;'"+$this.conds+"'&nbsp;业务领域</span>"
+						    }
 						    container_div+="</div>"	
 						}
-		    		    $.each($this.data.skillList,function(a,b){
-							if(a==0&&mark){
-								container_div+="<div class='ac-row ac-tag ac-active' id='"+generate_field_id()+"'  data-name='"+b.skillname+"' data-id='"+b.id+"'>"
-							}else{
-								container_div+="<div class='ac-row ac-tag'  id='"+generate_field_id()+"' data-name='"+b.skillname+"' data-id='"+b.id+"'>"
-							}
-							container_div+="      <span class='zu-autocomplete-row-name textoverflow'>"+b.skillname+"</span>"
-							container_div+="    </div>"
-						})
+						if(this.type=='skill'){
+			    		    $.each($this.data.skillList,function(a,b){
+								if(a==0&&mark){
+									container_div+="<div class='ac-row ac-tag ac-active' id='"+generate_field_id()+"'  data-name='"+b.skillname+"' data-id='"+b.id+"'>"
+								}else{
+									container_div+="<div class='ac-row ac-tag'  id='"+generate_field_id()+"' data-name='"+b.skillname+"' data-id='"+b.id+"'>"
+								}
+								container_div+="      <span class='zu-autocomplete-row-name textoverflow'>"+b.skillname+"</span>"
+								container_div+="    </div>"
+							})
+						}else{
+							$.each($this.data.busiareaList,function(a,b){
+								if(a==0&&mark){
+									container_div+="<div class='ac-row ac-tag ac-active' id='"+generate_field_id()+"'  data-name='"+b.busiareaname+"' data-id='"+b.id+"'>"
+								}else{
+									container_div+="<div class='ac-row ac-tag'  id='"+generate_field_id()+"' data-name='"+b.busiareaname+"' data-id='"+b.id+"'>"
+								}
+								container_div+="      <span class='zu-autocomplete-row-name textoverflow'>"+b.busiareaname+"</span>"
+								container_div+="    </div>"
+							})
+						}
 						container_div+="</div>";
 						$(".zm-tag-editor-command-buttons-wrap").append(container_div);	
-						//计算新添加层的高度
-		    		    $('#skill0').removeAttr('style').height($('#skill0').height()+$('#'+$this.id).height());
+						if(this.type=='skill'){
+							//计算新添加层的高度
+			    		    $('#skill0').removeAttr('style').height($('#skill0').height()+$('#'+$this.id).height());
+						}
 						$this.container_click();
 		    	}else{
 		    		    if(this.type=='topic'||this.type=='topictag')
@@ -131,6 +159,25 @@ var container_each='';
 		    			$('#skill0').removeAttr('style').css('min-height','150px');
 					});
 		    	}
+		    	if(this.type=='area'){
+		    		var skillname='';
+		    		var skillid='';
+		    		$("#"+$this.id+" .ac-row").bind('click',function(){
+		    			skillname=$(this).data('name');
+		    			skillid=$(this).data('id');
+			    		$this.iniAreaIputTags(skillname,skillid);
+					})
+					$(".zu-question-suggest-skill-input").on('click',function(e){
+						//技能重新计算高度
+						$('.background-skills-container').height($('#skill0').height()+$(this).parent().find('.ac-renderer').height());
+						$(this).parent().find('.ac-renderer').show();
+						$this.obj=$(this);
+			    		e.stopPropagation();
+			    	});
+		    		$(document).click(function(){
+		    			$('.zu-question-suggest-skill-input').parent().find('.ac-renderer').hide();
+					});
+		    	}
 		    	if(this.type=='doc'||this.type=='book'){
 		    		$this.obj.next().next().find('.ac-row').bind('click',function(event){
 			    		 name=$(this).data('name');
@@ -200,7 +247,7 @@ var container_each='';
 				if(!isExistSkill(skillname)){
 					return false;
 				};
-				if($('#skillinputtags>div').length>50){
+				if($('#skillinputtags>div').length==50){
 					var $child=$('.skill-error').children();
 					$('.skill-error').empty().append($child).append('最多只能添加50个技能').show();
 					return false;
@@ -220,6 +267,32 @@ var container_each='';
 		    		$('#searchSkill').parent().find('.err-tip').hide();
 				});
 			    $('#skill0').removeAttr('style').css('min-height','150px');
+			}
+			 //业务领域
+			Chosen.prototype.iniAreaIputTags=function(skillname,skillid){
+				$('.skill-error').hide();
+				if(!isExistSkill(skillname)){
+					return false;
+				};
+				if($('#skillinputtags>div').length==10){
+					var $child=$('.skill-error').children();
+					$('.skill-error').empty().append($child).append('业务领域不能大于10个').show();
+					return false;
+				}
+				var html='';
+		    	html+="<div class='zm-tag-editor-edit-item'>";
+		    	html+=" <span>"+skillname+"</span>"
+		    	html+=" <a id='"+skillid+"' data-name='"+skillname+"' class='zm-tag-editor-remove-button' name='removeskill'></a>"
+		    	html+="</div>";	
+		    	$('#skillinputtags').append(html);
+			    $("#"+$this.id).remove();
+			    $('#searchArea').val('').focus();
+			    
+			    $('#skillinputtags a[name=remove]').bind('click',function(){
+					$(this).parent().remove();
+					$('#searchArea').show().focus().prev().show();
+		    		$('#searchArea').parent().find('.err-tip').hide();
+				});
 			}
 		    //文档
 			Chosen.prototype.iniDocIputTags=function(name,id){
@@ -256,7 +329,7 @@ var container_each='';
 			return  Chosen;
 		})()
 	    //话题  书籍 文章 站点 课程  技能
-        $('#searchTopic,.zu-question-suggest-topic-input,#topictag,#searchSkill').live('keydown',function(event){ 
+        $('#searchTopic,.zu-question-suggest-topic-input,#topictag,#searchSkill,#searchArea').live('keydown',function(event){ 
         	upOrDownConvert($(this));
         });
         //创建新的标签
@@ -294,13 +367,15 @@ function upOrDownConvert(obj){
 		            	$this.iniDocIputTags(tagnames,tagid);
 		            }else if($this.type=='skill'){
 		            	$this.iniSkillsIputTags(tagnames,tagid);
+		            }else if($this.type=='area'){
+		            	$this.iniAreaIputTags(tagnames,tagid);
 		            }
 	    		}
 	    	}
 	    	ispublic=false;
 	    }
 	var $div = obj.nextAll('.tagdropdown').children().eq(upOrDownCount);  
-	$div.addClass('ac-active').siblings().removeClass('ac-active');     
+	$div.addClass('ac-active').siblings().removeClass('ac-active'); 
 }
 //创建新的标签
 function createtag(obj){
@@ -309,7 +384,7 @@ function createtag(obj){
 	if(!isExistSkill(tagname)){
 		return false;
 	};
-	if(tagname.length>10&&$this.type!='skill'){
+	if(tagname.length>10&&$this.type!='skill'&&$this.type!='area'){
 		if($this.type=='topictag'){
 			var $pjchild=$('#pj-warmprompt').children()
 			$('#pj-warmprompt').empty().append($pjchild).append('标签长度不能大于10个字').show(); 
@@ -318,9 +393,9 @@ function createtag(obj){
 			$this.obj.parents('td').find('.pj-warmprompt').empty().append($child).append('标签长度不能大于10个字').show();
 		}
 		return false;
-	 }else if(tagname.length>20&&$this.type=='skill'){
+	 }else if(tagname.length>20&&($this.type=='skill'||$this.type=='area')){
 		var $child=$('.skill-error').children();
-		$('.skill-error').empty().append($child).append('技能长度不能大于20个字').show();
+		$('.skill-error').empty().append($child).append('字数不能大于20字').show();
 		return false;
 	}
 	//技能
@@ -334,6 +409,22 @@ function createtag(obj){
 	     		if(data.returnStatus=='000'){
 	     			$this.iniSkillsIputTags(tagname,data.obj.id);
 	     			$('#skill0').removeAttr('style').css('min-height','150px');
+	     		}else if(data.returnStatus=='-999'){
+	     			var $child=$('.skill-error').children();
+	     			$('.skill-error').empty().append($child).append('敏感词语不能添加').show();
+	     			return false;
+	     		}
+	     	}
+		})
+	}else if($this.type=='area'){
+		$.ajax({
+			type:"POST",
+	     	url:"/comp/insertBusLib",
+	     	data:{busiareaname:tagname},
+	     	dataType:'json',
+	     	success:function(data){
+	     		if(data.returnStatus=='000'){
+	     			$this.iniAreaIputTags(tagname,data.obj.id);
 	     		}else if(data.returnStatus=='-999'){
 	     			var $child=$('.skill-error').children();
 	     			$('.skill-error').empty().append($child).append('敏感词语不能添加').show();
@@ -402,7 +493,12 @@ function isExistSkill(tagname){
 		var skillname=$(this).attr('data-name');
 		if($.trim(skillname)==$.trim(tagname)){
 			var $child=$('.skill-error').children();
-			$('.skill-error').empty().append($child).append('技能名称重复').show();
+			if($this.type=='skill'){
+				$('.skill-error').empty().append($child).append('技能名称重复').show();
+			}else{
+				$('.skill-error').empty().append($child).append('业务领域名称重复').show();
+			}
+			
 			$("#"+$this.id).remove();
 			isexist=false;
 		}

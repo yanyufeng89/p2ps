@@ -2,23 +2,29 @@
   <ul>
      <li>
         <span>国家/地区</span>
-        <select id="edit-company-country" class="ember-view"></select>
+        <select id="edit-company-country" name="nation" class="ember-view"></select>
      </li>
      <li>
         <span>省/自治区/直辖市</span>
-        <select id="edit-company-state" class="ember-text-field ember-view"></select>
+        <select id="edit-company-state" name="province" class="ember-text-field ember-view"></select>
      </li>
      <li>
         <span>市/区</span>
-        <select id="edit-company-city" class="ember-text-field ember-view"></select>
+        <select id="edit-company-city" name="city" class="ember-text-field ember-view"></select>
      </li>
      <li>
         <span>邮编</span>
-        <input type="text" id="edit-company-zipcode" class="ember-text-field ember-view">
+        <input type="text" id="edit-company-zipcode" name="postcode" class="ember-text-field ember-view" value='{$T.postcode}'>
      </li>
      <li>
         <span>详细地址</span>
-        <input type="text" id="edit-company-address-line1" class="ember-text-field ember-view">
+        <input type="text" id="edit-company-address-line1" name="address"  class="ember-text-field ember-view" value='{$T.address}'>
      </li>
   </ul>
+</div>
+<div class='cm-command'>
+  <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
+  <span class="item-msg-content"  style="display:none"></span>
+  <button class="zm-command-cancel" name="cancel"  style="font-size:14px;font-weight:500;">取消</button>
+  <button class="zg-r3px zg-btn-blue" name="save" type='submit'>保存</button>
 </div>

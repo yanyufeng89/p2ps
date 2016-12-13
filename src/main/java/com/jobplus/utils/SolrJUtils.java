@@ -109,14 +109,6 @@ public class SolrJUtils {
 			// 创建一个http连接
 			// 构造文档和域
 			SolrInputDocument doc = new SolrInputDocument();
-			// 确认schema.xml中是否有id，name，price这几个域
-			// <field name="id" type="string" indexed="true" stored="true"
-			// required="true" />
-			// <field name="sku" type="text_en_splitting_tight" indexed="true"
-			// stored="true" omitNorms="true"/>
-			// <field name="name" type="text_general" indexed="true"
-			// stored="true"/>
-			
 			// 添加域
 			doc.addField("id", busiAreaLib.getId());
 			doc.addField("busiareaname", busiAreaLib.getBusiareaname());
@@ -134,7 +126,7 @@ public class SolrJUtils {
 		}
 	}
 	/**
-	 * 根据关键字获取对应的技能
+	 * 根据关键字获取对应的业务领域
 	 * 
 	 * @return
 	 */

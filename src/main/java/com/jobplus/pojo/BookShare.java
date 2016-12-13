@@ -65,7 +65,19 @@ public class BookShare extends PageParent implements Serializable{
      * 用于批量删除时的条件  (id组)
      */
     private String condition;
+    /**
+     * 用户类型
+     */
+    private String usertype;
     
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
     private Books book;    
 
 	public String getLikedIds() {

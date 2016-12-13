@@ -24,12 +24,19 @@ $(function(){
 	
 	//确认分享
 	$('#sharesite').live('click',function(){
+		//标题必填
+		if($.trim($('input[name=title]').val()).length==0){
+			$('textarea[name=intro]').next().next().html('标题必填');
+			$('textarea[name=intro]').nextAll().css('display','inline-block');
+            $('input[name=title]').focus();
+            return false;
+		}
 		//简介必填
 		if($.trim($('textarea[name=intro]').val()).length==0){
 			$('textarea[name=intro]').next().next().html('简介必填');
 			$('textarea[name=intro]').nextAll().css('display','inline-block');
-            $('textarea[name=intro]').focus();
-            return false;
+			$('textarea[name=intro]').focus();
+			return false;
 		}
 		//简介字数限制
 		if($.trim($('textarea[name=intro]').val()).replace(/[^x00-xFF]/g,'**').length>65535){

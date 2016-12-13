@@ -65,7 +65,7 @@ import com.jobplus.utils.ConstantManager;
 import com.jobplus.utils.SHAUtil;
 
 @Controller
-@RequestMapping("/manage")
+@RequestMapping("/m")
 public class ManageController {
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ManageController.class);
@@ -167,7 +167,7 @@ public class ManageController {
             mv.addObject("message", "登录成功");
             mv.addObject("user", user);
             // 返回视图名设置
-            mv.setViewName("redirect:/manage/backstage/main");
+            mv.setViewName("redirect:/m/backstage/main");
             return mv;
         } catch (AuthenticationException e) {
             // 返回前端数据设置

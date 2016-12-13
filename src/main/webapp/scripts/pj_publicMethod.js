@@ -216,27 +216,6 @@ $(function(){
 	
 })
 
-//时间日期转换
-function formatDate(str){
-	var now=new Date(str);
-	var year=now.getFullYear();
-	var month=now.getMonth()+1;
-	var date=now.getDate();
-    var hours=now.getHours();
-    var minute=now.getMinutes();
-    var second=now.getSeconds();
-    // year+"年"+fixZero(month,2)+"月"+fixZero(date,2)+"日    "+fixZero(hour,2)+":"+fixZero(minute,2)+":"+fixZero(second,2)
-    return  year+"-"+fixZero(month,2)+"-"+fixZero(date,2); 
-}
-function fixZero(num,length){     
-	var str=""+num;      
-	var len=str.length;     
-	var s="";      
-	for(var i=length;i-->len;){
-		s+="0";     
-	}      
-	return s+str; 
-}
 
 //关掉举报弹出层
 function closeReport(obj){
@@ -261,14 +240,7 @@ function answerreplyCancel(obj){
 	obj.parents('._CommentForm_root_1-ko').children(':first').empty().addClass('_InputBox_blur_3JWV')
 	obj.parents('.comment-app-holder').remove();
 }
-//获取请求的url的参数
-String.prototype.getQuery = function(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 
-    var r = this.substr(this.indexOf("\?") + 1).match(reg);
-
-    if (r != null) return unescape(r[2]); return null;
- }
 //举报
 function topicReport(obj){
 	//被举报人
@@ -305,24 +277,6 @@ function topicReport(obj){
 	$('.pagetemplate').empty();
 	$('.dialog-report [name=reportcontent]').focus();
 	$('.edui-container').css('z-index','0');
-}
-
-//获取用户信息
-function getCurrentUser(){
-	$.ajax({
-		type:"POST",
-		url:"/myCenter/getCurrentUser",
-		dataType:"json",
-		success:function(data){
-			if(data.returnStatus=='000'){
-				userInfo=data.user;
-			}
-			else{
-				
-			}
-		}
-	
-	})
 }
 
 
@@ -392,11 +346,15 @@ function addHead(){
    })
    if(!isexist){
 	   var headHtml='';
+	   var clas='';
 	   headHtml+='<a title="'+userInfo.username+'" target="_blank" class="zm-item-link-avatar" href="/myHome/getHomePage/'+userInfo.userid+'" data-moduletype="0">';
+	   if(userInfo.usertype==2){
+		   clas='company-img';
+	   }
 	   if(userInfo.headicon==''||userInfo.headicon==undefined){
-		   headHtml+='<img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
+		   headHtml+='<img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy '+clas+' data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
 	   }else{
-		   headHtml+='<img src="'+userInfo.headicon+'" class="zm-item-img-avatar lazy" data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
+		   headHtml+='<img src="'+userInfo.headicon+'" class="zm-item-img-avatar lazy '+clas+'" data-moduletype="0" alt="个人头像" data-userid="'+userInfo.userid+'">'
 	   }
 	   headHtml+='</a>'
 	   return headHtml;
@@ -444,22 +402,7 @@ var getTagsByCondition=function(obj,type){
 		   $this.parent().find('input[name=currenttagval]').val('');
 		} 		
 }
-//判断是否是合格的URL
-function isURL (str_url) {// 验证url  
-    /*var strRegex="^((https|http|rtsp|mms)?://)"  
-    + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@  
-    + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184  
-    + "|" // 允许IP和DOMAIN（域名）  
-    + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.  
-    + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名  
-    + "[a-z]{2,6})" // first level domain- .com or .museum  
-    + "(:[0-9]{1,4})?" // 端口- :80  
-    + "((/?)|" // a slash isn't required if there is no file name  
-    + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$"; */
-	var strRegex=/((https|http|ftp|rtsp|mms):\/\/)?(([0-9a-z_!~*'().&=+$%-]+:)?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+\/?)/g;
-    var re=new RegExp(strRegex); 
-    return re.test(str_url); 
-} 
+
 function share(types) {
    /* var currentUrl = window.location.href;*/
     var type = 0;

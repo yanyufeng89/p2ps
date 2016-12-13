@@ -59,6 +59,10 @@ public class UserServiceImpl implements IUserService {
 	private IAccountService accountService;
 	@Resource
 	private IMyHomePageService myHomePageService;
+	@Resource
+	private ICompanyIntroService companyIntroService;
+	@Resource
+	private ICompanyNewsService companyNewsService;
 
 	@Override
 	public User get(Integer userid) {
@@ -177,6 +181,14 @@ public class UserServiceImpl implements IUserService {
 			opSum.setUserid(userid);
 			opSum.setOperatortime(time);
 			operationSumMapperDao.insert(opSum);
+			
+			if(user.getUsertype()==2){
+				//企业用户注册
+				CompanyIntro intro = new CompanyIntro();
+				intro.setId(user.getUserid());
+				intro.setCreatetime(time);
+				companyIntroService.insert(intro);
+			}
 		}
 
 		//发送短信
@@ -274,6 +286,13 @@ public class UserServiceImpl implements IUserService {
 		opts.setAllshresum(allShareSum);		
 		opts.setAttentionsum(attenManSum);
 		opts.setFanssum(fansSum);
+		/**
+	     * 新增企业用户的快讯条数
+	     */
+		CompanyNews cpn = new CompanyNews();
+		cpn.setCompid(userid);
+	  	Integer cpNewsSum = companyNewsService.getListCount(cpn);
+	  	user.setCpNewsSum(cpNewsSum);
 		
 		user.setOperationSum(opts);
 		// 查看他人主页数据不准确 临时改动 FIXME  查看他人主页数据不准确 临时改动********************************
@@ -305,7 +324,7 @@ public class UserServiceImpl implements IUserService {
 	 */
 	@Override
 	public List<User> getCollectUsers(String collectType,Integer actionType,Integer bookId) {
-		return dBUtilsTemplate.find(User.class,"select DISTINCT u.userId,u.userName,u.headIcon ,u.description from tbl_collect cl ,tbl_user u where cl.collectType = ? and cl.actionType = ? and cl.objectId = ? and cl.userId = u.userId ", new Object[] {collectType,actionType,bookId});
+		return dBUtilsTemplate.find(User.class,"select DISTINCT u.userId,u.userName,u.headIcon ,u.description ,u.userType from tbl_collect cl ,tbl_user u where cl.collectType = ? and cl.actionType = ? and cl.objectId = ? and cl.userId = u.userId ", new Object[] {collectType,actionType,bookId});
 	}
 	 /**
      * 个人中心：我的粉丝列表

@@ -13,9 +13,10 @@
     <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
     <script>
         var backurl = getBackUrlCookie();
-        if (backurl == 'undefined' || backurl == null)
+        console.log("/////////"+backurl);
+        /*if (backurl == 'undefined' || backurl == null)
             backurl = '';
-        window.location.href = projectName + backurl;
+        window.location.href = projectName + backurl;*/
     </script>
 </head>
 <body>

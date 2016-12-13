@@ -95,7 +95,8 @@ public class BookShareServiceImpl implements IBookShareService {
 			// 书籍评论数+1
 			updTableColumnService.updNums(1, 1, 0, 1, record.getBookid());
 			int isShared = bookShareDao.isShared(record);
-			
+			//插入书籍推荐记录
+			ret = bookShareDao.insert(record);
 			logger.info("*****书籍分享  isShared== "+isShared);
 			if(isShared==0){//没有分享过这本书
 				
@@ -108,7 +109,7 @@ public class BookShareServiceImpl implements IBookShareService {
 			}else{//已经分享过了
 				return -9;
 			}
-			ret = bookShareDao.insert(record);
+//			ret = bookShareDao.insert(record);
 		}
 		return ret;
 	}

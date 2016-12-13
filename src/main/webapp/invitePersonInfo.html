@@ -7,7 +7,7 @@
 	   <div class='content'>
 	       <button class="invite-button zg-btn zg-btn-green"  data-userid="{$T.list.id}" data-type="recommended">邀请回答</button>
 	       <div class="describe">
-			   <a href="/myHome/getHomePage/{$T.list.id}" target="_blank" class="author-link"  data-userid="{$T.list.id}">{$T.list.username}</a>
+			   <a href="/myHome/getHomePage/{$T.list.id}" target="_blank" class="author-link {#if $T.list.usertype==2}company-img{#/if}"  data-userid="{$T.list.id}">{$T.list.username}</a>
 			   <span class="bio description" title="">
 			    {#if $T.list.description}
 			     ,&nbsp;{$T.list.description}

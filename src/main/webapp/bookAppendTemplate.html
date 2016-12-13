@@ -2,9 +2,9 @@
   <div class="media-left">
      <a class='uhead' href='/myHome/getHomePage/{$T.user.userid}' target='_blank' data-userid='{$T.user.userid}'>
             {#if $T.user.headicon}
-              <img class='uname lazy'  src="{$T.user.headicon}" alt="个人头像" data-userid='{$T.user.userid}' data-moduletype='1'>
+              <img class='uname lazy {#if $T.user.usertype==2}company-img{#/if}'  src="{$T.user.headicon}" alt="个人头像" data-userid='{$T.user.userid}' data-moduletype='1'>
             {#else}
-              <img class='uname lazy' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='{$T.user.userid}' data-moduletype='1'>
+              <img class='uname lazy {#if $T.user.usertype==2}company-img{#/if}' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='{$T.user.userid}' data-moduletype='1'>
             {#/if}
             
             {#if $T.commentby}  

@@ -266,7 +266,7 @@ function cancelComment(obj){
 	var tableName=obj.attr('data-tableName');
 	$.ajax({
 			type:"POST",
-			url:"/manage/backstage/delComment",//url:"/docs/delComment",
+			url:"/m/backstage/delComment",//url:"/docs/delComment",
 			data:{id:id,tableName:tableName},//data:{id:id,docid:docid},
 			dataType:"json",
 		    success:function(data){

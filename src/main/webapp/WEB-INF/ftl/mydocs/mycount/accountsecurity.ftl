@@ -14,7 +14,7 @@
       <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
         <div id="bd">
 		<div class="bd-wrap">
-		<div class="uc-aside">
+		<div class="uc-aside <#if Session.user.usertype==2>com-aside</#if>">
 		<div class="uc-user-box">
 		<div class="<#if Session.user.usertype==2>img-business-center<#else>img-center</#if>">
 		<a  href="<#if Session.user.usertype==2>/comp/getHomePage/${Session.user.userid}?isReview=0<#else>/myCenter/getMyHeadTop</#if>" target="_self">
@@ -50,41 +50,41 @@
 		         <div class="my-doc link">
 					  <p>
 						  <a href='/myCenter/getMyHeadTop'>
-							<span class="icon-ken"></span>我的知识库
+							<span class="icon-ken <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的知识库
 						  </a>
 							<b class="iconfont up-arrow doc-arrow-btn"></b>
 					 </p>
 				 </div>
 		         <ul class="submenu">
-	                 <li id="mydocument"><a href="/myCenter/getMyDocsUploaded"><span class="icon-doc"></span>我的文档</a></li>
-	                 <li id="mytopic"><a href="/myCenter/getMyTopicsUploaded"><span class="icon-topic"></span>我的话题</a></li>
-	                 <li id="mybook"><a href="/myCenter/getSharedBookList"><span class="icon-book"></span>我的书籍</a></li>
-	                 <li id="mycourse"><a href="/myCenter/getSharedCourseList"><span class="icon-course"></span>我的课程</a></li>
-	                 <li id="myarticle"><a href="/myCenter/getSharedArticleList"><span class="icon-article"></span>我的文章</a></li>
-	                 <li id="mysite"><a href="/myCenter/getSharedSiteList"><span class="icon-site"></span>我的站点</a></li>
+	                 <li id="mydocument"><a href="/myCenter/getMyDocsUploaded"><span class="icon-doc <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的文档</a></li>
+	                 <li id="mytopic"><a href="/myCenter/getMyTopicsUploaded"><span class="icon-topic <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的话题</a></li>
+	                 <li id="mybook"><a href="/myCenter/getSharedBookList"><span class="icon-book <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的书籍</a></li>
+	                 <li id="mycourse"><a href="/myCenter/getSharedCourseList"><span class="icon-course <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的课程</a></li>
+	                 <li id="myarticle"><a href="/myCenter/getSharedArticleList"><span class="icon-article <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的文章</a></li>
+	                 <li id="mysite"><a href="/myCenter/getSharedSiteList"><span class="icon-site <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的站点</a></li>
 		          </ul>
 		      </li>
 		      <li class="open">
-		         <div class="my-doc link"><p><span class="icon-account"></span>我的账户<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
+		         <div class="my-doc link"><p><span class="icon-account <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的账户<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
 		         <ul class="submenu" style="display:block">
-	                 <li><a href="/myCenter/getAllSms?islook=0"><span class="icon-info"></span>全部消息</a></li>
-	                 <li><a href="/myCenter/getSmsFilterParm"><span class="icon-setinfo"></span>消息设置</a></li>
-	                 <li><a href="/myCenter/account/security" class="current"><span class="icon-accountsafety"></span>账户安全</a></li>
+	                 <li><a href="/myCenter/getAllSms?islook=0"><span class="icon-info <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>全部消息</a></li>
+	                 <li><a href="/myCenter/getSmsFilterParm"><span class="icon-setinfo <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>消息设置</a></li>
+	                 <li><a href="/myCenter/account/security" class="current"><span class="icon-accountsafety <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>账户安全</a></li>
 		          </ul>
 		       </li>
 		       <li>
-		        <div class="my-order link"><p><span class="icon-order"></span>我的订单<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
+		        <div class="my-order link"><p><span class="icon-order <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的订单<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
 		         <ul class="submenu">
-	                 <li><a href="/user/allorder"><span class="icon-allorder"></span>全部订单</a></li>
-	                 <li><a href="/user/cash"><span class="icon-cash"></span>已经支出</a></li>
-	                 <li><a href="/user/nocash"><span class="icon-nocash"></span>尚未支付</a></li>
+	                 <li><a href="/user/allorder"><span class="icon-allorder <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>全部订单</a></li>
+	                 <li><a href="/user/cash"><span class="icon-cash <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>已经支出</a></li>
+	                 <li><a href="/user/nocash"><span class="icon-nocash <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>尚未支付</a></li>
 		          </ul>
 		      </li>
 		       <li>
-		         <div class="my-order link"><p><span class="icon-wealth"></span>我的财富<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
+		         <div class="my-order link"><p><span class="icon-wealth <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>我的财富<b class="iconfont up-arrow doc-arrow-btn"></b></p></div>
 		         <ul class="submenu">
-	               <li><a href="/account/getDetailListByRecord?changetype=1"><span class="icon-incomewealth"></span>财富收益</a></li>
-	               <li><a href="/account/getDetailListByRecord?changetype=2"><span class="icon-wealthspending"></span>财富支出</a></li>
+	               <li><a href="/account/getDetailListByRecord?changetype=1"><span class="icon-incomewealth <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>财富收益</a></li>
+	               <li><a href="/account/getDetailListByRecord?changetype=2"><span class="icon-wealthspending <#if (Session.user.usertype==2)>c-icon<#else>u-icon</#if>"></span>财富支出</a></li>
 		          </ul>
 		      </li>
 		    </ul>
@@ -140,9 +140,9 @@
 						   <label for="email" class="error"></label>
 						</div>
 						<div class="group hidden">
-							<input required="" class="text digits" name="digits" type="number" placeholder="6 位数验证码">
+							<input required="" class="text digits" name="digits" placeholder="6 位数验证码">
 							<label for="email_no" class="error verification"></label>
-							<input type="button" value="获取验证码" class="register_submit" data-type='email' id="emailcode" style="width:150px;">
+							<input type="button" value="获取验证码" class="register_submit" data-type='email' id="emailcode" style="width:180px;">
 						</div>
 						<button class="getcode zg-btn-blue" data-type='email'>获取验证码</button>
 						<button class="btnsure zg-btn-blue hidden" data-type='email'>确定</button>
@@ -173,9 +173,9 @@
 						   <label for="phone_no" class="error"></label>
 						</div>
 						<div class="group hidden">
-						   <input required="" class="text digits" name="digits" type="number" placeholder="6 位数验证码">
+						   <input required="" class="text digits" name="digits" placeholder="6 位数验证码">
 						   <label for="phone_no" class="error verification"></label>
-						   <input type="button" value="获取验证码" class="register_submit"  data-type='phone' id="phonecode" style="width:150px;">
+						   <input type="button" value="获取验证码" class="register_submit"  data-type='phone' id="phonecode" style="width:180px;">
 						</div>
 						<button class="getcode zg-btn-blue" data-type='phone'>获取验证码</button>
 						<button class="btnsure zg-btn-blue hidden" data-type='phone'>确定</button>

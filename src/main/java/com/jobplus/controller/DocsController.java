@@ -82,7 +82,7 @@ public class DocsController {
 			String userid = (String) request.getSession().getAttribute("userid");
 			record.setId(Integer.parseInt(docId));
 			record.setUserid(Integer.parseInt(userid));
-			//文档原状态   用于积分扣减
+			//文档原状态   用于财富值扣减
 			String preIsPublic = request.getParameter("preIsPublic");
 			docsService.updDocAndUpdMoney(record,preIsPublic);			
 			// 更新用户操作统计数 存入session
@@ -411,7 +411,7 @@ public class DocsController {
 					baseResponse.setReturnStatus(ConstantManager.SUCCESS_STATUS);
 				}else{
 					baseResponse.setReturnStatus(ConstantManager.ERROR_STATUS);
-					baseResponse.setReturnMsg("积分不足，扣减失败");
+					baseResponse.setReturnMsg("财富值不足，扣减失败");
 				}
 				return JSON.toJSONString(baseResponse);
 			} else {

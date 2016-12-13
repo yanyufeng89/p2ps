@@ -69,4 +69,11 @@ public interface DocsMapper {
 	 * @return
 	 */
 	int updateReadSum(Integer id);
+
+    /**
+     * 根据title查询当前用户下的文档
+     * @param record
+     * @return
+     */
+    List<Docs> selectUserRecordByTitle(Docs record);
 }

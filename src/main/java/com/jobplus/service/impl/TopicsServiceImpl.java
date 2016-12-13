@@ -63,7 +63,7 @@ public class TopicsServiceImpl implements ITopicsService {
     }
 
     /**
-     * 插入话题   对应插入账户积分值和明细
+     * 插入话题   对应插入账户财富值值和明细
      */
     @Transactional
     @Override
@@ -75,9 +75,9 @@ public class TopicsServiceImpl implements ITopicsService {
         // 1.插入话题
         ret = topicsDao.insert(record);
         if (ret > 0) {
-            // 2.分享话题成功 增加积分 // 3.记录积分动作
+            // 2.分享话题成功 增加财富值 // 3.记录财富值动作
             int userid = record.getCreateperson();
-            // 2.分享话题成功 增加积分 // 3.记录积分动作2.分享话题成功 增加积分 // 3.记录积分动作
+            // 2.分享话题成功 增加财富值 // 3.记录财富值动作2.分享话题成功 增加财富值 // 3.记录财富值动作
             accountService.modAccountAndDetail(userid, 0, new Account().getSCORES()[0], 1, 0,
                     new Account().getSCORES()[0], 1);
 
@@ -89,7 +89,7 @@ public class TopicsServiceImpl implements ITopicsService {
             tagsService.addOrDecreaseTagUsenumer(tagsArray);
             
             if(ret > 0 && record.getRewardValue()>0){
-            	//话题发布 如果有悬赏值 积分扣减
+            	//话题发布 如果有悬赏值 财富值扣减
             	accountService.modAccountAndDetail(userid, 0, -record.getRewardValue(), 1, 1,
             			record.getRewardValue(), 11);
             	
@@ -356,7 +356,7 @@ public class TopicsServiceImpl implements ITopicsService {
 				record.setAcceptStatus(2);
 		ret = topicsDao.updateByPrimaryKeySelective(record);
 		if(ret > 0 && dValue>0){
-        	//有悬赏值变化  积分扣减
+        	//有悬赏值变化  财富值扣减
         	accountService.modAccountAndDetail(record.getCreateperson(), 0, -dValue, 1, 1,
         			dValue, 14);
         	

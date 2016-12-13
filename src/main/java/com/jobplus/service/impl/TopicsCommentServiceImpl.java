@@ -132,7 +132,7 @@ public class TopicsCommentServiceImpl implements ITopicsCommentService {
 		// 1.插入话题回答
 		ret = topicsCommentDao.insert(record);
 		if (ret > 0) {
-			// 2.分享话题成功 增加积分 3.记录积分动作
+			// 2.分享话题成功 增加财富值 3.记录财富值动作
 
 //			accountService.modAccountAndDetail(userID, 0, new Account().getSCORES()[0], 1, 0,
 //					new Account().getSCORES()[0], 1);

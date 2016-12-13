@@ -229,7 +229,7 @@ function cancelCommtent(obj){
 	
 	$.ajax({
 	    type:"POST",
-     	url:"/manage/backstage/delComment",
+     	url:"/m/backstage/delComment",
      	data:{id:recommend,tableName:tableName},//articleid:articleid,
      	dataType:"json",
      	success:function(data){

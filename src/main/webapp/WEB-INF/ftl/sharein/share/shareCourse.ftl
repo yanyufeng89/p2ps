@@ -143,7 +143,7 @@
                    </div>
 				   <div id="uploadcourse-list" class="uploadcourse-list">
                       <input type='hidden' name='coursesurl' value=''>
-                      <input type='hidden' name='coursesname' value=''>
+                      <#-- <input type='hidden' name='coursesname' value=''>-->
                       <#-- 这里是课程目录  -->
                       <input type='hidden' name='contents' value=''>
                       <div class="editlayoutbook" id="upload-item-0">
@@ -156,9 +156,12 @@
                                   <tr>
                                     <td class="name"><i>*</i>课程：</td> 
                                     <td> 
-                                      <div class="add-title-form">
-                                          
+                                      <#-- 
+                                     <div class="add-title-form">
+                                     
                                       </div>
+                                    -->
+                                     <input type="text" name='coursesname' class="add-title-form">
                                     </td>
                                    </tr>
                                    <tr>

@@ -204,7 +204,6 @@
 .detail .item .media-left a,.mycomment a{
     color: #0867c5;
     cursor: pointer;
-    text-decoration: none;
     font-size: 14px;
 }
 .detail .item .media-left .uhead img ,.mycomment .uhead img,.avatar-list img{
@@ -383,8 +382,6 @@ input[type=text], input[type=password]:focus {
     text-align: center;
     border: 1px solid #e5e5e5;
     vertical-align: super;
-     font-family: Arial,'Microsoft YaHei';
-    _font-family: Arial,'Microsoft YaHei';
 }
 
 .ReportMenu span {
@@ -403,9 +400,7 @@ input[type=text], input[type=password]:focus {
     content: attr(placeholder);
     color: #999;
 }
-.zg-icon-comment-del {
-    background-position: -236px -92px;
-}
+
 .meta-item .zg-icon {
     margin-right: 5px;
     width: 11px;
@@ -415,10 +410,7 @@ input[type=text], input[type=password]:focus {
 .meta-item:hover .zg-icon-comment-del {
     background-position: -236px -79px;
 }
-/* .edui-body-container {
-    width: 780px!important;
-    min-height: 150px!important;
-} */
+
 .commentcontent {
     height: 166px;
     width: 840px;
@@ -432,8 +424,6 @@ input[type=text], input[type=password]:focus {
     color: #333;
     outline: none;
     border-radius:4px;
-    font-family:  Arial,'Microsoft YaHei';
-    _font-family:  Arial,'Microsoft YaHei';
 }
 .zm-command {
     padding: 10px 0;
@@ -462,8 +452,8 @@ input[type=text], input[type=password]:focus {
 }
 .authorinfo .uname,.press .uname{
 	float: left;
-    width:24px;
-    height:24px;
+    width:32px;
+    height:32px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -651,8 +641,6 @@ input[type=text], input[type=password]:focus {
     margin-bottom: 0;
     font-size: 16px;
     outline:none;
-    font-family:  Arial,'Microsoft YaHei';
-    _font-family:  Arial,'Microsoft YaHei';
 }
 .reward_amount{
 	vertical-align: super;
@@ -679,8 +667,6 @@ input[type=text], input[type=password]:focus {
     -moz-box-shadow: none;
     box-shadow: none;
     outline:none;
-    font-family:  Arial,'Microsoft YaHei';
-    _font-family:  Arial,'Microsoft YaHei';
 }
 
 .ui-toolbar-middle .arrow-btn {
@@ -728,8 +714,6 @@ input[type=text], input[type=password]:focus {
 .ui-toolbar-middle .ipt-box .total-page {
 	font-size: 10px;
 	color: #555;
-	font-family:  Arial,'Microsoft YaHei';
-    _font-family:  Arial,'Microsoft YaHei';
 }
 
  .pj-kong{

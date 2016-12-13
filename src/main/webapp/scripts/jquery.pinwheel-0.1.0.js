@@ -1,4 +1,5 @@
-var userInfo;
+var userInfo,userid;
+var iscomuser=false;
 (function($){
 	var $loading, $wrap,booktype,timers = [], optsArray = [], currentObj, currentOpts = {},
 		
@@ -32,7 +33,12 @@ var userInfo;
 			refWidth = $ref.outerWidth();
 			targetHeight =160;
 			targetWidth =380;
-			
+			//判断是否为企业用户
+			if($('#pj-com-tooltip').length==1){
+				iscomuser=true
+			}else{
+				iscomuser=false;
+			}
 			//定位显示的位置
 			if(refOffset.top - scrollTop - targetHeight - arrowSize>= 0){//上
 				if(windowWidth + scrollLeft - refOffset.left - targetWidth >= 0){//上右
@@ -179,16 +185,24 @@ var userInfo;
 			$wrap.find('.arrow').removeClass().addClass('arrow arrow_' + arrowPositon);
 			
 			if(isPosition){
-				$target.css({
-					top: targetTop,
-					left: targetLeft
-				});
+				if(iscomuser){
+					$target.css({
+						top: targetTop-80,
+						left: targetLeft
+					});
+				}else{
+					$target.css({
+						top: targetTop,
+						left: targetLeft
+					});
+				}
+				
 			}
 
 		},
 		
 		_appendContent = function(){
-			var type, href, data, content,userid,bookid,ajaxLoader,moduletype;
+			var type, href, data, content,bookid,ajaxLoader,moduletype;
 					if (typeof($wrap) != "undefined"){
 						$wrap.html('');
 					}else{	
@@ -198,10 +212,10 @@ var userInfo;
 					
 					$wrap.html('<div class="pinwheel_layer"><div class="bg"><div class="effect"><div class="pinwheel_content"></div><div class="arrow"></div></div></div></div>');
 					$wrap.find('.pinwheel_content').append($loading);
-					userid=$(currentObj).attr('data-userid');
 					booktype=$(currentObj).attr('data-booktype');
 					moduletype=$(currentObj).attr('data-moduletype');//0代表话题   1代表书籍
 					bookid=$(currentObj).attr('data-bookid');
+					userid=$(currentObj).attr('data-userid');
 					if(booktype=='1'){//得到书籍的详情
 						  ajaxLoader = $.ajax({
 								type:'POST',
@@ -252,23 +266,23 @@ var userInfo;
 			        	    		}else{
 			        	    			data.user.fansIds=1;
 			        	    		}
-			        	    	/*	if(data.user.description!=undefined){
-			        	    			if(data.user.description.length>22){
-				        	    			data.user.description=data.user.description.substring(0,22)+'...'
-				        	    		}
-			        	    		}
-			        	    		*/
 			        	    		var datamodel={
 			        	    		    userSimpleInformation:data.user,
 			        	    		    userid:userid,
 			        	    		    cutuserid:userInfo==undefined?'':userInfo.userid,
 			        	    		}
-			        	    		//加载模板
-			        	    		$('.pagetemplate').setTemplateURL(projectName+'headIconInfoTemplate.html');
+			        	    		//加载模板 (分企业和用户)
+			        	    		if(data.user.usertype==2){
+			        	    			$('.pagetemplate').setTemplateURL(projectName+'cheadIconInfoTemplate.html');
+			        	    			
+			        	    		}else{
+			        	    			$('.pagetemplate').setTemplateURL(projectName+'uheadIconInfoTemplate.html');
+			        	    		}
+			        	    		
 			        	    		$('.pagetemplate').processTemplate(datamodel);
 			        	    		$wrap.find('.pinwheel_content').html($('.pagetemplate').html());
 			        	    		$('.pagetemplate').empty();
-			        	    		_position($(currentObj), $wrap);//定位
+			        	    		_position($(currentObj),$wrap);//定位
 			        	    	}
 			        	    	else{
 			        	    		console.log('ajax error');
@@ -295,6 +309,8 @@ var userInfo;
 		};
 		
 	$.fn.pinwheel = function(options){
+		
+		
 		//_debug(this);
 		var opts = $.extend({}, $.fn.pinwheel.defaults, options);
 		
@@ -308,7 +324,7 @@ var userInfo;
 				
 				
 				if(currentObj && currentObj == this){			
-					_position($(this), $wrap);//定位
+					_position($(this), $wrap);//定位	
 					$wrap.show();
 				}else{
 					currentObj = this;	
@@ -342,4 +358,5 @@ var userInfo;
 	$.fn.pinwheel.defaults = {
 
 	};
+
 })(jQuery);

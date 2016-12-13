@@ -38,6 +38,15 @@ $(function(){
 	});*/
 	//确认分享
 	$('#sharecourse').live('click',function(){
+		//课程标题必填
+		if($.trim($('input[name=coursesname]').val()).length==0){
+			$('textarea[name=intro]').next().next().html('课程名称必填');
+			$('textarea[name=intro]').nextAll().css('display','inline-block');
+            $('input[name=coursesname]').focus();
+            return false;
+		}
+		
+		
 		//简介必填
 		if($.trim($('textarea[name=intro]').val()).length==0){
 			$('textarea[name=intro]').next().next().html('简介必填');
@@ -128,7 +137,7 @@ function get3WInfo(url){
 }
 //课程详情
 function initTitleInfoBySearchCourse(data){
-	$('.add-title-form').html(data.obj.title);
+	$('.add-title-form').val(data.obj.title);
 	$('input[name=coursesname]').val(data.obj.title);
 	$('textarea[name=intro]').text(data.obj.intro);
 	/*$('input[name=coursescontent]').val(data.obj.intro);*/

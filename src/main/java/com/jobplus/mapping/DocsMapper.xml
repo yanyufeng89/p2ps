@@ -418,4 +418,15 @@
       </if>
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+    <select id="selectUserRecordByTitle" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.Docs" >
+        select
+        <include refid="Base_Column_List2" />
+        from tbl_docs t
+        where t.title = #{title}
+        AND t.userId = #{userid}
+        <!-- 必须是有效资源 -->
+        and t.isValid = 1
+        and isPublic != 0
+    </select>
 </mapper>

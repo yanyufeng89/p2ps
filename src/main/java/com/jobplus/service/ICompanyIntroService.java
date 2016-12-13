@@ -12,15 +12,15 @@ public interface ICompanyIntroService {
 
 	CompanyIntro selectByPrimaryKey(Integer id);
 
-	int updateByPrimaryKeySelective(CompanyIntro record);
+	int updateByPrimaryKeySelective(CompanyIntro record,Integer isEstTime);
 
 	int updateByPrimaryKeyWithBLOBs(CompanyIntro record);
 
 	int updateByPrimaryKey(CompanyIntro record);
-	
-	/**
-	 * 根据用户id获取公司信息
-	 */
-	CompanyIntro selectByUserid(Integer id);
 
+	/**
+	 * 更改企业图片
+	 */
+	int updImgurl(CompanyIntro record);
+	
 }

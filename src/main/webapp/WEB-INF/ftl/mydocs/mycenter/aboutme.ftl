@@ -17,6 +17,7 @@
                 <div id="bd-1">
                     <div class='top-card'>
                         <div class="profile-card vcard entity">
+                            <input type='hidden' name='userid' value='${userInfo.userid}'>
                             <div class="profile-picture" style='height:160px;line-height:160px'>
                                <#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
                                  <img src="${userInfo.headicon}" alt="个人头像" width="150" height="160" class='lazy'>
@@ -142,7 +143,7 @@
 						<span class='personal-share' id='personal-share'>个人分享</span>	
 						<span class="split">|</span>	
 						<span class='personal-attention' id='personal-attention' data-userid='${userInfo.userid}'>个人关注</span>	
-						<#if (userInfo.userid?string!=(Session.user.userid?string)!)>
+						<#if (userInfo.userid?string!=(Session.user.userid?string))>
 					       <div class="site-mail pm-img img" id='site-mail' data-issitemail='1' data-receivedid='${userInfo.userid}' data-name='${userInfo.username}'></div>	
 					    </#if>
 						</div> 
@@ -266,7 +267,13 @@
 									 <span class='profession'>${edulist.major?html}</span>
 							      </#if>
 								</span>
-								
+								 <h5 class="section-logo">
+							       <strong>
+							        <#if (edulist.schoolLogo)??>
+							         <img src="${edulist.schoolLogo}" alt="${edulist.school?html}" width="60" height="60" class='lazy'>
+							        </#if>
+							       </strong>
+							       </h5>
 							  </div>
 							  <div class='graduate'>
 								<span class='schoolinfo'>
@@ -278,13 +285,7 @@
 									</#if>
 								  </span>
 								</span>
-								<h5 class="section-logo">
-							       <strong>
-							        <#if (edulist.schoolLogo)??>
-							         <img src="${edulist.schoolLogo}" alt="${edulist.school?html}" width="50" height="50" class='lazy'>
-							        </#if>
-							       </strong>
-							    </h5>
+								
 							  </div>
 							 
 							</div>
@@ -440,7 +441,6 @@
 							  </#if>
                             </span>
 					    </a>
-						
                       </div>
 					  <div class='profile-navbar clearfix' id='fans-navbar' style='display:none'>
 					     <a class="pjitem current" href="javascript:void(0)" data-userid='${userInfo.userid}'>
@@ -484,7 +484,11 @@
 								 </li>
 							  </#list>
 							<#else>
-							   <span class='nosharelist'>这家伙很懒，还没有分享</span>
+							 <#if (userInfo.userid==Session.user.userid)>
+							    <span class='nosharelist'>这没有分享，开始<a href="/sharein/searchuploadFile?type=0" target="_blank">分享</a></span>
+							 <#else>
+							    <span class='nosharelist'>这家伙很懒，还没有分享</span>
+							 </#if>
 							</#if>
 						   </ul>
 						</div>
@@ -502,7 +506,7 @@
                        <div class="top-border">
                           <p>
 						   <#if userInfo.userid==(Session.user.userid)!>
-                            <a href="javascript:void(0)" self="_self" id='otheratten' data-userid='${userInfo.userid}'>
+                            <a href="javascript:void(0)" target="_self" id='otheratten' data-userid='${userInfo.userid}'>
                                <span class="count">
 							     <#list Session.myHeadTop!?keys as itemKey>
 									 <#if itemKey="attenManSum">
@@ -513,7 +517,7 @@
                                <span class="count-concern">我的关注</span>
                             </a>
 						   <#else>
-						    <a href="javascript:void(0)" self="_self" id='otheratten' data-userid='${userInfo.userid}'>
+						    <a href="javascript:void(0)" target="_self" id='otheratten' data-userid='${userInfo.userid}'>
                                <span class="count">
 							     <#if (atdAndFans)??>
 								  ${atdAndFans.attenManSum}
@@ -564,17 +568,20 @@
 							</#if>
                        </div>
                        <div class='detail-list zg-clear'>
-						  <#if (visitors)??>
+					      <#if (visitors.list)?? && visitors.list?size gt 0>
 							<#list visitors.list as list>
-								<a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}' data-userid="${list.visitorid}" data-moduletype='1'>
+								<a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}'  data-moduletype='1'>
 									   <#if (list.headIcon)??>
-										 <img src="${list.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy">
+										 <img src="${list.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
 									   <#else>
-										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
+										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
 									   </#if>
 							    </a>
 							</#list>
-					   </#if> 
+							<#else>
+							<span class="no-flashlist">暂无最近访问</span>
+					      </#if>
+					      
 					  </div>
 						
                     </div>
@@ -586,34 +593,44 @@
 							</#if>
                        </div>
 					   <div class='detail-list zg-clear'>
-						  <#if (recentShare)??>
+						  <#if (recentShare.list)?? && recentShare.list?size gt 0>
 						   <ul>
 								<#list recentShare.list as list>
 									<li>
-									  <#if list.type='tbl_docs'>
-									  [文档]
-									  <#elseif list.type='tbl_topics'>
-									  [话题]
-									  <#elseif list.type='tbl_books'>
-									  [书籍]
-									  <#elseif list.type='tbl_article'>
-									  [文章]
-									  <#elseif list.type='tbl_courses'>
-									  [课程]
-									  <#else>
-									 [站点]
-									  </#if>
-									  <a href='${list.objurl}' target='_blank' title='${list.title}'><span>${list.title}</span></a>
-									  <span class="smsdate zg-right">${list.createtime?string("yyyy-MM-dd")}</span>
+									  <a href='${list.objurl}' target='_blank' title='${list.title}'>
+										  <#if list.type='tbl_docs'>
+										  <span>[文档]
+										  <#elseif list.type='tbl_topics'>
+										  <span>[话题]
+										  <#elseif list.type='tbl_books'>
+										  <span>[书籍]
+										  <#elseif list.type='tbl_article'>
+										  <span>[文章]
+										  <#elseif list.type='tbl_courses'>
+										  <span>[课程]
+										  <#else>
+										  <span>[站点]
+										  </#if>
+									     ${list.title}</span>
+									     <span class="smsdate zg-right">${list.createtime?string("yyyy-MM-dd")}</span>
+									  </a>
 									</li>
 								</#list>
 							</ul>
+						  <#else>
+							<span class="no-flashlist">暂无最新分享</span>
 					      </#if> 
 					  </div>
 					</div>
+					<div class='pj_jsonp ad_exposure' style='padding-top:0'>
+					 <a href='http://www.cysupport.org/index.php' target='_blank'>
+						<img src='/image/ad_exposure_13.jpg' alt="广告" width='308' height='246' class='lazy'>
+						<div class='advertising-direction'>广告</div>
+					  </a>
+				   </div>  
                 </div>
             </div>
-            <div class='pagetemplate'></div>
+            <div class='pagetemplate  homepageTemplate'></div>
             <a id="backaboutmetop" title="回到顶部" href="#aboutmetop" class='back-to-top' style="display: none; bottom:300px;"></a>
             <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
             <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
@@ -622,6 +639,7 @@
             <script type="text/javascript" src="/scripts/jquery.pinwheel-0.1.0.js"></script>
             <script type="text/javascript" src="/scripts/pj_publicMethod.js"></script>
             <script type="text/javascript" src="/scripts/pj_loadPmAndsmg.js"></script>
+            <script type="text/javascript" src="/scripts/pj_centerCommon.js"></script>
             <script type="text/javascript" src="/scripts/pj_myhomepage.js" charset="UTF-8"></script>
     </body>
 </html>

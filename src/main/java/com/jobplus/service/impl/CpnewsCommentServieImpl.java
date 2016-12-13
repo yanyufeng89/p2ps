@@ -20,6 +20,7 @@ import com.jobplus.service.IOperationSumService;
 import com.jobplus.service.ISequenceService;
 import com.jobplus.service.ISmsService;
 import com.jobplus.service.IUpdTableColumnService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("cpnewsCommentServie")
 public class CpnewsCommentServieImpl implements ICpnewsCommentService {
@@ -72,9 +73,9 @@ public class CpnewsCommentServieImpl implements ICpnewsCommentService {
 		ret = cpnewsCommentDao.insert(record);
 		if(ret > 0){
 			//对应快讯评论条数+1
-			updTableColumnService.updNums(11, 0, 0, 1, record.getNewsid());
+			updTableColumnService.updNums(12, 0, 0, 1, record.getNewsid());
 			//添加消息通知
-			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[20],record.getNewsid(),
+			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[20],record.getObjCreatepersonPg(),
 					record.getObjCreatepersonPg(),1000,record.getId(),record.getObjectNamePg(),"");
 			return record;
 			
@@ -90,21 +91,31 @@ public class CpnewsCommentServieImpl implements ICpnewsCommentService {
 		ret = cpnewsCommentDao.updateByPrimaryKeySelective(record);
 		if(ret>0){
 			//对应快讯评论条数-1
-			updTableColumnService.updNums(11, 0, 1, 1, record.getNewsid());
+			updTableColumnService.updNums(12, 0, 1, 1, record.getNewsid());
 		}
 		return ret;
 	}
 	@Override
 	public int likeNews(CpnewsIslikedKey record,String contextPath,User user)  {
 		int ret = 0;
-		ret = cpnewsIslikedDao.insert(record);
+		try {
+			ret = cpnewsIslikedDao.insert(record);
+		} catch (Exception e) {
+			//非主键重复错误
+			if(!(e.getCause() instanceof MySQLIntegrityConstraintViolationException))
+				ret = 0;
+			//主键重复直接返回1
+			else 
+				return 1;
+		}
+		
 		if(ret>0){
 			//添加消息通知
-			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[20],record.getNewsid(),
-					record.getObjCreatepersonPg(),1000,record.getNewsid(),record.getObjectNamePg(),"");
+			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[20],record.getObjCreatepersonPg(),
+					record.getObjCreatepersonPg(),1001,record.getNewsid(),record.getObjectNamePg(),"");
 			
 			//对应快讯点赞数+1
-			updTableColumnService.updNums(11, 1, 0, 1, record.getNewsid());
+			updTableColumnService.updNums(12, 1, 0, 1, record.getNewsid());
 		}
 		return ret;
 	}
@@ -115,7 +126,7 @@ public class CpnewsCommentServieImpl implements ICpnewsCommentService {
 		ret = cpnewsIslikedDao.deleteByPrimaryKey(record);
 		if(ret>0){
 			//对应快讯点赞数-1
-			updTableColumnService.updNums(11, 1, 1, 1, record.getNewsid());
+			updTableColumnService.updNums(12, 1, 1, 1, record.getNewsid());
 		}
 		return ret;
 	}

@@ -85,7 +85,13 @@
            <span class="item-msg-content"  style="display:none">专业名称超出最大限制</span>
 	     </span>
 	    <a href="javascript:;" class="zu-edit-button" name="editsmajor" data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
+       
     </span>
+    <h5 class="section-logo">
+	       {#if $T.schoollogo}		   
+			<img src="{$T.schoollogo}" alt="{$T.schoolname}" width="60" height="60" class="lazy">
+		   {#/if}				        
+	</h5>
   </div>
   <div class='graduate'>
     <span class='schoolinfo'>
@@ -99,13 +105,6 @@
              <span class="item-msg-content"  style="display:none">请选择在校时间</span>
       </span>
       <a href="javascript:;" class="zu-edit-button" name="editschooltime"  data-currentid='{$T.currentid}'  style='display:none'><i class="zu-edit-button-icon"></i>修改</a>
-      
-      <h5 class="section-logo">
-      {#if $T.schoollogo}		   
-		<img src="{$T.schoollogo}" alt="{$T.schoolname}" width="50" height="50" class="lazy">
-	   {#/if}				        
-	  </h5>
-	 
     </span>
   </div>
   

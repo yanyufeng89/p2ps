@@ -87,7 +87,7 @@
               method="get">
                 <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">
                 </span>
-                
+                <#--
                 <input type="submit" id="search_button" class="search_button" value="知识搜索">
                 <input type="text" id="search_input" class="search_input ui-autocomplete-input" name="Condition"
                 tabindex="1" maxlength="64" autocomplete="off" value="" placeholder="JobPlus海量知识库"  style="color: rgb(153, 153, 153);">
@@ -95,6 +95,14 @@
                 <input type="hidden" name="fromSearch" id="fromSearch" value="true">
                 <input type="hidden" name="suginput" id="suginput">
                 <input type="submit" name="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier"
+                id="search-form-submit" style='height:45px;' value="分类搜索">
+                 -->
+                
+                
+                <input type="submit" id="search_button" class="search_button" value="知识搜索">
+                <input type="text" id="search_input" class="search_input ui-autocomplete-input" name="Condition"
+                tabindex="1" maxlength="64" autocomplete="off" value="" placeholder="JobPlus海量知识库"  style="color: rgb(153, 153, 153);">
+                <input type="submit" id="search-submit" class="bdcs-search-form-submit bdcs-search-form-submit-magnifier"
                 id="search-form-submit" style='height:45px;' value="分类搜索">
               </form>
               

@@ -1,9 +1,13 @@
 <div class="uc-head-top">
-       <div class='infotiptemplate'>
-         <img src='/image/sharetop.jpg' alt='分享' class="lazy">
-       </div>
-	   <div style="float:left">
-		   <#--<a href="javascript:void(0)"  id='myselfattenman' data-userid='${Session.user.userid}'>我关注的人
+       <#--<div class='infotiptemplate'>-->
+        <#if Session.user.usertype==2>
+         <img src='/image/com-sharetop.jpg' alt='分享' class="lazy" width='949' height='92'>
+        <#else>
+         <img src='/image/sharetop.jpg' alt='分享' class="lazy user-image" width='949' height='92'>
+        </#if>
+       <#--</div>-->
+	   <#--<div style="float:left">
+		   <a href="javascript:void(0)"  id='myselfattenman' data-userid='${Session.user.userid}'>我关注的人
 		    <#if (Session.myHeadTop)??>
 			     <#list Session.myHeadTop?keys as itemKey>
 				     <#if itemKey="attenManSum">
@@ -20,8 +24,8 @@
 			     </#if>
 		      </#list>
 		     </#if>
-		   </a>-->
-	  </div>
+		   </a>
+	  </div>-->
 
 	  <#--<a href='javascript:void(0);' onclick="share();" class='head-sharein' style='float:right'></a>-->
 

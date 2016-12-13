@@ -15,13 +15,13 @@
      <!-- 1:成功  0:未转换 3:转换失败 2：转换中  -->
 
 		{#if $T.list.isconverter==1} 
-		上传成功 
+		审核通过 
 		{#elseif $T.list.isconverter==0 || $T.list.isconverter==2}
-		<b class='ib tijiao'></b>审核中 
+		<b class='ib tijiao'></b>待审核 
 		{#elseif $T.list.isconverter==3} 
 		审核未通过
 		{#else} 
-		<b class='ib tijiao'></b>审核中 
+		<b class='ib tijiao'></b>待审核 
 		{#/if}
 
      </div>

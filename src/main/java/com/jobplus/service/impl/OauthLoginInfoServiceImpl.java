@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service("oauthLoginInfoService")
 public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
@@ -151,5 +152,10 @@ public class OauthLoginInfoServiceImpl implements IOauthLoginInfoService {
             return oauthLoginInfoMapper.deleteByPrimaryKey(id);
         }
         return 0;
+    }
+
+    @Override
+    public List<OauthLoginInfo> findByUserId(int userid) {
+        return oauthLoginInfoMapper.findByUserId(userid);
     }
 }

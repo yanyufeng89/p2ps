@@ -1,0 +1,44 @@
+{#foreach $T.cpNewes as news}
+     <li class='entity-list-item' id="entity-list-item-{$T.news.id}">
+        <div class='post-meta ember-view'>
+			 {#if $T.news.headIcon}
+               <img class="lazy-image avatar loaded" width='50' height='50' alt="{$T.news.userName}" src="{$T.news.headIcon}">
+             {#else}
+			   <img class="lazy-image avatar loaded" width='50' height='50' alt="{$T.news.userName}" src="/image/cm-defaultIcon180.jpg">
+			 {#/if}	
+			
+              <h3 class="actor">
+			    <span class="name semibold">{$T.news.userName}</span>
+			    <time class="timestamp">{$T.news.createtime}</time>
+			  </h3>
+            
+        </div>
+        {#if $T.news.news}
+         <div  class="inline-show-more-text feed-s-main-content ember-view"  data-flash='{$T.news.id}'>{$T.news.news}</div>
+        {#/if}
+        {#if $T.news.siteurl}
+        <div class='flash-url'>
+            <a href='{$T.news.siteurl}' target='_blank'>{$T.news.sitetitle}<span class='siteurl'>{$T.news.siteurl}</span></a>
+        </div>
+        {#/if}
+        {#if $T.news.imgurl}
+        <div class='flash-img'>
+            <img src='{$T.news.imgurl}' alt=''>
+        </div>
+        {#/if}
+        <div class='operate-container'>
+           {#if $T.news.likedIds==1}
+                   <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='1' data-flashid='{$T.news.id}' data-likenum='{$T.news.likesum}'>取消赞  ({$T.news.likesum})</a>                             
+           {#else}
+                   <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='0' data-flashid='{$T.news.id}' data-likenum='{$T.news.likesum}'>赞  {$T.news.likesum}</a>                             
+           {#/if}
+           <a class="numComments operate" href='javascript:void(0)' data-flashid='{$T.news.id}'  data-commsum='{$T.news.commentsum}'>评论  {$T.news.commentsum}</a>
+           {#if $T.comtype==1}
+           <a href="javascript:void(0)" class="update-btn operate">
+ 				<span class="delete-falsh" data-newsid="{$T.news.id}"><b class="iconfont pr2"></b>删除</span>
+ 				<span class="stick-botton" data-newsid="{$T.news.id}"><i class="com-stick com-icon"></i>置顶</span>
+		   </a>
+		   {#/if}
+        </div>
+     </li>
+{#/for}

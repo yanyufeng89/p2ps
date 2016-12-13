@@ -107,6 +107,7 @@
 		<include refid="Blob_Column_List" />
 		,u.userName AS tmpUserName,
 		u.headIcon AS tmpHeadIcon,
+		u.usertype as usertype,
 		(SELECT			
 				group_concat(userid)
 			FROM
@@ -127,6 +128,7 @@
 	<include refid="Blob_Column_List" />
 	,u.userName AS tmpUserName,
 	u.headIcon AS tmpHeadIcon,
+	u.usertype as usertype,
 	(SELECT			
 			group_concat(userid)
 		FROM

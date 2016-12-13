@@ -24,13 +24,20 @@ public class CompanyNewsServiceImpl implements ICompanyNewsService {
 	@Resource
 	private ISequenceService seqService;
 	
-	
+	@Override
+	public int getListCount(CompanyNews record){
+		int count = companyNewsDao.getListCount(record);
+		return count;
+	}
 	@Override
 	public Page<CompanyNews> getNewsList(CompanyNews record) {
 		Page<CompanyNews> page = new Page<CompanyNews>();
 		record.setPageNo(record.getPageNo() == null ? 1 : record.getPageNo());
-		record.setPageSize(page.getPageSize());
-		record.setLimitSt(record.getPageNo() * page.getPageSize() - page.getPageSize());
+		// 此处修改为每页8条 page.pageSize 相应的改变 原:page.getPageSize()
+		record.setPageSize(4);
+		page.setPageSize(4);
+
+		record.setLimitSt(record.getPageNo() * 4 - 4);
 		int count = companyNewsDao.getListCount(record);
 		if(count < 1)
 			return page;
@@ -53,7 +60,11 @@ public class CompanyNewsServiceImpl implements ICompanyNewsService {
 		record.setId(id);
 		record.setCreatetime(new Date());
 		record.setUpdatetime(new Date());
+		record.setToptime(new Date());
 		record.setIsvalid(1);
+		record.setLikesum(0);
+		record.setCommentsum(0);
+		record.setIstop(0);
 		ret = companyNewsDao.insert(record);
 		if(ret>0)
 			return record;
@@ -64,7 +75,21 @@ public class CompanyNewsServiceImpl implements ICompanyNewsService {
 	@Override
 	public int delCpNews(CompanyNews record) {
 		record.setIsvalid(0);
-		return companyNewsDao.updateByPrimaryKey(record);
+		return companyNewsDao.updateByPrimaryKeySelective(record);
+	}
+
+
+	@Override
+	public int topCpNews(CompanyNews record) {
+		record.setIstop(1);
+		record.setToptime(new Date());
+		return companyNewsDao.updateByPrimaryKeySelective(record);
+	}
+
+
+	@Override
+	public CompanyNews getOneNews(Integer id) {
+		return companyNewsDao.selectByPrimaryKey(id);
 	}
 	
 	

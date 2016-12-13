@@ -48,7 +48,7 @@
 		</layout>
 		<!--过滤器设置输出的级别--> 
 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
-			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMin" value="INFO" />
 			<param name="LevelMax" value="FATAL" />
 		</filter>
 		<!-- 过滤器，当AcceptOnMatch设置为“false”时，可以把日志包含有“[SECURITY]”的信息过滤掉-->
@@ -73,46 +73,10 @@
 		</filter>
 	</appender>
 
-	<!-- 配置一个logger 指定文件输出目录必需要存在-->
-	<appender name="businessLogger"
-		class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File"
-			value="/opt/logs/jobplus_businessLog.log" />
-		<param name="DatePattern" value="'_'yyyy-MM-dd'.log'" />
-		<param name="Append" value="true" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern"
-				value="%d{ISO8601} %-5p %m%n" />
-		</layout>
-		
-		<filter class="org.apache.log4j.varia.LevelRangeFilter">
-			<param name="LevelMin" value="INFO" />
-			<param name="LevelMax" value="FATAL" />
-		</filter>
-		<filter class="org.apache.log4j.varia.StringMatchFilter">
-			<param name="StringToMatch" value="[SECURITY]" />
-			<param name="AcceptOnMatch" value="true" />
-		</filter>
-		<filter class="org.apache.log4j.varia.StringMatchFilter">
-			<param name="StringToMatch" value="[BUSINESS]" />
-			<param name="AcceptOnMatch" value="true" />
-		</filter>
-		<filter class="org.apache.log4j.varia.StringMatchFilter">
-			<param name="StringToMatch" value="[PERFORMANCE]" />
-			<param name="AcceptOnMatch" value="true" />
-		</filter>
-
-		<filter class="org.apache.log4j.varia.StringMatchFilter">
-			<param name="StringToMatch" value="[SYSTEM]" />
-			<param name="AcceptOnMatch" value="true" />
-		</filter>
-	</appender>
-	
-	
 	<appender name="consoleFile"
 		class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="File"
-			value="/opt/logs/jobplus_console.log" />
+			value="${catalina.home}/logs/jobplus_console.log" />
 		<param name="DatePattern" value="'_'yyyy-MM-dd'.log'" />
 		<param name="Append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -142,65 +106,62 @@
 			<param name="AcceptOnMatch" value="true" />
 		</filter>
 	</appender>
-	
 	
 	<!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制-->
 	
 	<!-- 第一种用法，定义一个日志器，在使用的地方，通过Logger.getLogger("business")获取-->
-	<logger name="business" additivity="true">
-		<appender-ref ref="businessLogger" />
+	<logger name="consoleFile" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 	
 	<!-- 第二种用法，直为某个类或者包指定一个logger的设置，name属性为类的全路径-->
-	<logger name="com.huawei.nsm.pmgr.util.Log4jUtil">
-		<appender-ref ref="businessLogger" />
+	<logger name="com.jobplus" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="consoleFile" />
 	</logger>
-	
-	
-	
 	
 	<!-- Mybatis and SQL -->
 	<logger name="org.apache.ibatis" additivity="true">
-		<level value="DEBUG" />
-		<appender-ref ref="Console" />
+		<level value="INFO" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 
 	<logger name="org.mybatis.spring" additivity="true">
 		<level value="ERROR" />
-		<appender-ref ref="Console" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 	<logger name="java.sql" additivity="true">
-		<level value="DEBUG" />
-		<appender-ref ref="Console" />
+		<level value="INFO" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 
 	<logger name="java.sql.Connection" additivity="true">
 		<level value="INFO" />
-		<appender-ref ref="Console" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 
 	<logger name="java.sql.Statement" additivity="true">
 		<level value="INFO" />
-		<appender-ref ref="Console" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 
 	<logger name="java.sql.PreparedStatement" additivity="true">
 		<level value="INFO" />
-		<appender-ref ref="Console" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 
 	<!-- Spring        -->
 	<logger name="org.springframework" additivity="true">
 		<level value="INFO" />
-		<appender-ref ref="Console" />
+		<appender-ref ref="consoleFile" />
 	</logger>
 	
 	
 	
 	<!-- 根据需要设置日志输出 -->
 	<root>
-		<priority value="DEBUG" />
+		<priority value="INFO" />
 		<appender-ref ref="Console" />
-		<appender-ref ref="consoleFile" />
 	</root>
 </log4j:configuration>

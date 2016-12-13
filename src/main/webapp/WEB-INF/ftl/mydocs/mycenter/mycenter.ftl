@@ -25,7 +25,7 @@
                                </#if>
                                 <span class="ProfileAvatarEditor-tip">更换头像</span>
                                 <form method="POST"  id="previewImage" enctype="multipart/form-data">
-                                  <input name='headIconFile' class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this)" />
+                                  <input name='headIconFile' class="file-3" type="file" accept="image/*"   onchange="previewImage(this)" />
                                 </form>
                             </div>
                             <div class="profile-overview">
@@ -101,8 +101,7 @@
 									<#else>
 									 <button type="button" class="cta" id="control_gen_3"  data-addtype='1'>添加工作经历</button>
 									</#if>
-									    
-                                        <button type="button" class="desc-action prevent-edit-action" aria-describedby="-desc" data-tooltip-template-id="-desc"  tabindex="0"></button>
+                                        <#--<button type="button" class="desc-action prevent-edit-action" aria-describedby="-desc" data-tooltip-template-id="-desc"  tabindex="0"></button>-->
 								     </#if>
                                     </div>
                                     <div class="field" data-add-entity="EDU" data-trk="prof-edit-topcard-edu-inline_cta">
@@ -121,7 +120,7 @@
 									   <#else>
 									    <button type="button" class="cta" id="control_gen_4" data-addtype='1'>添加教育背景</button>
 									   </#if>
-                                        <button type="button" class="desc-action prevent-edit-action" aria-describedby="-desc" data-tooltip-template-id="-desc" tabindex="0"></button>
+                                        <#--<button type="button" class="desc-action prevent-edit-action" aria-describedby="-desc" data-tooltip-template-id="-desc" tabindex="0"></button>-->
 								     </#if>
                                     </div>
                                    
@@ -360,6 +359,11 @@
 							      </#if>
 								  <a href="javascript:;" class="zu-edit-button" data-currentid='${edulist.id}' data-edittype='${edittype}' name="editsmajor"><i class="zu-edit-button-icon"></i>修改</a>
 								</span>
+								 <h5 class="section-logo">
+							        <#if (edulist.schoolLogo)??>
+							           <img src="${edulist.schoolLogo}" class='lazy' alt="${edulist.school?html}" width="60" height="60">
+							        </#if>
+							      </h5> 
 							  </div>
 							  <div class='graduate'>
 								<span class='schoolinfo'>
@@ -372,11 +376,6 @@
 									<a href="javascript:;" class="zu-edit-button" data-currentid='${edulist.id}' data-edittype='${edittype}' name="editschooltime"><i class="zu-edit-button-icon"></i>修改</a>
 								  </span>
 								</span>
-								<h5 class="section-logo">
-							        <#if (edulist.schoolLogo)??>
-							           <img src="${edulist.schoolLogo}" class='lazy' alt="${edulist.school?html}" width="50" height="50">
-							        </#if>
-							    </h5>
 							  </div>
 							  
 							</div>
@@ -469,7 +468,7 @@
 							     <#assign item=items?split(':')/>
 								 <span class='skillzone' data-skillid='${item[0]}'>${item[1]}</span>
 							  </#list>
-							  <a href="javascript:;" class="zu-edit-button" name="editskill" data-skillid='${skill.id}' data-skillitem='${skill.skillitem}'>
+							  <a href="javascript:;" class="zu-edit-button" name="editskill" data-skillid='${skill.id}' data-skillitem='${skill.skillitem}' style='vertical-align:middle;'>
 							      <i class="zu-edit-button-icon"></i>修改
 							  </a>
 							</div>
@@ -529,17 +528,19 @@
                             </#if>
                        </div>
                        <div class='detail-list zg-clear'>
-						  <#if (visitors)??>
+						  <#if (visitors.list)?? && visitors.list?size gt 0>
 							<#list visitors.list as list>
-								 <a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}' data-userid="${list.visitorid}" data-moduletype='1'>
+								<a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}'  data-moduletype='1'>
 									   <#if (list.headIcon)??>
-										 <img src="${list.headIcon}"  alt="个人头像" class="zm-item-img-avatar lazy">
+										 <img src="${list.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
 									   <#else>
-										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
+										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
 									   </#if>
 							    </a>
 							</#list>
-					   </#if> 
+							<#else>
+							<span class="no-flashlist">暂无最近访问</span>
+					      </#if>
 					  </div>
 					  
                     </div>
@@ -566,6 +567,7 @@
             <script type="text/javascript" src="/scripts/pj_msgbox.js"></script>
             <script type="text/javascript" src="/scripts/waterbubble.js"></script>
             <script type="text/javascript" src="/scripts/jquery.confirm.js"></script>
+            <script type="text/javascript" src='/scripts/pj_centerCommon.js'></script>
             <script type="text/javascript">
                         $('#waterbubble').waterbubble({
 							    radius:40,

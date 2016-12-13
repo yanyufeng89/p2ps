@@ -2,7 +2,7 @@
    {#if $T.userinfo.headicon}
      {#if $T.userinfo.username}
       <a  href='/myHome/getHomePage/{$T.userinfo.userid}' target="_blank" tabindex="-1"  data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
-        <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="{$T.userinfo.headicon}" data-userid="{$T.userinfo.userid}">
+        <img tabindex="-1" class="Avatar Avatar-s lazy {#if $T.userinfo.usertype==2}company-img{#/if}" alt="个人头像" src="{$T.userinfo.headicon}" data-userid="{$T.userinfo.userid}">
       </a>
      {#else}
         <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="{$T.userinfo.headicon}">
@@ -10,10 +10,10 @@
     {#else}
      {#if $T.userinfo.username}
       <a  href='/myHome/getHomePage/{$T.userinfo.userid}' target="_blank" tabindex="-1"  data-moduletype="0" class="_CommentItem_avatarLink_3V51 hidden-phone">
-       <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg" data-userid="{$T.userinfo.userid}">
+       <img tabindex="-1" class="Avatar Avatar-s lazy {#if $T.userinfo.usertype==2}company-img{#/if}" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg" data-userid="{$T.userinfo.userid}">
       </a>
      {#else}
-       <img tabindex="-1" class="Avatar Avatar-s lazy" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg">
+       <img tabindex="-1" class="Avatar Avatar-s lazy {#if $T.userinfo.usertype==2}company-img{#/if}" alt="个人头像" src="/image/1b48b5a75c71597_100x100.jpg">
      {#/if}
    {#/if}
   <div class="_CommentItem_body_3qwB">

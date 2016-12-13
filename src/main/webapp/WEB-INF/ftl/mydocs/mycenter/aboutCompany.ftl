@@ -15,289 +15,501 @@
         <#include "/mydocs/commonTemplate/topandtail/top.ftl"/>
         <div class='com-main'>
           <div class='top-card container clearfix'>
+              <input type='hidden' name='userid' value='${userInfo.userid}'>
               <div class='top-card-company-logo logo' id='comlogo'>
-                    <#--<#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
-                     <img src="${userInfo.headicon}"  class='lazy' alt="个人头像" width="180"  id="imghead">
+                    <#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
+                     <img src="${userInfo.headicon}"  class='lazy' alt="个人头像" width="180" height='180' id="imghead">
                     <#else>
-                     <img src="/image/cm-defaultIcon.jpg" class='lazy' alt="个人头像" width="180"  id="imghead">
-                    </#if>-->
-                    <img src="/image/cm-defaultIcon180.jpg" class='lazy' alt="个人头像" width="180"  id="imghead">
+                     <img src="/image/cm-defaultIcon180.jpg" class='lazy' alt="个人头像" width="180" height='180' id="imghead">
+                    </#if>
               </div>
               <div class='top-card-data'>
                 <div class='profile-overview-content'>
                     <div id="name-container">
                         <div id="titlename" class="editable-item">
-                            <span class="full-name">微软亚太研发集团</span>
+                            <span class="full-name">${userInfo.username?html}</span>
                         </div>
                     </div>
                     <div id="slogan-container" class='slogan-container'>
-                       <span class="slogan">微软一直坚持技术导向的宗旨,让员工可以接触到世界最先进的产品和开发交流,通过大家的技术探索和技术实现</span>
+                       <span class="slogan">
+                       <#if (userInfo.description)?? && userInfo.description?length gt 0>
+                         ${userInfo.description?html}
+                       <#else>
+                                                           企业标语
+                       </#if>
+                       </span>
                     </div>
                     <div id='enterprise-container' class='enterprise-container'>
-                       <span class="enterprise">企业级应用产品</span>
+                       <span class="enterprise">
+                       <#if (userInfo.specialty)?? && userInfo.specialty?length gt 0>
+                         <#list userInfo.specialty?split(" ") as item>
+                         <#if item_index=0>
+                          ${item}
+                         <#else>
+                          &nbsp;${item}
+                         </#if>
+                       </#list>
+                       <#else>
+                                                         企业产品(服务)
+                       </#if>
+                       </span>
                     </div>
                  </div>
               </div>
 			  <div class='profile-func clearfix' id="aboutCompany-tab">
-			    <a href="/comp/getHomePage/${Session.user.userid}?isReview=0" class="preview-profile button-primary">返回编辑界面</a>
+			    
+			    <#if (userInfo.userid?string==(Session.user.userid?string)!)>
+                                    <a href="/comp/getHomePage/${Session.user.userid}?isReview=0" class="preview-profile button-primary">返回编辑界面</a>
+								 <#else>
+								  <#if (userInfo.fansIds)??>
+										   <#if (userInfo.fansIds)?? && userInfo.fansIds?length gt 0>										     
+											 <#if userInfo.fansIds?index_of(",")==-1>
+												  <#if (userInfo.fansIds?string==(Session.user.userid?string)!)>											 
+													<button  data-userid="${userInfo.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow"  data-actiontype='0'>取消关注</button>
+												  <#else>
+													<button  data-userid="${userInfo.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>+&nbsp;关注</button>
+												  </#if>
+											<#else>
+												 <#if userInfo.fansIds?split(",")?seq_contains((Session.user.userid?string)!)>
+													<button  data-userid="${userInfo.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-unfollow"  data-actiontype='0'>取消关注</button>
+												 <#else>
+													<button  data-userid="${userInfo.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>+&nbsp;关注</button>
+												 </#if>
+											</#if>
+										  <#else>
+											      <button  data-userid="${userInfo.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>+&nbsp;关注</button>
+										  </#if>
+								    <#else>
+									              <button  data-userid="${userInfo.userid}" class="zg-btn zm-rich-follow-btn small nth-0 zg-btn-follow"  data-actiontype='1'>+&nbsp;关注</button>
+									</#if>
+								</#if>	   
+								
 			    <span class="personal-data current" id="latest-update">最新快讯</span>
 				<label class="split">|</label>
 			    <span class="personal-data" id="company-profile">公司简介</span>
 			    <label class="split">|</label>
 			    <span class="personal-data" id="company-share">公司分享</span>
 			    <label class="split">|</label>
-			    <span class="personal-data" id="company-attention">公司关注</span>
+			    <span class="personal-data" id="company-attention" data-userid="${userInfo.userid}">公司关注</span>
+			    <div class='shareThe'>
+			             分享到
+			     <a href="javascript:void(0);" class="log_sina png" title="分享到新浪微博"></a>
+			     <a href="javascript:void(0);" class="log_qq png" title="分享到QQ空间"></a>
+			     <a href="javascript:void(0);" class="log_wx png" title="分享到微信"></a>
+			    </div>
+			    <#if (userInfo.userid?string!=(Session.user.userid?string))>
+					<div class="site-mail pm-img img" id='site-mail' data-issitemail='1' data-receivedid='${userInfo.userid}' data-name='${userInfo.username}'></div>	
+				 </#if>
 			  </div>
           </div>
 		  <div class='middle-card container clearfix'>
 		     <div class='middle-card-left tab-flash'>
 				<div class='entity-all separate-entities ember-view' style='margin-top:0'>
-				   <h4 class="recent-updates-heading com-heading">
-					      最新快讯
-				   </h4>
-				   <ul class='entity-list row'>
+				   <h4 class="recent-updates-heading com-heading">最新快讯</h4>
+				   <input type='hidden' name='companyId' value='${userInfo.userid}'>
+				   <input type='hidden' name='companyName' value='${userInfo.username}'>
+				   <#if (cpNewes.list)?? && cpNewes.list?size gt 0>
+				   <ul class='entity-list row' id='entity-list'>
+				    <#list cpNewes.list as news>
 				     <li class='entity-list-item'>
 				        <div class='post-meta ember-view'>
-				            <a href='javascript:void(0)'>
-				              <img class="lazy-image avatar  loaded" width='50' height='50' alt="JobPlus China" src="http://m.c.lnkd.licdn.com/mpr/mpr/shrinknp_100_100/AAEAAQAAAAAAAAg9AAAAJGRiNDAyM2E2LWYwMjUtNGVkOS1iMzU2LWEzMjIyOGRmNmQzYg.png">
-				            </a>
-				            <a href='javascript:void(0)'>
+	
+							 <#if (userInfo.headicon)?? && userInfo.headicon?length gt 0>
+				               <img class="lazy-image avatar loaded" width='50' height='50' alt="${userInfo.username}" src="${userInfo.headicon}">
+				             <#else>
+							  <img class="lazy-image avatar loaded" width='50' height='50' alt="${userInfo.username}" src="/image/cm-defaultIcon180.jpg">
+							 </#if>	
+							
 				              <h3 class="actor">
-							    <span class="name semibold">JobPlus China</span>
-							    <time class="timestamp">2016-09-26 10:20:13</time>
+							    <span class="name semibold">${userInfo.username?html}</span>
+							    <time class="timestamp">${news.createtime?string("yyyy-MM-dd HH:mm:ss")}</time>
 							  </h3>
-				            </a>
+				            
 				        </div>
-				        <div  class="inline-show-more-text feed-s-main-content ember-view">       
-				            2015年1月，在第66届艾美奖[2]  上，国家电视艺术和科学学院为微软颁发了“电视功能强化设备奖”。2015年7月9日，微软宣布对手机业务进行根本性重组，同时表示将削减至7800多个职位。[3]  2015年10月据美国CNBC报道，微软将在新一轮裁员仲裁撤1000个岗位。新裁员是在之前宣布的裁员基础上额外追加的。
+				       <#if (news.news)?? && news.news?length gt 0>
+				        <div  class="inline-show-more-text feed-s-main-content ember-view" data-flash='${news.id}'>  
+				          <#if news_index==0 && (news.istop==1)>     
+				            <i class="com-top com-icon"></i>
+				          </#if>
+				          ${news.news}
                         </div>
+                        </#if>
+                        <#if (oneNews.siteurl)?? && oneNews.siteurl?length gt 0>
+				   		<div class='flash-url'>
+			               <a href='${oneNews.siteurl}' target='_blank'>${oneNews.sitetitle}<span class='siteurl'>${oneNews.siteurl}</span></a>
+				   		</div>
+				   		</#if>
+                        <#if (news.imgurl)?? && news.imgurl?length gt 0>
                         <div class='flash-img'>
-                            <img src='http://m.c.lnkd.licdn.com/media-proxy/ext?w=800&h=800&f=none&hash=2aZPixKVB6zgDUANI8y04HW%2BwPM%3D&ora=1%2CaFBCTXdkRmpGL2lvQUFBPQ%2CxAVta9Er0Vinkhwfjw8177yE41y87UNCVordEGXyD3u0qYrdf3K7eceMKrCjuVoSfysclA1hdvL6EzS3D5G7LYrsdNsijpfiIo24ZxUBbFI8lWxI' alt=''>
+                            <img src='${news.imgurl}' alt=''>
                         </div>
+                        </#if>
                         <div class='operate-container'>
-                           <a class="numLikes" href='javascript:void(0)'>赞 2</a>
-                           <a class="numComments" href='javascript:void(0)'>评论 1</a>
-                         <a href='javascript:void(0)'   class='update-btn'>
-                            <span class='delete-falsh'><b class="iconfont pr2"></b>删除</span>
-                            <span class='stick-botton'><i class='com-stick com-icon'></i>置顶</span>
-                         </a>
+	                         <#if (news.likedIds)??&&news.likedIds?length gt 0>
+	                           <#if news.likedIds?index_of(",")==-1>
+	                            <#if (news.likedIds?string==(Session.user.userid?string)!)>
+	                              <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='1' data-flashid='${news.id}' data-likenum='${news.likesum}'>取消赞  (${news.likesum})</a>
+	                            <#else> 
+	                              <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='0' data-flashid='${news.id}' data-likenum='${news.likesum}'>赞  ${news.likesum}</a>                                   
+	                            </#if>                                             
+	                           <#else>
+	                              <#if news.likedIds?split(",")?seq_contains((Session.user.userid?string)!)>
+	                                 <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='1' data-flashid='${news.id}' data-likenum='${news.likesum}'>取消赞  (${news.likesum})</a>
+	                              <#else>
+	                                 <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='0' data-flashid='${news.id}' data-likenum='${news.likesum}'>赞  ${news.likesum}</a> 
+	                              </#if>
+	                           </#if>    
+	                          <#else> 
+	                                 <a class="numLikes operate" href='javascript:void(0)'  data-likeOperate='0' data-flashid='${news.id}' data-likenum='${news.likesum}'>赞  ${news.likesum}</a>                                
+	                          </#if>
+                           
+                           <a class="numComments operate" href='javascript:void(0)' data-flashid='${news.id}' data-commsum='${news.commentsum}'>评论  ${news.commentsum}</a>
                         </div>
 				     </li>
-				     <li class='entity-list-item'>
-				        <div class='post-meta ember-view'>
-				            <a href='javascript:void(0)'>
-				              <img class="lazy-image avatar  loaded" width='50' height='50' alt="JobPlus China" src="http://m.c.lnkd.licdn.com/mpr/mpr/shrinknp_100_100/AAEAAQAAAAAAAAg9AAAAJGRiNDAyM2E2LWYwMjUtNGVkOS1iMzU2LWEzMjIyOGRmNmQzYg.png">
-				            </a>
-				            <a href='javascript:void(0)'>
-				              <h3 class="actor">
-							    <span class="name semibold">JobPlus China</span>
-							    <time class="timestamp">2016-09-26 10:20:13</time>
-							  </h3>
-				            </a>
-				        </div>
-				        <div  class="inline-show-more-text feed-s-main-content ember-view">       
-				            2015年1月，在第66届艾美奖[2]  上，国家电视艺术和科学学院为微软颁发了“电视功能强化设备奖”。2015年7月9日，微软宣布对手机业务进行根本性重组，同时表示将削减至7800多个职位。[3]  2015年10月据美国CNBC报道，微软将在新一轮裁员仲裁撤1000个岗位。新裁员是在之前宣布的裁员基础上额外追加的。
-                        </div>
-                        <div class='flash-img'>
-                            <img src='http://m.c.lnkd.licdn.com/media-proxy/ext?w=800&h=800&f=none&hash=2aZPixKVB6zgDUANI8y04HW%2BwPM%3D&ora=1%2CaFBCTXdkRmpGL2lvQUFBPQ%2CxAVta9Er0Vinkhwfjw8177yE41y87UNCVordEGXyD3u0qYrdf3K7eceMKrCjuVoSfysclA1hdvL6EzS3D5G7LYrsdNsijpfiIo24ZxUBbFI8lWxI' alt=''>
-                        </div>
-                        <div class='operate-container'>
-                           <a class="numLikes" href='javascript:void(0)'>赞 2</a>
-                           <a class="numComments" href='javascript:void(0)'>评论 1</a>
-                         <a href='javascript:void(0)'   class='update-btn'>
-                            <span class='delete-falsh'><b class="iconfont pr2"></b>删除</span>
-                            <span class='stick-botton'><i class='com-stick com-icon'></i>置顶</span>
-                         </a>
-                        </div>
-				     </li>
-				   </ul>
+					 </#list>
+					 <#if (cpNewes.last gt 1)>
+					 <a href="javascript:;" data-pageno="1"  data-sumpage="${cpNewes.last}" data-comtype='0' class="zg-btn-white  zu-button-more flash-load-more">更多</a>
+					 </#if>
+					 </ul>
+				   <#else>
+		
+					  <li class='no-flashlist'>暂无最新快讯</li>
+				
+				   </#if>
 				</div>
 			 </div>
 			 <div class='middle-card-left tab-profile' style='display:none'>
 			    <div class='public-profile'>
-				   <h4 class="com-heading">
-					  图片
-				   </h4>
+
 				   <div class='profile-logo'>
-				    <img src="http://m.c.lnkd.licdn.com/media-proxy/ext?w=800&h=800&f=none&hash=2aZPixKVB6zgDUANI8y04HW%2BwPM%3D&ora=1%2CaFBCTXdkRmpGL2lvQUFBPQ%2CxAVta9Er0Vinkhwfjw8177yE41y87UNCVordEGXyD3u0qYrdf3K7eceMKrCjuVoSfysclA1hdvL6EzS3D5G7LYrsdNsijpfiIo24ZxUBbFI8lWxI" class='lazy' alt="公司图片" width="834" height='220' id="imghead">
-                    <span class="update-comimg-tip">更换图片</span>
-                    <form method="POST"  id="profileImage" enctype="multipart/form-data">
-                      <input name='headIconFile' class="file-3" type="file" accept="image/*" size="30" onchange="previewImage(this,2)" />
-                   </form>
+				   <#if (cpnInfo.imgurl)??>
+				    <img src="${cpnInfo.imgurl}" class='lazy' alt="公司图片" width="834" height='220' style='margin-top:20px'>
+				   <#else>
+				   <img src="/image/bg-computer.jpg" class='lazy' alt="公司图片" width="834" height='220' style='margin-top:20px'>
+				   </#if>
 				   </div>
-				   <h4 class="com-heading">
-					  公司介绍
-				   </h4>
+				   <h4 class="com-heading">公司介绍</h4>
 				   <div class='profile-brief clearfix'>
-				     <span>微软，是一家总部位于美国的跨国科技公司，也是世界PC（Personal Computer，个人计算机）机软件开发的先导，由比尔·盖茨与保罗·艾伦创办于1975年，公司总部设立在华盛顿州的雷德蒙德（Redmond，邻近西雅图）。以研发、制造、授权和提供广泛的电脑软件服务业务为主。</span>
+				    <#if (cpnInfo.intro)?? && cpnInfo.intro?length gt 0>
+				     <span class='intro'>${cpnInfo.intro}</span>
+				    <#else>
+				     <span>暂无公司介绍</span>
+				    </#if>
 				   </div>
-				    <h4 class="com-heading">
-					 业务领域
-				    </h4>
-				    <div class='business-area clearfix'>
-				      <span class="areazone" data-skillid="8">软件服务</span>
+				  
+				    <h4 class="com-heading">业务领域</h4>
+				    <div class='business-area clearfix' style='border-bottom:none;padding-bottom:0'>
+				      <#if (cpnInfo.busiarea)?? && cpnInfo.busiarea?length gt 0>
+				      <#list cpnInfo.busiarea?split(',') as items>
+						 <#assign item=items?split(':')/>
+							<span class="areazone" data-skillid="${item[0]}">${item[1]}</span>
+					  </#list>
+					  <#else>
+					   <span class="no-areazone">暂无业务领域</span>
+					 </#if>
 				    </div>
-				    <div class='com-address clearfix'>
-				         详情地址: 中国江苏省苏州市工业园区星湖街创意产业园18号    221700
+				    <h4 class="com-heading">公司地址</h4>
+				    <div class='com-address clearfix' style='border-bottom:none;padding:0 20px 0 20px'>
+				         <#if (cpnInfo.address)?? && (cpnInfo.nation)?? && (cpnInfo.province)?? && (cpnInfo.city)??>
+				         ${cpnInfo.nation}${cpnInfo.province}${cpnInfo.city} ${cpnInfo.address} ${cpnInfo.postcode}
+				         <#else>
+				                           暂无公司地址
+				         </#if>    
 				    </div>
 				    <div class='com-websit clearfix'>
 				       <ul>
 				         <li>
 				           <span>公司网站</span>
-				           <p>http://www.jobplus.com.cn</p>
+				           <p><#if (cpnInfo.url)??><a href='${cpnInfo.url}' target='_blank' class='websiturl' title='${cpnInfo.url}'>${cpnInfo.url}</a><#else>暂无公司网站</#if></p>
 				         </li>
 				         <li>
 				           <span>公司规模</span>
-				           <p>10000+ </p>
+				           <p><#if (cpnInfo.scale)??>${cpnInfo.scale}<#else>暂无数据</#if></p>
 				         </li>
 				         <li>
 				           <span>所属行业</span>
-				           <p>互联网</p>
+				           <p><#if (cpnInfo.industry)??>${cpnInfo.industry}<#else>暂无数据</#if></p>
 				         </li>
 				         <li>
 				           <span>创立年份</span>
-				           <p>1985年 </p>
+				           <p><#if (cpnInfo.establishtime)??>${cpnInfo.establishtime?string("yyyy")}<#else>暂无数据</#if></p>
 				         </li>
 				         <li>
 				            <span>公司类型</span>
-				            <p>外商独资 </p>
+				            <p><#if (cpnInfo.type)??>${cpnInfo.type}<#else>暂无数据</#if> </p>
 				         </li>
 				       </ul>
 				    </div>
 				</div>
 			 </div>
+			 <div class="middle-card-left tab-profile profile-navbar" id='cmprofile-navbar' style='display:none'>
+			 
+			  <div>
+				<a class="pjitem current"  href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='' data-tablecolumn='' data-tablecolumn2=''>
+				   最新分享
+				   <span class="num">
+					  <#if (atdAndFans.operationSum.allshresum)??>
+						${atdAndFans.operationSum.allshresum}
+					  <#else>
+					   0
+					  </#if>
+					</span>
+				</a>
+				<a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='tbl_docs'  data-tablecolumn='title' data-tablecolumn2='userid'>
+					文档
+					<span class="num">
+					  <#if (atdAndFans.operationSum.docsharesum)??>
+						${atdAndFans.operationSum.docsharesum}
+					  <#else>
+					   0
+					  </#if>
+					</span>
+				</a>
+				 <a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='tbl_topics'  data-tablecolumn='title' data-tablecolumn2='createPerson'>
+					话题
+					<span class="num">
+					   <#if (atdAndFans.operationSum.topicssharesum)??>
+						 ${atdAndFans.operationSum.topicssharesum}
+					  <#else>
+						 0
+					  </#if>
+					</span>
+				</a>
+				 <a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='tbl_books'  data-tablecolumn='bookname' data-tablecolumn2='userid'>
+					书籍
+					<span class="num">
+					   <#if (atdAndFans.operationSum.booksharesum)??>
+						 ${atdAndFans.operationSum.booksharesum}
+					  <#else>
+						 0
+					  </#if>
+					</span>
+				</a>
+				 <a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='tbl_article'  data-tablecolumn='title' data-tablecolumn2='userid'>
+					文章
+					<span class="num">
+					   <#if (atdAndFans.operationSum.articlesharesum)??>
+						 ${atdAndFans.operationSum.articlesharesum}
+					  <#else>
+						 0
+					  </#if>
+					</span>
+				</a>
+				 <a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='tbl_courses'  data-tablecolumn='coursesName' data-tablecolumn2='userid'>
+					课程
+					<span class="num">
+					   <#if (atdAndFans.operationSum.coursessharesum)??>
+						 ${atdAndFans.operationSum.coursessharesum}
+					  <#else>
+						 0
+					  </#if>
+					</span>
+				</a>
+				<a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}' data-tablename='tbl_sites'  data-tablecolumn='title' data-tablecolumn2='userid'>
+					站点
+					<span class="num">
+					   <#if (atdAndFans.operationSum.sitessharesum)??>
+						 ${atdAndFans.operationSum.sitessharesum}
+					  <#else>
+						 0
+					  </#if>
+					</span>
+				</a>
+			   </div>
+			   <div class='cm-profile-section-wrap'>					   
+						<div class='zm-profile-section-list' id='zh-profile-answers-inner-list'>
+						   <ul>
+						    <#if (recentShare)?? &&recentShare.list?size gt 0>
+							   <#list recentShare.list as slist>
+								 <li>
+								   <div class="allnewscontent">	
+								    <#if slist.type='tbl_docs'>[文档]<#elseif slist.type='tbl_topics'>[话题]<#elseif slist.type='tbl_books'>[书籍]<#elseif slist.type='tbl_article'>[文章]<#elseif slist.type='tbl_courses'>[课程]<#else>[站点]</#if><a href="${slist.objurl}"  target="_blank" title='${slist.title}'><span class='allnewsname'>${slist.title}</span></a>
+								    <span class="smsdate zg-right">${slist.createtime?string("yyyy-MM-dd")}</span>
+								   </div>
+								 </li>
+							  </#list>
+							<#else>
+							 <#if (userInfo.userid==Session.user.userid)>
+							    <span class='nosharelist'>这没有分享，开始<a href="/sharein/searchuploadFile?type=0" target="_blank">分享</a></span>
+							 <#else>
+							    <span class='nosharelist'>这家伙很懒，还没有分享</span>
+							 </#if>
+							</#if>
+						   </ul>
+						</div>
+						 <#if (recentShare.last gt 1)>
+					         <a href="javascript:;"  data-pageno="1" data-tablename=''  data-tablecolumn2='' data-tablecolumn='' data-userid='${userInfo.userid}' data-sumpage='${recentShare.last}' class="zg-btn-white zg-r3px zu-button-more pj-load-more">更多</a>
+					     </#if>
+				</div>
+             </div>
+             <div class='middle-card-left profile-navbar clearfix' id='cmfans-navbar' style='display:none'>
+				 <div>
+				 <a class="pjitem current" href="javascript:void(0)" data-userid='${userInfo.userid}'>
+					<#if userInfo.userid==(Session.user.userid)!>我的关注<#else>他的关注</#if><span class="num">
+							   <#if (atdAndFans)??>
+								 ${atdAndFans.attenManSum}
+							   <#else>
+								 0
+							   </#if>
+							   </span>
+				 </a>
+				 <a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}'>
+					<#if userInfo.userid==(Session.user.userid)!>我的粉丝<#else>他的粉丝</#if><span class="num">
+							 <#if (atdAndFans)??>
+							   ${atdAndFans.fansSum}
+							 <#else>
+							  0
+							 </#if>
+							</span>
+				 </a>
+				 <a class="pjitem" href="javascript:void(0)" data-userid='${userInfo.userid}'>
+						  最近访问<span class="num">
+							 <#if (visitors!)>
+							   ${visitors.count}
+							 <#else>
+							  0
+							 </#if>
+							</span>
+				 </a>
+				 </div>
+				 <div id='cm-profile-follows-list' class='cm-profile-follows-list'>
+				      <div class="zh-general-list clearfix">
+					  </div>
+				 </div>	
+			  </div>
 			 <div class='middle-card-right'>
                 <div class="news" style="border-color:#cce1ef">
                        <div class="top-border">
                           <p>
-                            <a href="javascript:void(0)" self="_self" id="otheratten" data-userid="2">
+                            <#if userInfo.userid==(Session.user.userid)!>
+                            <a href="javascript:void(0)" target="_self" id='cmotheratten' data-userid='${userInfo.userid}'>
                                <span class="count">
-										9
+							     <#list Session.myHeadTop!?keys as itemKey>
+									 <#if itemKey="attenManSum">
+										${Session.myHeadTop[itemKey]}
+									 </#if>
+								 </#list>
 							   </span>
                                <span class="count-concern">我的关注</span>
                             </a>
+						   <#else>
+						    <a href="javascript:void(0)" target="_self" id='cmotheratten' data-userid='${userInfo.userid}'>
+                               <span class="count">
+							     <#if (atdAndFans)??>
+								  ${atdAndFans.attenManSum}
+								 <#else>
+								   0
+								 </#if>
+							   </span>
+                               <span class="count-concern">他的关注</span>
+                             </a>
+                           </#if>	
                           </p>
                           <p>
-								<a href="javascript:void(0)" target="_self" id="otherfans" data-userid="2">
+							 <#if userInfo.userid==(Session.user.userid)!>
+								<a href="javascript:void(0)"  target="_self" id='cmotherfans' data-userid='${userInfo.userid}'>
 								   <span class="count">
-											13
+									  <#list Session.myHeadTop!?keys as itemKey>
+										 <#if itemKey="fansSum">
+											${Session.myHeadTop[itemKey]}
+										 </#if>
+									  </#list>   
 								   </span>
 								   <span class="count-concern">我的粉丝</span>
 								</a> 
+							<#else>
+							  <a href="javascript:void(0)"  target="_self" id='cmotherfans' data-userid='${userInfo.userid}'>
+                               <span class="count">
+							      <#if (atdAndFans)??>
+								    ${atdAndFans.fansSum}
+								 <#else>
+								   0
+								 </#if>
+							   </span>
+                               <span class="count-concern">他的粉丝</span>
+                              </a> 
+							</#if>
                           </p>
                        </div>
                   </div>
 				  <div class="seeme">
                        <div class="recent-seeme">
                             <span>最近访问</span>
-                               <span class="more" id="moreVisitor">更多&gt;&gt;</span>
+                            <#if visitors.last gt 1>
+                               <span class='more' id='cmmoreVisitor'>更多>></span>
+							</#if>
                        </div>
-                       <div class="detail-list zg-clear">
-								<a title="小丑" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/31" data-userid="31" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/10/31/31_4d3a0cc861ef406e9c2ce1e2d53e86a1.png" alt="个人头像" class="zm-item-img-avatar lazy">
+                       <div class='detail-list zg-clear'>
+						  <#if (visitors.list)?? && visitors.list?size gt 0>
+							<#list visitors.list as list>
+								<a title="${list.userName}"  class="zm-item-link-avatar uname" target='_blank' href='/myHome/getHomePage/${list.visitorid}'  data-moduletype='1'>
+									   <#if (list.headIcon)??>
+										 <img src="${list.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
+									   <#else>
+										  <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy <#if list.usertype==2>company-img</#if>" data-userid="${list.visitorid}">
+									   </#if>
 							    </a>
-								<a title="Amy" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/479" data-userid="479" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/29/479_38b3a5f56e42417ebb21337a70e011e4.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="admin" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/1" data-userid="1" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/16/1_65e135354a1d48e8bc00f4280f9f49d3.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="LEO .Messi" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/30" data-userid="30" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/22/30_01894ca8585b4ad380a241bd9c66a2b1.png" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="LEO .Messi" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/30" data-userid="30" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/22/30_01894ca8585b4ad380a241bd9c66a2b1.png" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="陌上花开" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/471" data-userid="471" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/16/471_24723608295a400994098a73de7bffd2.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="LEO .Messi" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/30" data-userid="30" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/22/30_01894ca8585b4ad380a241bd9c66a2b1.png" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="Amy" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/479" data-userid="479" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/29/479_38b3a5f56e42417ebb21337a70e011e4.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="LEO .Messi" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/30" data-userid="30" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/22/30_01894ca8585b4ad380a241bd9c66a2b1.png" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-								<a title="LEO .Messi" class="zm-item-link-avatar uname" target="_blank" href="/myHome/getHomePage/30" data-userid="30" data-moduletype="1">
-										 <img src="http://192.168.0.39:8199/headIcon/2016/11/22/30_01894ca8585b4ad380a241bd9c66a2b1.png" alt="个人头像" class="zm-item-img-avatar lazy">
-							    </a>
-					  </div>
-						
+							</#list>
+							<#else>
+							<span class="no-flashlist">暂无最近访问</span>
+					      </#if> 
+					   </div>
                     </div>
 					<div class="sharelist">
 					  <div class="recent-share">
                             <span>最新分享</span>
-                               <span class="more" id="moreShare">更多&gt;&gt;</span>
+                            <#if visitors.last gt 1>
+                               <span class='more' id='cmmoreShare'>更多>></span>
+							</#if>
                        </div>
-					   <div class="detail-list zg-clear">
+					  <div class='detail-list zg-clear'>
+						  <#if (recentShare.list)?? && recentShare.list?size gt 0>
 						   <ul>
+							  <#list recentShare.list as list>
 									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113969" target="_blank" title="20161114会议纪要"><span>20161114会议纪要</span></a>
-									  <span class="smsdate zg-right">2016-11-28</span>
+									  <a href='${list.objurl}' target='_blank' title='${list.title}'>
+										  <#if list.type='tbl_docs'>
+										  <span>[文档]
+										  <#elseif list.type='tbl_topics'>
+										  <span>[话题]
+										  <#elseif list.type='tbl_books'>
+										  <span>[书籍]
+										  <#elseif list.type='tbl_article'>
+										  <span>[文章]
+										  <#elseif list.type='tbl_courses'>
+										  <span>[课程]
+										  <#else>
+										  <span>[站点]
+										  </#if>
+									     ${list.title}</span>
+									     <span class="smsdate zg-right">${list.createtime?string("yyyy-MM-dd")}</span>
+									  </a>
 									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113905" target="_blank" title="30段超实用CSS代码"><span>30段超实用CSS代码</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113906" target="_blank" title="Css垂直居中"><span>Css垂直居中</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113907" target="_blank" title="html5实现本地存储登陆用户信息保存"><span>html5实现本地存储登陆用户信息保存</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113908" target="_blank" title="html-javascript前端页面刷新重载的方法汇总"><span>html-javascript前端页面刷新重载的方法汇总</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113909" target="_blank" title="Jquery实例库"><span>Jquery实例库</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113911" target="_blank" title="高性能滚动 scroll 及页面渲染优化"><span>高性能滚动 scroll 及页面渲染优化</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113903" target="_blank" title="java ajax"><span>java ajax</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113899" target="_blank" title="备份"><span>备份</span></a>
-									  <span class="smsdate zg-right">2016-11-24</span>
-									</li>
-									<li>
-									  [文档]
-									  <a href="/docs/getDocsDetail/113873" target="_blank" title="Jquery实例库"><span>Jquery实例库</span></a>
-									  <span class="smsdate zg-right">2016-11-23</span>
-									</li>
+								</#list>
 							</ul>
+						  <#else>
+							<span class="no-flashlist">暂无最新分享</span>
+					      </#if> 
 					  </div>
 					</div>
 			 </div>
 		  </div>
         </div>
       </div>
-      <div class='homepageTemplate'></div>
+      <div class='homepageTemplate pagetemplate'></div>
       <a id="backcomtop" title="回到顶部"  class='back-to-top' href="#comtop" style="display:none; bottom:300px;"></a>
       <#include "/mydocs/commonTemplate/topandtail/tail.ftl"/>
       <script type="text/javascript" src="/scripts/jquery-1.8.0.min.js"></script>
       <script type="text/javascript" src="/scripts/jquery-jtemplates.js"></script> 
       <script type="text/javascript" src="/scripts/pj_changeHeadIcon.js" charset="UTF-8"></script>
+      <script type="text/javascript" src="/scripts/jquery.pinwheel-0.1.0.js"></script>
       <script type="text/javascript" src="/scripts/waterbubble.js"></script>
       <script type="text/javascript" src="/scripts/pj_mycompage.js"></script>
+      <script type="text/javascript" src="/scripts/pj_publicMethod.js"></script>
+      <script type="text/javascript" src="/scripts/pj_loadPmAndsmg.js"></script>
+      <script type="text/javascript" src='/scripts/pj_centerCommon.js'></script>
+      <script type="text/javascript" src="/scripts/share.js"></script>
+      <script type="text/javascript" src="/scripts/jquery.simplePagination.js"></script>
       <script type="text/javascript" src="/scripts/pj_constant.js"></script>
     </body>
 </html>

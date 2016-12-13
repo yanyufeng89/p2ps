@@ -11,18 +11,18 @@
          {#if $T.commlist.tmpHeadIcon}
             {#if $T.commlist.tmpUserName}
              <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">
-                <img src="{$T.commlist.tmpHeadIcon}" alt="个人头像" class="zm-item-img-avatar lazy" data-userid='{$T.commlist.userid}'>
+                <img src="{$T.commlist.tmpHeadIcon}" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" data-userid='{$T.commlist.userid}'>
              </a>
             {#else}
-                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
+                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}">
             {#/if}
          {#else}
            {#if $T.commlist.tmpUserName}
              <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">
-                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy" data-userid='{$T.commlist.userid}'>
+                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" data-userid='{$T.commlist.userid}'>
              </a>
            {#else}
-             <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
+             <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}">
            {#/if}
          {#/if}
        

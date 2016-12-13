@@ -427,6 +427,9 @@ $(function(){
     	    		}else{
     	    			$('#appendreply').before($('#appendreply').html());
     	    		}
+       	    		//评论条数加1
+       	    		var commsum=$('#topiccomment').attr('data-commentcount');
+       	    		$('#topiccomment').attr('data-commentcount',Number(commsum)+1);
        	    		$('#appendreply').empty();
        	    		intoUserInfo();
        	    		$this.parent().prev().val('');
@@ -699,9 +702,8 @@ $(function(){
     	
     },function(){
     	$('#invite-container').hide();
-    	var commentcount=$(this).parent().nextAll('.panel-container').find('.zm-item-comment').size();
     	var $children=$(this).children();
-    	$(this).empty().append($children).append(commentcount+'条评论');
+    	$(this).empty().append($children).append($(this).attr('data-commentcount')+'条评论');    	
     	$(this).parents('.zm-meta-panel').nextAll('.panel-container').hide();
     })
     
@@ -784,19 +786,12 @@ $(function(){
     	//关联的主体名称(话题名称)
     	var topicname=$('input[name=titlename]').val();
     	
-        /*var commcontent=$('.publishanswer .edui-body-container').html();*/
     	var commcontent=editor.getContent();
 		if($.trim(commcontent).replace(/[^x00-xFF]/g,'**').length>65535){
 			$(this).prevAll().show();
 			return false;
 		}
-    	/*//判断输入的字节大小
-    	var len=commcontent.length+(commcontent.match(/[^\x00-\xff]/g) ||"").length;
-    	if(len>10000){
-    		if($(this).parent().find('.errortip').length==0)
-    		$(this).before('<span class="errortip">请控制在 10000 字以下</span>&nbsp;&nbsp;');
-    		return false;
-    	}*/
+
     	var $this=$(this);
     	var isPublic=$('input[type=checkbox]').is(':checked')?0:1;
     	//判断不为空 或者是在IE浏览器下umeditor插件 会把placeholder属性转换为P标签里面的内容
@@ -814,6 +809,7 @@ $(function(){
             			userid:userInfo==undefined?'':userInfo.userid,
             			username:userInfo==undefined?'':userInfo.username,
             			headicon:userInfo==undefined?'':userInfo.headicon,
+            			usertype:userInfo==undefined?'':userInfo.headicon,		
             			topicsComment:data.topicsComment,
             			commcontent:commcontent,
             			ispublic:isPublic,
@@ -1003,8 +999,8 @@ function upReward(obj){
 		return false;
 	}	
 	if(Dvalue >  points){
-		//积分不够
-		$('.zh-pm-warnmsg').html('积分不够!').show();
+		//财富值不够
+		$('.zh-pm-warnmsg').html('财富值不够!').show();
 		return false;
 	}
 	
@@ -1464,10 +1460,15 @@ function cancelnewreply(obj,type){
        	dataType:"json",
        	success:function(data){
        		if(data.returnStatus=='000'){
-       			if(type=='comment')
-       			$this.parents('.zm-item-comment').remove();
-       			else
-       			$this.parents('._CommentItem_root_PQNS').remove();	
+       			if(type=='comment'){
+       				$this.parents('.zm-item-comment').remove();
+       			    //评论条数减1
+       	    		var commsum=$('#topiccomment').attr('data-commentcount');
+       	    		$('#topiccomment').attr('data-commentcount',Number(commsum)-1);
+       			}
+       			else{
+       				$this.parents('._CommentItem_root_PQNS').remove();	
+       			}
        		}
        		else{
        			

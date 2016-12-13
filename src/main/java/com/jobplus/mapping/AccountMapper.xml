@@ -30,7 +30,7 @@
       #{createtime,jdbcType=TIMESTAMP}, #{points,jdbcType=INTEGER}, #{freezeup,jdbcType=INTEGER}
       )
   </insert>
-  <!-- 分享话题 增加积分  -->
+  <!-- 分享话题 增加财富值  -->
   <update id="addPointsByAddTopics" parameterType="java.lang.Integer" >
     update tbl_account
     <set >

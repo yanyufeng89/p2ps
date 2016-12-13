@@ -112,11 +112,11 @@
 		     <#list  record.commentList.list as booklist>
 		       <div class='item'>
 		         <div class='media-left'>
-		           <a class='uhead' href='/myHome/getHomePage/${booklist.userid}' target='_blank' data-userid='${booklist.userid}'>
+		           <a class='uhead' href='/myHome/getHomePage/${booklist.userid}' target='_blank'>
 		             <#if (booklist.userHeadIcon)??>
-		               <img class='uname lazy' src="${booklist.userHeadIcon}" alt="个人头像"  data-userid='${booklist.userid}' data-moduletype='1'>
+		               <img class='uname lazy <#if booklist.usertype==2>company-img</#if>' src="${booklist.userHeadIcon}" alt="个人头像"  data-userid='${booklist.userid}' data-moduletype='1'>
 		             <#else>
-		               <img class='uname lazy' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='${booklist.userid}' data-moduletype='1'>
+		               <img class='uname lazy <#if booklist.usertype==2>company-img</#if>' src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='${booklist.userid}' data-moduletype='1'>
 		             </#if>
 		             <#if (booklist.commentbyName)??>
 			               <a href='/myHome/getHomePage/${booklist.userid}' target='_blank' class='uname' data-userid='${booklist.userid}'> 
@@ -160,11 +160,11 @@
 		<#--判断是否登录-->
 		<#if (Session.user)??>
 		    <div class='mycomment'>
-			  <a href='/myHome/getHomePage/${Session.user.userid}' target='_blank' data-userid='${Session.user.userid}'>
+			  <a href='/myHome/getHomePage/${Session.user.userid}' target='_blank'>
 				 <#if (Session.user.headicon)??>
-				   <img src="${Session.user.headicon}" alt="个人头像" class='zm-list-avatar lazy' data-userid='${Session.user.userid}' data-moduletype='1'>
+				   <img src="${Session.user.headicon}" alt="个人头像" class='zm-list-avatar lazy <#if Session.user.usertype==2>company-img</#if>' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 <#else>
-				   <img src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" class='zm-list-avatar lazy' data-userid='${Session.user.userid}' data-moduletype='1'>
+				   <img src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" class='zm-list-avatar lazy <#if Session.user.usertype==2>company-img</#if>' data-userid='${Session.user.userid}' data-moduletype='1'>
 				 </#if>
 				 <span class="mycommentinfo">推荐语</span>
 			  </a>
@@ -238,9 +238,9 @@
 						<#list record.collectUsers[0..5] as colllist>
 							<a title="${colllist.username}"  class="zm-item-link-avatar" href='/myHome/getHomePage/${colllist.userid}' target='_blank' data-moduletype='1'>
 							   <#if (colllist.headicon)??>
-								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy"  data-userid="${colllist.userid}" alt="个人头像">
+								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>"  data-userid="${colllist.userid}" alt="个人头像">
 							   <#else>
-								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy"  data-userid="${colllist.userid}" alt="个人头像">
+								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>"  data-userid="${colllist.userid}" alt="个人头像">
 							   </#if>
 							</a>
 					   </#list>
@@ -249,9 +249,9 @@
 					   <#list record.collectUsers as colllist>
 							<a title="${colllist.username}"  class="zm-item-link-avatar" href='/myHome/getHomePage/${colllist.userid}' target='_blank'  data-moduletype='1'>
 							   <#if (colllist.headicon)??>
-								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}"  alt="个人头像">
+								 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}"  alt="个人头像">
 							   <#else>
-								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}"  alt="个人头像">
+								  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}"  alt="个人头像">
 							   </#if>
 							</a>
 					   </#list>
@@ -262,9 +262,9 @@
 							<#list record.collectUsers as colllist>
 								<a title="${colllist.username}"  class="zm-item-link-avatar" href='/myHome/getHomePage/${colllist.userid}' target='_blank' data-moduletype='1'>
 								   <#if (colllist.headicon)??>
-									 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}"  alt="个人头像">
+									 <img src="${colllist.headicon}" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}"  alt="个人头像">
 								   <#else>
-									  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" data-userid="${colllist.userid}"  alt="个人头像">
+									  <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy <#if colllist.usertype==2>company-img</#if>" data-userid="${colllist.userid}"  alt="个人头像">
 								   </#if>
 								</a>
 						   </#list>
@@ -286,7 +286,7 @@
 						  <li>
 							 <div class='related-book-right'>
 							        <a href='/sites/getSiteDetail/${samelist.data_id}' target='_blank' title='${samelist.title}'><span class='SidebarListNav-label'>${samelist.title}</span></a>
-									<span class='evaluate-label'><#if (samelist.replySum)??> ${samelist.replySum}<#else>0</#if>人浏览</span>
+									<span class='evaluate-label'><#if (samelist.replySum)??> ${samelist.replySum}<#else>0</#if>人推荐</span>
 							 </div>
 						  </li>
 						 </#list>

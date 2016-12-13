@@ -41,9 +41,9 @@ public class CompanyIntroServiceImpl implements ICompanyIntroService {
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(CompanyIntro record) {
+	public int updateByPrimaryKeySelective(CompanyIntro record,Integer isEstTime) {
 		
-		return conpanyIntroDao.updateByPrimaryKeySelective(record);
+		return conpanyIntroDao.updateByPrimaryKeySelective(record,isEstTime);
 	}
 
 	@Override
@@ -59,9 +59,8 @@ public class CompanyIntroServiceImpl implements ICompanyIntroService {
 	}
 
 	@Override
-	public CompanyIntro selectByUserid(Integer id) {
-		
-		return conpanyIntroDao.selectByUserid(id);
+	public int updImgurl(CompanyIntro record) {
+		return conpanyIntroDao.updImgurl(record);
 	}
 
 }

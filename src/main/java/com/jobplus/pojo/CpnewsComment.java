@@ -27,7 +27,44 @@ public class CpnewsComment extends PageParent implements Serializable{
 
     private String comments;
 
-    public Integer getId() {
+    /**
+     * 用户名
+     */
+    private String userName;    
+    /**
+     * 头像
+     */
+    private String headIcon;
+    /**
+     * 用户类型
+     */
+    private String usertype;     
+    
+    public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getHeadIcon() {
+		return headIcon;
+	}
+
+	public void setHeadIcon(String headIcon) {
+		this.headIcon = headIcon;
+	}
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
+
+	public Integer getId() {
         return id;
     }
 

@@ -36,7 +36,7 @@ public class AccountDetail extends PageParent implements Serializable{
     /**
      * 更改原因
      */
-    private String[] CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题","文档被下载","打赏文章","文章被打赏","话题悬赏","话题回答被采纳","取消悬赏,积分返还"
+    private String[] CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题","文档被下载","打赏文章","文章被打赏","话题悬赏","话题回答被采纳","取消悬赏,财富值返还"
     		,"话题悬赏提高","文档私有","文档公开","删除文档"};
     
     /**
@@ -45,13 +45,13 @@ public class AccountDetail extends PageParent implements Serializable{
     private String showCreateTime;
     
     /**
-     * 枚举积分值[]CHANGEVALUE = {1,2,3,4,5,6,7,8,9,10,15,20};
+     * 枚举财富值值[]CHANGEVALUE = {1,2,3,4,5,6,7,8,9,10,15,20};
      */
     private Integer []CHANGEVALUES = {1,2,3,4,5,6,7,8,9,10,15,20};
 
     
     /**
-     * 枚举积分值[]CHANGEVALUE = {1,2,3,4,5,6,7,8,9,10,15,20};
+     * 枚举财富值值[]CHANGEVALUE = {1,2,3,4,5,6,7,8,9,10,15,20};
      */
 	public Integer[] getCHANGEVALUES() {
 		return CHANGEVALUES;
@@ -72,7 +72,7 @@ public class AccountDetail extends PageParent implements Serializable{
 	}
 
 	/**
-	 *  CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题","文档被下载","打赏文章","文章被打赏","话题悬赏","话题回答被采纳","取消悬赏,积分返还"
+	 *  CHANGECAUSES = {"分享文档","分享话题","分享书籍","分享课程","分享文章","分享站点","下载文档","回答问题","文档被下载","打赏文章","文章被打赏","话题悬赏","话题回答被采纳","取消悬赏,财富值返还"
     		,"话题悬赏提高","文档私有","文档公开"};
 	 */
 	public String[] getCHANGECAUSES() {

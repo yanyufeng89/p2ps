@@ -1,0 +1,36 @@
+<div class="zm-item-comment"  tabindex="-1" aria-label="评论">
+  <a class="zg-anchor-hidden"></a>
+ 
+  {#if $T.userinfo.headicon}
+     {#if $T.userinfo.username}
+        <a  class="zm-item-link-avatar"  href='/myHome/getHomePage/{$T.userinfo.userid}' target='_blank'>
+          <img src="{$T.userinfo.headicon}" class="zm-item-img-avatar lazy {#if $T.userinfo.usertype==2}company-img{#/if}"  alt="个人头像" data-userid='{$T.userinfo.userid}' data-moduletype="0">
+        </a>
+     {#else}
+         <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像"  data-moduletype="0">
+     {#/if}
+  {#else}
+     {#if $T.userinfo.username}
+      <a  class="zm-item-link-avatar"  href='/myHome/getHomePage/{$T.userinfo.userid}' target='_blank'>
+        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy {#if $T.userinfo.usertype==2}company-img{#/if}" alt="个人头像" data-userid='{$T.userinfo.userid}' data-moduletype="0">
+      </a>
+     {#else}
+       <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像"data-moduletype="0">
+     {#/if}
+  {#/if}
+  
+  <div class="zm-comment-content-wrap">
+    <div class="zm-comment-hd">
+       <a href='/myHome/getHomePage/{$T.userinfo.userid}' target='_blank' class="zg-link" data-original_title="{$T.userinfo.username}" data-userid='{$T.userinfo.userid}'  data-moduletype="0">
+             {$T.userinfo.username}
+       </a>
+   </div>
+    <div class="zm-comment-content">{$T.flashComment.comments}</div>
+    <div class="zm-comment-ft">
+      <span class="date">{$T.flashComment.createtime}</span>
+      <a href="javascript:void(0)" class="del zm-comment-op-link needsfocus" name="delcomment" data-id='{$T.flashComment.id}' data-flashid='{$T.newsid}'>
+          <i class="zg-icon zg-icon-comment-del"></i>删除
+      </a>
+    </div>
+  </div>
+</div>

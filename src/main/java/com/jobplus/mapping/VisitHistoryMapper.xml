@@ -19,7 +19,7 @@
   <select id="getRecentVistors" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.VisitHistory"  >
     select 
     <include refid="Base_Column_List2" />
-    ,u.userName as userName,u.headIcon as headIcon,u.description as description,p.attentionsum as attentionsum,p.fanssum as fanssum
+    ,u.userName as userName,u.headIcon as headIcon,u.description as description,u.usertype as usertype,p.attentionsum as attentionsum,p.fanssum as fanssum
     ,(select group_concat(userid)  from tbl_attention where objectId = t.visitorId and colltype='tbl_user') as fansIds
 <!--     ,(select count(*) from tbl_visitHistory t left join tbl_user u
 	    on t.visitorId = u.userId join tbl_operationSum p on t.visitorId = p.userid

@@ -4,7 +4,7 @@
   {#if $T.userinfo.headicon}
      {#if $T.userinfo.username}
         <a  class="zm-item-link-avatar"  href='/myHome/getHomePage/{$T.userinfo.userid}' target='_blank'>
-          <img src="{$T.userinfo.headicon}" class="zm-item-img-avatar lazy"  alt="个人头像" data-userid='{$T.userinfo.userid}' data-moduletype="0">
+          <img src="{$T.userinfo.headicon}" class="zm-item-img-avatar lazy {#if $T.userinfo.usertype==2}company-img{#/if}"  alt="个人头像" data-userid='{$T.userinfo.userid}' data-moduletype="0">
         </a>
      {#else}
          <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像"  data-moduletype="0">
@@ -12,7 +12,7 @@
   {#else}
      {#if $T.userinfo.username}
       <a  class="zm-item-link-avatar"  href='/myHome/getHomePage/{$T.userinfo.userid}' target='_blank'>
-        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像" data-userid='{$T.userinfo.userid}' data-moduletype="0">
+        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy {#if $T.userinfo.usertype==2}company-img{#/if}" alt="个人头像" data-userid='{$T.userinfo.userid}' data-moduletype="0">
       </a>
      {#else}
        <img src="/image/1b48b5a75c71597_100x100.jpg" class="zm-item-img-avatar lazy" alt="个人头像"data-moduletype="0">

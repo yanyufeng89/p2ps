@@ -30,6 +30,7 @@
 		,
 		u.userName as userName,
 		u.headIcon as userHeadIcon,
+		u.usertype as usertype,
 		uc.userName as
 		commentbyName,
 		uc.headIcon as commentbyHeadIcon

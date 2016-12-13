@@ -7,11 +7,36 @@
 <title>上传文档</title>
 <script type="text/javascript">
 
-	function updUserInfo(){
+//user表以user_打头      user_userid必传
+//公司表以companyIntro_打头  companyIntro_id必传
+
+function updCompUserInfo(data){
+	
+	
 	  	   $.ajax({
 	         	type:"POST",
 	         	url:"comp/updUserInfo",
-	         	data:{user_userid:30,user_addres:"江苏苏州",companyIntro_id:31,companyIntro_province:"山东"},
+	         	data:{user_username:"微软",
+	         		//user_headIconFile:"头像 file",
+	         		user_userid:"30",
+	         		user_description:"公司描述",//顶端公司简介
+	         		user_specialty:"业务领域",
+	         		companyIntro_id:31,
+	         		companyIntro_nation:"中国",
+	         		companyIntro_province:"山东",
+	         		companyIntro_city:"济南",
+	         		companyIntro_postcode:"221111",
+	         		companyIntro_url:"www.microsoft.com",
+	         		companyIntro_scale:"50",//公司规模
+	         		companyIntro_industry:"互联网",//行业
+	         		//companyIntro_establishtime:"2016-12-01 14:17:46",//创建时间
+	         		companyIntro_type:"民营",//公司介绍
+	         		
+	         		companyIntro_intro:"公司简介",//业务领域
+	         		companyIntro_address:"江苏省苏州市工业园区新街口",//公司地址
+	         		companyIntro_busiarea:"1:财务咨询,2:软件外包,3:会计审核",//业务领域
+	         		companyIntro_imgurl:"http://192.168.0.39:8199/headIcon/2016/10/31/31_4d3a0cc861ef406e9c2ce1e2d53e86a1.png公司图片",//
+	         		},
 	         	dataType:"json",
 	         	success:function(data){
 	         		if(data.returnStatus=='000'){//返回成功
@@ -50,11 +75,16 @@
 	        	}
 	     });
 	  } 
+	// compid 上一级评论id 
+	// newsid 快讯id 
+	// comments 评论内容
+	// objCreatepersonPg 快讯公司id 
+	// objectNamePg 快讯名称 
 	function addComment(){
 	  	   $.ajax({
 	         	type:"POST",
-	         	url:"comp/addComment",
-	         	data:{compid:31,newsid:1,comments:"非常好"},
+	         	url:"/comp/addComment",
+	         	data:{compid:31,newsid:1,comments:"非常好",objCreatepersonPg:30,objectNamePg:"快讯名称"},
 	         	dataType:"json",
 	         	success:function(data){
 	         		if(data.returnStatus=='000'){//返回成功
@@ -64,7 +94,143 @@
 	        	}
 	     });
 	  } 
+	
+/* 	5.快讯点赞
+	url:"comp/loadNews",  
 
+	likeOperate:动作  1：取消点赞  0 点赞
+	newsid:快讯id
+	objCreatepersonPg: 发布快讯的公司id
+	relationidPg:635
+	objectNamePg:快讯内容 */
+	function likeNews(){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"comp/likeNews",
+	         	data:{likeOperate:0,id:96,objCreatepersonPg:479},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+	//删除企业快讯
+	function delCpNews(){
+		var newsId = 96;
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"comp/delCpNews",
+	         	data:{id:newsId},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+	function topCpNews(id){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"comp/topCpNews",
+	         	data:{id:id},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+	//插入业务领域
+	function addCpNews(){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"/comp/topCpNews",
+	         	data:{busiareaname:"业务领域"},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+ 	//插入企业业务领域
+	function insertBusLib(){
+		 $.ajax({
+	         	type:"POST",
+	         	url:"/comp/insertBusLib",
+	         	data:{id:id},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	}
+	//获取网站信息
+	function comGet3WInfo(){
+		 $.ajax({
+	         	type:"POST",
+	         	url:"/comp/get3WInfo",
+	         	data:{url:"www.baidu.com"},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	}
+	function getUserSimpleInformation(){
+	  	   $.ajax({
+	         	type:"POST",
+	         	url:"/myCenter/getUserSimpleInformation?userId="+479,
+	         	//data:{compid:31},
+	         	dataType:"json",
+	         	success:function(data){
+	         		if(data.returnStatus=='000'){//返回成功
+	            		console.log(data);
+	        		}else{//返回失败
+	        		}
+	        	}
+	     });
+	  } 
+	
+/* $(function(){
+	//ajax提交form表单的方式
+    $("#updForm").submit(function() {
+        var AjaxURL= "comp/updImg";       
+        alert($('#formAddHandlingFee').serialize());
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: AjaxURL,
+                data: $('#updForm').serialize(),
+                success: function (data) {
+                    var strresult=data;
+                    console.log(data);
+                    alert(strresult);
+                    //加载最大可退金额
+                   // $("#spanMaxAmount").html(strresult);
+                },
+                error: function(data) {
+                    alert("error:"+data.responseText);
+                 }
+            });
+    }
+    );
+}); */
 
 </script>
 
@@ -74,7 +240,13 @@
 </head>
 <body>
 
-	<input type="button" value="updUserInfo" onclick="updUserInfo()" /><br><br>
+	<input type="button" value="comGet3WInfo" onclick="comGet3WInfo()" /><br><br>
+	<input type="button" value="getUserSimpleInformation" onclick="getUserSimpleInformation()" /><br><br>
+	<input type="button" value="comGet3WInfo" onclick="comGet3WInfo()" /><br><br>
+	<input type="button" value="comGet3WInfo" onclick="comGet3WInfo()" /><br><br>
+	<input type="button" value="likeNews" onclick="likeNews()" /><br><br>
+	<input type="button" value="delCpNews" onclick="delCpNews()" /><br><br>
+	<input type="button" value="updCompUserInfo" onclick="updCompUserInfo()" /><br><br>
 	<input type="button" value="loadNews" onclick="loadNews()" /><br><br>
 	<input type="button" value="loadNewsComments" onclick="loadNewsComments()" /><br><br>
 	<input type="button" value="addComment" onclick="addComment()" /><br><br>
@@ -82,7 +254,11 @@
 	<form action="comp/updImg" method="post" enctype="multipart/form-data">
 		<input type="file"  name="imgField" multiple="multiple"> 
 		<input type="submit" value="上传图片">
-</form>
+	</form>
+	<form id="updForm" method="post" enctype="multipart/form-data"><!-- action="comp/updImg"  -->
+		<input type="file"  name="imgField" multiple="multiple"> 
+		<input  type="submit" value="上传图片">
+	</form>
 </body>
 
 <script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>

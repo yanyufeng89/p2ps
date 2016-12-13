@@ -16,17 +16,20 @@
     <result column="establishTime" property="establishtime" jdbcType="TIMESTAMP" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <!-- 新增联系电话和邮箱 -->
+    <result column="contactEmail" property="contactEmail" jdbcType="VARCHAR" />
+    <result column="contactTel" property="contactTel" jdbcType="CHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.CompanyIntro" extends="BaseResultMap" >
     <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, imgUrl, busiArea, nation, province, city, postcode, address, url, scale, industry, 
-    establishTime, type, createTime
+    establishTime, type, createTime, contactEmail ,contactTel
   </sql>
   <sql id="Base_Column_List_t" >
     t.id, t.imgUrl, t.busiArea, t.nation, t.province, t.city, t.postcode, t.address, t.url, t.scale, t.industry, t.
-    establishTime, t.type, t.createTime
+    establishTime, t.type, t.createTime, t.contactEmail ,t.contactTel
   </sql>
   <sql id="Blob_Column_List" >
     intro
@@ -34,15 +37,40 @@
   <sql id="Blob_Column_List_t" >
     t.intro
   </sql>
-  
-<!--  <select id="selectByUserid" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List_t" />
-    ,
-    <include refid="Blob_Column_List_t" />
-    from tbl_company_intro t join tbl_user u on
+  <!-- 企业用户资料完成度 -->
+<select id="cpInfoCompletion" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+     select FORMAT((u1+u2+u3+c1+c2+c3+c4+c5+c6+c7+c8+c9+c10+c11+c12+c13+c14+c15)/16*100,0)
+     from(
+      select if(t.userName is null or t.userName='',0,1) as u1,
+			if(t.description is null or t.description='',0,1) as u2,
+			if(t.specialty is null or t.specialty='',0,1) as u3,
+	if(c.imgUrl is null or c.imgUrl='',0,1) as c1,
+	if(c.intro is null or c.intro='',0,1) as c2,
+	if(c.busiArea is null or c.busiArea='',0,1) as c3,
+	if(c.nation is null or c.nation='',0,1) as c4,
+	if(c.province is null or c.province='',0,1) as c5,
+	if(c.city is null or c.city='',0,1) as c6,
+	if(c.postcode is null or c.postcode='',0,1) as c7,
+	if(c.address is null or c.address='',0,1) as c8,
+	if(c.url is null or c.url='',0,1) as c9,
+	if(c.scale is null or c.scale='',0,1) as c10,
+	if(c.industry is null or c.industry='',0,1) as c11,
+	if(c.establishtime is null or c.establishtime='',0,1) as c12,
+	if(c.type is null or c.type='',0,1) as c13,
+	if(c.contactEmail is null or c.contactEmail='',0,1) as c14,
+	if(c.contactTel is null or c.contactTel='',0,1) as c15
+      from tbl_user t 
+			LEFT JOIN tbl_company_intro c on t.userId=c.id
+      where t.userid=#{id,jdbcType=INTEGER}
+      ) tt
+  </select>
+  <!-- 更改企业图片 -->
+  <update id="updImgurl" parameterType="com.jobplus.pojo.CompanyIntro" >
+    update tbl_company_intro
+    set imgUrl = #{imgurl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
-  </select> -->
+  </update>
+  
   
   
   
@@ -65,13 +93,14 @@
       nation, province, city, 
       postcode, address, url, 
       scale, industry, establishTime, 
-      type, createTime, intro
+      type, createTime, intro, contactEmail ,contactTel
       )
     values (#{id,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, #{busiarea,jdbcType=VARCHAR}, 
       #{nation,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
       #{scale,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{establishtime,jdbcType=TIMESTAMP}, 
       #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{intro,jdbcType=LONGVARCHAR}
+      , #{contactEmail,jdbcType=VARCHAR}, #{contactTel,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.CompanyIntro" >
@@ -122,6 +151,12 @@
       <if test="intro != null" >
         intro,
       </if>
+      <if test="contactEmail != null" >
+        contactEmail,
+      </if>
+      <if test="contactTel != null" >
+        contactTel,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -169,55 +204,67 @@
       <if test="intro != null" >
         #{intro,jdbcType=LONGVARCHAR},
       </if>
+      <if test="contactEmail != null" >
+        #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        #{contactTel,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jobplus.pojo.CompanyIntro" >
     update tbl_company_intro
     <set >
-      <if test="imgurl != null" >
-        imgUrl = #{imgurl,jdbcType=VARCHAR},
+      <if test="record.imgurl != null" >
+        imgUrl = #{record.imgurl,jdbcType=VARCHAR},
       </if>
-      <if test="busiarea != null" >
-        busiArea = #{busiarea,jdbcType=VARCHAR},
+      <if test="record.busiarea != null" >
+        busiArea = #{record.busiarea,jdbcType=VARCHAR},
       </if>
-      <if test="nation != null" >
-        nation = #{nation,jdbcType=VARCHAR},
+      <if test="record.nation != null" >
+        nation = #{record.nation,jdbcType=VARCHAR},
       </if>
-      <if test="province != null" >
-        province = #{province,jdbcType=VARCHAR},
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
-        city = #{city,jdbcType=VARCHAR},
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
       </if>
-      <if test="postcode != null" >
-        postcode = #{postcode,jdbcType=VARCHAR},
+      <if test="record.postcode != null" >
+        postcode = #{record.postcode,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
       </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
       </if>
-      <if test="scale != null" >
-        scale = #{scale,jdbcType=VARCHAR},
+      <if test="record.scale != null" >
+        scale = #{record.scale,jdbcType=VARCHAR},
       </if>
-      <if test="industry != null" >
-        industry = #{industry,jdbcType=VARCHAR},
+      <if test="record.industry != null" >
+        industry = #{record.industry,jdbcType=VARCHAR},
       </if>
-      <if test="establishtime != null" >
-        establishTime = #{establishtime,jdbcType=TIMESTAMP},
+      <if test="isEstTime == 1" >
+        establishTime = #{record.establishtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=VARCHAR},
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="intro != null" >
-        intro = #{intro,jdbcType=LONGVARCHAR},
+      <if test="record.intro != null" >
+        intro = #{record.intro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.contactEmail != null" >
+        contactEmail = #{record.contactEmail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.contactTel != null" >
+        contactTel = #{record.contactTel,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{record.id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jobplus.pojo.CompanyIntro" >
     update tbl_company_intro
@@ -234,7 +281,9 @@
       establishTime = #{establishtime,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=VARCHAR},
       createTime = #{createtime,jdbcType=TIMESTAMP},
-      intro = #{intro,jdbcType=LONGVARCHAR}
+      intro = #{intro,jdbcType=LONGVARCHAR},
+      contactEmail = #{contactEmail,jdbcType=VARCHAR},
+      contactTel = #{contactTel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.CompanyIntro" >
@@ -251,7 +300,9 @@
       industry = #{industry,jdbcType=VARCHAR},
       establishTime = #{establishtime,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      contactEmail = #{contactEmail,jdbcType=VARCHAR},
+      contactTel = #{contactTel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

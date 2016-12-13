@@ -4,9 +4,9 @@
     <div class="media-left">
         <a class="uhead" href='/myHome/getHomePage/{$T.list.userid}' target='_blank' data-userid="{$T.list.userid}">
             {#if $T.list.userHeadIcon}
-		        <img class='uname lazy'  src="{$T.list.userHeadIcon}"  alt="个人头像"  data-userid='{$T.list.userid}' data-moduletype='1'>
+		        <img class='uname lazy {#if $T.list.usertype==2}company-img{#/if}'  src="{$T.list.userHeadIcon}"  alt="个人头像"  data-userid='{$T.list.userid}' data-moduletype='1'>
 		        {#else}
-		        <img class='uname lazy'  src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='{$T.list.userid}' data-moduletype='1'>
+		        <img class='uname lazy {#if $T.list.usertype==2}company-img{#/if}'  src='/image/1b48b5a75c71597_100x100.jpg' alt="个人头像" data-userid='{$T.list.userid}' data-moduletype='1'>
 		    {#/if}
 		  </a>
 		    {#if $T.list.commentbyName}

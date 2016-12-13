@@ -43,7 +43,10 @@ public class SkillsController {
 		return solrJUtils.findUser(condition,userid);		
 	}
 	/**
-	 * 根据条件模糊查询技能
+	 * 根据条件模糊查询技能  
+	 * 对于rest风格的请求，如果参数是以".js"类型后辍结尾，会被当做静态资源处理 
+	 * 如果逻辑确实需要进入requestMapping的方法，则不能在web.xml中处理静态资源，需要使用<mvc:default-servlet-handler />处理静态资源，
+	 * 并在requestMapping的condition上编写通配符（sping会对 .js做截取处理） @RequestMapping(value = "/findSkill/{condition:.*}", method = RequestMethod.POST)
 	 * @param request
 	 * @param condition
 	 * @return

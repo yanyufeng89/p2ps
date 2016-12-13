@@ -8,6 +8,7 @@
 * http://flaviusmatis.github.com/license.html
 */
 var userInfo;
+var newsid='';
 (function($){
 
 	var methods = {
@@ -18,6 +19,7 @@ var userInfo;
 				pages: 0,
 				displayedPages:10,
 				edges: 2,
+				id:'1',
 				currentPage: 1,
 				hrefTextPrefix: '#page-',
 				hrefTextSuffix: '',
@@ -40,7 +42,7 @@ var userInfo;
 			o.pages = o.pages ? o.pages : Math.ceil(o.items / o.itemsOnPage) ? Math.ceil(o.items / o.itemsOnPage) : 1;
 			o.currentPage = o.currentPage - 1;
 			o.halfDisplayed = o.displayedPages / 2;
-
+			newsid=o.id;
 			this.each(function() {
 				self.addClass(o.cssStyle + ' simple-pagination').data('pagination', o);
 				methods._draw.call(self);
@@ -317,7 +319,38 @@ function initPageData(page,moduleType){
 	  case 'search' :
 		  initSearch(page);
 		  break;
+	  case 'flashcommentlist':
+		  initFlashCommListPageData(page);
+		  break;
 	}
+}
+//企业快讯评论分页
+function initFlashCommListPageData(page){
+	$.ajax({
+		type:"POST",
+		url:"/comp/loadNewsComments",
+		data:{newsid:newsid,pageNo:page},
+		dataType:"json",
+		success:function(data){
+			$.each(data.obj.list,function(index,item){
+				item.createtime=formatDate(item.createtime)
+			})
+			 var datas={
+			    		flashcommentList:data.obj.list,
+			    		userInfo:userInfo,
+			    		flashId:newsid
+			    	}
+			    	$('.homepageTemplate').setTemplateURL('/flashCommentAppendTemplate.html');
+			    	$('.homepageTemplate').processTemplate(datas);
+			    	$('#comment-'+newsid).find('.zm-item-comment').remove();
+			    	$('#comment-'+newsid).find('.page-inner').before($('.homepageTemplate').html());
+			    	$('.homepageTemplate').empty();
+			    	intoUserInfo();
+		}
+		
+	})
+	var top=$('#comment-'+newsid).offset().top-50;
+	window.scrollTo(0,top);
 }
 //我的粉丝
 function initMyFansPageData(page){

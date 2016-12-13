@@ -38,12 +38,12 @@ public class DocsLikedServiceImpl implements IDocsLikedService {
 		int ret = 0;
 		ret = docsLikedDao.insert(record);
 		if (ret > 0) {
-			// 站点点赞数 + 1
+			// 文档点赞数 + 1
 			updTableColumnService.updNums(0 , 3, 0, 1, record.getDocid());
 			
 			//添加消息通知
-			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[16],record.getDocid(),
-					record.getObjCreatepersonPg(),53,record.getRelationidPg(),record.getObjectNamePg(),"");
+			smsService.addNotice(user,contextPath, new Sms().getTABLENAMES()[18],record.getDocid(),
+					record.getObjCreatepersonPg(),63,record.getRelationidPg(),record.getObjectNamePg(),"");
 			
 		}
 		return ret;

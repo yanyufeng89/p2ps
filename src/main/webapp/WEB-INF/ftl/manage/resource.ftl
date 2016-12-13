@@ -71,7 +71,7 @@
         }, function () {
             $.ajax({
                 type: "POST",
-                url: $path_base + "/manage/backstage/delObjOrComment",
+                url: $path_base + "/m/backstage/delObjOrComment",
                 data: {id: id, tableName: tableName},
                 dataType: "json",
                 success: function (data) {
@@ -94,7 +94,7 @@
             shadeClose: true,
             shade: 0.5,
             area: ['1000px', '750px'],
-            content: $path_base + "/manage/backstage/course/" + id,
+            content: $path_base + "/m/backstage/course/" + id,
             end : function(){
                 search();
             }
@@ -110,7 +110,7 @@
         }
         $.ajax({
             type: "POST",
-            url: $path_base + "/manage/backstage/getOneObj",
+            url: $path_base + "/m/backstage/getOneObj",
             data: {id: search_id, type: search_type},
             dataType: "json",
             success: function (data) {

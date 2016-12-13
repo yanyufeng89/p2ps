@@ -36,6 +36,7 @@ import com.jobplus.pojo.VisitHistory;
 import com.jobplus.pojo.WorkExper;
 import com.jobplus.pojo.response.BaseResponse;
 import com.jobplus.service.IAttentionService;
+import com.jobplus.service.ICompanyService;
 import com.jobplus.service.IEducationBgrdService;
 import com.jobplus.service.IMyHomePageService;
 import com.jobplus.service.IOperationSumService;
@@ -82,6 +83,8 @@ public class MyHomeController {
 	private SolrJUtils solrJUtils;
 	@Resource
 	private IPersonalSkillService personalSkillService;
+	@Resource
+	private ICompanyService companyService;
 	
 	
 	
@@ -252,8 +255,21 @@ public class MyHomeController {
 		
 		//当前登录人id
 		String cutUserid = (String) request.getSession().getAttribute("userid");
-		
-		mv = myHomePageService.getHomePage(request,mv,userid, cutUserid, isReview);
+		User user = userService.get(Integer.parseInt(userid));
+		if(user.getUsertype()!=null && user.getUsertype()==2){
+			//企业用户
+			mv = companyService.getHomePage(request, mv, userid, cutUserid, isReview);
+			
+			//编辑界面
+			if("0".equals(isReview) && cutUserid.equals(userid))
+				mv.setViewName("mydocs/mycenter/companyCenter");		
+			//预览界面
+			else
+				mv.setViewName("mydocs/mycenter/aboutCompany");
+		}else{
+			//个人用户
+			mv = myHomePageService.getHomePage(request,mv,userid, cutUserid, isReview);
+		}
 		
 		return mv;
 	}	

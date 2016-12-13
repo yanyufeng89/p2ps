@@ -62,12 +62,12 @@ $(function(){
     		}
     		/******************/
     		
-    		// 查看积分是否够删除批量文档
+    		// 查看财富值是否够删除批量文档
     		 if($(this).parents().find('input[name=alMn]').val() < Number(conditions.split(',').length)*docValue 
     				&& isP!='0'  ){
     			 $.confirm({
- 					'title'		: '积分扣除',
- 					'message'	: "当前积分不够扣除!",
+ 					'title'		: '财富值扣除',
+ 					'message'	: "当前财富值不够扣除!",
  					'buttons'	: {
  						'确认'	: {
  							'class'	: 'blue',
@@ -120,12 +120,12 @@ $(function(){
     	//
     	var isP = $(this).data('ispublic');
     	var isvalid = $(this).data('isvalid');
-    	// 查看积分是否够删除批量文档
+    	// 查看财富值是否够删除批量文档
 		 if($(this).parents().find('input[name=alMn]').val() < docValue 
 				&& isP!='0'  ){
 			 $.confirm({
-					'title'		: '积分扣除',
-					'message'	: "当前积分不够扣除!",
+					'title'		: '财富值扣除',
+					'message'	: "当前财富值不够扣除!",
 					'buttons'	: {
 						'确认'	: {
 							'class'	: 'blue',
@@ -224,7 +224,7 @@ $(function(){
     		return false;
     	}else{
 //    		console.log("转换成功");
-    		$(this).parent().next('div').html("上传成功");
+    		$(this).parent().next('div').html("审核通过");
     		window.open("/docs/getDocsDetail/"+docid);
     	}
     });  

@@ -105,6 +105,13 @@ public class ThirdPartyLoginController {
                 oauthLoginInfo.setOauthexpires(new Long(accessTokenObj.getExpireIn()).intValue());
                 oauthLoginInfo.setOauthopenid(openID);
                 OauthLoginInfo loginInfo = oauthLoginInfoService.selectByNameAndOpenId(oauthLoginInfo);
+                if (loginInfo == null) {
+                    HttpClient htc = new HttpClient();
+                    Response rsp = htc.get("https://graph.qq.com/user/get_user_info?oauth_consumer_key=" + ParsProperFile.getQQConfigString("app_ID") + "&access_token=" + accessToken + "&openid=" + openID + "&format=json");
+                    JSONObject userObj = new JSONObject(rsp.asString());
+                    oauthLoginInfo.setNickname(Common.filterEmoji(userObj.getString("nickname")));
+                    oauthLoginInfo.setHeadicon(userObj.getString("figureurl_qq_2"));
+                }
                 if (type == 1) {//绑定
                     ModelAndView mv = new ModelAndView();
                     if (loginInfo != null && loginInfo.getUserid() != null) {
@@ -118,13 +125,6 @@ public class ThirdPartyLoginController {
                     mv.setViewName("bind");
                     return mv;
                 } else {//第三方登录
-                    if (loginInfo == null) {
-                        HttpClient htc = new HttpClient();
-                        Response rsp = htc.get("https://graph.qq.com/user/get_user_info?oauth_consumer_key=" + ParsProperFile.getQQConfigString("app_ID") + "&access_token=" + accessToken + "&openid=" + openID + "&format=json");
-                        JSONObject userObj = new JSONObject(rsp.asString());
-                        oauthLoginInfo.setNickname(Common.filterEmoji(userObj.getString("nickname")));
-                        oauthLoginInfo.setHeadicon(userObj.getString("figureurl_qq_1"));
-                    }
                     return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
                 }
             }
@@ -195,7 +195,7 @@ public class ThirdPartyLoginController {
                 if (loginInfo == null) {
                     User user = um.showUserById(accessToken.getUid());
                     oauthLoginInfo.setNickname(user.getName());
-                    oauthLoginInfo.setHeadicon(user.getProfileImageUrl());
+                    oauthLoginInfo.setHeadicon(user.getAvatarLarge());
                 }
                 return login(request, oauthLoginInfoService.getUserFromOauth(loginInfo, oauthLoginInfo), null);
             }
@@ -354,6 +354,7 @@ public class ThirdPartyLoginController {
                     mv.addObject("returnMsg", "授权失败");
                     mv.addObject("returnStatus", ConstantManager.ERROR_STATUS);
                 } else {
+                    Users um = new Users(accessToken.getAccessToken());
                     OauthLoginInfo oauthLoginInfo = new OauthLoginInfo();
                     oauthLoginInfo.setOauthname(DataType.WEIBO.getValue());
                     oauthLoginInfo.setOauthopenid(accessToken.getUid());
@@ -364,6 +365,9 @@ public class ThirdPartyLoginController {
                         mv.addObject("returnMsg", "该微博已绑定账号");
                         mv.addObject("returnStatus", ConstantManager.INVALID_STATUS);
                     } else {
+                        User user = um.showUserById(accessToken.getUid());
+                        oauthLoginInfo.setNickname(user.getName());
+                        oauthLoginInfo.setHeadicon(user.getAvatarLarge());
                         oauthLoginInfoService.bindUserFromOauth(loginInfo, oauthLoginInfo);
                         mv.addObject("returnMsg", ConstantManager.SUCCESS_MESSAGE);
                         mv.addObject("returnStatus", ConstantManager.SUCCESS_STATUS);
@@ -412,6 +416,10 @@ public class ThirdPartyLoginController {
                     mv.addObject("returnMsg", "该微信已绑定账号");
                     mv.addObject("returnStatus", ConstantManager.INVALID_STATUS);
                 } else {
+                    String userStr = HttpClientUtils.doGet("https://api.weixin.qq.com/sns/userinfo?access_token=" + access_token + "&openid=" + openid);
+                    JSONObject userObj = new JSONObject(userStr);
+                    oauthLoginInfo.setNickname(Common.filterEmoji(transStringCoding(userObj.getString("nickname"))));
+                    oauthLoginInfo.setHeadicon(userObj.getString("headimgurl"));
                     oauthLoginInfoService.bindUserFromOauth(loginInfo, oauthLoginInfo);
                     mv.addObject("returnMsg", ConstantManager.SUCCESS_MESSAGE);
                     mv.addObject("returnStatus", ConstantManager.SUCCESS_STATUS);
@@ -566,8 +574,6 @@ public class ThirdPartyLoginController {
             url = ParsProperFile.getString("wechat.redirect_URI");
         else if (type == 1)
             url = ParsProperFile.getString("wechat.bind_redirect_URI");
-        else
-            url = ParsProperFile.getString("wechat.unbind_redirect_URI");
         return "https://open.weixin.qq.com/connect/qrconnect?appid=" + ParsProperFile.getString("wechat.AppID") + "&redirect_uri=" + url + "&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
     }
 }

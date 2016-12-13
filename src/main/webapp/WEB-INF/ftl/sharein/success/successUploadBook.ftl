@@ -30,13 +30,22 @@
 					</div>
 					<div class="hd">
 					  <div class="hd-wrap">
+				<#if num gt 0>
 						<div class='congrats'>
-						     恭喜！书籍分享成功!
+							恭喜！书籍分享成功!
 						</div>
 						<div class='addtreasure'>
 						              系统自动给您加上<span class="success-upload-tips">${num}财富值</span>的奖励
 						      <a href="/myCenter/getSharedBookList" class='checkshare'>&nbsp;&nbsp;查看已分享的书籍>></a>
 						 </div>
+				<#else>
+						<div class='congrats'>
+							这本书您已经分享过啦！
+						</div>
+						<div class='addtreasure'>
+						      <a href="/myCenter/getSharedBookList" class='checkshare'>&nbsp;&nbsp;查看已分享的书籍>></a>
+						 </div>
+				</#if>						
 						 <a class="goon-upload log-xsend"  href="/sharein/searchuploadFile?type=2">继续分享</a>
 					  </div>
 					</div>

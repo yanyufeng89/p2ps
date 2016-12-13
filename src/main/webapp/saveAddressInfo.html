@@ -1,0 +1,74 @@
+<ul>
+      <li>
+          <!-- {#if $T.nation}
+             <span>国家/地区</span>
+             <p>{$T.nation}<a href="javascript:;" class="zu-edit-button" name="editsnation"><i class="zu-edit-button-icon"></i>修改</a></p>
+           {#else}
+             <span>国家/地区<a href="javascript:;" class="zu-edit-button" name="editsnation"><i class="zu-edit-button-icon"></i>修改</a></span>
+           {#/if} -->
+           <span>国家/地区</span>
+           <p>
+           {#if $T.nation}
+           {$T.nation}
+           {#/if}
+           <a href="javascript:;" class="zu-edit-button" name="editsnation"><i class="zu-edit-button-icon"></i>修改</a></p>
+         </li>
+         <li>
+           <!-- {#if $T.province}
+             <span>省/自治区/直辖市</span>
+             <p>{$T.province}<a href="javascript:;" class="zu-edit-button" name="editsprovince"><i class="zu-edit-button-icon"></i>修改</a></p>
+           {#else}
+             <span>省/自治区/直辖市<a href="javascript:;" class="zu-edit-button" name="editsprovince"><i class="zu-edit-button-icon"></i>修改</a></span>
+           {#/if} -->
+           <span>省/自治区/直辖市</span>
+           <p>
+           {#if $T.province}
+           {$T.province}
+           {#/if}
+           <a href="javascript:;" class="zu-edit-button" name="editsprovince"><i class="zu-edit-button-icon"></i>修改</a></p>
+         </li>
+         <li {#if $T.city}{#else}style='margin-top:20px;'{#/if}>
+           <!-- {#if $T.city}
+             <span>市/区</span>
+             <p>{$T.city}<a href="javascript:;" class="zu-edit-button" name="editscity"><i class="zu-edit-button-icon"></i>修改</a></p>
+           {#else}
+             <span>市/区<a href="javascript:;" class="zu-edit-button" name="editscity"><i class="zu-edit-button-icon"></i>修改</a></span>
+           {#/if} -->
+           <span>市/区</span>
+           <p>
+           {#if $T.city}
+           {$T.city}
+           {#/if}
+           <a href="javascript:;" class="zu-edit-button" name="editscity"><i class="zu-edit-button-icon"></i>修改</a>
+           </p>
+         </li>
+         <li {#if $T.postcode}{#else}style='margin-top:20px;'{#/if}>
+           <!-- {#if $T.postcode}
+             <span>邮编</span>
+             <p>{$T.postcode}<a href="javascript:;" class="zu-edit-button" name="editspostcode"><i class="zu-edit-button-icon"></i>修改</a></p>
+           {#else}
+             <span>邮编<a href="javascript:;" class="zu-edit-button" name="editspostcode"><i class="zu-edit-button-icon"></i>修改</a></span>
+           {#/if} -->
+            <span>邮编</span>
+            <p>
+            {#if $T.postcode}
+            {$T.postcode}
+            {#/if}
+            <a href="javascript:;" class="zu-edit-button" name="editspostcode"><i class="zu-edit-button-icon"></i>修改</a>
+            </p>
+         </li>
+         <li {#if $T.address}{#else}style='margin-top:20px;'{#/if}>
+           <!-- {#if $T.address}
+             <span>详细地址</span>
+             <p>{$T.address}<a href="javascript:;" class="zu-edit-button" name="editsaddress"><i class="zu-edit-button-icon"></i>修改</a></p>
+           {#else}
+             <span>详细地址<a href="javascript:;" class="zu-edit-button" name="editsaddress"><i class="zu-edit-button-icon"></i>修改</a></span>
+           {#/if} -->
+           <span>详细地址</span>
+           <p>
+           {#if $T.address}
+           {$T.address}
+           {#/if}
+           <a href="javascript:;" class="zu-edit-button" name="editsaddress"><i class="zu-edit-button-icon"></i>修改</a></p>
+         </li>
+        </ul>

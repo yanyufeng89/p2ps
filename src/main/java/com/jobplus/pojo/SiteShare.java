@@ -49,7 +49,19 @@ public class SiteShare extends PageParent implements Serializable{
      * 是否点赞      用于控制页面端是否点赞
      */
 //    private Integer isLiked;
+    /**
+     * 用户类型
+     */
+    private String usertype;
     
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 
     public Integer getCurrentUserId() {
 		return currentUserId;

@@ -12,26 +12,37 @@
     <result column="topTime" property="toptime" jdbcType="TIMESTAMP" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <!-- add siteUrl and siteTitle -->
+    <result column="siteUrl" property="siteurl" jdbcType="VARCHAR" />
+    <result column="siteTitle" property="sitetitle" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.jobplus.pojo.CompanyNews" extends="BaseResultMap" >
     <result column="news" property="news" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, compId, imgUrl, commentSum, likeSum, isValid, isTop, topTime, createTime, updateTime
+    id, compId, imgUrl, commentSum, likeSum, isValid, isTop, topTime, createTime, updateTime,siteurl,sitetitle
   </sql>
   <sql id="Blob_Column_List" >
     news
   </sql>
+  <sql id="Base_Column_List_t" >
+    t.id, t.compId, t.imgUrl, t.commentSum, t.likeSum, t.isValid, t.isTop, t.topTime, t.createTime, t.updateTime,t.siteUrl,t.siteTitle
+  </sql>
+  <sql id="Blob_Column_List_t" >
+    t.news
+  </sql>
   <!-- 分页获取所有企业快讯 -->
   <select id="getList" resultMap="ResultMapWithBLOBs" parameterType="com.jobplus.pojo.CompanyNews" >
-    select 
-    <include refid="Base_Column_List" />
+    <!-- select 
+    <include refid="Base_Column_List_t" />
     ,
-    <include refid="Blob_Column_List" />,
-    (SELECT group_concat(tcl.userid) FROM tbl_cpnews_isliked tcl WHERE tcl.newsId=#{id,jdbcType=INTEGER})AS likedIds
-    from tbl_company_news t
+    <include refid="Blob_Column_List_t" />,
+    (SELECT group_concat(tcl.userid) FROM tbl_cpnews_isliked tcl WHERE tcl.newsId=t.id)AS likedIds
+        
+    ,u.userName as userName,u.headIcon as headIcon,u.usertype as usertype
+    from tbl_company_news t join tbl_user u on t.compId = u.userId
     where t.compId = #{compid,jdbcType=INTEGER}
-    and t.isValid=1 ORDER BY t.isTop,t.topTime,t.updateTime
+    and t.isValid=1 ORDER BY t.isTop desc,t.topTime desc,t.createTime desc
     <choose>
 			<when test="pageNo !=null">
 				limit #{limitSt},#{pageSize}
@@ -39,7 +50,36 @@
 			<otherwise>
 				limit #{defaultPageSize,jdbcType=INTEGER}
 			</otherwise>
-		</choose>
+		</choose> -->
+	select 
+    <include refid="Base_Column_List_t" />
+    ,
+    <include refid="Blob_Column_List_t" />,
+    (SELECT group_concat(tcl.userid) FROM tbl_cpnews_isliked tcl WHERE tcl.newsId=t.id)AS likedIds
+        
+    ,u.userName as userName,u.headIcon as headIcon,u.usertype as usertype
+    from 
+    <!-- 置顶的1条快讯 st    limit param-->	
+	((SELECT * from tbl_company_news where istop=1 AND isValid=1 AND compId=#{compid,jdbcType=INTEGER} order by topTime desc LIMIT 1)
+	UNION ALL
+	(select * from (
+				(SELECT a.* from tbl_company_news a where istop=0 AND isValid=1 AND compId=#{compid,jdbcType=INTEGER})  
+				UNION ALL  
+				(SELECT * from tbl_company_news where istop=1 AND isValid=1 AND compId=#{compid,jdbcType=INTEGER} order by topTime desc LIMIT 1,100 )
+	) a order by a.createTime DESC LIMIT 100)) t
+	<!-- 置顶的3条快讯  end -->
+	 join tbl_user u on t.compId = u.userId
+    where t.compId = #{compid,jdbcType=INTEGER}
+    and t.isValid=1 
+    <choose>
+			<when test="pageNo !=null">
+				limit #{limitSt},#{pageSize}
+			</when>
+			<otherwise>
+				limit #{defaultPageSize,jdbcType=INTEGER}
+			</otherwise>
+		</choose>	
+
   </select>
   <!-- 分页获取所有企业快讯条数 -->
   <select id="getListCount" resultType="java.lang.Integer" parameterType="com.jobplus.pojo.CompanyNews" >
@@ -71,11 +111,11 @@
     insert into tbl_company_news (id, compId, imgUrl, 
       commentSum, likeSum, isValid, 
       isTop, topTime, createTime, 
-      updateTime, news)
+      updateTime, news,siteUrl,siteTitle)
     values (#{id,jdbcType=INTEGER}, #{compid,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, 
       #{commentsum,jdbcType=INTEGER}, #{likesum,jdbcType=INTEGER}, #{isvalid,jdbcType=INTEGER}, 
       #{istop,jdbcType=INTEGER}, #{toptime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{news,jdbcType=LONGVARCHAR})
+      #{updatetime,jdbcType=TIMESTAMP}, #{news,jdbcType=LONGVARCHAR}, #{siteurl,jdbcType=VARCHAR}, #{sitetitle,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jobplus.pojo.CompanyNews" >
     insert into tbl_company_news
@@ -113,6 +153,12 @@
       <if test="news != null" >
         news,
       </if>
+      <if test="siteurl != null" >
+        siteurl,
+      </if>
+      <if test="sitetitle != null" >
+        sitetitle,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -147,6 +193,12 @@
       </if>
       <if test="news != null" >
         #{news,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="siteurl != null" >
+        #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sitetitle != null" >
+        #{sitetitle,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -183,6 +235,12 @@
       <if test="news != null" >
         news = #{news,jdbcType=LONGVARCHAR},
       </if>
+      <if test="siteurl != null" >
+        siteUrl = #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sitetitle != null" >
+        siteTitle = #{sitetitle,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -197,7 +255,9 @@
       topTime = #{toptime,jdbcType=TIMESTAMP},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      news = #{news,jdbcType=LONGVARCHAR}
+      news = #{news,jdbcType=LONGVARCHAR},
+      siteurl = #{siteurl,jdbcType=VARCHAR},
+      siteTitle = #{sitetitle,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jobplus.pojo.CompanyNews" >
@@ -210,7 +270,9 @@
       isTop = #{istop,jdbcType=INTEGER},
       topTime = #{toptime,jdbcType=TIMESTAMP},
       createTime = #{createtime,jdbcType=TIMESTAMP},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      siteurl = #{siteurl,jdbcType=VARCHAR},
+      siteTitle = #{sitetitle,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

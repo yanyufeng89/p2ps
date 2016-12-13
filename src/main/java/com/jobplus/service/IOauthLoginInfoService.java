@@ -3,6 +3,8 @@ package com.jobplus.service;
 import com.jobplus.pojo.OauthLoginInfo;
 import com.jobplus.pojo.User;
 
+import java.util.List;
+
 public interface IOauthLoginInfoService {
 
     int insert(OauthLoginInfo record);
@@ -54,4 +56,12 @@ public interface IOauthLoginInfoService {
      * @throws Exception
      */
     int unbindUserFromOauth(int id) throws Exception;
+
+    /**
+     * 根据用户ID获取列表
+     *
+     * @param userid
+     * @return
+     */
+    List<OauthLoginInfo> findByUserId(int userid);
 }

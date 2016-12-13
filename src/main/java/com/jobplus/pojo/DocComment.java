@@ -39,7 +39,19 @@ public class DocComment extends PageParent implements Serializable{
     private String userHeadIcon;
     private String commentbyName;
     private String commentbyHeadIcon;
+    /**
+     * 用户类型
+     */
+    private String usertype;
     
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 
 	public String getUserCommentTime() {
 		return userCommentTime;

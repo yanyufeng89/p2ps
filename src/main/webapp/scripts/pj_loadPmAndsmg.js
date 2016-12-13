@@ -42,7 +42,7 @@ $(function () {
         $('.pagetemplate').setTemplateURL(projectName + 'privateMessage.html');
         $('.pagetemplate').processTemplate(datamodel);
         if(issitemail=='1'){
-    		$('#backaboutmetop').after($('.pagetemplate').html());
+    		$('.pagetemplate').after($('.pagetemplate').html());
     	}else{
     		$(this).parents('#top-nav-live-new1').after($('.pagetemplate').html());
             $('.edui-container').css('z-index', '0');
@@ -134,6 +134,32 @@ function updateData() {
     } catch (err) {
         clearInterval(updateData);
     }
+}
+//获取请求的url的参数
+String.prototype.getQuery = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+
+    var r = this.substr(this.indexOf("\?") + 1).match(reg);
+
+    if (r != null) return unescape(r[2]); return null;
+ }
+//获取用户信息
+function getCurrentUser(){
+	$.ajax({
+		type:"POST",
+		url:"/myCenter/getCurrentUser",
+		dataType:"json",
+		async:false,
+		success:function(data){
+			if(data.returnStatus=='000'){
+				userInfo=data.user;
+			}
+			else{
+				
+			}
+		}
+	
+	})
 }
 //私信
 function priveteSmg(obj) {

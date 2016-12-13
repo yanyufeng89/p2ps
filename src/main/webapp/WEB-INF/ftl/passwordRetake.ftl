@@ -70,7 +70,7 @@
 					            <div class="password_list_left">验证码：</div>
 					            <input type="text" value="" placeholder="请输入邮箱验证码" class="password_list_text password_list_textw110" id="sendcode_email">
 					            <div class="password_list_r step3_email_timer">
-					               <input type="button" value="点击免费获取" class="input_btn" data-messagetype='1' id="emailcode" onclick="sendmsg(this,'forgetpw');" style="width:160px;">
+					               <input type="button" value="点击免费获取" class="input_btn" data-messagetype='1' id="emailcode" onclick="sendmsg(this,'forgetpw');" style="width:180px;">
 					            </div>
 					          </div>
 					          <div class="password_list fl m15">
@@ -86,7 +86,7 @@
 					            <div class="password_list_left">验证码：</div>
 					            <input type="text" value="" placeholder="请输入手机验证码" class="password_list_text password_list_textw110" id="sendcode_moblie">
 					            <div class="password_list_r step3_email_timer">
-					              <input type="button" value="点击免费获取" class="input_btn" data-messagetype='0' id="phonecode" onclick="sendmsg(this)" style="width:160px;">
+					              <input type="button" value="点击免费获取" class="input_btn" data-messagetype='0' id="phonecode" onclick="sendmsg(this)" style="width:180px;">
 					            </div>
 					          </div>
 					          <div class="password_list fl m15">

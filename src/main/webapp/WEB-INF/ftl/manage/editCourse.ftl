@@ -124,7 +124,7 @@
 
         var formData = new FormData($("#courseForm")[0]);
         $.ajax({
-            url: $path_base + "/manage/backstage/updateCourse",
+            url: $path_base + "/m/backstage/updateCourse",
             type: 'POST',
             data: formData,
             async: false,

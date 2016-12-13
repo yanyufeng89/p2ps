@@ -7,7 +7,8 @@ $(function(){
 		var index=$(this).index();
 		$(this).addClass('active').siblings().removeClass('active');
 		$(this).parent().attr('data-active-index',index);
-		$('input[name=usertype]').val(Number(index)+1);
+		index=$(this).index()+1==3?$(this).index():$(this).index()+1;
+		$('input[name=usertype]').val(index);
 	});
 })
 function reg_checkAjax(id){
@@ -24,11 +25,11 @@ function reg_checkAjax(id){
 			type=2;
 		}
 		if(obj==""){
-			msg='请输入邮箱/手机！';
+			msg='请输入手机/邮箱！';
 			update_html(id,"0",msg); 
 			return false;
 		}else if(!myreg.test(obj) && !reg.test(obj)){
-			msg='请输入正确的邮箱或手机！';
+			msg='请输入正确的手机或邮箱！';
 			update_html(id,"0",msg);
 			return false;
 		}else{
@@ -430,7 +431,7 @@ function check_name(){
 	var username=$("#username").val();
 	
 	if(!myreg.test(username) && !reg.test(username)){
-		msg='请输入正确的邮箱或手机！';
+		msg='请输入正确的手机或邮箱！';
 		update_html("username","0",msg);
 		return false;
 	}

@@ -170,7 +170,7 @@
         </div>
 
         <div class="main-content">
-            <iframe src="/manage/backstage/index" id="iframepage" onload="changeFrameHeight()" scrolling="no" frameborder="0" style="width: 100%;"></iframe>
+            <iframe src="/m/backstage/index" id="iframepage" onload="changeFrameHeight()" scrolling="no" frameborder="0" style="width: 100%;"></iframe>
         </div><!-- /.main-content -->
 
         <div class="ace-settings-container" id="ace-settings-container">
@@ -261,7 +261,7 @@
     function reloadFrame(url,ts) {
         $(".nav-list li").removeClass("active");
         $(ts).parent().addClass("active");
-        $("iframe").attr("src", "/manage" + url);
+        $("iframe").attr("src", "/m" + url);
     }
 
     function changeFrameHeight(){
@@ -273,7 +273,7 @@
     }
 
     function logout() {
-        window.location.href = "/manage/backstage/logout";
+        window.location.href = "/m/backstage/logout";
     }
 </script>
 </body>

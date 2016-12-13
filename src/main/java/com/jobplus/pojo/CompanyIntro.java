@@ -3,6 +3,9 @@ package com.jobplus.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class CompanyIntro implements Serializable{
     /**
 	 * 
@@ -30,7 +33,8 @@ public class CompanyIntro implements Serializable{
     private String scale;
 
     private String industry;
-
+    
+    @DateTimeFormat(pattern = "yyyy")  
     private Date establishtime;
 
     private String type;
@@ -38,8 +42,46 @@ public class CompanyIntro implements Serializable{
     private Date createtime;
 
     private String intro;
+    
+    /**
+     * 图片文件
+     */
+    private CommonsMultipartFile imgFiles;  
 
-    public Integer getId() {
+    /**
+     * 联系邮箱
+     */
+    private String contactEmail ;
+    /**
+     * 联系号码
+     */
+    private String contactTel;
+    
+    public String getContactEmail() {
+		return contactEmail;
+	}
+
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
+
+	public String getContactTel() {
+		return contactTel;
+	}
+
+	public void setContactTel(String contactTel) {
+		this.contactTel = contactTel;
+	}
+
+	public CommonsMultipartFile getImgFiles() {
+		return imgFiles;
+	}
+
+	public void setImgFiles(CommonsMultipartFile imgFiles) {
+		this.imgFiles = imgFiles;
+	}
+
+	public Integer getId() {
         return id;
     }
 

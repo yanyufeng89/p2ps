@@ -23,6 +23,7 @@ hr,.secant_line{
 .btn_disabled{
 	background-color: #ccc;
 }
+
 textarea {
     border: 0;
     -moz-outline: 0;
@@ -134,9 +135,17 @@ body {
     vertical-align: middle;
     zoom:1
 }
+.Cvatar-xs{
+	height:160px;
+    width:160px;
+    background-color: #eee;
+    vertical-align: middle;
+    zoom:1
+}
 .item-msg-content {
     font-size: 12px;
     color: #555;
+    margin-right:6px;
 }
 .ft-share{
 	height:64px;
@@ -160,7 +169,8 @@ body {
     padding-left:4px;
 	vertical-align: top;
 	width:99%;
-	resize: none
+	resize: none;
+	color:#555;
 }
 #ft .row .links-section p {
 	margin: 0;
@@ -179,8 +189,6 @@ body {
     background: none;
     color: #999;
     font-size: 12px;
-    font-family: Arial,'Microsoft YaHei';
-    _font-family: Arial,'Microsoft YaHei';
 }
 
 .pj-two-dimensional, .jb-service-tel,.pj-weibo{
@@ -293,8 +301,7 @@ body {
 .col-md-3 {
     width:16%;
 }
-.ic-msg {
-    vertical-align: -4px;
+.ic-msg { 
     margin-right: 4px;
     background: url(../image/new_upload_6dde23c.png) no-repeat;
     background-position: 0 -37px;
@@ -949,8 +956,9 @@ body {
     font-size: 12px;
     -webkit-text-size-adjust: none;
     font-weight: 400;
-    padding: 0 5px 0 4px;
-    margin: 0 0 0 10px;
+    /* padding: 0 5px 0 4px;
+    margin: 0 0 0 10px; */
+    vertical-align: bottom;
 }
 .zm-item-tag, .zm-tag-editor-edit-item {
 	float:left;
@@ -1352,7 +1360,6 @@ input[type=checkbox] {
 }
 .zg-btn-blue {
     color: #fff!important;
-    text-shadow: 0 -1px 0 rgba(0,0,0,.5);
     background: #1b85d5;
     border: 1px solid #1b85d5;
 }
@@ -1372,8 +1379,6 @@ input[type=checkbox] {
     box-sizing: border-box;
     outline:none;
     text-shadow: 0 -1px 0 rgba(0,0,0,.5); 
-    font-family:  Arial,'Microsoft YaHei';
-    _font-family:  Arial,'Microsoft YaHei';
 }
 
 .zm-item-answer .answer-head {
@@ -1591,12 +1596,11 @@ input[type=checkbox] {
 
 img {
     border: 0;
-    vertical-align:middle
+    vertical-align:middle;
 }
-
-/* .zm-item-answer-author-info a {
-    color: inherit;
-} */
+.zm-item-comment .zm-comment-content-wrap {
+    margin: 0 0 0 35px;
+}
 .zm-item-answer-author-info .author-link {
     color: #0867c5;
     cursor: pointer;
@@ -2657,7 +2661,7 @@ a {
 	background-position:-114px 0;
 	width:20px!important;
 	height:15px!important;
-	margin-top: 8px;
+	margin-top:6px;
 	cursor:pointer;
 }
 .site-mail:hover{
@@ -2903,7 +2907,9 @@ a {
     text-align:center;
     border: 1px solid #e5e5e5;
     display: inline-block;
-    border-radius: 4px;
+    border-radius:4px;
+    box-sizing: content-box;
+    background: #fff;
 }
 .zm-command-cancel:hover,._CommentBox_textButton_3t9_:hover{
 	color: #1A7BDD;
@@ -3406,7 +3412,73 @@ p .tips_icon {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.com-aside .name-link{
+	color:#c1c1c1;
+}
 .name-link{
+	color: #333;
 	max-width:60px;
 	display:inline-block;
+}
+._CommentBox_list_10_K, .zm-comment-list {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+._CommentItem_root_PQNS:first-child, .zm-item-comment:first-child {
+    border-top: none;
+}
+button, input, select, textarea {
+    font-family: Arial,'Microsoft YaHei';
+    _font-family: Arial,'Microsoft YaHei';
+}
+.zm-item-comment {
+    outline: none;
+    padding: .9em 0;
+    border-top: 1px solid #e5e5e5;
+    font-size: 14px;
+}
+.zm-item-comment .zm-item-img-avatar {
+    width: 32px;
+    height:32px;
+    border-radius:50%;
+}
+.zm-comment-content{
+	font-size:14px;
+	color:#555;
+	outline:none;
+	line-height: 18px;
+	text-align: justify;
+	margin:12px 0 0 10px;
+	word-wrap: break-word;
+    word-break: break-all;
+}
+.beian-code{
+	color: #999;
+	margin-left:10px;
+}
+.zm-item-comment>.zm-item-link-avatar {
+    float: left;
+    margin: 4px 0 0;
+}
+.zm-item-comment .zm-comment-hd, .zm-item-comment .zm-comment-ft {
+    color: #999;
+    margin-top: 10px;
+    padding: 0 0 0 12px;
+    font-size:12px;
+}
+.zm-comment-ft a:hover .zg-icon-comment-del, .CommentItem_cancel:hover .zg-icon-comment-del {
+    background-position: -236px -79px;
+}
+.zg-icon-comment-like, .zm-comment-op-link .zg-icon {
+    margin-right: 5px;
+    width: 11px;
+    height: 11px;
+    vertical-align: -1px;
+}
+.zg-icon-comment-del {
+    background-position: -236px -92px;
+}
+.company-img{
+	padding:1px;
+	border:1px solid #B1E0FF!important;
 }

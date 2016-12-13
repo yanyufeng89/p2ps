@@ -4,18 +4,18 @@
        {#if $T.headicon}
           {#if $T.ispublic==1}
           <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.userid}' target="_blank">
-            <img src="{$T.headicon}" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid="{$T.userid}" data-moduletype="0">
+            <img src="{$T.headicon}" alt="个人头像" class="zm-list-avatar avatar lazy {#if $T.usertype==2}company-img{#/if}" data-userid="{$T.userid}" data-moduletype="0">
           </a>
           {#else}
-          <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-avatar avatar lazy"  data-moduletype="0">
+          <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-avatar avatar lazy {#if $T.usertype==2}company-img{#/if}"  data-moduletype="0">
           {#/if}
        {#else}
          {#if $T.ispublic==1}
          <a class="zm-item-link-avatar avatar-link" href='/myHome/getHomePage/{$T.userid}' target="_blank">
-          <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-list-avatar avatar lazy" data-userid="{$T.userid}" data-moduletype="0">
+          <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-list-avatar avatar lazy {#if $T.usertype==2}company-img{#/if}" data-userid="{$T.userid}" data-moduletype="0">
          </a>
          {#else}
-          <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-avatar avatar lazy"  data-moduletype="0">
+          <img src="/image/1b48b5a75c71597_100x100.jpg"  alt="个人头像" class="zm-list-avatar avatar lazy {#if $T.usertype==2}company-img{#/if}"  data-moduletype="0">
          {#/if}
        {#/if}
        {#if $T.ispublic==1}

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jobplus.pojo.BusiAreaLib;
 import com.jobplus.pojo.MyHomePage;
 import com.jobplus.pojo.OperationSum;
 import com.jobplus.pojo.Page;
@@ -16,7 +17,7 @@ public interface ICompanyService {
 	 * @param record
 	 * @return
 	 */
-	public Page<MyHomePage> getRecentShare(HttpServletRequest request,MyHomePage record);
+//	public Page<MyHomePage> getRecentShare(HttpServletRequest request,MyHomePage record);
 	
 	/**
 	 * 获取我分享的某一类 tableName;tableColumn;userid;
@@ -24,7 +25,7 @@ public interface ICompanyService {
 	 * @param record
 	 * @return
 	 */
-	public Page<MyHomePage> getOneShares(HttpServletRequest request,MyHomePage record);
+//	public Page<MyHomePage> getOneShares(HttpServletRequest request,MyHomePage record);
 	
 	
 	/**
@@ -37,7 +38,7 @@ public interface ICompanyService {
 	/**
 	 * 实时获取用户分享的总数（成功的）
 	 */
-	public OperationSum getRealSum(Integer userid);
+//	public OperationSum getRealSum(Integer userid);
 	
 	
 	/**
@@ -46,4 +47,12 @@ public interface ICompanyService {
 	 */
 	public String uploadImg(MultipartFile[] files,User user);
 
+	/**
+	 * 新增业务领域 标签
+	 */
+	int insertBusLib(BusiAreaLib record);
+	/**
+     * 统计企业用户完整度
+     */
+    int cpInfoCompletion(Integer id);
 }

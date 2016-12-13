@@ -1,46 +1,41 @@
-<!--快讯的评论 列表-->
 <div class="panel-container">
   <div class="question-invite-panel"></div>
   <div class="cm-comment-box clearfix" data-count='{$T.topiccount}'>
-    <i class="icon icon-spike zm-comment-bubble" style="display: inline; left:55px;"></i>
+    <i class="icon icon-spike zm-comment-bubble" style="display: inline; left:{#if $T.islike==1}96px;{#else}55px;{#/if}"></i>
     <a class="zg-anchor-hidden" name="comment-0"></a>
-    <div class="zm-comment-list">
+    <div class="zm-comment-list"  id='comment-{$T.flashId}'>
      {#foreach $T.flashcommentList as commlist}
-      <div class="zm-item-comment" data-id="{$T.commlist.typeid}" tabindex="-1" aria-label="评论">
-        <a class="zg-anchor-hidden" name="comment-{$T.commlist.typeid}"></a>
-         {#if $T.commlist.tmpHeadIcon}
-            {#if $T.commlist.tmpUserName}
-             <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">
-                <img src="{$T.commlist.tmpHeadIcon}" alt="个人头像" class="zm-item-img-avatar lazy" data-userid='{$T.commlist.userid}'>
-             </a>
-            {#else}
-                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
-            {#/if}
+      <div class="zm-item-comment">
+        <a class="zg-anchor-hidden"></a>
+        <a  class="zm-item-link-avatar"  href='/myHome/getHomePage/{$T.commlist.userid}'  target='_blank'  data-moduletype="0">
+         {#if $T.commlist.headIcon}
+             
+                <img src="{$T.commlist.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" data-userid='{$T.commlist.userid}'>
+            
          {#else}
-           {#if $T.commlist.tmpUserName}
-             <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">
-                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy" data-userid='{$T.commlist.userid}'>
-             </a>
-           {#else}
-             <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy">
-           {#/if}
+                 <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" data-userid='{$T.commlist.userid}'>
          {#/if}
-       
+        </a>
         <div class="zm-comment-content-wrap">
+          <div class="zm-comment-hd">             	            		          
+            <a href="/myHome/getHomePage/{$T.commlist.userid}" target="_blank" class="zg-link" data-userid="{$T.commlist.userid}" data-moduletype="0" >{$T.commlist.userName}</a>		         		                               
+           </div>
           <div class="zm-comment-content">
-            {$T.commlist.commcontent}
+            {$T.commlist.comments}
           </div>
           <div class="zm-comment-ft">
-		      <span class="date">{$T.commlist.showcreatetime}</span>
-		      <a href="javascript:void(0)" class="del zm-comment-op-link needsfocus" name="delcomment" data-reply='{$T.commlist.id}'>
+		      <span class="date">{$T.commlist.createtime}</span>
+		      {#if $T.commlist.userid==userInfo.userid}
+		      <a href="javascript:void(0)" class="del zm-comment-op-link needsfocus" name="delcomment" data-id='{$T.commlist.id}' data-flashid='{$T.flashId}'>
 		          <i class="zg-icon zg-icon-comment-del"></i>删除
 		      </a>
+		      {#/if}
           </div>
           <div class='zm-comment-form' style='display:none'></div>
         </div>
       </div>
      {#/for}
-     {#if $T.last=='1'}
+     {#if $T.last>1}
 	     <div class='page-inner'>
 		  <div class="ui-pager pager-center">
 		    <div class='pager'>
@@ -59,8 +54,7 @@
       <div class="cm-command zg-clear">
         <b class="ic ic-msg" style="background-position: -47px -144px;display:none"></b>
 		<span class="item-msg-content" style='display:none'>文字超出最大限制</span>
-        <span  name="addnew" class="flash-comment zg-btn-blue" data-topicid='{$T.topicid}'>评论</span>
-        <span  name="closeform" class="_CommentForm_cancelButton_cy3u _CommentBox_textButton_3t9_">取消</span>
+        <span  name="addnew" class="flash-comment zg-btn-blue" data-flashid='{$T.flashId}' data-compid='{$T.compid}'>评论</span>
       </div>
     </div>
   </div>

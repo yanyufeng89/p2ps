@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.jobplus.controller.UserController;
 import com.jobplus.dao.TagsMapper;
 import com.jobplus.pojo.Tags;
 import com.jobplus.service.ISensitiveWordsService;
@@ -26,7 +25,7 @@ import com.jobplus.service.ITagsService;
 @Service("tagsService")
 public class TagsServiceImpl implements ITagsService{
 	
-	private static org.slf4j.Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(TagsServiceImpl.class);
 	
 	@Resource
 	private TagsMapper tagsDao;

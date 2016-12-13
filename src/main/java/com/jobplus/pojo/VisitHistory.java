@@ -29,6 +29,10 @@ public class VisitHistory extends PageParent implements Serializable{
      */
     private String headIcon;
     /**
+     * 用户类型
+     */
+    private String usertype;
+    /**
      * 用于前端显示时间
      */
     private String showVTime;
@@ -87,6 +91,14 @@ public class VisitHistory extends PageParent implements Serializable{
 
 	public void setAttentionsum(Integer attentionsum) {
 		this.attentionsum = attentionsum;
+	}
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
 	}
 
 	public String getDescription() {

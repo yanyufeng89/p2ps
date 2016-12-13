@@ -1,0 +1,45 @@
+<ul>
+        <li>
+          <span>公司网站</span>
+          <p>
+           {#if $T.url}
+	         <a href='{$T.url}' target='_blank' class='websiturl' title='{$T.url}'>{$T.url}</a> 
+	       {#/if}
+	         <a href="javascript:;" class="zu-edit-button" name="editsurl"><i class="zu-edit-button-icon"></i>修改</a>
+          </p>
+        </li>
+        <li>
+        <span>公司规模</span>
+        <p>
+        {#if $T.scale}
+        {$T.scale}
+        {#/if}
+        <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+        </li>
+        <li>
+          <span>所属行业</span>
+          <p>
+          {#if $T.industry}
+          {$T.industry}
+          {#/if}
+          <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a>
+          </p>
+        </li>
+        <li>
+         <span>创立年份</span>
+         <p>
+         {#if $T.establishtime}
+         {$T.establishtime}
+         {#/if}
+         <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a>
+         </p>
+        </li>
+        <li>
+          <span>公司类型</span>
+          <p>
+          {#if $T.type}
+          {$T.type} 
+          {#/if}
+          <a href="javascript:;" class="zu-edit-button" name="editsmodule"><i class="zu-edit-button-icon"></i>修改</a></p>
+       </li>
+ </ul>

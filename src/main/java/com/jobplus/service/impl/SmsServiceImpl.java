@@ -35,40 +35,40 @@ public class SmsServiceImpl implements ISmsService{
 	@Resource
 	private ISmsFilterService smsFilterService;
 	
-	/**消息类型   0系统消息    1私信  2关注通知(成为你的粉丝)                  2
+	/**消息类型   0系统消息    1私信  2关注通知(成为您的粉丝)                  2
 	*11话题新增回答  12话题的回答新增评论     13话题新增评论   14话题评论新增回复      15话题回答点赞     7
 	*21书籍推荐新增回复   22书籍点赞										9
 	*31课程新增推荐  32课程新增评论 	 33课程点赞							12
 	*41文章新增推荐   42文章新增评论 	 43文章点赞							15
 	*51站点新增推荐   52站点新增评论 	 53站点点赞							18
 	*61文档新增推荐   62文档新增评论	 63文档点赞							21
-	*3关注了你发布的话题  
+	*3关注了您发布的话题  
     * */
 	private static Map<String, String> map = new HashMap<String,String>();
 	public static Map<String, String> urlMap = new HashMap<String,String>();
 //	private static Map<String, String> tableColMap = new HashMap<String,String>();
 	static {
 		map.put("2","关注了您");
-		map.put("11","回答了你分享的话题");
-		map.put("12","回复了你话题的评论");
-		map.put("13","评论了你的话题");
-		map.put("14","回复了你的话题");
-		map.put("15","赞了你的话题");
-		map.put("21","回复了你分享的书籍");
-		map.put("22","赞了你分享的书籍");
-		map.put("31","推荐了你分享的课程");
-		map.put("32","评论了你分享的课程");
-		map.put("33","赞了你分享的课程");
-		map.put("41","评论了你分享的文章");
-		map.put("42","评论了你分享的文章");
-		map.put("43","赞了你分享的文章");
-		map.put("51","评论了你分享的站点");
-		map.put("52","评论了你分享的站点");
-		map.put("53","赞了你分享的站点");
-		map.put("61","评论了你分享的文档");
-		map.put("62","评论了你分享的文档");
-		map.put("63","赞了你分享的文档");
-		map.put("3","关注了你发布的话题");
+		map.put("11","回答了您分享的话题");
+		map.put("12","回复了您话题的评论");
+		map.put("13","评论了您的话题");
+		map.put("14","回复了您的话题");
+		map.put("15","赞了您的话题");
+		map.put("21","回复了您分享的书籍");
+		map.put("22","赞了您分享的书籍");
+		map.put("31","推荐了您分享的课程");
+		map.put("32","评论了您分享的课程");
+		map.put("33","赞了您分享的课程");
+		map.put("41","评论了您分享的文章");
+		map.put("42","评论了您分享的文章");
+		map.put("43","赞了您分享的文章");
+		map.put("51","评论了您分享的站点");
+		map.put("52","评论了您分享的站点");
+		map.put("53","赞了您分享的站点");
+		map.put("61","评论了您分享的文档");
+		map.put("62","评论了您分享的文档");
+		map.put("63","赞了您分享的文档");
+		map.put("3","关注了您发布的话题");
 		map.put("80","邀请您回答");
 		map.put("90","下载了您的文档");
 		map.put("100","打赏了您的文章");
@@ -76,6 +76,7 @@ public class SmsServiceImpl implements ISmsService{
 		
 		//企业
 		map.put("1000","评论了您的主页快讯");
+		map.put("1001","赞了您的主页快讯");
 
 		urlMap.put("tbl_user","");
 		urlMap.put("tbl_topics","/topics/getTopicsDetail/");
@@ -83,7 +84,7 @@ public class SmsServiceImpl implements ISmsService{
 		urlMap.put("tbl_topics_isLiked","/topics/getTopicsDetail/");		
 		urlMap.put("tbl_courses","/courses/getCourseDetail/");
 		urlMap.put("tbl_courses_share","/courses/getCourseDetail/");		
-		urlMap.put("tbl_courses_sLiked","/courses/getCourseDetail/");		
+		urlMap.put("tbl_courses_Liked","/courses/getCourseDetail/");		
 		urlMap.put("tbl_sites","/sites/getSiteDetail/");
 		urlMap.put("tbl_sites_share","/sites/getSiteDetail/");		
 		urlMap.put("tbl_sites_isliked","/sites/getSiteDetail/");		
@@ -202,8 +203,10 @@ public class SmsServiceImpl implements ISmsService{
 			String tip = map.get(sms.getSmstype().toString());
 			//发送者url    sms.getSendUserName() +    暂时不需要 
 			String userUrl = "";//"<a target='_blank' href='"+ contextPath+"/user/mycenter?userid="+sms.getSenderid()+"'>" + "</a>";
+			String objName = StringUtils.isBlank(sms.getObjectName())?"":sms.getObjectName();
 			//对象url
-			String objUrl = "<a target='_blank' href='"+contextPath+urlMap.get(tableName) +topObjId+ "'>" + sms.getObjectName() + "</a>";
+			String objUrl = "<a target='_blank' href='"+contextPath+urlMap.get(tableName) +topObjId+ "'>" + 
+					objName + "</a>";
 //			String content ="";
 			if(tableName.equals("tbl_user")){
 				//拼接消息内容

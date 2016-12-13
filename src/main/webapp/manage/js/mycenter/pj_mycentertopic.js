@@ -1174,7 +1174,7 @@ function cancelnewreply(obj,type){
 	console.log($this);
 	$.ajax({
        	type:"POST",
-       	url:"/manage/backstage/delComment",//url:"/topics/delCommentOnTopDetail",
+       	url:"/m/backstage/delComment",//url:"/topics/delCommentOnTopDetail",
        	data:{id:replyid,tableName:tableName},//data:{id:replyid,type:operatetype,topicsid:topicsid,parentcommid:parentcommId},
        	dataType:"json",
        	success:function(data){

@@ -3,6 +3,8 @@ package com.jobplus.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class CompanyNews extends PageParent implements Serializable{
     /**
 	 * 
@@ -30,14 +32,87 @@ public class CompanyNews extends PageParent implements Serializable{
     private Date updatetime;
 
     private String news;
+    
+    /**
+     * 快讯 链接名字 title
+     */
+    private String sitetitle;
+    /**
+     * 快讯 链接
+     */
+    private String siteurl;
 
     /**
 	 * 点赞的人 ids
 	 */
 	private String likedIds;
+	/**
+     * 图片文件
+     */
+    private CommonsMultipartFile newsImgFiles;  
+    /**
+     * 用户名
+     */
+    private String userName;    
+    /**
+     * 头像
+     */
+    private String headIcon;
+    /**
+     * 用户类型
+     */
+    private String usertype;
     
-    
-    public String getLikedIds() {
+
+	public String getSitetitle() {
+		return sitetitle;
+	}
+
+	public void setSitetitle(String sitetitle) {
+		this.sitetitle = sitetitle;
+	}
+
+	public String getSiteurl() {
+		return siteurl;
+	}
+
+	public void setSiteurl(String siteurl) {
+		this.siteurl = siteurl;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getHeadIcon() {
+		return headIcon;
+	}
+
+	public void setHeadIcon(String headIcon) {
+		this.headIcon = headIcon;
+	}
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
+
+	public CommonsMultipartFile getNewsImgFiles() {
+		return newsImgFiles;
+	}
+
+	public void setNewsImgFiles(CommonsMultipartFile newsImgFiles) {
+		this.newsImgFiles = newsImgFiles;
+	}
+
+	public String getLikedIds() {
 		return likedIds;
 	}
 
@@ -66,7 +141,7 @@ public class CompanyNews extends PageParent implements Serializable{
     }
 
     public void setImgurl(String imgurl) {
-        this.imgurl = imgurl == null ? null : imgurl.trim();
+        this.imgurl = imgurl == null ? "" : imgurl.trim();
     }
 
     public Integer getCommentsum() {

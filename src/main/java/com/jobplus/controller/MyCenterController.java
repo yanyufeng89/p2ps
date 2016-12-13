@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jobplus.pojo.*;
+import com.jobplus.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,30 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.alibaba.fastjson.JSON;
-import com.jobplus.pojo.Attention;
-import com.jobplus.pojo.Docs;
-import com.jobplus.pojo.MyCollect;
-import com.jobplus.pojo.OperationSum;
-import com.jobplus.pojo.Page;
-import com.jobplus.pojo.ReportInfo;
-import com.jobplus.pojo.Topics;
-import com.jobplus.pojo.TopicsComment;
-import com.jobplus.pojo.TopicsLiked;
-import com.jobplus.pojo.TypeConfig;
-import com.jobplus.pojo.User;
 import com.jobplus.pojo.response.BaseResponse;
 import com.jobplus.pojo.response.DocsResponse;
 import com.jobplus.pojo.response.MyCollectResponse;
-import com.jobplus.service.IAttentionService;
-import com.jobplus.service.IDocsService;
-import com.jobplus.service.IMyCollectService;
-import com.jobplus.service.IOperationSumService;
-import com.jobplus.service.IReportInfoService;
-import com.jobplus.service.ITopicsCommentService;
-import com.jobplus.service.ITopicsLikedService;
-import com.jobplus.service.ITopicsService;
-import com.jobplus.service.ITypeConfigService;
-import com.jobplus.service.IUserService;
 import com.jobplus.utils.ConstantManager;
 
 /**
@@ -77,7 +58,8 @@ public class MyCenterController {
 	private IOperationSumService operationSumService;
 	@Resource
 	private IReportInfoService reportInfoService;
-	
+	@Resource
+	private IOauthLoginInfoService oauthLoginInfoService;
 	
 	/**
 	 * 个人中心-我上传的文档   列表
@@ -855,8 +837,11 @@ public class MyCenterController {
 	 * @return
 	 */
 	@RequestMapping(value = "/account/security")
-	public ModelAndView accountsecurity() {
+	public ModelAndView accountsecurity(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
+		String userId = (String) request.getSession().getAttribute("userid");
+		List<OauthLoginInfo> list = oauthLoginInfoService.findByUserId(Integer.parseInt(userId));
+		mv.addObject("thirdInfos", list);
 		mv.setViewName("/mydocs/mycount/accountsecurity");
 		return mv;
 	}

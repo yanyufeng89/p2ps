@@ -70,6 +70,14 @@
     <include refid="Base_Column_List_copy" />
     ,
     <include refid="tbl_operationSum_Column_List" />
+    <!-- 新增企业用户的快讯条数 -->
+    ,(
+		select
+    COUNT(*)
+    from tbl_user tu LEFT JOIN tbl_company_news cn on tu.userId=cn.compId    
+    where tu.userId = #{userID,jdbcType=INTEGER} AND cn.isValid=1
+	) as cpNewsSum
+    
     from tbl_user t left join tbl_operationSum p
     on t.userId = p.userid
     where t.userId = #{userID,jdbcType=INTEGER}
@@ -77,7 +85,7 @@
 
     <select id="getFansListInformation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select distinct
-   	u.userId,u.userName,u.headIcon 
+   	u.userId,u.userName,u.headIcon ,u.userType
     from tbl_attention at,tbl_user u where at.collType='${collType}' and at.objectId = ${objectId} and u.userId = at.userId LIMIT 20 ;
   </select>
 	<!-- 个人中心：我的粉丝列表 getMyFansList -->
@@ -145,7 +153,7 @@
 	</select>
 	<!-- 文章打赏的人 -->
 	<select id="getRewardUsers" resultMap="BaseResultMap" parameterType="com.jobplus.pojo.User" >
-	SELECT DISTINCT 	u.userId,u.userName,u.headIcon  FROM tbl_user u LEFT JOIN tbl_article_supportlist a on u.userId = a.userId WHERE a.articleId = ${articleId} LIMIT 20 ;
+	SELECT DISTINCT 	u.userId,u.userName,u.headIcon,u.userType  FROM tbl_user u LEFT JOIN tbl_article_supportlist a on u.userId = a.userId WHERE a.articleId = ${articleId} LIMIT 20 ;
 	</select>
 
 

@@ -68,14 +68,17 @@ $(function(){
 		    if(filetypes.indexOf(fileend.toLowerCase())<0){
 		    	flag=false;
 		    }
+		    $('#upload-files-container .error').hide();
+		    var $child=$('#upload-files-container .error').children();
 		    //文件类型不符合
 		    if(!flag){
-				$('#upload-files-container .error').css('display','block');
+				$('#upload-files-container .error').empty().append($child).append('上传的文档包含不支持的类型').show();
 				return false;
 			}
-			else{
-				$('#upload-files-container .error').css('display','none');
-			}
+		    if(addfiles[i].size>20971520){
+		    	$('#upload-files-container .error').empty().append($child).append('上传的文件大小限制在20M以内').show();
+		    	return false;
+		    }
 		    newarrFiles.push(addfiles[i]);
 		}	
 	  

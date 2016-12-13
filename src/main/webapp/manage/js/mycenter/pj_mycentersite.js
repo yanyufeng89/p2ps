@@ -205,7 +205,7 @@ function cancelCommtent(obj){
 	var tableName=obj.attr('data-tableName');
 	$.ajax({
 	    type:"POST",
-	    url:"/manage/backstage/delComment",//url:"/sites/delComment",
+	    url:"/m/backstage/delComment",//url:"/sites/delComment",
      	data:{id:recommend,tableName:tableName},//data:{id:recommend,siteid:siteid},
      	dataType:"json",
      	success:function(data){

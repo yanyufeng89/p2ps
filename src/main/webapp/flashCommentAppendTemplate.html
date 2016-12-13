@@ -1,0 +1,30 @@
+{#foreach $T.flashcommentList as commlist}
+      <div class="zm-item-comment">
+        <a class="zg-anchor-hidden"></a>
+         {#if $T.commlist.headIcon}
+             <a  class="zm-item-link-avatar" href='/myHome/getHomePage/{$T.commlist.userid}' target='_blank'  data-moduletype="0">
+                <img src="{$T.commlist.headIcon}" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" data-userid='{$T.commlist.userid}'>
+             </a>
+            {#else}
+                <img src="/image/1b48b5a75c71597_100x100.jpg" alt="个人头像" class="zm-item-img-avatar lazy {#if $T.commlist.usertype==2}company-img{#/if}" data-userid='{$T.commlist.userid}'>
+         {#/if}
+       
+        <div class="zm-comment-content-wrap">
+          <div class="zm-comment-hd">             	            		          
+            <a href="/myHome/getHomePage/{$T.commlist.userid}" target="_blank" class="zg-link" data-userid="{$T.commlist.userid}" data-moduletype="0" >{$T.commlist.userName}</a>		         		                               
+           </div>
+          <div class="zm-comment-content">
+            {$T.commlist.comments}
+          </div>
+          <div class="zm-comment-ft">
+		      <span class="date">{$T.commlist.createtime}</span>
+		      {#if $T.commlist.userid==$T.userInfo.userid}
+			      <a href="javascript:void(0)" class="del zm-comment-op-link needsfocus" name="delcomment" data-id='{$T.commlist.id}' data-flashid='{$T.flashId}'>
+			          <i class="zg-icon zg-icon-comment-del"></i>删除
+			      </a>
+		      {#/if}
+          </div>
+          <div class='zm-comment-form' style='display:none'></div>
+        </div>
+      </div>
+{#/for}

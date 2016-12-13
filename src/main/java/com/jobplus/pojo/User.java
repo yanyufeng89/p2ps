@@ -88,10 +88,22 @@ public class User extends PageParent implements Serializable {
     private String contactTel;
     
     private CommonsMultipartFile headIconFile;  
-
-
+    
+    /**
+     * 新增企业用户的快讯条数
+     */
+    private Integer cpNewsSum;
+    
 	public String getContactEmail() {
 		return contactEmail;
+	}
+
+	public Integer getCpNewsSum() {
+		return cpNewsSum;
+	}
+
+	public void setCpNewsSum(Integer cpNewsSum) {
+		this.cpNewsSum = cpNewsSum;
 	}
 
 	public void setContactEmail(String contactEmail) {
